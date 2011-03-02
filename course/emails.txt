@@ -1,0 +1,265 @@
+20100618 Alan Barrett, this is not used by the code, it is in git to be able to be retrieved
+if e-mail text gets overwritten/lost from the Moodle settings where it is now to be stored.
+
+====================================================================================
+Dear GIVEN_NAME_HERE,
+
+Your application to take the Course Module 'COURSE_MODULE_1_NAME_HERE'
+COURSE_MODULE_2_TEXT_HEREhas been approved.
+COURSE_MODULE_2_WARNING_TEXT_HERE
+
+If you are a new Peoples-uni Moodle user, you will be sent your account
+Username and Password in a separate email along with the address of the
+web site (URL) you will use to login.
+You will also receive a welcome email for each course module giving
+the course module URL and the URL for your profile.
+We will send you all these details on the first day of the course
+orientation week March 29th 2010.
+
+Please see the course timetable at:
+http://www.peoples-uni.org/book/course-dates-2010
+
+During the orientation week, you will be able to familiarise yourself with
+the module layout and introduce yourself to the other students and tutors.
+The course semester will finish on June 28th.
+
+
+*** Payment will be required before enrolment on 29th of March.
+The fees are £30 sterling if you have been approved for one course
+module or £60 sterling if you have been approved for two modules.
+
+There are a number of ways you can pay.
+
+WITH A CREDIT CARD... You can pay via the secure online
+payment system RBS WorldPay. Please click on the following URL:
+http://courses.peoples-uni.org/course/pay.php?sid=SID_HERE
+
+and follow instructions (Everything happens automatically,
+there is no need to tell us about your payment).
+
+BY BANK TRANSFER (UK or Nigeria)...
+
+DIRECT TO THE UK in Pounds Sterling
+BANK NAME: Barclays
+Branch: Barclays Bank, Manchester City, PO Box 357, 51 Mosley Street,
+Manchester UK.
+Account name: Peoples Open Access Education Initiative
+Account number: 93777308
+Sort code: 20-55-34
+SWIFT: BARCGB22
+IBAN: GB82 BARC 2055 3493 7773 08
+Please be sure to quote this number SID_HERE as a reference in
+addition to giving your name on the lodgement docket.
+When you have made the Bank Transfer you must then click on this web site (URL):
+http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+
+and fill in the form so we know about your payment.
+
+IN NIGERIA in local currency, Naira
+Please pay N9,000 for one course module or N18,000 for two into:
+BANK NAME: Diamond Bank Plc.
+Branch: Wuse II, Abuja
+Account name: Datasphir Solutions Limited
+Account number: 0412350001544
+Please be sure to quote this number SID_HERE as a reference in
+addition to giving your name on the lodgement docket.
+When you have made the Bank Transfer you must then click on this web site (URL):
+http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+
+and fill in the form so we know about your payment.
+
+ALTERNATIVE WAYS OF SENDING MONEY, Travellers Cheques or cash...
+Buy a Travellers Cheque in Sterling, preferably drawn on a UK bank
+(such as Visa, Mastercard or American Express).
+Sign at the top and countersign at the bottom.
+Make this payable to the Peoples Open Access Education Initiative.
+Send it by registered mail to:
+Peoples Open Access Education Initiative,
+34 Stafford Road,
+Ellesmere Park,
+Manchester M30 9ED,
+UK.
+The amount should be 30 pounds for one module or 60 pounds for two modules.
+Notify us of the number of the cheques and the number (or tracking code) of
+the receipt you will have from the registered mail, by clicking on this
+web site (URL):
+http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+
+and fill in the form so we know about your payment.
+(or send an e-mail to payments@peoples-uni.org )
+Sterling travellers cheques come in either 20 pounds or 50 pounds,
+so if you are enroling in only one module, you are better to send cash.
+It is possible to send cash for two modules rather than a travellers cheque, but
+make sure it is in sterling. Send it via registered mail and tell us as above.
+(You might fold a piece of paper around the cash so that people cannot easily
+see that cash is being sent!). The equivalent amount if you can only get
+US dollars is $50 per module, but we would prefer sterling if possible.
+
+
+Please e-mail payments@peoples-uni.org if you have a payment query or
+experience any problems.
+
+
+*** In the meantime, please look through the module Foundations of
+Public Health: http://courses.peoples-uni.org/course/view.php?id=53
+
+This is a demonstration module to show you what a module looks like and
+to introduce you to Public Health. This is just to look at and read the
+resources, you will not be able to or required to take part in the
+discussions or assignments of this demonstration module.
+
+We look forward to your participation this semester, and hope that you
+enjoy the experience and find it useful.
+
+    Peoples Open Access Education Initiative Administrator.
+====================================================================================
+Set the above text as the Approval e-mail wording (in Application Details/app.php)
+====================================================================================
+
+====================================================================================
+Dear GIVEN_NAME_HERE,
+
+We contacted you earlier indicating that your application to Peoples-uni
+for this semester had been approved and giving payment options.
+
+We have so far not received any indication of payment from you. If you have
+only recently paid we may not have a record of that yet. However, if you
+have not paid, we would like to remind you that
+payment will be required before enrolment on 29th of March.
+
+Your fees are £AMOUNT_OWED_HERE sterling.
+
+Here is a reminder of the payment methods.
+
+WITH A CREDIT CARD... You can pay via the secure online
+payment system RBS WorldPay. Please click on the following URL:
+http://courses.peoples-uni.org/course/pay.php?sid=SID_HERE
+
+and follow instructions (Everything happens automatically,
+there is no need to tell us about your payment).
+
+BY BANK TRANSFER (UK or Nigeria)...
+
+DIRECT TO THE UK in Pounds Sterling
+BANK NAME: Barclays
+Branch: Barclays Bank, Manchester City, PO Box 357, 51 Mosley Street,
+Manchester UK.
+Account name: Peoples Open Access Education Initiative
+Account number: 93777308
+Sort code: 20-55-34
+SWIFT: BARCGB22
+IBAN: GB82 BARC 2055 3493 7773 08
+Please be sure to quote this number SID_HERE as a reference in
+addition to giving your name on the lodgement docket.
+When you have made the Bank Transfer you must then click on this web site (URL):
+http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+
+and fill in the form so we know about your payment.
+
+IN NIGERIA in local currency, Naira
+Please pay N9,000 for one course module or N18,000 for two into:
+BANK NAME: Diamond Bank Plc.
+Branch: Wuse II, Abuja
+Account name: Datasphir Solutions Limited
+Account number: 0412350001544
+Please be sure to quote this number SID_HERE as a reference in
+addition to giving your name on the lodgement docket.
+When you have made the Bank Transfer you must then click on this web site (URL):
+http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+
+and fill in the form so we know about your payment.
+
+ALTERNATIVE WAYS OF SENDING MONEY, Travellers Cheques or cash...
+Buy a Travellers Cheque in Sterling, preferably drawn on a UK bank
+(such as Visa, Mastercard or American Express).
+Sign at the top and countersign at the bottom.
+Make this payable to the Peoples Open Access Education Initiative.
+Send it by registered mail to:
+Peoples Open Access Education Initiative,
+34 Stafford Road,
+Ellesmere Park,
+Manchester M30 9ED,
+UK.
+The amount should be 30 pounds for one module or 60 pounds for two modules.
+Notify us of the number of the cheques and the number (or tracking code) of
+the receipt you will have from the registered mail, by clicking on this
+web site (URL):
+http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+
+and fill in the form so we know about your payment.
+(or send an e-mail to payments@peoples-uni.org )
+Sterling travellers cheques come in either 20 pounds or 50 pounds,
+so if you are enroling in only one module, you are better to send cash.
+It is possible to send cash for two modules rather than a travellers cheque, but
+make sure it is in sterling. Send it via registered mail and tell us as above.
+(You might fold a piece of paper around the cash so that people cannot easily
+see that cash is being sent!). The equivalent amount if you can only get
+US dollars is $50 per module, but we would prefer sterling if possible.
+
+
+Please e-mail payments@peoples-uni.org if you have a payment query or
+experience any problems.
+
+If you are unable to pay now, but would still like to take the course,
+please send a message to payments@peoples-uni.org and tell us the reasons.
+A limited number of scholarships are available, and it may also be
+possible to delay payment until after the course has started.
+
+We look forward to your participation this semester, and hope that you
+enjoy the experience and find it useful.
+
+    Peoples Open Access Education Initiative Administrator.
+====================================================================================
+Set above text as Batch Reminder e-mail wording (in applications.php spreadsheet)
+====================================================================================
+
+====================================================================================
+Dear GIVEN_NAME_HERE,
+
+Here is a reminder of you Application ID (called SID).
+
+Your SID is: SID_HERE
+
+This is used both for payment purposes and also to present anonymous data to you.
+
+    Peoples Open Access Education Initiative Administrator.
+====================================================================================
+Set above text as wording for Batch e-mail to enrolled students (in coursegrades.php)
+====================================================================================
+
+====================================================================================
+Dear GIVEN_NAME_HERE,
+
+Thank you for sending an expression of interest to enrol on the next intake
+in the Peoples-uni. The next intake will be in September 2010,
+and we will contact you beforehand when we are open for enrolments.
+In the meantime, you may want to look through the course module Foundations
+of Public Health at http://courses.peoples-uni.org/course/view.php?id=53
+which is freely available as an demonstration course module to show you
+what a module looks like and to set the scene for you.
+You may also want to look in detail through the particular parts of the
+web site http://peoples-uni.org under the section 'Potential Students'.
+You can also ask any question in the section marked 'Ask a Question'
+under the 'Community' heading, and view the Frequently Asked Questions
+(FAQ) on the top right hand corner of the site.
+
+We look forward to seeing you on the course soon.
+
+     Peoples Open Access Education Initiative Administrator.
+====================================================================================
+Set above text as Reply e-mail wording for Expressions of Interest (in int.php)
+====================================================================================
+
+
+====================================================================================
+Dear GIVEN_NAME_HERE,
+
+This is a reminder that you have not logged on to Peoples-uni
+since the start of the Semester.
+
+You can login at http://courses.peoples-uni.org/login/index.php
+
+     Peoples Open Access Education Initiative Administrator.
+====================================================================================
+Set above text as wording for Batch e-mail to Not Loggen on students (in coursegrades.php)
+====================================================================================

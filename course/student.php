@@ -1,0 +1,492 @@
+<?php  // $Id: student.php,v 1.1 2008/11/20 21:15:00 alanbarrett Exp $
+/**
+*
+* List a users enrolments and grades etc.
+*
+*/
+
+/*
+CREATE TABLE mdl_peoplesstudentnotes (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  datesubmitted BIGINT(10) UNSIGNED NOT NULL,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  note text NOT NULL,
+  sid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+CONSTRAINT  PRIMARY KEY (id)
+);
+CREATE INDEX mdl_peoplesstudentnotes_uid_ix ON mdl_peoplesstudentnotes (userid);
+CREATE INDEX mdl_peoplesstudentnotes_sid_ix ON mdl_peoplesstudentnotes (sid);
+
+20100820 Added "sid" so can add notes (in app.php) before userid assigned.
+(userid will be set when it is known.)
+*/
+
+
+require("../config.php");
+require_once($CFG->dirroot .'/course/lib.php');
+
+require_login();
+// Might possibly be Guest??... Anyway Guest user will not have any enrolment
+if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
+
+// has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))
+$isteacher = isteacherinanycourse();
+
+print_header('Student Grades');
+
+$userid = optional_param('id', 0, PARAM_INT);
+if (empty($userid) || !$isteacher) $userid = $USER->id;
+if (empty($userid)) {echo '<h1>$userid empty(), should not happen!</h1>'; die();}
+
+$userrecord = get_record('user', 'id', $userid);
+if (empty($userrecord)) {
+	echo '<h1>User does not exist!</h1>';
+	die();
+}
+
+echo '<h1>Student Enrolments and Grades for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8') . '</h1>';
+echo '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $userid . '" target="_blank">User Profile for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8') . '</a>, e-mail: ' . $userrecord->email;
+echo ', Last access: ' . ($userrecord->lastaccess ? format_time(time() - $userrecord->lastaccess) : get_string('never'));
+
+$application = get_record_sql("SELECT sid FROM mdl_peoplesapplication
+  WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27 OR state=9 OR state=10 OR state=17) AND userid=$userid
+  ORDER BY datesubmitted DESC");
+if (!empty($application)) {
+  echo '<br />Most recent Registration Number (SID): ' . $application->sid;
+}
+echo '<br /><br /><br />';
+
+
+if (!empty($_POST['mailtext']) && !empty($_POST['markemailstudent'])) {
+	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+	$email = $userrecord->email;
+	$body = stripslashes($_POST['mailtext']);
+	$body = strip_tags($body);
+
+  $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
+                                                                   // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+
+	$subject = 'Peoples-Uni Information';
+
+	if (!sendapprovedmail($email, $subject, $body)) {
+		echo '<br /><br /><br /><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
+		echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+		print_footer();
+		die();
+	}
+	echo '<div style="color:green" align="center">e-mail sent.</div><br /><br /><br />';
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotifiedstudentpass'])) {
+	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+	$email = $userrecord->email;
+	$course = get_record('course', 'id', $_POST['courseid']);
+	$coursename = empty($course->fullname) ? '' : $course->fullname;
+	$body = "Dear $userrecord->firstname,
+
+We have now completed the assessment process of your course module '$coursename',
+and you can see the final result if you go to... $CFG->wwwroot/course/student.php?id=$userid
+
+I am pleased to tell you that you have passed, and that you can download and
+print a PDF academic transcript for the module at that link.
+
+    Peoples Open Access Education Initiative Administrator.";
+	$subject = 'Peoples-Uni Grading Complete for: ' . $coursename;
+
+	if (!sendapprovedmail($email, $subject, $body)) {
+		echo '<br /><br /><br /><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
+		echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+		print_footer();
+		die();
+	}
+	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+	if (!empty($enrolment)) {
+		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->notified = 1;
+		$enrolment->datenotified = time();
+		$enrolment->gradenotified = 1; // Pass
+		update_record('enrolment', $enrolment);
+	}
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotifiedstudentfail'])) {
+	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+	$email = $userrecord->email;
+	$course = get_record('course', 'id', $_POST['courseid']);
+	$coursename = empty($course->fullname) ? '' : $course->fullname;
+	$body = "Dear $userrecord->firstname,
+
+We have now completed the assessment process of your course module '$coursename',
+and you can see the final result if you go to... $CFG->wwwroot/course/student.php?id=$userid
+
+I am sorry to tell you that you have not passed. You are welcome to enrol once more to
+try to reach a pass grade, and we will be happy to give you any advice that would help.
+
+    Peoples Open Access Education Initiative Administrator.";
+	$subject = 'Peoples-Uni Grading Complete for: ' . $coursename;
+
+	if (!sendapprovedmail($email, $subject, $body)) {
+		echo '<br /><br /><br /><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
+		echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+		print_footer();
+		die();
+	}
+	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+	if (!empty($enrolment)) {
+		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->notified = 1;
+		$enrolment->datenotified = time();
+		$enrolment->gradenotified = 0; // Fail
+		update_record('enrolment', $enrolment);
+	}
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradedstudent'])) {
+	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+	if (!empty($enrolment)) {
+		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->notified = 2;
+		update_record('enrolment', $enrolment);
+	}
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradedcertificatestudent'])) {
+	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+	$email = $userrecord->email;
+	$course = get_record('course', 'id', $_POST['courseid']);
+	$coursename = empty($course->fullname) ? '' : $course->fullname;
+	$body = "Dear $userrecord->firstname,
+
+We have now completed the assessment process of your course module '$coursename'.
+You can download and print a PDF Certificate of Participation for the module if you go to:
+$CFG->wwwroot/course/student.php?id=$userid
+
+    Peoples Open Access Education Initiative Administrator.";
+	$subject = 'Peoples-Uni Assessment Complete for: ' . $coursename;
+
+	if (!sendapprovedmail($email, $subject, $body)) {
+		echo '<br /><br /><br /><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
+		echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+		print_footer();
+		die();
+	}
+	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+	if (!empty($enrolment)) {
+		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->notified = 3;
+		$enrolment->datenotified = time();
+		update_record('enrolment', $enrolment);
+	}
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradednotpaidstudent'])) {
+	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+	if (!empty($enrolment)) {
+		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->notified = 4;
+		update_record('enrolment', $enrolment);
+	}
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['markunexpectedlycompleted']) && $isteacher) {
+	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+	if (!empty($enrolment)) {
+		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->notified = 0;
+		update_record('enrolment', $enrolment);
+	}
+}
+elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
+	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+	$newnote = new object();
+	$newnote->userid = $userid;
+	$newnote->datesubmitted = time();
+
+	// textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
+	$newnote->note = addslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(stripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
+	insert_record('peoplesstudentnotes', $newnote);
+}
+
+
+$enrols = get_records_sql("SELECT * FROM
+(SELECT e.*, c.fullname, c.idnumber, c.id AS cid FROM mdl_enrolment e, mdl_course c WHERE e.courseid=c.id AND e.userid=$userid) AS x
+LEFT JOIN
+(SELECT g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' AND g.userid=$userid) AS y
+ON cid=icourseid
+ORDER BY datefirstenrolled ASC, fullname ASC;");
+
+if (!empty($enrols)) {
+	$lastsemester = '';
+	foreach ($enrols as $enrol) {
+		echo '<br />';
+		if ($lastsemester !== $enrol->semester) echo '<h2>Semester: ' . htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8') . '</h2>';
+		$lastsemester = $enrol->semester;
+		if ($enrol->enrolled == 0) echo 'Was Un-Enrolled on: ' . gmdate('d M Y', $enrol->dateunenrolled) . '<br />';
+		foreach ($enrols as $enr) {
+			$founda = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matchesa);	// Take out course code without Year/Semester part
+			$foundb = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enr->idnumber, $matchesb);
+			if ($founda && $foundb) {
+				if (($matchesa[1] === $matchesb[1]) && ($enrol->datefirstenrolled < $enr->datefirstenrolled)) {
+					echo '<span style="color:red">Re-Enrolled in this course for Semester: ' . htmlspecialchars($enr->semester, ENT_COMPAT, 'UTF-8') . '</span><br />';
+				}
+			}
+		}
+
+		require_once $CFG->libdir.'/gradelib.php';
+		require_once $CFG->dirroot.'/grade/lib.php';
+		require_once $CFG->dirroot.'/grade/report/user/lib.php';
+		$courseid = $enrol->courseid;
+		$context = get_context_instance(CONTEXT_COURSE, $courseid);
+		$gpr = new grade_plugin_return(array('type'=>'report', 'plugin'=>'user', 'courseid'=>$courseid, 'userid'=>$userid));
+		grade_regrade_final_grades($courseid);
+		$report = new grade_report_user($courseid, $gpr, $context, $userid);
+		$report->showrange = false;
+		if ($report->fill_table()) {
+			$output = $report->print_table(true);
+
+			$output = preg_replace(array('/&lt;!--.*?--&gt;/', '/&amp;lt;!--.*?--&amp;gt;/'),
+			                       array(                  '',                           ''), $output);
+
+			//$output = preg_replace(array('/<table.*?XXXXX>/', '#</table>#'),
+			//                       array(            '',           ''), $output);
+
+			//$output = preg_replace(array('/>Category</', '/>Grade item</', '/>Course total</',            ),
+			//                       array(    '>Module<',  '>Graded item<', '><b>Overall Module Grade</b><'), $output);
+
+			$output = preg_replace(array('/>Grade item</', '/>Course total</'      ),
+			                       array( '>Graded item<', '>Overall Module Grade<'), $output);
+
+			//$output = preg_replace(array('/<span class="courseitem">/'                         ),
+			//                       array('<span class="courseitem" style="font-weight: bold;">'), $output);
+
+			//$output = preg_replace(array('#(?s)<tr.*?/mod/quiz/grade.php.*?</tr>#'),
+			//                       array(                                       ''), $output);
+
+			$output = preg_replace(array('#<tr>\n<td.*?>.*?/mod/quiz/grade.php.*?</td>\n<td.*?>.*?</td>\n<td.*?>.*?</td>\n</tr>#'),
+			                       array(''                                                                                      ), $output);
+
+			$output = preg_replace(array('#<th class="header">Range</th>#'),
+			                       array(                               ''), $output);
+
+			//$output = preg_replace(array('/>Passed</'     , '/>Failed</'     ),
+			//                       array('><b>Passed</b><', '><b>Failed</b><'), $output);
+
+			echo $output;
+		}
+
+		echo '<br />';
+		if ($enrol->notified == 0) {
+			if ($isteacher) {
+				if (!empty($enrol->finalgrade)) {
+					if ($enrol->finalgrade > 1.99999) {
+						?>
+						<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+						<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+						<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+						<input type="hidden" name="marknotifiedstudentfail" value="1" />
+						<input type="submit" name="notifiedstudentfail" value="Mark Grading Complete and Notify Student: They Failed" style="width:40em" />
+						</form>
+						<?php
+					}
+					else {
+						?>
+						<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+						<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+						<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+						<input type="hidden" name="marknotifiedstudentpass" value="1" />
+						<input type="submit" name="notifiedstudentpass" value="Mark Grading Complete and Notify Student: They Passed" style="width:40em" />
+						</form>
+						<?php
+					}
+				}
+				?>
+				<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+				<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+				<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+				<input type="hidden" name="marknotgradedstudent" value="1" />
+				<input type="submit" name="notgradedstudent" value="Click to indicate Student will NOT be Graded, because they did Not Complete" style="width:40em" />
+				</form><br />
+				<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+				<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+				<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+				<input type="hidden" name="marknotgradedcertificatestudent" value="1" />
+				<input type="submit" name="notgradedcertificatestudent" value="Click to indicate Student will NOT be Graded, but will get a Certificate of Participation" style="width:40em" />
+				</form><br />
+				<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+				<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+				<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+				<input type="hidden" name="marknotgradednotpaidstudent" value="1" />
+				<input type="submit" name="notgradednotpaidstudent" value="Click to indicate Student will NOT be Graded, because they did Not Pay" style="width:40em" />
+				</form>
+				<?php
+			}
+		}
+		elseif ($enrol->notified == 1) {
+			echo '<i>Grading for this module is complete.</i>';
+		}
+		else {
+			echo '<i>This module will not be graded.</i>';
+			if ($isteacher) {
+				?>
+				<br />
+				<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+				<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+				<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+				<input type="hidden" name="markunexpectedlycompleted" value="1" />
+				<input type="submit" name="unexpectedlycompleted" value="Click to Re-open Grading for this Student (because they unexpectedly paid or completed)" style="width:40em" />
+				</form>
+				<?php
+			}
+		}
+		echo '<br /><br />';
+	}
+}
+echo '<br /><br />';
+
+
+// A Diploma when 8 modules have been passed,
+// Provided at least two are from each of the Foundation Sciences and Public Health problems groupings.
+//// THESE LISTS MUST BE KEEPT UP TO DATE HERE AND ALSO IN peoplescertificate.php WHERE THIS IS RECHECKED
+//
+//// Intro to Epi, Biostatistics, Evidence Based Practice etc. are 'foundation'
+//$foundation['PUBIOS'] = 1;  // Biostatistics
+//$foundation['PUEBP']  = 1;  // Evidence Based Practice
+//$foundation['PUEPI']  = 1;  // Introduction to Epidemiology
+//$foundation['PUETH']  = 1;  // Public Health Ethics
+//$foundation['PUEVAL'] = 1;  // Evaluation of Interventions
+//$foundation['PUHECO'] = 1;  // Health Economics
+//$foundation['PUISDH'] = 1;  // Inequalities and the social determinants of health
+//$foundation['PUPHC']  = 1;  // Public Health Concepts for Policy Makers
+//
+//// Maternal Mortality, Preventing Child Mortality and Disasters etc. are 'problems'.
+//$problems['PUCOMDIS']  = 1; // Communicable Disease
+//$problems['PUDMEP']    = 1; // Disaster Management and Emergency Planning
+//$problems['PUEH']      = 1; // Environmental Health: Investigating a problem
+//$problems['PUHIVAIDS'] = 1; // HIV/AIDS
+//$problems['PUMM']      = 1; // Maternal Mortality
+//$problems['PUNCD']     = 1; // Non-Communicable Diseases 1: Diabetes and Cardiovascular Diseases
+//$problems['PUPCM']     = 1; // Preventing Child Mortality
+//$problems['PUPHNUT']   = 1; // Public Health Nutrition
+//$problems['PUPSAFE']   = 1; // Patient Safety
+$foundation_records = get_records('peoples_course_codes', 'type', 'foundation', 'course_code ASC');
+foreach ($foundation_records as $record) {
+  $foundation[$record->course_code] = 1;
+}
+$problems_records = get_records('peoples_course_codes', 'type', 'problems',   'course_code ASC');
+foreach ($problems_records as $record) {
+  $problems[$record->course_code] = 1;
+}
+
+
+$first = true;
+$certificate = 0;
+$countf = 0;
+$countp = 0;
+foreach ($enrols as $enrol) {
+	//Test: $enrol->finalgrade = 1.0;
+	//Test: $enrol->notified = 1;
+	if (!empty($enrol->finalgrade) && ($enrol->finalgrade <= 1.99999) && ($enrol->notified == 1)) {
+		if ($first) {
+			$first = false;
+			echo '<b>Download your Academic Transcript by clicking on the links below...</b><br />';
+			echo '(When your certificate appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br />';
+		}
+		echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=transcript" target="_blank">Academic Transcript for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
+		$certificate++;
+		$matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches);	// Take out course code without Year/Semester part
+		if ($matched && !empty($foundation[$matches[1]])) $countf++;
+		if ($matched && !empty($problems  [$matches[1]])) $countp++;
+	}
+	elseif ($enrol->notified == 3) {
+		if ($first) {
+			$first = false;
+			echo '<b>Download your Certificate by clicking on the links below...</b><br />';
+			echo '(When your certificate appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br />';
+		}
+		echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=participation" target="_blank">Certificate of Participation for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
+	}
+}
+
+if ($certificate >= 4) {
+	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate" target="_blank">Your Peoples Open Access Educational Initiative Certificate</a><br />';
+}
+if (($certificate >= 8) && ($countf >= 2) && ($countp >= 2)) {
+	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma" target="_blank">Your Peoples Open Access Educational Initiative Diploma</a><br />';
+}
+
+
+if ($isteacher) {
+?>
+<br /><br />To send an e-mail to this student (EDIT the e-mail text below!), press "e-mail Student".<br />
+<form id="emailstudentform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+<textarea name="mailtext" rows="10" cols="75" wrap="hard">
+Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?>,
+
+<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>
+
+
+    Peoples Open Access Education Initiative Administrator.
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markemailstudent" value="1" />
+<input type="submit" name="emailstudent" value="e-mail Student" />
+</form>
+<br /><br />
+<?php
+
+	$notes = get_records('peoplesstudentnotes', 'userid', $userid, 'datesubmitted DESC');
+	if (!empty($notes)) {
+		echo 'Notes...<br />';
+		echo '<table border="1" BORDERCOLOR="RED">';
+		foreach ($notes as $note) {
+			echo '<tr><td>';
+			echo gmdate('d/m/Y H:i', $note->datesubmitted);
+			echo '</td><td>';
+			echo $note->note;
+			echo '</td></tr>';
+		}
+		echo '</table>';
+	}
+?>
+<br />To add a note to this student's grading record, add text below and press "Add...".<br />
+<form id="addnoteform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+<textarea name="note" rows="5" cols="100" wrap="hard"></textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markaddnote" value="1" />
+<input type="submit" name="addnote" value="Add This Note to Student Grading Record" />
+</form>
+<br /><br />
+<?php
+
+	echo '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $userid . '">Student Submissions</a><br />';
+	echo '<a href="' . $CFG->wwwroot . '/course/coursegrades.php">(Student Enrolments and Grades for All Students)</a><br />';
+}
+
+
+echo '<br /><br /><br />';
+echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+
+print_footer();
+
+
+function sendapprovedmail($email, $subject, $message) {
+
+	// Dummy User
+    $user = new object;
+	$user->id = 999999999;
+    $user->email = $email;
+    $user->maildisplay = true;
+	$user->mnethostid = 1;
+
+    $supportuser = generate_email_supportuser();
+
+    $messagehtml = text_to_html($message, false, false, true);
+
+    $user->mailformat = 1;  // Always send HTML version as well
+
+    $ret = email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+
+    $user->email = 'applicationresponses@peoples-uni.org';
+
+    email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message, $messagehtml);
+
+    return $ret;
+}
+?>

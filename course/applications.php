@@ -1,0 +1,1570 @@
+<?php  // $Id: applications.php,v 1.1 2008/08/02 17:18:32 alanbarrett Exp $
+/**
+*
+* List all course applications from Drupal
+*
+*/
+
+/*
+CREATE TABLE mdl_peoplesapplication (
+	id BIGINT(10) unsigned NOT NULL auto_increment,
+	datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	sid BIGINT(10) unsigned NOT NULL,
+	nid BIGINT(10) unsigned NOT NULL,
+  state BIGINT(10) unsigned NOT NULL,
+  state_1 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  state_2 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  state_3 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  state_4 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+	userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	username VARCHAR(100) NOT NULL DEFAULT '',
+	firstname VARCHAR(100) NOT NULL DEFAULT '',
+	lastname VARCHAR(100) NOT NULL DEFAULT '',
+	email VARCHAR(100) NOT NULL DEFAULT '',
+	city VARCHAR(20) NOT NULL DEFAULT '',
+	country VARCHAR(2) NOT NULL DEFAULT '',
+	qualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	employment BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  course_id_1 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  course_id_2 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  course_id_3 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  course_id_4 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  coursename1 VARCHAR(255) NOT NULL DEFAULT '',
+  coursename2 VARCHAR(255) NOT NULL DEFAULT '',
+  coursename3 VARCHAR(255) NOT NULL DEFAULT '',
+  coursename4 VARCHAR(255) NOT NULL DEFAULT '',
+  semester VARCHAR(255) NOT NULL DEFAULT '',
+  dob VARCHAR(20) NOT NULL DEFAULT '',
+	dobday VARCHAR(2) NOT NULL DEFAULT '',
+	dobmonth VARCHAR(2) NOT NULL DEFAULT '',
+	dobyear VARCHAR(4) NOT NULL DEFAULT '',
+	gender VARCHAR(6) NOT NULL DEFAULT '',
+	applicationaddress text NOT NULL,
+	currentjob text NOT NULL,
+	education text NOT NULL,
+	reasons text NOT NULL,
+	methodofpayment VARCHAR(255) NOT NULL DEFAULT '',
+	paymentidentification VARCHAR(255) NOT NULL DEFAULT '',
+	costowed VARCHAR(10) NOT NULL DEFAULT '0',
+	costpaid VARCHAR(10) NOT NULL DEFAULT '0',
+	paymentmechanism BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	currency VARCHAR(3) NOT NULL DEFAULT 'USD',
+	datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	dateattemptedtopay BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	datepaid BIGINT(10) unsigned NOT NULL DEFAULT 0,
+	datafromworldpay VARCHAR(255) NOT NULL DEFAULT '',
+	hidden TINYINT(2) unsigned NOT NULL DEFAULT 0,
+CONSTRAINT  PRIMARY KEY (id)
+);
+CREATE INDEX mdl_peoplesapplication_sid_ix ON mdl_peoplesapplication (sid);
+CREATE INDEX mdl_peoplesapplication_uid_ix ON mdl_peoplesapplication (userid);
+
+((ALTER TABLE mdl_peoplesapplication ADD hidden TINYINT(2) unsigned NOT NULL DEFAULT 0;
+  ALTER TABLE mdl_peoplesapplication ADD paymentmechanism BIGINT(10) unsigned NOT NULL DEFAULT 0;
+
+For possible future use only...
+ALTER TABLE mdl_peoplesapplication ADD state_1 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER state;
+ALTER TABLE mdl_peoplesapplication ADD state_2 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER state_1;
+ALTER TABLE mdl_peoplesapplication ADD state_3 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER state_2;
+ALTER TABLE mdl_peoplesapplication ADD state_4 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER state_3;
+
+Will be used to support new Webform...
+ALTER TABLE mdl_peoplesapplication ADD course_id_1 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER employment;
+ALTER TABLE mdl_peoplesapplication ADD course_id_2 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER course_id_1;
+
+For possible future use only...
+ALTER TABLE mdl_peoplesapplication ADD course_id_3 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER course_id_2;
+ALTER TABLE mdl_peoplesapplication ADD course_id_4 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER course_id_3;
+
+For possible future use only...
+ALTER TABLE mdl_peoplesapplication ADD coursename3 VARCHAR(255) NOT NULL DEFAULT '' AFTER coursename2;
+ALTER TABLE mdl_peoplesapplication ADD coursename4 VARCHAR(255) NOT NULL DEFAULT '' AFTER coursename3;
+
+Will be used to support new Webform...
+ALTER TABLE mdl_peoplesapplication ADD dob VARCHAR(20) NOT NULL DEFAULT '' AFTER semester;
+))
+*/
+
+$countryname['AF'] = 'Afghanistan';
+$countryname['AX'] = 'Åland Islands';
+$countryname['AL'] = 'Albania';
+$countryname['DZ'] = 'Algeria';
+$countryname['AS'] = 'American Samoa';
+$countryname['AD'] = 'Andorra';
+$countryname['AO'] = 'Angola';
+$countryname['AI'] = 'Anguilla';
+$countryname['AQ'] = 'Antarctica';
+$countryname['AG'] = 'Antigua And Barbuda';
+$countryname['AR'] = 'Argentina';
+$countryname['AM'] = 'Armenia';
+$countryname['AW'] = 'Aruba';
+$countryname['AU'] = 'Australia';
+$countryname['AT'] = 'Austria';
+$countryname['AZ'] = 'Azerbaijan';
+$countryname['BS'] = 'Bahamas';
+$countryname['BH'] = 'Bahrain';
+$countryname['BD'] = 'Bangladesh';
+$countryname['BB'] = 'Barbados';
+$countryname['BY'] = 'Belarus';
+$countryname['BE'] = 'Belgium';
+$countryname['BZ'] = 'Belize';
+$countryname['BJ'] = 'Benin';
+$countryname['BM'] = 'Bermuda';
+$countryname['BT'] = 'Bhutan';
+$countryname['BO'] = 'Bolivia';
+$countryname['BA'] = 'Bosnia And Herzegovina';
+$countryname['BW'] = 'Botswana';
+$countryname['BV'] = 'Bouvet Island';
+$countryname['BR'] = 'Brazil';
+$countryname['IO'] = 'British Indian Ocean Territory';
+$countryname['BN'] = 'Brunei Darussalam';
+$countryname['BG'] = 'Bulgaria';
+$countryname['BF'] = 'Burkina Faso';
+$countryname['BI'] = 'Burundi';
+$countryname['KH'] = 'Cambodia';
+$countryname['CM'] = 'Cameroon';
+$countryname['CA'] = 'Canada';
+$countryname['CV'] = 'Cape Verde';
+$countryname['KY'] = 'Cayman Islands';
+$countryname['CF'] = 'Central African Republic';
+$countryname['TD'] = 'Chad';
+$countryname['CL'] = 'Chile';
+$countryname['CN'] = 'China';
+$countryname['CX'] = 'Christmas Island';
+$countryname['CC'] = 'Cocos (Keeling) Islands';
+$countryname['CO'] = 'Colombia';
+$countryname['KM'] = 'Comoros';
+$countryname['CG'] = 'Congo';
+$countryname['CD'] = 'Congo, The Democratic Republic Of The';
+$countryname['CK'] = 'Cook Islands';
+$countryname['CR'] = 'Costa Rica';
+$countryname['CI'] = 'Côte D\'Ivoire';
+$countryname['HR'] = 'Croatia';
+$countryname['CU'] = 'Cuba';
+$countryname['CY'] = 'Cyprus';
+$countryname['CZ'] = 'Czech Republic';
+$countryname['DK'] = 'Denmark';
+$countryname['DJ'] = 'Djibouti';
+$countryname['DM'] = 'Dominica';
+$countryname['DO'] = 'Dominican Republic';
+$countryname['EC'] = 'Ecuador';
+$countryname['EG'] = 'Egypt';
+$countryname['SV'] = 'El Salvador';
+$countryname['GQ'] = 'Equatorial Guinea';
+$countryname['ER'] = 'Eritrea';
+$countryname['EE'] = 'Estonia';
+$countryname['ET'] = 'Ethiopia';
+$countryname['FK'] = 'Falkland Islands (Malvinas)';
+$countryname['FO'] = 'Faroe Islands';
+$countryname['FJ'] = 'Fiji';
+$countryname['FI'] = 'Finland';
+$countryname['FR'] = 'France';
+$countryname['GF'] = 'French Guiana';
+$countryname['PF'] = 'French Polynesia';
+$countryname['TF'] = 'French Southern Territories';
+$countryname['GA'] = 'Gabon';
+$countryname['GM'] = 'Gambia';
+$countryname['GE'] = 'Georgia';
+$countryname['DE'] = 'Germany';
+$countryname['GH'] = 'Ghana';
+$countryname['GI'] = 'Gibraltar';
+$countryname['GR'] = 'Greece';
+$countryname['GL'] = 'Greenland';
+$countryname['GD'] = 'Grenada';
+$countryname['GP'] = 'Guadeloupe';
+$countryname['GU'] = 'Guam';
+$countryname['GT'] = 'Guatemala';
+$countryname['GG'] = 'Guernsey';
+$countryname['GN'] = 'Guinea';
+$countryname['GW'] = 'Guinea-Bissau';
+$countryname['GY'] = 'Guyana';
+$countryname['HT'] = 'Haiti';
+$countryname['HM'] = 'Heard Island And Mcdonald Islands';
+$countryname['VA'] = 'Holy See (Vatican City State)';
+$countryname['HN'] = 'Honduras';
+$countryname['HK'] = 'Hong Kong';
+$countryname['HU'] = 'Hungary';
+$countryname['IS'] = 'Iceland';
+$countryname['IN'] = 'India';
+$countryname['ID'] = 'Indonesia';
+$countryname['IR'] = 'Iran, Islamic Republic Of';
+$countryname['IQ'] = 'Iraq';
+$countryname['IE'] = 'Ireland';
+$countryname['IM'] = 'Isle Of Man';
+$countryname['IL'] = 'Israel';
+$countryname['IT'] = 'Italy';
+$countryname['JM'] = 'Jamaica';
+$countryname['JP'] = 'Japan';
+$countryname['JE'] = 'Jersey';
+$countryname['JO'] = 'Jordan';
+$countryname['KZ'] = 'Kazakhstan';
+$countryname['KE'] = 'Kenya';
+$countryname['KI'] = 'Kiribati';
+$countryname['KP'] = 'Korea, Democratic People\'s Republic Of';
+$countryname['KR'] = 'Korea, Republic Of';
+$countryname['KW'] = 'Kuwait';
+$countryname['KG'] = 'Kyrgyzstan';
+$countryname['LA'] = 'Lao People\'s Democratic Republic';
+$countryname['LV'] = 'Latvia';
+$countryname['LB'] = 'Lebanon';
+$countryname['LS'] = 'Lesotho';
+$countryname['LR'] = 'Liberia';
+$countryname['LY'] = 'Libyan Arab Jamahiriya';
+$countryname['LI'] = 'Liechtenstein';
+$countryname['LT'] = 'Lithuania';
+$countryname['LU'] = 'Luxembourg';
+$countryname['MO'] = 'Macao';
+$countryname['MK'] = 'Macedonia, The Former Yugoslav Republic Of';
+$countryname['MG'] = 'Madagascar';
+$countryname['MW'] = 'Malawi';
+$countryname['MY'] = 'Malaysia';
+$countryname['MV'] = 'Maldives';
+$countryname['ML'] = 'Mali';
+$countryname['MT'] = 'Malta';
+$countryname['MH'] = 'Marshall Islands';
+$countryname['MQ'] = 'Martinique';
+$countryname['MR'] = 'Mauritania';
+$countryname['MU'] = 'Mauritius';
+$countryname['YT'] = 'Mayotte';
+$countryname['MX'] = 'Mexico';
+$countryname['FM'] = 'Micronesia, Federated States Of';
+$countryname['MD'] = 'Moldova, Republic Of';
+$countryname['MC'] = 'Monaco';
+$countryname['MN'] = 'Mongolia';
+$countryname['ME'] = 'Montenegro';
+$countryname['MS'] = 'Montserrat';
+$countryname['MA'] = 'Morocco';
+$countryname['MZ'] = 'Mozambique';
+$countryname['MM'] = 'Myanmar';
+$countryname['NA'] = 'Namibia';
+$countryname['NR'] = 'Nauru';
+$countryname['NP'] = 'Nepal';
+$countryname['NL'] = 'Netherlands';
+$countryname['AN'] = 'Netherlands Antilles';
+$countryname['NC'] = 'New Caledonia';
+$countryname['NZ'] = 'New Zealand';
+$countryname['NI'] = 'Nicaragua';
+$countryname['NE'] = 'Niger';
+$countryname['NG'] = 'Nigeria';
+$countryname['NU'] = 'Niue';
+$countryname['NF'] = 'Norfolk Island';
+$countryname['MP'] = 'Northern Mariana Islands';
+$countryname['NO'] = 'Norway';
+$countryname['OM'] = 'Oman';
+$countryname['PK'] = 'Pakistan';
+$countryname['PW'] = 'Palau';
+$countryname['PS'] = 'Palestinian Territory, Occupied';
+$countryname['PA'] = 'Panama';
+$countryname['PG'] = 'Papua New Guinea';
+$countryname['PY'] = 'Paraguay';
+$countryname['PE'] = 'Peru';
+$countryname['PH'] = 'Philippines';
+$countryname['PN'] = 'Pitcairn';
+$countryname['PL'] = 'Poland';
+$countryname['PT'] = 'Portugal';
+$countryname['PR'] = 'Puerto Rico';
+$countryname['QA'] = 'Qatar';
+$countryname['RE'] = 'Réunion';
+$countryname['RO'] = 'Romania';
+$countryname['RU'] = 'Russian Federation';
+$countryname['RW'] = 'Rwanda';
+$countryname['BL'] = 'Saint Barthélemy';
+$countryname['SH'] = 'Saint Helena';
+$countryname['KN'] = 'Saint Kitts And Nevis';
+$countryname['LC'] = 'Saint Lucia';
+$countryname['MF'] = 'Saint Martin';
+$countryname['PM'] = 'Saint Pierre And Miquelon';
+$countryname['VC'] = 'Saint Vincent And The Grenadines';
+$countryname['WS'] = 'Samoa';
+$countryname['SM'] = 'San Marino';
+$countryname['ST'] = 'Sao Tome And Principe';
+$countryname['SA'] = 'Saudi Arabia';
+$countryname['SN'] = 'Senegal';
+$countryname['RS'] = 'Serbia';
+$countryname['SC'] = 'Seychelles';
+$countryname['SL'] = 'Sierra Leone';
+$countryname['SG'] = 'Singapore';
+$countryname['SK'] = 'Slovakia';
+$countryname['SI'] = 'Slovenia';
+$countryname['SB'] = 'Solomon Islands';
+$countryname['SO'] = 'Somalia';
+$countryname['ZA'] = 'South Africa';
+$countryname['GS'] = 'South Georgia And The South Sandwich Islands';
+$countryname['ES'] = 'Spain';
+$countryname['LK'] = 'Sri Lanka';
+$countryname['SD'] = 'Sudan';
+$countryname['SR'] = 'Suriname';
+$countryname['SJ'] = 'Svalbard And Jan Mayen';
+$countryname['SZ'] = 'Swaziland';
+$countryname['SE'] = 'Sweden';
+$countryname['CH'] = 'Switzerland';
+$countryname['SY'] = 'Syrian Arab Republic';
+$countryname['TW'] = 'Taiwan, Province Of China';
+$countryname['TJ'] = 'Tajikistan';
+$countryname['TZ'] = 'Tanzania, United Republic Of';
+$countryname['TH'] = 'Thailand';
+$countryname['TL'] = 'Timor-Leste';
+$countryname['TG'] = 'Togo';
+$countryname['TK'] = 'Tokelau';
+$countryname['TO'] = 'Tonga';
+$countryname['TT'] = 'Trinidad And Tobago';
+$countryname['TN'] = 'Tunisia';
+$countryname['TR'] = 'Turkey';
+$countryname['TM'] = 'Turkmenistan';
+$countryname['TC'] = 'Turks And Caicos Islands';
+$countryname['TV'] = 'Tuvalu';
+$countryname['UG'] = 'Uganda';
+$countryname['UA'] = 'Ukraine';
+$countryname['AE'] = 'United Arab Emirates';
+$countryname['GB'] = 'United Kingdom';
+$countryname['US'] = 'United States';
+$countryname['UM'] = 'United States Minor Outlying Islands';
+$countryname['UY'] = 'Uruguay';
+$countryname['UZ'] = 'Uzbekistan';
+$countryname['VU'] = 'Vanuatu';
+$countryname['VE'] = 'Venezuela';
+$countryname['VN'] = 'Viet Nam';
+$countryname['VG'] = 'Virgin Islands, British';
+$countryname['VI'] = 'Virgin Islands, U.S.';
+$countryname['WF'] = 'Wallis And Futuna';
+$countryname['EH'] = 'Western Sahara';
+$countryname['YE'] = 'Yemen';
+$countryname['ZM'] = 'Zambia';
+$countryname['ZW'] = 'Zimbabwe';
+
+$qualificationname[ '1'] = 'None';
+$qualificationname['10'] = 'Degree (not health related)';
+$qualificationname['20'] = 'Health qualification (non-degree)';
+$qualificationname['30'] = 'Health qualification (degree, but not medical doctor)';
+$qualificationname['40'] = 'Medical degree';
+
+$higherqualificationname[ '1'] = 'None';
+$higherqualificationname['10'] = 'Certificate';
+$higherqualificationname['20'] = 'Diploma';
+$higherqualificationname['30'] = 'Masters';
+$higherqualificationname['40'] = 'Ph.D.';
+$higherqualificationname['50'] = 'Other';
+
+$employmentname[ '1'] = 'None';
+$employmentname['10'] = 'Student';
+$employmentname['20'] = 'Non-health';
+$employmentname['30'] = 'Clinical (not specifically public health)';
+$employmentname['40'] = 'Public health';
+$employmentname['50'] = 'Other health related';
+$employmentname['60'] = 'Academic occupation (e.g. lecturer)';
+
+
+require("../config.php");
+require_once($CFG->dirroot .'/course/lib.php');
+
+if (!empty($_POST['markfilter'])) {
+	redirect($CFG->wwwroot . '/course/applications.php?'
+		. 'chosensemester=' . urlencode(stripslashes($_POST['chosensemester']))
+		. '&chosenstatus=' . urlencode($_POST['chosenstatus'])
+		. '&chosenstartyear=' . $_POST['chosenstartyear']
+		. '&chosenstartmonth=' . $_POST['chosenstartmonth']
+		. '&chosenstartday=' . $_POST['chosenstartday']
+		. '&chosenendyear=' . $_POST['chosenendyear']
+		. '&chosenendmonth=' . $_POST['chosenendmonth']
+		. '&chosenendday=' . $_POST['chosenendday']
+		. '&chosensearch=' . urlencode(stripslashes($_POST['chosensearch']))
+		. '&chosenpay=' . urlencode($_POST['chosenpay'])
+    . '&chosenreenrol=' . urlencode($_POST['chosenreenrol'])
+		. (empty($_POST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
+		);
+}
+elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $sendemails = true;
+}
+else {
+  $sendemails = false;
+}
+
+
+require_login();
+
+// Access to applications.php is given by the "Manage Applications" role
+// which is based on authenticated user with moodle/site:viewparticipants
+// (administrator also has moodle/site:viewparticipants)
+//require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+
+print_header('Student Applications');
+
+
+// Find and insert all missing peoplesapplication database rows
+$newapplications = get_records_sql('
+  SELECT s.sid FROM d5_webform_submissions s
+  LEFT JOIN mdl_peoplesapplication p ON s.sid=p.sid
+  WHERE (s.nid=71 OR s.nid=80) AND p.id IS NULL');
+
+foreach ($newapplications as $sid => $newapplication) {
+  $application = new object();
+
+  $rows = get_recordset_sql("
+    SELECT s.*, sd.cid, sd.no, sd.data
+    FROM d5_webform_submitted_data sd
+    LEFT JOIN d5_webform_submissions s ON sd.sid=s.sid
+    WHERE (s.nid=71 OR s.nid=80) AND sd.sid=$sid
+    ORDER BY s.submitted DESC", '', '');
+
+  while (!empty($rows) && !$rows->EOF) {
+
+    $row = $rows->fields;
+
+    $submitted = $row['submitted'];
+    $nid       = $row['nid'];
+    $cid       = $row['cid'];
+    $data      = $row['data'];
+    if (empty($data)) $data = '';
+
+    if ($nid === '71') { // First Application Webform (peoples-uni-course-application-form)
+
+      if ($cid ==='17' && $row['no'] === '0') {
+        if (strlen($data) > 2) {
+          $application->dob      = $data; // Actually $application->dob is not used
+          $application->dobyear  = (int)substr($data, 0, 4);
+          $application->dobmonth = (int)substr($data, 5, 2);
+          $application->dobday   = (int)substr($data, 8, 2);
+        }
+        else $application->dobmonth = $data;
+      }
+
+      if ($cid === '17' && $row['no'] === '1') {
+        $application->dobday = $data;
+      }
+
+      if ($cid === '17' && $row['no'] === '2') {
+        $application->dobyear = $data;
+      }
+
+      if ($cid === '1') {
+        $data = trim(strip_tags($data));
+        $data = mb_substr($data, 0, 100, 'UTF-8');
+        $application->lastname = addslashes($data);
+      }
+
+      if ($cid === '2') {
+        $data = trim(strip_tags($data));
+        $data = mb_substr($data, 0, 100, 'UTF-8');
+        $application->firstname = addslashes($data);
+      }
+
+      if ($cid === '11') {
+          $data = trim(strip_tags($data));
+          $data = mb_substr($data, 0, 100, 'UTF-8');
+          $application->email = addslashes($data);
+      }
+
+      if ($cid === '16') {
+        if (is_numeric($data)) {
+          $semesterrecord = get_record('semesters', 'id', $data);
+          $application->semester = addslashes($semesterrecord->semester);
+        }
+        else {
+          $application->semester = addslashes($data);
+        }
+      }
+
+      if ($cid === '18') {
+          if ($data === '' || (is_numeric($data) && $data == 0)) {
+            $application->course_id_1 = 0;
+            $application->coursename1 = '';
+          }
+          elseif (is_numeric($data)) {
+            $application->course_id_1 = $data; // $application->course_id_1 is not used
+            $course = get_record('course', 'id', $data);
+            $application->coursename1 = addslashes($course->fullname);
+          }
+          else {
+            $application->coursename1 = addslashes($data);
+            $course = get_record('course', 'fullname', addslashes($data));
+            $application->course_id_1 = $course->id;
+          }
+      }
+
+      if ($cid === '19') {
+          if ($data === '' || (is_numeric($data) && $data == 0)) {
+            $application->course_id_2 = 0;
+            $application->coursename2 = '';
+          }
+          elseif (is_numeric($data)) {
+            $application->course_id_2 = $data; // $application->course_id_2 is not used
+            $course = get_record('course', 'id', $data);
+            $application->coursename2 = addslashes($course->fullname);
+          }
+          else {
+            $application->coursename2 = addslashes($data);
+            $course = get_record('course', 'fullname', addslashes($data));
+            $application->course_id_2 = $course->id;
+          }
+      }
+
+      if ($cid === '12') {
+          $application->gender = addslashes($data);
+      }
+
+      if ($cid === '3') {
+          // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
+          $application->applicationaddress = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+      }
+
+      if ($cid === '14') {
+         $data = trim(strip_tags($data));
+         $data = mb_substr($data, 0, 20, 'UTF-8');
+         $application->city = addslashes($data);
+      }
+
+      if ($cid === '13') {
+          $data = trim(strip_tags($data));
+          // Drupal select fields are protected by Drupal Form API
+          $application->country = addslashes($data);
+      }
+
+      if ($cid === '36') {
+        if (empty($data)) $data = '0';
+        $data = strip_tags($data);
+        $application->employment = $data;
+      }
+
+      if ($cid === '7') {
+          // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
+          $application->currentjob = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+      }
+
+      if ($cid === '34') {
+        if (empty($data)) $data = '0';
+        $data = strip_tags($data);
+        $application->qualification = $data;
+      }
+
+      if ($cid === '35') {
+        if (empty($data)) $data = '0';
+        $data = strip_tags($data);
+        $application->higherqualification = $data;
+      }
+
+      if ($cid === '8') {
+        // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
+        $application->education = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+      }
+
+      if ($cid === '10') {
+        // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
+        $application->reasons = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+      }
+
+      if ($cid === '31') {
+        // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
+        $application->methodofpayment = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+      }
+
+      if ($cid === '32') {
+        // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
+        $application->paymentidentification = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+      }
+
+      if ($cid === '21') {
+        $data = strip_tags($data);
+        $data = str_replace("<", '', $data);
+        $data = str_replace(">", '', $data);
+        $data = str_replace("/", '', $data);
+        $data = str_replace("#", '', $data);
+        $data = trim(moodle_strtolower($data));
+        if (empty($data)) $data = 'user1';  // Just in case it becomes empty
+        $data = mb_substr($data, 0, 100, 'UTF-8');
+        $application->username = addslashes($data);
+      }
+
+      $application->userid = 0;
+    }
+    else { // Subsequent Application Webform (application-form-returning-students)
+      if ($cid === '10') {
+        $application->userid = (int)$data;
+
+        $oldapplication = get_record('peoplesapplication', 'userid', $application->userid);
+
+        $application->gender                = addslashes($oldapplication->gender);
+        $application->applicationaddress    = addslashes($oldapplication->applicationaddress);
+        $application->currentjob            = addslashes($oldapplication->currentjob);
+        $application->education             = addslashes($oldapplication->education);
+        $application->reasons               = addslashes($oldapplication->reasons);
+        $application->methodofpayment       = addslashes($oldapplication->methodofpayment);
+        $application->paymentidentification = addslashes($oldapplication->paymentidentification);
+
+        $application->dob                   = $oldapplication->dob;
+        $application->dobyear               = $oldapplication->dobyear;
+        $application->dobmonth              = $oldapplication->dobmonth;
+        $application->dobday                = $oldapplication->dobday;
+
+        $application->employment            = $oldapplication->employment;
+        $application->qualification         = $oldapplication->qualification;
+        $application->higherqualification   = $oldapplication->higherqualification;
+      }
+
+      if ($cid === '14') {
+        $data = trim(strip_tags($data));
+        $data = mb_substr($data, 0, 100, 'UTF-8');
+        $application->lastname = addslashes($data);
+      }
+
+      if ($cid === '15') {
+        $data = trim(strip_tags($data));
+        $data = mb_substr($data, 0, 100, 'UTF-8');
+        $application->firstname = addslashes($data);
+      }
+
+      if ($cid === '11') {
+          $data = trim(strip_tags($data));
+          $data = mb_substr($data, 0, 100, 'UTF-8');
+          $application->email = addslashes($data);
+      }
+
+      if ($cid === '2') {
+        if (is_numeric($data)) {
+          $semesterrecord = get_record('semesters', 'id', $data);
+          $application->semester = addslashes($semesterrecord->semester);
+        }
+        else {
+          $application->semester = addslashes($data);
+        }
+      }
+
+      if ($cid === '3') {
+          if ($data === '' || (is_numeric($data) && $data == 0)) {
+            $application->course_id_1 = 0;
+            $application->coursename1 = '';
+          }
+          elseif (is_numeric($data)) {
+            $application->course_id_1 = $data;
+            $course = get_record('course', 'id', $data);
+            $application->coursename1 = addslashes($course->fullname);
+          }
+          else {
+            $application->coursename1 = addslashes($data);
+            $course = get_record('course', 'fullname', addslashes($data));
+            $application->course_id_1 = $course->id;
+          }
+      }
+
+      if ($cid === '4') {
+          if ($data === '' || (is_numeric($data) && $data == 0)) {
+            $application->course_id_2 = 0;
+            $application->coursename2 = '';
+          }
+          elseif (is_numeric($data)) {
+            $application->course_id_2 = $data;
+            $course = get_record('course', 'id', $data);
+            $application->coursename2 = addslashes($course->fullname);
+          }
+          else {
+            $application->coursename2 = addslashes($data);
+            $course = get_record('course', 'fullname', addslashes($data));
+            $application->course_id_2 = $course->id;
+          }
+      }
+
+      if ($cid === '21') {
+         $data = trim(strip_tags($data));
+         $data = mb_substr($data, 0, 20, 'UTF-8');
+         $application->city = addslashes($data);
+      }
+
+      if ($cid === '22') {
+          $data = trim(strip_tags($data));
+          // Drupal select fields are protected by Drupal Form API
+          $application->country = addslashes($data);
+      }
+
+      if ($cid === '8') {
+        $data = strip_tags($data);
+        $data = str_replace("<", '', $data);
+        $data = str_replace(">", '', $data);
+        $data = str_replace("/", '', $data);
+        $data = str_replace("#", '', $data);
+        $data = trim(moodle_strtolower($data));
+        if (empty($data)) $data = 'user1';  // Just in case it becomes empty
+        $data = mb_substr($data, 0, 100, 'UTF-8');
+        $application->username = addslashes($data);
+      }
+    }
+
+    $rows->MoveNext();
+  }
+
+  if (empty($application->dob)) $application->dob = sprintf('%04d-%02d-%02d', $application->dobyear, $application->dobmonth, $application->dobday);
+
+  $application->datesubmitted = $submitted;
+  $application->sid = $sid;
+  $application->nid = $nid;
+
+  $application->currency = 'GBP'; // The DB default is no longer correct 20090526!
+
+  $application->state = 0;
+
+  insert_record('peoplesapplication', $application);
+}
+
+
+echo "<h1>Student Applications</h1>";
+
+if (!empty($_REQUEST['chosensemester'])) $chosensemester = stripslashes($_REQUEST['chosensemester']);
+if (!empty($_REQUEST['chosenstatus'])) $chosenstatus = $_REQUEST['chosenstatus'];
+if (!empty($_REQUEST['chosenstartyear']) && !empty($_REQUEST['chosenstartmonth']) && !empty($_REQUEST['chosenstartday'])) {
+	$chosenstartyear = (int)$_REQUEST['chosenstartyear'];
+	$chosenstartmonth = (int)$_REQUEST['chosenstartmonth'];
+	$chosenstartday = (int)$_REQUEST['chosenstartday'];
+	$starttime = gmmktime(0, 0, 0, $chosenstartmonth, $chosenstartday, $chosenstartyear);
+	//echo gmdate('d/m/Y H:i', $starttime) . '<br />';
+}
+else {
+	$starttime = 0;
+}
+if (!empty($_REQUEST['chosenendyear']) && !empty($_REQUEST['chosenendmonth']) && !empty($_REQUEST['chosenendday'])) {
+	$chosenendyear = (int)$_REQUEST['chosenendyear'];
+	$chosenendmonth = (int)$_REQUEST['chosenendmonth'];
+	$chosenendday = (int)$_REQUEST['chosenendday'];
+	$endtime = gmmktime(24, 0, 0, $chosenendmonth, $chosenendday, $chosenendyear);
+	//echo gmdate('d/m/Y H:i', $endtime) . '<br />';
+}
+else {
+	$endtime = 1.0E+20;
+}
+if (!empty($_REQUEST['chosensearch'])) $chosensearch = stripslashes($_REQUEST['chosensearch']);
+else $chosensearch = '';
+if (!empty($_REQUEST['chosenpay'])) $chosenpay = $_REQUEST['chosenpay'];
+if (!empty($_REQUEST['chosenreenrol'])) $chosenreenrol = $_REQUEST['chosenreenrol'];
+if (!empty($_REQUEST['displayextra'])) $displayextra = true;
+else $displayextra = false;
+
+$semesters = get_records('semesters', '', '', 'id DESC');
+foreach ($semesters as $semester) {
+	$listsemester[] = $semester->semester;
+	if (!isset($chosensemester)) $chosensemester = $semester->semester;
+}
+$listsemester[] = 'All';
+
+$liststatus[] = 'All';
+if (!isset($chosenstatus)) $chosenstatus = 'All';
+$liststatus[] = 'Not fully Approved';
+$liststatus[] = 'Not fully Registered';
+$liststatus[] = 'Part or Fully Approved';
+$liststatus[] = 'Part or Fully Registered';
+
+$listchosenpay[] = 'Any';
+if (!isset($chosenpay)) $chosenpay = 'Any';
+$listchosenpay[] = 'No Indication Given';
+$listchosenpay[] = 'Not Confirmed (all)';
+$listchosenpay[] = 'Barclays not confirmed';
+$listchosenpay[] = 'Diamond not confirmed';
+$listchosenpay[] = 'MoneyGram not confirmed';
+$listchosenpay[] = 'Western Union not confirmed';
+$listchosenpay[] = 'Indian Confederation not confirmed';
+$listchosenpay[] = 'Posted Travellers Cheques not confirmed';
+$listchosenpay[] = 'Posted Cash not confirmed';
+$listchosenpay[] = 'Promised End Semester';
+$listchosenpay[] = 'Waiver';
+$listchosenpay[] = 'RBS Confirmed';
+$listchosenpay[] = 'Barclays Confirmed';
+$listchosenpay[] = 'Diamond Confirmed';
+$listchosenpay[] = 'MoneyGram Confirmed';
+$listchosenpay[] = 'Western Union Confirmed';
+$listchosenpay[] = 'Indian Confederation Confirmed';
+$listchosenpay[] = 'Posted Travellers Cheques Confirmed';
+$listchosenpay[] = 'Posted Cash Confirmed';
+
+$listchosenreenrol[] = 'Any';
+if (!isset($chosenreenrol)) $chosenreenrol = 'Any';
+$listchosenreenrol[] = 'Re-enrolment';
+$listchosenreenrol[] = 'New student';
+
+for ($i = 2008; $i <= (int)gmdate('Y'); $i++) {
+	if (!isset($chosenstartyear)) $chosenstartyear = $i;
+	$liststartyear[] = $i;
+}
+
+for ($i = 1; $i <= 12; $i++) {
+	if (!isset($chosenstartmonth)) $chosenstartmonth = $i;
+	$liststartmonth[] = $i;
+}
+
+for ($i = 1; $i <= 31; $i++) {
+	if (!isset($chosenstartday)) $chosenstartday = $i;
+	$liststartday[] = $i;
+}
+
+for ($i = (int)gmdate('Y'); $i >= 2008; $i--) {
+	if (!isset($chosenendyear)) $chosenendyear = $i;
+	$listendyear[] = $i;
+}
+
+for ($i = 12; $i >= 1; $i--) {
+	if (!isset($chosenendmonth)) $chosenendmonth = $i;
+	$listendmonth[] = $i;
+}
+
+for ($i = 31; $i >= 1; $i--) {
+	if (!isset($chosenendday)) $chosenendday = $i;
+	$listendday[] = $i;
+}
+
+?>
+<form method="post" action="<?php echo $CFG->wwwroot . '/course/applications.php'; ?>">
+Display entries using the following filters...
+<table border="2" cellpadding="2">
+	<tr>
+		<td>Semester</td>
+		<td>Status</td>
+		<td>Start Year</td>
+		<td>Start Month</td>
+		<td>Start Day</td>
+		<td>End Year</td>
+		<td>End Month</td>
+		<td>End Day</td>
+		<td>Name or e-mail Contains</td>
+		<td>"Paid?" Value</td>
+    <td>Re&#8209;enrolment?</td>
+		<td>Show Extra Details</td>
+	</tr>
+	<tr>
+		<?php
+		displayoptions('chosensemester', $listsemester, $chosensemester);
+		displayoptions('chosenstatus', $liststatus, $chosenstatus);
+		displayoptions('chosenstartyear', $liststartyear, $chosenstartyear);
+		displayoptions('chosenstartmonth', $liststartmonth, $chosenstartmonth);
+		displayoptions('chosenstartday', $liststartday, $chosenstartday);
+		displayoptions('chosenendyear', $listendyear, $chosenendyear);
+		displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
+		displayoptions('chosenendday', $listendday, $chosenendday);
+		?>
+		<td><input type="text" size="40" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
+		<?php
+		displayoptions('chosenpay', $listchosenpay, $chosenpay);
+    displayoptions('chosenreenrol', $listchosenreenrol, $chosenreenrol);
+		?>
+		<td><input type="checkbox" name="displayextra" <?php if ($displayextra) echo ' CHECKED'; ?>></td>
+	</tr>
+</table>
+<input type="hidden" name="markfilter" value="1" />
+<input type="submit" name="filter" value="Apply Filters" />
+<a href="<?php echo $CFG->wwwroot; ?>/course/applications.php">Reset Filters</a>
+</form>
+<br />
+<?php
+
+
+function displayoptions($name, $options, $selectedvalue) {
+	echo '<td><select name="' . $name . '">';
+	foreach ($options as $option) {
+		if ($option === $selectedvalue) $selected = 'selected="selected"';
+		else $selected = '';
+
+		$opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
+		echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+	}
+	echo '</select></td>';
+}
+
+
+// Retrieve all relevent rows
+//$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
+$applications = get_records_sql('
+  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent
+  FROM mdl_peoplesapplication a
+  LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
+  WHERE hidden=0 ORDER BY a.datesubmitted DESC');
+if (empty($applications)) {
+	$applications = array();
+}
+
+
+$emaildups = 0;
+foreach ($applications as $sid => $application) {
+  $state = (int)$application->state;
+	if ($state === 1) $state = 011;
+
+	if (
+    $application->datesubmitted < $starttime ||
+    $application->datesubmitted > $endtime ||
+    (($chosensemester !== 'All') && ($application->semester !== $chosensemester)) ||
+    (($chosenstatus  === 'Not fully Approved')       && ($state === 011 || $state === 033)) ||
+    (($chosenstatus  === 'Not fully Registered')     && ($state === 033)) ||
+    (($chosenstatus  === 'Part or Fully Approved')   && (!($state === 011 || $state === 012 || $state === 021 || $state === 023 || $state === 032 || $state === 013 || $state === 031 || $state === 033))) ||
+    (($chosenstatus  === 'Part or Fully Registered') && (!($state === 023 || $state === 032 || $state === 013 || $state === 031 || $state === 033)))
+    ) {
+
+		unset($applications[$sid]);
+		continue;
+	}
+
+	if (!empty($chosensearch) &&
+    stripos($application->lastname, $chosensearch) === false &&
+    stripos($application->firstname, $chosensearch) === false &&
+    stripos($application->email, $chosensearch) === false) {
+
+		unset($applications[$sid]);
+		continue;
+	}
+
+	if (!empty($chosenpay) && $chosenpay !== 'Any') {
+		if ($chosenpay === 'No Indication Given' && $application->paymentmechanism != 0) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'Not Confirmed (all)' && ($application->paymentmechanism == 1 || $application->paymentmechanism >= 100)) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'Barclays not confirmed' && $application->paymentmechanism != 2) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'Diamond not confirmed' && $application->paymentmechanism != 3) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'Western Union not confirmed' && $application->paymentmechanism != 4) {
+			unset($applications[$sid]);
+			continue;
+		}
+    if ($chosenpay === 'Indian Confederation not confirmed' && $application->paymentmechanism != 5) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Posted Travellers Cheques not confirmed' && $application->paymentmechanism != 7) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Posted Cash not confirmed' && $application->paymentmechanism != 8) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'MoneyGram not confirmed' && $application->paymentmechanism != 9) {
+      unset($applications[$sid]);
+      continue;
+    }
+		if ($chosenpay === 'Promised End Semester' && $application->paymentmechanism != 6) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'Waiver' && $application->paymentmechanism != 100) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'RBS Confirmed' && $application->paymentmechanism != 1) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'Barclays Confirmed' && $application->paymentmechanism != 102) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'Diamond Confirmed' && $application->paymentmechanism != 103) {
+			unset($applications[$sid]);
+			continue;
+		}
+		if ($chosenpay === 'Western Union Confirmed' && $application->paymentmechanism != 104) {
+			unset($applications[$sid]);
+			continue;
+		}
+    if ($chosenpay === 'Indian Confederation Confirmed' && $application->paymentmechanism != 105) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Posted Travellers Cheques Confirmed' && $application->paymentmechanism != 107) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Posted Cash Confirmed' && $application->paymentmechanism != 108) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'MoneyGram Confirmed' && $application->paymentmechanism != 109) {
+      unset($applications[$sid]);
+      continue;
+    }
+	}
+
+  if (!empty($chosenreenrol) && $chosenreenrol !== 'Any') {
+    if ($chosenreenrol === 'Re-enrolment' && $application->nid != 80) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenreenrol === 'New student' && $application->nid == 80) {
+      unset($applications[$sid]);
+      continue;
+    }
+  }
+
+	if ($application->hidden) {
+		unset($applications[$sid]);
+		continue;
+	}
+
+  if (empty($emailcounts[$application->email])) $emailcounts[$application->email] = 1;
+	else {
+    $emailcounts[$application->email]++;
+		$emaildups++;
+	}
+}
+
+
+if ($sendemails) {
+  if (empty($_POST['reg'])) $_POST['reg'] = '/^[a-zA-Z0-9_.-]/';
+  sendemails($applications, strip_tags(stripslashes($_POST['emailsubject'])), strip_tags(stripslashes($_POST['emailbody'])), stripslashes($_POST['reg']));
+}
+
+
+echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+echo "<tr>";
+
+/*
+state
+30
+moodleuserid
+29
+Family name
+1
+Given name
+2
+Email address
+11
+Semester
+16
+First module
+18
+Second module
+19
+DOB
+***
+Gender
+12
+Address
+3
+City/Town
+14
+Country
+13
+Current employment
+36
+Current employment details
+7
+qualification
+34
+higherqualification
+35
+Previous educational experience
+8
+Reasons for wanting to enrol
+10
+Method of payment
+31
+Payment Identification
+32
+Desired Moodle Username
+21
+*/
+
+echo '<td>Submitted</td>';
+echo '<td>sid</td>';
+echo '<td>Approved?</td>';
+echo '<td>Paid?</td>';
+echo '<td>Registered?</td>';
+if (!$displayextra) echo '<td></td>';
+echo '<td>Family name</td>';
+echo '<td>Given name</td>';
+echo '<td>Email address</td>';
+echo '<td>Semester</td>';
+echo '<td>First module</td>';
+echo '<td>Second module</td>';
+echo '<td>DOB dd/mm/yyyy</td>';
+echo '<td>Gender</td>';
+echo '<td>City/Town</td>';
+echo '<td>Country</td>';
+//echo '<td>Method of payment</td>';
+//echo '<td>Payment Identification</td>';
+if ($displayextra) {
+	echo "<td>Address</td>";
+	echo "<td>Current employment</td>";
+	echo "<td>Current employment details</td>";
+	echo "<td>Qualification</td>";
+	echo "<td>Postgraduate Qualification</td>";
+	echo "<td>Education Details</td>";
+	echo "<td>Reasons for wanting to enrol</td>";
+	echo "<td>Desired Moodle Username</td>";
+	echo "<td>Moodle UserID</td>";
+	//echo "<td>Application SID</td>";
+}
+echo '<td></td>';
+echo '<td></td>';
+echo "</tr>";
+
+$n = 0;
+$napproved = 0;
+$nregistered = 0;
+
+$modules = array();
+foreach ($applications as $sid => $application) {
+  $state = (int)$application->state;
+	// Legacy fixups...
+	if ($state === 2) {
+		$state = 022;
+	}
+	if ($state === 1) {
+		$state = 011;
+	}
+	// Allowed transitions for Module 1 state (00X0) or Module 2 state (0X00):
+	// state 0 (not processed) ..> state 2 (defered) OR state 1 (approved)
+	// state 2 (defered) ..> state 1 (approved)
+	// state 1 (approved) ..> state 3 (registered) OR state 2 (defered)
+	// state 3 (registered) ..> state 2 (defered)
+	// If any state changes from 0, all must change from 0!
+	// If Module 2 is empty, its state should change along with Module 1's
+
+	// Allowed States:
+	// 00	0
+	// 22	18
+	// 12	10
+	// 21	17
+	// 11	9
+	// 23	19
+	// 32	26
+	// 13	11
+	// 31	25
+	// 33	27
+	// If there are any 3's, Moodle UserID must be set
+
+	$state1 = $state & 07;
+	$state2 = $state & 070;
+
+  $application->userid = (int)$application->userid;
+
+	if (true) {
+		echo '<tr>';
+    echo '<td>' . gmdate('d/m/Y H:i', $application->datesubmitted) . '</td>';
+		echo '<td>' . $sid . '</td>';
+
+		if ($state === 0) echo '<td><span style="color:red">No</span></td>';
+		elseif ($state === 022) echo '<td><span style="color:blue">Denied or Deferred</span></td>';
+		elseif ($state1===02 || $state2===020) echo '<td><span style="color:blue">Some</span></td>';
+		else echo '<td><span style="color:green">Yes</span></td>';
+
+		if (empty($application->paymentmechanism)) $mechanism = '';
+		elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
+		elseif ($application->paymentmechanism == 2) $mechanism = ' Barclays';
+		elseif ($application->paymentmechanism == 3) $mechanism = ' Diamond';
+		elseif ($application->paymentmechanism == 4) $mechanism = ' Western Union';
+		elseif ($application->paymentmechanism == 5) $mechanism = ' Indian Confederation';
+		elseif ($application->paymentmechanism == 6) $mechanism = ' Promised End Semester';
+    elseif ($application->paymentmechanism == 7) $mechanism = ' Posted Travellers Cheques';
+    elseif ($application->paymentmechanism == 8) $mechanism = ' Posted Cash';
+    elseif ($application->paymentmechanism == 9) $mechanism = ' MoneyGram';
+		elseif ($application->paymentmechanism == 100) $mechanism = ' Waiver';
+		elseif ($application->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
+		elseif ($application->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
+		elseif ($application->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
+		elseif ($application->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
+    elseif ($application->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';
+    elseif ($application->paymentmechanism == 108) $mechanism = ' Posted Cash Confirmed';
+    elseif ($application->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
+		else  $mechanism = '';
+
+		if ($application->costpaid < .01) echo '<td><span style="color:red">No' . $mechanism . '</span></td>';
+		elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes' . $mechanism . '</span></td>';
+		else echo '<td><span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span></td>';
+
+    echo '<td>';
+    if (!($state1===03 || $state2===030)) echo '<span style="color:red">No</span>';
+    elseif ($state === 033) echo '<span style="color:green">Yes</span>';
+    else echo '<span style="color:blue">Some</span>';
+
+    if ($application->notepresent) echo '<br />(Note Present)';
+    echo '</td>';
+
+		if (!$displayextra) {
+?>
+<td>
+<form method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>" target="_blank">
+
+<input type="hidden" name="state" value="<?php echo $state; ?>" />
+<input type="hidden" name="29" value="<?php echo htmlspecialchars($application->userid, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="1" value="<?php echo htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="2" value="<?php echo htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="11" value="<?php echo htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="16" value="<?php echo htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="18" value="<?php echo htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="19" value="<?php echo htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="dobday" value="<?php echo $application->dobday; ?>" />
+<input type="hidden" name="dobmonth" value="<?php echo $application->dobmonth; ?>" />
+<input type="hidden" name="dobyear" value="<?php echo $application->dobyear; ?>" />
+<input type="hidden" name="12" value="<?php echo htmlspecialchars($application->gender, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="14" value="<?php echo htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="13" value="<?php echo htmlspecialchars($application->country, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="34" value="<?php echo htmlspecialchars($application->qualification, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="35" value="<?php echo htmlspecialchars($application->higherqualification, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="36" value="<?php echo htmlspecialchars($application->employment, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="31" value="<?php echo htmlspecialchars($application->methodofpayment, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="21" value="<?php echo htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8'); ?>" />
+<span style="display: none;">
+<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8'); ?></textarea>
+</span>
+<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
+<input type="hidden" name="nid" value="<?php echo $application->nid; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markapp" value="1" />
+<input type="submit" name="approveapplication" value="Details" />
+</form>
+<?php
+    if ($application->nid == 80) echo 'Re&#8209;enrolment';
+		echo '</td>';
+		}
+    echo "<td>" . htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8') . "</td>";
+    echo "<td>" . htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8') . "</td>";
+    if ($emailcounts[$application->email] === 1) {
+      echo "<td>" . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . "</td>";
+		}
+		else {
+      echo "<td>" . '<span style="color:navy">**</span>' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . "</td>";
+		}
+    echo "<td>" . htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8') . "</td>";
+
+		echo '<td>';
+		if ($state1 === 02) {
+			echo '<span style="color:red">';
+		}
+		elseif ($state1 === 01) {
+			echo '<span style="color:#FF8C00">';
+		}
+		elseif ($state1 === 03) {
+			echo '<span style="color:green">';
+		}
+		else {
+			echo '<span>';
+		}
+    echo htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '</span></td>';
+
+		echo '<td>';
+		if ($state2 === 020) {
+			echo '<span style="color:red">';
+		}
+		elseif ($state2 === 010) {
+			echo '<span style="color:#FF8C00">';
+		}
+		elseif ($state2 === 030) {
+			echo '<span style="color:green">';
+		}
+		else {
+			echo '<span>';
+		}
+    echo htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span></td>';
+
+    echo "<td>" . $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear . "</td>";
+    echo "<td>" . $application->gender . "</td>";
+    echo "<td>" . htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8') . "</td>";
+    if (empty($countryname[$application->country])) echo "<td></td>";
+    else echo "<td>" . $countryname[$application->country] . "</td>";
+    //echo "<td>" . $application->methodofpayment . "</td>";
+    //echo "<td>" . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . "</td>";
+
+		if ($displayextra) {
+      echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'))) . "</td>";
+
+      if (empty($employmentname[$application->employment])) echo "<td></td>";
+      else echo "<td>" . $employmentname[$application->employment] . "</td>";
+
+      echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'))) . "</td>";
+
+      if (empty($qualificationname[$application->qualification])) echo "<td></td>";
+      else echo "<td>" . $qualificationname[$application->qualification] . "</td>";
+      if (empty($higherqualificationname[$application->higherqualification])) echo "<td></td>";
+      else echo "<td>" . $higherqualificationname[$application->higherqualification] . "</td>";
+
+      echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'))) . "</td>";
+      echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'))) . "</td>";
+      echo "<td>" . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . "</td>";
+      if (empty($application->userid)) echo '<td></td>';
+      else echo "<td>" . $application->userid . "</td>";
+			//echo '<td>' . $sid . '</td>';
+		}
+    if (empty($application->userid)) echo '<td></td>';
+    else echo '<td><a href="' . $CFG->wwwroot . '/course/student.php?id=' . $application->userid . '" target="_blank">Student Grades</a></td>';
+    if (empty($application->userid)) echo '<td></td>';
+    else echo '<td><a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a></td>';
+		echo "</tr>";
+
+    if (empty($modules[$application->coursename1])) {
+      $modules[$application->coursename1] = 1;
+		}
+		else {
+      $modules[$application->coursename1]++;
+		}
+    if (!empty($application->coursename2)) {
+      if (empty($modules[$application->coursename2])) {
+        $modules[$application->coursename2] = 1;
+			}
+			else {
+        $modules[$application->coursename2]++;
+			}
+		}
+
+		$n++;
+
+		if ($state1===01 || $state1===03 || $state2===010 || $state2===030) {
+			$napproved++;
+
+			// Is Module 1 Approved/Registered
+			if ($state1===01 || $state1===03) {
+        if (empty($moduleapprovals[$application->coursename1])) {
+          $moduleapprovals[$application->coursename1] = 1;
+				}
+				else {
+          $moduleapprovals[$application->coursename1]++;
+				}
+			}
+
+			// Is Module 2 Approved/Registered
+			if ($state2===010 || $state2===030) {
+        if (!empty($application->coursename2)) {
+          if (empty($moduleapprovals[$application->coursename2])) {
+            $moduleapprovals[$application->coursename2] = 1;
+					}
+					else {
+            $moduleapprovals[$application->coursename2]++;
+					}
+				}
+			}
+
+      if (empty($gender[$application->gender])) {
+        $gender[$application->gender] = 1;
+			}
+			else {
+        $gender[$application->gender]++;
+			}
+
+      if (empty($application->dobyear)) $range = '';
+      elseif ($application->dobyear >= 1990) $range = '1990+';
+      elseif ($application->dobyear >= 1980) $range = '1980-1989';
+      elseif ($application->dobyear >= 1970) $range = '1970-1979';
+      elseif ($application->dobyear >= 1960) $range = '1960-1969';
+      elseif ($application->dobyear >= 1950) $range = '1950-1959';
+			else $range = '1900-1950';
+			if (empty($age[$range])) {
+				$age[$range] = 1;
+			}
+			else {
+				$age[$range]++;
+			}
+
+      if (empty($country[$countryname[$application->country]])) {
+        $country[$countryname[$application->country]] = 1;
+			}
+			else {
+        $country[$countryname[$application->country]]++;
+			}
+
+      $listofemails[]  = htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
+		}
+		if ($state1===03 || $state2===030) {
+			$nregistered++;
+
+			// Is Module 1 Registered
+			if ($state1 === 03) {
+        if (empty($moduleregistrations[$application->coursename1])) {
+          $moduleregistrations[$application->coursename1] = 1;
+				}
+				else {
+          $moduleregistrations[$application->coursename1]++;
+				}
+			}
+
+			// Is Module 2 Registered
+			if ($state2 === 030) {
+        if (!empty($application->coursename2)) {
+          if (empty($moduleregistrations[$application->coursename2])) {
+            $moduleregistrations[$application->coursename2] = 1;
+					}
+					else {
+            $moduleregistrations[$application->coursename2]++;
+					}
+				}
+			}
+		}
+	}
+}
+echo '</table>';
+echo '<br />Total Applications: ' . $n;
+echo '<br />Total Approved (or part Approved): ' . $napproved;
+echo '<br />Total Registered (or part Registered): ' . $nregistered;
+echo '<br /><br />(Duplicated e-mails: ' . $emaildups . ',  see <span style="color:navy">**</span>)';
+echo '<br/><br/>';
+
+echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+echo "<tr>";
+echo "<td>Module</td>";
+echo "<td>Number of Applications</td>";
+echo "<td>Number Approved</td>";
+echo "<td>Number Registered</td>";
+echo "</tr>";
+
+ksort($modules);
+
+$n = 0;
+
+foreach ($modules as $product => $number) {
+	echo "<tr>";
+	echo "<td>" . $product . "</td>";
+	echo "<td>" . $number . "</td>";
+	if (empty($moduleapprovals[$product])) { echo "<td>0</td>";} else { 	echo "<td>" . $moduleapprovals[$product] . "</td>";}
+	if (empty($moduleregistrations[$product])) { echo "<td>0</td>";} else { echo "<td>" . $moduleregistrations[$product] . "</td>";}
+    echo "</tr>";
+
+	$n++;
+}
+echo '</table>';
+echo '<br/>Number of Modules: ' . $n . '<br /><br />';
+
+natcasesort($listofemails);
+echo 'e-mails of Approved Students...<br />' . implode(', ', array_unique($listofemails)) . '<br /><br />';
+
+echo 'Statistics for Approved Students...<br />';
+displaystat($gender,'Gender');
+displaystat($age,'Year of Birth');
+displaystat($country,'Country');
+
+
+$peoples_batch_reminder_email = get_config(NULL, 'peoples_batch_reminder_email');
+
+$peoples_batch_reminder_email = htmlspecialchars($peoples_batch_reminder_email, ENT_COMPAT, 'UTF-8');
+?>
+<br />To send an e-mail to all the students in the main spreadsheet above...
+enter BOTH a subject and optionally edit the e-mail text below and click "Send e-mail to All".<br />
+<br />
+NOTE, to send an e-mail only to approved and registered students for the current semester who have not indicated that they have paid
+or have otherwise been marked as paid or have a waiver... BEFORE SENDING THE E_MAIL,
+set the filters at the top of this page as follows...<br />
+Status: "Part or Fully Approved"<br />
+"Paid?" Value: "No Indication Given"<br />
+<br />
+Also look at list of e-mails sent to verify they went! (No subject and they will not go!)<br /><br />
+<form id="emailsendform" method="post" action="<?php
+  echo $CFG->wwwroot . '/course/applications.php?'
+    . 'chosensemester=' . urlencode(stripslashes($_REQUEST['chosensemester']))
+    . '&chosenstatus=' . urlencode($_REQUEST['chosenstatus'])
+    . '&chosenstartyear=' . $_REQUEST['chosenstartyear']
+    . '&chosenstartmonth=' . $_REQUEST['chosenstartmonth']
+    . '&chosenstartday=' . $_REQUEST['chosenstartday']
+    . '&chosenendyear=' . $_REQUEST['chosenendyear']
+    . '&chosenendmonth=' . $_REQUEST['chosenendmonth']
+    . '&chosenendday=' . $_REQUEST['chosenendday']
+    . '&chosensearch=' . urlencode(stripslashes($_REQUEST['chosensearch']))
+    . '&chosenpay=' . urlencode($_REQUEST['chosenpay'])
+    . '&chosenreenrol=' . urlencode($_REQUEST['chosenreenrol'])
+    . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1');
+?>">
+Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
+<textarea name="emailbody" rows="15" cols="75" wrap="hard">
+<?php echo $peoples_batch_reminder_email; ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markemailsend" value="1" />
+<input type="submit" name="emailsend" value="Send e-mail to All" />
+<br />Regular expression for included e-mails (defaults to all, so do not change!):&nbsp;<input type="text" size="20" name="reg" value="/^[a-zA-Z0-9_.-]/" />
+</form>
+<br /><br />
+<?php
+
+
+echo '<br /><br />';
+
+notice(get_string('continue'), "$CFG->wwwroot/");
+
+
+function displaystat($stat, $title) {
+	echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+	echo "<tr>";
+	echo "<td>$title</td>";
+	echo "<td>Number</td>";
+	echo "</tr>";
+
+	ksort($stat);
+
+	foreach ($stat as $key => $number) {
+		echo "<tr>";
+		echo "<td>" . $key . "</td>";
+		echo "<td>" . $number . "</td>";
+	    echo "</tr>";
+	}
+	echo '</table>';
+	echo '<br/>';
+}
+
+
+function sendemails($applications, $emailsubject, $emailbody, $reg) {
+
+  echo '<br />';
+  $i = 1;
+  foreach ($applications as $sid => $application) {
+
+    $email = trim($application->email);
+
+    if (!preg_match($reg, $email)) {
+      echo "&nbsp;&nbsp;&nbsp;&nbsp;($email skipped because of regular expression.)<br />";
+      continue;
+    }
+
+    $emailbodytemp = str_replace('GIVEN_NAME_HERE', trim($application->firstname), $emailbody);
+    $emailbodytemp = str_replace('SID_HERE', $sid, $emailbodytemp);
+    $emailbodytemp = str_replace('AMOUNT_OWED_HERE', $application->costowed, $emailbodytemp);
+
+    $emailbodytemp = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $emailbodytemp); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
+                                                                                       // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+
+    if (sendapprovedmail($email, $emailsubject, $emailbodytemp)) {
+      echo "($i) $email successfully sent.<br />";
+    }
+    else {
+      echo "FAILURE TO SEND $email !!!<br />";
+    }
+    $i++;
+  }
+}
+
+
+function sendapprovedmail($email, $subject, $message) {
+  global $CFG;
+
+  // Dummy User
+  $user = new object;
+  $user->id = 999999999;
+  // $user->email = 'alanabarrett0@gmail.com';
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = 1;
+
+  // $supportuser = generate_email_supportuser();
+  $supportuser = new object;
+  $supportuser->email = 'payments@peoples-uni.org';
+  $supportuser->firstname = 'Peoples-uni Payments';
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
+
+  $messagehtml = text_to_html($message, false, false, true);
+
+  $user->mailformat = 1;  // Always send HTML version as well
+
+  $ret = email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+
+  $user->email = 'applicationresponses@peoples-uni.org';
+
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message, $messagehtml);
+
+  return $ret;
+}
+?>
