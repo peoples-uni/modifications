@@ -7,15 +7,21 @@
 
 require("../config.php");
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/listcertificates.php');
+$PAGE->set_pagelayout('standard');
+
 require_login();
 
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-print_header('List Volunteer Certificates');
+$PAGE->set_title('List Volunteer Certificates');
+$PAGE->set_heading('List Volunteer Certificates');
+echo $OUTPUT->header();
 
-echo '<h1>List Volunteer Certificates</h1>';
 
-$volunteercertificates = get_records_sql('SELECT * FROM mdl_volunteercertificate ORDER BY name ASC');
+$volunteercertificates = $DB->get_records_sql('SELECT * FROM mdl_volunteercertificate ORDER BY name ASC');
 
 echo '<table border="1" BORDERCOLOR="RED">';
 
@@ -55,5 +61,5 @@ echo '</table>';
 <br /><br /><a href="<?php echo $CFG->wwwroot ?>/course/createcertificate.php" target="_blank">Create New Certificate</a>
 <?php
 
-print_footer();
+echo $OUTPUT->footer();
 ?>

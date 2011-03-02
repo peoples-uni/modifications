@@ -1,13 +1,19 @@
 <?php  // $Id: volunteercertificate.php,v 1.1 2009/04/16 15:16:00 alanbarrett Exp $
 
 require_once('../config.php');
-include '../lib/fpdf/fpdf.php';
-include '../lib/fpdf/fpdfprotection.php';
+include 'fpdf/fpdf.php';
+include 'fpdf/fpdfprotection.php';
 include_once('html2pdf.php');
+
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/volunteercertificate.php');
+$PAGE->set_pagelayout('embedded');
+
 
 $id = required_param('id', PARAM_INT);
 
-$volunteercertificate = get_record('volunteercertificate', 'id', $id);
+$volunteercertificate = $DB->get_record('volunteercertificate', array('id' => $id));
 if (empty($volunteercertificate)) {
 	error('Certificate not found');
 }

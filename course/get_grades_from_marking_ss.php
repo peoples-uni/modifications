@@ -8,20 +8,24 @@
 require("../config.php");
 //require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/get_grades_from_marking_ss.php');
+$PAGE->set_pagelayout('standard');
+
 require_login();
 
 require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 
-print_header('Retrieve Student Grades from Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');
-
-echo '<h2>Retrieve Student Grades from Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking</h2><br /><br />';
+$PAGE->set_title('Retrieve Student Grades from Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');
+$PAGE->set_heading('Retrieve Student Grades from Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');
+echo $OUTPUT->header();
 
 
 if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
   $id = (int)$_POST['course_id'];
-  $course = get_record('course', 'id', $id);
+  $course = $DB->get_record('course', array('id' => $id));
   if (empty($course)) die();
 
   /**
@@ -55,7 +59,7 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
   Zend_Loader::loadClass('Zend_Gdata_Spreadsheets');
 
 
-  $google_ss = get_record('peoples_google_ss', 'course_id', $id);
+  $google_ss = $DB->get_record('peoples_google_ss', array('course_id' => $id));
   if (empty($google_ss)) {
         echo "<br /><br /><strong>Error: No marking spreadsheet exists for course.</strong><br /><br />";
 
@@ -155,7 +159,7 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
     }
     echo '</table>';
 
-    $grade_item = get_record('grade_items', 'courseid', $id, 'itemtype', 'course');
+    $grade_item = $DB->get_record('grade_items', array('courseid' => $id, 'itemtype' => 'course'));
     if (empty($grade_item)) {
       echo "<br /><br /><strong>Error: No grade_items entry exists for course.</strong><br /><br />";
 
@@ -182,7 +186,7 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
       $grade = $grades[$user_id];
       $nograde = empty($grade) || (stripos($grade, 'P')===FALSE && stripos($grade, 'F')===FALSE);
 
-      $grade_grade = get_record('grade_grades', 'itemid', $grade_item->id, 'userid', $user_id);
+      $grade_grade = $DB->get_record('grade_grades', array('itemid' => $grade_item->id, 'userid' => $user_id));
 
       if (empty($grade_grade) && $nograde) {
         // Do nothing because there is no grade in Moodle and none in the spreadsheet
@@ -199,9 +203,9 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
         $record->usermodified = $USER->id;
         $record->overridden   = time();
         $record->timemodified = time();
-        insert_record('grade_grades', $record);
+        $DB->insert_record('grade_grades', $record);
 
-        $grade_grade = get_record('grade_grades', 'itemid', $grade_item->id, 'userid', $user_id);
+        $grade_grade = $DB->get_record('grade_grades', array('itemid' => $grade_item->id, 'userid' => $user_id));
 
         unset($grade_grade->timecreated);
         $grade_grade->action       = 1;
@@ -210,7 +214,7 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
         $grade_grade->source       = 'gradebook';
         $grade_grade->timemodified = time();
         $grade_grade->userlogged   = $USER->id; // Perpetuate bug!
-        insert_record('grade_grades_history', addslashes_recursive($grade_grade));
+        $DB->insert_record('grade_grades_history', dontaddslashes_recursive($grade_grade));
 
         $n_added++;
       }
@@ -229,9 +233,9 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
         $record->usermodified = $USER->id;
         $record->overridden   = time();
         $record->timemodified = time();
-        update_record('grade_grades', $record);
+        $DB->update_record('grade_grades', $record);
 
-        $grade_grade = get_record('grade_grades', 'itemid', $grade_item->id, 'userid', $user_id);
+        $grade_grade = $DB->get_record('grade_grades', array('itemid' => $grade_item->id, 'userid' => $user_id));
 
         unset($grade_grade->timecreated);
         $grade_grade->action       = 2;
@@ -240,7 +244,7 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
         $grade_grade->source       = 'gradebook';
         $grade_grade->timemodified = time();
         $grade_grade->userlogged   = $USER->id; // Perpetuate bug!
-        insert_record('grade_grades_history', addslashes_recursive($grade_grade));
+        $DB->insert_record('grade_grades_history', dontaddslashes_recursive($grade_grade));
 
         $n_updated++;
       }
@@ -262,7 +266,7 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
 else {
   $id = required_param('id', PARAM_INT);
 
-  $course = get_record('course', 'id', $id);
+  $course = $DB->get_record('course', array('id' => $id));
   if (empty($course)) die();
 
   echo '<script type="text/JavaScript">function areyousuregetgradesfromss() { var sure = false; sure = confirm("Are you sure you want to Retrieve the Course Total Grades (only) from the Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking for: ' . htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8')
@@ -283,5 +287,11 @@ else {
 
 echo '<br /><strong><a href="javascript:window.close();">Close Window</a></strong>';
 
-print_footer();
+echo $OUTPUT->footer();
+
+
+function dontaddslashes_recursive($x) {
+  return $x;
+}
+
 ?>

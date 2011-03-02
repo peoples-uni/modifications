@@ -7,25 +7,25 @@
 
 /*
 CREATE TABLE mdl_peoplesapplication (
-	id BIGINT(10) unsigned NOT NULL auto_increment,
-	datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	sid BIGINT(10) unsigned NOT NULL,
-	nid BIGINT(10) unsigned NOT NULL,
+  id BIGINT(10) unsigned NOT NULL auto_increment,
+  datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  sid BIGINT(10) unsigned NOT NULL,
+  nid BIGINT(10) unsigned NOT NULL,
   state BIGINT(10) unsigned NOT NULL,
   state_1 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   state_2 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   state_3 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   state_4 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-	userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	username VARCHAR(100) NOT NULL DEFAULT '',
-	firstname VARCHAR(100) NOT NULL DEFAULT '',
-	lastname VARCHAR(100) NOT NULL DEFAULT '',
-	email VARCHAR(100) NOT NULL DEFAULT '',
-	city VARCHAR(20) NOT NULL DEFAULT '',
-	country VARCHAR(2) NOT NULL DEFAULT '',
-	qualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	employment BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  username VARCHAR(100) NOT NULL DEFAULT '',
+  firstname VARCHAR(100) NOT NULL DEFAULT '',
+  lastname VARCHAR(100) NOT NULL DEFAULT '',
+  email VARCHAR(100) NOT NULL DEFAULT '',
+  city VARCHAR(20) NOT NULL DEFAULT '',
+  country VARCHAR(2) NOT NULL DEFAULT '',
+  qualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  employment BIGINT(10) unsigned NOT NULL DEFAULT 0,
   course_id_1 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   course_id_2 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   course_id_3 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -36,26 +36,26 @@ CREATE TABLE mdl_peoplesapplication (
   coursename4 VARCHAR(255) NOT NULL DEFAULT '',
   semester VARCHAR(255) NOT NULL DEFAULT '',
   dob VARCHAR(20) NOT NULL DEFAULT '',
-	dobday VARCHAR(2) NOT NULL DEFAULT '',
-	dobmonth VARCHAR(2) NOT NULL DEFAULT '',
-	dobyear VARCHAR(4) NOT NULL DEFAULT '',
-	gender VARCHAR(6) NOT NULL DEFAULT '',
-	applicationaddress text NOT NULL,
-	currentjob text NOT NULL,
-	education text NOT NULL,
-	reasons text NOT NULL,
-	methodofpayment VARCHAR(255) NOT NULL DEFAULT '',
-	paymentidentification VARCHAR(255) NOT NULL DEFAULT '',
-	costowed VARCHAR(10) NOT NULL DEFAULT '0',
-	costpaid VARCHAR(10) NOT NULL DEFAULT '0',
-	paymentmechanism BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	currency VARCHAR(3) NOT NULL DEFAULT 'USD',
-	datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	dateattemptedtopay BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	datepaid BIGINT(10) unsigned NOT NULL DEFAULT 0,
-	datafromworldpay VARCHAR(255) NOT NULL DEFAULT '',
-	hidden TINYINT(2) unsigned NOT NULL DEFAULT 0,
+  dobday VARCHAR(2) NOT NULL DEFAULT '',
+  dobmonth VARCHAR(2) NOT NULL DEFAULT '',
+  dobyear VARCHAR(4) NOT NULL DEFAULT '',
+  gender VARCHAR(6) NOT NULL DEFAULT '',
+  applicationaddress text NOT NULL,
+  currentjob text NOT NULL,
+  education text NOT NULL,
+  reasons text NOT NULL,
+  methodofpayment VARCHAR(255) NOT NULL DEFAULT '',
+  paymentidentification VARCHAR(255) NOT NULL DEFAULT '',
+  costowed VARCHAR(10) NOT NULL DEFAULT '0',
+  costpaid VARCHAR(10) NOT NULL DEFAULT '0',
+  paymentmechanism BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  currency VARCHAR(3) NOT NULL DEFAULT 'USD',
+  datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  dateattemptedtopay BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  datepaid BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  datafromworldpay VARCHAR(255) NOT NULL DEFAULT '',
+  hidden TINYINT(2) unsigned NOT NULL DEFAULT 0,
 CONSTRAINT  PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoplesapplication_sid_ix ON mdl_peoplesapplication (sid);
@@ -359,21 +359,25 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/applications.php'); // Defined here to avoid notices on errors etc
+
 if (!empty($_POST['markfilter'])) {
-	redirect($CFG->wwwroot . '/course/applications.php?'
-		. 'chosensemester=' . urlencode(stripslashes($_POST['chosensemester']))
-		. '&chosenstatus=' . urlencode($_POST['chosenstatus'])
-		. '&chosenstartyear=' . $_POST['chosenstartyear']
-		. '&chosenstartmonth=' . $_POST['chosenstartmonth']
-		. '&chosenstartday=' . $_POST['chosenstartday']
-		. '&chosenendyear=' . $_POST['chosenendyear']
-		. '&chosenendmonth=' . $_POST['chosenendmonth']
-		. '&chosenendday=' . $_POST['chosenendday']
-		. '&chosensearch=' . urlencode(stripslashes($_POST['chosensearch']))
-		. '&chosenpay=' . urlencode($_POST['chosenpay'])
+  redirect($CFG->wwwroot . '/course/applications.php?'
+    . 'chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
+    . '&chosenstatus=' . urlencode($_POST['chosenstatus'])
+    . '&chosenstartyear=' . $_POST['chosenstartyear']
+    . '&chosenstartmonth=' . $_POST['chosenstartmonth']
+    . '&chosenstartday=' . $_POST['chosenstartday']
+    . '&chosenendyear=' . $_POST['chosenendyear']
+    . '&chosenendmonth=' . $_POST['chosenendmonth']
+    . '&chosenendday=' . $_POST['chosenendday']
+    . '&chosensearch=' . urlencode(dontstripslashes($_POST['chosensearch']))
+    . '&chosenpay=' . urlencode($_POST['chosenpay'])
     . '&chosenreenrol=' . urlencode($_POST['chosenreenrol'])
-		. (empty($_POST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
-		);
+    . (empty($_POST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
+    );
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -384,6 +388,14 @@ else {
 }
 
 
+$PAGE->set_pagelayout('embedded');   // Needs as much space as possible
+//$PAGE->set_pagelayout('base');     // Most backwards compatible layout without the blocks - this is the layout used by default
+//$PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
+//$PAGE->set_pagelayout('course');
+//$PAGE->set_pagetype('course-view-' . 1);
+//$PAGE->set_other_editing_capability('moodle/course:manageactivities');
+
+
 require_login();
 
 // Access to applications.php is given by the "Manage Applications" role
@@ -392,11 +404,15 @@ require_login();
 //require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-print_header('Student Applications');
+$PAGE->set_title('Student Applications');
+$PAGE->set_heading('Student Applications');
+echo $OUTPUT->header();
+
+//echo html_writer::start_tag('div', array('class'=>'course-content'));
 
 
 // Find and insert all missing peoplesapplication database rows
-$newapplications = get_records_sql('
+$newapplications = $DB->get_records_sql('
   SELECT s.sid FROM d5_webform_submissions s
   LEFT JOIN mdl_peoplesapplication p ON s.sid=p.sid
   WHERE (s.nid=71 OR s.nid=80) AND p.id IS NULL');
@@ -404,26 +420,23 @@ $newapplications = get_records_sql('
 foreach ($newapplications as $sid => $newapplication) {
   $application = new object();
 
-  $rows = get_recordset_sql("
+  $rows = $DB->get_recordset_sql("
     SELECT s.*, sd.cid, sd.no, sd.data
     FROM d5_webform_submitted_data sd
     LEFT JOIN d5_webform_submissions s ON sd.sid=s.sid
     WHERE (s.nid=71 OR s.nid=80) AND sd.sid=$sid
-    ORDER BY s.submitted DESC", '', '');
+    ORDER BY s.submitted DESC");
 
-  while (!empty($rows) && !$rows->EOF) {
-
-    $row = $rows->fields;
-
-    $submitted = $row['submitted'];
-    $nid       = $row['nid'];
-    $cid       = $row['cid'];
-    $data      = $row['data'];
+  foreach ($rows as $row) {
+    $submitted = $row->submitted;
+    $nid       = $row->nid;
+    $cid       = $row->cid;
+    $data      = $row->data;
     if (empty($data)) $data = '';
 
     if ($nid === '71') { // First Application Webform (peoples-uni-course-application-form)
 
-      if ($cid ==='17' && $row['no'] === '0') {
+      if ($cid ==='17' && $row->no === '0') {
         if (strlen($data) > 2) {
           $application->dob      = $data; // Actually $application->dob is not used
           $application->dobyear  = (int)substr($data, 0, 4);
@@ -433,39 +446,39 @@ foreach ($newapplications as $sid => $newapplication) {
         else $application->dobmonth = $data;
       }
 
-      if ($cid === '17' && $row['no'] === '1') {
+      if ($cid === '17' && $row->no === '1') {
         $application->dobday = $data;
       }
 
-      if ($cid === '17' && $row['no'] === '2') {
+      if ($cid === '17' && $row->no === '2') {
         $application->dobyear = $data;
       }
 
       if ($cid === '1') {
         $data = trim(strip_tags($data));
         $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->lastname = addslashes($data);
+        $application->lastname = dontaddslashes($data);
       }
 
       if ($cid === '2') {
         $data = trim(strip_tags($data));
         $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->firstname = addslashes($data);
+        $application->firstname = dontaddslashes($data);
       }
 
       if ($cid === '11') {
           $data = trim(strip_tags($data));
           $data = mb_substr($data, 0, 100, 'UTF-8');
-          $application->email = addslashes($data);
+          $application->email = dontaddslashes($data);
       }
 
       if ($cid === '16') {
         if (is_numeric($data)) {
-          $semesterrecord = get_record('semesters', 'id', $data);
-          $application->semester = addslashes($semesterrecord->semester);
+          $semesterrecord = $DB->get_record('semesters', array('id' => $data));
+          $application->semester = dontaddslashes($semesterrecord->semester);
         }
         else {
-          $application->semester = addslashes($data);
+          $application->semester = dontaddslashes($data);
         }
       }
 
@@ -476,12 +489,12 @@ foreach ($newapplications as $sid => $newapplication) {
           }
           elseif (is_numeric($data)) {
             $application->course_id_1 = $data; // $application->course_id_1 is not used
-            $course = get_record('course', 'id', $data);
-            $application->coursename1 = addslashes($course->fullname);
+            $course = $DB->get_record('course', array('id' => $data));
+            $application->coursename1 = dontaddslashes($course->fullname);
           }
           else {
-            $application->coursename1 = addslashes($data);
-            $course = get_record('course', 'fullname', addslashes($data));
+            $application->coursename1 = dontaddslashes($data);
+            $course = $DB->get_record('course', array('fullname' => dontaddslashes($data)));
             $application->course_id_1 = $course->id;
           }
       }
@@ -493,35 +506,35 @@ foreach ($newapplications as $sid => $newapplication) {
           }
           elseif (is_numeric($data)) {
             $application->course_id_2 = $data; // $application->course_id_2 is not used
-            $course = get_record('course', 'id', $data);
-            $application->coursename2 = addslashes($course->fullname);
+            $course = $DB->get_record('course', array('id' => $data));
+            $application->coursename2 = dontaddslashes($course->fullname);
           }
           else {
-            $application->coursename2 = addslashes($data);
-            $course = get_record('course', 'fullname', addslashes($data));
+            $application->coursename2 = dontaddslashes($data);
+            $course = $DB->get_record('course', array('fullname' => dontaddslashes($data)));
             $application->course_id_2 = $course->id;
           }
       }
 
       if ($cid === '12') {
-          $application->gender = addslashes($data);
+          $application->gender = dontaddslashes($data);
       }
 
       if ($cid === '3') {
           // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-          $application->applicationaddress = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+          $application->applicationaddress = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
       }
 
       if ($cid === '14') {
          $data = trim(strip_tags($data));
          $data = mb_substr($data, 0, 20, 'UTF-8');
-         $application->city = addslashes($data);
+         $application->city = dontaddslashes($data);
       }
 
       if ($cid === '13') {
           $data = trim(strip_tags($data));
           // Drupal select fields are protected by Drupal Form API
-          $application->country = addslashes($data);
+          $application->country = dontaddslashes($data);
       }
 
       if ($cid === '36') {
@@ -532,7 +545,7 @@ foreach ($newapplications as $sid => $newapplication) {
 
       if ($cid === '7') {
           // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-          $application->currentjob = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+          $application->currentjob = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
       }
 
       if ($cid === '34') {
@@ -549,22 +562,22 @@ foreach ($newapplications as $sid => $newapplication) {
 
       if ($cid === '8') {
         // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-        $application->education = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+        $application->education = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
       }
 
       if ($cid === '10') {
         // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-        $application->reasons = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+        $application->reasons = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
       }
 
       if ($cid === '31') {
         // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-        $application->methodofpayment = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+        $application->methodofpayment = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
       }
 
       if ($cid === '32') {
         // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-        $application->paymentidentification = addslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+        $application->paymentidentification = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
       }
 
       if ($cid === '21') {
@@ -576,7 +589,7 @@ foreach ($newapplications as $sid => $newapplication) {
         $data = trim(moodle_strtolower($data));
         if (empty($data)) $data = 'user1';  // Just in case it becomes empty
         $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->username = addslashes($data);
+        $application->username = dontaddslashes($data);
       }
 
       $application->userid = 0;
@@ -585,15 +598,15 @@ foreach ($newapplications as $sid => $newapplication) {
       if ($cid === '10') {
         $application->userid = (int)$data;
 
-        $oldapplication = get_record('peoplesapplication', 'userid', $application->userid);
+        $oldapplication = $DB->get_record('peoplesapplication', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
 
-        $application->gender                = addslashes($oldapplication->gender);
-        $application->applicationaddress    = addslashes($oldapplication->applicationaddress);
-        $application->currentjob            = addslashes($oldapplication->currentjob);
-        $application->education             = addslashes($oldapplication->education);
-        $application->reasons               = addslashes($oldapplication->reasons);
-        $application->methodofpayment       = addslashes($oldapplication->methodofpayment);
-        $application->paymentidentification = addslashes($oldapplication->paymentidentification);
+        $application->gender                = dontaddslashes($oldapplication->gender);
+        $application->applicationaddress    = dontaddslashes($oldapplication->applicationaddress);
+        $application->currentjob            = dontaddslashes($oldapplication->currentjob);
+        $application->education             = dontaddslashes($oldapplication->education);
+        $application->reasons               = dontaddslashes($oldapplication->reasons);
+        $application->methodofpayment       = dontaddslashes($oldapplication->methodofpayment);
+        $application->paymentidentification = dontaddslashes($oldapplication->paymentidentification);
 
         $application->dob                   = $oldapplication->dob;
         $application->dobyear               = $oldapplication->dobyear;
@@ -608,28 +621,28 @@ foreach ($newapplications as $sid => $newapplication) {
       if ($cid === '14') {
         $data = trim(strip_tags($data));
         $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->lastname = addslashes($data);
+        $application->lastname = dontaddslashes($data);
       }
 
       if ($cid === '15') {
         $data = trim(strip_tags($data));
         $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->firstname = addslashes($data);
+        $application->firstname = dontaddslashes($data);
       }
 
       if ($cid === '11') {
           $data = trim(strip_tags($data));
           $data = mb_substr($data, 0, 100, 'UTF-8');
-          $application->email = addslashes($data);
+          $application->email = dontaddslashes($data);
       }
 
       if ($cid === '2') {
         if (is_numeric($data)) {
-          $semesterrecord = get_record('semesters', 'id', $data);
-          $application->semester = addslashes($semesterrecord->semester);
+          $semesterrecord = $DB->get_record('semesters', array('id' => $data));
+          $application->semester = dontaddslashes($semesterrecord->semester);
         }
         else {
-          $application->semester = addslashes($data);
+          $application->semester = dontaddslashes($data);
         }
       }
 
@@ -640,12 +653,12 @@ foreach ($newapplications as $sid => $newapplication) {
           }
           elseif (is_numeric($data)) {
             $application->course_id_1 = $data;
-            $course = get_record('course', 'id', $data);
-            $application->coursename1 = addslashes($course->fullname);
+            $course = $DB->get_record('course', array('id' => $data));
+            $application->coursename1 = dontaddslashes($course->fullname);
           }
           else {
-            $application->coursename1 = addslashes($data);
-            $course = get_record('course', 'fullname', addslashes($data));
+            $application->coursename1 = dontaddslashes($data);
+            $course = $DB->get_record('course', array('fullname' => dontaddslashes($data)));
             $application->course_id_1 = $course->id;
           }
       }
@@ -657,12 +670,12 @@ foreach ($newapplications as $sid => $newapplication) {
           }
           elseif (is_numeric($data)) {
             $application->course_id_2 = $data;
-            $course = get_record('course', 'id', $data);
-            $application->coursename2 = addslashes($course->fullname);
+            $course = $DB->get_record('course', array('id' => $data));
+            $application->coursename2 = dontaddslashes($course->fullname);
           }
           else {
-            $application->coursename2 = addslashes($data);
-            $course = get_record('course', 'fullname', addslashes($data));
+            $application->coursename2 = dontaddslashes($data);
+            $course = $DB->get_record('course', array('fullname' => dontaddslashes($data)));
             $application->course_id_2 = $course->id;
           }
       }
@@ -670,13 +683,13 @@ foreach ($newapplications as $sid => $newapplication) {
       if ($cid === '21') {
          $data = trim(strip_tags($data));
          $data = mb_substr($data, 0, 20, 'UTF-8');
-         $application->city = addslashes($data);
+         $application->city = dontaddslashes($data);
       }
 
       if ($cid === '22') {
           $data = trim(strip_tags($data));
           // Drupal select fields are protected by Drupal Form API
-          $application->country = addslashes($data);
+          $application->country = dontaddslashes($data);
       }
 
       if ($cid === '8') {
@@ -688,12 +701,11 @@ foreach ($newapplications as $sid => $newapplication) {
         $data = trim(moodle_strtolower($data));
         if (empty($data)) $data = 'user1';  // Just in case it becomes empty
         $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->username = addslashes($data);
+        $application->username = dontaddslashes($data);
       }
     }
-
-    $rows->MoveNext();
   }
+  $rows->close();
 
   if (empty($application->dob)) $application->dob = sprintf('%04d-%02d-%02d', $application->dobyear, $application->dobmonth, $application->dobday);
 
@@ -705,45 +717,45 @@ foreach ($newapplications as $sid => $newapplication) {
 
   $application->state = 0;
 
-  insert_record('peoplesapplication', $application);
+  $DB->insert_record('peoplesapplication', $application);
 }
 
 
 echo "<h1>Student Applications</h1>";
 
-if (!empty($_REQUEST['chosensemester'])) $chosensemester = stripslashes($_REQUEST['chosensemester']);
+if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
 if (!empty($_REQUEST['chosenstatus'])) $chosenstatus = $_REQUEST['chosenstatus'];
 if (!empty($_REQUEST['chosenstartyear']) && !empty($_REQUEST['chosenstartmonth']) && !empty($_REQUEST['chosenstartday'])) {
-	$chosenstartyear = (int)$_REQUEST['chosenstartyear'];
-	$chosenstartmonth = (int)$_REQUEST['chosenstartmonth'];
-	$chosenstartday = (int)$_REQUEST['chosenstartday'];
-	$starttime = gmmktime(0, 0, 0, $chosenstartmonth, $chosenstartday, $chosenstartyear);
-	//echo gmdate('d/m/Y H:i', $starttime) . '<br />';
+  $chosenstartyear = (int)$_REQUEST['chosenstartyear'];
+  $chosenstartmonth = (int)$_REQUEST['chosenstartmonth'];
+  $chosenstartday = (int)$_REQUEST['chosenstartday'];
+  $starttime = gmmktime(0, 0, 0, $chosenstartmonth, $chosenstartday, $chosenstartyear);
+  //echo gmdate('d/m/Y H:i', $starttime) . '<br />';
 }
 else {
-	$starttime = 0;
+  $starttime = 0;
 }
 if (!empty($_REQUEST['chosenendyear']) && !empty($_REQUEST['chosenendmonth']) && !empty($_REQUEST['chosenendday'])) {
-	$chosenendyear = (int)$_REQUEST['chosenendyear'];
-	$chosenendmonth = (int)$_REQUEST['chosenendmonth'];
-	$chosenendday = (int)$_REQUEST['chosenendday'];
-	$endtime = gmmktime(24, 0, 0, $chosenendmonth, $chosenendday, $chosenendyear);
-	//echo gmdate('d/m/Y H:i', $endtime) . '<br />';
+  $chosenendyear = (int)$_REQUEST['chosenendyear'];
+  $chosenendmonth = (int)$_REQUEST['chosenendmonth'];
+  $chosenendday = (int)$_REQUEST['chosenendday'];
+  $endtime = gmmktime(24, 0, 0, $chosenendmonth, $chosenendday, $chosenendyear);
+  //echo gmdate('d/m/Y H:i', $endtime) . '<br />';
 }
 else {
-	$endtime = 1.0E+20;
+  $endtime = 1.0E+20;
 }
-if (!empty($_REQUEST['chosensearch'])) $chosensearch = stripslashes($_REQUEST['chosensearch']);
+if (!empty($_REQUEST['chosensearch'])) $chosensearch = dontstripslashes($_REQUEST['chosensearch']);
 else $chosensearch = '';
 if (!empty($_REQUEST['chosenpay'])) $chosenpay = $_REQUEST['chosenpay'];
 if (!empty($_REQUEST['chosenreenrol'])) $chosenreenrol = $_REQUEST['chosenreenrol'];
 if (!empty($_REQUEST['displayextra'])) $displayextra = true;
 else $displayextra = false;
 
-$semesters = get_records('semesters', '', '', 'id DESC');
+$semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
-	$listsemester[] = $semester->semester;
-	if (!isset($chosensemester)) $chosensemester = $semester->semester;
+  $listsemester[] = $semester->semester;
+  if (!isset($chosensemester)) $chosensemester = $semester->semester;
 }
 $listsemester[] = 'All';
 
@@ -782,71 +794,71 @@ $listchosenreenrol[] = 'Re-enrolment';
 $listchosenreenrol[] = 'New student';
 
 for ($i = 2008; $i <= (int)gmdate('Y'); $i++) {
-	if (!isset($chosenstartyear)) $chosenstartyear = $i;
-	$liststartyear[] = $i;
+  if (!isset($chosenstartyear)) $chosenstartyear = $i;
+  $liststartyear[] = $i;
 }
 
 for ($i = 1; $i <= 12; $i++) {
-	if (!isset($chosenstartmonth)) $chosenstartmonth = $i;
-	$liststartmonth[] = $i;
+  if (!isset($chosenstartmonth)) $chosenstartmonth = $i;
+  $liststartmonth[] = $i;
 }
 
 for ($i = 1; $i <= 31; $i++) {
-	if (!isset($chosenstartday)) $chosenstartday = $i;
-	$liststartday[] = $i;
+  if (!isset($chosenstartday)) $chosenstartday = $i;
+  $liststartday[] = $i;
 }
 
 for ($i = (int)gmdate('Y'); $i >= 2008; $i--) {
-	if (!isset($chosenendyear)) $chosenendyear = $i;
-	$listendyear[] = $i;
+  if (!isset($chosenendyear)) $chosenendyear = $i;
+  $listendyear[] = $i;
 }
 
 for ($i = 12; $i >= 1; $i--) {
-	if (!isset($chosenendmonth)) $chosenendmonth = $i;
-	$listendmonth[] = $i;
+  if (!isset($chosenendmonth)) $chosenendmonth = $i;
+  $listendmonth[] = $i;
 }
 
 for ($i = 31; $i >= 1; $i--) {
-	if (!isset($chosenendday)) $chosenendday = $i;
-	$listendday[] = $i;
+  if (!isset($chosenendday)) $chosenendday = $i;
+  $listendday[] = $i;
 }
 
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/applications.php'; ?>">
 Display entries using the following filters...
 <table border="2" cellpadding="2">
-	<tr>
-		<td>Semester</td>
-		<td>Status</td>
-		<td>Start Year</td>
-		<td>Start Month</td>
-		<td>Start Day</td>
-		<td>End Year</td>
-		<td>End Month</td>
-		<td>End Day</td>
-		<td>Name or e-mail Contains</td>
-		<td>"Paid?" Value</td>
+  <tr>
+    <td>Semester</td>
+    <td>Status</td>
+    <td>Start Year</td>
+    <td>Start Month</td>
+    <td>Start Day</td>
+    <td>End Year</td>
+    <td>End Month</td>
+    <td>End Day</td>
+    <td>Name or e-mail Contains</td>
+    <td>"Paid?" Value</td>
     <td>Re&#8209;enrolment?</td>
-		<td>Show Extra Details</td>
-	</tr>
-	<tr>
-		<?php
-		displayoptions('chosensemester', $listsemester, $chosensemester);
-		displayoptions('chosenstatus', $liststatus, $chosenstatus);
-		displayoptions('chosenstartyear', $liststartyear, $chosenstartyear);
-		displayoptions('chosenstartmonth', $liststartmonth, $chosenstartmonth);
-		displayoptions('chosenstartday', $liststartday, $chosenstartday);
-		displayoptions('chosenendyear', $listendyear, $chosenendyear);
-		displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
-		displayoptions('chosenendday', $listendday, $chosenendday);
-		?>
-		<td><input type="text" size="40" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
-		<?php
-		displayoptions('chosenpay', $listchosenpay, $chosenpay);
+    <td>Show Extra Details</td>
+  </tr>
+  <tr>
+    <?php
+    displayoptions('chosensemester', $listsemester, $chosensemester);
+    displayoptions('chosenstatus', $liststatus, $chosenstatus);
+    displayoptions('chosenstartyear', $liststartyear, $chosenstartyear);
+    displayoptions('chosenstartmonth', $liststartmonth, $chosenstartmonth);
+    displayoptions('chosenstartday', $liststartday, $chosenstartday);
+    displayoptions('chosenendyear', $listendyear, $chosenendyear);
+    displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
+    displayoptions('chosenendday', $listendday, $chosenendday);
+    ?>
+    <td><input type="text" size="40" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
+    <?php
+    displayoptions('chosenpay', $listchosenpay, $chosenpay);
     displayoptions('chosenreenrol', $listchosenreenrol, $chosenreenrol);
-		?>
-		<td><input type="checkbox" name="displayextra" <?php if ($displayextra) echo ' CHECKED'; ?>></td>
-	</tr>
+    ?>
+    <td><input type="checkbox" name="displayextra" <?php if ($displayextra) echo ' CHECKED'; ?>></td>
+  </tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
 <input type="submit" name="filter" value="Apply Filters" />
@@ -857,36 +869,36 @@ Display entries using the following filters...
 
 
 function displayoptions($name, $options, $selectedvalue) {
-	echo '<td><select name="' . $name . '">';
-	foreach ($options as $option) {
-		if ($option === $selectedvalue) $selected = 'selected="selected"';
-		else $selected = '';
+  echo '<td><select name="' . $name . '">';
+  foreach ($options as $option) {
+    if ($option === $selectedvalue) $selected = 'selected="selected"';
+    else $selected = '';
 
-		$opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
-		echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
-	}
-	echo '</select></td>';
+    $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
+    echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+  }
+  echo '</select></td>';
 }
 
 
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
-$applications = get_records_sql('
+$applications = $DB->get_records_sql('
   SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent
   FROM mdl_peoplesapplication a
   LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
   WHERE hidden=0 ORDER BY a.datesubmitted DESC');
 if (empty($applications)) {
-	$applications = array();
+  $applications = array();
 }
 
 
 $emaildups = 0;
 foreach ($applications as $sid => $application) {
   $state = (int)$application->state;
-	if ($state === 1) $state = 011;
+  if ($state === 1) $state = 011;
 
-	if (
+  if (
     $application->datesubmitted < $starttime ||
     $application->datesubmitted > $endtime ||
     (($chosensemester !== 'All') && ($application->semester !== $chosensemester)) ||
@@ -896,40 +908,40 @@ foreach ($applications as $sid => $application) {
     (($chosenstatus  === 'Part or Fully Registered') && (!($state === 023 || $state === 032 || $state === 013 || $state === 031 || $state === 033)))
     ) {
 
-		unset($applications[$sid]);
-		continue;
-	}
+    unset($applications[$sid]);
+    continue;
+  }
 
-	if (!empty($chosensearch) &&
+  if (!empty($chosensearch) &&
     stripos($application->lastname, $chosensearch) === false &&
     stripos($application->firstname, $chosensearch) === false &&
     stripos($application->email, $chosensearch) === false) {
 
-		unset($applications[$sid]);
-		continue;
-	}
+    unset($applications[$sid]);
+    continue;
+  }
 
-	if (!empty($chosenpay) && $chosenpay !== 'Any') {
-		if ($chosenpay === 'No Indication Given' && $application->paymentmechanism != 0) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'Not Confirmed (all)' && ($application->paymentmechanism == 1 || $application->paymentmechanism >= 100)) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'Barclays not confirmed' && $application->paymentmechanism != 2) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'Diamond not confirmed' && $application->paymentmechanism != 3) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'Western Union not confirmed' && $application->paymentmechanism != 4) {
-			unset($applications[$sid]);
-			continue;
-		}
+  if (!empty($chosenpay) && $chosenpay !== 'Any') {
+    if ($chosenpay === 'No Indication Given' && $application->paymentmechanism != 0) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Not Confirmed (all)' && ($application->paymentmechanism == 1 || $application->paymentmechanism >= 100)) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Barclays not confirmed' && $application->paymentmechanism != 2) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Diamond not confirmed' && $application->paymentmechanism != 3) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Western Union not confirmed' && $application->paymentmechanism != 4) {
+      unset($applications[$sid]);
+      continue;
+    }
     if ($chosenpay === 'Indian Confederation not confirmed' && $application->paymentmechanism != 5) {
       unset($applications[$sid]);
       continue;
@@ -946,30 +958,30 @@ foreach ($applications as $sid => $application) {
       unset($applications[$sid]);
       continue;
     }
-		if ($chosenpay === 'Promised End Semester' && $application->paymentmechanism != 6) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'Waiver' && $application->paymentmechanism != 100) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'RBS Confirmed' && $application->paymentmechanism != 1) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'Barclays Confirmed' && $application->paymentmechanism != 102) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'Diamond Confirmed' && $application->paymentmechanism != 103) {
-			unset($applications[$sid]);
-			continue;
-		}
-		if ($chosenpay === 'Western Union Confirmed' && $application->paymentmechanism != 104) {
-			unset($applications[$sid]);
-			continue;
-		}
+    if ($chosenpay === 'Promised End Semester' && $application->paymentmechanism != 6) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Waiver' && $application->paymentmechanism != 100) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'RBS Confirmed' && $application->paymentmechanism != 1) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Barclays Confirmed' && $application->paymentmechanism != 102) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Diamond Confirmed' && $application->paymentmechanism != 103) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Western Union Confirmed' && $application->paymentmechanism != 104) {
+      unset($applications[$sid]);
+      continue;
+    }
     if ($chosenpay === 'Indian Confederation Confirmed' && $application->paymentmechanism != 105) {
       unset($applications[$sid]);
       continue;
@@ -986,7 +998,7 @@ foreach ($applications as $sid => $application) {
       unset($applications[$sid]);
       continue;
     }
-	}
+  }
 
   if (!empty($chosenreenrol) && $chosenreenrol !== 'Any') {
     if ($chosenreenrol === 'Re-enrolment' && $application->nid != 80) {
@@ -999,27 +1011,84 @@ foreach ($applications as $sid => $application) {
     }
   }
 
-	if ($application->hidden) {
-		unset($applications[$sid]);
-		continue;
-	}
+  if ($application->hidden) {
+    unset($applications[$sid]);
+    continue;
+  }
 
   if (empty($emailcounts[$application->email])) $emailcounts[$application->email] = 1;
-	else {
+  else {
     $emailcounts[$application->email]++;
-		$emaildups++;
-	}
+    $emaildups++;
+  }
 }
 
 
 if ($sendemails) {
   if (empty($_POST['reg'])) $_POST['reg'] = '/^[a-zA-Z0-9_.-]/';
-  sendemails($applications, strip_tags(stripslashes($_POST['emailsubject'])), strip_tags(stripslashes($_POST['emailbody'])), stripslashes($_POST['reg']));
+  sendemails($applications, strip_tags(dontstripslashes($_POST['emailsubject'])), strip_tags(dontstripslashes($_POST['emailbody'])), dontstripslashes($_POST['reg']));
 }
 
 
-echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
-echo "<tr>";
+//echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+//echo "<tr>";
+$table = new html_table();
+
+if (!$displayextra) {
+  $table->head = array(
+    'Submitted',
+    'sid',
+    'Approved?',
+    'Paid?',
+    'Registered?',
+    '',
+    'Family name',
+    'Given name',
+    'Email address',
+    'Semester',
+    'First module',
+    'Second module',
+    'DOB dd/mm/yyyy',
+    'Gender',
+    'City/Town',
+    'Country',
+    '',
+    ''
+  );
+}
+else {
+  $table->head = array(
+    'Submitted',
+    'sid',
+    'Approved?',
+    'Paid?',
+    'Registered?',
+    'Family name',
+    'Given name',
+    'Email address',
+    'Semester',
+    'First module',
+    'Second module',
+    'DOB dd/mm/yyyy',
+    'Gender',
+    'City/Town',
+    'Country',
+    'Address</td>',
+    'Current employment',
+    'Current employment details',
+    'Qualification',
+    'Postgraduate Qualification',
+    'Education Details',
+    'Reasons for wanting to enrol',
+    'Desired Moodle Username',
+    'Moodle UserID',
+    '',
+    ''
+  );
+}
+
+//$table->align = array ("left", "left", "left", "left", "left", "center", "center", "center");
+//$table->width = "95%";
 
 /*
 state
@@ -1068,6 +1137,7 @@ Desired Moodle Username
 21
 */
 
+/*
 echo '<td>Submitted</td>';
 echo '<td>sid</td>';
 echo '<td>Approved?</td>';
@@ -1087,20 +1157,21 @@ echo '<td>Country</td>';
 //echo '<td>Method of payment</td>';
 //echo '<td>Payment Identification</td>';
 if ($displayextra) {
-	echo "<td>Address</td>";
-	echo "<td>Current employment</td>";
-	echo "<td>Current employment details</td>";
-	echo "<td>Qualification</td>";
-	echo "<td>Postgraduate Qualification</td>";
-	echo "<td>Education Details</td>";
-	echo "<td>Reasons for wanting to enrol</td>";
-	echo "<td>Desired Moodle Username</td>";
-	echo "<td>Moodle UserID</td>";
-	//echo "<td>Application SID</td>";
+  echo "<td>Address</td>";
+  echo "<td>Current employment</td>";
+  echo "<td>Current employment details</td>";
+  echo "<td>Qualification</td>";
+  echo "<td>Postgraduate Qualification</td>";
+  echo "<td>Education Details</td>";
+  echo "<td>Reasons for wanting to enrol</td>";
+  echo "<td>Desired Moodle Username</td>";
+  echo "<td>Moodle UserID</td>";
+  //echo "<td>Application SID</td>";
 }
 echo '<td></td>';
 echo '<td></td>';
 echo "</tr>";
+*/
 
 $n = 0;
 $napproved = 0;
@@ -1109,244 +1180,356 @@ $nregistered = 0;
 $modules = array();
 foreach ($applications as $sid => $application) {
   $state = (int)$application->state;
-	// Legacy fixups...
-	if ($state === 2) {
-		$state = 022;
-	}
-	if ($state === 1) {
-		$state = 011;
-	}
-	// Allowed transitions for Module 1 state (00X0) or Module 2 state (0X00):
-	// state 0 (not processed) ..> state 2 (defered) OR state 1 (approved)
-	// state 2 (defered) ..> state 1 (approved)
-	// state 1 (approved) ..> state 3 (registered) OR state 2 (defered)
-	// state 3 (registered) ..> state 2 (defered)
-	// If any state changes from 0, all must change from 0!
-	// If Module 2 is empty, its state should change along with Module 1's
+  // Legacy fixups...
+  if ($state === 2) {
+    $state = 022;
+  }
+  if ($state === 1) {
+    $state = 011;
+  }
+  // Allowed transitions for Module 1 state (00X0) or Module 2 state (0X00):
+  // state 0 (not processed) ..> state 2 (defered) OR state 1 (approved)
+  // state 2 (defered) ..> state 1 (approved)
+  // state 1 (approved) ..> state 3 (registered) OR state 2 (defered)
+  // state 3 (registered) ..> state 2 (defered)
+  // If any state changes from 0, all must change from 0!
+  // If Module 2 is empty, its state should change along with Module 1's
 
-	// Allowed States:
-	// 00	0
-	// 22	18
-	// 12	10
-	// 21	17
-	// 11	9
-	// 23	19
-	// 32	26
-	// 13	11
-	// 31	25
-	// 33	27
-	// If there are any 3's, Moodle UserID must be set
+  // Allowed States:
+  // 00 0
+  // 22 18
+  // 12 10
+  // 21 17
+  // 11 9
+  // 23 19
+  // 32 26
+  // 13 11
+  // 31 25
+  // 33 27
+  // If there are any 3's, Moodle UserID must be set
 
-	$state1 = $state & 07;
-	$state2 = $state & 070;
+  $state1 = $state & 07;
+  $state2 = $state & 070;
 
   $application->userid = (int)$application->userid;
 
-	if (true) {
-		echo '<tr>';
-    echo '<td>' . gmdate('d/m/Y H:i', $application->datesubmitted) . '</td>';
-		echo '<td>' . $sid . '</td>';
+  if (true) {
+    $rowdata = array();
+    //echo '<tr>';
+    //echo '<td>' . gmdate('d/m/Y H:i', $application->datesubmitted) . '</td>';
+    $rowdata[] = gmdate('d/m/Y H:i', $application->datesubmitted);
+    //echo '<td>' . $sid . '</td>';
+    $rowdata[] = $sid;
 
-		if ($state === 0) echo '<td><span style="color:red">No</span></td>';
-		elseif ($state === 022) echo '<td><span style="color:blue">Denied or Deferred</span></td>';
-		elseif ($state1===02 || $state2===020) echo '<td><span style="color:blue">Some</span></td>';
-		else echo '<td><span style="color:green">Yes</span></td>';
+    //if ($state === 0) echo '<td><span style="color:red">No</span></td>';
+    //elseif ($state === 022) echo '<td><span style="color:blue">Denied or Deferred</span></td>';
+    //elseif ($state1===02 || $state2===020) echo '<td><span style="color:blue">Some</span></td>';
+    //else echo '<td><span style="color:green">Yes</span></td>';
+    if ($state === 0) $z = '<span style="color:red">No</span>';
+    elseif ($state === 022) $z = '<span style="color:blue">Denied or Deferred</span>';
+    elseif ($state1===02 || $state2===020) $z = '<span style="color:blue">Some</span>';
+    else $z = '<span style="color:green">Yes</span>';
+    $rowdata[] = $z;
 
-		if (empty($application->paymentmechanism)) $mechanism = '';
-		elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
-		elseif ($application->paymentmechanism == 2) $mechanism = ' Barclays';
-		elseif ($application->paymentmechanism == 3) $mechanism = ' Diamond';
-		elseif ($application->paymentmechanism == 4) $mechanism = ' Western Union';
-		elseif ($application->paymentmechanism == 5) $mechanism = ' Indian Confederation';
-		elseif ($application->paymentmechanism == 6) $mechanism = ' Promised End Semester';
+    if (empty($application->paymentmechanism)) $mechanism = '';
+    elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
+    elseif ($application->paymentmechanism == 2) $mechanism = ' Barclays';
+    elseif ($application->paymentmechanism == 3) $mechanism = ' Diamond';
+    elseif ($application->paymentmechanism == 4) $mechanism = ' Western Union';
+    elseif ($application->paymentmechanism == 5) $mechanism = ' Indian Confederation';
+    elseif ($application->paymentmechanism == 6) $mechanism = ' Promised End Semester';
     elseif ($application->paymentmechanism == 7) $mechanism = ' Posted Travellers Cheques';
     elseif ($application->paymentmechanism == 8) $mechanism = ' Posted Cash';
     elseif ($application->paymentmechanism == 9) $mechanism = ' MoneyGram';
-		elseif ($application->paymentmechanism == 100) $mechanism = ' Waiver';
-		elseif ($application->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
-		elseif ($application->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
-		elseif ($application->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
-		elseif ($application->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
+    elseif ($application->paymentmechanism == 100) $mechanism = ' Waiver';
+    elseif ($application->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
+    elseif ($application->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
+    elseif ($application->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
+    elseif ($application->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
     elseif ($application->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';
     elseif ($application->paymentmechanism == 108) $mechanism = ' Posted Cash Confirmed';
     elseif ($application->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
-		else  $mechanism = '';
+    else  $mechanism = '';
 
-		if ($application->costpaid < .01) echo '<td><span style="color:red">No' . $mechanism . '</span></td>';
-		elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes' . $mechanism . '</span></td>';
-		else echo '<td><span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span></td>';
+    //if ($application->costpaid < .01) echo '<td><span style="color:red">No' . $mechanism . '</span></td>';
+    //elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes' . $mechanism . '</span></td>';
+    //else echo '<td><span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span></td>';
+    if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
+    elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+    else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+    $rowdata[] = $z;
 
-    echo '<td>';
-    if (!($state1===03 || $state2===030)) echo '<span style="color:red">No</span>';
-    elseif ($state === 033) echo '<span style="color:green">Yes</span>';
-    else echo '<span style="color:blue">Some</span>';
+    //echo '<td>';
+    //if (!($state1===03 || $state2===030)) echo '<span style="color:red">No</span>';
+    //elseif ($state === 033) echo '<span style="color:green">Yes</span>';
+    //else echo '<span style="color:blue">Some</span>';
+    //
+    //if ($application->notepresent) echo '<br />(Note Present)';
+    //echo '</td>';
+    if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';
+    elseif ($state === 033) $z = '<span style="color:green">Yes</span>';
+    else $z = '<span style="color:blue">Some</span>';
 
-    if ($application->notepresent) echo '<br />(Note Present)';
-    echo '</td>';
+    if ($application->notepresent) $z .= '<br />(Note Present)';
 
-		if (!$displayextra) {
-?>
-<td>
-<form method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>" target="_blank">
+    $rowdata[] = $z;
 
-<input type="hidden" name="state" value="<?php echo $state; ?>" />
-<input type="hidden" name="29" value="<?php echo htmlspecialchars($application->userid, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="1" value="<?php echo htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="2" value="<?php echo htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="11" value="<?php echo htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="16" value="<?php echo htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="18" value="<?php echo htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="19" value="<?php echo htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="dobday" value="<?php echo $application->dobday; ?>" />
-<input type="hidden" name="dobmonth" value="<?php echo $application->dobmonth; ?>" />
-<input type="hidden" name="dobyear" value="<?php echo $application->dobyear; ?>" />
-<input type="hidden" name="12" value="<?php echo htmlspecialchars($application->gender, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="14" value="<?php echo htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="13" value="<?php echo htmlspecialchars($application->country, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="34" value="<?php echo htmlspecialchars($application->qualification, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="35" value="<?php echo htmlspecialchars($application->higherqualification, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="36" value="<?php echo htmlspecialchars($application->employment, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="31" value="<?php echo htmlspecialchars($application->methodofpayment, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="21" value="<?php echo htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8'); ?>" />
-<span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8'); ?></textarea>
-</span>
-<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
-<input type="hidden" name="nid" value="<?php echo $application->nid; ?>" />
-<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
-<input type="hidden" name="markapp" value="1" />
-<input type="submit" name="approveapplication" value="Details" />
-</form>
-<?php
-    if ($application->nid == 80) echo 'Re&#8209;enrolment';
-		echo '</td>';
-		}
-    echo "<td>" . htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8') . "</td>";
-    echo "<td>" . htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8') . "</td>";
+    if (!$displayextra) {
+//?X>
+//<td>
+//<form method="post" action="<X?php echo $CFG->wwwroot . '/course/app.php'; ?X>" target="_blank">
+//
+//<input type="hidden" name="state" value="<X?php echo $state; ?X>" />
+//<input type="hidden" name="29" value="<X?php echo htmlspecialchars($application->userid, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="1" value="<X?php echo htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="2" value="<X?php echo htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="11" value="<X?php echo htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="16" value="<X?php echo htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="18" value="<X?php echo htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="19" value="<X?php echo htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="dobday" value="<X?php echo $application->dobday; ?X>" />
+//<input type="hidden" name="dobmonth" value="<X?php echo $application->dobmonth; ?X>" />
+//<input type="hidden" name="dobyear" value="<X?php echo $application->dobyear; ?X>" />
+//<input type="hidden" name="12" value="<X?php echo htmlspecialchars($application->gender, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="14" value="<X?php echo htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="13" value="<X?php echo htmlspecialchars($application->country, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="34" value="<X?php echo htmlspecialchars($application->qualification, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="35" value="<X?php echo htmlspecialchars($application->higherqualification, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="36" value="<X?php echo htmlspecialchars($application->employment, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="31" value="<X?php echo htmlspecialchars($application->methodofpayment, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<input type="hidden" name="21" value="<X?php echo htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8'); ?X>" />
+//<span style="display: none;">
+//<textarea name="3" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'); ?X></textarea>
+//<textarea name="7" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'); ?X></textarea>
+//<textarea name="8" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'); ?X></textarea>
+//<textarea name="10" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'); ?X></textarea>
+//<textarea name="32" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8'); ?X></textarea>
+//</span>
+//<input type="hidden" name="sid" value="<X?php echo $sid; ?X>" />
+//<input type="hidden" name="nid" value="<X?php echo $application->nid; ?X>" />
+//<input type="hidden" name="sesskey" value="<X?php echo $USER->sesskey ?X>" />
+//<input type="hidden" name="markapp" value="1" />
+//<input type="submit" name="approveapplication" value="Details" />
+//</form>
+//<X?php
+//    if ($application->nid == 80) echo 'Re&#8209;enrolment';
+//    echo '</td>';
+      $z  = '<form method="post" action="' .  $CFG->wwwroot . '/course/app.php" target="_blank">';
+
+      $z .= '<input type="hidden" name="state" value="' . $state . '" />';
+      $z .= '<input type="hidden" name="29" value="' . htmlspecialchars($application->userid, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="1" value="' . htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="2" value="' . htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="11" value="' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="16" value="' . htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="18" value="' . htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="19" value="' . htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="dobday" value="' . $application->dobday . '" />';
+      $z .= '<input type="hidden" name="dobmonth" value="' . $application->dobmonth . '" />';
+      $z .= '<input type="hidden" name="dobyear" value="' . $application->dobyear . '" />';
+      $z .= '<input type="hidden" name="12" value="' . htmlspecialchars($application->gender, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="14" value="' . htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="13" value="' . htmlspecialchars($application->country, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="34" value="' . htmlspecialchars($application->qualification, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="35" value="' . htmlspecialchars($application->higherqualification, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="36" value="' . htmlspecialchars($application->employment, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="31" value="' . htmlspecialchars($application->methodofpayment, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="21" value="' . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<span style="display: none;">';
+      $z .= '<textarea name="3" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8') . '</textarea>';
+      $z .= '<textarea name="7" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8') . '</textarea>';
+      $z .= '<textarea name="8" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8') . '</textarea>';
+      $z .= '<textarea name="10" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8') . '</textarea>';
+      $z .= '<textarea name="32" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
+      $z .= '</span>';
+      $z .= '<input type="hidden" name="sid" value="' . $sid . '" />';
+      $z .= '<input type="hidden" name="nid" value="' . $application->nid . '" />';
+      $z .= '<input type="hidden" name="sesskey" value="' . $USER->sesskey . '" />';
+      $z .= '<input type="hidden" name="markapp" value="1" />';
+      $z .= '<input type="submit" name="approveapplication" value="Details" />';
+
+      $z .= '</form>';
+      if ($application->nid == 80) $z .= 'Re&#8209;enrolment';
+      $rowdata[] = $z;
+    }
+
+    //echo "<td>" . htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8') . "</td>";
+    $rowdata[] = htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8');
+
+    //echo "<td>" . htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8') . "</td>";
+    $rowdata[] = htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8');
+
     if ($emailcounts[$application->email] === 1) {
-      echo "<td>" . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . "</td>";
-		}
-		else {
-      echo "<td>" . '<span style="color:navy">**</span>' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . "</td>";
-		}
-    echo "<td>" . htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8') . "</td>";
+      //echo "<td>" . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . "</td>";
+      $z = htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
+    }
+    else {
+      //echo "<td>" . '<span style="color:navy">**</span>' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . "</td>";
+      $z = '<span style="color:navy">**</span>' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
+    }
+    $rowdata[] = $z;
 
-		echo '<td>';
-		if ($state1 === 02) {
-			echo '<span style="color:red">';
-		}
-		elseif ($state1 === 01) {
-			echo '<span style="color:#FF8C00">';
-		}
-		elseif ($state1 === 03) {
-			echo '<span style="color:green">';
-		}
-		else {
-			echo '<span>';
-		}
-    echo htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '</span></td>';
+    //echo "<td>" . htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8') . "</td>";
+    $rowdata[] = htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8');
 
-		echo '<td>';
-		if ($state2 === 020) {
-			echo '<span style="color:red">';
-		}
-		elseif ($state2 === 010) {
-			echo '<span style="color:#FF8C00">';
-		}
-		elseif ($state2 === 030) {
-			echo '<span style="color:green">';
-		}
-		else {
-			echo '<span>';
-		}
-    echo htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span></td>';
+    //echo '<td>';
+    if ($state1 === 02) {
+      //echo '<span style="color:red">';
+      $z = '<span style="color:red">';
+    }
+    elseif ($state1 === 01) {
+      //echo '<span style="color:#FF8C00">';
+      $z = '<span style="color:#FF8C00">';
+    }
+    elseif ($state1 === 03) {
+      //echo '<span style="color:green">';
+      $z = '<span style="color:green">';
+    }
+    else {
+      //echo '<span>';
+      $z = '<span>';
+    }
+    //echo htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '</span></td>';
+    $rowdata[] = $z . htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '</span>';
 
-    echo "<td>" . $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear . "</td>";
-    echo "<td>" . $application->gender . "</td>";
-    echo "<td>" . htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8') . "</td>";
-    if (empty($countryname[$application->country])) echo "<td></td>";
-    else echo "<td>" . $countryname[$application->country] . "</td>";
-    //echo "<td>" . $application->methodofpayment . "</td>";
-    //echo "<td>" . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . "</td>";
+    //echo '<td>';
+    if ($state2 === 020) {
+      //echo '<span style="color:red">';
+      $z = '<span style="color:red">';
+    }
+    elseif ($state2 === 010) {
+      //echo '<span style="color:#FF8C00">';
+      $z = '<span style="color:#FF8C00">';
+    }
+    elseif ($state2 === 030) {
+      //echo '<span style="color:green">';
+      $z = '<span style="color:green">';
+    }
+    else {
+      //echo '<span>';
+      $z = '<span>';
+    }
+    //echo htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span></td>';
+    $rowdata[] = $z . htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span>';
 
-		if ($displayextra) {
-      echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'))) . "</td>";
+    //echo "<td>" . $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear . "</td>";
+    $rowdata[] = $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
 
-      if (empty($employmentname[$application->employment])) echo "<td></td>";
-      else echo "<td>" . $employmentname[$application->employment] . "</td>";
+    //echo "<td>" . $application->gender . "</td>";
+    $rowdata[] = $application->gender;
 
-      echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'))) . "</td>";
+    //echo "<td>" . htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8') . "</td>";
+    $rowdata[] = htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8');
 
-      if (empty($qualificationname[$application->qualification])) echo "<td></td>";
-      else echo "<td>" . $qualificationname[$application->qualification] . "</td>";
-      if (empty($higherqualificationname[$application->higherqualification])) echo "<td></td>";
-      else echo "<td>" . $higherqualificationname[$application->higherqualification] . "</td>";
+    //if (empty($countryname[$application->country])) echo "<td></td>";
+    //else echo "<td>" . $countryname[$application->country] . "</td>";
+    if (empty($countryname[$application->country])) $z = '';
+    else $z = $countryname[$application->country];
+    $rowdata[] = $z;
 
-      echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'))) . "</td>";
-      echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'))) . "</td>";
-      echo "<td>" . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . "</td>";
-      if (empty($application->userid)) echo '<td></td>';
-      else echo "<td>" . $application->userid . "</td>";
-			//echo '<td>' . $sid . '</td>';
-		}
-    if (empty($application->userid)) echo '<td></td>';
-    else echo '<td><a href="' . $CFG->wwwroot . '/course/student.php?id=' . $application->userid . '" target="_blank">Student Grades</a></td>';
-    if (empty($application->userid)) echo '<td></td>';
-    else echo '<td><a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a></td>';
-		echo "</tr>";
+    if ($displayextra) {
+      //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'))) . "</td>";
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8')));
+
+      //if (empty($employmentname[$application->employment])) echo "<td></td>";
+      //else echo "<td>" . $employmentname[$application->employment] . "</td>";
+      if (empty($employmentname[$application->employment])) $z = '';
+      else $z = $employmentname[$application->employment];
+      $rowdata[] = $z;
+
+      //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'))) . "</td>";
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8')));
+
+      //if (empty($qualificationname[$application->qualification])) echo "<td></td>";
+      //else echo "<td>" . $qualificationname[$application->qualification] . "</td>";
+      if (empty($qualificationname[$application->qualification])) $z = '';
+      else $z = $qualificationname[$application->qualification];
+      $rowdata[] = $z;
+
+      //if (empty($higherqualificationname[$application->higherqualification])) echo "<td></td>";
+      //else echo "<td>" . $higherqualificationname[$application->higherqualification] . "</td>";
+      if (empty($higherqualificationname[$application->higherqualification])) $z = '';
+      else $z = $higherqualificationname[$application->higherqualification];
+      $rowdata[] = $z;
+
+      //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'))) . "</td>";
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8')));
+
+      //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'))) . "</td>";
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8')));
+
+      //echo "<td>" . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . "</td>";
+      $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
+
+      //if (empty($application->userid)) echo '<td></td>';
+      //else echo "<td>" . $application->userid . "</td>";
+      if (empty($application->userid)) $z = '';
+      else $z = $application->userid;
+      $rowdata[] = $z;
+    }
+
+    //if (empty($application->userid)) echo '<td></td>';
+    //else echo '<td><a href="' . $CFG->wwwroot . '/course/student.php?id=' . $application->userid . '" target="_blank">Student Grades</a></td>';
+    if (empty($application->userid)) $z = '';
+    else $z = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $application->userid . '" target="_blank">Student Grades</a>';
+    $rowdata[] = $z;
+
+    //if (empty($application->userid)) echo '<td></td>';
+    //else echo '<td><a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a></td>';
+    if (empty($application->userid)) $z = '';
+    else $z = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a>';
+    $rowdata[] = $z;
+
+    //echo "</tr>";
 
     if (empty($modules[$application->coursename1])) {
       $modules[$application->coursename1] = 1;
-		}
-		else {
+    }
+    else {
       $modules[$application->coursename1]++;
-		}
+    }
     if (!empty($application->coursename2)) {
       if (empty($modules[$application->coursename2])) {
         $modules[$application->coursename2] = 1;
-			}
-			else {
+      }
+      else {
         $modules[$application->coursename2]++;
-			}
-		}
+      }
+    }
 
-		$n++;
+    $n++;
 
-		if ($state1===01 || $state1===03 || $state2===010 || $state2===030) {
-			$napproved++;
+    if ($state1===01 || $state1===03 || $state2===010 || $state2===030) {
+      $napproved++;
 
-			// Is Module 1 Approved/Registered
-			if ($state1===01 || $state1===03) {
+      // Is Module 1 Approved/Registered
+      if ($state1===01 || $state1===03) {
         if (empty($moduleapprovals[$application->coursename1])) {
           $moduleapprovals[$application->coursename1] = 1;
-				}
-				else {
+        }
+        else {
           $moduleapprovals[$application->coursename1]++;
-				}
-			}
+        }
+      }
 
-			// Is Module 2 Approved/Registered
-			if ($state2===010 || $state2===030) {
+      // Is Module 2 Approved/Registered
+      if ($state2===010 || $state2===030) {
         if (!empty($application->coursename2)) {
           if (empty($moduleapprovals[$application->coursename2])) {
             $moduleapprovals[$application->coursename2] = 1;
-					}
-					else {
+          }
+          else {
             $moduleapprovals[$application->coursename2]++;
-					}
-				}
-			}
+          }
+        }
+      }
 
       if (empty($gender[$application->gender])) {
         $gender[$application->gender] = 1;
-			}
-			else {
+      }
+      else {
         $gender[$application->gender]++;
-			}
+      }
 
       if (empty($application->dobyear)) $range = '';
       elseif ($application->dobyear >= 1990) $range = '1990+';
@@ -1354,51 +1537,53 @@ foreach ($applications as $sid => $application) {
       elseif ($application->dobyear >= 1970) $range = '1970-1979';
       elseif ($application->dobyear >= 1960) $range = '1960-1969';
       elseif ($application->dobyear >= 1950) $range = '1950-1959';
-			else $range = '1900-1950';
-			if (empty($age[$range])) {
-				$age[$range] = 1;
-			}
-			else {
-				$age[$range]++;
-			}
+      else $range = '1900-1950';
+      if (empty($age[$range])) {
+        $age[$range] = 1;
+      }
+      else {
+        $age[$range]++;
+      }
 
       if (empty($country[$countryname[$application->country]])) {
         $country[$countryname[$application->country]] = 1;
-			}
-			else {
+      }
+      else {
         $country[$countryname[$application->country]]++;
-			}
+      }
 
       $listofemails[]  = htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
-		}
-		if ($state1===03 || $state2===030) {
-			$nregistered++;
+    }
+    if ($state1===03 || $state2===030) {
+      $nregistered++;
 
-			// Is Module 1 Registered
-			if ($state1 === 03) {
+      // Is Module 1 Registered
+      if ($state1 === 03) {
         if (empty($moduleregistrations[$application->coursename1])) {
           $moduleregistrations[$application->coursename1] = 1;
-				}
-				else {
+        }
+        else {
           $moduleregistrations[$application->coursename1]++;
-				}
-			}
+        }
+      }
 
-			// Is Module 2 Registered
-			if ($state2 === 030) {
+      // Is Module 2 Registered
+      if ($state2 === 030) {
         if (!empty($application->coursename2)) {
           if (empty($moduleregistrations[$application->coursename2])) {
             $moduleregistrations[$application->coursename2] = 1;
-					}
-					else {
+          }
+          else {
             $moduleregistrations[$application->coursename2]++;
-					}
-				}
-			}
-		}
-	}
+          }
+        }
+      }
+    }
+    $table->data[] = $rowdata;
+  }
 }
-echo '</table>';
+echo html_writer::table($table);
+//echo '</table>';
 echo '<br />Total Applications: ' . $n;
 echo '<br />Total Approved (or part Approved): ' . $napproved;
 echo '<br />Total Registered (or part Registered): ' . $nregistered;
@@ -1418,14 +1603,14 @@ ksort($modules);
 $n = 0;
 
 foreach ($modules as $product => $number) {
-	echo "<tr>";
-	echo "<td>" . $product . "</td>";
-	echo "<td>" . $number . "</td>";
-	if (empty($moduleapprovals[$product])) { echo "<td>0</td>";} else { 	echo "<td>" . $moduleapprovals[$product] . "</td>";}
-	if (empty($moduleregistrations[$product])) { echo "<td>0</td>";} else { echo "<td>" . $moduleregistrations[$product] . "</td>";}
+  echo "<tr>";
+  echo "<td>" . $product . "</td>";
+  echo "<td>" . $number . "</td>";
+  if (empty($moduleapprovals[$product])) { echo "<td>0</td>";} else {   echo "<td>" . $moduleapprovals[$product] . "</td>";}
+  if (empty($moduleregistrations[$product])) { echo "<td>0</td>";} else { echo "<td>" . $moduleregistrations[$product] . "</td>";}
     echo "</tr>";
 
-	$n++;
+  $n++;
 }
 echo '</table>';
 echo '<br/>Number of Modules: ' . $n . '<br /><br />';
@@ -1454,19 +1639,24 @@ Status: "Part or Fully Approved"<br />
 <br />
 Also look at list of e-mails sent to verify they went! (No subject and they will not go!)<br /><br />
 <form id="emailsendform" method="post" action="<?php
-  echo $CFG->wwwroot . '/course/applications.php?'
-    . 'chosensemester=' . urlencode(stripslashes($_REQUEST['chosensemester']))
-    . '&chosenstatus=' . urlencode($_REQUEST['chosenstatus'])
-    . '&chosenstartyear=' . $_REQUEST['chosenstartyear']
-    . '&chosenstartmonth=' . $_REQUEST['chosenstartmonth']
-    . '&chosenstartday=' . $_REQUEST['chosenstartday']
-    . '&chosenendyear=' . $_REQUEST['chosenendyear']
-    . '&chosenendmonth=' . $_REQUEST['chosenendmonth']
-    . '&chosenendday=' . $_REQUEST['chosenendday']
-    . '&chosensearch=' . urlencode(stripslashes($_REQUEST['chosensearch']))
-    . '&chosenpay=' . urlencode($_REQUEST['chosenpay'])
-    . '&chosenreenrol=' . urlencode($_REQUEST['chosenreenrol'])
-    . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1');
+  if (!empty($_REQUEST['chosensemester'])) {
+    echo $CFG->wwwroot . '/course/applications.php?'
+      . 'chosensemester=' . urlencode(dontstripslashes($_REQUEST['chosensemester']))
+      . '&chosenstatus=' . urlencode($_REQUEST['chosenstatus'])
+      . '&chosenstartyear=' . $_REQUEST['chosenstartyear']
+      . '&chosenstartmonth=' . $_REQUEST['chosenstartmonth']
+      . '&chosenstartday=' . $_REQUEST['chosenstartday']
+      . '&chosenendyear=' . $_REQUEST['chosenendyear']
+      . '&chosenendmonth=' . $_REQUEST['chosenendmonth']
+      . '&chosenendday=' . $_REQUEST['chosenendday']
+      . '&chosensearch=' . urlencode(dontstripslashes($_REQUEST['chosensearch']))
+      . '&chosenpay=' . urlencode($_REQUEST['chosenpay'])
+      . '&chosenreenrol=' . urlencode($_REQUEST['chosenreenrol'])
+      . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1');
+  }
+  else {
+    echo $CFG->wwwroot . '/course/applications.php';
+  }
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 <textarea name="emailbody" rows="15" cols="75" wrap="hard">
@@ -1483,26 +1673,30 @@ Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 
 echo '<br /><br />';
 
-notice(get_string('continue'), "$CFG->wwwroot/");
+//notice(get_string('continue'), "$CFG->wwwroot/");
+
+//echo html_writer::end_tag('div');
+
+echo $OUTPUT->footer();
 
 
 function displaystat($stat, $title) {
-	echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
-	echo "<tr>";
-	echo "<td>$title</td>";
-	echo "<td>Number</td>";
-	echo "</tr>";
+  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+  echo "<tr>";
+  echo "<td>$title</td>";
+  echo "<td>Number</td>";
+  echo "</tr>";
 
-	ksort($stat);
+  ksort($stat);
 
-	foreach ($stat as $key => $number) {
-		echo "<tr>";
-		echo "<td>" . $key . "</td>";
-		echo "<td>" . $number . "</td>";
-	    echo "</tr>";
-	}
-	echo '</table>';
-	echo '<br/>';
+  foreach ($stat as $key => $number) {
+    echo "<tr>";
+    echo "<td>" . $key . "</td>";
+    echo "<td>" . $number . "</td>";
+      echo "</tr>";
+  }
+  echo '</table>';
+  echo '<br/>';
 }
 
 
@@ -1541,30 +1735,36 @@ function sendapprovedmail($email, $subject, $message) {
   global $CFG;
 
   // Dummy User
-  $user = new object;
+  $user = new stdClass();
   $user->id = 999999999;
-  // $user->email = 'alanabarrett0@gmail.com';
   $user->email = $email;
   $user->maildisplay = true;
-  $user->mnethostid = 1;
+  $user->mnethostid = $CFG->mnet_localhost_id;
 
-  // $supportuser = generate_email_supportuser();
-  $supportuser = new object;
+  $supportuser = new stdClass();
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
   $supportuser->maildisplay = true;
 
-  $messagehtml = text_to_html($message, false, false, true);
-
-  $user->mailformat = 1;  // Always send HTML version as well
-
-  $ret = email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
 
   $user->email = 'applicationresponses@peoples-uni.org';
 
-  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
 
   return $ret;
+}
+
+
+function dontaddslashes($x) {
+  return $x;
+}
+
+
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

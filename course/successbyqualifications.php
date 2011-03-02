@@ -280,45 +280,53 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/successbyqualifications.php');
+
 
 if (!empty($_POST['markfilter'])) {
 	redirect($CFG->wwwroot . '/course/successbyqualifications.php?'
 		. 'id=' . $_POST['id']
-		. '&chosenstatus=' . urlencode(stripslashes($_POST['chosenstatus']))
-		. '&chosensemester=' . urlencode(stripslashes($_POST['chosensemester']))
+		. '&chosenstatus=' . urlencode(dontstripslashes($_POST['chosenstatus']))
+		. '&chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
 		. (empty($_POST['sortbyaccess']) ? '&sortbyaccess=0' : '&sortbyaccess=1')
 		);
 }
 
 
+$PAGE->set_pagelayout('embedded');
+
 require_login();
+
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
-$isteacher = isteacherinanycourse();
+$isteacher = is_peoples_teacher();
 if (!$isteacher) {echo '<h1>You must be a teacher to do this!</h1>'; die();}
-
-print_header('Report on Grades versus Qualifications');
-
 
 $courseid = optional_param('id', 0, PARAM_INT);
 if ($courseid) {
-	$courserecord = get_record('course', 'id', $courseid);
+  $courserecord = $DB->get_record('course', array('id' => $courseid));
 	if (empty($courserecord)) {
 		echo '<h1>Course does not exist!</h1>';
 		die();
 	}
 	$courseidsql1 = "AND e.courseid=$courseid";
 	$courseidsql2 = "AND i.courseid=$courseid";
-	echo '<h1>Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8') . '</h1>';
+  echo '<h1>Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8') . '</h1>';
+  $PAGE->set_title('Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
+  $PAGE->set_heading('Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
 }
 else {
 	$courseidsql1 = '';
 	$courseidsql2 = '';
-	echo '<h1>Report on Student Grades versus Qualifications and Employment</h1>';
+  echo '<h1>Report on Student Grades versus Qualifications and Employment</h1>';
+  $PAGE->set_title('Report on Student Grades versus Qualifications and Employment');
+  $PAGE->set_heading('Report on Student Grades versus Qualifications and Employment');
 }
+echo $OUTPUT->header();
 
 
-$chosenstatus = stripslashes(optional_param('chosenstatus', 'All', PARAM_NOTAGS));
+$chosenstatus = dontstripslashes(optional_param('chosenstatus', 'All', PARAM_NOTAGS));
 
 $liststatus[] = 'All';
 if (!isset($chosenstatus)) $chosenstatus = 'All';
@@ -345,9 +353,9 @@ elseif ($chosenstatus === 'Will NOT be Graded, but will get a Certificate of Par
 elseif ($chosenstatus === 'Will NOT be Graded, because they did Not Pay') $statussql = 'AND e.notified=4';
 
 
-$chosensemester = stripslashes(optional_param('chosensemester', '', PARAM_NOTAGS));
+$chosensemester = dontstripslashes(optional_param('chosensemester', '', PARAM_NOTAGS));
 
-$semesters = get_records('semesters', '', '', 'id DESC');
+$semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
 	$listsemester[] = $semester->semester;
 	if (empty($chosensemester)) $chosensemester = $semester->semester;
@@ -356,11 +364,12 @@ $listsemester[] = 'All';
 
 if (empty($chosensemester) || ($chosensemester == 'All')) {
 	$chosensemester = 'All';
-	$semestersql = '';
+  $semestersql = 'AND e.semester!=?';
 }
 else {
-	$semestersql = "AND e.semester='" . addslashes($chosensemester) . "'";
+  $semestersql = 'AND e.semester=?';
 }
+
 if (!empty($_REQUEST['sortbyaccess'])) {
 	$sortbyaccess = true;
 	$orderby ='x.lastaccess DESC, x.firstname ASC, username ASC, fullname ASC';
@@ -386,7 +395,7 @@ Display entries using the following filters...
 		<select name="id">
 				<option value="0" <?php if (empty($courseid)) echo 'selected="selected"';?>>All</option>
 				<?php
-				$courses = get_records('course', '', '', 'fullname ASC');
+        $courses = $DB->get_records('course', NULL, 'fullname ASC');
 				foreach ($courses as $course) {
 					?>
 					<option value="<?php echo $course->id; ?>" <?php if ($course->id == $courseid) echo 'selected="selected"';?>><?php echo htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8'); ?></option>
@@ -423,99 +432,96 @@ function displayoptions($name, $options, $selectedvalue) {
 }
 
 
-$prof = get_record('user_info_field', 'shortname', 'dateofbirth');
+$prof = $DB->get_record('user_info_field', array('shortname' => 'dateofbirth'));
 if (!empty($prof->id)) $dobid = $prof->id;
-$prof = get_record('user_info_field', 'shortname', 'gender');
+$prof = $DB->get_record('user_info_field', array('shortname' => 'gender'));
 if (!empty($prof->id)) $genderid = $prof->id;
 
 
-$enrols = get_records_sql("SELECT * FROM
+$enrols = $DB->get_records_sql("SELECT * FROM
 (SELECT e.*, c.fullname, c.idnumber, u.lastname, u.firstname, u.email, u.username, u.lastaccess, u.country, q.qualification, q.higherqualification, q.employment FROM
 mdl_enrolment e, mdl_course c, mdl_user u, mdl_applicantqualifications q WHERE e.courseid=c.id AND e.userid=u.id $courseidsql1 $statussql $semestersql AND u.id=q.userid) AS x
 LEFT JOIN
 (SELECT g.userid AS guserid, g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' $courseidsql2) AS y
 ON x.userid=y.guserid AND x.courseid=y.icourseid
 $gradesql
-ORDER BY $orderby");
+ORDER BY $orderby",
+array($chosensemester));
+
 // If courseid is not specified this could get very inefficient, in that case I should optimise the JOIN
 
 echo '<b>Data displayed and totalled for students with qualification data only...</b><br />';
-echo '<table border="1" BORDERCOLOR="RED">';
-echo '<tr>';
-echo '<td>Semester</td>';
-echo '<td>Module</td>';
-echo '<td>Family name</td>';
-echo '<td>Given name</td>';
-echo '<td>Username</td>';
-echo '<td>Last access</td>';
-echo '<td>Grade</td>';
-echo '<td>Informed?</td>';
-echo '<td>Qualification</td>';
-echo '<td>Higherqualification</td>';
-echo '<td>Employment</td>';
-echo '</tr>';
-
+$table = new html_table();
+$table->head = array(
+  'Semester',
+  'Module',
+  'Family name',
+  'Given name',
+  'Username',
+  'Last access',
+  'Grade',
+  'Informed?',
+  'Qualification',
+  'Higherqualification',
+  'Employment'
+  );
 
 $n = 0;
 $lastname = '';
 $countnondup = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
-		echo '<tr>';
-		echo '<td>' . htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td>' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td><a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a></td>';
-		echo '<td><a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a></td>';
-		echo '<td>' . htmlspecialchars($enrol->username, ENT_COMPAT, 'UTF-8') . '</td>';
-		// echo '<td>' . gmdate('d M Y', $enrol->datefirstenrolled) . '</td>';
+    $rowdata = array();
+    $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
+    $rowdata[] = htmlspecialchars($enrol->username, ENT_COMPAT, 'UTF-8');
 
-		echo '<td>';
-		echo ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
-		if ($enrol->enrolled == 0) echo '<br />Was Un-Enrolled on: ' . gmdate('d M Y', $enrol->dateunenrolled);
+    $z = ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
+    if ($enrol->enrolled == 0) $z .= '<br />Was Un-Enrolled on: ' . gmdate('d M Y', $enrol->dateunenrolled);
 
-		$enrs = get_records_sql("SELECT e.datefirstenrolled, e.semester, c.idnumber FROM mdl_enrolment e, mdl_course c WHERE e.userid=$enrol->userid AND e.courseid=c.id AND {$enrol->datefirstenrolled}<e.datefirstenrolled");
-		foreach ($enrs as $enr) {
-			$founda = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matchesa);	// Take out course code without Year/Semester part
-			$foundb = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enr->idnumber, $matchesb);
-			if ($founda && $foundb) {
-				if ($matchesa[1] === $matchesb[1]) {
-					echo '<br /><span style="color:red">Re-Enrolled in this Module for Semester: ' . htmlspecialchars($enr->semester, ENT_COMPAT, 'UTF-8') . '</span>';
-				}
-			}
-		}
-		echo '</td>';
-		echo '<td>';
-		if (empty($enrol->finalgrade)) echo '';
-		elseif ($enrol->finalgrade > 1.99999) echo 'Failed';
-		else echo 'Passed';
-		echo '</td>';
+    $enrs = $DB->get_records_sql("SELECT e.datefirstenrolled, e.semester, c.idnumber FROM mdl_enrolment e, mdl_course c
+      WHERE e.userid=? AND e.courseid=c.id AND ?<e.datefirstenrolled", array($enrol->userid, $enrol->datefirstenrolled));
+    foreach ($enrs as $enr) {
+      $founda = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matchesa); // Take out course code without Year/Semester part
+      $foundb = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enr->idnumber, $matchesb);
+      if ($founda && $foundb) {
+        if ($matchesa[1] === $matchesb[1]) {
+          $z .= '<br /><span style="color:red">Re-Enrolled in this Module for Semester: ' . htmlspecialchars($enr->semester, ENT_COMPAT, 'UTF-8') . '</span>';
+        }
+      }
+    }
+    $rowdata[] = $z;
 
-		echo '<td>';
-		if ($enrol->notified == 0) {
-		}
-		elseif ($enrol->notified == 1) {
-			echo 'Yes';
-		}
-		elseif ($enrol->notified == 2) {
-			echo 'No, did Not Complete';
-		}
-		elseif ($enrol->notified == 3) {
-			echo 'Yes, Certificate of Participation';
-		}
-		elseif ($enrol->notified == 4) {
-			echo 'No, did Not Pay';
-		}
-		echo '</td>';
+    if (empty($enrol->finalgrade))        $rowdata[] = '';
+    elseif ($enrol->finalgrade > 1.99999) $rowdata[] = 'Failed';
+    else                                  $rowdata[] = 'Passed';
 
-		echo '<td>' . $qualificationname[$enrol->qualification] . '</td>';
-		echo '<td>' . $higherqualificationname[$enrol->higherqualification] . '</td>';
-		echo '<td>' . $employmentname[$enrol->employment] . '</td>';
-		echo '</tr>';
+    if ($enrol->notified == 0) {
+      $rowdata[] = '';
+    }
+    elseif ($enrol->notified == 1) {
+      $rowdata[] = 'Yes';
+    }
+    elseif ($enrol->notified == 2) {
+      $rowdata[] = 'No, did Not Complete';
+    }
+    elseif ($enrol->notified == 3) {
+      $rowdata[] = 'Yes, Certificate of Participation';
+    }
+    elseif ($enrol->notified == 4) {
+      $rowdata[] = 'No, did Not Pay';
+    }
+
+    $rowdata[] = $qualificationname[$enrol->qualification];
+    $rowdata[] = $higherqualificationname[$enrol->higherqualification];
+    $rowdata[] = $employmentname[$enrol->employment];
 
 		if ($enrol->username !== $lastname) {
 
 			if ($genderid) {
-				$data = get_record('user_info_data', 'userid', $enrol->userid, 'fieldid', $genderid);
+        $data = $DB->get_record('user_info_data', array('userid' => $enrol->userid, 'fieldid' => $genderid));
 				if (!empty($data->data)) {
 					$profgender = $data->data;
 
@@ -529,7 +535,7 @@ if (!empty($enrols)) {
 			}
 
 			if ($dobid) {
-				$data = get_record('user_info_data', 'userid', $enrol->userid, 'fieldid', $dobid);
+        $data = $DB->get_record('user_info_data', array('userid' => $enrol->userid, 'fieldid' => $dobid));
 				if (!empty($data->data)) {
 					$founddob = preg_match('/^[0-9]{1,2} (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4,})$/', $data->data, $matchesdob);	// Take out course code without Year/Semester part
 					if ($founddob) {
@@ -584,9 +590,10 @@ if (!empty($enrols)) {
 		}
 		$lastname = $enrol->username;
 		$n++;
+    $table->data[] = $rowdata;
 	}
 }
-echo '</table>';
+echo html_writer::table($table);
 echo '<br/>Number of Enrolments: ' . $n;
 echo '<br/>Number of Students: ' . $countnondup;
 
@@ -625,5 +632,43 @@ function displaystat($stat, $title) {
 	}
 	echo '</table>';
 	echo '<br/>';
+}
+
+
+function is_peoples_teacher() {
+  global $USER;
+  global $DB;
+
+  /* All Teacher, Teachers...
+  SELECT u.lastname, r.name, c.fullname
+  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
+  WHERE
+  u.id=ra.userid AND
+  ra.roleid=r.id AND
+  ra.contextid=con.id AND
+  r.name IN ('Teacher', 'Teachers') AND
+  con.contextlevel=50 AND
+  con.instanceid=c.id ORDER BY c.fullname, r.name;
+  */
+
+  $teachers = $DB->get_records_sql("
+    SELECT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    WHERE
+      ra.userid=? AND
+      ra.roleid=r.id AND
+      ra.contextid=con.id AND
+      r.name IN ('Teacher', 'Teachers') AND
+      con.contextlevel=50",
+    array($USER->id));
+
+  if (!empty($teachers)) return true;
+
+  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  else return false;
+}
+
+
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

@@ -8,22 +8,27 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/studentprogress.php');
+$PAGE->set_pagelayout('embedded');
 
 require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
-$isteacher = isteacherinanycourse();
+$isteacher = is_peoples_teacher();
 if (!$isteacher) {
   echo '<h1>You must be a teacher to do this!</h1>';
   notice('Please Login Below', "$CFG->wwwroot/");
 }
 
-print_header('Student Progress');
-
 echo '<h1>Student Progress</h1>';
+$PAGE->set_title('Student Progress');
+$PAGE->set_heading('Student Progress');
+
+echo $OUTPUT->header();
 
 
-$enrols = get_records_sql("
+$enrols = $DB->get_records_sql("
 SELECT
   u.id,
   u.lastname,
@@ -54,36 +59,37 @@ GROUP BY e.userid
 ORDER BY numberpassed DESC, u.lastname, u.firstname
 ");
 
-echo '<table border="1" BORDERCOLOR="RED">';
-echo '<tr>';
-echo '<td>Family name</td>';
-echo '<td>Given name</td>';
-echo '<td>Last access</td>';
-echo '<td># Passed</td>';
-echo '<td>Passed</td>';
-echo '<td># Foundation</td>';
-echo '<td># Problems</td>';
-echo '<td>Qualification</td>';
-echo '<td></td>';
-echo '</tr>';
+$table = new html_table();
+
+$table->head = array(
+  'Family name',
+  'Given name',
+  'Last access',
+  '# Passed',
+  'Passed',
+  '# Foundation',
+  '# Problems',
+  'Qualification',
+  ''
+  );
 
 $n = 0;
 foreach ($enrols as $enrol) {
-  echo '<tr>';
-  echo '<td><a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a></td>';
-  echo '<td><a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a></td>';
-  echo '<td>' . ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never')) . '</td>';
-  echo "<td>{$enrol->numberpassed}</td>";
-  echo '<td>' . htmlspecialchars($enrol->codespassed, ENT_COMPAT, 'UTF-8') . '</td>';
-  echo "<td>{$enrol->foundationspassed}</td>";
-  echo "<td>{$enrol->problemspassed}</td>";
-  echo "<td>{$enrol->qualification}</td>";
-  echo '<td><a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->id . '" target="_blank">Student Grades</a></td>';
-  echo '</tr>';
+  $rowdata = array();
+  $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
+  $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
+  $rowdata[] =  ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
+  $rowdata[] =  $enrol->numberpassed;
+  $rowdata[] =  htmlspecialchars($enrol->codespassed, ENT_COMPAT, 'UTF-8');
+  $rowdata[] =  $enrol->foundationspassed;
+  $rowdata[] =  $enrol->problemspassed;
+  $rowdata[] =  $enrol->qualification;
+  $rowdata[] =  '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->id . '" target="_blank">Student Grades</a>';
   $n++;
+  $table->data[] = $rowdata;
 }
+echo html_writer::table($table);
 
-echo '</table>';
 echo '<br/>Number of Students: ' . $n;
 
 echo '<br /><br /><br /><br /><br />';
@@ -95,5 +101,38 @@ echo '<a href="' . $CFG->wwwroot . '/course/coursegrades.php" target="_blank">Co
 
 echo '<br /><br />';
 
-print_footer();
+echo $OUTPUT->footer();
+
+
+function is_peoples_teacher() {
+  global $USER;
+  global $DB;
+
+  /* All Teacher, Teachers...
+  SELECT u.lastname, r.name, c.fullname
+  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
+  WHERE
+  u.id=ra.userid AND
+  ra.roleid=r.id AND
+  ra.contextid=con.id AND
+  r.name IN ('Teacher', 'Teachers') AND
+  con.contextlevel=50 AND
+  con.instanceid=c.id ORDER BY c.fullname, r.name;
+  */
+
+  $teachers = $DB->get_records_sql("
+    SELECT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    WHERE
+      ra.userid=? AND
+      ra.roleid=r.id AND
+      ra.contextid=con.id AND
+      r.name IN ('Teacher', 'Teachers') AND
+      con.contextlevel=50",
+    array($USER->id));
+
+  if (!empty($teachers)) return true;
+
+  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  else return false;
+}
 ?>

@@ -37,18 +37,24 @@ $closednotice = 'APPLICATIONS CLOSED, WILL REOPEN SOON FOR NEXT SEMESTER';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/settings.php'); // Defined here to avoid notices on errors etc
+
+$PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
+
 require_login();
 
 require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 
-print_header();
-
-echo '<h1>Settings for Student Applications</h1>';
+$PAGE->set_title('Settings for Student Applications');
+$PAGE->set_heading('Settings for Student Applications');
+echo $OUTPUT->header();
 
 
 if (!empty($_POST['markaddsemester']) && !empty($_POST['semester'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	$_POST['semester'] = stripslashes($_POST['semester']);
+	$_POST['semester'] = dontstripslashes($_POST['semester']);
 	// Special characters will allways be converted to entities for display so not needed (but Bug in Drupal which converts twice, see below)
 	// $_POST['semester'] = strip_tags($_POST['semester']);
 	$newsemester = $_POST['semester'];
@@ -57,7 +63,7 @@ if (!empty($_POST['markaddsemester']) && !empty($_POST['semester'])) {
 	$newsemester = str_replace("<", '', $newsemester);
 	$newsemester = str_replace(">", '', $newsemester);
 
-	$semesters = get_records('semesters');
+  $semesters = $DB->get_records('semesters');
 
 	$found = false;
 	foreach ($semesters as $semester) {
@@ -65,12 +71,12 @@ if (!empty($_POST['markaddsemester']) && !empty($_POST['semester'])) {
 	}
 
 	if (!$found) {
-		$record->semester = addslashes($newsemester);
-		insert_record('semesters', $record);
+    $record->semester = dontaddslashes($newsemester);
+    $DB->insert_record('semesters', $record);
 	}
 
 	// http://www.peoples-uni.org/forms/application-form-returning-students
-	$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=80 AND cid=2');
+  $semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=80 AND cid=2');
 
 	$extra = unserialize($semestercomponent->extra);
 	// echo '----------------------------------------------<br />';
@@ -79,13 +85,13 @@ if (!empty($_POST['markaddsemester']) && !empty($_POST['semester'])) {
 
 	$extra['items'] = $newsemester;
 
-	$ret = execute_sql("UPDATE d5_webform_component SET value='" . addslashes($newsemester) . "', extra='" . addslashes(serialize($extra)) . "' WHERE nid=80 AND cid=2");
+  $ret = $DB->execute("UPDATE d5_webform_component SET value=?, extra=? WHERE nid=80 AND cid=2", array($newsemester, serialize($extra)));
 
 	// http://www.peoples-uni.org/forms/peoples-uni-course-application-form
-	$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=16');
+  $semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=16');
 	$extra = unserialize($semestercomponent->extra);
 	$extra['items'] = $newsemester;
-	$ret = execute_sql("UPDATE d5_webform_component SET value='" . addslashes($newsemester) . "', extra='" . addslashes(serialize($extra)) . "' WHERE nid=71 AND cid=16");
+  $ret = $DB->execute("UPDATE d5_webform_component SET value=?, extra=? WHERE nid=71 AND cid=16", array($newsemester, serialize($extra)));
 }
 if (!empty($_POST['markaddfoundation']) && !empty($_POST['foundation'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -93,7 +99,7 @@ if (!empty($_POST['markaddfoundation']) && !empty($_POST['foundation'])) {
 
   $record->type = 'foundation';
   $record->course_code = $_POST['foundation'];
-  insert_record('peoples_course_codes', $record);
+  $DB->insert_record('peoples_course_codes', $record);
 }
 if (!empty($_POST['markaddproblems']) && !empty($_POST['problems'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -101,7 +107,7 @@ if (!empty($_POST['markaddproblems']) && !empty($_POST['problems'])) {
 
   $record->type = 'problems';
   $record->course_code = $_POST['problems'];
-  insert_record('peoples_course_codes', $record);
+  $DB->insert_record('peoples_course_codes', $record);
 }
 if (!empty($_POST['markclosesemester'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -109,25 +115,25 @@ if (!empty($_POST['markclosesemester'])) {
 	$newsemester = $closednotice;
 
 	// Subsequent Modules Form
-	$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=80 AND cid=2');
+  $semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=80 AND cid=2');
 
 	$extra = unserialize($semestercomponent->extra);
 	$extra['items'] = $newsemester;
 
-	$ret = execute_sql("UPDATE d5_webform_component SET value='" . addslashes($newsemester) . "', extra='" . addslashes(serialize($extra)) . "' WHERE nid=80 AND cid=2");
+  $ret = $DB->execute("UPDATE d5_webform_component SET value=?, extra=? WHERE nid=80 AND cid=2", array($newsemester, serialize($extra)));
 
 	// Main form...
-	$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=16');
+  $semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=16');
 	$extra = unserialize($semestercomponent->extra);
 	$extra['items'] = $newsemester;
-	$ret = execute_sql("UPDATE d5_webform_component SET value='" . addslashes($newsemester) . "', extra='" . addslashes(serialize($extra)) . "' WHERE nid=71 AND cid=16");
+  $ret = $DB->execute("UPDATE d5_webform_component SET value=?, extra=? WHERE nid=71 AND cid=16", array($newsemester, serialize($extra)));
 
-	$activemodules = get_records('activemodules');
+  $activemodules = $DB->get_records('activemodules');
 	foreach ($activemodules as $activemodule) {
-		$activemodule->fullname = addslashes($activemodule->fullname);
+    $activemodule->fullname = dontaddslashes($activemodule->fullname);
 		if (!$activemodule->modulefull) {
 			$activemodule->modulefull = 1;
-			update_record('activemodules', $activemodule);
+      $DB->update_record('activemodules', $activemodule);
 		}
 	}
 
@@ -135,9 +141,9 @@ if (!empty($_POST['markclosesemester'])) {
 }
 if (!empty($_POST['markaddnewmodule']) && !empty($_POST['moduletoadd'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	$moduletoadd = stripslashes($_POST['moduletoadd']);
+	$moduletoadd = dontstripslashes($_POST['moduletoadd']);
 
-	$activemodules = get_records('activemodules');
+  $activemodules = $DB->get_records('activemodules');
 
 	$found = false;
 	foreach ($activemodules as $activemodule) {
@@ -145,19 +151,19 @@ if (!empty($_POST['markaddnewmodule']) && !empty($_POST['moduletoadd'])) {
 	}
 
   if (!$found) {
-    $record->fullname = addslashes($moduletoadd);
-    $courseforid = get_record('course', 'fullname', $record->fullname);
+    $record->fullname = dontaddslashes($moduletoadd);
+    $courseforid = $DB->get_record('course', array('fullname' => $record->fullname));
     $record->course_id = $courseforid->id;
-    insert_record('activemodules', $record);
+    $DB->insert_record('activemodules', $record);
   }
 }
 if (!empty($_POST['markupdatemodules'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-	$activemodules = get_records('activemodules');
+  $activemodules = $DB->get_records('activemodules');
 
   foreach ($activemodules as $activemodule) {
-    $activemodule->fullname = addslashes($activemodule->fullname);
+    $activemodule->fullname = dontaddslashes($activemodule->fullname);
 
     $fullname_escaped = $activemodule->fullname;
     $fullname_escaped = str_replace('[', 'XLBRACKETX', $fullname_escaped);
@@ -166,17 +172,17 @@ if (!empty($_POST['markupdatemodules'])) {
     if (!empty($_POST[modulefull][$fullname_escaped])) {
       if (!$activemodule->modulefull) {
         $activemodule->modulefull = 1;
-        update_record('activemodules', $activemodule);
+        $DB->update_record('activemodules', $activemodule);
       }
     }
     else {
       if ($activemodule->modulefull) {
         $activemodule->modulefull = 0;
-        update_record('activemodules', $activemodule);
+        $DB->update_record('activemodules', $activemodule);
       }
     }
     if (!empty($_POST[removemodule][$fullname_escaped])) {
-      delete_records('activemodules', 'id', $activemodule->id);
+      $DB->delete_records('activemodules', array('id' => $activemodule->id));
     }
   }
 
@@ -184,44 +190,44 @@ if (!empty($_POST['markupdatemodules'])) {
 }
 if (!empty($_POST['marksetstudentscorner']) && !empty($_POST['studentscorner'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $studentscorner = stripslashes($_POST['studentscorner']);
+  $studentscorner = dontstripslashes($_POST['studentscorner']);
   set_config('peoples_students_corner_id', $studentscorner);
 }
 if (!empty($_POST['mark_approval_email']) && !empty($_POST['value_approval_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $value_approval_email = stripslashes($_POST['value_approval_email']);
+  $value_approval_email = dontstripslashes($_POST['value_approval_email']);
   set_config('peoples_approval_email', $value_approval_email);
 }
 if (!empty($_POST['mark_approval_old_students_email']) && !empty($_POST['value_approval_old_students_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $value_approval_old_students_email = stripslashes($_POST['value_approval_old_students_email']);
+  $value_approval_old_students_email = dontstripslashes($_POST['value_approval_old_students_email']);
   set_config('peoples_approval_old_students_email', $value_approval_old_students_email);
 }
 if (!empty($_POST['mark_batch_reminder_email']) && !empty($_POST['value_batch_reminder_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $value_batch_reminder_email = stripslashes($_POST['value_batch_reminder_email']);
+  $value_batch_reminder_email = dontstripslashes($_POST['value_batch_reminder_email']);
   set_config('peoples_batch_reminder_email', $value_batch_reminder_email);
 }
 if (!empty($_POST['mark_batch_email_to_enrolled']) && !empty($_POST['value_batch_email_to_enrolled'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $value_batch_email_to_enrolled = stripslashes($_POST['value_batch_email_to_enrolled']);
+  $value_batch_email_to_enrolled = dontstripslashes($_POST['value_batch_email_to_enrolled']);
   set_config('peoples_batch_email_to_enrolled', $value_batch_email_to_enrolled);
 }
 if (!empty($_POST['mark_interest_email']) && !empty($_POST['value_interest_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $value_interest_email = stripslashes($_POST['value_interest_email']);
+  $value_interest_email = dontstripslashes($_POST['value_interest_email']);
   set_config('peoples_interest_email', $value_interest_email);
 }
 if (!empty($_POST['mark_batch_email_to_enrolled_missing']) && !empty($_POST['value_batch_email_to_enrolled_missing'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $value_batch_email_to_enrolled_missing = stripslashes($_POST['value_batch_email_to_enrolled_missing']);
+  $value_batch_email_to_enrolled_missing = dontstripslashes($_POST['value_batch_email_to_enrolled_missing']);
   set_config('peoples_batch_email_to_enrolled_missing', $value_batch_email_to_enrolled_missing);
 }
 
 
 echo '<h2>Semester...</h2>';
 
-$semesters = get_records('semesters', '', '', 'id ASC');
+$semesters = $DB->get_records('semesters', NULL, 'id ASC');
 
 echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
 echo "<tr>";
@@ -238,7 +244,7 @@ foreach ($semesters as $semester) {
 echo '</table>';
 echo '<br /><br />';
 
-$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=16');
+$semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=16');
 // echo var_dump($semestercomponent) . '<br />';
 $extra = unserialize($semestercomponent->extra);
 $semesterfromform = $extra['items'];
@@ -274,9 +280,9 @@ if (!$closed) {
 
 echo '<h2>Modules for Semester...</h2>';
 
-$courses = get_records('course', '', '', 'fullname ASC');
+$courses = $DB->get_records('course', NULL, 'fullname ASC');
 
-$activemodules = get_records('activemodules', '', '', 'fullname ASC');
+$activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
 ?>
 
 <form id="updatemodulesform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
@@ -333,14 +339,14 @@ foreach ($courses as $course) {
 <?php
 echo '<br />Here is are lists of valid Peoples-uni agreed Course Codes (Course ID numbers)...';
 echo '<br />Foundation Sciences:';
-$foundation_records = get_records('peoples_course_codes', 'type', 'foundation', 'course_code ASC');
+$foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
 foreach ($foundation_records as $record) {
   $foundation[$record->course_code] = 1;
   echo ' ' . $record->course_code;
 }
 
 echo '<br />Public Health Problems:';
-$problems_records = get_records('peoples_course_codes', 'type', 'problems',   'course_code ASC');
+$problems_records = $DB->get_records('peoples_course_codes', array('type' => 'problems'),   'course_code ASC');
 foreach ($problems_records as $record) {
   $problems[$record->course_code] = 1;
   echo ' ' . $record->course_code;
@@ -372,7 +378,7 @@ foreach ($problems_records as $record) {
 //  if ($problems[$key] != $value) echo 'missing(problems): ' . $key . '<br />';
 //}
 
-$idnumbers = get_records_sql('SELECT a.id, c.idnumber, a.fullname FROM mdl_activemodules a LEFT JOIN mdl_course c ON a.fullname=c.fullname order by a.fullname');
+$idnumbers = $DB->get_records_sql('SELECT a.id, c.idnumber, a.fullname FROM mdl_activemodules a LEFT JOIN mdl_course c ON a.fullname=c.fullname order by a.fullname');
 $first_one = TRUE;
 foreach ($idnumbers as $idnumber) {
   $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $idnumber->idnumber, $matches); // Take out course code without Year/Semester part
@@ -491,11 +497,13 @@ foreach ($courses as $course) {
 <?php
 echo '<br /><br /><br />';
 
-notice(get_string('continue'), "$CFG->wwwroot/");
+echo $OUTPUT->footer();
 
 
 function updateformmoduleselections() {
-	$activemodules = get_records('activemodules');
+  global $DB;
+
+  $activemodules = $DB->get_records('activemodules');
 
 	$listforselect = array();
 	$listforunavailable = array();
@@ -522,30 +530,40 @@ function updateformmoduleselections() {
 	}
 
 	// http://www.peoples-uni.org/forms/application-form-returning-students
-	$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=80 AND cid=3');
+  $semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=80 AND cid=3');
 
 	$extra = unserialize($semestercomponent->extra);
 	$extra['items'] = $listforselect;
 	$extra['description'] = $text;
 
-	$ret = execute_sql("UPDATE d5_webform_component SET extra='" . addslashes(serialize($extra)) . "' WHERE nid=80 AND cid=3");
+  $ret = $DB->execute("UPDATE d5_webform_component SET extra=? WHERE nid=80 AND cid=3", array(serialize($extra)));
 
-	$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=80 AND cid=4');
+  $semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=80 AND cid=4');
 
 	$extra = unserialize($semestercomponent->extra);
 	$extra['items'] = $listforselect;
 
-	$ret = execute_sql("UPDATE d5_webform_component SET extra='" . addslashes(serialize($extra)) . "' WHERE nid=80 AND cid=4");
+  $ret = $DB->execute("UPDATE d5_webform_component SET extra=? WHERE nid=80 AND cid=4", array(serialize($extra)));
 
 	// http://www.peoples-uni.org/forms/peoples-uni-course-application-form
-	$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=18');
+  $semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=18');
 	$extra = unserialize($semestercomponent->extra);
 	$extra['items'] = $listforselect;
 	$extra['description'] = $text;
-	$ret = execute_sql("UPDATE d5_webform_component SET extra='" . addslashes(serialize($extra)) . "' WHERE nid=71 AND cid=18");
-	$semestercomponent = get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=19');
+  $ret = $DB->execute("UPDATE d5_webform_component SET extra=? WHERE nid=71 AND cid=18", array(serialize($extra)));
+  $semestercomponent = $DB->get_record_sql('SELECT value, extra FROM d5_webform_component WHERE nid=71 AND cid=19');
 	$extra = unserialize($semestercomponent->extra);
 	$extra['items'] = $listforselect;
-	$ret = execute_sql("UPDATE d5_webform_component SET extra='" . addslashes(serialize($extra)) . "' WHERE nid=71 AND cid=19");
+  $ret = $DB->execute("UPDATE d5_webform_component SET extra=? WHERE nid=71 AND cid=19", array(serialize($extra)));
+}
+
+
+function dontaddslashes($x) {
+  return $x;
+}
+
+
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

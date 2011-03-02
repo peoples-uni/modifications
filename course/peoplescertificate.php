@@ -1,9 +1,14 @@
 <?php  // $Id: peoplescertificate.php,v 1.1 2008/11/28 20:00:00 alanbarrett Exp $
 
 require_once('../config.php');
-include '../lib/fpdf/fpdf.php';
-include '../lib/fpdf/fpdfprotection.php';
+include 'fpdf/fpdf.php';
+include 'fpdf/fpdfprotection.php';
 include_once('html2pdf.php');
+
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/peoplescertificate.php'); // Defined here to avoid notices on errors etc
+$PAGE->set_pagelayout('embedded');
 
 require_login();
 if (empty($USER->id)) {
@@ -23,7 +28,7 @@ if ($cert == 'transcript') {
 	//AND g.userid=$userid AND g.itemid=i.id AND i.itemtype='course' AND i.courseid=$courseid");
 
 	$enrolid = required_param('enrolid', PARAM_INT);
-	$enrol = get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified, g.finalgrade
+	$enrol = $DB->get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified, g.finalgrade
 	FROM mdl_enrolment e, mdl_course c, mdl_grade_grades g, mdl_grade_items i
 	WHERE e.id=$enrolid AND e.courseid=c.id AND e.userid=g.userid AND g.itemid=i.id AND i.itemtype='course' AND e.courseid=i.courseid");
 	if (empty($enrol)) {
@@ -34,12 +39,12 @@ if ($cert == 'transcript') {
 	}
 
 	$userid = $enrol->userid;
-	if (!$userrecord = get_record('user', 'id', $userid)) {
+  if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
 		error('user missing');
 	}
 
 	$courseid = $enrol->courseid;
-	if (!$course = get_record('course', 'id', $courseid)) {
+  if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 		error('course missing');
 	}
 
@@ -64,7 +69,7 @@ if ($cert == 'transcript') {
 	$certificate->printseal = 'tapestry_logo.jpg';
 	$certificate->printseal = '';
 
-	$isteacher = isteacherinanycourse();
+  $isteacher = is_peoples_teacher();
 	if (!$isteacher && ($userid != $USER->id)) {
 		error('You may only print your own certificate.');
 	}
@@ -160,18 +165,18 @@ if ($cert == 'transcript') {
 }
 elseif ($cert == 'participation') {
 	$enrolid = required_param('enrolid', PARAM_INT);
-	$enrol = get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified FROM mdl_enrolment e WHERE e.id=$enrolid");
+	$enrol = $DB->get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified FROM mdl_enrolment e WHERE e.id=$enrolid");
 	if (empty($enrol)) {
 		error('enrolment not found');
 	}
 
 	$userid = $enrol->userid;
-	if (!$userrecord = get_record('user', 'id', $userid)) {
+  if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
 		error('user missing');
 	}
 
 	$courseid = $enrol->courseid;
-	if (!$course = get_record('course', 'id', $courseid)) {
+  if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 		error('course missing');
 	}
 
@@ -192,7 +197,7 @@ elseif ($cert == 'participation') {
 	$certificate->printseal = 'tapestry_logo.jpg';
 	$certificate->printseal = '';
 
-	$isteacher = isteacherinanycourse();
+  $isteacher = is_peoples_teacher();
 	if (!$isteacher && ($userid != $USER->id)) {
 		error('You may only print your own certificate.');
 	}
@@ -264,7 +269,7 @@ elseif ($cert == 'participation') {
 else {
 	$userid = required_param('userid', PARAM_INT);
 
-	$enrols = get_records_sql("SELECT * FROM
+	$enrols = $DB->get_records_sql("SELECT * FROM
 (SELECT e.*, c.fullname, c.idnumber, c.id AS cid FROM mdl_enrolment e, mdl_course c WHERE e.courseid=c.id AND e.userid=$userid) AS x
 LEFT JOIN
 (SELECT g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' AND g.userid=$userid) AS y
@@ -296,11 +301,11 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 //  $problems['PUPCM']     = 1; // Preventing Child Mortality
 //  $problems['PUPHNUT']   = 1; // Public Health Nutrition
 //  $problems['PUPSAFE']   = 1; // Patient Safety
-  $foundation_records = get_records('peoples_course_codes', 'type', 'foundation', 'course_code ASC');
+  $foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
   foreach ($foundation_records as $record) {
     $foundation[$record->course_code] = 1;
   }
-  $problems_records = get_records('peoples_course_codes', 'type', 'problems',   'course_code ASC');
+  $problems_records   = $DB->get_records('peoples_course_codes', array('type' => 'problems'),   'course_code ASC');
   foreach ($problems_records as $record) {
     $problems[$record->course_code] = 1;
   }
@@ -341,7 +346,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 		error('certificate not valid');
 	}
 
-	if (!$userrecord = get_record('user', 'id', $userid)) {
+  if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
 		error('user missing');
 	}
 
@@ -357,7 +362,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 	$certificate->printsignature2 = 'rajansignature.jpg';
 	$certificate->printseal = '';
 
-	$isteacher = isteacherinanycourse();
+  $isteacher = is_peoples_teacher();
 	if (!$isteacher && ($userid != $USER->id)) {
 		error('You may only print your own certificate.');
 	}
@@ -893,5 +898,38 @@ function certificate_generate_date($certificate, $course) {
         } else $certdate = $timecreated;
         }
 return $certdate;
+}
+
+
+function is_peoples_teacher() {
+  global $USER;
+  global $DB;
+
+  /* All Teacher, Teachers...
+  SELECT u.lastname, r.name, c.fullname
+  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
+  WHERE
+  u.id=ra.userid AND
+  ra.roleid=r.id AND
+  ra.contextid=con.id AND
+  r.name IN ('Teacher', 'Teachers') AND
+  con.contextlevel=50 AND
+  con.instanceid=c.id ORDER BY c.fullname, r.name;
+  */
+
+  $teachers = $DB->get_records_sql("
+    SELECT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    WHERE
+      ra.userid=? AND
+      ra.roleid=r.id AND
+      ra.contextid=con.id AND
+      r.name IN ('Teacher', 'Teachers') AND
+      con.contextlevel=50",
+    array($USER->id));
+
+  if (!empty($teachers)) return true;
+
+  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  else return false;
 }
 ?>

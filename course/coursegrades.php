@@ -255,14 +255,17 @@ $countryname['ZW'] = 'Zimbabwe';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/coursegrades.php');
+
 
 if (!empty($_POST['markfilter'])) {
   redirect($CFG->wwwroot . '/course/coursegrades.php?'
     . 'id=' . $_POST['id']
-    . '&chosenstatus=' . urlencode(stripslashes($_POST['chosenstatus']))
-    . '&chosensemester=' . urlencode(stripslashes($_POST['chosensemester']))
+    . '&chosenstatus=' . urlencode(dontstripslashes($_POST['chosenstatus']))
+    . '&chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
     . (empty($_POST['sortbyaccess']) ? '&sortbyaccess=0' : '&sortbyaccess=1')
-    . '&showmissingfordays=' . urlencode(stripslashes($_POST['showmissingfordays']))
+    . '&showmissingfordays=' . urlencode(dontstripslashes($_POST['showmissingfordays']))
     );
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
@@ -278,37 +281,43 @@ else {
 }
 
 
+$PAGE->set_pagelayout('embedded');
+
 require_login();
+
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
-$isteacher = isteacherinanycourse();
+$isteacher = is_peoples_teacher();
 if (!$isteacher) {
 	echo '<h1>You must be a teacher to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");
 }
 
-print_header('Course Grades');
-
-
 $courseid = optional_param('id', 0, PARAM_INT);
 if ($courseid) {
-	$courserecord = get_record('course', 'id', $courseid);
+  $courserecord = $DB->get_record('course', array('id' => $courseid));
 	if (empty($courserecord)) {
 		echo '<h1>Course does not exist!</h1>';
 		die();
 	}
 	$courseidsql1 = "AND e.courseid=$courseid";
 	$courseidsql2 = "AND i.courseid=$courseid";
-	echo '<h1>Student Enrolments and Grades for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8') . '</h1>';
+  echo '<h1>Student Enrolments and Grades for course ' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8') . '</h1>';
+  $PAGE->set_title('Student Enrolments and Grades for course ' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
+  $PAGE->set_heading('Student Enrolments and Grades for course ' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
 }
 else {
 	$courseidsql1 = '';
 	$courseidsql2 = '';
-	echo '<h1>Student Enrolments and Grades</h1>';
+  echo '<h1>Student Enrolments and Grades</h1>';
+  $PAGE->set_title('Student Enrolments and Grades');
+  $PAGE->set_heading('Student Enrolments and Grades');
 }
 
+echo $OUTPUT->header();
 
-$chosenstatus = stripslashes(optional_param('chosenstatus', 'All', PARAM_NOTAGS));
+
+$chosenstatus = dontstripslashes(optional_param('chosenstatus', 'All', PARAM_NOTAGS));
 
 $liststatus[] = 'All';
 if (!isset($chosenstatus)) $chosenstatus = 'All';
@@ -335,9 +344,9 @@ elseif ($chosenstatus === 'Will NOT be Graded, but will get a Certificate of Par
 elseif ($chosenstatus === 'Will NOT be Graded, because they did Not Pay') $statussql = 'AND e.notified=4';
 
 
-$chosensemester = stripslashes(optional_param('chosensemester', '', PARAM_NOTAGS));
+$chosensemester = dontstripslashes(optional_param('chosensemester', '', PARAM_NOTAGS));
 
-$semesters = get_records('semesters', '', '', 'id DESC');
+$semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
 	$listsemester[] = $semester->semester;
 	if (empty($chosensemester)) $chosensemester = $semester->semester;
@@ -346,10 +355,10 @@ $listsemester[] = 'All';
 
 if (empty($chosensemester) || ($chosensemester == 'All')) {
 	$chosensemester = 'All';
-	$semestersql = '';
+  $semestersql = 'AND e.semester!=?';
 }
 else {
-	$semestersql = "AND e.semester='" . addslashes($chosensemester) . "'";
+  $semestersql = 'AND e.semester=?';
 }
 if (!empty($_REQUEST['sortbyaccess'])) {
 	$sortbyaccess = true;
@@ -361,7 +370,7 @@ else {
 }
 
 
-$showmissingfordays = stripslashes(optional_param('showmissingfordays', 'All', PARAM_NOTAGS));
+$showmissingfordays = dontstripslashes(optional_param('showmissingfordays', 'All', PARAM_NOTAGS));
 
 $listshowmissingfordays[] = 'All';
 if (!isset($showmissingfordays)) $showmissingfordays = 'All';
@@ -401,7 +410,7 @@ Display entries using the following filters...
 		<select name="id">
 				<option value="0" <?php if (empty($courseid)) echo 'selected="selected"';?>>All</option>
 				<?php
-				$courses = get_records('course', '', '', 'fullname ASC');
+        $courses = $DB->get_records('course', NULL, 'fullname ASC');
 				foreach ($courses as $course) {
 					?>
 					<option value="<?php echo $course->id; ?>" <?php if ($course->id == $courseid) echo 'selected="selected"';?>><?php echo htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8'); ?></option>
@@ -441,105 +450,102 @@ function displayoptions($name, $options, $selectedvalue) {
 }
 
 
-$prof = get_record('user_info_field', 'shortname', 'dateofbirth');
+$prof = $DB->get_record('user_info_field', array('shortname' => 'dateofbirth'));
 if (!empty($prof->id)) $dobid = $prof->id;
-$prof = get_record('user_info_field', 'shortname', 'gender');
+$prof = $DB->get_record('user_info_field', array('shortname' => 'gender'));
 if (!empty($prof->id)) $genderid = $prof->id;
 
 
-$enrols = get_records_sql("SELECT * FROM
+$enrols = $DB->get_records_sql("SELECT * FROM
 (SELECT e.*, c.fullname, c.idnumber, u.lastname, u.firstname, u.email, u.username, u.lastaccess, u.country FROM mdl_enrolment e, mdl_course c, mdl_user u WHERE e.courseid=c.id AND e.userid=u.id $courseidsql1 $statussql $semestersql $showmissingfordayssql) AS x
 LEFT JOIN
 (SELECT g.userid AS guserid, g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' $courseidsql2) AS y
 ON x.userid=y.guserid AND x.courseid=y.icourseid
 $gradesql
-ORDER BY $orderby");
+ORDER BY $orderby",
+array($chosensemester));
 // If courseid is not specified this could get very inefficient, in that case I should optimise the JOIN
 
 
 if ($sendemails) {
 	if (empty($_POST['reg'])) $_POST['reg'] = '/^[a-zA-Z0-9_.-]/';
-	sendemails($enrols, strip_tags(stripslashes($_POST['emailsubject'])), strip_tags(stripslashes($_POST['emailbody'])), stripslashes($_POST['reg']));
+	sendemails($enrols, strip_tags(dontstripslashes($_POST['emailsubject'])), strip_tags(dontstripslashes($_POST['emailbody'])), dontstripslashes($_POST['reg']));
 }
 
 
-echo '<table border="1" BORDERCOLOR="RED">';
-echo '<tr>';
-echo '<td>Semester</td>';
-echo '<td>Module</td>';
-echo '<td>Family name</td>';
-echo '<td>Given name</td>';
-echo '<td>Username</td>';
-echo '<td>Last access</td>';
-echo '<td>Grade</td>';
-echo '<td>Informed?</td>';
-echo '<td></td>';
-echo '<td></td>';
-echo '<td></td>';
-echo '</tr>';
+$table = new html_table();
+$table->head = array(
+  'Semester',
+  'Module',
+  'Family name',
+  'Given name',
+  'Username',
+  'Last access',
+  'Grade',
+  'Informed?',
+  '',
+  '',
+  ''
+  );
 
 $n = 0;
 $lastname = '';
 $countnondup = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
-		echo '<tr>';
-		echo '<td>' . htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td>' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td><a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a></td>';
-		echo '<td><a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a></td>';
-		echo '<td>' . htmlspecialchars($enrol->username, ENT_COMPAT, 'UTF-8') . '</td>';
-		// echo '<td>' . gmdate('d M Y', $enrol->datefirstenrolled) . '</td>';
+    $rowdata = array();
+    $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
+    $rowdata[] = htmlspecialchars($enrol->username, ENT_COMPAT, 'UTF-8');
 
-		echo '<td>';
-		echo ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
-		if ($enrol->enrolled == 0) echo '<br />Was Un-Enrolled on: ' . gmdate('d M Y', $enrol->dateunenrolled);
+		$z = ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
+		if ($enrol->enrolled == 0) $z .= '<br />Was Un-Enrolled on: ' . gmdate('d M Y', $enrol->dateunenrolled);
 
-		$enrs = get_records_sql("SELECT e.datefirstenrolled, e.semester, c.idnumber FROM mdl_enrolment e, mdl_course c WHERE e.userid=$enrol->userid AND e.courseid=c.id AND {$enrol->datefirstenrolled}<e.datefirstenrolled");
+    $enrs = $DB->get_records_sql("SELECT e.datefirstenrolled, e.semester, c.idnumber FROM mdl_enrolment e, mdl_course c
+      WHERE e.userid=? AND e.courseid=c.id AND ?<e.datefirstenrolled", array($enrol->userid, $enrol->datefirstenrolled));
 		foreach ($enrs as $enr) {
 			$founda = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matchesa);	// Take out course code without Year/Semester part
 			$foundb = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enr->idnumber, $matchesb);
 			if ($founda && $foundb) {
 				if ($matchesa[1] === $matchesb[1]) {
-					echo '<br /><span style="color:red">Re-Enrolled in this Module for Semester: ' . htmlspecialchars($enr->semester, ENT_COMPAT, 'UTF-8') . '</span>';
+					$z .= '<br /><span style="color:red">Re-Enrolled in this Module for Semester: ' . htmlspecialchars($enr->semester, ENT_COMPAT, 'UTF-8') . '</span>';
 				}
 			}
 		}
-		echo '</td>';
-		echo '<td>';
-		if (empty($enrol->finalgrade)) echo '';
-		elseif ($enrol->finalgrade > 1.99999) echo 'Failed';
-		else echo 'Passed';
-		echo '</td>';
+    $rowdata[] = $z;
 
-		echo '<td>';
+    if (empty($enrol->finalgrade))        $rowdata[] = '';
+    elseif ($enrol->finalgrade > 1.99999) $rowdata[] = 'Failed';
+    else                                  $rowdata[] = 'Passed';
+
 		if ($enrol->notified == 0) {
+      $rowdata[] = '';
 		}
 		elseif ($enrol->notified == 1) {
-			echo 'Yes';
+      $rowdata[] = 'Yes';
 		}
 		elseif ($enrol->notified == 2) {
-			echo 'No, did Not Complete';
+      $rowdata[] = 'No, did Not Complete';
 		}
 		elseif ($enrol->notified == 3) {
-			echo 'Yes, Certificate of Participation';
+      $rowdata[] = 'Yes, Certificate of Participation';
 		}
 		elseif ($enrol->notified == 4) {
-			echo 'No, did Not Pay';
+      $rowdata[] = 'No, did Not Pay';
 		}
-		echo '</td>';
 
-		echo '<td><a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">Student Grades</a></td>';
-		echo '<td><a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $enrol->userid . '" target="_blank">Student Submissions</a></td>';
-		echo '<td><a href="' . $CFG->wwwroot . '/grade/report/user/index.php?id=' . $enrol->courseid . '&userid=' . $enrol->userid . '" target="_blank">Moodle Grade report</a></td>';
-		echo '</tr>';
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">Student Grades</a>';
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $enrol->userid . '" target="_blank">Student Submissions</a>';
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/grade/report/user/index.php?id=' . $enrol->courseid . '&userid=' . $enrol->userid . '" target="_blank">Moodle Grade report</a>';
 
 		$listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
 
 		if ($enrol->username !== $lastname) {
 
 			if ($genderid) {
-				$data = get_record('user_info_data', 'userid', $enrol->userid, 'fieldid', $genderid);
+        $data = $DB->get_record('user_info_data', array('userid' => $enrol->userid, 'fieldid' => $genderid));
 				if (!empty($data->data)) {
 					$profgender = $data->data;
 
@@ -553,7 +559,7 @@ if (!empty($enrols)) {
 			}
 
 			if ($dobid) {
-				$data = get_record('user_info_data', 'userid', $enrol->userid, 'fieldid', $dobid);
+        $data = $DB->get_record('user_info_data', array('userid' => $enrol->userid, 'fieldid' => $dobid));
 				if (!empty($data->data)) {
 					$founddob = preg_match('/^[0-9]{1,2} (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4,})$/', $data->data, $matchesdob);	// Take out course code without Year/Semester part
 					if ($founddob) {
@@ -586,9 +592,11 @@ if (!empty($enrols)) {
 		}
 		$lastname = $enrol->username;
 		$n++;
+    $table->data[] = $rowdata;
 	}
 }
-echo '</table>';
+echo html_writer::table($table);
+
 echo '<br/>Number of Enrolments: ' . $n;
 echo '<br/>Number of Students: ' . $countnondup;
 
@@ -664,7 +672,7 @@ Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 <?php
 
 
-print_footer();
+echo $OUTPUT->footer();
 
 
 function displaystat($stat, $title) {
@@ -688,6 +696,7 @@ function displaystat($stat, $title) {
 
 
 function sendemails($enrols, $emailsubject, $emailbody, $reg) {
+  global $DB;
 
   echo '<br />';
   $senttouserid = array();
@@ -703,7 +712,8 @@ function sendemails($enrols, $emailsubject, $emailbody, $reg) {
     if (!in_array($enrol->userid, $senttouserid)) {
       $senttouserid[] = $enrol->userid;
 
-      $application = get_record_sql("SELECT sid FROM mdl_peoplesapplication WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27) AND userid=$enrol->userid AND semester='" . addslashes($enrol->semester) . "'");
+      $application = $DB->get_record_sql("SELECT sid FROM mdl_peoplesapplication
+        WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27) AND userid=? AND semester=?", array($enrol->userid, $enrol->semester));
       if (!empty($application)) {
         $emailbodytemp = str_replace('GIVEN_NAME_HERE', $enrol->firstname, $emailbody);
         $emailbodytemp = str_replace('SID_HERE', $application->sid, $emailbodytemp);
@@ -728,30 +738,64 @@ function sendapprovedmail($email, $subject, $message) {
   global $CFG;
 
   // Dummy User
-  $user = new object;
+  $user = new stdClass();
   $user->id = 999999999;
   $user->email = $email;
-  // $user->email = 'alanabarrett0@gmail.com';
   $user->maildisplay = true;
-  $user->mnethostid = 1;
+  $user->mnethostid = $CFG->mnet_localhost_id;
 
-  // $supportuser = generate_email_supportuser();
-  $supportuser = new object;
+  $supportuser = new stdClass();
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
   $supportuser->maildisplay = true;
 
-  $messagehtml = text_to_html($message, false, false, true);
-
-  $user->mailformat = 1;  // Always send HTML version as well
-
-  $ret = email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
 
   $user->email = 'applicationresponses@peoples-uni.org';
 
-  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
 
   return $ret;
+}
+
+
+function is_peoples_teacher() {
+  global $USER;
+  global $DB;
+
+  /* All Teacher, Teachers...
+  SELECT u.lastname, r.name, c.fullname
+  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
+  WHERE
+  u.id=ra.userid AND
+  ra.roleid=r.id AND
+  ra.contextid=con.id AND
+  r.name IN ('Teacher', 'Teachers') AND
+  con.contextlevel=50 AND
+  con.instanceid=c.id ORDER BY c.fullname, r.name;
+  */
+
+  $teachers = $DB->get_records_sql("
+    SELECT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    WHERE
+      ra.userid=? AND
+      ra.roleid=r.id AND
+      ra.contextid=con.id AND
+      r.name IN ('Teacher', 'Teachers') AND
+      con.contextlevel=50",
+    array($USER->id));
+
+  if (!empty($teachers)) return true;
+
+  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  else return false;
+}
+
+
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

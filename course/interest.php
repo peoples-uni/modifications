@@ -255,123 +255,129 @@ $countryname['ZW'] = 'Zimbabwe';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/interest.php'); // Defined here to avoid notices on errors etc
+
 
 if (!empty($_POST['markfilter'])) {
-	redirect($CFG->wwwroot . '/course/interest.php?'
-		. 'chosenstartyear=' . $_POST['chosenstartyear']
-		. '&chosenstartmonth=' . $_POST['chosenstartmonth']
-		. '&chosenstartday=' . $_POST['chosenstartday']
-		. '&chosenendyear=' . $_POST['chosenendyear']
-		. '&chosenendmonth=' . $_POST['chosenendmonth']
-		. '&chosenendday=' . $_POST['chosenendday']
-		. '&chosensearch=' . urlencode(stripslashes($_POST['chosensearch']))
-		);
+  redirect($CFG->wwwroot . '/course/interest.php?'
+    . 'chosenstartyear=' . $_POST['chosenstartyear']
+    . '&chosenstartmonth=' . $_POST['chosenstartmonth']
+    . '&chosenstartday=' . $_POST['chosenstartday']
+    . '&chosenendyear=' . $_POST['chosenendyear']
+    . '&chosenendmonth=' . $_POST['chosenendmonth']
+    . '&chosenendday=' . $_POST['chosenendday']
+    . '&chosensearch=' . urlencode(dontstripslashes($_POST['chosensearch']))
+    );
 }
 
+
+$PAGE->set_pagelayout('embedded');
 
 require_login();
 
 //require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-print_header();
+$PAGE->set_title('Expressions of Interest');
+$PAGE->set_heading('Expressions of Interest');
+echo $OUTPUT->header();
 
-echo "<h1>Expressions of Interest</h1>";
 
-$rows = get_recordset_sql('SELECT s.*, sd.cid, sd.no, sd.data FROM d5_webform_submitted_data AS sd LEFT JOIN d5_webform_submissions AS s ON sd.sid=s.sid WHERE s.nid=104 ORDER BY s.submitted DESC', '', '');
+$rows = $DB->get_recordset_sql('SELECT s.*, sd.cid, sd.no, sd.data FROM d5_webform_submitted_data AS sd LEFT JOIN d5_webform_submissions AS s ON sd.sid=s.sid WHERE s.nid=104 ORDER BY s.submitted DESC');
 
-while (!empty($rows) && !$rows->EOF) {
+foreach ($rows as $row) {
 
-	$row = $rows->fields;
-
-	$registrations[$row['sid']]['submitted'] = $row['submitted'];
-	$registrations[$row['sid']][$row['cid']] = $row['data'];
-
-	$rows->MoveNext();
+  $registrations[$row->sid]['submitted'] = $row->submitted;
+  $registrations[$row->sid][$row->cid] = $row->data;
 }
+$rows->close();
 
 if (empty($registrations)) {
-	$registrations = array();
+  $registrations = array();
 }
 
 
+echo '<h1>Expressions of Interest</h1>';
+
 if (!empty($_REQUEST['chosenstartyear']) && !empty($_REQUEST['chosenstartmonth']) && !empty($_REQUEST['chosenstartday'])) {
-	$chosenstartyear = (int)$_REQUEST['chosenstartyear'];
-	$chosenstartmonth = (int)$_REQUEST['chosenstartmonth'];
-	$chosenstartday = (int)$_REQUEST['chosenstartday'];
-	$starttime = gmmktime(0, 0, 0, $chosenstartmonth, $chosenstartday, $chosenstartyear);
-	//echo gmdate('d/m/Y H:i', $starttime) . '<br />';
+  $chosenstartyear = (int)$_REQUEST['chosenstartyear'];
+  $chosenstartmonth = (int)$_REQUEST['chosenstartmonth'];
+  $chosenstartday = (int)$_REQUEST['chosenstartday'];
+  $starttime = gmmktime(0, 0, 0, $chosenstartmonth, $chosenstartday, $chosenstartyear);
+  //echo gmdate('d/m/Y H:i', $starttime) . '<br />';
 }
 else {
 	$starttime = 0;
 }
 if (!empty($_REQUEST['chosenendyear']) && !empty($_REQUEST['chosenendmonth']) && !empty($_REQUEST['chosenendday'])) {
-	$chosenendyear = (int)$_REQUEST['chosenendyear'];
-	$chosenendmonth = (int)$_REQUEST['chosenendmonth'];
-	$chosenendday = (int)$_REQUEST['chosenendday'];
-	$endtime = gmmktime(24, 0, 0, $chosenendmonth, $chosenendday, $chosenendyear);
-	//echo gmdate('d/m/Y H:i', $endtime) . '<br />';
+  $chosenendyear = (int)$_REQUEST['chosenendyear'];
+  $chosenendmonth = (int)$_REQUEST['chosenendmonth'];
+  $chosenendday = (int)$_REQUEST['chosenendday'];
+  $endtime = gmmktime(24, 0, 0, $chosenendmonth, $chosenendday, $chosenendyear);
+  //echo gmdate('d/m/Y H:i', $endtime) . '<br />';
 }
 else {
-	$endtime = 1.0E+20;
+  $endtime = 1.0E+20;
 }
-if (!empty($_REQUEST['chosensearch'])) $chosensearch = stripslashes($_REQUEST['chosensearch']);
+if (!empty($_REQUEST['chosensearch'])) $chosensearch = dontstripslashes($_REQUEST['chosensearch']);
 else $chosensearch = '';
 
 for ($i = 2008; $i <= (int)gmdate('Y'); $i++) {
-	if (!isset($chosenstartyear)) $chosenstartyear = $i;
-	$liststartyear[] = $i;
+  if (!isset($chosenstartyear)) $chosenstartyear = $i;
+  $liststartyear[] = $i;
 }
 
 for ($i = 1; $i <= 12; $i++) {
-	if (!isset($chosenstartmonth)) $chosenstartmonth = $i;
-	$liststartmonth[] = $i;
+  if (!isset($chosenstartmonth)) $chosenstartmonth = $i;
+  $liststartmonth[] = $i;
 }
 
 for ($i = 1; $i <= 31; $i++) {
-	if (!isset($chosenstartday)) $chosenstartday = $i;
-	$liststartday[] = $i;
+  if (!isset($chosenstartday)) $chosenstartday = $i;
+  $liststartday[] = $i;
 }
 
 for ($i = (int)gmdate('Y'); $i >= 2008; $i--) {
-	if (!isset($chosenendyear)) $chosenendyear = $i;
-	$listendyear[] = $i;
+  if (!isset($chosenendyear)) $chosenendyear = $i;
+  $listendyear[] = $i;
 }
 
 for ($i = 12; $i >= 1; $i--) {
-	if (!isset($chosenendmonth)) $chosenendmonth = $i;
-	$listendmonth[] = $i;
+  if (!isset($chosenendmonth)) $chosenendmonth = $i;
+  $listendmonth[] = $i;
 }
 
 for ($i = 31; $i >= 1; $i--) {
-	if (!isset($chosenendday)) $chosenendday = $i;
-	$listendday[] = $i;
+  if (!isset($chosenendday)) $chosenendday = $i;
+  $listendday[] = $i;
 }
 
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/interest.php'; ?>">
 Display entries using the following filters...
 <table border="2" cellpadding="2">
-	<tr>
-		<td>Start Year</td>
-		<td>Start Month</td>
-		<td>Start Day</td>
-		<td>End Year</td>
-		<td>End Month</td>
-		<td>End Day</td>
-		<td>Name or e-mail Contains</td>
-	</tr>
-	<tr>
-		<?php
-		displayoptions('chosenstartyear', $liststartyear, $chosenstartyear);
-		displayoptions('chosenstartmonth', $liststartmonth, $chosenstartmonth);
-		displayoptions('chosenstartday', $liststartday, $chosenstartday);
-		displayoptions('chosenendyear', $listendyear, $chosenendyear);
-		displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
-		displayoptions('chosenendday', $listendday, $chosenendday);
-		?>
-		<td><input type="text" size="40" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
-	</tr>
+  <tr>
+    <td>Start Year</td>
+    <td>Start Month</td>
+    <td>Start Day</td>
+    <td>End Year</td>
+    <td>End Month</td>
+    <td>End Day</td>
+    <td>Name or e-mail Contains</td>
+  </tr>
+  <tr>
+    <?php
+    displayoptions('chosenstartyear', $liststartyear, $chosenstartyear);
+    displayoptions('chosenstartmonth', $liststartmonth, $chosenstartmonth);
+    displayoptions('chosenstartday', $liststartday, $chosenstartday);
+    displayoptions('chosenendyear', $listendyear, $chosenendyear);
+    displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
+    displayoptions('chosenendday', $listendday, $chosenendday);
+    ?>
+    <td><input type="text" size="40" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
+  </tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
 <input type="submit" name="filter" value="Apply Filters" />
@@ -382,73 +388,73 @@ Display entries using the following filters...
 
 
 function displayoptions($name, $options, $selectedvalue) {
-	echo '<td><select name="' . $name . '">';
-	foreach ($options as $option) {
-		if ($option === $selectedvalue) $selected = 'selected="selected"';
-		else $selected = '';
+  echo '<td><select name="' . $name . '">';
+  foreach ($options as $option) {
+    if ($option === $selectedvalue) $selected = 'selected="selected"';
+    else $selected = '';
 
-		$opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
-		echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
-	}
+    $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
+    echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+  }
 	echo '</select></td>';
 }
 
 
 $emaildups = 0;
 foreach ($registrations as $sid => $registration) {
-	if (empty($registration['3'])) $registration['3'] = '';
-	$registration['3'] = strip_tags($registration['3']);
+  if (empty($registration['3'])) $registration['3'] = '';
+  $registration['3'] = strip_tags($registration['3']);
 
-	if (empty($registration['9'])) $registration['9'] = '';
-	if (substr($registration['9'], 0, 6) === 'HIDDEN') {
-		unset($registrations[$sid]);
-		continue;
-	}
+  if (empty($registration['9'])) $registration['9'] = '';
+  if (substr($registration['9'], 0, 6) === 'HIDDEN') {
+    unset($registrations[$sid]);
+    continue;
+  }
 
-	if ($registration['submitted'] < $starttime ||
-		$registration['submitted'] > $endtime) {
+  if ($registration['submitted'] < $starttime ||
+    $registration['submitted'] > $endtime) {
 
-		unset($registrations[$sid]);
-		continue;
-	}
+    unset($registrations[$sid]);
+    continue;
+  }
 
-	if (empty($registration['6'])) $registration['6'] = '';
-	if (empty($registration['7'])) $registration['7'] = '';
+  if (empty($registration['6'])) $registration['6'] = '';
+  if (empty($registration['7'])) $registration['7'] = '';
 
-	if (!empty($chosensearch) &&
-		stripos($registration['3'], $chosensearch) === false &&
-		stripos($registration['6'], $chosensearch) === false &&
-		stripos($registration['7'], $chosensearch) === false) {
+  if (!empty($chosensearch) &&
+  stripos($registration['3'], $chosensearch) === false &&
+    stripos($registration['6'], $chosensearch) === false &&
+    stripos($registration['7'], $chosensearch) === false) {
 
-		unset($registrations[$sid]);
-		continue;
-	}
+    unset($registrations[$sid]);
+    continue;
+  }
 
-	if (empty($emailcounts[$registration['3']])) {
-		$emailcounts[$registration['3']] = 1;
-		$listofemails[]  = htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8');
-	}
-	else {
-		$emailcounts[$registration['3']]++;
-		$emaildups++;
-	}
+  if (empty($emailcounts[$registration['3']])) {
+    $emailcounts[$registration['3']] = 1;
+    $listofemails[]  = htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8');
+  }
+  else {
+    $emailcounts[$registration['3']]++;
+    $emaildups++;
+  }
 }
 
-echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
-echo "<tr>";
+$table = new html_table();
 
-echo "<td>Submitted</td>";
-echo '<td></td>';
-echo "<td>Family name</td>";
-echo "<td>Given name</td>";
-echo "<td>Email address</td>";
-echo "<td>First module</td>";
-echo "<td>Second module</td>";
-echo '<td>Suggestions</td>';
-echo '<td>Country</td>';
-echo '<td>e-mail sent?</td>';
-echo '<td>Comment</td>';
-echo "</tr>";
+$table->head = array(
+  'Submitted',
+  '',
+  'Family name',
+  'Given name',
+  'Email address',
+  'First module',
+  'Second module',
+  'Suggestions',
+  'Country',
+  'e-mail sent?',
+  'Comment'
+);
 
 $n = 0;
 
@@ -465,82 +471,87 @@ foreach ($registrations as $sid => $registration) {
 // state:			10
 // comment:			9
 
-	if (empty($registration['1'])) $registration['1'] = '';
-	if (empty($registration['2'])) $registration['2'] = '';
-	if (empty($registration['3'])) $registration['3'] = '';
-	if (empty($registration['6'])) $registration['6'] = '';
-	if (empty($registration['7'])) $registration['7'] = '';
-	if (empty($registration['8'])) $registration['8'] = '';
-	if (empty($registration['9'])) $registration['9'] = '';
-	if (empty($registration['10'])) $registration['10'] = '0';
+  if (empty($registration['1'])) $registration['1'] = '';
+  if (empty($registration['2'])) $registration['2'] = '';
+  if (empty($registration['3'])) $registration['3'] = '';
+  if (empty($registration['6'])) $registration['6'] = '';
+  if (empty($registration['7'])) $registration['7'] = '';
+  if (empty($registration['8'])) $registration['8'] = '';
+  if (empty($registration['9'])) $registration['9'] = '';
+  if (empty($registration['10'])) $registration['10'] = '0';
 
-	$registration['3'] = strip_tags($registration['3']);
-	$registration['6'] = strip_tags($registration['6']);
-	$registration['7'] = strip_tags($registration['7']);
-	$registration['9'] = strip_tags($registration['9']);
+  $registration['3'] = strip_tags($registration['3']);
+  $registration['6'] = strip_tags($registration['6']);
+  $registration['7'] = strip_tags($registration['7']);
+  $registration['9'] = strip_tags($registration['9']);
 
-	$registration['6'] = mb_substr($registration['6'], 0, 100, 'UTF-8');
-	$registration['7'] = mb_substr($registration['7'], 0, 100, 'UTF-8');
+  $registration['6'] = mb_substr($registration['6'], 0, 100, 'UTF-8');
+  $registration['7'] = mb_substr($registration['7'], 0, 100, 'UTF-8');
 
-	echo "<tr>";
-	echo "<td>" . gmdate('d/m/Y H:i', $registration['submitted']) . "</td>";
-?>
-<td>
-<form method="post" action="<?php echo $CFG->wwwroot . '/course/int.php'; ?>" target="_blank">
+  $rowdata = array();
 
-<input type="hidden" name="familyname" value="<?php echo htmlspecialchars($registration['6'], ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="givenname" value="<?php echo htmlspecialchars($registration['7'], ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="email" value="<?php echo htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8'); ?>" />
+  $rowdata[] = gmdate('d/m/Y H:i', $registration['submitted']);
 
-<span style="display: none;">
-<textarea name="comment" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($registration['9'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-</span>
-<input type="hidden" name="state" value="<?php echo $registration['10']; ?>" />
+  $z  = '<form method="post" action="' . $CFG->wwwroot . '/course/int.php" target="_blank">';
+  $z .= '<input type="hidden" name="familyname" value="' . htmlspecialchars($registration['6'], ENT_COMPAT, 'UTF-8') . '" />';
+  $z .= '<input type="hidden" name="givenname"  value="' . htmlspecialchars($registration['7'], ENT_COMPAT, 'UTF-8') . '" />';
+  $z .= '<input type="hidden" name="email"      value="' . htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8') . '" />';
+  $z .= '<span style="display: none;">';
+  $z .= '<textarea name="comment" rows="10" cols="100" wrap="hard">' . htmlspecialchars($registration['9'], ENT_COMPAT, 'UTF-8') . '</textarea>';
+  $z .= '</span>';
+  $z .= '<input type="hidden" name="state"      value="' . $registration['10'] . '" />';
+  $z .= '<input type="hidden" name="sid"        value="' . $sid                . '" />';
+  $z .= '<input type="hidden" name="sesskey"    value="' . $USER->sesskey      . '" />';
+  $z .= '<input type="hidden" name="markapp" value="1" />';
+  $z .= '<input type="submit" name="approveapplication" value="e-mail" />';
+  $z .= '</form>';
+  $rowdata[] = $z;
 
-<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
-<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
-<input type="hidden" name="markapp" value="1" />
-<input type="submit" name="approveapplication" value="e-mail" />
-</form>
-<?php
-	echo "<td>" . htmlspecialchars($registration['6'], ENT_COMPAT, 'UTF-8') . "</td>";
-	echo "<td>" . htmlspecialchars($registration['7'], ENT_COMPAT, 'UTF-8') . "</td>";
-	if ($emailcounts[$registration['3']] === 1) {
-		echo "<td>" . htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8') . "</td>";
-	}
+  $rowdata[] = htmlspecialchars($registration['6'], ENT_COMPAT, 'UTF-8');
+
+  $rowdata[] = htmlspecialchars($registration['7'], ENT_COMPAT, 'UTF-8');
+
+  if ($emailcounts[$registration['3']] === 1) {
+    $rowdata[] = htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8');
+  }
 	else {
-		echo "<td>" . '<span style="color:navy">**</span>' . htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8') . "</td>";
-	}
-	echo '<td>' . htmlspecialchars($registration['1'], ENT_COMPAT, 'UTF-8') . '</td>';
-	echo '<td>' . htmlspecialchars($registration['2'], ENT_COMPAT, 'UTF-8') . '</td>';
-	echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($registration['11'], ENT_COMPAT, 'UTF-8'))) . '</td>';
-	if (empty($countryname[$registration['8']])) echo '<td></td>';
-	else echo '<td>' . $countryname[$registration['8']] . '</td>';
-
-	if (empty($registration['10'])) echo '<td></td>';
-	else echo '<td>Yes</td>';
-
-	echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($registration['9'], ENT_COMPAT, 'UTF-8'))) . '</td>';
-	echo '</tr>';
-
-	if (empty($modules[$registration['1']])) {
-		$modules[$registration['1']] = 1;
-	}
-	else {
-		$modules[$registration['1']]++;
-	}
-	if (!empty($registration['2'])) {
-		if (empty($modules[$registration['2']])) {
-			$modules[$registration['2']] = 1;
-		}
-		else {
-			$modules[$registration['2']]++;
-		}
+    $rowdata[] = '<span style="color:navy">**</span>' . htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8');
 	}
 
-	$n++;
+  $rowdata[] = htmlspecialchars($registration['1'], ENT_COMPAT, 'UTF-8');
+
+  $rowdata[] = htmlspecialchars($registration['2'], ENT_COMPAT, 'UTF-8');
+
+  $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($registration['11'], ENT_COMPAT, 'UTF-8')));
+
+  if (empty($countryname[$registration['8']])) $rowdata[] = '';
+  else $rowdata[] = $countryname[$registration['8']];
+
+  if (empty($registration['10'])) $rowdata[] = '';
+  else $rowdata[] = 'Yes';
+
+  $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($registration['9'], ENT_COMPAT, 'UTF-8')));
+
+  if (empty($modules[$registration['1']])) {
+    $modules[$registration['1']] = 1;
+  }
+  else {
+    $modules[$registration['1']]++;
+  }
+  if (!empty($registration['2'])) {
+    if (empty($modules[$registration['2']])) {
+      $modules[$registration['2']] = 1;
+    }
+    else {
+      $modules[$registration['2']]++;
+    }
+  }
+
+  $n++;
+  $table->data[] = $rowdata;
 }
-echo '</table>';
+echo html_writer::table($table);
+
 echo '<br />Total Expressions of Interest: ' . $n;
 echo '<br /><br />(Duplicated e-mails: ' . $emaildups . ',  see <span style="color:navy">**</span>)';
 echo '<br/><br/>';
@@ -556,12 +567,12 @@ ksort($modules);
 $n = 0;
 
 foreach ($modules as $product => $number) {
-	echo "<tr>";
-	echo "<td>" . $product . "</td>";
-	echo "<td>" . $number . "</td>";
-    echo "</tr>";
+  echo "<tr>";
+  echo "<td>" . $product . "</td>";
+  echo "<td>" . $number . "</td>";
+  echo "</tr>";
 
-	$n++;
+  $n++;
 }
 echo '</table>';
 echo '<br />Number of Modules: ' . $n . '<br /><br />';
@@ -571,5 +582,10 @@ echo 'e-mails of those who have Expressed an Interest...<br />' . implode(', ', 
 
 echo '<br /><br /><br />';
 
-notice(get_string('continue'), "$CFG->wwwroot/");
+echo $OUTPUT->footer();
+
+
+function dontstripslashes($x) {
+  return $x;
+}
 ?>

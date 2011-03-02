@@ -8,17 +8,25 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/admin_documentation.php');
+$PAGE->set_pagelayout('standard');
+
 
 require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
-$isteacher = isteacherinanycourse();
+$isteacher = is_peoples_teacher();
 if (!$isteacher) {
 	echo '<h1>You must be a teacher to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");
 }
 
-print_header('Administration Documentation for Peoples-uni');
+$PAGE->set_title('Administration Documentation for Peoples-uni');
+$PAGE->set_heading('Administration Documentation for Peoples-uni');
+echo $OUTPUT->header();
+
 
 ?>
 <h1>Applications, Approving, Payments, Enrolling, Grading and Certificates</h1>
@@ -1023,3 +1031,40 @@ The EXACT link that should be sent to recipients for them to retrieve the certif
 You can also list all certificates with the "List All Certificates" link.
 </li>
 </ol>
+
+<?php
+echo $OUTPUT->footer();
+
+
+function is_peoples_teacher() {
+  global $USER;
+  global $DB;
+
+  /* All Teacher, Teachers...
+  SELECT u.lastname, r.name, c.fullname
+  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
+  WHERE
+  u.id=ra.userid AND
+  ra.roleid=r.id AND
+  ra.contextid=con.id AND
+  r.name IN ('Teacher', 'Teachers') AND
+  con.contextlevel=50 AND
+  con.instanceid=c.id ORDER BY c.fullname, r.name;
+  */
+
+  $teachers = $DB->get_records_sql("
+    SELECT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    WHERE
+      ra.userid=? AND
+      ra.roleid=r.id AND
+      ra.contextid=con.id AND
+      r.name IN ('Teacher', 'Teachers') AND
+      con.contextlevel=50",
+    array($USER->id));
+
+  if (!empty($teachers)) return true;
+
+  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  else return false;
+}
+?>

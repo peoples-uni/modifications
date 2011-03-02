@@ -23,13 +23,19 @@ CONSTRAINT  PRIMARY KEY (id)
 
 require("../config.php");
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/createcertificate.php');
+$PAGE->set_pagelayout('standard');
+
 require_login();
 
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-print_header('Create Volunteer Certificate');
+$PAGE->set_title('Create Volunteer Certificate');
+$PAGE->set_heading('Create Volunteer Certificate');
+echo $OUTPUT->header();
 
-echo '<h1>Create Volunteer Certificate</h1>';
 
 $name = '';
 $title = 'Certificate of Academic Input to the Peoples Open Access Education Initiative - Peoples-uni';
@@ -61,7 +67,7 @@ if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) &&
 	$volunteercertificate->body3 = $_POST['body3'];
 	$volunteercertificate->body4 = $_POST['body4'];
 	$volunteercertificate->body5 = $_POST['body5'];
-	update_record('volunteercertificate', $volunteercertificate);
+	$DB->update_record('volunteercertificate', $volunteercertificate);
 
 	$id = $_POST['id'];
 
@@ -73,13 +79,13 @@ if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) &&
 	$body4 = $_POST['body4'];
 	$body5 = $_POST['body5'];
 
-	$name = htmlspecialchars(stripslashes($name), ENT_COMPAT, 'UTF-8');
-	$title = htmlspecialchars(stripslashes($title), ENT_COMPAT, 'UTF-8');
-	$body1 = htmlspecialchars(stripslashes($body1), ENT_COMPAT, 'UTF-8');
-	$body2 = htmlspecialchars(stripslashes($body2), ENT_COMPAT, 'UTF-8');
-	$body3 = htmlspecialchars(stripslashes($body3), ENT_COMPAT, 'UTF-8');
-	$body4 = htmlspecialchars(stripslashes($body4), ENT_COMPAT, 'UTF-8');
-	$body5 = htmlspecialchars(stripslashes($body5), ENT_COMPAT, 'UTF-8');
+	$name = htmlspecialchars(dontstripslashes($name), ENT_COMPAT, 'UTF-8');
+	$title = htmlspecialchars(dontstripslashes($title), ENT_COMPAT, 'UTF-8');
+	$body1 = htmlspecialchars(dontstripslashes($body1), ENT_COMPAT, 'UTF-8');
+	$body2 = htmlspecialchars(dontstripslashes($body2), ENT_COMPAT, 'UTF-8');
+	$body3 = htmlspecialchars(dontstripslashes($body3), ENT_COMPAT, 'UTF-8');
+	$body4 = htmlspecialchars(dontstripslashes($body4), ENT_COMPAT, 'UTF-8');
+	$body5 = htmlspecialchars(dontstripslashes($body5), ENT_COMPAT, 'UTF-8');
 }
 elseif (!empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['markupdatecertificate']) && !empty($_POST['createcertificate'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -97,7 +103,7 @@ elseif (!empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['mark
 	$volunteercertificate->body3 = $_POST['body3'];
 	$volunteercertificate->body4 = $_POST['body4'];
 	$volunteercertificate->body5 = $_POST['body5'];
-	$id = insert_record('volunteercertificate', $volunteercertificate);
+	$id = $DB->insert_record('volunteercertificate', $volunteercertificate);
 
 	$name = $_POST['name'];
 	$title = $_POST['title'];
@@ -107,13 +113,13 @@ elseif (!empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['mark
 	$body4 = $_POST['body4'];
 	$body5 = $_POST['body5'];
 
-	$name = htmlspecialchars(stripslashes($name), ENT_COMPAT, 'UTF-8');
-	$title = htmlspecialchars(stripslashes($title), ENT_COMPAT, 'UTF-8');
-	$body1 = htmlspecialchars(stripslashes($body1), ENT_COMPAT, 'UTF-8');
-	$body2 = htmlspecialchars(stripslashes($body2), ENT_COMPAT, 'UTF-8');
-	$body3 = htmlspecialchars(stripslashes($body3), ENT_COMPAT, 'UTF-8');
-	$body4 = htmlspecialchars(stripslashes($body4), ENT_COMPAT, 'UTF-8');
-	$body5 = htmlspecialchars(stripslashes($body5), ENT_COMPAT, 'UTF-8');
+	$name = htmlspecialchars(dontstripslashes($name), ENT_COMPAT, 'UTF-8');
+	$title = htmlspecialchars(dontstripslashes($title), ENT_COMPAT, 'UTF-8');
+	$body1 = htmlspecialchars(dontstripslashes($body1), ENT_COMPAT, 'UTF-8');
+	$body2 = htmlspecialchars(dontstripslashes($body2), ENT_COMPAT, 'UTF-8');
+	$body3 = htmlspecialchars(dontstripslashes($body3), ENT_COMPAT, 'UTF-8');
+	$body4 = htmlspecialchars(dontstripslashes($body4), ENT_COMPAT, 'UTF-8');
+	$body5 = htmlspecialchars(dontstripslashes($body5), ENT_COMPAT, 'UTF-8');
 }
 
 if (!empty($id)) {
@@ -161,5 +167,10 @@ if (!empty($id)) {
 <br />
 <?php
 
-print_footer();
+echo $OUTPUT->footer();
+
+
+function dontstripslashes($x) {
+  return $x;
+}
 ?>

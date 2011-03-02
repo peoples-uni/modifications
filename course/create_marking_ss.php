@@ -21,20 +21,24 @@ CREATE INDEX mdl_peoples_google_ss_course_id_ix ON mdl_peoples_google_ss (course
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/create_marking_ss.php');
+$PAGE->set_pagelayout('standard');
+
 require_login();
 
 require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 
-print_header('Create Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');
-
-echo '<h2>Create Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking</h2><br /><br />';
+$PAGE->set_title('Create Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');
+$PAGE->set_heading('Create Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');
+echo $OUTPUT->header();
 
 
 if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
   $id = (int)$_POST['course_id'];
-  $course = get_record('course', 'id', $id);
+  $course = $DB->get_record('course', array('id' => $id));
   if (empty($course)) die();
 
   /**
@@ -119,7 +123,7 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
     die();
   }
 
-  $students = get_records_sql("SELECT DISTINCT e.userid, u.lastname, u.firstname FROM mdl_enrolment e, mdl_user u WHERE e.courseid=$id AND e.enrolled!=0 AND e.userid=u.id ORDER BY u.lastname, u.firstname ASC");
+  $students = $DB->get_records_sql("SELECT DISTINCT e.userid, u.lastname, u.firstname FROM mdl_enrolment e, mdl_user u WHERE e.courseid=$id AND e.enrolled!=0 AND e.userid=u.id ORDER BY u.lastname, u.firstname ASC");
   $number = count($students);
 
   $query = new Zend_Gdata_Spreadsheets_CellQuery();
@@ -212,20 +216,20 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
   // Example of what is needed: http://spreadsheets.google.com/ccc?key=0Ag3Bj9qWqJ-VdHpmVnNWWVBTTGF3OEE4Z1BzWlN5dUE&hl=en&authkey=CNboh4wB
   $newlink = 'http://spreadsheets.google.com/ccc?key=' . $key . '&hl=en&authkey=' . $authkey;
 
-  $google_ss_existing = get_record('peoples_google_ss', 'course_id', $id);
+  $google_ss_existing = $DB->get_record('peoples_google_ss', array('course_id' => $id));
   if (empty($google_ss_existing)) {
     $google_ss = new object();
     $google_ss->course_id = $id;
-    $google_ss->full_link = addslashes($newlink);
+    $google_ss->full_link = dontaddslashes($newlink);
 
-    insert_record('peoples_google_ss', $google_ss);
+    $DB->insert_record('peoples_google_ss', $google_ss);
   }
   else {
     $google_ss = new object();
     $google_ss->id = $google_ss_existing->id;
-    $google_ss->full_link = addslashes($newlink);
+    $google_ss->full_link = dontaddslashes($newlink);
 
-    update_record('peoples_google_ss', $google_ss);
+    $DB->update_record('peoples_google_ss', $google_ss);
   }
 
 
@@ -236,7 +240,7 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
 else {
   $id = required_param('id', PARAM_INT);
 
-  $course = get_record('course', 'id', $id);
+  $course = $DB->get_record('course', array('id' => $id));
   if (empty($course)) die();
 
   echo '<script type="text/JavaScript">function areyousurecreatess() { var sure = false; sure = confirm("Are you sure you want to Create the Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking for: ' . htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8')
@@ -257,7 +261,7 @@ else {
 
 echo '<br /><strong><a href="javascript:window.close();">Close Window</a></strong>';
 
-print_footer();
+echo $OUTPUT->footer();
 
 
 function resizeWorksheet($spreadsheets, $key, $newRowCount, $newColumnCount) {
@@ -267,5 +271,10 @@ function resizeWorksheet($spreadsheets, $key, $newRowCount, $newColumnCount) {
   $currentWorksheet = $currentWorksheet->setRowCount(new Zend_Gdata_Spreadsheets_Extension_RowCount($newRowCount));
   $currentWorksheet = $currentWorksheet->setColumnCount(new Zend_Gdata_Spreadsheets_Extension_ColCount($newColumnCount));
   $currentWorksheet->save();
+}
+
+
+function dontaddslashes($x) {
+  return $x;
 }
 ?>

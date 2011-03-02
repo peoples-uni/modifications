@@ -280,22 +280,34 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/app.php'); // Defined here to avoid notices on errors etc
+
+//$PAGE->set_pagelayout('embedded');   // Needs as much space as possible
+//$PAGE->set_pagelayout('base');     // Most backwards compatible layout without the blocks - this is the layout used by default
+$PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
+
 require_login();
 
 //require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-print_header('Student Details');
+$PAGE->set_title('Student Details');
+$PAGE->set_heading('Details for '. htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8') . ', ' . htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'));
+echo $OUTPUT->header();
+
+//print_header('Student Details');
 
 if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
 
-echo '<script type="text/JavaScript">function areyousureunapp1() { var sure = false; sure = confirm("Are you sure you want to Un-Approve and possibly Un-Enrol ' . htmlspecialchars(stripslashes($_REQUEST['2']), ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars(stripslashes($_REQUEST['1']), ENT_COMPAT, 'UTF-8') . ' from ' . htmlspecialchars(stripslashes($_REQUEST['18']), ENT_COMPAT, 'UTF-8') . '?"); return sure;}</script>';
-echo '<script type="text/JavaScript">function areyousureunapp2() { var sure = false; sure = confirm("Are you sure you want to Un-Approve and possibly Un-Enrol ' . htmlspecialchars(stripslashes($_REQUEST['2']), ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars(stripslashes($_REQUEST['1']), ENT_COMPAT, 'UTF-8') . ' from ' . htmlspecialchars(stripslashes($_REQUEST['19']), ENT_COMPAT, 'UTF-8') . '?"); return sure;}</script>';
-echo '<script type="text/JavaScript">function areyousuredeleteentry() { var sure = false; sure = confirm("Are you sure you want to Hide this Application Form Entry for ' . htmlspecialchars(stripslashes($_REQUEST['2']), ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars(stripslashes($_REQUEST['1']), ENT_COMPAT, 'UTF-8') . ' from All Future Processing?"); return sure;}</script>';
+echo '<script type="text/JavaScript">function areyousureunapp1() { var sure = false; sure = confirm("Are you sure you want to Un-Approve and possibly Un-Enrol ' . htmlspecialchars(dontstripslashes($_REQUEST['2']), ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars(dontstripslashes($_REQUEST['1']), ENT_COMPAT, 'UTF-8') . ' from ' . htmlspecialchars(dontstripslashes($_REQUEST['18']), ENT_COMPAT, 'UTF-8') . '?"); return sure;}</script>';
+echo '<script type="text/JavaScript">function areyousureunapp2() { var sure = false; sure = confirm("Are you sure you want to Un-Approve and possibly Un-Enrol ' . htmlspecialchars(dontstripslashes($_REQUEST['2']), ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars(dontstripslashes($_REQUEST['1']), ENT_COMPAT, 'UTF-8') . ' from ' . htmlspecialchars(dontstripslashes($_REQUEST['19']), ENT_COMPAT, 'UTF-8') . '?"); return sure;}</script>';
+echo '<script type="text/JavaScript">function areyousuredeleteentry() { var sure = false; sure = confirm("Are you sure you want to Hide this Application Form Entry for ' . htmlspecialchars(dontstripslashes($_REQUEST['2']), ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars(dontstripslashes($_REQUEST['1']), ENT_COMPAT, 'UTF-8') . ' from All Future Processing?"); return sure;}</script>';
 
 
-$activemodules = get_records('activemodules', '', '', 'fullname ASC');
+$activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
 
 $modules = array();
 foreach ($activemodules as $activemodule) {
@@ -305,30 +317,18 @@ foreach ($activemodules as $activemodule) {
 
 $refreshparent = false;
 if (!empty($_POST['markapp1'])) {
-	if ($_POST['nid'] !== '80') $cid = '30';
-	else  $cid = '13';
-
-	$ret = execute_sql('UPDATE d5_webform_submitted_data SET data='. $_POST['state'] . ' WHERE cid=' . $cid . ' AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'state', $_POST['state'], 1);
 
 	$refreshparent = true;
 }
 if (!empty($_POST['markapp2'])) {
-	if ($_POST['nid'] !== '80') $cid = '30';
-	else  $cid = '13';
-
-	$ret = execute_sql('UPDATE d5_webform_submitted_data SET data='. $_POST['state'] . ' WHERE cid=' . $cid . ' AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'state', $_POST['state'], 1);
 
 	$refreshparent = true;
 }
 if (!empty($_POST['markunapp1'])) {
-	if ($_POST['nid'] !== '80') $cid = '30';
-	else  $cid = '13';
-
-	$ret = execute_sql('UPDATE d5_webform_submitted_data SET data='. $_POST['state'] . ' WHERE cid=' . $cid . ' AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'state', $_POST['state'], -1);
 
@@ -338,10 +338,6 @@ if (!empty($_POST['markunapp1'])) {
 	}
 }
 if (!empty($_POST['markunapp2'])) {
-	if ($_POST['nid'] !== '80') $cid = '30';
-	else  $cid = '13';
-
-	$ret = execute_sql('UPDATE d5_webform_submitted_data SET data='. $_POST['state'] . ' WHERE cid=' . $cid . ' AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'state', $_POST['state'], -1);
 
@@ -351,30 +347,18 @@ if (!empty($_POST['markunapp2'])) {
 	}
 }
 if (!empty($_POST['change1'])) {
-	if ($_POST['nid'] !== '80') $cid = '18';
-	else  $cid = '3';
-
-	$ret = execute_sql("UPDATE d5_webform_submitted_data SET data='". $_REQUEST['18'] . "' WHERE cid=" . $cid . " AND sid=" . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'coursename1', $_REQUEST['18']);
 
 	$refreshparent = true;
 }
 if (!empty($_POST['change2'])) {
-	if ($_POST['nid'] !== '80') $cid = '19';
-	else  $cid = '4';
-
-	$ret = execute_sql("UPDATE d5_webform_submitted_data SET data='". $_REQUEST['19'] . "' WHERE cid=" . $cid . " AND sid=" . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'coursename2', $_REQUEST['19']);
 
 	$refreshparent = true;
 }
 if (!empty($_POST['add2newapproved'])) {
-  if ($_POST['nid'] !== '80') $cid = '19';
-  else  $cid = '4';
-
-  $ret = execute_sql("UPDATE d5_webform_submitted_data SET data='". $_REQUEST['19'] . "' WHERE cid=" . $cid . " AND sid=" . $_POST['sid']);
 
   updateapplication($_POST['sid'], 'coursename2', $_REQUEST['19'], 1); // 1 => Need to increase payment for new approved module
 
@@ -388,8 +372,8 @@ if (!empty($_POST['note']) && !empty($_POST['markaddnote'])) {
   $newnote->datesubmitted = time();
 
   // textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
-  $newnote->note = addslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(stripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
-  insert_record('peoplesstudentnotes', $newnote);
+  $newnote->note = dontaddslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
+  $DB->insert_record('peoplesstudentnotes', $newnote);
 
   $refreshparent = true;
 }
@@ -402,19 +386,18 @@ if (!empty($_POST['markchangeemail']) && !empty($_POST['11'])) {
 }
 if (!empty($_POST['markaddnewmodule']) && !empty($_POST['newmodulename']) && !empty($_POST['29'])) {
 
-  $user = get_record('user', 'id', $_REQUEST['29']);
+  $user = $DB->get_record('user', array('id' => $_REQUEST['29']));
 
-  $course = get_record('course', 'fullname', $_POST['newmodulename']);
+  $course = $DB->get_record('course', array('fullname' => $_POST['newmodulename']));
 
-  enrolincourse($course, $user, 'manual', $_REQUEST['16']);
+  enrolincourse($course, $user, $_REQUEST['16']);
 
-  $teacher = get_teacher($course->id);
+  $teacher = get_peoples_teacher($course);
 
-  if (!empty($CFG->enrol_mailteachers)) {
-    $a->course = $course->fullname;
-    $a->user = fullname($user);
-    email_to_user($teacher, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-  }
+  $a->course = $course->fullname;
+  $a->user = fullname($user);
+  //$teacher->email = 'alanabarrett0@gmail.com';
+  email_to_user($teacher, $user, get_string('enrolmentnew', 'enrol', $course->shortname), get_string('enrolmentnewuser', 'enrol', $a));
 
   updateapplication($_POST['sid'], 'dummyfieldname', 'dummyfieldvalue', 1);
 }
@@ -430,7 +413,7 @@ window.opener.location.reload();
 }
 
 
-$application = get_record('peoplesapplication', 'sid', $_REQUEST['sid']);
+$application = $DB->get_record('peoplesapplication', array('sid' => $_REQUEST['sid']));
 
 
 $state = (int)$_REQUEST['state'];
@@ -440,25 +423,25 @@ if ($state === 0) {
 $state1 = $state & 07;
 $state2 = $state & 070;
 
-$_REQUEST['1'] = stripslashes($_REQUEST['1']);
-$_REQUEST['2'] = stripslashes($_REQUEST['2']);
-$_REQUEST['11'] = stripslashes($_REQUEST['11']);
-$_REQUEST['16'] = stripslashes($_REQUEST['16']);
-$_REQUEST['18'] = stripslashes($_REQUEST['18']);
-$_REQUEST['19'] = stripslashes($_REQUEST['19']);
-$_REQUEST['12'] = stripslashes($_REQUEST['12']);
-$_REQUEST['3'] = stripslashes($_REQUEST['3']);
-$_REQUEST['14'] = stripslashes($_REQUEST['14']);
-$_REQUEST['13'] = stripslashes($_REQUEST['13']);
-$_REQUEST['34'] = stripslashes($_REQUEST['34']);
-$_REQUEST['35'] = stripslashes($_REQUEST['35']);
-$_REQUEST['36'] = stripslashes($_REQUEST['36']);
-$_REQUEST['7'] = stripslashes($_REQUEST['7']);
-$_REQUEST['8'] = stripslashes($_REQUEST['8']);
-$_REQUEST['10'] = stripslashes($_REQUEST['10']);
-$_REQUEST['31'] = stripslashes($_REQUEST['31']);
-$_REQUEST['32'] = stripslashes($_REQUEST['32']);
-$_REQUEST['21'] = stripslashes($_REQUEST['21']);
+$_REQUEST['1'] = dontstripslashes($_REQUEST['1']);
+$_REQUEST['2'] = dontstripslashes($_REQUEST['2']);
+$_REQUEST['11'] = dontstripslashes($_REQUEST['11']);
+$_REQUEST['16'] = dontstripslashes($_REQUEST['16']);
+$_REQUEST['18'] = dontstripslashes($_REQUEST['18']);
+$_REQUEST['19'] = dontstripslashes($_REQUEST['19']);
+$_REQUEST['12'] = dontstripslashes($_REQUEST['12']);
+$_REQUEST['3'] = dontstripslashes($_REQUEST['3']);
+$_REQUEST['14'] = dontstripslashes($_REQUEST['14']);
+$_REQUEST['13'] = dontstripslashes($_REQUEST['13']);
+$_REQUEST['34'] = dontstripslashes($_REQUEST['34']);
+$_REQUEST['35'] = dontstripslashes($_REQUEST['35']);
+$_REQUEST['36'] = dontstripslashes($_REQUEST['36']);
+$_REQUEST['7'] = dontstripslashes($_REQUEST['7']);
+$_REQUEST['8'] = dontstripslashes($_REQUEST['8']);
+$_REQUEST['10'] = dontstripslashes($_REQUEST['10']);
+$_REQUEST['31'] = dontstripslashes($_REQUEST['31']);
+$_REQUEST['32'] = dontstripslashes($_REQUEST['32']);
+$_REQUEST['21'] = dontstripslashes($_REQUEST['21']);
 
 $_REQUEST['1'] = strip_tags($_REQUEST['1']);
 $_REQUEST['2'] = strip_tags($_REQUEST['2']);
@@ -470,7 +453,7 @@ $_REQUEST['35'] = strip_tags($_REQUEST['35']);
 $_REQUEST['36'] = strip_tags($_REQUEST['36']);
 $_REQUEST['21'] = strip_tags($_REQUEST['21']);
 
-echo "<h1>Details for ".htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8').", ".htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8')."</h1>";
+//echo "<h1>Details for ".htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8').", ".htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8')."</h1>";
 
 echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
 echo "<tr>";
@@ -636,7 +619,7 @@ echo '<td>' . htmlspecialchars($application->datafromworldpay, ENT_COMPAT, 'UTF-
 echo '</tr>';
 
 $sid = $_REQUEST['sid'];
-$notes = get_records_sql("SELECT * FROM mdl_peoplesstudentnotes WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
+$notes = $DB->get_records_sql("SELECT * FROM mdl_peoplesstudentnotes WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($notes)) {
   echo '<tr><td colspan="2">Notes (can add more below)...</td></tr>';
 
@@ -1146,12 +1129,12 @@ You have applied to take the Course Module '<?php echo htmlspecialchars($_REQUES
 <?php
 
 if (!empty($_REQUEST['29'])) {
-	$userrecord = get_record('user', 'id', addslashes($_REQUEST['29']));
+  $userrecord = $DB->get_record('user', array('id' => dontaddslashes($_REQUEST['29'])));
 }
 elseif (!empty($_REQUEST['21'])) {
 	if ($_REQUEST['nid'] === '80') echo 'ERROR, THIS SHOULD NOT HAPPEN, TALK TO ALAN<br /><br />';
 
-	$userrecord = get_record('user', 'username', addslashes($_REQUEST['21']));
+  $userrecord = $DB->get_record('user', array('username' => dontaddslashes($_REQUEST['21'])));
 }
 if (!empty($userrecord)) {
 	if (empty($_REQUEST['29'])) {
@@ -1197,10 +1180,10 @@ if (!empty($userrecord)) {
 
 	echo '<br />';
 
-	$courses = get_my_courses($userrecord->id);
+  $courses = enrol_get_users_courses($userrecord->id);
 
 	if (!empty($courses)) {
-		echo "Users course's...";
+		echo "User's courses...";
 		echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
 		foreach ($courses as $key => $course) {
 			echo "<tr>";
@@ -1657,50 +1640,55 @@ echo '<br /><strong><a href="javascript:window.close();">Close Window</a></stron
 </form>
 <?php
 
-print_footer();
-
+//print_footer();
+echo $OUTPUT->footer();
 
 function unenrolstudent($userid, $modulename) {
+  global $DB;
+
 	// Student is probably (but not for sure) enrolled in this module
-	// This is from a POST so has slashes
 
 	if (!empty($userid)) {
-		$coursetoremove = get_record('course', 'fullname', $modulename);
+    $coursetoremove = $DB->get_record('course', array('fullname' => $modulename));
 		if (!empty($coursetoremove)) {
-			if ($role = get_default_course_role($coursetoremove)) {
-				$context = get_context_instance(CONTEXT_COURSE, $coursetoremove->id);
 
-				if (role_unassign($role->id, $userid, 0, $context->id)) {
-					// Will come in here even if did not have role...
+      if (!enrol_is_enabled('manual')) {
+        return false;
+      }
+      if (!$enrol = enrol_get_plugin('manual')) {
+        return false;
+      }
+      if (!$instances = $DB->get_records('enrol', array('enrol'=>'manual', 'courseid'=>$coursetoremove->id, 'status'=>ENROL_INSTANCE_ENABLED), 'sortorder,id ASC')) {
+        return false;
+      }
+      $instance = reset($instances);
 
-					mark_context_dirty($context->path);
+      $enrol->unenrol_user($instance, $userid);
 
-					$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $coursetoremove->id);
+      $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $coursetoremove->id));
 
-					if (!empty($enrolment)) {
-						$enrolment->semester = addslashes($enrolment->semester);
-						$enrolment->dateunenrolled = time();
-						$enrolment->enrolled = 0;
-						update_record('enrolment', $enrolment);
-					}
+      if (!empty($enrolment)) {
+        $enrolment->semester = dontaddslashes($enrolment->semester);
+        $enrolment->dateunenrolled = time();
+        $enrolment->enrolled = 0;
+        $DB->update_record('enrolment', $enrolment);
+      }
 
-					$message = '';
-					$user = get_record('user', 'id', $userid);
-					if (!empty($user->firstname))  $message .= $user->firstname;
-					if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
-					if (!empty($role->name)) $message .= ' as ' . $role->name;
-					$message .= ' in ' . stripslashes($modulename);
-					// 'upload' needed to stop URL from being mangled
-					add_to_log($coursetoremove->id, 'upload', 'roles unassign', '/admin/roles/assign.php?contextid=' . $context->id . '&roleid=' . $role->id, $message);
-				}
-			}
+      $message = '';
+      $user = $DB->get_record('user', array('id' => $userid));
+      if (!empty($user->firstname))  $message .= $user->firstname;
+      if (!empty($user->lastname))   $message .= ' ' . $user->lastname;
+      $message .= ' as Student in ' . dontstripslashes($modulename);
+      add_to_log($coursetoremove->id, 'course', 'unenrol', '../enrol/users.php?id=' . $coursetoremove->id, $message, 0, $userid);
 		}
 	}
 }
 
 
 function updateapplication($sid, $field, $value, $deltamodules = 0) {
-	$record = get_record('peoplesapplication', 'sid', $sid);
+  global $DB;
+
+  $record = $DB->get_record('peoplesapplication', array('sid' => $sid));
 	$application = new object();
 	$application->id = $record->id;
 	$application->{$field} = $value;
@@ -1712,37 +1700,27 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
 		if ($application->costowed < 0) $application->costowed = 0;
 	}
 
-	update_record('peoplesapplication', $application);
+  $DB->update_record('peoplesapplication', $application);
 }
 
 
-function enrolincourse($course, $user, $enrol, $semester) {
+function enrolincourse($course, $user, $semester) {
+  global $DB;
 
-    $timestart = time();
-    // remove time part from the timestamp and keep only the date part
-    $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
-    if ($course->enrolperiod) {
-        $timeend = $timestart + $course->enrolperiod;
-    } else {
-        $timeend = 0;
-    }
+  $timestart = time();
+  // remove time part from the timestamp and keep only the date part
+  $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
 
-    if ($role = get_default_course_role($course)) {
+  $roles = get_archetype_roles('student');
+  $role = reset($roles);
 
-        $context = get_context_instance(CONTEXT_COURSE, $course->id);
+  if (enrol_try_internal_enrol($course->id, $user->id, $role->id, $timestart, 0)) {
 
-        if (!role_assign($role->id, $user->id, 0, $context->id, $timestart, $timeend, 0, $enrol)) {
-            return false;
-        }
-
-        // force accessdata refresh for users visiting this context...
-        mark_context_dirty($context->path);
-
-    $enrolment = get_record('enrolment', 'userid', $user->id, 'courseid', $course->id);
+    $enrolment = $DB->get_record('enrolment', array('userid' => $user->id, 'courseid' => $course->id));
     if (!empty($enrolment)) {
-      $enrolment->semester = addslashes($enrolment->semester);
+      $enrolment->semester = dontaddslashes($enrolment->semester);
       $enrolment->enrolled = 1;
-      update_record('enrolment', $enrolment);
+      $DB->update_record('enrolment', $enrolment);
     }
     else {
       $enrolment->userid = $user->id;
@@ -1751,60 +1729,89 @@ function enrolincourse($course, $user, $enrol, $semester) {
       $enrolment->datefirstenrolled = time();
       $enrolment->enrolled = 1;
 
-      insert_record('enrolment', $enrolment);
+      $DB->insert_record('enrolment', $enrolment);
     }
 
-        emailwelcome($course, $user);
+    emailwelcome($course, $user);
 
     $message = '';
     if (!empty($user->firstname))  $message .= $user->firstname;
     if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
     if (!empty($role->name)) $message .= ' as ' . $role->name;
     if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-        add_to_log($course->id, 'course', 'enrol', 'view.php?id='.$course->id, $message);
+    add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
 
-        return true;
-    }
-
+    return true;
+  }
+  else {
     return false;
+  }
 }
 
 
 function emailwelcome($course, $user) {
-    global $CFG;
+  global $CFG;
 
-    if (isset($CFG->sendcoursewelcomemessage) and !$CFG->sendcoursewelcomemessage) {
-        return;
-    }
-
-    if (!empty($course->welcomemessage)) {
-        $message = $course->welcomemessage;
-    } else {
-        $a = new Object();
-        $a->coursename = $course->fullname;
-        $a->profileurl = "$CFG->wwwroot/user/view.php?id=$user->id&course=$course->id";
-        $a->courseurl = "$CFG->wwwroot/course/view.php?id=$course->id";
-    $message = "Welcome to $a->coursename!
+  $subject = "New enrolment in $course->fullname";
+  $message = "Welcome to $course->fullname!
 
 If you have not done so already, you should edit your profile page
 so that we can learn more about you:
 
-  $a->profileurl
+  $CFG->wwwroot/user/view.php?id=$user->id&amp;course=$course->id
 
 There is a link to your course at the bottom of the profile or you can click:
 
-  $a->courseurl";
+  $CFG->wwwroot/course/view.php?id=$course->id";
+
+  $teacher = get_peoples_teacher($course);
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $teacher, $subject, $message);
+
+//  $eventdata = new stdClass();
+//  $eventdata->modulename        = 'moodle';
+//  $eventdata->component         = 'course';
+//  $eventdata->name              = 'flatfile_enrolment';
+//  $eventdata->userfrom          = $teacher;
+//  $eventdata->userto            = $user;
+//  $eventdata->subject           = $subject;
+//  $eventdata->fullmessage       = $message;
+//  $eventdata->fullmessageformat = FORMAT_PLAIN;
+//  $eventdata->fullmessagehtml   = '';
+//  $eventdata->smallmessage      = '';
+//  message_send($eventdata);
+}
+
+
+function get_peoples_teacher($course) {
+  global $DB;
+
+  $context = get_context_instance(CONTEXT_COURSE, $course->id);
+
+  $role = $DB->get_record('role', array('name' => 'Teacher'));
+
+  if ($teachers = get_role_users($role->id, $context)) {
+    foreach ($teachers as $teacher) {
+      $teacheruserid = $teacher->id;
+    }
   }
 
-    /// If you don't want a welcome message sent, then make the message string blank.
-    if (!empty($message)) {
-        $subject = get_string('welcometocourse', '', format_string($course->fullname));
+  if (isset($teacheruserid)) {
+    $teacher = $DB->get_record('user', array('id' => $teacheruserid));
+  }
+  else {
+    $teacher = get_admin();
+  }
+  return $teacher;
+}
 
-        if (! $teacher = get_teacher($course->id)) {
-            $teacher = get_admin();
-        }
 
-        email_to_user($user, $teacher, $subject, $message);
-    }
+function dontaddslashes($x) {
+  return $x;
+}
+
+
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

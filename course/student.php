@@ -1,7 +1,7 @@
 <?php  // $Id: student.php,v 1.1 2008/11/20 21:15:00 alanbarrett Exp $
 /**
 *
-* List a users enrolments and grades etc.
+* List a user's enrolments and grades etc.
 *
 */
 
@@ -25,32 +25,39 @@ CREATE INDEX mdl_peoplesstudentnotes_sid_ix ON mdl_peoplesstudentnotes (sid);
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/student.php'); // Defined here to avoid notices on errors etc
+$PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
+
 require_login();
 // Might possibly be Guest??... Anyway Guest user will not have any enrolment
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 // has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))
-$isteacher = isteacherinanycourse();
-
-print_header('Student Grades');
+$isteacher = is_peoples_teacher();
 
 $userid = optional_param('id', 0, PARAM_INT);
 if (empty($userid) || !$isteacher) $userid = $USER->id;
 if (empty($userid)) {echo '<h1>$userid empty(), should not happen!</h1>'; die();}
 
-$userrecord = get_record('user', 'id', $userid);
+$userrecord = $DB->get_record('user', array('id' => $userid));
 if (empty($userrecord)) {
-	echo '<h1>User does not exist!</h1>';
-	die();
+  echo '<h1>User does not exist!</h1>';
+  die();
 }
 
-echo '<h1>Student Enrolments and Grades for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8') . '</h1>';
+$PAGE->set_title('Student Enrolments and Grades for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
+$PAGE->set_heading('Student Enrolments and Grades for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
+echo $OUTPUT->header();
+
 echo '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $userid . '" target="_blank">User Profile for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8') . '</a>, e-mail: ' . $userrecord->email;
 echo ', Last access: ' . ($userrecord->lastaccess ? format_time(time() - $userrecord->lastaccess) : get_string('never'));
 
-$application = get_record_sql("SELECT sid FROM mdl_peoplesapplication
-  WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27 OR state=9 OR state=10 OR state=17) AND userid=$userid
-  ORDER BY datesubmitted DESC");
+
+$application = $DB->get_record_sql("SELECT sid FROM mdl_peoplesapplication
+  WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27 OR state=9 OR state=10 OR state=17) AND userid=?
+  ORDER BY datesubmitted DESC", array($userid), IGNORE_MULTIPLE);
 if (!empty($application)) {
   echo '<br />Most recent Registration Number (SID): ' . $application->sid;
 }
@@ -60,7 +67,7 @@ echo '<br /><br /><br />';
 if (!empty($_POST['mailtext']) && !empty($_POST['markemailstudent'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 	$email = $userrecord->email;
-	$body = stripslashes($_POST['mailtext']);
+  $body = dontstripslashes($_POST['mailtext']);
 	$body = strip_tags($body);
 
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
@@ -79,7 +86,7 @@ if (!empty($_POST['mailtext']) && !empty($_POST['markemailstudent'])) {
 elseif (!empty($_POST['courseid']) && !empty($_POST['marknotifiedstudentpass'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 	$email = $userrecord->email;
-	$course = get_record('course', 'id', $_POST['courseid']);
+  $course = $DB->get_record('course', array('id' => $_POST['courseid']));
 	$coursename = empty($course->fullname) ? '' : $course->fullname;
 	$body = "Dear $userrecord->firstname,
 
@@ -98,19 +105,19 @@ print a PDF academic transcript for the module at that link.
 		print_footer();
 		die();
 	}
-	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
 	if (!empty($enrolment)) {
-		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->semester = dontaddslashes($enrolment->semester);
 		$enrolment->notified = 1;
 		$enrolment->datenotified = time();
 		$enrolment->gradenotified = 1; // Pass
-		update_record('enrolment', $enrolment);
+    $DB->update_record('enrolment', $enrolment);
 	}
 }
 elseif (!empty($_POST['courseid']) && !empty($_POST['marknotifiedstudentfail'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 	$email = $userrecord->email;
-	$course = get_record('course', 'id', $_POST['courseid']);
+  $course = $DB->get_record('course', array('id' => $_POST['courseid']));
 	$coursename = empty($course->fullname) ? '' : $course->fullname;
 	$body = "Dear $userrecord->firstname,
 
@@ -129,28 +136,28 @@ try to reach a pass grade, and we will be happy to give you any advice that woul
 		print_footer();
 		die();
 	}
-	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
 	if (!empty($enrolment)) {
-		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->semester = dontaddslashes($enrolment->semester);
 		$enrolment->notified = 1;
 		$enrolment->datenotified = time();
 		$enrolment->gradenotified = 0; // Fail
-		update_record('enrolment', $enrolment);
+    $DB->update_record('enrolment', $enrolment);
 	}
 }
 elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradedstudent'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
 	if (!empty($enrolment)) {
-		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->semester = dontaddslashes($enrolment->semester);
 		$enrolment->notified = 2;
-		update_record('enrolment', $enrolment);
+    $DB->update_record('enrolment', $enrolment);
 	}
 }
 elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradedcertificatestudent'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 	$email = $userrecord->email;
-	$course = get_record('course', 'id', $_POST['courseid']);
+  $course = $DB->get_record('course', array('id' => $_POST['courseid']));
 	$coursename = empty($course->fullname) ? '' : $course->fullname;
 	$body = "Dear $userrecord->firstname,
 
@@ -167,30 +174,30 @@ $CFG->wwwroot/course/student.php?id=$userid
 		print_footer();
 		die();
 	}
-	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
 	if (!empty($enrolment)) {
-		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->semester = dontaddslashes($enrolment->semester);
 		$enrolment->notified = 3;
 		$enrolment->datenotified = time();
-		update_record('enrolment', $enrolment);
+    $DB->update_record('enrolment', $enrolment);
 	}
 }
 elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradednotpaidstudent'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
 	if (!empty($enrolment)) {
-		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->semester = dontaddslashes($enrolment->semester);
 		$enrolment->notified = 4;
-		update_record('enrolment', $enrolment);
+    $DB->update_record('enrolment', $enrolment);
 	}
 }
 elseif (!empty($_POST['courseid']) && !empty($_POST['markunexpectedlycompleted']) && $isteacher) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	$enrolment = get_record('enrolment', 'userid', $userid, 'courseid', $_POST['courseid']);
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
 	if (!empty($enrolment)) {
-		$enrolment->semester = addslashes($enrolment->semester);
+		$enrolment->semester = dontaddslashes($enrolment->semester);
 		$enrolment->notified = 0;
-		update_record('enrolment', $enrolment);
+    $DB->update_record('enrolment', $enrolment);
 	}
 }
 elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
@@ -200,17 +207,17 @@ elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
 	$newnote->datesubmitted = time();
 
 	// textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
-	$newnote->note = addslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(stripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
-	insert_record('peoplesstudentnotes', $newnote);
+	$newnote->note = dontaddslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
+  $DB->insert_record('peoplesstudentnotes', $newnote);
 }
 
 
-$enrols = get_records_sql("SELECT * FROM
+$enrols = $DB->get_records_sql("SELECT * FROM
 (SELECT e.*, c.fullname, c.idnumber, c.id AS cid FROM mdl_enrolment e, mdl_course c WHERE e.courseid=c.id AND e.userid=$userid) AS x
 LEFT JOIN
 (SELECT g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' AND g.userid=$userid) AS y
 ON cid=icourseid
-ORDER BY datefirstenrolled ASC, fullname ASC;");
+ORDER BY datefirstenrolled ASC, fullname ASC");
 
 if (!empty($enrols)) {
 	$lastsemester = '';
@@ -365,11 +372,11 @@ echo '<br /><br />';
 //$problems['PUPCM']     = 1; // Preventing Child Mortality
 //$problems['PUPHNUT']   = 1; // Public Health Nutrition
 //$problems['PUPSAFE']   = 1; // Patient Safety
-$foundation_records = get_records('peoples_course_codes', 'type', 'foundation', 'course_code ASC');
+$foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
 foreach ($foundation_records as $record) {
   $foundation[$record->course_code] = 1;
 }
-$problems_records = get_records('peoples_course_codes', 'type', 'problems',   'course_code ASC');
+$problems_records = $DB->get_records('peoples_course_codes', array('type' => 'problems'), 'course_code ASC');
 foreach ($problems_records as $record) {
   $problems[$record->course_code] = 1;
 }
@@ -431,7 +438,7 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 <br /><br />
 <?php
 
-	$notes = get_records('peoplesstudentnotes', 'userid', $userid, 'datesubmitted DESC');
+  $notes = $DB->get_records('peoplesstudentnotes', array('userid' => $userid), 'datesubmitted DESC');
 	if (!empty($notes)) {
 		echo 'Notes...<br />';
 		echo '<table border="1" BORDERCOLOR="RED">';
@@ -463,30 +470,72 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 echo '<br /><br /><br />';
 echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
 
-print_footer();
+echo $OUTPUT->footer();
 
 
 function sendapprovedmail($email, $subject, $message) {
+  global $CFG;
 
-	// Dummy User
-    $user = new object;
-	$user->id = 999999999;
-    $user->email = $email;
-    $user->maildisplay = true;
-	$user->mnethostid = 1;
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
 
-    $supportuser = generate_email_supportuser();
+  $supportuser = generate_email_supportuser();
 
-    $messagehtml = text_to_html($message, false, false, true);
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
 
-    $user->mailformat = 1;  // Always send HTML version as well
+  $user->email = 'applicationresponses@peoples-uni.org';
 
-    $ret = email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
 
-    $user->email = 'applicationresponses@peoples-uni.org';
+  return $ret;
+}
 
-    email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message, $messagehtml);
 
-    return $ret;
+function is_peoples_teacher() {
+  global $USER;
+  global $DB;
+
+  /* All Teacher, Teachers...
+  SELECT u.lastname, r.name, c.fullname
+  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
+  WHERE
+  u.id=ra.userid AND
+  ra.roleid=r.id AND
+  ra.contextid=con.id AND
+  r.name IN ('Teacher', 'Teachers') AND
+  con.contextlevel=50 AND
+  con.instanceid=c.id ORDER BY c.fullname, r.name;
+  */
+
+  $teachers = $DB->get_records_sql("
+    SELECT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    WHERE
+      ra.userid=? AND
+      ra.roleid=r.id AND
+      ra.contextid=con.id AND
+      r.name IN ('Teacher', 'Teachers') AND
+      con.contextlevel=50",
+    array($USER->id));
+
+  if (!empty($teachers)) return true;
+
+  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  else return false;
+}
+
+
+function dontaddslashes($x) {
+  return $x;
+}
+
+
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

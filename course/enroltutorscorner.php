@@ -8,17 +8,22 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/enroltutorscorner.php');
+$PAGE->set_pagelayout('standard');
+
 require_login();
 
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-print_header('Enrol All Current Teacher/Teachers/Education Officer in "Tutors Corner" and "Guide for online facilitators"');
-
-echo '<h1>Enrol All Current Teacher/Teachers/Education Officer in "Tutors Corner" and "Guide for online facilitators"</h1>';
+$PAGE->set_title('Enrol All Current Teacher/Teachers/Education Officer in "Tutors Corner" and "Guide for online facilitators"');
+$PAGE->set_heading('Enrol All Current Teacher/Teachers/Education Officer in "Tutors Corner" and "Guide for online facilitators"');
+echo $OUTPUT->header();
 
 
 // Tutors Corner
-$missingfromtutors = get_records_sql("
+$missingfromtutors = $DB->get_records_sql("
 	SELECT module.userid
 	FROM
 		(SELECT userid
@@ -45,19 +50,19 @@ if (empty($missingfromtutors)) {
 
 foreach ($missingfromtutors as $missing) {
 
-	$tutorscorner = get_record('course', 'fullname', 'Tutors Corner');
+  $tutorscorner = $DB->get_record('course', array('fullname' => 'Tutors Corner'));
 	if (!empty($tutorscorner)) {
-		$user = get_record('user', 'id', $missing->userid);
+    $user = $DB->get_record('user', array('id' => $missing->userid));
 		if (!empty($user)) {
 			echo 'Adding to Tutors Corner: ' . $user->firstname . ' ' . $user->lastname . '<br />';
-			enrolincoursesimple($tutorscorner, $user, 'manual');
+			enrolincoursesimple($tutorscorner, $user);
 		}
 	}
 }
 
 
 // Guide for online facilitators
-$missingfromtutors = get_records_sql("
+$missingfromtutors = $DB->get_records_sql("
 	SELECT module.userid
 	FROM
 		(SELECT userid
@@ -86,51 +91,38 @@ if (empty($missingfromtutors)) {
 
 foreach ($missingfromtutors as $missing) {
 
-	$tutorscorner = get_record('course', 'fullname', 'Guide for online facilitators');
+  $tutorscorner = $DB->get_record('course', array('fullname' => 'Guide for online facilitators'));
 	if (!empty($tutorscorner)) {
-		$user = get_record('user', 'id', $missing->userid);
+    $user = $DB->get_record('user', array('id' => $missing->userid));
 		if (!empty($user)) {
 			echo 'Adding to Guide for online facilitators: ' . $user->firstname . ' ' . $user->lastname . '<br />';
-			enrolincoursesimple($tutorscorner, $user, 'manual');
+			enrolincoursesimple($tutorscorner, $user);
 		}
 	}
 }
 
+echo $OUTPUT->footer();
 
-function enrolincoursesimple($course, $user, $enrol) {
 
-	$timestart = time();
-	// remove time part from the timestamp and keep only the date part
-	$timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
-	if ($course->enrolperiod) {
-		$timeend = $timestart + $course->enrolperiod;
-	} else {
-		$timeend = 0;
-	}
+function enrolincoursesimple($course, $user) {
+  global $DB;
 
-	if ($role = get_default_course_role($course)) {
+  $timestart = time();
+  // remove time part from the timestamp and keep only the date part
+  $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
 
-		$context = get_context_instance(CONTEXT_COURSE, $course->id);
+  $roles = get_archetype_roles('student');
+  $role = reset($roles);
 
-		if (!role_assign($role->id, $user->id, 0, $context->id, $timestart, $timeend, 0, $enrol)) {
-			return false;
-		}
+  enrol_try_internal_enrol($course->id, $user->id, $role->id, $timestart, 0);
 
-		// force accessdata refresh for users visiting this context...
-		mark_context_dirty($context->path);
+  // emailwelcome($course, $user);
 
-//		emailwelcome($course, $user);
-
-		$message = '';
-		if (!empty($user->firstname))  $message .= $user->firstname;
-		if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
-		if (!empty($role->name)) $message .= ' as ' . $role->name;
-		if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-		add_to_log($course->id, 'course', 'enrol', 'view.php?id='.$course->id, $message);
-
-		return true;
-	}
-
-	return false;
+  $message = '';
+  if (!empty($user->firstname))  $message .= $user->firstname;
+  if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
+  if (!empty($role->name)) $message .= ' as ' . $role->name;
+  if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
+  add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
 }
 ?>

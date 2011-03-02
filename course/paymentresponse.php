@@ -53,7 +53,7 @@ if (empty($_POST['M_donate']) && empty($_POST['M_wikitox'])) {
 	}
 
 	$sid = (int)$_POST['M_sid'];
-	$application = get_record('peoplesapplication', 'sid', $sid);
+  $application = $DB->get_record('peoplesapplication', array('sid' => $sid));
 	if (empty($application)) {
 		error_log('RBS WorldPay M_sid DOES NOT MATCH Existing Record! M_sid: ' . $sid);
 		email_error_to_payments('RBS WorldPay M_sid DOES NOT MATCH Existing Record!', $_POST);
@@ -78,7 +78,7 @@ if (empty($_POST['M_donate']) && empty($_POST['M_wikitox'])) {
 	$updated->costpaid = $application->costowed;
 	$updated->datafromworldpay = (int)$_POST['transId'];
 	$updated->datepaid = time();
-	update_record('peoplesapplication', $updated);
+  $DB->update_record('peoplesapplication', $updated);
 }
 elseif (!empty($_POST['M_donate'])) {
 	$peoplesdonation = new object();
@@ -143,7 +143,7 @@ elseif (!empty($_POST['M_donate'])) {
 
 	$peoplesdonation->datafromworldpay = (int)$_POST['transId'];
 
-	insert_record('peoplesdonation', $peoplesdonation);
+  $DB->insert_record('peoplesdonation', $peoplesdonation);
 }
 elseif (!empty($_POST['M_wikitox'])) {
   /*
@@ -209,14 +209,14 @@ elseif (!empty($_POST['M_wikitox'])) {
 
   $peoples_wikitox_payment->datafromworldpay = (int)$_POST['transId'];
 
-  insert_record('peoples_wikitox_payment', $peoples_wikitox_payment);
+  $DB->insert_record('peoples_wikitox_payment', $peoples_wikitox_payment);
 
   // e-mail all relevant people
   $amount   = $peoples_wikitox_payment->amount;
   $currency = $peoples_wikitox_payment->currency;
-  $name     = stripslashes($peoples_wikitox_payment->name);
-  $email    = stripslashes($peoples_wikitox_payment->email);
-  $address  = stripslashes($peoples_wikitox_payment->address);
+  $name     = dontstripslashes($peoples_wikitox_payment->name);
+  $email    = dontstripslashes($peoples_wikitox_payment->email);
+  $address  = dontstripslashes($peoples_wikitox_payment->address);
   $country  = $peoples_wikitox_payment->country;
   $time     = $peoples_wikitox_payment->M_wikitox;
   $transid  = $peoples_wikitox_payment->datafromworldpay;
@@ -239,8 +239,7 @@ Peoples-uni Payments";
   $payments = new stdClass();
   $payments->id = 999999999;
   $payments->maildisplay = true;
-  $payments->mnethostid = 1;
-  $payments->mailformat = 0;
+  $payments->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
   $supportuser->email = 'payments@peoples-uni.org';
@@ -264,32 +263,36 @@ Peoples-uni Payments";
 
 
 function email_error_to_payments($subject, $post) {
-    $message = "$subject\n\nPOST from RBS WorldPay Payment Response...\n";
+  global $CFG;
 
-    foreach ($post as $key => $value) {
-		if ($key !== 'callbackPW') {
-    	    $value = stripslashes($value);
-    	    $message .= "$key => $value\n";
-		}
+  $message = "$subject\n\nPOST from RBS WorldPay Payment Response...\n";
+
+  foreach ($post as $key => $value) {
+    if ($key !== 'callbackPW') {
+      $value = dontstripslashes($value);
+      $message .= "$key => $value\n";
     }
+  }
 
-	// Dummy User
-    $payments = new object;
-	$payments->id = 999999999;
+  // Dummy User
+  $payments = new stdClass();
+  $payments->id = 999999999;
+  $payments->email = 'payments@peoples-uni.org';
+  $payments->maildisplay = true;
+  $payments->mnethostid = $CFG->mnet_localhost_id;
 
-	// $payments->email = 'alanabarrett0@gmail.com';
-    $payments->email = 'payments@peoples-uni.org';
+  $supportuser = new stdClass();
+  $supportuser->email = 'payments@peoples-uni.org';
+  $supportuser->firstname = 'Peoples-uni Payments';
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
 
-    $payments->maildisplay = true;
-	$payments->mnethostid = 1;
-    $payments->mailformat = 0;
+  //$payments->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($payments, $supportuser, $subject, $message);
+}
 
-    $supportuser = new object;
-    $supportuser->email = 'payments@peoples-uni.org';
-    $supportuser->firstname = 'Peoples-uni Payments';
-    $supportuser->lastname = '';
-    $supportuser->maildisplay = true;
 
-    email_to_user($payments, $supportuser, $subject, $message);
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

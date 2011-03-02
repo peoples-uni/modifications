@@ -8,11 +8,14 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/posts.php');
+
 
 if (!empty($_POST['markfilter'])) {
 	redirect($CFG->wwwroot . '/course/posts.php?'
-		. 'chosensemester=' . urlencode(stripslashes($_POST['chosensemester']))
-		. '&chosenmodule=' . urlencode(stripslashes($_POST['chosenmodule']))
+		. 'chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
+		. '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
 		. (empty($_POST['skipintro']) ? '&skipintro=0' : '&skipintro=1')
 		. (empty($_POST['suppressnames']) ? '&suppressnames=0' : '&suppressnames=1')
 		. (empty($_POST['showyesonly']) ? '&showyesonly=0' : '&showyesonly=1')
@@ -20,21 +23,25 @@ if (!empty($_POST['markfilter'])) {
 }
 
 
+$PAGE->set_pagelayout('embedded');
+
 require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
-$isteacher = isteacherinanycourse();
+$isteacher = is_peoples_teacher();
 if (!$isteacher) {
 	echo '<h1>You must be a teacher to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");
 }
 
-print_header('Posts for Enrolled Students');
 echo '<h1>Posts for Enrolled Students</h1>';
+$PAGE->set_title('Posts for Enrolled Students');
+$PAGE->set_heading('Posts for Enrolled Students');
+echo $OUTPUT->header();
 
 
-if (!empty($_REQUEST['chosensemester'])) $chosensemester = stripslashes($_REQUEST['chosensemester']);
-if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = stripslashes($_REQUEST['chosenmodule']);
+if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
+if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
 if (!empty($_REQUEST['skipintro'])) $skipintro = true;
 else $skipintro = false;
 if (!empty($_REQUEST['suppressnames'])) $suppressnames = true;
@@ -42,14 +49,14 @@ else $suppressnames = false;
 if (!empty($_REQUEST['showyesonly'])) $showyesonly = true;
 else $showyesonly = false;
 
-$semesters = get_records('semesters', '', '', 'id DESC');
+$semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
 	$listsemester[] = $semester->semester;
 	if (!isset($chosensemester)) $chosensemester = $semester->semester;
 }
 $listsemester[] = 'All';
 
-$courses = get_records_sql(
+$courses = $DB->get_records_sql(
 "SELECT DISTINCT c.id AS courseid, c.fullname
 FROM mdl_enrolment e, mdl_course c
 WHERE e.courseid=c.id
@@ -105,36 +112,39 @@ function displayoptions($name, $options, $selectedvalue) {
 
 
 if (empty($chosensemester) || ($chosensemester == 'All')) {
-	$semestersql = '';
+  $chosensemester = 'All';
+  $semestersql = 'AND e.semester!=?';
 }
 else {
-	$semestersql = "AND e.semester='" . addslashes($chosensemester) . "'";
+	$semestersql = 'AND e.semester=?';
 }
 if (empty($chosenmodule) || ($chosenmodule == 'All')) {
-	$modulesql = '';
+  $chosenmodule = 'All';
+  $modulesql = 'AND c.fullname!=?';
 }
 else {
-	$modulesql = "AND c.fullname='" . addslashes($chosenmodule) . "'";
+  $modulesql = 'AND c.fullname=?';
 }
 
-$enrols = get_records_sql(
+$enrols = $DB->get_records_sql(
 "SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject
 FROM mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp
 WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql
-ORDER BY e.semester, u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC"
+ORDER BY e.semester, u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC",
+array($chosensemester, $chosenmodule)
 );
 
-$sidsbyuseridsemester = get_records_sql('SELECT CONCAT(userid, semester) AS i, sid FROM mdl_peoplesapplication WHERE (((state & 0x38)>>3)=3 OR (state & 0x7)=3)');
+$sidsbyuseridsemester = $DB->get_records_sql('SELECT CONCAT(userid, semester) AS i, sid FROM mdl_peoplesapplication WHERE (((state & 0x38)>>3)=3 OR (state & 0x7)=3)');
 
-echo '<table border="1" BORDERCOLOR="RED">';
-echo '<tr>';
-echo '<td>Family name</td>';
-echo '<td>Given name</td>';
-echo '<td>Module</td>';
-echo '<td>Semester</td>';
-echo '<td>Discussion Forum Topic</td>';
-echo '<td>Subject</td>';
-echo '</tr>';
+$table = new html_table();
+$table->head = array(
+  'Family name',
+  'Given name',
+  'Module',
+  'Semester',
+  'Discussion Forum Topic',
+  'Subject'
+  );
 
 $usercount = array();
 $usermodulecount = array();
@@ -146,15 +156,13 @@ if (!empty($enrols)) {
 				continue;
 		}
 
-		echo '<tr>';
-		echo '<td>' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td>' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td>' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td>' . htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td>' . htmlspecialchars($enrol->forumname, ENT_COMPAT, 'UTF-8') . '</td>';
-		echo '<td><a href="' . $CFG->wwwroot . '/mod/forum/discuss.php?d=' . $enrol->discid . '#p' . $enrol->postid . '" target="_blank">' . htmlspecialchars($enrol->subject, ENT_COMPAT, 'UTF-8') . '</a></td>';
-		echo '</tr>';
-
+    $rowdata = array();
+    $rowdata[] = htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($enrol->forumname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/mod/forum/discuss.php?d=' . $enrol->discid . '#p' . $enrol->postid . '" target="_blank">' . htmlspecialchars($enrol->subject, ENT_COMPAT, 'UTF-8') . '</a>';
 
 		$hashforcourse = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
 		$courseswithstudentforumstats[$hashforcourse]['forums']['<td>' . htmlspecialchars($enrol->forumname, ENT_COMPAT, 'UTF-8') . '</td>'] = 1;
@@ -205,9 +213,10 @@ if (!empty($enrols)) {
 		}
 
 		$n++;
+    $table->data[] = $rowdata;
 	}
 }
-echo '</table>';
+echo html_writer::table($table);
 echo '<br/>Number of Forum Postings: ' . $n;
 echo '<br /><br />';
 
@@ -261,7 +270,7 @@ echo '<br /><br /><br /><br /><br />';
 echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
 echo '<br /><br />';
 
-print_footer();
+echo $OUTPUT->footer();
 
 
 function displaystat($stat, $title) {
@@ -281,5 +290,43 @@ function displaystat($stat, $title) {
 	}
 	echo '</table>';
 	echo '<br/>';
+}
+
+
+function is_peoples_teacher() {
+  global $USER;
+  global $DB;
+
+  /* All Teacher, Teachers...
+  SELECT u.lastname, r.name, c.fullname
+  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
+  WHERE
+  u.id=ra.userid AND
+  ra.roleid=r.id AND
+  ra.contextid=con.id AND
+  r.name IN ('Teacher', 'Teachers') AND
+  con.contextlevel=50 AND
+  con.instanceid=c.id ORDER BY c.fullname, r.name;
+  */
+
+  $teachers = $DB->get_records_sql("
+    SELECT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    WHERE
+      ra.userid=? AND
+      ra.roleid=r.id AND
+      ra.contextid=con.id AND
+      r.name IN ('Teacher', 'Teachers') AND
+      con.contextlevel=50",
+    array($USER->id));
+
+  if (!empty($teachers)) return true;
+
+  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  else return false;
+}
+
+
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

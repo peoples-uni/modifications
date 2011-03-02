@@ -1,22 +1,29 @@
 <?php  // $Id: payconfirm.php,v 1.1 2009/09/14 12:00:00 alanbarrett Exp $
 /**
 *
-* Upadte details of a payment by a user
+* Update details of a payment by a user
 *
 */
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/payconfirm.php');
+$PAGE->set_pagelayout('standard');
+
 require_login();
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-print_header('Peoples-uni Payment Details');
+$PAGE->set_title('Peoples-uni Payment Details');
+$PAGE->set_heading('Peoples-uni Payment Details');
+echo $OUTPUT->header();
 
-print_simple_box_start("center");
+echo $OUTPUT->box_start('generalbox boxaligncenter');
+
 
 $sid = (int)$_REQUEST['sid'];
-$application = get_record('peoplesapplication', 'sid', $sid);
+$application = $DB->get_record('peoplesapplication', array('sid' => $sid));
 if (empty($application)) {
 	notice('Error: The parameter passed does not correspond to a valid application to Peoples-uni!', "$CFG->wwwroot");
 }
@@ -73,7 +80,7 @@ if (!empty($_POST['markpayconfirm'])) {
 		$updated->costpaid = $application->costowed;
 	}
 
-    update_record('peoplesapplication', $updated);
+    $DB->update_record('peoplesapplication', $updated);
 
     notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
@@ -93,7 +100,7 @@ elseif (!empty($_POST['marksetowed'])) {
 	$updated->costpaid = $_POST['costpaid'];
 	$updated->costowed = $_POST['costowed'];
 
-    update_record('peoplesapplication', $updated);
+    $DB->update_record('peoplesapplication', $updated);
 
     notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
@@ -155,6 +162,6 @@ Amount Owed: <input type="text" size="60" name="costowed" value="<?php echo $app
 
 <?php
 
-print_simple_box_end();
-print_footer();
+echo $OUTPUT->box_end();
+echo $OUTPUT->footer();
 ?>

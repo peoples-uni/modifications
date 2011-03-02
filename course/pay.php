@@ -265,7 +265,7 @@ print_simple_box_start("center");
 
 
 $sid = (int)$_REQUEST['sid'];
-$application = get_record('peoplesapplication', 'sid', $sid);
+$application = $DB->get_record('peoplesapplication', array('sid' => $sid));
 if (empty($application)) {
 	notice('Error: The parameter passed does not correspond to a valid application to Peoples-uni!', "$CFG->wwwroot");
 }
@@ -322,7 +322,7 @@ $currency = $application->currency;
 $updated = new object();
 $updated->id = $application->id;
 $updated->dateattemptedtopay = time();
-update_record('peoplesapplication', $updated);
+$DB->update_record('peoplesapplication', $updated);
 
 
 if ($test) {

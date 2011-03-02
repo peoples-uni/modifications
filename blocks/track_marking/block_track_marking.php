@@ -9,10 +9,11 @@ class block_track_marking extends block_base {
 
   function init() {
     $this->title = 'Track Marking';
-    $this->version = 2010101738;
+    //$this->version = 2010101738;
   }
 
   function get_content() {
+    global $DB;
     global $CFG, $COURSE;
 
     if($this->content !== NULL) {
@@ -32,7 +33,7 @@ class block_track_marking extends block_base {
     // If this is a site admin or teacher/teachers in that course show the block
     if (has_capability('moodle/grade:edit', get_context_instance(CONTEXT_COURSE, $COURSE->id)) || $admin) {
 
-      $google_ss = get_record('peoples_google_ss', 'course_id', $COURSE->id);
+      $google_ss = $DB->get_record('peoples_google_ss', array('course_id' => $COURSE->id));
       if (!empty($google_ss->full_link)) {
         $this->content->text = '<a href="' . $google_ss->full_link . '" target="_blank">Edit Marking Spreadsheet</a>';
       }

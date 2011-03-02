@@ -8,12 +8,19 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-print_header('Peoples-uni Payment Details');
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/paydetails.php');
+$PAGE->set_pagelayout('standard');
 
-print_simple_box_start("center");
+$PAGE->set_title('Peoples-uni Payment Details');
+$PAGE->set_heading('Peoples-uni Payment Details');
+echo $OUTPUT->header();
+
+echo $OUTPUT->box_start('generalbox boxaligncenter');
+
 
 $sid = (int)$_REQUEST['sid'];
-$application = get_record('peoplesapplication', 'sid', $sid);
+$application = $DB->get_record('peoplesapplication', array('sid' => $sid));
 if (empty($application)) {
 	notice('Error: The parameter passed does not correspond to a valid application to Peoples-uni!', "$CFG->wwwroot");
 }
@@ -38,76 +45,72 @@ $currency = $application->currency;
 
 
 if (!empty($_POST['markpaydetails'])) {
-    if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-    $updated = new object();
-    $updated->id = $application->id;
+  $updated = new object();
+  $updated->id = $application->id;
 
-    if (empty($_POST['paymentmechanism'])) notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
+  if (empty($_POST['paymentmechanism'])) notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
 
-    if ($_POST['paymentmechanism'] == 2) {
-	    $updated->paymentmechanism = 2;
-        $mechanism = 'Barclays';
-    }
-    elseif ($_POST['paymentmechanism'] == 3) {
-        $updated->paymentmechanism = 3;
-        $mechanism = 'Diamond';
-    }
-    elseif ($_POST['paymentmechanism'] == 4) {
-        $updated->paymentmechanism = 4;
-        $mechanism = 'Western Union';
-    }
-    elseif ($_POST['paymentmechanism'] == 5) {
-        $updated->paymentmechanism = 5;
-        $mechanism = 'Indian Confederation for Healthcare Accreditation for those taking Patient Safety module from India';
-    }
-    elseif ($_POST['paymentmechanism'] == 7) {
-        $updated->paymentmechanism = 7;
-        $mechanism = 'Posted Travellers Cheques';
-    }
-    elseif ($_POST['paymentmechanism'] == 8) {
-        $updated->paymentmechanism = 8;
-        $mechanism = 'Posted Cash';
-    }
-    elseif ($_POST['paymentmechanism'] == 9) {
-        $updated->paymentmechanism = 9;
-        $mechanism = 'MoneyGram';
-    }
-    else notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
+  if ($_POST['paymentmechanism'] == 2) {
+    $updated->paymentmechanism = 2;
+    $mechanism = 'Barclays';
+  }
+  elseif ($_POST['paymentmechanism'] == 3) {
+    $updated->paymentmechanism = 3;
+    $mechanism = 'Diamond';
+  }
+  elseif ($_POST['paymentmechanism'] == 4) {
+    $updated->paymentmechanism = 4;
+    $mechanism = 'Western Union';
+  }
+  elseif ($_POST['paymentmechanism'] == 5) {
+    $updated->paymentmechanism = 5;
+    $mechanism = 'Indian Confederation for Healthcare Accreditation for those taking Patient Safety module from India';
+  }
+  elseif ($_POST['paymentmechanism'] == 7) {
+    $updated->paymentmechanism = 7;
+    $mechanism = 'Posted Travellers Cheques';
+  }
+  elseif ($_POST['paymentmechanism'] == 8) {
+    $updated->paymentmechanism = 8;
+    $mechanism = 'Posted Cash';
+  }
+  elseif ($_POST['paymentmechanism'] == 9) {
+    $updated->paymentmechanism = 9;
+    $mechanism = 'MoneyGram';
+  }
+  else notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
 
-    if (empty($_POST['datafromworldpay'])) notice('You must enter text with details of the payment. Press Continue and re-enter.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
+  if (empty($_POST['datafromworldpay'])) notice('You must enter text with details of the payment. Press Continue and re-enter.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
 
-    $updated->datafromworldpay = $_POST['datafromworldpay'];
+  $updated->datafromworldpay = $_POST['datafromworldpay'];
 
-	$updated->costpaid = $application->costowed;
+  $updated->costpaid = $application->costowed;
 
-    $updated->datepaid = time();
+  $updated->datepaid = time();
 
-    update_record('peoplesapplication', $updated);
+  $DB->update_record('peoplesapplication', $updated);
 
-	$info = strip_tags(stripslashes($_POST['datafromworldpay']));
+  $info = strip_tags(dontstripslashes($_POST['datafromworldpay']));
 
-	$message = "$name indicates that payment has been made using $mechanism.
+  $message = "$name indicates that payment has been made using $mechanism.
 The application has been marked as paid, assuming that this reflects reality.
 Payment info that was entered by applicant: $info";
 
-	// Dummy User
-    $user = new object;
-	$user->id = 999999999;
-    $user->maildisplay = true;
-	$user->mnethostid = 1;
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = 'payments@peoples-uni.org';
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
 
-    $supportuser = generate_email_supportuser();
+  $supportuser = generate_email_supportuser();
 
-    $messagehtml = text_to_html($message, false, false, true);
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $name . " Indicates that payment has been made ($mechanism)", $message);
 
-    $user->mailformat = 1;  // Always send HTML version as well
-
-    $user->email = 'payments@peoples-uni.org';
-
-    email_to_user($user, $supportuser, $name . " Indicates that payment has been made ($mechanism)", $message, $messagehtml);
-
-    notice('Success! Data saved!', "$CFG->wwwroot");
+  notice('Success! Data saved!', "$CFG->wwwroot");
 }
 
 echo '<div align="center">';
@@ -147,6 +150,11 @@ Enter confirmation/receipt information you received when you paid: <input type="
 
 <?php
 
-print_simple_box_end();
-print_footer();
+echo $OUTPUT->box_end();
+echo $OUTPUT->footer();
+
+
+function dontstripslashes($x) {
+  return $x;
+}
 ?>

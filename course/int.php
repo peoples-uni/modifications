@@ -8,28 +8,39 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/int.php'); // Defined here to avoid notices on errors etc
+
+$PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
+
 require_login();
 
 //require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-print_header();
-
-if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-
 $sid = $_REQUEST['sid'];
-$familyname = stripslashes($_REQUEST['familyname']);
+$familyname = dontstripslashes($_REQUEST['familyname']);
 $familyname = strip_tags($familyname);
-$givenname = stripslashes($_REQUEST['givenname']);
+$givenname = dontstripslashes($_REQUEST['givenname']);
 $givenname = strip_tags($givenname);
-$email = stripslashes($_REQUEST['email']);
+$email = dontstripslashes($_REQUEST['email']);
 $email = strip_tags($email);
-$comment = stripslashes($_REQUEST['comment']);
+$comment = dontstripslashes($_REQUEST['comment']);
 $comment = strip_tags($comment);
 if ($comment === ' ') $comment = '';
 
+if (!empty($familyname)) {
+  $PAGE->set_title('e-mail: ' . htmlspecialchars($familyname, ENT_COMPAT, 'UTF-8') . ', ' . htmlspecialchars($givenname, ENT_COMPAT, 'UTF-8'));
+  $PAGE->set_heading('e-mail: ' . htmlspecialchars($familyname, ENT_COMPAT, 'UTF-8') . ', ' . htmlspecialchars($givenname, ENT_COMPAT, 'UTF-8'));
+}
+echo $OUTPUT->header();
+
+if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+
+
 if (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
-	$body = stripslashes($_POST['defertext']);
+	$body = dontstripslashes($_POST['defertext']);
 	$body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
@@ -41,20 +52,18 @@ if (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
 	}
 	else {
 		$cid = '10';
-		$ret = execute_sql('UPDATE d5_webform_submitted_data SET data=1 WHERE cid=' . $cid . ' AND sid=' . $_POST['sid']);
+    $ret = $DB->execute('UPDATE d5_webform_submitted_data SET data=? WHERE cid=? AND sid=?', array(1, $cid, $_POST['sid']));
 		echo '<script type="text/javascript">if (!window.opener.closed) {window.opener.location.reload();}</script>';
 		echo '<script type="text/javascript">window.close();</script>';
 	}
 }
 elseif (!empty($_POST['markupdatecomment'])) {
 	$cid = '9';
-	$ret = execute_sql("UPDATE d5_webform_submitted_data SET data='" . addslashes($comment) . "' WHERE cid=" . $cid . ' AND sid=' . $_POST['sid']);
+  $ret = $DB->execute('UPDATE d5_webform_submitted_data SET data=? WHERE cid=? AND sid=?', array($comment, $cid, $_POST['sid']));
 	echo '<script type="text/javascript">if (!window.opener.closed) {window.opener.location.reload();}</script>';
 	echo '<script type="text/javascript">window.close();</script>';
 }
 else {
-  echo '<h1>e-mail: ' . htmlspecialchars($familyname, ENT_COMPAT, 'UTF-8') . ', ' . htmlspecialchars($givenname, ENT_COMPAT, 'UTF-8') . '</h1>';
-
   $peoples_interest_email = get_config(NULL, 'peoples_interest_email');
   $peoples_interest_email = str_replace('GIVEN_NAME_HERE', $givenname, $peoples_interest_email);
   $peoples_interest_email = htmlspecialchars($peoples_interest_email, ENT_COMPAT, 'UTF-8');
@@ -90,30 +99,34 @@ else {
 <br /><br /><br />
 <?php
 
-print_footer();
+echo $OUTPUT->footer();
 
 
 function sendapprovedmail($email, $subject, $message) {
+  global $CFG;
 
-	// Dummy User
-    $user = new object;
-	$user->id = 999999999;
-    $user->email = $email;
-    $user->maildisplay = true;
-	$user->mnethostid = 1;
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
 
-    $supportuser = generate_email_supportuser();
+  $supportuser = generate_email_supportuser();
 
-    $messagehtml = text_to_html($message, false, false, true);
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
 
-    $user->mailformat = 1;  // Always send HTML version as well
+  $user->email = 'applicationresponses@peoples-uni.org';
 
-    $ret = email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
 
-    $user->email = 'applicationresponses@peoples-uni.org';
+  return $ret;
+}
 
-    email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message, $messagehtml);
 
-    return $ret;
+function dontstripslashes($x) {
+  return $x;
 }
 ?>

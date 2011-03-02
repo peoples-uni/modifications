@@ -102,6 +102,14 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_url('/course/appaction.php'); // Defined here to avoid notices on errors etc
+
+//$PAGE->set_pagelayout('embedded');   // Needs as much space as possible
+//$PAGE->set_pagelayout('base');     // Most backwards compatible layout without the blocks - this is the layout used by default
+//$PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
+
 require_login();
 
 //require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
@@ -117,9 +125,9 @@ if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 <?php
 
 if (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'])) {
-	$email = stripslashes($_POST['email']);
+	$email = dontstripslashes($_POST['email']);
 	$email = strip_tags($email);
-	$body = stripslashes($_POST['approvedtext']);
+	$body = dontstripslashes($_POST['approvedtext']);
 	$body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
@@ -135,18 +143,14 @@ if (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'])) 
 <?php
 		die();
 	}
-	if ($_POST['nid'] !== '80') $cid = '30';
-	else  $cid = '13';
-
-	execute_sql('UPDATE d5_webform_submitted_data SET data=9 WHERE cid=' . $cid . ' AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'state', 9, 2);
 }
 elseif (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
 	// Not really defer anymore, just send mail (but update status, might need to be 022)
-	$email = stripslashes($_POST['email']);
+	$email = dontstripslashes($_POST['email']);
 	$email = strip_tags($email);
-	$body = stripslashes($_POST['defertext']);
+	$body = dontstripslashes($_POST['defertext']);
 	$body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
@@ -162,15 +166,10 @@ elseif (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
 <?php
 		die();
 	}
-	if ($_POST['nid'] !== '80') $cid = '30';
-	else  $cid = '13';
-
-	execute_sql('UPDATE d5_webform_submitted_data SET data=' . $_POST['state'] . ' WHERE cid=' . $cid . ' AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'state', $_POST['state']);
 }
 elseif (!empty($_POST['userid']) && !empty($_POST['markupdateuserid'])) {
-	execute_sql('UPDATE d5_webform_submitted_data SET data=' . $_POST['userid'] . ' WHERE cid=29 AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'userid', $_POST['userid']);
 }
@@ -183,15 +182,9 @@ elseif (!empty($_POST['username']) && !empty($_POST['markupdateusername'])) {
 	$_POST['username'] = trim(moodle_strtolower($_POST['username']));
 //	$_POST['username'] = eregi_replace("[^(-\.[:alnum:])]", '', $_POST['username']);
 
-	execute_sql("UPDATE d5_webform_submitted_data SET data='" . $_POST['username'] . "' WHERE cid=21 AND sid=" . $_POST['sid']);
-
 	updateapplication($_POST['sid'], 'username', $_POST['username']);
 }
 elseif (!empty($_POST['newpaymentmethod']) && !empty($_POST['markdeleteentry'])) {
-	if ($_POST['nid'] !== '80') $cid = '31';
-	else  $cid = '6';
-
-	execute_sql("UPDATE d5_webform_submitted_data SET data='" . $_POST['newpaymentmethod'] . "' WHERE cid=" . $cid . " AND sid=" . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'hidden', 1);
 }
@@ -226,26 +219,26 @@ elseif (!empty($_POST['username']) && (
 		die();
 	}
 
-	//$user->password    = strtolower(random_string(6));
-	$user->password    = (string)rand(100000, 999999);
+	$user->password     = (string)rand(100000, 999999);
 
-	$user->lastname    = $_POST['lastname'];
-	$user->firstname   = $_POST['firstname'];
-	$user->email       = $_POST['email'];
-	$user->city        = $_POST['city'];
-	$user->country     = $_POST['country'];
-	$user->lang        = 'en_utf8';
+	$user->lastname     = $_POST['lastname'];
+	$user->firstname    = $_POST['firstname'];
+	$user->email        = $_POST['email'];
+	$user->city         = $_POST['city'];
+	$user->country      = $_POST['country'];
+  $user->lang         = 'en';
+  $user->description  = '';
+  $user->descriptionformat = 1;
+  $user->imagealt     = '';
 
-	$user->confirmed   = 1;
-	$user->deleted     = 0;
+	$user->confirmed    = 1;
+	$user->deleted      = 0;
 
-	// $user->firstaccess = time();
 	$user->timemodified = time();
+  $user->timecreated  = time();
 
-	$user->mnethostid  = $CFG->mnet_localhost_id;
-	// $user->secret      = random_string(15);
-	// $user->auth        = $CFG->registerauth;
-	$user->auth        = 'manual';
+	$user->mnethostid   = $CFG->mnet_localhost_id;
+	$user->auth         = 'manual';
 
 	require_once($CFG->dirroot.'/user/profile/lib.php');
 
@@ -253,7 +246,7 @@ elseif (!empty($_POST['username']) && (
 
 	$user->password = hash_internal_user_password($user->password);
 
-	$ur = get_record('user', 'username', $user->username);
+  $ur = $DB->get_record('user', array('username' => $user->username));
 	if (!empty($ur)) {
 ?>
 <br/><br/><br/><strong>For some reason this Moodle Username ALREADY EXISTS and CANNOT BE CREATED!</strong>
@@ -264,7 +257,7 @@ elseif (!empty($_POST['username']) && (
 		die();
 	}
 
-	if (!($user->id = insert_record('user', $user))) {
+  if (!($user->id = $DB->insert_record('user', $user))) {
 ?>
 <br/><br/><br/><strong>User FAILED to be Registered (BAD insert_record())!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
@@ -274,20 +267,9 @@ elseif (!empty($_POST['username']) && (
 		die();
 	}
 
-	$pref->name = 'auth_forcepasswordchange';
-	$pref->value = 0;	// 1 Would force a change on first login!
-	$pref->userid = $user->id;
-	insert_record('user_preferences',$pref, false);
-
-	$pref->name = 'email_bounce_count';
-	$pref->value = 1;
-	$pref->userid = $user->id;
-	insert_record('user_preferences',$pref, false);
-
-	$pref->name = 'email_send_count';
-	$pref->value = 1;
-	$pref->userid = $user->id;
-	insert_record('user_preferences',$pref, false);
+  set_user_preference('auth_forcepasswordchange', 0, $user->id); // 1 Would force a change on first login!
+  set_user_preference('email_bounce_count',       1, $user->id);
+  set_user_preference('email_send_count',         1, $user->id);
 
 	if (!empty($_POST['dobday']) && !empty($_POST['dobmonth']) && !empty($_POST['dobyear'])) {
 		$monthnames = array(1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December');
@@ -298,16 +280,16 @@ elseif (!empty($_POST['username']) && (
 	}
 	if (!empty($_POST['applicationaddress'])) {
 		// textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
-		$user->applicationaddress = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(stripslashes($_POST['applicationaddress']), ENT_COMPAT, 'UTF-8')));
+		$user->applicationaddress = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['applicationaddress']), ENT_COMPAT, 'UTF-8')));
 	}
 	if (!empty($_POST['currentjob'])) {
-		$user->currentjob = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(stripslashes($_POST['currentjob']), ENT_COMPAT, 'UTF-8')));
+		$user->currentjob = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['currentjob']), ENT_COMPAT, 'UTF-8')));
 	}
 	if (!empty($_POST['education'])) {
-		$user->education = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(stripslashes($_POST['education']), ENT_COMPAT, 'UTF-8')));
+		$user->education = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['education']), ENT_COMPAT, 'UTF-8')));
 	}
 	if (!empty($_POST['reasons'])) {
-		$user->reasons = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(stripslashes($_POST['reasons']), ENT_COMPAT, 'UTF-8')));
+		$user->reasons = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['reasons']), ENT_COMPAT, 'UTF-8')));
 	}
 	if (!empty($qualificationname[$_POST['qualification']])) {
 		$user->qualification = $qualificationname[$_POST['qualification']];
@@ -319,35 +301,47 @@ elseif (!empty($_POST['username']) && (
 		$user->employment = $employmentname[$_POST['employment']];
 	}
 
-	$fields = get_records_sql("SELECT id, shortname FROM mdl_user_info_field WHERE shortname IN ('dateofbirth', 'applicationaddress', 'currentjob', 'education', 'reasons', 'gender', 'qualification', 'higherqualification', 'employment')");
+  $fields = $DB->get_records_sql("SELECT id, shortname FROM mdl_user_info_field WHERE shortname IN ('dateofbirth', 'applicationaddress', 'currentjob', 'education', 'reasons', 'gender', 'qualification', 'higherqualification', 'employment')");
 	if (!empty($fields)) {
-        foreach ($fields as $field) {
+    foreach ($fields as $field) {
 			$data = new object();
 			$data->userid  = $user->id;
 			$data->fieldid = $field->id;
 			if (!empty($user->{$field->shortname})) {
-				$data->data = addslashes($user->{$field->shortname});
-				insert_record('user_info_data', $data);
+				$data->data = dontaddslashes($user->{$field->shortname});
+        $DB->insert_record('user_info_data', $data);
 			}
-        }
     }
+  }
+
+  // Moodle 2 (but above as is)...
+  // profile_save_data($user);
 
 	if (!empty($qualificationname[$_POST['qualification']]) &&
 		!empty($higherqualificationname[$_POST['higherqualification']]) &&
 		!empty($employmentname[$_POST['employment']])) {
 
 		$data = new object();
-		$data->userid			= $user->id;
-		$data->parentsid			= 0;
-		$data->qualification		= $_POST['qualification'];
-		$data->higherqualification	= $_POST['higherqualification'];
-		$data->employment			= $_POST['employment'];
-		insert_record('applicantqualifications', $data);
+		$data->userid			         = $user->id;
+		$data->parentsid			     = 0;
+		$data->qualification		   = $_POST['qualification'];
+		$data->higherqualification = $_POST['higherqualification'];
+		$data->employment			     = $_POST['employment'];
+    $DB->insert_record('applicantqualifications', $data);
 	}
 
-	$user = get_record('user', 'id', $user->id);
+  $user = $DB->get_record('user', array('id' => $user->id));
 
-  execute_sql('UPDATE mdl_peoplesstudentnotes SET userid=' . $user->id . ' WHERE sid=' . $_POST['sid']);
+  //execute_sql('UPDATE mdl_peoplesstudentnotes SET userid=' . $user->id . ' WHERE sid=' . $_POST['sid']);
+  $notes = $DB->get_records('peoplesstudentnotes', array('sid' => $_POST['sid']));
+  if (!empty($notes)) {
+    foreach ($notes as $note) {
+      $note->userid = $user->id;
+      $DB->update_record('peoplesstudentnotes', $note);
+    }
+  }
+
+  get_context_instance(CONTEXT_USER, $user->id);
 
 	events_trigger('user_created', $user);
 
@@ -363,35 +357,30 @@ window.opener.location.reload();
 </body>
 </html>
 <?php
-		execute_sql('UPDATE d5_webform_submitted_data SET data=' . $user->id . ' WHERE cid=29 AND sid=' . $_POST['sid']);
 
 		updateapplication($_POST['sid'], 'userid', $user->id);
 
 		// Attempt to complete enrollment
 		if (empty($_POST['coursename1'])) die();
-		$course = get_record('course', 'fullname', $_POST['coursename1']);
+    $course = $DB->get_record('course', array('fullname' => $_POST['coursename1']));
 		if (empty($course)) die();
-		if (!enrolincourse($course, $user, 'manual', $_POST['semester'])) die();
-
-		execute_sql('UPDATE d5_webform_submitted_data SET data=' . $newstate . ' WHERE cid=30 AND sid=' . $_POST['sid']);
+		if (!enrolincourse($course, $user, $_POST['semester'])) die();
 
 		updateapplication($_POST['sid'], 'state', $newstate);
 
 		if (empty($_POST['coursename2'])) die();
-		$course = get_record('course', 'fullname', $_POST['coursename2']);
+		$course = $DB->get_record('course', array('fullname' => $_POST['coursename2']));
 		if (empty($course)) die();
-		if (!enrolincourse($course, $user, 'manual', $_POST['semester'])) die();
+		if (!enrolincourse($course, $user, $_POST['semester'])) die();
 		die();
 	}
-
-	execute_sql('UPDATE d5_webform_submitted_data SET data=' . $user->id . ' WHERE cid=29 AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'userid', $user->id);
 
 	// Enrol student in Students Corner
-  $studentscorner = get_record('course', 'id', get_config(NULL, 'peoples_students_corner_id'));
+  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
 	if (!empty($studentscorner)) {
-		enrolincoursesimple($studentscorner, $user, 'manual');
+		enrolincoursesimple($studentscorner, $user);
 	}
 
 	if (empty($_POST['coursename1'])) {
@@ -410,10 +399,10 @@ window.opener.location.reload();
 	}
 
 	if ($create1) {
-		$course = get_record('course', 'fullname', $_POST['coursename1']);
+    $course = $DB->get_record('course', array('fullname' => $_POST['coursename1']));
 		if (empty($course)) {
 ?>
-<br/><br/><br/><strong>Registered user sucessfully, BUT CAN NOT enrol the user in the first selected course '<?php echo htmlspecialchars(stripslashes($_POST['coursename1']), ENT_COMPAT, 'UTF-8'); ?>' because it CAN NOT BE FOUND!</strong>
+<br/><br/><br/><strong>Registered user sucessfully, BUT CAN NOT enrol the user in the first selected course '<?php echo htmlspecialchars(dontstripslashes($_POST['coursename1']), ENT_COMPAT, 'UTF-8'); ?>' because it CAN NOT BE FOUND!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 <script type="text/javascript">
 if (!window.opener.closed) {
@@ -423,12 +412,12 @@ window.opener.location.reload();
 </body>
 </html>
 <?php
-			die();
-		}
+      die();
+    }
 
-		if (!enrolincourse($course, $user, 'manual', $_POST['semester'])) {
+		if (!enrolincourse($course, $user, $_POST['semester'])) {
 ?>
-<br/><br/><br/><strong>Registered user sucessfully, BUT CAN NOT ENROL the user in the first selected course '<?php echo htmlspecialchars(stripslashes($_POST['coursename1']), ENT_COMPAT, 'UTF-8'); ?>'!</strong>
+<br/><br/><br/><strong>Registered user sucessfully, BUT CAN NOT ENROL the user in the first selected course '<?php echo htmlspecialchars(dontstripslashes($_POST['coursename1']), ENT_COMPAT, 'UTF-8'); ?>'!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 <script type="text/javascript">
 if (!window.opener.closed) {
@@ -438,34 +427,16 @@ window.opener.location.reload();
 </body>
 </html>
 <?php
-			die();
+      die();
 		}
 
-		$teacher = get_teacher($course->id);
+    $teacher = get_peoples_teacher($course);
 
-		if (!empty($CFG->enrol_mailstudents)) {
-			$a->coursename = $course->fullname;
-			$a->profileurl = "$CFG->wwwroot/user/view.php?id=$user->id";
-//			email_to_user($user, $teacher, get_string("enrolmentnew", '', $course->shortname), get_string('welcometocoursetext', '', $a));
-		}
-
-		if (!empty($CFG->enrol_mailteachers)) {
-			$a->course = $course->fullname;
-			$a->user = fullname($user);
-			email_to_user($teacher, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-		}
-
-		if (!empty($CFG->enrol_mailadmins)) {
-			$a->course = $course->fullname;
-			$a->user = fullname($user);
-			$admins = get_admins();
-			foreach ($admins as $admin) {
-//				email_to_user($admin, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-			}
-		}
+    $a->course = $course->fullname;
+    $a->user = fullname($user);
+    //$teacher->email = 'alanabarrett0@gmail.com';
+    email_to_user($teacher, $user, get_string('enrolmentnew', 'enrol', $course->shortname), get_string('enrolmentnewuser', 'enrol', $a));
 	}
-
-	execute_sql('UPDATE d5_webform_submitted_data SET data=' . $newstate . ' WHERE cid=30 AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'state', $newstate);
 
@@ -485,10 +456,10 @@ window.close();
 	}
 
 	if ($create2) {
-		$course = get_record('course', 'fullname', $_POST['coursename2']);
+    $course = $DB->get_record('course', array('fullname' => $_POST['coursename2']));
 		if (empty($course)) {
 ?>
-<br/><br/><br/><strong>Registered user sucessfully, BUT CAN NOT enrol the user in the second selected course '<?php echo htmlspecialchars(stripslashes($_POST['coursename2']), ENT_COMPAT, 'UTF-8'); ?>' because it CAN NOT BE FOUND!</strong>
+<br/><br/><br/><strong>Registered user sucessfully, BUT CAN NOT enrol the user in the second selected course '<?php echo htmlspecialchars(dontstripslashes($_POST['coursename2']), ENT_COMPAT, 'UTF-8'); ?>' because it CAN NOT BE FOUND!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 <script type="text/javascript">
 if (!window.opener.closed) {
@@ -501,9 +472,9 @@ window.opener.location.reload();
 			die();
 		}
 
-		if (!enrolincourse($course, $user, 'manual', $_POST['semester'])) {
+		if (!enrolincourse($course, $user, $_POST['semester'])) {
 ?>
-<br/><br/><br/><strong>Registered user sucessfully, BUT CAN NOT ENROL the user in the second selected course '<?php echo htmlspecialchars(stripslashes($_POST['coursename2']), ENT_COMPAT, 'UTF-8'); ?>'!</strong>
+<br/><br/><br/><strong>Registered user sucessfully, BUT CAN NOT ENROL the user in the second selected course '<?php echo htmlspecialchars(dontstripslashes($_POST['coursename2']), ENT_COMPAT, 'UTF-8'); ?>'!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 <script type="text/javascript">
 if (!window.opener.closed) {
@@ -516,28 +487,12 @@ window.opener.location.reload();
 			die();
 		}
 
-		$teacher = get_teacher($course->id);
+    $teacher = get_peoples_teacher($course);
 
-		if (!empty($CFG->enrol_mailstudents)) {
-			$a->coursename = $course->fullname;
-			$a->profileurl = "$CFG->wwwroot/user/view.php?id=$user->id";
-//			email_to_user($user, $teacher, get_string("enrolmentnew", '', $course->shortname), get_string('welcometocoursetext', '', $a));
-		}
-
-		if (!empty($CFG->enrol_mailteachers)) {
-			$a->course = $course->fullname;
-			$a->user = fullname($user);
-			email_to_user($teacher, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-		}
-
-		if (!empty($CFG->enrol_mailadmins)) {
-			$a->course = $course->fullname;
-			$a->user = fullname($user);
-			$admins = get_admins();
-			foreach ($admins as $admin) {
-//				email_to_user($admin, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-			}
-		}
+    $a->course = $course->fullname;
+    $a->user = fullname($user);
+    //$teacher->email = 'alanabarrett0@gmail.com';
+    email_to_user($teacher, $user, get_string('enrolmentnew', 'enrol', $course->shortname), get_string('enrolmentnewuser', 'enrol', $a));
 	}
 }
 elseif (!empty($_POST['userid']) && (
@@ -552,7 +507,7 @@ elseif (!empty($_POST['userid']) && (
 
 	$newstate = $_POST['state'];
 
-	$user = get_record('user', 'id', $_POST['userid']);
+  $user = $DB->get_record('user', array('id' => $_POST['userid']));
 	if (empty($user)) {
 ?>
 <br/><br/><br/><strong>For some reason this Moodle UserID DOES NOT EXIST!</strong>
@@ -564,9 +519,9 @@ elseif (!empty($_POST['userid']) && (
 	}
 
   // Enrol student in Students Corner
-  $studentscorner = get_record('course', 'id', get_config(NULL, 'peoples_students_corner_id'));
+  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
   if (!empty($studentscorner)) {
-    enrolincoursesimple($studentscorner, $user, 'manual');
+    enrolincoursesimple($studentscorner, $user);
     sendstudentscorner($user);
   }
 
@@ -586,10 +541,10 @@ window.opener.location.reload();
 	}
 
 	if ($create1) {
-		$course = get_record('course', 'fullname', $_POST['coursename1']);
+    $course = $DB->get_record('course', array('fullname' => $_POST['coursename1']));
 		if (empty($course)) {
 ?>
-<br/><br/><br/><strong>CAN NOT enrol the user in the first selected course '<?php echo htmlspecialchars(stripslashes($_POST['coursename1']), ENT_COMPAT, 'UTF-8'); ?>' because it CAN NOT BE FOUND!</strong>
+<br/><br/><br/><strong>CAN NOT enrol the user in the first selected course '<?php echo htmlspecialchars(dontstripslashes($_POST['coursename1']), ENT_COMPAT, 'UTF-8'); ?>' because it CAN NOT BE FOUND!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 <script type="text/javascript">
 if (!window.opener.closed) {
@@ -602,9 +557,9 @@ window.opener.location.reload();
 			die();
 		}
 
-		if (!enrolincourse($course, $user, 'manual', $_POST['semester'])) {
+		if (!enrolincourse($course, $user, $_POST['semester'])) {
 ?>
-<br/><br/><br/><strong>CAN NOT ENROL the user in the first selected course '<?php echo htmlspecialchars(stripslashes($_POST['coursename1']), ENT_COMPAT, 'UTF-8'); ?>'!</strong>
+<br/><br/><br/><strong>CAN NOT ENROL the user in the first selected course '<?php echo htmlspecialchars(dontstripslashes($_POST['coursename1']), ENT_COMPAT, 'UTF-8'); ?>'!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 <script type="text/javascript">
 if (!window.opener.closed) {
@@ -617,33 +572,13 @@ window.opener.location.reload();
 			die();
 		}
 
-		$teacher = get_teacher($course->id);
+    $teacher = get_peoples_teacher($course);
 
-		if (!empty($CFG->enrol_mailstudents)) {
-			$a->coursename = $course->fullname;
-			$a->profileurl = "$CFG->wwwroot/user/view.php?id=$user->id";
-//			email_to_user($user, $teacher, get_string("enrolmentnew", '', $course->shortname), get_string('welcometocoursetext', '', $a));
-		}
-
-		if (!empty($CFG->enrol_mailteachers)) {
-			$a->course = $course->fullname;
-			$a->user = fullname($user);
-			email_to_user($teacher, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-		}
-
-		if (!empty($CFG->enrol_mailadmins)) {
-			$a->course = $course->fullname;
-			$a->user = fullname($user);
-			$admins = get_admins();
-			foreach ($admins as $admin) {
-//				email_to_user($admin, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-			}
-		}
+    $a->course = $course->fullname;
+    $a->user = fullname($user);
+    //$teacher->email = 'alanabarrett0@gmail.com';
+    email_to_user($teacher, $user, get_string('enrolmentnew', 'enrol', $course->shortname), get_string('enrolmentnewuser', 'enrol', $a));
 	}
-	if ($_POST['nid'] !== '80') $cid = '30';
-	else  $cid = '13';
-
-	execute_sql('UPDATE d5_webform_submitted_data SET data=' . $newstate . ' WHERE cid=' . $cid . ' AND sid=' . $_POST['sid']);
 
 	updateapplication($_POST['sid'], 'state', $newstate);
 
@@ -663,10 +598,10 @@ window.close();
 	}
 
 	if ($create2) {
-		$course = get_record('course', 'fullname', $_POST['coursename2']);
+    $course = $DB->get_record('course', array('fullname' => $_POST['coursename2']));
 		if (empty($course)) {
 ?>
-<br/><br/><br/><strong>CAN NOT enrol the user in the second selected course '<?php echo htmlspecialchars(stripslashes($_POST['coursename2']), ENT_COMPAT, 'UTF-8'); ?>' because it CAN NOT BE FOUND!</strong>
+<br/><br/><br/><strong>CAN NOT enrol the user in the second selected course '<?php echo htmlspecialchars(dontstripslashes($_POST['coursename2']), ENT_COMPAT, 'UTF-8'); ?>' because it CAN NOT BE FOUND!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 <script type="text/javascript">
 if (!window.opener.closed) {
@@ -679,9 +614,9 @@ window.opener.location.reload();
 			die();
 		}
 
-		if (!enrolincourse($course, $user, 'manual', $_POST['semester'])) {
+		if (!enrolincourse($course, $user, $_POST['semester'])) {
 ?>
-<br/><br/><br/><strong>CAN NOT ENROL the user in the second selected course '<?php echo htmlspecialchars(stripslashes($_POST['coursename2']), ENT_COMPAT, 'UTF-8'); ?>'!</strong>
+<br/><br/><br/><strong>CAN NOT ENROL the user in the second selected course '<?php echo htmlspecialchars(dontstripslashes($_POST['coursename2']), ENT_COMPAT, 'UTF-8'); ?>'!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 <script type="text/javascript">
 if (!window.opener.closed) {
@@ -694,28 +629,12 @@ window.opener.location.reload();
 			die();
 		}
 
-		$teacher = get_teacher($course->id);
+    $teacher = get_peoples_teacher($course);
 
-		if (!empty($CFG->enrol_mailstudents)) {
-			$a->coursename = $course->fullname;
-			$a->profileurl = "$CFG->wwwroot/user/view.php?id=$user->id";
-//			email_to_user($user, $teacher, get_string("enrolmentnew", '', $course->shortname), get_string('welcometocoursetext', '', $a));
-		}
-
-		if (!empty($CFG->enrol_mailteachers)) {
-			$a->course = $course->fullname;
-			$a->user = fullname($user);
-			email_to_user($teacher, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-		}
-
-		if (!empty($CFG->enrol_mailadmins)) {
-			$a->course = $course->fullname;
-			$a->user = fullname($user);
-			$admins = get_admins();
-			foreach ($admins as $admin) {
-//				email_to_user($admin, $user, get_string("enrolmentnew", '', $course->shortname), get_string('enrolmentnewuser', '', $a));
-			}
-		}
+    $a->course = $course->fullname;
+    $a->user = fullname($user);
+    //$teacher->email = 'alanabarrett0@gmail.com';
+    email_to_user($teacher, $user, get_string('enrolmentnew', 'enrol', $course->shortname), get_string('enrolmentnewuser', 'enrol', $a));
 	}
 }
 ?>
@@ -732,27 +651,26 @@ window.close();
 
 
 function sendapprovedmail($email, $subject, $message) {
+  global $CFG;
 
-	// Dummy User
-    $user = new object;
-	$user->id = 999999999;
-    $user->email = $email;
-    $user->maildisplay = true;
-	$user->mnethostid = 1;
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
 
-    $supportuser = generate_email_supportuser();
+  $supportuser = generate_email_supportuser();
 
-    $messagehtml = text_to_html($message, false, false, true);
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
 
-    $user->mailformat = 1;  // Always send HTML version as well
+  $user->email = 'applicationresponses@peoples-uni.org';
 
-    $ret = email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
 
-    $user->email = 'applicationresponses@peoples-uni.org';
-
-    email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message, $messagehtml);
-
-    return $ret;
+  return $ret;
 }
 
 
@@ -765,6 +683,7 @@ function sendapprovedmail($email, $subject, $message) {
  *          was blocked by user and "false" if there was another sort of error.
  */
 function sendunpw($user, $passwordforemail) {
+  global $DB;
   global $CFG;
 
   $message = "Hi FULL_NAME_HERE,
@@ -813,7 +732,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $site = get_site();
 
-  $studentscorner = get_record('course', 'id', get_config(NULL, 'peoples_students_corner_id'));
+  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
 
   $message = str_replace('FULL_NAME_HERE',          fullname($user), $message);
   $message = str_replace('SITE_NAME_HERE',          format_string($site->fullname), $message);
@@ -827,18 +746,16 @@ TECHSUPPORT_EMAIL_HERE";
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-  $messagehtml = text_to_html($message, false, false, true);
-
-  $user->mailformat = 1;  // Always send HTML version as well
-
   $supportuser = generate_email_supportuser();
   $subject = format_string($site->fullname) . ': Your Account has been Created';
 
-  return email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  return email_to_user($user, $supportuser, $subject, $message);
 }
 
 
 function sendstudentscorner($user) {
+  global $DB;
   global $CFG;
 
   $message = "Hi FULL_NAME_HERE,
@@ -854,7 +771,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $site = get_site();
 
-  $studentscorner = get_record('course', 'id', get_config(NULL, 'peoples_students_corner_id'));
+  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
 
   $message = str_replace('FULL_NAME_HERE',          fullname($user), $message);
   $message = str_replace('SITE_NAME_HERE',          format_string($site->fullname), $message);
@@ -867,161 +784,164 @@ TECHSUPPORT_EMAIL_HERE";
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-  $messagehtml = text_to_html($message, false, false, true);
-
-  $user->mailformat = 1;  // Always send HTML version as well
-
   $supportuser = generate_email_supportuser();
   $subject = format_string($site->fullname) . ': Students Corner';
 
-  return email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+  //$user->email = 'alanabarrett0@gmail.com';
+  return email_to_user($user, $supportuser, $subject, $message);
 }
 
 
-function enrolincourse($course, $user, $enrol, $semester) {
+function enrolincourse($course, $user, $semester) {
+  global $DB;
 
-    $timestart = time();
-    // remove time part from the timestamp and keep only the date part
-    $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
-    if ($course->enrolperiod) {
-        $timeend = $timestart + $course->enrolperiod;
-    } else {
-        $timeend = 0;
+  $timestart = time();
+  // remove time part from the timestamp and keep only the date part
+  $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
+
+  $roles = get_archetype_roles('student');
+  $role = reset($roles);
+
+  if (enrol_try_internal_enrol($course->id, $user->id, $role->id, $timestart, 0)) {
+
+    $enrolment = $DB->get_record('enrolment', array('userid' => $user->id, 'courseid' => $course->id));
+    if (!empty($enrolment)) {
+      $enrolment->semester = dontaddslashes($enrolment->semester);
+      $enrolment->enrolled = 1;
+      $DB->update_record('enrolment', $enrolment);
+    }
+    else {
+      $enrolment->userid = $user->id;
+      $enrolment->courseid = $course->id;
+      $enrolment->semester = $semester;
+      $enrolment->datefirstenrolled = time();
+      $enrolment->enrolled = 1;
+
+      $DB->insert_record('enrolment', $enrolment);
     }
 
-    if ($role = get_default_course_role($course)) {
+    emailwelcome($course, $user);
 
-        $context = get_context_instance(CONTEXT_COURSE, $course->id);
+    $message = '';
+    if (!empty($user->firstname))  $message .= $user->firstname;
+    if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
+    if (!empty($role->name)) $message .= ' as ' . $role->name;
+    if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
+    add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
 
-        if (!role_assign($role->id, $user->id, 0, $context->id, $timestart, $timeend, 0, $enrol)) {
-            return false;
-        }
-
-        // force accessdata refresh for users visiting this context...
-        mark_context_dirty($context->path);
-
-		$enrolment = get_record('enrolment', 'userid', $user->id, 'courseid', $course->id);
-		if (!empty($enrolment)) {
-			$enrolment->semester = addslashes($enrolment->semester);
-			$enrolment->enrolled = 1;
-			update_record('enrolment', $enrolment);
-		}
-		else {
-			$enrolment->userid = $user->id;
-			$enrolment->courseid = $course->id;
-			$enrolment->semester = $semester;
-			$enrolment->datefirstenrolled = time();
-			$enrolment->enrolled = 1;
-
-			insert_record('enrolment', $enrolment);
-		}
-
-        emailwelcome($course, $user);
-
-		$message = '';
-		if (!empty($user->firstname))  $message .= $user->firstname;
-		if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
-		if (!empty($role->name)) $message .= ' as ' . $role->name;
-		if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-        add_to_log($course->id, 'course', 'enrol', 'view.php?id='.$course->id, $message);
-
-        return true;
-    }
-
+    return true;
+  }
+  else {
     return false;
+  }
 }
 
 
-function enrolincoursesimple($course, $user, $enrol) {
+function enrolincoursesimple($course, $user) {
+  global $DB;
 
-	$timestart = time();
-	// remove time part from the timestamp and keep only the date part
-	$timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
-	if ($course->enrolperiod) {
-		$timeend = $timestart + $course->enrolperiod;
-	} else {
-		$timeend = 0;
-	}
+  $timestart = time();
+  // remove time part from the timestamp and keep only the date part
+  $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
 
-	if ($role = get_default_course_role($course)) {
+  $roles = get_archetype_roles('student');
+  $role = reset($roles);
 
-		$context = get_context_instance(CONTEXT_COURSE, $course->id);
+  enrol_try_internal_enrol($course->id, $user->id, $role->id, $timestart, 0);
 
-		if (!role_assign($role->id, $user->id, 0, $context->id, $timestart, $timeend, 0, $enrol)) {
-			return false;
-		}
+  // emailwelcome($course, $user);
 
-		// force accessdata refresh for users visiting this context...
-		mark_context_dirty($context->path);
-
-//		emailwelcome($course, $user);
-
-		$message = '';
-		if (!empty($user->firstname))  $message .= $user->firstname;
-		if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
-		if (!empty($role->name)) $message .= ' as ' . $role->name;
-		if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-		add_to_log($course->id, 'course', 'enrol', 'view.php?id='.$course->id, $message);
-
-		return true;
-	}
-
-	return false;
+  $message = '';
+  if (!empty($user->firstname))  $message .= $user->firstname;
+  if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
+  if (!empty($role->name)) $message .= ' as ' . $role->name;
+  if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
+  add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
 }
 
 
 function emailwelcome($course, $user) {
-    global $CFG;
+  global $CFG;
 
-    if (isset($CFG->sendcoursewelcomemessage) and !$CFG->sendcoursewelcomemessage) {
-        return;
-    }
-
-    if (!empty($course->welcomemessage)) {
-        $message = $course->welcomemessage;
-    } else {
-        $a = new Object();
-        $a->coursename = $course->fullname;
-        $a->profileurl = "$CFG->wwwroot/user/view.php?id=$user->id&course=$course->id";
-        $a->courseurl = "$CFG->wwwroot/course/view.php?id=$course->id";
-		$message = "Welcome to $a->coursename!
+  $subject = "New enrolment in $course->fullname";
+  $message = "Welcome to $course->fullname!
 
 If you have not done so already, you should edit your profile page
 so that we can learn more about you:
 
-  $a->profileurl
+  $CFG->wwwroot/user/view.php?id=$user->id&amp;course=$course->id
 
 There is a link to your course at the bottom of the profile or you can click:
 
-  $a->courseurl";
-	}
+  $CFG->wwwroot/course/view.php?id=$course->id";
 
-    /// If you don't want a welcome message sent, then make the message string blank.
-    if (!empty($message)) {
-        $subject = get_string('welcometocourse', '', format_string($course->fullname));
+  $teacher = get_peoples_teacher($course);
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $teacher, $subject, $message);
 
-        if (! $teacher = get_teacher($course->id)) {
-            $teacher = get_admin();
-        }
-
-        email_to_user($user, $teacher, $subject, $message);
-    }
+//  $eventdata = new stdClass();
+//  $eventdata->modulename        = 'moodle';
+//  $eventdata->component         = 'course';
+//  $eventdata->name              = 'flatfile_enrolment';
+//  $eventdata->userfrom          = $teacher;
+//  $eventdata->userto            = $user;
+//  $eventdata->subject           = $subject;
+//  $eventdata->fullmessage       = $message;
+//  $eventdata->fullmessageformat = FORMAT_PLAIN;
+//  $eventdata->fullmessagehtml   = '';
+//  $eventdata->smallmessage      = '';
+//  message_send($eventdata);
 }
 
 
 function updateapplication($sid, $field, $value, $deltamodules = 0) {
-	$record = get_record('peoplesapplication', 'sid', $sid);
-	$application = new object();
-	$application->id = $record->id;
-	$application->{$field} = $value;
+  global $DB;
 
-	if ($deltamodules != 0) {
-		if (($deltamodules > 1) && empty($record->coursename2)) $deltamodules = 1;
+  $record = $DB->get_record('peoplesapplication', array('sid' => $sid));
+  $application = new object();
+  $application->id = $record->id;
+  $application->{$field} = $value;
 
-		$application->costowed = $record->costowed + $deltamodules * MODULE_COST;
-		if ($application->costowed < 0) $application->costowed = 0;
-	}
+  if ($deltamodules != 0) {
+    if (($deltamodules > 1) && empty($record->coursename2)) $deltamodules = 1;
 
-	update_record('peoplesapplication', $application);
+    $application->costowed = $record->costowed + $deltamodules * MODULE_COST;
+    if ($application->costowed < 0) $application->costowed = 0;
+  }
+
+  $DB->update_record('peoplesapplication', $application);
+}
+
+
+function get_peoples_teacher($course) {
+  global $DB;
+
+  $context = get_context_instance(CONTEXT_COURSE, $course->id);
+
+  $role = $DB->get_record('role', array('name' => 'Teacher'));
+
+  if ($teachers = get_role_users($role->id, $context)) {
+    foreach ($teachers as $teacher) {
+      $teacheruserid = $teacher->id;
+    }
+  }
+
+  if (isset($teacheruserid)) {
+    $teacher = $DB->get_record('user', array('id' => $teacheruserid));
+  }
+  else {
+    $teacher = get_admin();
+  }
+  return $teacher;
+}
+
+
+function dontaddslashes($x) {
+  return $x;
+}
+
+
+function dontstripslashes($x) {
+  return $x;
 }
 ?>
