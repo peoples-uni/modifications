@@ -6,30 +6,49 @@ require_once($CFG->libdir.'/formslib.php');
 require_once($CFG->libdir.'/completionlib.php');
 
 class application_form_new_student_form extends moodleform {
-    protected $course;
-    protected $context;
+  protected $course;
+  protected $context;
 
-    function definition() {
-        global $DB;
+  function definition() {
+    global $DB;
 
-        $mform    = $this->_form;
+    $mform    = $this->_form;
 
-        $editoroptions = $this->_customdata['editoroptions'];
-        $returnto = $this->_customdata['returnto'];
+    $editoroptions = $this->_customdata['editoroptions'];
+    $returnto = $this->_customdata['returnto'];
 
-
-        $mform->addElement('header','general', 'Form Header');
-
-        $mform->addElement('hidden', 'returnto', null);
-        $mform->setType('returnto', PARAM_ALPHANUM);
-        $mform->setConstant('returnto', $returnto);
-
-                $displaylist[$category->id] = $path;
-                $mform->addElement('select', 'category', get_string('category'), $displaylist);
-                $mform->addHelpButton('category', 'category');
-                $mform->setDefault('category', $category->id);
+    echo '<h2>Instructions</h2>
+<p>Please read the information in <a href="http://www.peoples-uni.org/book/essential-information-potential-students">Essential information for potential students</a> before submitting this form, particularly see the information about <a href="http://peoples-uni.org/book/course-fees">Course fees</a> </p>
+<p><strong>Use this form for your <u>first</u> application to do one or two training course modules in the semester in which you wish to start. <br /><br />
+        </strong></p>
+<p>For inquires about registration or payment please send an email to  <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a>.</p>
+<p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
+<p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send a mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>';
 
 
+    $mform->addElement('header', 'general', 'Course Module Selection');
+
+    $mform->addElement('hidden', 'returnto', null);
+    $mform->setType('returnto', PARAM_ALPHANUM);
+    $mform->setConstant('returnto', $returnto);
+
+    echo 'Semester';
+
+    $modules[9] = 'biostat';
+    $mform->addElement('select', 'module1', 'First module', $modules);
+    $mform->addHelpButton('module1', 'Please select the first course module you are applying for from the drop down box. Note: 'Biostatistics 11a', 'Communicable Disease 11a', 'Disaster Management and Emergency Planning 11a', 'Evaluation of Interventions 11a', 'Evidence Based Practice 11a', 'HIV/AIDS 11a', 'Health Economics 11a', 'Introduction to Epidemiology 11a', 'Maternal Mortality 11a', 'Patient Safety 11a', 'Preventing Child Mortality 11a', 'Public Health Ethics 11a', 'Public Health Nutrition 11a' are not available for this semester because they are full.');
+    //$mform->setDefault('module1', 9);
+
+    $mform->addElement('select', 'module2', 'Second module', $modules);
+    $mform->addHelpButton('module2', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.');
+    //$mform->setDefault('module2', 9);
+
+/*
+    $mform->addElement('header', 'general', 'Personal details');
+
+
+
+>>>Text
         $mform->addElement('text','fullname', get_string('fullnamecourse'),'maxlength="254" size="50"');
         $mform->addHelpButton('fullname', 'fullnamecourse');
         $mform->addRule('fullname', get_string('missingfullname'), 'required', null, 'client');
@@ -39,239 +58,42 @@ class application_form_new_student_form extends moodleform {
             $mform->setConstant('fullname', $course->fullname);
         }
 
-        $mform->addElement('text', 'shortname', get_string('shortnamecourse'), 'maxlength="100" size="20"');
-        $mform->addHelpButton('shortname', 'shortnamecourse');
-        $mform->addRule('shortname', get_string('missingshortname'), 'required', null, 'client');
-        $mform->setType('shortname', PARAM_MULTILANG);
-        if (!empty($course->id) and !has_capability('moodle/course:changeshortname', $coursecontext)) {
-            $mform->hardFreeze('shortname');
-            $mform->setConstant('shortname', $course->shortname);
-        }
-
-        $mform->addElement('text','idnumber', get_string('idnumbercourse'),'maxlength="100"  size="10"');
-        $mform->addHelpButton('idnumber', 'idnumbercourse');
-        $mform->setType('idnumber', PARAM_RAW);
-        if (!empty($course->id) and !has_capability('moodle/course:changeidnumber', $coursecontext)) {
-            $mform->hardFreeze('idnumber');
-            $mform->setConstants('idnumber', $course->idnumber);
-        }
-
-
+>>>Textarea
         $mform->addElement('editor','summary_editor', get_string('coursesummary'), null, $editoroptions);
         $mform->addHelpButton('summary_editor', 'coursesummary');
         $mform->setType('summary_editor', PARAM_RAW);
-
-        if (!empty($course->id) and !has_capability('moodle/course:changesummary', $coursecontext)) {
+        if (false) {
             $mform->hardFreeze('summary_editor');
         }
 
-        $courseformats = get_plugin_list('format');
-        $formcourseformats = array();
-        foreach ($courseformats as $courseformat => $formatdir) {
-            $formcourseformats[$courseformat] = get_string('pluginname', "format_$courseformat");
-        }
-        $mform->addElement('select', 'format', get_string('format'), $formcourseformats);
-        $mform->addHelpButton('format', 'format');
-        $mform->setDefault('format', $courseconfig->format);
-
-        for ($i=1; $i<=52; $i++) {
-          $sectionmenu[$i] = "$i";
-        }
-        $mform->addElement('select', 'numsections', get_string('numberweeks'), $sectionmenu);
-        $mform->setDefault('numsections', $courseconfig->numsections);
-
+>>>Date
         $mform->addElement('date_selector', 'startdate', get_string('startdate'));
         $mform->addHelpButton('startdate', 'startdate');
         $mform->setDefault('startdate', time() + 3600 * 24);
 
-        $choices = array();
-        $choices['0'] = get_string('hiddensectionscollapsed');
-        $choices['1'] = get_string('hiddensectionsinvisible');
-        $mform->addElement('select', 'hiddensections', get_string('hiddensections'), $choices);
-        $mform->addHelpButton('hiddensections', 'hiddensections');
-        $mform->setDefault('hiddensections', $courseconfig->hiddensections);
-
-        $options = range(0, 10);
-        $mform->addElement('select', 'newsitems', get_string('newsitemsnumber'), $options);
-        $mform->addHelpButton('newsitems', 'newsitemsnumber');
-        $mform->setDefault('newsitems', $courseconfig->newsitems);
-
+>>>YES/NO
         $mform->addElement('selectyesno', 'showgrades', get_string('showgrades'));
         $mform->addHelpButton('showgrades', 'showgrades');
         $mform->setDefault('showgrades', $courseconfig->showgrades);
 
-        $mform->addElement('selectyesno', 'showreports', get_string('showreports'));
-        $mform->addHelpButton('showreports', 'showreports');
-        $mform->setDefault('showreports', $courseconfig->showreports);
-
-        $choices = get_max_upload_sizes($CFG->maxbytes);
-        $mform->addElement('select', 'maxbytes', get_string('maximumupload'), $choices);
-        $mform->addHelpButton('maxbytes', 'maximumupload');
-        $mform->setDefault('maxbytes', $courseconfig->maxbytes);
-
-        if (!empty($course->legacyfiles) or !empty($CFG->legacyfilesinnewcourses)) {
-            if (empty($course->legacyfiles)) {
-                //0 or missing means no legacy files ever used in this course - new course or nobody turned on legacy files yet
-                $choices = array('0'=>get_string('no'), '2'=>get_string('yes'));
-            } else {
-                $choices = array('1'=>get_string('no'), '2'=>get_string('yes'));
-            }
-            $mform->addElement('select', 'legacyfiles', get_string('courselegacyfiles'), $choices);
-            $mform->addHelpButton('legacyfiles', 'courselegacyfiles');
-            if (!isset($courseconfig->legacyfiles)) {
-                // in case this was not initialised properly due to switching of $CFG->legacyfilesinnewcourses
-                $courseconfig->legacyfiles = 0;
-            }
-            $mform->setDefault('legacyfiles', $courseconfig->legacyfiles);
-        }
-
-        if (!empty($CFG->allowcoursethemes)) {
-            $themeobjects = get_list_of_themes();
-            $themes=array();
-            $themes[''] = get_string('forceno');
-            foreach ($themeobjects as $key=>$theme) {
-                $themes[$key] = $theme->name;
-            }
-            $mform->addElement('select', 'theme', get_string('forcetheme'), $themes);
-        }
-
-//--------------------------------------------------------------------------------
-        enrol_course_edit_form($mform, $course, $context);
-
-//--------------------------------------------------------------------------------
+>>>Header
         $mform->addElement('header','', get_string('groups', 'group'));
 
-        $choices = array();
-        $choices[NOGROUPS] = get_string('groupsnone', 'group');
-        $choices[SEPARATEGROUPS] = get_string('groupsseparate', 'group');
-        $choices[VISIBLEGROUPS] = get_string('groupsvisible', 'group');
-        $mform->addElement('select', 'groupmode', get_string('groupmode', 'group'), $choices);
-        $mform->addHelpButton('groupmode', 'groupmode', 'group');
-        $mform->setDefault('groupmode', $courseconfig->groupmode);
 
-        $choices = array();
-        $choices['0'] = get_string('no');
-        $choices['1'] = get_string('yes');
-        $mform->addElement('select', 'groupmodeforce', get_string('groupmodeforce', 'group'), $choices);
-        $mform->addHelpButton('groupmodeforce', 'groupmodeforce', 'group');
-        $mform->setDefault('groupmodeforce', $courseconfig->groupmodeforce);
-
-        //default groupings selector
-        $options = array();
-        $options[0] = get_string('none');
-        $mform->addElement('select', 'defaultgroupingid', get_string('defaultgrouping', 'group'), $options);
-
-//--------------------------------------------------------------------------------
-        $mform->addElement('header','', get_string('availability'));
-
-        $choices = array();
-        $choices['0'] = get_string('courseavailablenot');
-        $choices['1'] = get_string('courseavailable');
-        $mform->addElement('select', 'visible', get_string('availability'), $choices);
-        $mform->addHelpButton('visible', 'availability');
-        $mform->setDefault('visible', $courseconfig->visible);
-        if (!has_capability('moodle/course:visibility', $context)) {
+...
+>>>Make an elemnet constant
             $mform->hardFreeze('visible');
-            if (!empty($course->id)) {
-                $mform->setConstant('visible', $course->visible);
-            } else {
-                $mform->setConstant('visible', $category->visible);
-            }
-        }
+            $mform->setConstant('visible', $course->visible);
 
-//--------------------------------------------------------------------------------
-        $mform->addElement('header','', get_string('language'));
-
-        $languages=array();
-        $languages[''] = get_string('forceno');
-        $languages += get_string_manager()->get_list_of_translations();
-        $mform->addElement('select', 'lang', get_string('forcelanguage'), $languages);
-        $mform->setDefault('lang', $courseconfig->lang);
-
-//--------------------------------------------------------------------------------
-        if (completion_info::is_enabled_for_site()) {
-            $mform->addElement('header','', get_string('progress','completion'));
-            $mform->addElement('select', 'enablecompletion', get_string('completion','completion'),
-                array(0=>get_string('completiondisabled','completion'), 1=>get_string('completionenabled','completion')));
-            $mform->setDefault('enablecompletion', $courseconfig->enablecompletion);
-
+>>>checkbox
             $mform->addElement('checkbox', 'completionstartonenrol', get_string('completionstartonenrol', 'completion'));
             $mform->setDefault('completionstartonenrol', $courseconfig->completionstartonenrol);
             $mform->disabledIf('completionstartonenrol', 'enablecompletion', 'eq', 0);
-        } else {
-            $mform->addElement('hidden', 'enablecompletion');
-            $mform->setType('enablecompletion', PARAM_INT);
-            $mform->setDefault('enablecompletion',0);
-
-            $mform->addElement('hidden', 'completionstartonenrol');
-            $mform->setType('completionstartonenrol', PARAM_INT);
-            $mform->setDefault('completionstartonenrol',0);
-        }
-
-//--------------------------------------------------------------------------------
-        if (has_capability('moodle/site:config', $systemcontext)) {
-            if (((!empty($course->requested) && $CFG->restrictmodulesfor == 'requested') || $CFG->restrictmodulesfor == 'all')) {
-                $mform->addElement('header', '', get_string('restrictmodules'));
-
-                $options = array();
-                $options['0'] = get_string('no');
-                $options['1'] = get_string('yes');
-                $mform->addElement('select', 'restrictmodules', get_string('restrictmodules'), $options);
-                if (!empty($CFG->restrictbydefault)) {
-                    $mform->setDefault('restrictmodules', 1);
-                }
-
-                $mods = array(0=>get_string('allownone'));
-                $mods += $DB->get_records_menu('modules', array('visible'=>1), 'name', 'id, name');
-                $mform->addElement('select', 'allowedmods', get_string('to'), $mods, array('multiple'=>'multiple', 'size'=>'10'));
-                $mform->disabledIf('allowedmods', 'restrictmodules', 'eq', 0);
-                // defaults are already in $course
-            } else {
-                // remove any mod restriction
-                $mform->addElement('hidden', 'restrictmodules', 0);
-                $mform->setType('restrictmodules', PARAM_INT);
-            }
-        } else {
-            $mform->addElement('hidden', 'restrictmodules');
-            $mform->setType('restrictmodules', PARAM_INT);
-            if (empty($course->id)) {
-                $mform->setConstant('restrictmodules', (int)($CFG->restrictmodulesfor == 'all'));
-            } else {
-                // keep previous
-                $mform->setConstant('restrictmodules', $course->restrictmodules);
-            }
-        }
-
-/// customizable role names in this course
-//--------------------------------------------------------------------------------
-        $mform->addElement('header','rolerenaming', get_string('rolerenaming'));
-        $mform->addHelpButton('rolerenaming', 'rolerenaming');
-
-        if ($roles = get_all_roles()) {
-            if ($coursecontext) {
-                $roles = role_fix_names($roles, $coursecontext, ROLENAME_ALIAS_RAW);
-            }
-            $assignableroles = get_roles_for_contextlevels(CONTEXT_COURSE);
-            foreach ($roles as $role) {
-                $mform->addElement('text', 'role_'.$role->id, get_string('yourwordforx', '', $role->name));
-                if (isset($role->localname)) {
-                    $mform->setDefault('role_'.$role->id, $role->localname);
-                }
-                $mform->setType('role_'.$role->id, PARAM_TEXT);
-                if (!in_array($role->id, $assignableroles)) {
-                    $mform->setAdvanced('role_'.$role->id);
-                }
-            }
-        }
-
+*/
 //--------------------------------------------------------------------------------
         $this->add_action_buttons();
 //--------------------------------------------------------------------------------
-        $mform->addElement('hidden', 'id', null);
-        $mform->setType('id', PARAM_INT);
-
-/// finally set the current form data
-//--------------------------------------------------------------------------------
+$course = new stdClass();
         $this->set_data($course);
     }
 
