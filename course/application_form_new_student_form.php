@@ -97,6 +97,7 @@ $course = new stdClass();
         $this->set_data($course);
     }
 
+/*
     function definition_after_data() {
         global $DB;
 
@@ -114,7 +115,7 @@ $course = new stdClass();
             $gr_el->load($options);
         }
     }
-
+*/
 
 /// perform some extra moodle validation
     function validation($data, $files) {
