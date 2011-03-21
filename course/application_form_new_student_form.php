@@ -36,11 +36,11 @@ class application_form_new_student_form extends moodleform {
 
     $modules[9] = 'biostat';
     $mform->addElement('select', 'module1', 'First module', $modules);
-    $mform->addHelpButton('module1', 'Please select the first course module you are applying for from the drop down box. Note: 'Biostatistics 11a', 'Communicable Disease 11a', 'Disaster Management and Emergency Planning 11a', 'Evaluation of Interventions 11a', 'Evidence Based Practice 11a', 'HIV/AIDS 11a', 'Health Economics 11a', 'Introduction to Epidemiology 11a', 'Maternal Mortality 11a', 'Patient Safety 11a', 'Preventing Child Mortality 11a', 'Public Health Ethics 11a', 'Public Health Nutrition 11a' are not available for this semester because they are full.');
+//    $mform->addHelpButton('module1', "Please select the first course module you are applying for from the drop down box. Note: 'Biostatistics 11a', 'Communicable Disease 11a', 'Disaster Management and Emergency Planning 11a', 'Evaluation of Interventions 11a', 'Evidence Based Practice 11a', 'HIV/AIDS 11a', 'Health Economics 11a', 'Introduction to Epidemiology 11a', 'Maternal Mortality 11a', 'Patient Safety 11a', 'Preventing Child Mortality 11a', 'Public Health Ethics 11a', 'Public Health Nutrition 11a' are not available for this semester because they are full.");
     //$mform->setDefault('module1', 9);
 
     $mform->addElement('select', 'module2', 'Second module', $modules);
-    $mform->addHelpButton('module2', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.');
+//    $mform->addHelpButton('module2', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.');
     //$mform->setDefault('module2', 9);
 
 /*
