@@ -17,13 +17,13 @@ class application_form_new_student_form extends moodleform {
     $editoroptions = $this->_customdata['editoroptions'];
     $returnto = $this->_customdata['returnto'];
 
-    echo '<h2>Instructions</h2>
+    $mform->addElement('html', '<h2>Instructions</h2>
 <p>Please read the information in <a href="http://www.peoples-uni.org/book/essential-information-potential-students">Essential information for potential students</a> before submitting this form, particularly see the information about <a href="http://peoples-uni.org/book/course-fees">Course fees</a> </p>
 <p><strong>Use this form for your <u>first</u> application to do one or two training course modules in the semester in which you wish to start. <br /><br />
         </strong></p>
 <p>For inquires about registration or payment please send an email to  <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
-<p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send a mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>';
+<p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send a mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>');
 
 
     $mform->addElement('header', 'general', 'Course Module Selection');
@@ -32,12 +32,13 @@ class application_form_new_student_form extends moodleform {
     $mform->setType('returnto', PARAM_ALPHANUM);
     $mform->setConstant('returnto', $returnto);
 
-    echo 'Semester';
+    $mform->addElement('html', '<br />Semester<br /><br />');
 
     $modules[9] = 'biostat';
     $mform->addElement('select', 'module1', 'First module', $modules);
 //    $mform->addHelpButton('module1', "Please select the first course module you are applying for from the drop down box. Note: 'Biostatistics 11a', 'Communicable Disease 11a', 'Disaster Management and Emergency Planning 11a', 'Evaluation of Interventions 11a', 'Evidence Based Practice 11a', 'HIV/AIDS 11a', 'Health Economics 11a', 'Introduction to Epidemiology 11a', 'Maternal Mortality 11a', 'Patient Safety 11a', 'Preventing Child Mortality 11a', 'Public Health Ethics 11a', 'Public Health Nutrition 11a' are not available for this semester because they are full.");
     //$mform->setDefault('module1', 9);
+    $mform->addElement('html', "<br />Please select the first course module you are applying for from the drop down box. Note: 'Biostatistics 11a', 'Communicable Disease 11a', 'Disaster Management and Emergency Planning 11a', 'Evaluation of Interventions 11a', 'Evidence Based Practice 11a', 'HIV/AIDS 11a', 'Health Economics 11a', 'Introduction to Epidemiology 11a', 'Maternal Mortality 11a', 'Patient Safety 11a', 'Preventing Child Mortality 11a', 'Public Health Ethics 11a', 'Public Health Nutrition 11a' are not available for this semester because they are full.<br />");
 
     $mform->addElement('select', 'module2', 'Second module', $modules);
 //    $mform->addHelpButton('module2', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.');
