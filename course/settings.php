@@ -219,7 +219,8 @@ $currentsemester = $semester_current->semester;
 
 $open_modules = $DB->get_records('activemodules', array('modulefull' => 0));
 if (empty($open_modules)) {
-  echo 'Application forms are currently closed.<br /><br />';
+  echo 'Application forms are currently closed. (Applicants will be sent to Expression of Interest Form.)<br />';
+  echo 'When at least one Module if not full, applications will be opened.<br /><br />';
   $closed = true;
 }
 else {
