@@ -56,22 +56,26 @@ echo $OUTPUT->header();
 
 
 if (!empty($_POST['markaddsemester']) && !empty($_POST['semester'])) {
-	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	// Special characters will allways be converted to entities for display so not needed
-	// $_POST['semester'] = strip_tags($_POST['semester']);
-	$newsemester = $_POST['semester'];
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  // Special characters will allways be converted to entities for display so not needed
+  // $_POST['semester'] = strip_tags($_POST['semester']);
+  $newsemester = $_POST['semester'];
 
   $semesters = $DB->get_records('semesters');
 
-	$found = false;
-	foreach ($semesters as $semester) {
-		if ($newsemester === $semester->semester) $found = true;
-	}
+  $found = false;
+  foreach ($semesters as $semester) {
+    if ($newsemester === $semester->semester) $found = true;
+  }
 
-	if (!$found) {
+  if (!$found) {
     $record->semester = $newsemester;
     $DB->insert_record('semesters', $record);
-	}
+  }
+
+  $semester_current = $DB->get_record('semester_current', array('id' => 1));
+  $semester_current->semester = $newsemester;
+  $DB->update_record('semester_current', $semester_current);
 }
 if (!empty($_POST['markaddfoundation']) && !empty($_POST['foundation'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -208,19 +212,19 @@ echo '</table>';
 <br />
 <?php
 
-echo '<br /><br />';
+echo '<br />';
 
-$semester_current = $DB->get_records('semester_current', array('id' => 1));
+$semester_current = $DB->get_record('semester_current', array('id' => 1));
 $currentsemester = $semester_current->semester;
 
 $open_modules = $DB->get_records('activemodules', array('modulefull' => 0));
 if (empty($open_modules)) {
-	echo 'Application forms are currently closed.<br />';
-	$closed = true;
+  echo 'Application forms are currently closed.<br /><br />';
+  $closed = true;
 }
 else {
-  echo 'Application forms are currently open for semester: "' . htmlspecialchars($currentsemester, ENT_COMPAT, 'UTF-8') . '".<br />';
-	$closed = false;
+  echo 'Application forms are currently open for semester: "' . htmlspecialchars($currentsemester, ENT_COMPAT, 'UTF-8') . '".<br /><br />';
+  $closed = false;
 }
 
 if (!$closed) {
