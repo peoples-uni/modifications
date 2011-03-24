@@ -263,7 +263,7 @@ class application_form_new_student_form extends moodleform {
   protected $context;
 
   function definition() {
-    global $DB;
+    global $DB, $CFG;
 
     $mform    = $this->_form;
 
@@ -348,11 +348,9 @@ class application_form_new_student_form extends moodleform {
 
     $mform->addElement('date_selector', 'dob', 'Date of Birth', array('startyear' => 1930, 'stopyear' => 2000));
 
-    $mform->addElement('select', 'gender', '', array('male' => 'Male', 'female' => 'Female'));
-
     $genderarray = array();
-    $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', get_string('Male'), 'male');
-    $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', get_string('Female'), 'female');
+    $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Male', 'male');
+    $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Female', 'female');
     $mform->addGroup($genderarray, 'gender', 'Gender', array(' '), false);
     $mform->addElement('static', 'explaingender', '&nbsp;', 'Select your gender: Male or Female.<br />');
 
