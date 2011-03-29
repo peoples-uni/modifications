@@ -5,6 +5,18 @@
  */
 
 
+defined('MOODLE_INTERNAL') || die;
+
+require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir.'/completionlib.php');
+
+class application_form_new_student_form extends moodleform {
+  protected $course;
+  protected $context;
+
+  function definition() {
+    global $DB, $CFG;
+
 $countryname['AF'] = 'Afghanistan';
 $countryname['AX'] = 'Åland Islands';
 $countryname['AL'] = 'Albania';
@@ -251,21 +263,9 @@ $countryname['EH'] = 'Western Sahara';
 $countryname['YE'] = 'Yemen';
 $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
-$i = 1;
-foreach($countryname as $country) $countrylist[$i++] = $country;
+//(*)$i = 1;
+//foreach($countryname as $country) $countrylist[$i++] = $country;
 
-
-defined('MOODLE_INTERNAL') || die;
-
-require_once($CFG->libdir.'/formslib.php');
-require_once($CFG->libdir.'/completionlib.php');
-
-class application_form_new_student_form extends moodleform {
-  protected $course;
-  protected $context;
-
-  function definition() {
-    global $DB, $CFG;
 
     $mform    = $this->_form;
 
@@ -287,7 +287,6 @@ class application_form_new_student_form extends moodleform {
 <p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send a mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>');
 
 
-//(*)ADD SEMESTER
     $semester_current = $DB->get_record('semester_current', array('id' => 1));
     $mform->addElement('header', 'modules', "Course Module Selection for Semester $semester_current->semester");
 
@@ -319,7 +318,6 @@ class application_form_new_student_form extends moodleform {
       $text .= ' Note: ' . $listforunavailable . ' is not available for this semester because it is full.';
     }
 
-//(*)REQUIRED
     $mform->addElement('select', 'module1', 'First module', $listforselect);
     $mform->addRule('module1', 'First Module is required', 'required', null, 'client');
     $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
@@ -352,11 +350,9 @@ class application_form_new_student_form extends moodleform {
     $mform->setType('email2', PARAM_NOTAGS);
     $mform->addElement('static', 'explainemail2', '&nbsp;', 'Must match first e-mail.<br />');
 
-//(*)REQUIRED
     $mform->addElement('date_selector', 'dob', 'Date of Birth', array('startyear' => 1930, 'stopyear' => 2000));
     $mform->addRule('dob', 'Date of Birth is required', 'required', null, 'client');
 
-//(*)REQUIRED
     $genderarray = array();
     $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Male', 'male');
     $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Female', 'female');
@@ -364,7 +360,6 @@ class application_form_new_student_form extends moodleform {
     $mform->addRule('gender', 'Gender is required', 'required', null, 'client');
     $mform->addElement('static', 'explaingender', '&nbsp;', 'Select your gender: Male or Female.<br />');
 
-//(*)REQUIRED,
     $mform->addElement('textarea', 'applicationaddress', 'Address', 'wrap="HARD" rows="7" cols="50"');
     $mform->addRule('applicationaddress', 'Address is required', 'required', null, 'client');
 
@@ -375,12 +370,10 @@ class application_form_new_student_form extends moodleform {
     $mform->setType('city', PARAM_MULTILANG);
     $mform->addElement('static', 'explaincity', '&nbsp;', 'Your City or Town for display in Moodle.<br />');
 
-//(*)REQUIRED, broken look again after fix
-    $mform->addElement('select', 'country', 'Country', $countrylist);
+    $mform->addElement('select', 'country', 'Country', $countryname);
     $mform->addRule('country', 'Country is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincountry', '&nbsp;', 'Your country of residence. Select from list.<br />');
 
-//(*)REQUIRED,
     $mform->addElement('textarea', 'reasons', 'Reasons for wanting to enrol', 'wrap="HARD" rows="10" cols="100"');
     $mform->addRule('reasons', 'Reasons for wanting to enrol is required', 'required', null, 'client');
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to enrol in this course in up to 150 words.<br />');
@@ -393,7 +386,6 @@ class application_form_new_student_form extends moodleform {
 
     $mform->addElement('header', 'educationdetails', 'Education and Employment details');
 
-//(*)REQUIRED
     $qualificationname[ '1'] = 'None';
     $qualificationname['10'] = 'Degree (not health related)';
     $qualificationname['20'] = 'Health qualification (non-degree)';
@@ -403,7 +395,6 @@ class application_form_new_student_form extends moodleform {
     $mform->addRule('qualification', 'Higher Education Qualification is required', 'required', null, 'client');
     $mform->addElement('static', 'explainqualification', '&nbsp;', 'Select the option that best describes your Higher Education Qualification.<br />');
 
-//(*)REQUIRED
     $higherqualificationname[ '1'] = 'None';
     $higherqualificationname['10'] = 'Certificate';
     $higherqualificationname['20'] = 'Diploma';
@@ -417,7 +408,6 @@ class application_form_new_student_form extends moodleform {
     $mform->addElement('textarea', 'education', 'Other relevant qualifications or educational experience', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explaineducation', '&nbsp;', 'You can add any details about any of your relevant qualifications or educational experience.<br />');
 
-//(*)REQUIRED
     $employmentname[ '1'] = 'None';
     $employmentname['10'] = 'Student';
     $employmentname['20'] = 'Non-health';
