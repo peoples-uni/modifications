@@ -263,9 +263,6 @@ $countryname['EH'] = 'Western Sahara';
 $countryname['YE'] = 'Yemen';
 $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
-//(*)$i = 1;
-//foreach($countryname as $country) $countrylist[$i++] = $country;
-
 
     $mform    = $this->_form;
 
@@ -450,27 +447,16 @@ $countryname['ZW'] = 'Zimbabwe';
     }
 */
 
-/// perform some extra moodle validation
-    function validation($data, $files) {
-        global $DB;
 
-        $errors = parent::validation($data, $files);
-        if ($foundcourses = $DB->get_records('course', array('shortname'=>$data['shortname']))) {
-            if (!empty($data['id'])) {
-                unset($foundcourses[$data['id']]);
-            }
-            if (!empty($foundcourses)) {
-                foreach ($foundcourses as $foundcourse) {
-                    $foundcoursenames[] = $foundcourse->fullname;
-                }
-                $foundcoursenamestring = implode(',', $foundcoursenames);
-                $errors['shortname']= get_string('shortnametaken', '', $foundcoursenamestring);
-            }
-        }
+  function validation($data, $files) {
+    global $DB;
 
-        $errors = array_merge($errors, enrol_course_edit_validation($data, $this->context));
+    $errors = parent::validation($data, $files);
 
-        return $errors;
-    }
+    if ($data['module1'] === $data['module2']) $errors['module1'] = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
+    if ($data['email'] !== $data['email2']) $errors['email'] = 'Email address does not match Email verification, they must be the same';
+
+    return $errors;
+  }
 }
 
