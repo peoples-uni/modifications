@@ -17,6 +17,7 @@ class application_form_new_student_form extends moodleform {
   function definition() {
     global $DB, $CFG;
 
+$countryname[0] = '';
 $countryname['AF'] = 'Afghanistan';
 $countryname['AX'] = 'Åland Islands';
 $countryname['AL'] = 'Albania';
@@ -295,6 +296,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
 
     $listforselect = array();
+    $listforselect[0] = '';
     $listforunavailable = array();
     foreach ($activemodules as $activemodule) {
       if (!$activemodule->modulefull) {
@@ -383,6 +385,7 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $mform->addElement('header', 'educationdetails', 'Education and Employment details');
 
+    $qualificationname[0] = '';
     $qualificationname[ '1'] = 'None';
     $qualificationname['10'] = 'Degree (not health related)';
     $qualificationname['20'] = 'Health qualification (non-degree)';
@@ -392,6 +395,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addRule('qualification', 'Higher Education Qualification is required', 'required', null, 'client');
     $mform->addElement('static', 'explainqualification', '&nbsp;', 'Select the option that best describes your Higher Education Qualification.<br />');
 
+    $higherqualificationname[0] = '';
     $higherqualificationname[ '1'] = 'None';
     $higherqualificationname['10'] = 'Certificate';
     $higherqualificationname['20'] = 'Diploma';
@@ -405,6 +409,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('textarea', 'education', 'Other relevant qualifications or educational experience', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explaineducation', '&nbsp;', 'You can add any details about any of your relevant qualifications or educational experience.<br />');
 
+    $employmentname[0] = '';
     $employmentname[ '1'] = 'None';
     $employmentname['10'] = 'Student';
     $employmentname['20'] = 'Non-health';
@@ -420,11 +425,9 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'You can add any details about your current employment.<br />');
 
     $this->add_action_buttons();
-//(*) (cancel??), look at Drupal form tests, check is the tag etc error checking OK?
-//(*) make sure HARD works properly and is compatible
 
-    $course = new stdClass();
-    $this->set_data($course);
+    //$course = new stdClass();
+    //$this->set_data($course);
   }
 
 /*
@@ -453,8 +456,14 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $errors = parent::validation($data, $files);
 
-    if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1'] = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
-    if ($data['email'] !== $data['email2']) $errors['email'] = 'Email address does not match Email verification, they must be the same';
+    if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1']         = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
+    if ($data['email'] !== $data['email2'])            $errors['email']               = 'Email address does not match Email verification, they must be the same';
+
+    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required';
+    if (empty($data['country']))                       $errors['country']             = 'Country is required';
+    if (empty($data['qualification']))                 $errors['qualification']       = 'Higher Education Qualification is required';
+    if (empty($data['higherqualification']))           $errors['higherqualification'] = 'Postgraduate Qualification is required';
+    if (empty($data['employment']))                    $errors['employment']          = 'Current Employment is required';
 
     return $errors;
   }
