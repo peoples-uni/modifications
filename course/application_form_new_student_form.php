@@ -315,11 +315,11 @@ $countryname['ZW'] = 'Zimbabwe';
       $text .= ' Note: ' . $listforunavailable . ' is not available for this semester because it is full.';
     }
 
-    $mform->addElement('select', 'module1', 'First module', $listforselect);
-    $mform->addRule('module1', 'First Module is required', 'required', null, 'client');
+    $mform->addElement('select', 'course_id_1', 'First module', $listforselect);
+    $mform->addRule('course_id_1', 'First Module is required', 'required', null, 'client');
     $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
 
-    $mform->addElement('select', 'module2', 'Second module', $listforselect);
+    $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
     $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br />');
 
 
@@ -335,13 +335,13 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->setType('firstname', PARAM_MULTILANG);
     $mform->addElement('static', 'explainfirstname', '&nbsp;', 'Your first or given name(s).<br />');
 
-    $mform->addElement('text','email', 'Email address', 'maxlength="100" size="50"');
+    $mform->addElement('text', 'email', 'Email address', 'maxlength="100" size="50"');
     $mform->addRule('email', 'Email is required', 'required', null, 'client');
     $mform->addRule('email', 'Email must be a valid e-mail address', 'email', null, 'client');
     $mform->setType('email', PARAM_NOTAGS);
     $mform->addElement('static', 'explainemail', '&nbsp;', 'Your email Address. We will send you a copy of your application to this email address.<br />');
 
-    $mform->addElement('text','email2', 'Email verification', 'maxlength="100" size="50"');
+    $mform->addElement('text', 'email2', 'Email verification', 'maxlength="100" size="50"');
     $mform->addRule('email2', 'Email verification is required', 'required', null, 'client');
     $mform->addRule('email2', 'Email must be a valid e-mail address', 'email', null, 'client');
     $mform->setType('email2', PARAM_NOTAGS);
@@ -453,7 +453,7 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $errors = parent::validation($data, $files);
 
-    if ($data['module1'] === $data['module2']) $errors['module1'] = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
+    if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1'] = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
     if ($data['email'] !== $data['email2']) $errors['email'] = 'Email address does not match Email verification, they must be the same';
 
     return $errors;
