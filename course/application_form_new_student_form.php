@@ -330,19 +330,19 @@ $countrynameint = $countryname;
     $mform->addElement('static', 'explainlastname', '&nbsp;', 'Your Family name or Surname.<br />');
 
     $mform->addElement('text', 'firstname', 'Given name', 'maxlength="100" size="50"');
-    $mform->addRule('firstname', 'Given name is required', 'required', null, 'client');
+//    $mform->addRule('firstname', 'Given name is required', 'required', null, 'client');
     $mform->setType('firstname', PARAM_MULTILANG);
     $mform->addElement('static', 'explainfirstname', '&nbsp;', 'Your first or given name(s).<br />');
 
     $mform->addElement('text', 'email', 'Email address', 'maxlength="100" size="50"');
-    $mform->addRule('email', 'Email is required', 'required', null, 'client');
+//    $mform->addRule('email', 'Email is required', 'required', null, 'client');
     $mform->addRule('email', 'Email must be a valid e-mail address', 'email');
     $mform->setType('email', PARAM_NOTAGS);
     $mform->addElement('static', 'explainemail', '&nbsp;', 'Your email Address. We will send you a copy of your application to this email address.<br />');
 
     $mform->addElement('text', 'email2', 'Email verification', 'maxlength="100" size="50"');
-    $mform->addRule('email2', 'Email verification is required', 'required', null, 'client');
-    $mform->addRule('email2', 'Email must be a valid e-mail address', 'email');
+//    $mform->addRule('email2', 'Email verification is required', 'required', null, 'client');
+//    $mform->addRule('email2', 'Email must be a valid e-mail address', 'email');
     $mform->setType('email2', PARAM_NOTAGS);
     $mform->addElement('static', 'explainemail2', '&nbsp;', 'Must match first e-mail.<br />');
 
@@ -357,25 +357,25 @@ $countrynameint = $countryname;
     $mform->addElement('static', 'explaingender', '&nbsp;', 'Select your gender: Male or Female.<br />');
 
     $mform->addElement('textarea', 'applicationaddress', 'Address', 'wrap="HARD" rows="7" cols="50"');
-    $mform->addRule('applicationaddress', 'Address is required', 'required', null, 'client');
+//    $mform->addRule('applicationaddress', 'Address is required', 'required', null, 'client');
 
     $mform->addElement('static', 'explainapplicationaddress', '&nbsp;', 'Your full postal address.<br />');
 
     $mform->addElement('text', 'city', 'City/Town', 'maxlength="20" size="50"');
-    $mform->addRule('city', 'City/Town is required', 'required', null, 'client');
+//    $mform->addRule('city', 'City/Town is required', 'required', null, 'client');
     $mform->setType('city', PARAM_MULTILANG);
     $mform->addElement('static', 'explaincity', '&nbsp;', 'Your City or Town for display in Moodle.<br />');
 
     $mform->addElement('select', 'country', 'Country', $countrynameint);
-    $mform->addRule('country', 'Country is required', 'required', null, 'client');
+//    $mform->addRule('country', 'Country is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincountry', '&nbsp;', 'Your country of residence. Select from list.<br />');
 
     $mform->addElement('textarea', 'reasons', 'Reasons for wanting to enrol', 'wrap="HARD" rows="10" cols="100"');
-    $mform->addRule('reasons', 'Reasons for wanting to enrol is required', 'required', null, 'client');
+//    $mform->addRule('reasons', 'Reasons for wanting to enrol is required', 'required', null, 'client');
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to enrol in this course in up to 150 words.<br />');
 
     $mform->addElement('text', 'username', 'Preferred Username', 'maxlength="100" size="50"');
-    $mform->addRule('username', 'Preferred Username is required', 'required', null, 'client');
+//    $mform->addRule('username', 'Preferred Username is required', 'required', null, 'client');
     $mform->setType('username', PARAM_MULTILANG);
     $mform->addElement('static', 'explainusername', '&nbsp;', 'Please enter your desired Username for logging in to our education site, for example your first name.<br />');
 
@@ -389,7 +389,7 @@ $countrynameint = $countryname;
     $qualificationname['30'] = 'Health qualification (degree, but not medical doctor)';
     $qualificationname['40'] = 'Medical degree';
     $mform->addElement('select', 'qualification', 'Higher Education Qualification', $qualificationname);
-    $mform->addRule('qualification', 'Higher Education Qualification is required', 'required', null, 'client');
+//    $mform->addRule('qualification', 'Higher Education Qualification is required', 'required', null, 'client');
     $mform->addElement('static', 'explainqualification', '&nbsp;', 'Select the option that best describes your Higher Education Qualification.<br />');
 
     $higherqualificationname[0] = '';
@@ -400,7 +400,7 @@ $countrynameint = $countryname;
     $higherqualificationname['40'] = 'Ph.D.';
     $higherqualificationname['50'] = 'Other';
     $mform->addElement('select', 'higherqualification', 'Postgraduate Qualification', $higherqualificationname);
-    $mform->addRule('higherqualification', 'Postgraduate Qualification is required', 'required', null, 'client');
+//    $mform->addRule('higherqualification', 'Postgraduate Qualification is required', 'required', null, 'client');
     $mform->addElement('static', 'explainhigherqualification', '&nbsp;', 'Select the option that best describes your Postgraduate Qualification.<br />');
 
     $mform->addElement('textarea', 'education', 'Other relevant qualifications or educational experience', 'wrap="HARD" rows="10" cols="100"');
@@ -415,7 +415,7 @@ $countrynameint = $countryname;
     $employmentname['50'] = 'Other health related';
     $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
     $mform->addElement('select', 'employment', 'Current Employment', $employmentname);
-    $mform->addRule('employment', 'Current Employment is required', 'required', null, 'client');
+//    $mform->addRule('employment', 'Current Employment is required', 'required', null, 'client');
     $mform->addElement('static', 'explainemployment', '&nbsp;', 'Select the option that best describes your Current Employment.<br />');
 
     $mform->addElement('textarea', 'currentjob', 'Current Employment Details', 'wrap="HARD" rows="10" cols="100"');
