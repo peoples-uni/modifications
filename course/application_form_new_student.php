@@ -7,11 +7,7 @@
 require_once('../config.php');
 require_once('application_form_new_student_form.php');
 
-//$PAGE->set_pagelayout('embedded');
-//$PAGE->set_pagelayout('mydashboard');
-//$PAGE->set_pagelayout('base');     // Most backwards compatible layout without the blocks - this is the layout used by default
-$PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
-
+$PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/application_form_new_student.php');
 
 
@@ -164,8 +160,6 @@ $PAGE->set_title("People's Open Access Education Initiative Application Form");
 $PAGE->set_heading('Peoples-uni Course Application form for New Students');
 
 echo $OUTPUT->header();
-
-echo $OUTPUT->heading('Peoples-uni Course Application form for New Students');
 
 echo $OUTPUT->box_start('generalbox');
 $editform->display();
