@@ -262,6 +262,7 @@ $countryname['EH'] = 'Western Sahara';
 $countryname['YE'] = 'Yemen';
 $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
+foreach($countryname as $name) $countrynameint[] = $name;
 
     $mform    = $this->_form;
 
@@ -364,7 +365,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->setType('city', PARAM_MULTILANG);
     $mform->addElement('static', 'explaincity', '&nbsp;', 'Your City or Town for display in Moodle.<br />');
 
-    $mform->addElement('select', 'country', 'Country', $countryname);
+    $mform->addElement('select', 'country', 'Country', $countrynameint);
     $mform->addRule('country', 'Country is required', 'required');
     $mform->addElement('static', 'explaincountry', '&nbsp;', 'Your country of residence. Select from list.<br />');
 
