@@ -317,12 +317,12 @@ $countryname['ZW'] = 'Zimbabwe';
       $text .= ' Note: ' . $listforunavailable . ' is not available for this semester because it is full.';
     }
 
-    $mform->addElement('select', 'course_id_1', 'First module', $listforselect);
-    $mform->addRule('course_id_1', 'First Module is required', 'required', null, 'client');
-    $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
-
-    $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
-    $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br />');
+//    $mform->addElement('select', 'course_id_1', 'First module', $listforselect);
+//    $mform->addRule('course_id_1', 'First Module is required', 'required', null, 'client');
+//    $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
+//
+//    $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
+//    $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br />');
 
 
     $mform->addElement('header', 'personaldetails', 'Personal details');
@@ -456,10 +456,10 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $errors = parent::validation($data, $files);
 
-    if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1']         = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
+//    if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1']         = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
     if ($data['email'] !== $data['email2'])            $errors['email']               = 'Email address does not match Email verification, they must be the same';
 
-    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required';
+//    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required';
     if (empty($data['country']))                       $errors['country']             = 'Country is required';
     if (empty($data['qualification']))                 $errors['qualification']       = 'Higher Education Qualification is required';
     if (empty($data['higherqualification']))           $errors['higherqualification'] = 'Postgraduate Qualification is required';
