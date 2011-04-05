@@ -313,7 +313,7 @@ $countryname['ZW'] = 'Zimbabwe';
     }
 
     $mform->addElement('select', 'course_id_1', 'First module', $listforselect);
-    $mform->addRule('course_id_1', 'First Module is required', 'required', null, 'client');
+    $mform->addRule('course_id_1', 'First Module is required', 'required');
     $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
 
     $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
@@ -323,57 +323,57 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('header', 'personaldetails', 'Personal details');
 
     $mform->addElement('text', 'lastname', 'Family name', 'maxlength="100" size="50"');
-    $mform->addRule('lastname', 'Family name is required', 'required', null, 'client');
+    $mform->addRule('lastname', 'Family name is required', 'required');
     $mform->setType('lastname', PARAM_MULTILANG);
     $mform->addElement('static', 'explainlastname', '&nbsp;', 'Your Family name or Surname.<br />');
 
     $mform->addElement('text', 'firstname', 'Given name', 'maxlength="100" size="50"');
-    $mform->addRule('firstname', 'Given name is required', 'required', null, 'client');
+    $mform->addRule('firstname', 'Given name is required', 'required');
     $mform->setType('firstname', PARAM_MULTILANG);
     $mform->addElement('static', 'explainfirstname', '&nbsp;', 'Your first or given name(s).<br />');
 
     $mform->addElement('text', 'email', 'Email address', 'maxlength="100" size="50"');
-    $mform->addRule('email', 'Email is required', 'required', null, 'client');
-    $mform->addRule('email', 'Email must be a valid e-mail address', 'email', null, 'client');
+    $mform->addRule('email', 'Email is required', 'required');
+    $mform->addRule('email', 'Email must be a valid e-mail address', 'email');
     $mform->setType('email', PARAM_NOTAGS);
     $mform->addElement('static', 'explainemail', '&nbsp;', 'Your email Address. We will send you a copy of your application to this email address.<br />');
 
     $mform->addElement('text', 'email2', 'Email verification', 'maxlength="100" size="50"');
-    $mform->addRule('email2', 'Email verification is required', 'required', null, 'client');
-    $mform->addRule('email2', 'Email must be a valid e-mail address', 'email', null, 'client');
+    $mform->addRule('email2', 'Email verification is required', 'required');
+    $mform->addRule('email2', 'Email must be a valid e-mail address', 'email');
     $mform->setType('email2', PARAM_NOTAGS);
     $mform->addElement('static', 'explainemail2', '&nbsp;', 'Must match first e-mail.<br />');
 
     $mform->addElement('date_selector', 'dob', 'Date of Birth', array('startyear' => 1930, 'stopyear' => 2000));
-    //$mform->addRule('dob', 'Date of Birth is required', 'required', null, 'client');
+    //$mform->addRule('dob', 'Date of Birth is required', 'required');
 
     $genderarray = array();
     $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Male', 'male');
     $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Female', 'female');
     $mform->addGroup($genderarray, 'gender', 'Gender', array(' '), false);
-    //$mform->addRule('gender', 'Gender is required', 'required', null, 'client');
+    //$mform->addRule('gender', 'Gender is required', 'required');
     $mform->addElement('static', 'explaingender', '&nbsp;', 'Select your gender: Male or Female.<br />');
 
     $mform->addElement('textarea', 'applicationaddress', 'Address', 'wrap="HARD" rows="7" cols="50"');
-    $mform->addRule('applicationaddress', 'Address is required', 'required', null, 'client');
+    $mform->addRule('applicationaddress', 'Address is required', 'required');
 
     $mform->addElement('static', 'explainapplicationaddress', '&nbsp;', 'Your full postal address.<br />');
 
     $mform->addElement('text', 'city', 'City/Town', 'maxlength="20" size="50"');
-    $mform->addRule('city', 'City/Town is required', 'required', null, 'client');
+    $mform->addRule('city', 'City/Town is required', 'required');
     $mform->setType('city', PARAM_MULTILANG);
     $mform->addElement('static', 'explaincity', '&nbsp;', 'Your City or Town for display in Moodle.<br />');
 
     $mform->addElement('select', 'country', 'Country', $countryname);
-    $mform->addRule('country', 'Country is required', 'required', null, 'client');
+    $mform->addRule('country', 'Country is required', 'required');
     $mform->addElement('static', 'explaincountry', '&nbsp;', 'Your country of residence. Select from list.<br />');
 
     $mform->addElement('textarea', 'reasons', 'Reasons for wanting to enrol', 'wrap="HARD" rows="10" cols="100"');
-    $mform->addRule('reasons', 'Reasons for wanting to enrol is required', 'required', null, 'client');
+    $mform->addRule('reasons', 'Reasons for wanting to enrol is required', 'required');
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to enrol in this course in up to 150 words.<br />');
 
     $mform->addElement('text', 'username', 'Preferred Username', 'maxlength="100" size="50"');
-    $mform->addRule('username', 'Preferred Username is required', 'required', null, 'client');
+    $mform->addRule('username', 'Preferred Username is required', 'required');
     $mform->setType('username', PARAM_MULTILANG);
     $mform->addElement('static', 'explainusername', '&nbsp;', 'Please enter your desired Username for logging in to our education site, for example your first name.<br />');
 
@@ -387,7 +387,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $qualificationname['30'] = 'Health qualification (degree, but not medical doctor)';
     $qualificationname['40'] = 'Medical degree';
     $mform->addElement('select', 'qualification', 'Higher Education Qualification', $qualificationname);
-    $mform->addRule('qualification', 'Higher Education Qualification is required', 'required', null, 'client');
+    $mform->addRule('qualification', 'Higher Education Qualification is required', 'required');
     $mform->addElement('static', 'explainqualification', '&nbsp;', 'Select the option that best describes your Higher Education Qualification.<br />');
 
     $higherqualificationname[0] = '';
@@ -398,7 +398,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $higherqualificationname['40'] = 'Ph.D.';
     $higherqualificationname['50'] = 'Other';
     $mform->addElement('select', 'higherqualification', 'Postgraduate Qualification', $higherqualificationname);
-    $mform->addRule('higherqualification', 'Postgraduate Qualification is required', 'required', null, 'client');
+    $mform->addRule('higherqualification', 'Postgraduate Qualification is required', 'required');
     $mform->addElement('static', 'explainhigherqualification', '&nbsp;', 'Select the option that best describes your Postgraduate Qualification.<br />');
 
     $mform->addElement('textarea', 'education', 'Other relevant qualifications or educational experience', 'wrap="HARD" rows="10" cols="100"');
@@ -413,7 +413,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $employmentname['50'] = 'Other health related';
     $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
     $mform->addElement('select', 'employment', 'Current Employment', $employmentname);
-    $mform->addRule('employment', 'Current Employment is required', 'required', null, 'client');
+    $mform->addRule('employment', 'Current Employment is required', 'required');
     $mform->addElement('static', 'explainemployment', '&nbsp;', 'Select the option that best describes your Current Employment.<br />');
 
     $mform->addElement('textarea', 'currentjob', 'Current Employment Details', 'wrap="HARD" rows="10" cols="100"');
@@ -433,7 +433,7 @@ $countryname['ZW'] = 'Zimbabwe';
     if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1']         = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
     if ($data['email'] !== $data['email2'])            $errors['email']               = 'Email address does not match Email verification, they must be the same';
 
-    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required';
+    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required'. $data['course_id_1'] . 'SERVER';
     if (empty($data['country']))                       $errors['country']             = 'Country is required';
     if (empty($data['dob']))                           $errors['dob']                 = 'Date of Birth is required';
     if (empty($data['gender']))                        $errors['gender']              = 'Gender is required';

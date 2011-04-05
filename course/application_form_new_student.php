@@ -161,8 +161,6 @@ $PAGE->set_heading('Peoples-uni Course Application form for New Students');
 
 echo $OUTPUT->header();
 
-echo $OUTPUT->box_start('generalbox');
 $editform->display();
-echo $OUTPUT->box_end();
 
 echo $OUTPUT->footer();
