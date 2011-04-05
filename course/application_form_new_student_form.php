@@ -11,8 +11,6 @@ require_once($CFG->libdir.'/formslib.php');
 require_once($CFG->libdir.'/completionlib.php');
 
 class application_form_new_student_form extends moodleform {
-  protected $course;
-  protected $context;
 
   function definition() {
     global $DB, $CFG;
@@ -267,9 +265,6 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $mform    = $this->_form;
 
-    $editoroptions = $this->_customdata['editoroptions'];
-    $returnto = $this->_customdata['returnto'];
-
     $mform->addElement('hidden', 'returnto', null);
     $mform->setType('returnto', PARAM_ALPHANUM);
     $mform->setConstant('returnto', $returnto);
@@ -317,12 +312,12 @@ $countryname['ZW'] = 'Zimbabwe';
       $text .= ' Note: ' . $listforunavailable . ' is not available for this semester because it is full.';
     }
 
-//    $mform->addElement('select', 'course_id_1', 'First module', $listforselect);
-//    $mform->addRule('course_id_1', 'First Module is required', 'required', null, 'client');
-//    $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
-//
-//    $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
-//    $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br />');
+    $mform->addElement('select', 'course_id_1', 'First module', $listforselect);
+    $mform->addRule('course_id_1', 'First Module is required', 'required', null, 'client');
+    $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
+
+    $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
+    $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br />');
 
 
     $mform->addElement('header', 'personaldetails', 'Personal details');
@@ -350,13 +345,13 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('static', 'explainemail2', '&nbsp;', 'Must match first e-mail.<br />');
 
     $mform->addElement('date_selector', 'dob', 'Date of Birth', array('startyear' => 1930, 'stopyear' => 2000));
-    $mform->addRule('dob', 'Date of Birth is required', 'required', null, 'client');
+    //$mform->addRule('dob', 'Date of Birth is required', 'required', null, 'client');
 
     $genderarray = array();
     $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Male', 'male');
     $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Female', 'female');
     $mform->addGroup($genderarray, 'gender', 'Gender', array(' '), false);
-    $mform->addRule('gender', 'Gender is required', 'required', null, 'client');
+    //$mform->addRule('gender', 'Gender is required', 'required', null, 'client');
     $mform->addElement('static', 'explaingender', '&nbsp;', 'Select your gender: Male or Female.<br />');
 
     $mform->addElement('textarea', 'applicationaddress', 'Address', 'wrap="HARD" rows="7" cols="50"');
@@ -426,29 +421,8 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $this->add_action_buttons();
 
-    //$course = new stdClass();
-    //$this->set_data($course);
+    //$this->set_data($data);
   }
-
-/*
-    function definition_after_data() {
-        global $DB;
-
-        $mform = $this->_form;
-
-        // add available groupings
-        if ($courseid = $mform->getElementValue('id') and $mform->elementExists('defaultgroupingid')) {
-            $options = array();
-            if ($groupings = $DB->get_records('groupings', array('courseid'=>$courseid))) {
-                foreach ($groupings as $grouping) {
-                    $options[$grouping->id] = format_string($grouping->name);
-                }
-            }
-            $gr_el =& $mform->getElement('defaultgroupingid');
-            $gr_el->load($options);
-        }
-    }
-*/
 
 
   function validation($data, $files) {
@@ -456,11 +430,13 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $errors = parent::validation($data, $files);
 
-//    if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1']         = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
+    if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1']         = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
     if ($data['email'] !== $data['email2'])            $errors['email']               = 'Email address does not match Email verification, they must be the same';
 
-//    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required';
+    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required';
     if (empty($data['country']))                       $errors['country']             = 'Country is required';
+    if (empty($data['dob']))                           $errors['dob']                 = 'Date of Birth is required';
+    if (empty($data['gender']))                        $errors['gender']              = 'Gender is required';
     if (empty($data['qualification']))                 $errors['qualification']       = 'Higher Education Qualification is required';
     if (empty($data['higherqualification']))           $errors['higherqualification'] = 'Postgraduate Qualification is required';
     if (empty($data['employment']))                    $errors['employment']          = 'Current Employment is required';
@@ -468,4 +444,3 @@ $countryname['ZW'] = 'Zimbabwe';
     return $errors;
   }
 }
-

@@ -5,14 +5,13 @@
  */
 
 require_once('../config.php');
-//require_once('lib.php');
 require_once('application_form_new_student_form.php');
 
 $PAGE->set_pagelayout('embedded');
 $PAGE->set_url('/course/application_form_new_student.php');
 
-$editoroptions = array('maxfiles' => EDITOR_UNLIMITED_FILES, 'maxbytes'=>$CFG->maxbytes, 'trusttext'=>false, 'noclean'=>true);
-$editform = new application_form_new_student_form(NULL, array('editoroptions'=>$editoroptions, 'returnto'=>0));
+
+$editform = new application_form_new_student_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url('http://peoples-uni.org'));
 }
