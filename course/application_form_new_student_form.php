@@ -15,7 +15,7 @@ class application_form_new_student_form extends moodleform {
   function definition() {
     global $DB, $CFG;
 
-$countryname[0] = '';
+$countryname[  ''] = '';
 $countryname['AF'] = 'Afghanistan';
 $countryname['AX'] = 'Åland Islands';
 $countryname['AL'] = 'Albania';
@@ -262,8 +262,8 @@ $countryname['EH'] = 'Western Sahara';
 $countryname['YE'] = 'Yemen';
 $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
-foreach($countryname as $name) $countrynameint[] = $name;
-$countrynameint = $countryname;
+//foreach($countryname as $name) $countrynameint[] = $name;
+//$countrynameint = $countryname;
 
     $mform    = $this->_form;
 
@@ -293,7 +293,7 @@ $countrynameint = $countryname;
     $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
 
     $listforselect = array();
-    $listforselect[0] = '';
+    $listforselect[''] = '';
     $listforunavailable = array();
     foreach ($activemodules as $activemodule) {
       if (!$activemodule->modulefull) {
@@ -366,8 +366,8 @@ $countrynameint = $countryname;
     $mform->setType('city', PARAM_MULTILANG);
     $mform->addElement('static', 'explaincity', '&nbsp;', 'Your City or Town for display in Moodle.<br />');
 
-    $mform->addElement('select', 'country', 'Country', $countrynameint);
-//    $mform->addRule('country', 'Country is required', 'required', null, 'client');
+    $mform->addElement('select', 'country', 'Country', $countryname);
+    $mform->addRule('country', 'Country is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincountry', '&nbsp;', 'Your country of residence. Select from list.<br />');
 
     $mform->addElement('textarea', 'reasons', 'Reasons for wanting to enrol', 'wrap="HARD" rows="10" cols="100"');
@@ -382,17 +382,17 @@ $countrynameint = $countryname;
 
     $mform->addElement('header', 'educationdetails', 'Education and Employment details');
 
-    $qualificationname[0] = '';
+    $qualificationname[  ''] = '';
     $qualificationname[ '1'] = 'None';
     $qualificationname['10'] = 'Degree (not health related)';
     $qualificationname['20'] = 'Health qualification (non-degree)';
     $qualificationname['30'] = 'Health qualification (degree, but not medical doctor)';
     $qualificationname['40'] = 'Medical degree';
     $mform->addElement('select', 'qualification', 'Higher Education Qualification', $qualificationname);
-//    $mform->addRule('qualification', 'Higher Education Qualification is required', 'required', null, 'client');
+    $mform->addRule('qualification', 'Higher Education Qualification is required', 'required', null, 'client');
     $mform->addElement('static', 'explainqualification', '&nbsp;', 'Select the option that best describes your Higher Education Qualification.<br />');
 
-    $higherqualificationname[0] = '';
+    $higherqualificationname[  ''] = '';
     $higherqualificationname[ '1'] = 'None';
     $higherqualificationname['10'] = 'Certificate';
     $higherqualificationname['20'] = 'Diploma';
@@ -406,7 +406,7 @@ $countrynameint = $countryname;
     $mform->addElement('textarea', 'education', 'Other relevant qualifications or educational experience', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explaineducation', '&nbsp;', 'You can add any details about any of your relevant qualifications or educational experience.<br />');
 
-    $employmentname[0] = '';
+    $employmentname[  ''] = '';
     $employmentname[ '1'] = 'None';
     $employmentname['10'] = 'Student';
     $employmentname['20'] = 'Non-health';
@@ -435,13 +435,13 @@ $countrynameint = $countryname;
     if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1']         = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
     if ($data['email'] !== $data['email2'])            $errors['email']               = 'Email address does not match Email verification, they must be the same';
 
-    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required'. $data['course_id_1'] . 'SERVER';
-    if (empty($data['country']))                       $errors['country']             = 'Country is required';
+//    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required'. $data['course_id_1'] . 'SERVER';
+//    if (empty($data['country']))                       $errors['country']             = 'Country is required';
     if (empty($data['dob']))                           $errors['dob']                 = 'Date of Birth is required';
     if (empty($data['gender']))                        $errors['gender']              = 'Gender is required';
-    if (empty($data['qualification']))                 $errors['qualification']       = 'Higher Education Qualification is required';
-    if (empty($data['higherqualification']))           $errors['higherqualification'] = 'Postgraduate Qualification is required';
-    if (empty($data['employment']))                    $errors['employment']          = 'Current Employment is required';
+//    if (empty($data['qualification']))                 $errors['qualification']       = 'Higher Education Qualification is required';
+//    if (empty($data['higherqualification']))           $errors['higherqualification'] = 'Postgraduate Qualification is required';
+//    if (empty($data['employment']))                    $errors['employment']          = 'Current Employment is required';
 
     return $errors;
   }
