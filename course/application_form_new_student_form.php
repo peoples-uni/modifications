@@ -15,7 +15,7 @@ class application_form_new_student_form extends moodleform {
   function definition() {
     global $DB, $CFG;
 
-$countryname[  ''] = '';
+$countryname[  ''] = 'Select...';
 $countryname['AF'] = 'Afghanistan';
 $countryname['AX'] = 'Åland Islands';
 $countryname['AL'] = 'Albania';
@@ -291,7 +291,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
 
     $listforselect = array();
-    $listforselect[''] = '';
+    $listforselect[''] = 'Select...';
     $listforunavailable = array();
     foreach ($activemodules as $activemodule) {
       if (!$activemodule->modulefull) {
@@ -344,12 +344,12 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->setType('email2', PARAM_NOTAGS);
     $mform->addElement('static', 'explainemail2', '&nbsp;', 'Must match first e-mail.<br />');
 
-    $yearname[''] = '';
+    $yearname[''] = 'Select...';
     for ($year = 1930; $year <= 2000; $year++) $yearname[$year] = $year;
     $mform->addElement('select', 'dobyear', 'Date of Birth Year', $yearname);
     $mform->addRule('dobyear', 'Date of Birth Year is required', 'required', null, 'client');
 
-    $monthname[''] = '';
+    $monthname[''] = 'Select...';
     $monthname[ 1] = 'Jan';
     $monthname[ 2] = 'Feb';
     $monthname[ 3] = 'Mar';
@@ -365,7 +365,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('select', 'dobmonth', 'Date of Birth Month', $monthname);
     $mform->addRule('dobmonth', 'Date of Birth Month is required', 'required', null, 'client');
 
-    $dayname[''] = '';
+    $dayname[''] = 'Select...';
     for ($day = 1; $day <= 31; $day++) $dayname[$day] = $day;
     $mform->addElement('select', 'dobday', 'Date of Birth Day', $dayname);
     $mform->addRule('dobday', 'Date of Birth Day is required', 'required', null, 'client');
@@ -400,7 +400,7 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $mform->addElement('header', 'educationdetails', 'Education and Employment details');
 
-    $qualificationname[  ''] = '';
+    $qualificationname[  ''] = 'Select...';
     $qualificationname[ '1'] = 'None';
     $qualificationname['10'] = 'Degree (not health related)';
     $qualificationname['20'] = 'Health qualification (non-degree)';
@@ -410,7 +410,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addRule('qualification', 'Higher Education Qualification is required', 'required', null, 'client');
     $mform->addElement('static', 'explainqualification', '&nbsp;', 'Select the option that best describes your Higher Education Qualification.<br />');
 
-    $higherqualificationname[  ''] = '';
+    $higherqualificationname[  ''] = 'Select...';
     $higherqualificationname[ '1'] = 'None';
     $higherqualificationname['10'] = 'Certificate';
     $higherqualificationname['20'] = 'Diploma';
@@ -424,7 +424,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('textarea', 'education', 'Other relevant qualifications or educational experience', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explaineducation', '&nbsp;', 'You can add any details about any of your relevant qualifications or educational experience.<br />');
 
-    $employmentname[  ''] = '';
+    $employmentname[  ''] = 'Select...';
     $employmentname[ '1'] = 'None';
     $employmentname['10'] = 'Student';
     $employmentname['20'] = 'Non-health';
