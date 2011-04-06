@@ -88,11 +88,16 @@ elseif ($data = $editform->get_data()) {
   $dataitem = $data['gender'];
   $application->gender = $dataitem;
 
-  $dataitem = $data['dob'];
-  $application->dobmonth = gmdate('m', $dataitem);
-  $application->dobday = gmdate('d', $dataitem);
-  $application->dobyear = gmdate('Y', $dataitem);
-  $application->dob = gmdate('d-m-Y', $dataitem); // Actually $application->dob is not used
+  $dataitem = $data['dobyear'];
+  $application->dobyear = $dataitem;
+
+  $dataitem = $data['dobmonth'];
+  $application->dobmonth = $dataitem;
+
+  $dataitem = $data['dobday'];
+  $application->dobday = $dataitem;
+
+  $application->dob = sprintf('%04d-%02d-%02d', $application->dobyear, $application->dobmonth, $application->dobday); // Actually $application->dob is not used
 
   $dataitem = $data['applicationaddress'];
   // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice

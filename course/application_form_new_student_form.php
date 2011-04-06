@@ -262,8 +262,6 @@ $countryname['EH'] = 'Western Sahara';
 $countryname['YE'] = 'Yemen';
 $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
-//foreach($countryname as $name) $countrynameint[] = $name;
-//$countrynameint = $countryname;
 
     $mform    = $this->_form;
 
@@ -346,14 +344,34 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->setType('email2', PARAM_NOTAGS);
     $mform->addElement('static', 'explainemail2', '&nbsp;', 'Must match first e-mail.<br />');
 
-    $mform->addElement('date_selector', 'dob', 'Date of Birth', array('startyear' => 1930, 'stopyear' => 2000));
-    //$mform->addRule('dob', 'Date of Birth is required', 'required', null, 'client');
+    $yearname[''] = '';
+    while($year = 1930; $year <= 2000; $year++) $yearname[$year] = $year;
+    $mform->addElement('select', 'dobyear', 'Date of Birth Year', $yearname);
+    $mform->addRule('dobyear', 'Date of Birth Year is required', 'required', null, 'client');
 
-    $genderarray = array();
-    $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Male', 'male');
-    $genderarray[] = &MoodleQuickForm::createElement('radio', 'gendermf', '', 'Female', 'female');
-    $mform->addGroup($genderarray, 'gender', 'Gender', array(' '), false);
-    //$mform->addRule('gender', 'Gender is required', 'required', null, 'client');
+    $monthname[''] = '';
+    $monthname[ 1] = 'Jan';
+    $monthname[ 2] = 'Feb';
+    $monthname[ 3] = 'Mar';
+    $monthname[ 4] = 'Apr';
+    $monthname[ 5] = 'May';
+    $monthname[ 6] = 'Jun';
+    $monthname[ 7] = 'Jul';
+    $monthname[ 8] = 'Aug';
+    $monthname[ 9] = 'Sep';
+    $monthname[10] = 'Oct';
+    $monthname[11] = 'Nov';
+    $monthname[12] = 'Dec';
+    $mform->addElement('select', 'dobmonth', 'Date of Birth Month', $monthname);
+    $mform->addRule('dobmonth', 'Date of Birth Month is required', 'required', null, 'client');
+
+    $dayname[''] = '';
+    while($day = 1; $day <= 31; $day++) $dayname[$day] = $day;
+    $mform->addElement('select', 'dobday', 'Date of Birth Day', $dayname);
+    $mform->addRule('dobday', 'Date of Birth Day is required', 'required', null, 'client');
+
+    $mform->addElement('select', 'gender', 'Gender', array('' => '', 'female' => 'Female', 'male' => 'Male'));
+    $mform->addRule('gender', 'Gender is required', 'required', null, 'client');
     $mform->addElement('static', 'explaingender', '&nbsp;', 'Select your gender: Male or Female.<br />');
 
     $mform->addElement('textarea', 'applicationaddress', 'Address', 'wrap="HARD" rows="7" cols="50"');
@@ -434,14 +452,6 @@ $countryname['ZW'] = 'Zimbabwe';
 
     if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1']         = 'You have selected the same module as your first and second choice. Either remove the second selection (by selecting the `select..???` message at the top of the option list) or change the second module selected';
     if ($data['email'] !== $data['email2'])            $errors['email']               = 'Email address does not match Email verification, they must be the same';
-
-//    if (empty($data['course_id_1']))                   $errors['course_id_1']         = 'First module is required'. $data['course_id_1'] . 'SERVER';
-//    if (empty($data['country']))                       $errors['country']             = 'Country is required';
-    if (empty($data['dob']))                           $errors['dob']                 = 'Date of Birth is required';
-    if (empty($data['gender']))                        $errors['gender']              = 'Gender is required';
-//    if (empty($data['qualification']))                 $errors['qualification']       = 'Higher Education Qualification is required';
-//    if (empty($data['higherqualification']))           $errors['higherqualification'] = 'Postgraduate Qualification is required';
-//    if (empty($data['employment']))                    $errors['employment']          = 'Current Employment is required';
 
     return $errors;
   }
