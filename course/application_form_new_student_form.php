@@ -345,7 +345,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('static', 'explainemail2', '&nbsp;', 'Must match first e-mail.<br />');
 
     $yearname[''] = '';
-    while($year = 1930; $year <= 2000; $year++) $yearname[$year] = $year;
+    for ($year = 1930; $year <= 2000; $year++) $yearname[$year] = $year;
     $mform->addElement('select', 'dobyear', 'Date of Birth Year', $yearname);
     $mform->addRule('dobyear', 'Date of Birth Year is required', 'required', null, 'client');
 
@@ -366,7 +366,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addRule('dobmonth', 'Date of Birth Month is required', 'required', null, 'client');
 
     $dayname[''] = '';
-    while($day = 1; $day <= 31; $day++) $dayname[$day] = $day;
+    for ($day = 1; $day <= 31; $day++) $dayname[$day] = $day;
     $mform->addElement('select', 'dobday', 'Date of Birth Day', $dayname);
     $mform->addRule('dobday', 'Date of Birth Day is required', 'required', null, 'client');
 
