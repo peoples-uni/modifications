@@ -366,7 +366,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('select', 'dobday', 'Date of Birth Day', $dayname);
     $mform->addRule('dobday', 'Date of Birth Day is required', 'required', null, 'client');
 
-    $mform->addElement('select', 'gender', 'Gender', array('' => 'Select...', 'female' => 'Female', 'male' => 'Male'));
+    $mform->addElement('select', 'gender', 'Gender', array('' => 'Select...', 'Female' => 'Female', 'Male' => 'Male'));
     $mform->addRule('gender', 'Gender is required', 'required', null, 'client');
     $mform->addElement('static', 'explaingender', '&nbsp;', 'Select your gender: Male or Female.<br />');
 

@@ -419,11 +419,11 @@ elseif ($data = $editform->get_data()) {
   $message .= "Module 2: $application->coursename2\n";
   $message .= "Date of Birth: $application->dob\n";
   $message .= "Gender: $application->gender\n";
-  $message .= "Application Address: $application->applicationaddress\n";
+  $message .= "Application Address:\n" . htmlspecialchars_decode($application->applicationaddress, ENT_COMPAT, 'UTF-8') . "\n";
   $message .= "City: $application->city\n";
   $message .= "Country: " . $countryname[$application->country] . "\n";
   $message .= "Preferred Username: $application->username\n";
-  $message .= "Reasons for wanting to enrol:\n$application->reasons\n";
+  $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT, 'UTF-8') . "\n";
 
     $employmentname[  ''] = 'Select...';
     $employmentname[ '1'] = 'None';
@@ -450,8 +450,8 @@ elseif ($data = $editform->get_data()) {
     $higherqualificationname['50'] = 'Other';
   $message .= "Postgraduate Qualification: " . $higherqualificationname[$application->higherqualification] . "\n";
 
-  $message .= "Current Employment Details:\n$application->currentjob\n";
-  $message .= "Other relevant qualifications or educational experience:\n$application->education\n";
+  $message .= "Current Employment Details:\n" . htmlspecialchars_decode($application->currentjob, ENT_COMPAT, 'UTF-8') . "\n";
+  $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT, 'UTF-8') . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Application Form Submission From: $application->lastname, $application->firstname", $message);
   sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Application Form Submission From: $application->lastname, $application->firstname", $message);
