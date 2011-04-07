@@ -256,6 +256,8 @@ $countryname['ZW'] = 'Zimbabwe';
 require_once('../config.php');
 require_once('application_form_new_student_form.php');
 
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/application_form_new_student.php');
 
@@ -297,22 +299,22 @@ elseif ($data = $editform->get_data()) {
 
 
   // Some of the data cleaning done may be obsolete as the Moodle Form can do it now
-  $dataitem = $data['lastname'];
+  $dataitem = $data->lastname;
   $dataitem = trim(strip_tags($dataitem));
   $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
   $application->lastname = $dataitem;
 
-  $dataitem = $data['firstname'];
+  $dataitem = $data->firstname;
   $dataitem = trim(strip_tags($dataitem));
   $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
   $application->firstname = $dataitem;
 
-  $dataitem = $data['email'];
+  $dataitem = $data->email;
   $dataitem = trim(strip_tags($dataitem));
   $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
   $application->email = $dataitem;
 
-  $dataitem = $data['course_id_1'];
+  $dataitem = $data->course_id_1;
   if ($dataitem === '' || (is_numeric($dataitem) && $dataitem == 0)) {
     $application->course_id_1 = 0;
     $application->coursename1 = '';
@@ -323,7 +325,7 @@ elseif ($data = $editform->get_data()) {
     $application->coursename1 = $course->fullname;
   }
 
-  $dataitem = $data['course_id_2'];
+  $dataitem = $data->course_id_2;
   if ($dataitem === '' || (is_numeric($dataitem) && $dataitem == 0)) {
     $application->course_id_2 = 0;
     $application->coursename2 = '';
@@ -334,64 +336,64 @@ elseif ($data = $editform->get_data()) {
     $application->coursename2 = $course->fullname;
   }
 
-  $dataitem = $data['gender'];
+  $dataitem = $data->gender;
   $application->gender = $dataitem;
 
-  $dataitem = $data['dobyear'];
+  $dataitem = $data->dobyear;
   $application->dobyear = $dataitem;
 
-  $dataitem = $data['dobmonth'];
+  $dataitem = $data->dobmonth;
   $application->dobmonth = $dataitem;
 
-  $dataitem = $data['dobday'];
+  $dataitem = $data->dobday;
   $application->dobday = $dataitem;
 
   $application->dob = sprintf('%04d-%02d-%02d', $application->dobyear, $application->dobmonth, $application->dobday); // Actually $application->dob is not used
 
-  $dataitem = $data['applicationaddress'];
+  $dataitem = $data->applicationaddress;
   // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->applicationaddress = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-  $dataitem = $data['city'];
+  $dataitem = $data->city;
   $dataitem = trim(strip_tags($dataitem));
   $dataitem = mb_substr($dataitem, 0, 20, 'UTF-8');
   $application->city = $dataitem;
 
-  $dataitem = $data['country'];
+  $dataitem = $data->country;
   $dataitem = trim(strip_tags($dataitem));
   // (Drupal select fields are protected by Drupal Form API)
   $application->country = $dataitem;
 
-  $dataitem = $data['employment'];
+  $dataitem = $data->employment;
   if (empty($dataitem)) $dataitem = '0';
   $dataitem = strip_tags($dataitem);
   $application->employment = $dataitem;
 
-  $dataitem = $data['currentjob'];
+  $dataitem = $data->currentjob;
   if (empty($dataitem)) $dataitem = '';
   // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->currentjob = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-  $dataitem = $data['qualification'];
+  $dataitem = $data->qualification;
   if (empty($dataitem)) $dataitem = '0';
   $dataitem = strip_tags($dataitem);
   $application->qualification = $dataitem;
 
-  $dataitem = $data['higherqualification'];
+  $dataitem = $data->higherqualification;
   if (empty($dataitem)) $dataitem = '0';
   $dataitem = strip_tags($dataitem);
   $application->higherqualification = $dataitem;
 
-  $dataitem = $data['education'];
+  $dataitem = $data->education;
   if (empty($dataitem)) $dataitem = '';
   // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-  $dataitem = $data['reasons'];
+  $dataitem = $data->reasons;
   // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-  $dataitem = $data['username'];
+  $dataitem = $data->username;
   $dataitem = strip_tags($dataitem);
   $dataitem = str_replace("<", '', $dataitem);
   $dataitem = str_replace(">", '', $dataitem);

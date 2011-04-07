@@ -6,7 +6,9 @@
 
 require_once('../config.php');
 
-$PAGE->set_pagelayout('embedded');
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+
+$PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/application_form_success.php');
 
 $PAGE->set_title("People's Open Access Education Initiative Application Form Successfully Submitted");

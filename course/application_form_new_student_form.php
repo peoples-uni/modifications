@@ -265,10 +265,6 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $mform    = $this->_form;
 
-    $mform->addElement('hidden', 'returnto', null);
-    $mform->setType('returnto', PARAM_ALPHANUM);
-    $mform->setConstant('returnto', $returnto);
-
 
     $mform->addElement('header', 'top', 'Instructions');
 
