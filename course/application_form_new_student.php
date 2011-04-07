@@ -451,8 +451,8 @@ elseif ($data = $editform->get_data()) {
   $message .= "Current Employment Details:\n$application->currentjob\n";
   $message .= "Other relevant qualifications or educational experience:\n$application->education\n";
 
-  sendapprovedmail($application->email, "Peoples-uni Application Form Submission From: $application->lastname, $application->firstname", $message)
-  sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Application Form Submission From: $application->lastname, $application->firstname", $message)
+  sendapprovedmail($application->email, "Peoples-uni Application Form Submission From: $application->lastname, $application->firstname", $message);
+  sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Application Form Submission From: $application->lastname, $application->firstname", $message);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
 }
