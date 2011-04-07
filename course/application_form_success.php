@@ -15,4 +15,8 @@ $PAGE->set_heading("People's Open Access Education Initiative Application Form S
 echo $OUTPUT->header();
 echo $OUTPUT->heading("People's Open Access Education Initiative Application Form Successfully Submitted");
 
+echo '<p>';
+echo 'Thank you for applying to do a course module. You should receive an email copy of your application. If after an hour or two you have not received the email contact our support staff at - <strong><a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a></strong> with your details.
+echo '</p>';
+
 echo $OUTPUT->footer();
