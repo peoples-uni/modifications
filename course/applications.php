@@ -411,316 +411,6 @@ echo $OUTPUT->header();
 //echo html_writer::start_tag('div', array('class'=>'course-content'));
 
 
-// Find and insert all missing peoplesapplication database rows
-$newapplications = $DB->get_records_sql('
-  SELECT s.sid FROM d5_webform_submissions s
-  LEFT JOIN mdl_peoplesapplication p ON s.sid=p.sid
-  WHERE (s.nid=71 OR s.nid=80) AND p.id IS NULL');
-
-foreach ($newapplications as $sid => $newapplication) {
-  $application = new object();
-
-  $rows = $DB->get_recordset_sql("
-    SELECT s.*, sd.cid, sd.no, sd.data
-    FROM d5_webform_submitted_data sd
-    LEFT JOIN d5_webform_submissions s ON sd.sid=s.sid
-    WHERE (s.nid=71 OR s.nid=80) AND sd.sid=$sid
-    ORDER BY s.submitted DESC");
-
-  foreach ($rows as $row) {
-    $submitted = $row->submitted;
-    $nid       = $row->nid;
-    $cid       = $row->cid;
-    $data      = $row->data;
-    if (empty($data)) $data = '';
-
-    if ($nid === '71') { // First Application Webform (peoples-uni-course-application-form)
-
-      if ($cid ==='17' && $row->no === '0') {
-        if (strlen($data) > 2) {
-          $application->dob      = $data; // Actually $application->dob is not used
-          $application->dobyear  = (int)substr($data, 0, 4);
-          $application->dobmonth = (int)substr($data, 5, 2);
-          $application->dobday   = (int)substr($data, 8, 2);
-        }
-        else $application->dobmonth = $data;
-      }
-
-      if ($cid === '17' && $row->no === '1') {
-        $application->dobday = $data;
-      }
-
-      if ($cid === '17' && $row->no === '2') {
-        $application->dobyear = $data;
-      }
-
-      if ($cid === '1') {
-        $data = trim(strip_tags($data));
-        $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->lastname = dontaddslashes($data);
-      }
-
-      if ($cid === '2') {
-        $data = trim(strip_tags($data));
-        $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->firstname = dontaddslashes($data);
-      }
-
-      if ($cid === '11') {
-          $data = trim(strip_tags($data));
-          $data = mb_substr($data, 0, 100, 'UTF-8');
-          $application->email = dontaddslashes($data);
-      }
-
-      if ($cid === '16') {
-        if (is_numeric($data)) {
-          $semesterrecord = $DB->get_record('semesters', array('id' => $data));
-          $application->semester = dontaddslashes($semesterrecord->semester);
-        }
-        else {
-          $application->semester = dontaddslashes($data);
-        }
-      }
-
-      if ($cid === '18') {
-          if ($data === '' || (is_numeric($data) && $data == 0)) {
-            $application->course_id_1 = 0;
-            $application->coursename1 = '';
-          }
-          elseif (is_numeric($data)) {
-            $application->course_id_1 = $data; // $application->course_id_1 is not used
-            $course = $DB->get_record('course', array('id' => $data));
-            $application->coursename1 = dontaddslashes($course->fullname);
-          }
-          else {
-            $application->coursename1 = dontaddslashes($data);
-            $course = $DB->get_record('course', array('fullname' => dontaddslashes($data)));
-            $application->course_id_1 = $course->id;
-          }
-      }
-
-      if ($cid === '19') {
-          if ($data === '' || (is_numeric($data) && $data == 0)) {
-            $application->course_id_2 = 0;
-            $application->coursename2 = '';
-          }
-          elseif (is_numeric($data)) {
-            $application->course_id_2 = $data; // $application->course_id_2 is not used
-            $course = $DB->get_record('course', array('id' => $data));
-            $application->coursename2 = dontaddslashes($course->fullname);
-          }
-          else {
-            $application->coursename2 = dontaddslashes($data);
-            $course = $DB->get_record('course', array('fullname' => dontaddslashes($data)));
-            $application->course_id_2 = $course->id;
-          }
-      }
-
-      if ($cid === '12') {
-          $application->gender = dontaddslashes($data);
-      }
-
-      if ($cid === '3') {
-          // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-          $application->applicationaddress = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
-      }
-
-      if ($cid === '14') {
-         $data = trim(strip_tags($data));
-         $data = mb_substr($data, 0, 20, 'UTF-8');
-         $application->city = dontaddslashes($data);
-      }
-
-      if ($cid === '13') {
-          $data = trim(strip_tags($data));
-          // Drupal select fields are protected by Drupal Form API
-          $application->country = dontaddslashes($data);
-      }
-
-      if ($cid === '36') {
-        if (empty($data)) $data = '0';
-        $data = strip_tags($data);
-        $application->employment = $data;
-      }
-
-      if ($cid === '7') {
-          // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-          $application->currentjob = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
-      }
-
-      if ($cid === '34') {
-        if (empty($data)) $data = '0';
-        $data = strip_tags($data);
-        $application->qualification = $data;
-      }
-
-      if ($cid === '35') {
-        if (empty($data)) $data = '0';
-        $data = strip_tags($data);
-        $application->higherqualification = $data;
-      }
-
-      if ($cid === '8') {
-        // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-        $application->education = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
-      }
-
-      if ($cid === '10') {
-        // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-        $application->reasons = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
-      }
-
-      if ($cid === '31') {
-        // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-        $application->methodofpayment = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
-      }
-
-      if ($cid === '32') {
-        // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
-        $application->paymentidentification = dontaddslashes(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
-      }
-
-      if ($cid === '21') {
-        $data = strip_tags($data);
-        $data = str_replace("<", '', $data);
-        $data = str_replace(">", '', $data);
-        $data = str_replace("/", '', $data);
-        $data = str_replace("#", '', $data);
-        $data = trim(moodle_strtolower($data));
-        if (empty($data)) $data = 'user1';  // Just in case it becomes empty
-        $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->username = dontaddslashes($data);
-      }
-
-      $application->userid = 0;
-    }
-    else { // Subsequent Application Webform (application-form-returning-students)
-      if ($cid === '10') {
-        $application->userid = (int)$data;
-
-        $oldapplication = $DB->get_record('peoplesapplication', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
-
-        $application->gender                = dontaddslashes($oldapplication->gender);
-        $application->applicationaddress    = dontaddslashes($oldapplication->applicationaddress);
-        $application->currentjob            = dontaddslashes($oldapplication->currentjob);
-        $application->education             = dontaddslashes($oldapplication->education);
-        $application->reasons               = dontaddslashes($oldapplication->reasons);
-        $application->methodofpayment       = dontaddslashes($oldapplication->methodofpayment);
-        $application->paymentidentification = dontaddslashes($oldapplication->paymentidentification);
-
-        $application->dob                   = $oldapplication->dob;
-        $application->dobyear               = $oldapplication->dobyear;
-        $application->dobmonth              = $oldapplication->dobmonth;
-        $application->dobday                = $oldapplication->dobday;
-
-        $application->employment            = $oldapplication->employment;
-        $application->qualification         = $oldapplication->qualification;
-        $application->higherqualification   = $oldapplication->higherqualification;
-      }
-
-      if ($cid === '14') {
-        $data = trim(strip_tags($data));
-        $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->lastname = dontaddslashes($data);
-      }
-
-      if ($cid === '15') {
-        $data = trim(strip_tags($data));
-        $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->firstname = dontaddslashes($data);
-      }
-
-      if ($cid === '11') {
-          $data = trim(strip_tags($data));
-          $data = mb_substr($data, 0, 100, 'UTF-8');
-          $application->email = dontaddslashes($data);
-      }
-
-      if ($cid === '2') {
-        if (is_numeric($data)) {
-          $semesterrecord = $DB->get_record('semesters', array('id' => $data));
-          $application->semester = dontaddslashes($semesterrecord->semester);
-        }
-        else {
-          $application->semester = dontaddslashes($data);
-        }
-      }
-
-      if ($cid === '3') {
-          if ($data === '' || (is_numeric($data) && $data == 0)) {
-            $application->course_id_1 = 0;
-            $application->coursename1 = '';
-          }
-          elseif (is_numeric($data)) {
-            $application->course_id_1 = $data;
-            $course = $DB->get_record('course', array('id' => $data));
-            $application->coursename1 = dontaddslashes($course->fullname);
-          }
-          else {
-            $application->coursename1 = dontaddslashes($data);
-            $course = $DB->get_record('course', array('fullname' => dontaddslashes($data)));
-            $application->course_id_1 = $course->id;
-          }
-      }
-
-      if ($cid === '4') {
-          if ($data === '' || (is_numeric($data) && $data == 0)) {
-            $application->course_id_2 = 0;
-            $application->coursename2 = '';
-          }
-          elseif (is_numeric($data)) {
-            $application->course_id_2 = $data;
-            $course = $DB->get_record('course', array('id' => $data));
-            $application->coursename2 = dontaddslashes($course->fullname);
-          }
-          else {
-            $application->coursename2 = dontaddslashes($data);
-            $course = $DB->get_record('course', array('fullname' => dontaddslashes($data)));
-            $application->course_id_2 = $course->id;
-          }
-      }
-
-      if ($cid === '21') {
-         $data = trim(strip_tags($data));
-         $data = mb_substr($data, 0, 20, 'UTF-8');
-         $application->city = dontaddslashes($data);
-      }
-
-      if ($cid === '22') {
-          $data = trim(strip_tags($data));
-          // Drupal select fields are protected by Drupal Form API
-          $application->country = dontaddslashes($data);
-      }
-
-      if ($cid === '8') {
-        $data = strip_tags($data);
-        $data = str_replace("<", '', $data);
-        $data = str_replace(">", '', $data);
-        $data = str_replace("/", '', $data);
-        $data = str_replace("#", '', $data);
-        $data = trim(moodle_strtolower($data));
-        if (empty($data)) $data = 'user1';  // Just in case it becomes empty
-        $data = mb_substr($data, 0, 100, 'UTF-8');
-        $application->username = dontaddslashes($data);
-      }
-    }
-  }
-  $rows->close();
-
-  if (empty($application->dob)) $application->dob = sprintf('%04d-%02d-%02d', $application->dobyear, $application->dobmonth, $application->dobday);
-
-  $application->datesubmitted = $submitted;
-  $application->sid = $sid;
-  $application->nid = $nid;
-
-  $application->currency = 'GBP'; // The DB default is no longer correct 20090526!
-
-  $application->state = 0;
-
-  $DB->insert_record('peoplesapplication', $application);
-}
-
-
 echo "<h1>Student Applications</h1>";
 
 if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
@@ -730,7 +420,6 @@ if (!empty($_REQUEST['chosenstartyear']) && !empty($_REQUEST['chosenstartmonth']
   $chosenstartmonth = (int)$_REQUEST['chosenstartmonth'];
   $chosenstartday = (int)$_REQUEST['chosenstartday'];
   $starttime = gmmktime(0, 0, 0, $chosenstartmonth, $chosenstartday, $chosenstartyear);
-  //echo gmdate('d/m/Y H:i', $starttime) . '<br />';
 }
 else {
   $starttime = 0;
@@ -740,7 +429,6 @@ if (!empty($_REQUEST['chosenendyear']) && !empty($_REQUEST['chosenendmonth']) &&
   $chosenendmonth = (int)$_REQUEST['chosenendmonth'];
   $chosenendday = (int)$_REQUEST['chosenendday'];
   $endtime = gmmktime(24, 0, 0, $chosenendmonth, $chosenendday, $chosenendyear);
-  //echo gmdate('d/m/Y H:i', $endtime) . '<br />';
 }
 else {
   $endtime = 1.0E+20;
@@ -1030,8 +718,6 @@ if ($sendemails) {
 }
 
 
-//echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
-//echo "<tr>";
 $table = new html_table();
 
 if (!$displayextra) {
@@ -1137,42 +823,6 @@ Desired Moodle Username
 21
 */
 
-/*
-echo '<td>Submitted</td>';
-echo '<td>sid</td>';
-echo '<td>Approved?</td>';
-echo '<td>Paid?</td>';
-echo '<td>Registered?</td>';
-if (!$displayextra) echo '<td></td>';
-echo '<td>Family name</td>';
-echo '<td>Given name</td>';
-echo '<td>Email address</td>';
-echo '<td>Semester</td>';
-echo '<td>First module</td>';
-echo '<td>Second module</td>';
-echo '<td>DOB dd/mm/yyyy</td>';
-echo '<td>Gender</td>';
-echo '<td>City/Town</td>';
-echo '<td>Country</td>';
-//echo '<td>Method of payment</td>';
-//echo '<td>Payment Identification</td>';
-if ($displayextra) {
-  echo "<td>Address</td>";
-  echo "<td>Current employment</td>";
-  echo "<td>Current employment details</td>";
-  echo "<td>Qualification</td>";
-  echo "<td>Postgraduate Qualification</td>";
-  echo "<td>Education Details</td>";
-  echo "<td>Reasons for wanting to enrol</td>";
-  echo "<td>Desired Moodle Username</td>";
-  echo "<td>Moodle UserID</td>";
-  //echo "<td>Application SID</td>";
-}
-echo '<td></td>';
-echo '<td></td>';
-echo "</tr>";
-*/
-
 $n = 0;
 $napproved = 0;
 $nregistered = 0;
@@ -1221,10 +871,6 @@ foreach ($applications as $sid => $application) {
     //echo '<td>' . $sid . '</td>';
     $rowdata[] = $sid;
 
-    //if ($state === 0) echo '<td><span style="color:red">No</span></td>';
-    //elseif ($state === 022) echo '<td><span style="color:blue">Denied or Deferred</span></td>';
-    //elseif ($state1===02 || $state2===020) echo '<td><span style="color:blue">Some</span></td>';
-    //else echo '<td><span style="color:green">Yes</span></td>';
     if ($state === 0) $z = '<span style="color:red">No</span>';
     elseif ($state === 022) $z = '<span style="color:blue">Denied or Deferred</span>';
     elseif ($state1===02 || $state2===020) $z = '<span style="color:blue">Some</span>';
@@ -1251,21 +897,11 @@ foreach ($applications as $sid => $application) {
     elseif ($application->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
     else  $mechanism = '';
 
-    //if ($application->costpaid < .01) echo '<td><span style="color:red">No' . $mechanism . '</span></td>';
-    //elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes' . $mechanism . '</span></td>';
-    //else echo '<td><span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span></td>';
     if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
     elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
     else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
     $rowdata[] = $z;
 
-    //echo '<td>';
-    //if (!($state1===03 || $state2===030)) echo '<span style="color:red">No</span>';
-    //elseif ($state === 033) echo '<span style="color:green">Yes</span>';
-    //else echo '<span style="color:blue">Some</span>';
-    //
-    //if ($application->notepresent) echo '<br />(Note Present)';
-    //echo '</td>';
     if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';
     elseif ($state === 033) $z = '<span style="color:green">Yes</span>';
     else $z = '<span style="color:blue">Some</span>';
@@ -1275,45 +911,6 @@ foreach ($applications as $sid => $application) {
     $rowdata[] = $z;
 
     if (!$displayextra) {
-//?X>
-//<td>
-//<form method="post" action="<X?php echo $CFG->wwwroot . '/course/app.php'; ?X>" target="_blank">
-//
-//<input type="hidden" name="state" value="<X?php echo $state; ?X>" />
-//<input type="hidden" name="29" value="<X?php echo htmlspecialchars($application->userid, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="1" value="<X?php echo htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="2" value="<X?php echo htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="11" value="<X?php echo htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="16" value="<X?php echo htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="18" value="<X?php echo htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="19" value="<X?php echo htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="dobday" value="<X?php echo $application->dobday; ?X>" />
-//<input type="hidden" name="dobmonth" value="<X?php echo $application->dobmonth; ?X>" />
-//<input type="hidden" name="dobyear" value="<X?php echo $application->dobyear; ?X>" />
-//<input type="hidden" name="12" value="<X?php echo htmlspecialchars($application->gender, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="14" value="<X?php echo htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="13" value="<X?php echo htmlspecialchars($application->country, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="34" value="<X?php echo htmlspecialchars($application->qualification, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="35" value="<X?php echo htmlspecialchars($application->higherqualification, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="36" value="<X?php echo htmlspecialchars($application->employment, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="31" value="<X?php echo htmlspecialchars($application->methodofpayment, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<input type="hidden" name="21" value="<X?php echo htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8'); ?X>" />
-//<span style="display: none;">
-//<textarea name="3" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'); ?X></textarea>
-//<textarea name="7" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'); ?X></textarea>
-//<textarea name="8" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'); ?X></textarea>
-//<textarea name="10" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'); ?X></textarea>
-//<textarea name="32" rows="10" cols="100" wrap="hard"><X?php echo htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8'); ?X></textarea>
-//</span>
-//<input type="hidden" name="sid" value="<X?php echo $sid; ?X>" />
-//<input type="hidden" name="nid" value="<X?php echo $application->nid; ?X>" />
-//<input type="hidden" name="sesskey" value="<X?php echo $USER->sesskey ?X>" />
-//<input type="hidden" name="markapp" value="1" />
-//<input type="submit" name="approveapplication" value="Details" />
-//</form>
-//<X?php
-//    if ($application->nid == 80) echo 'Re&#8209;enrolment';
-//    echo '</td>';
       $z  = '<form method="post" action="' .  $CFG->wwwroot . '/course/app.php" target="_blank">';
 
       $z .= '<input type="hidden" name="state" value="' . $state . '" />';
@@ -1353,134 +950,94 @@ foreach ($applications as $sid => $application) {
       $rowdata[] = $z;
     }
 
-    //echo "<td>" . htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8') . "</td>";
     $rowdata[] = htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8');
 
-    //echo "<td>" . htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8') . "</td>";
     $rowdata[] = htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8');
 
     if ($emailcounts[$application->email] === 1) {
-      //echo "<td>" . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . "</td>";
       $z = htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
     }
     else {
-      //echo "<td>" . '<span style="color:navy">**</span>' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8') . "</td>";
       $z = '<span style="color:navy">**</span>' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
     }
     $rowdata[] = $z;
 
-    //echo "<td>" . htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8') . "</td>";
     $rowdata[] = htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8');
 
-    //echo '<td>';
     if ($state1 === 02) {
-      //echo '<span style="color:red">';
       $z = '<span style="color:red">';
     }
     elseif ($state1 === 01) {
-      //echo '<span style="color:#FF8C00">';
       $z = '<span style="color:#FF8C00">';
     }
     elseif ($state1 === 03) {
-      //echo '<span style="color:green">';
       $z = '<span style="color:green">';
     }
     else {
-      //echo '<span>';
       $z = '<span>';
     }
-    //echo htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '</span></td>';
     $rowdata[] = $z . htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '</span>';
 
-    //echo '<td>';
     if ($state2 === 020) {
-      //echo '<span style="color:red">';
       $z = '<span style="color:red">';
     }
     elseif ($state2 === 010) {
-      //echo '<span style="color:#FF8C00">';
       $z = '<span style="color:#FF8C00">';
     }
     elseif ($state2 === 030) {
-      //echo '<span style="color:green">';
       $z = '<span style="color:green">';
     }
     else {
-      //echo '<span>';
       $z = '<span>';
     }
-    //echo htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span></td>';
     $rowdata[] = $z . htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span>';
 
-    //echo "<td>" . $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear . "</td>";
     $rowdata[] = $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
 
-    //echo "<td>" . $application->gender . "</td>";
     $rowdata[] = $application->gender;
 
-    //echo "<td>" . htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8') . "</td>";
     $rowdata[] = htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8');
 
-    //if (empty($countryname[$application->country])) echo "<td></td>";
-    //else echo "<td>" . $countryname[$application->country] . "</td>";
     if (empty($countryname[$application->country])) $z = '';
     else $z = $countryname[$application->country];
     $rowdata[] = $z;
 
     if ($displayextra) {
-      //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'))) . "</td>";
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->applicationaddress));
 
-      //if (empty($employmentname[$application->employment])) echo "<td></td>";
-      //else echo "<td>" . $employmentname[$application->employment] . "</td>";
       if (empty($employmentname[$application->employment])) $z = '';
       else $z = $employmentname[$application->employment];
       $rowdata[] = $z;
 
-      //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'))) . "</td>";
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob));
 
-      //if (empty($qualificationname[$application->qualification])) echo "<td></td>";
-      //else echo "<td>" . $qualificationname[$application->qualification] . "</td>";
       if (empty($qualificationname[$application->qualification])) $z = '';
       else $z = $qualificationname[$application->qualification];
       $rowdata[] = $z;
 
-      //if (empty($higherqualificationname[$application->higherqualification])) echo "<td></td>";
-      //else echo "<td>" . $higherqualificationname[$application->higherqualification] . "</td>";
       if (empty($higherqualificationname[$application->higherqualification])) $z = '';
       else $z = $higherqualificationname[$application->higherqualification];
       $rowdata[] = $z;
 
-      //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'))) . "</td>";
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
 
-      //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'))) . "</td>";
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
 
-      //echo "<td>" . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . "</td>";
       $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
 
-      //if (empty($application->userid)) echo '<td></td>';
-      //else echo "<td>" . $application->userid . "</td>";
       if (empty($application->userid)) $z = '';
       else $z = $application->userid;
       $rowdata[] = $z;
     }
 
-    //if (empty($application->userid)) echo '<td></td>';
-    //else echo '<td><a href="' . $CFG->wwwroot . '/course/student.php?id=' . $application->userid . '" target="_blank">Student Grades</a></td>';
     if (empty($application->userid)) $z = '';
     else $z = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $application->userid . '" target="_blank">Student Grades</a>';
     $rowdata[] = $z;
 
-    //if (empty($application->userid)) echo '<td></td>';
-    //else echo '<td><a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a></td>';
     if (empty($application->userid)) $z = '';
     else $z = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a>';
     $rowdata[] = $z;
 
-    //echo "</tr>";
 
     if (empty($modules[$application->coursename1])) {
       $modules[$application->coursename1] = 1;
@@ -1583,7 +1140,7 @@ foreach ($applications as $sid => $application) {
   }
 }
 echo html_writer::table($table);
-//echo '</table>';
+
 echo '<br />Total Applications: ' . $n;
 echo '<br />Total Approved (or part Approved): ' . $napproved;
 echo '<br />Total Registered (or part Registered): ' . $nregistered;
@@ -1672,8 +1229,6 @@ Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 
 
 echo '<br /><br />';
-
-//notice(get_string('continue'), "$CFG->wwwroot/");
 
 //echo html_writer::end_tag('div');
 
