@@ -1336,10 +1336,10 @@ foreach ($applications as $sid => $application) {
       $z .= '<input type="hidden" name="31" value="' . htmlspecialchars($application->methodofpayment, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<input type="hidden" name="21" value="' . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<span style="display: none;">';
-      $z .= '<textarea name="3" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8') . '</textarea>';
-      $z .= '<textarea name="7" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8') . '</textarea>';
-      $z .= '<textarea name="8" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8') . '</textarea>';
-      $z .= '<textarea name="10" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8') . '</textarea>';
+      $z .= '<textarea name="3" rows="10" cols="100" wrap="hard">'  . $application->applicationaddress . '</textarea>';
+      $z .= '<textarea name="7" rows="10" cols="100" wrap="hard">'  . $application->currentjob         . '</textarea>';
+      $z .= '<textarea name="8" rows="10" cols="100" wrap="hard">'  . $application->education          . '</textarea>';
+      $z .= '<textarea name="10" rows="10" cols="100" wrap="hard">' . $application->reasons            . '</textarea>';
       $z .= '<textarea name="32" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
       $z .= '</span>';
       $z .= '<input type="hidden" name="sid" value="' . $sid . '" />';
@@ -1429,7 +1429,7 @@ foreach ($applications as $sid => $application) {
 
     if ($displayextra) {
       //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'))) . "</td>";
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8')));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->applicationaddress));
 
       //if (empty($employmentname[$application->employment])) echo "<td></td>";
       //else echo "<td>" . $employmentname[$application->employment] . "</td>";
@@ -1438,7 +1438,7 @@ foreach ($applications as $sid => $application) {
       $rowdata[] = $z;
 
       //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'))) . "</td>";
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8')));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob));
 
       //if (empty($qualificationname[$application->qualification])) echo "<td></td>";
       //else echo "<td>" . $qualificationname[$application->qualification] . "</td>";
@@ -1453,10 +1453,10 @@ foreach ($applications as $sid => $application) {
       $rowdata[] = $z;
 
       //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'))) . "</td>";
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8')));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
 
       //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'))) . "</td>";
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8')));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
 
       //echo "<td>" . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . "</td>";
       $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
