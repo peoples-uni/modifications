@@ -321,10 +321,10 @@ elseif ($data = $editform->get_data()) {
   $application->methodofpayment       = $oldapplication->methodofpayment;
   $application->paymentidentification = $oldapplication->paymentidentification;
 
-  $application->dob                   = $oldapplication->dob;
   $application->dobyear               = $oldapplication->dobyear;
   $application->dobmonth              = $oldapplication->dobmonth;
   $application->dobday                = $oldapplication->dobday;
+  $application->dob                   = sprintf('%04d-%02d-%02d', $application->dobyear, $application->dobmonth, $application->dobday); // Actually $application->dob is not used
 
   $application->employment            = $oldapplication->employment;
   $application->qualification         = $oldapplication->qualification;
