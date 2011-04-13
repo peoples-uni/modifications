@@ -300,7 +300,7 @@ elseif ($data = $editform->get_data()) {
     $application->coursename2 = $course->fullname;
   }
 
-  $user_record = $DB->get_record('user', array('username' => $data['username']));
+  $user_record = $DB->get_record('user', array('username' => $data->username));
 
   $application->username  = $user_record->username;
   $application->userid    = $user_record->id;
