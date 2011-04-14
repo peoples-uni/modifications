@@ -5,6 +5,27 @@
 *
 */
 
+/*
+CREATE TABLE mdl_peoplesinterest (
+  id BIGINT(10) unsigned NOT NULL auto_increment,
+  datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  state BIGINT(10) unsigned NOT NULL,
+  firstname VARCHAR(100) NOT NULL DEFAULT '',
+  lastname VARCHAR(100) NOT NULL DEFAULT '',
+  email VARCHAR(100) NOT NULL DEFAULT '',
+  country VARCHAR(2) NOT NULL DEFAULT '',
+  coursename1 VARCHAR(255) NOT NULL DEFAULT '',
+  coursename2 VARCHAR(255) NOT NULL DEFAULT '',
+  coursename3 VARCHAR(255) NOT NULL DEFAULT '',
+  coursename4 VARCHAR(255) NOT NULL DEFAULT '',
+  suggestions text NOT NULL,
+  comment text NOT NULL,
+  hidden TINYINT(2) unsigned NOT NULL DEFAULT 0,
+  CONSTRAINT  PRIMARY KEY (id)
+);
+*/
+
+
 $countryname['AF'] = 'Afghanistan';
 $countryname['AX'] = 'Åland Islands';
 $countryname['AL'] = 'Albania';
@@ -285,18 +306,7 @@ $PAGE->set_heading('Expressions of Interest');
 echo $OUTPUT->header();
 
 
-$rows = $DB->get_recordset_sql('SELECT s.*, sd.cid, sd.no, sd.data FROM d5_webform_submitted_data AS sd LEFT JOIN d5_webform_submissions AS s ON sd.sid=s.sid WHERE s.nid=104 ORDER BY s.submitted DESC');
-
-foreach ($rows as $row) {
-
-  $registrations[$row->sid]['submitted'] = $row->submitted;
-  $registrations[$row->sid][$row->cid] = $row->data;
-}
-$rows->close();
-
-if (empty($registrations)) {
-  $registrations = array();
-}
+$interests = $DB->get_records('peoplesinterest', NULL, 'datesubmitted DESC');
 
 
 echo '<h1>Expressions of Interest</h1>';
@@ -401,41 +411,34 @@ function displayoptions($name, $options, $selectedvalue) {
 
 
 $emaildups = 0;
-foreach ($registrations as $sid => $registration) {
-  if (empty($registration['3'])) $registration['3'] = '';
-  $registration['3'] = strip_tags($registration['3']);
+foreach ($interests as $id => $interest) {
 
-  if (empty($registration['9'])) $registration['9'] = '';
-  if (substr($registration['9'], 0, 6) === 'HIDDEN') {
-    unset($registrations[$sid]);
+  if ($interest->hidden) {
+    unset($interests[$id]););
     continue;
   }
 
-  if ($registration['submitted'] < $starttime ||
-    $registration['submitted'] > $endtime) {
-
-    unset($registrations[$sid]);
+  if ($interest->datesubmitted < $starttime ||
+    $interest->datesubmitted > $endtime) {
+    unset($interests[$id]););
     continue;
   }
-
-  if (empty($registration['6'])) $registration['6'] = '';
-  if (empty($registration['7'])) $registration['7'] = '';
 
   if (!empty($chosensearch) &&
-  stripos($registration['3'], $chosensearch) === false &&
-    stripos($registration['6'], $chosensearch) === false &&
-    stripos($registration['7'], $chosensearch) === false) {
+    stripos($interest->email, $chosensearch) === false &&
+    stripos($interest->lastname, $chosensearch) === false &&
+    stripos($interest->firstname, $chosensearch) === false) {
 
-    unset($registrations[$sid]);
+    unset($interests[$id]););
     continue;
   }
 
-  if (empty($emailcounts[$registration['3']])) {
-    $emailcounts[$registration['3']] = 1;
-    $listofemails[]  = htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8');
+  if (empty($emailcounts[$interest->email])) {
+    $emailcounts[$interest->email] = 1;
+    $listofemails[]  = htmlspecialchars($interest->email, ENT_COMPAT, 'UTF-8');
   }
   else {
-    $emailcounts[$registration['3']]++;
+    $emailcounts[$interest->email]++;
     $emaildups++;
   }
 }
@@ -459,91 +462,64 @@ $table->head = array(
 $n = 0;
 
 $modules = array();
-foreach ($registrations as $sid => $registration) {
-
-// Family name:		6
-// Given name:		7
-// Email address:	3
-// First module:	1
-// Second module:	2
-// suggestions:		11
-// Country:			8
-// state:			10
-// comment:			9
-
-  if (empty($registration['1'])) $registration['1'] = '';
-  if (empty($registration['2'])) $registration['2'] = '';
-  if (empty($registration['3'])) $registration['3'] = '';
-  if (empty($registration['6'])) $registration['6'] = '';
-  if (empty($registration['7'])) $registration['7'] = '';
-  if (empty($registration['8'])) $registration['8'] = '';
-  if (empty($registration['9'])) $registration['9'] = '';
-  if (empty($registration['10'])) $registration['10'] = '0';
-
-  $registration['3'] = strip_tags($registration['3']);
-  $registration['6'] = strip_tags($registration['6']);
-  $registration['7'] = strip_tags($registration['7']);
-  $registration['9'] = strip_tags($registration['9']);
-
-  $registration['6'] = mb_substr($registration['6'], 0, 100, 'UTF-8');
-  $registration['7'] = mb_substr($registration['7'], 0, 100, 'UTF-8');
+foreach ($interests as $id => $interest) {
 
   $rowdata = array();
 
-  $rowdata[] = gmdate('d/m/Y H:i', $registration['submitted']);
+  $rowdata[] = gmdate('d/m/Y H:i', $interest->datesubmitted);
 
   $z  = '<form method="post" action="' . $CFG->wwwroot . '/course/int.php" target="_blank">';
-  $z .= '<input type="hidden" name="familyname" value="' . htmlspecialchars($registration['6'], ENT_COMPAT, 'UTF-8') . '" />';
-  $z .= '<input type="hidden" name="givenname"  value="' . htmlspecialchars($registration['7'], ENT_COMPAT, 'UTF-8') . '" />';
-  $z .= '<input type="hidden" name="email"      value="' . htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8') . '" />';
+  $z .= '<input type="hidden" name="familyname" value="' . htmlspecialchars($interest->lastname, ENT_COMPAT, 'UTF-8') . '" />';
+  $z .= '<input type="hidden" name="givenname"  value="' . htmlspecialchars($interest->firstname, ENT_COMPAT, 'UTF-8') . '" />';
+  $z .= '<input type="hidden" name="email"      value="' . htmlspecialchars($interest->email, ENT_COMPAT, 'UTF-8') . '" />';
   $z .= '<span style="display: none;">';
-  $z .= '<textarea name="comment" rows="10" cols="100" wrap="hard">' . htmlspecialchars($registration['9'], ENT_COMPAT, 'UTF-8') . '</textarea>';
+  $z .= '<textarea name="comment" rows="10" cols="100" wrap="hard">' . $interest->comment . '</textarea>';
   $z .= '</span>';
-  $z .= '<input type="hidden" name="state"      value="' . $registration['10'] . '" />';
-  $z .= '<input type="hidden" name="sid"        value="' . $sid                . '" />';
+  $z .= '<input type="hidden" name="state"      value="' . $interest->state . '" />';
+  $z .= '<input type="hidden" name="sid"        value="' . $id                . '" />';
   $z .= '<input type="hidden" name="sesskey"    value="' . $USER->sesskey      . '" />';
   $z .= '<input type="hidden" name="markapp" value="1" />';
   $z .= '<input type="submit" name="approveapplication" value="e-mail" />';
   $z .= '</form>';
   $rowdata[] = $z;
 
-  $rowdata[] = htmlspecialchars($registration['6'], ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($interest->lastname, ENT_COMPAT, 'UTF-8');
 
-  $rowdata[] = htmlspecialchars($registration['7'], ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($interest->firstname, ENT_COMPAT, 'UTF-8');
 
-  if ($emailcounts[$registration['3']] === 1) {
-    $rowdata[] = htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8');
+  if ($emailcounts[$interest->email] === 1) {
+    $rowdata[] = htmlspecialchars($interest->email, ENT_COMPAT, 'UTF-8');
   }
 	else {
-    $rowdata[] = '<span style="color:navy">**</span>' . htmlspecialchars($registration['3'], ENT_COMPAT, 'UTF-8');
+    $rowdata[] = '<span style="color:navy">**</span>' . htmlspecialchars($interest->email, ENT_COMPAT, 'UTF-8');
 	}
 
-  $rowdata[] = htmlspecialchars($registration['1'], ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($interest->coursename1, ENT_COMPAT, 'UTF-8');
 
-  $rowdata[] = htmlspecialchars($registration['2'], ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($interest->coursename2, ENT_COMPAT, 'UTF-8');
 
-  $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($registration['11'], ENT_COMPAT, 'UTF-8')));
+  $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $interest->suggestions));
 
-  if (empty($countryname[$registration['8']])) $rowdata[] = '';
-  else $rowdata[] = $countryname[$registration['8']];
+  if (empty($countryname[$interest->country])) $rowdata[] = '';
+  else $rowdata[] = $countryname[$interest->country];
 
-  if (empty($registration['10'])) $rowdata[] = '';
+  if (empty($interest->state)) $rowdata[] = '';
   else $rowdata[] = 'Yes';
 
-  $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($registration['9'], ENT_COMPAT, 'UTF-8')));
+  $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $interest->comment));
 
-  if (empty($modules[$registration['1']])) {
-    $modules[$registration['1']] = 1;
+  if (empty($modules[$interest->coursename1])) {
+    $modules[$interest->coursename1] = 1;
   }
   else {
-    $modules[$registration['1']]++;
+    $modules[$interest->coursename1]++;
   }
-  if (!empty($registration['2'])) {
-    if (empty($modules[$registration['2']])) {
-      $modules[$registration['2']] = 1;
+  if (!empty($interest->coursename2)) {
+    if (empty($modules[$interest->coursename2])) {
+      $modules[$interest->coursename2] = 1;
     }
     else {
-      $modules[$registration['2']]++;
+      $modules[$interest->coursename2]++;
     }
   }
 

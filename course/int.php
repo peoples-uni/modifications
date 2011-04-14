@@ -21,13 +21,12 @@ require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_
 
 $sid = $_REQUEST['sid'];
 $familyname = dontstripslashes($_REQUEST['familyname']);
-$familyname = strip_tags($familyname);
+$familyname = trim(strip_tags($familyname));
 $givenname = dontstripslashes($_REQUEST['givenname']);
-$givenname = strip_tags($givenname);
+$givenname = trim(strip_tags($givenname));
 $email = dontstripslashes($_REQUEST['email']);
-$email = strip_tags($email);
+$email = trim(strip_tags($email));
 $comment = dontstripslashes($_REQUEST['comment']);
-$comment = strip_tags($comment);
 if ($comment === ' ') $comment = '';
 
 if (!empty($familyname)) {
@@ -38,30 +37,41 @@ echo $OUTPUT->header();
 
 if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
+echo '<script type="text/JavaScript">function areyousuredeleteentry() { var sure = false; sure = confirm("Are you sure you want to Hide this Application Form Entry for ' . htmlspecialchars(dontstripslashes($_REQUEST['2']), ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars($familyname, ENT_COMPAT, 'UTF-8') . ' from All Future Processing?"); return sure;}</script>';
+
 
 if (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
-	$body = dontstripslashes($_POST['defertext']);
-	$body = strip_tags($body);
+  $body = dontstripslashes($_POST['defertext']);
+  $body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-	$subject = 'Peoples-Uni Expression of Interest';
+  $subject = 'Peoples-Uni Expression of Interest';
 
 	if (!sendapprovedmail($email, $subject, $body)) {
 		echo '<br/><br/><br/><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
 	}
 	else {
-		$cid = '10';
-    $ret = $DB->execute('UPDATE d5_webform_submitted_data SET data=? WHERE cid=? AND sid=?', array(1, $cid, $_POST['sid']));
-		echo '<script type="text/javascript">if (!window.opener.closed) {window.opener.location.reload();}</script>';
-		echo '<script type="text/javascript">window.close();</script>';
+    $interest = $DB->get_record('peoplesinterest', array('id' => $_POST['sid']));
+    $interest->state = 1;
+    $DB->update_record('peoplesinterest', $interest);
+    echo '<script type="text/javascript">if (!window.opener.closed) {window.opener.location.reload();}</script>';
+    echo '<script type="text/javascript">window.close();</script>';
 	}
 }
 elseif (!empty($_POST['markupdatecomment'])) {
-	$cid = '9';
-  $ret = $DB->execute('UPDATE d5_webform_submitted_data SET data=? WHERE cid=? AND sid=?', array($comment, $cid, $_POST['sid']));
-	echo '<script type="text/javascript">if (!window.opener.closed) {window.opener.location.reload();}</script>';
-	echo '<script type="text/javascript">window.close();</script>';
+  $interest = $DB->get_record('peoplesinterest', array('id' => $_POST['sid']));
+  $interest->comment = htmlspecialchars($comment, ENT_COMPAT, 'UTF-8');
+  $DB->update_record('peoplesinterest', $interest);
+  echo '<script type="text/javascript">if (!window.opener.closed) {window.opener.location.reload();}</script>';
+  echo '<script type="text/javascript">window.close();</script>';
+}
+elseif (!empty($_POST['markdeleteentry'])) {
+  $interest = $DB->get_record('peoplesinterest', array('id' => $_POST['sid']));
+  $interest->hidden = 1;
+  $DB->update_record('peoplesinterest', $interest);
+  echo '<script type="text/javascript">if (!window.opener.closed) {window.opener.location.reload();}</script>';
+  echo '<script type="text/javascript">window.close();</script>';
 }
 else {
   $peoples_interest_email = get_config(NULL, 'peoples_interest_email');
@@ -96,6 +106,13 @@ else {
 ?>
 <br /><br /><br /><br />
 <strong><a href="javascript:window.close();">Close Window</a></strong>
+<br /><br /><br /><br /><br /><br /><br /><br />
+<form id="deleteentryform" method="post" action="<?php echo $CFG->wwwroot . '/course/int.php'; ?>" onSubmit="return areyousuredeleteentry()">
+<input type="hidden" name="sid" value="<?php echo $sid ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markdeleteentry" value="1" />
+<input type="submit" name="deleteentry" value="Hide this Application Form Entry from All Future Processing" />
+</form>
 <br /><br /><br />
 <?php
 
