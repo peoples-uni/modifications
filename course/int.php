@@ -37,7 +37,7 @@ echo $OUTPUT->header();
 
 if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-echo '<script type="text/JavaScript">function areyousuredeleteentry() { var sure = false; sure = confirm("Are you sure you want to Hide this Application Form Entry for ' . htmlspecialchars(dontstripslashes($_REQUEST['2']), ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars($familyname, ENT_COMPAT, 'UTF-8') . ' from All Future Processing?"); return sure;}</script>';
+echo '<script type="text/JavaScript">function areyousuredeleteentry() { var sure = false; sure = confirm("Are you sure you want to Hide this Application Form Entry for ' . htmlspecialchars($givenname, ENT_COMPAT, 'UTF-8') . ' ' . htmlspecialchars($familyname, ENT_COMPAT, 'UTF-8') . ' from All Future Processing?"); return sure;}</script>';
 
 
 if (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
