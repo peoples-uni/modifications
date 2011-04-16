@@ -20,12 +20,20 @@ require_login();
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
 $sid = $_REQUEST['sid'];
+
+if (empty($_REQUEST['familyname'])) $_REQUEST['familyname'] = '';
 $familyname = dontstripslashes($_REQUEST['familyname']);
 $familyname = trim(strip_tags($familyname));
+
+if (empty($_REQUEST['givenname'])) $_REQUEST['givenname'] = '';
 $givenname = dontstripslashes($_REQUEST['givenname']);
 $givenname = trim(strip_tags($givenname));
+
+if (empty($_REQUEST['email'])) $_REQUEST['email'] = '';
 $email = dontstripslashes($_REQUEST['email']);
 $email = trim(strip_tags($email));
+
+if (empty($_REQUEST['comment'])) $_REQUEST['comment'] = '';
 $comment = dontstripslashes($_REQUEST['comment']);
 if ($comment === ' ') $comment = '';
 
