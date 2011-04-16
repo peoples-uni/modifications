@@ -414,13 +414,13 @@ $emaildups = 0;
 foreach ($interests as $id => $interest) {
 
   if ($interest->hidden) {
-    unset($interests[$id]););
+    unset($interests[$id]);
     continue;
   }
 
   if ($interest->datesubmitted < $starttime ||
     $interest->datesubmitted > $endtime) {
-    unset($interests[$id]););
+    unset($interests[$id]);
     continue;
   }
 
@@ -429,7 +429,7 @@ foreach ($interests as $id => $interest) {
     stripos($interest->lastname, $chosensearch) === false &&
     stripos($interest->firstname, $chosensearch) === false) {
 
-    unset($interests[$id]););
+    unset($interests[$id]);
     continue;
   }
 
