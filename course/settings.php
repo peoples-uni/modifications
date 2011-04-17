@@ -276,7 +276,7 @@ foreach ($activemodules as $activemodule) {
 echo '</table>';
 ?>
 <input type="hidden" name="markupdatemodules" value="1" />
-<input type="submit" name="updatemodules" value="Update Modules for Application Forms from list above" style="width:45em" />
+<input type="submit" name="updatemodules" value="Mark Modules as Full or to be Removed based on Check Boxes Above" style="width:45em" />
 </form>
 <br />
 
