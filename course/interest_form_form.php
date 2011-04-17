@@ -9,7 +9,7 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->libdir.'/formslib.php');
 
-class application_form_interest_form extends moodleform {
+class interest_form_form extends moodleform {
 
   function definition() {
     global $DB, $CFG;
