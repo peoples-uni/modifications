@@ -351,13 +351,13 @@ elseif ($data = $editform->get_data()) {
 
 
   $message  = "Expression of Interest Acknowledgement...\n\n";
-  $message .= "Last Name: $interest->lastname\n";
-  $message .= "First Name: $interest->firstname\n";
-  $message .= "e-mail: $interest->email\n";
-  $message .= "Country: " . $countryname[$interest->country] . "\n";
-  $message .= "Date Submitted: " . gmdate('d/m/Y H:i', $interest->datesubmitted) . "\n";
-  $message .= "Module 1: $interest->coursename1\n";
-  $message .= "Module 2: $interest->coursename2\n";
+  $message .= "Last Name: $interest->lastname\n\n";
+  $message .= "First Name: $interest->firstname\n\n";
+  $message .= "e-mail: $interest->email\n\n";
+  $message .= "Country: " . $countryname[$interest->country] . "\n\n";
+  $message .= "Date Submitted: " . gmdate('d/m/Y H:i', $interest->datesubmitted) . "\n\n";
+  $message .= "Module 1: $interest->coursename1\n\n";
+  $message .= "Module 2: $interest->coursename2\n\n";
   $message .= "Suggestions:\n" . htmlspecialchars_decode($interest->suggestions, ENT_COMPAT) . "\n";
 
   sendapprovedmail($interest->email, "Peoples-uni Expression of Interest in Future Courses From: $interest->lastname, $interest->firstname", $message);
