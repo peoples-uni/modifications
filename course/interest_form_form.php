@@ -330,7 +330,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('static', 'explain1', '&nbsp;', 'Please select the first course module you may be interested in applying for from the drop down box.<br />');
 
     $mform->addElement('select', 'course_id_2', 'Selection 2', $list_for_module_select);
-    $mform->addElement('static', 'explain2', '&nbsp;', 'If you may be interested in applying for two course modules, please select the second course module are interested in from the drop down box.<br />');
+    $mform->addElement('static', 'explain2', '&nbsp;', 'If you may be interested in applying for two course modules, please select the second course module you are interested in from the drop down box.<br />');
 
     $mform->addElement('textarea', 'suggestions', 'If we do not offer the Courses you would like to do, please tell us...', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explainsuggestions', '&nbsp;', 'Enter the details of public health related courses that you would like us to offer.<br />');
