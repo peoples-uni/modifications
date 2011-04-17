@@ -283,7 +283,7 @@ echo '</table>';
 <form id="addnewmoduleform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markaddnewmodule" value="1" />
-<input type="submit" name="addnewmodule" value="Add this Module to above Active Module list for Applications:" style="width:45em" />
+<input type="submit" name="addnewmodule" value="Add this Module to Above Active Module list for Applications:" style="width:45em" />
 <select name="moduletoadd">
 <?php
 foreach ($courses as $course) {
