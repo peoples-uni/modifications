@@ -22,6 +22,7 @@ $list_for_module_select[$i++] = 'Introduction to Epidemiology';
 $list_for_module_select[$i++] = 'Maternal Mortality';
 $list_for_module_select[$i++] = 'Non-Communicable Diseases 1: Diabetes and Cardiovascular Diseases';
 $list_for_module_select[$i++] = 'Patient Safety';
+$list_for_module_select[$i++] = 'Preventing Child Mortality';
 $list_for_module_select[$i++] = 'Public Health Concepts for Policy Makers';
 $list_for_module_select[$i++] = 'Public Health Ethics';
 $list_for_module_select[$i++] = 'Public Health Nutrition';
