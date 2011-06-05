@@ -1,0 +1,145 @@
+--- lib.bak.php	Sat Jun  4 16:06:02 2011
++++ lib.php	Sat Jun  4 16:42:18 2011
+@@ -582,8 +582,142 @@
+      */
+     function update_grade($submission) {
+         assignment_update_grades($this->assignment, $submission->userid);
++
++        $this->record_submission($submission); //ALAN
+     }
+ 
++
++// ALAN START
++/*
++CREATE TABLE mdl_recorded_submissions (
++  id BIGINT(10) unsigned NOT NULL auto_increment,
++  submission BIGINT(10) unsigned NOT NULL DEFAULT 0,
++  assignment BIGINT(10) unsigned NOT NULL DEFAULT 0,
++  userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
++  timemodified BIGINT(10) unsigned NOT NULL DEFAULT 0,
++  data1 TEXT,
++  data2 TEXT,
++  CONSTRAINT PRIMARY KEY (id)
++);
++CREATE INDEX mdl_recorded_submissions_sid_ix ON mdl_recorded_submissions (submission);
++CREATE INDEX mdl_recorded_submissions_aid_ix ON mdl_recorded_submissions (assignment);
++CREATE INDEX mdl_recorded_submissions_uid_ix ON mdl_recorded_submissions (userid);
++CREATE INDEX mdl_recorded_submissions_tim_ix ON mdl_recorded_submissions (timemodified);
++*/
++
++
++function record_submission($submission) {
++  global $DB;
++  global $CFG;
++
++  $submission = $DB->get_record('assignment_submissions', array('id' => $submission->id));
++
++  $recorded_submissions = $DB->get_records_sql("SELECT * FROM mdl_recorded_submissions WHERE submission=$submission->id AND timemodified=$submission->timemodified");
++
++  if (empty($recorded_submissions)) {
++    $recorded_submission = new object();
++    $recorded_submission->submission   = $submission->id;
++    $recorded_submission->assignment   = $submission->assignment;
++    $recorded_submission->userid       = $submission->userid;
++    $recorded_submission->timemodified = $submission->timemodified;
++    if (!empty($submission->data1)) {
++      $recorded_submission->data1 = $submission->data1;
++    }
++    else {
++      $recorded_submission->data1 = '';
++    }
++    if (!empty($submission->data2)) {
++      $recorded_submission->data2 = $submission->data2;
++    }
++    else {
++      $recorded_submission->data2 = '';
++    }
++    $DB->insert_record('recorded_submissions', $recorded_submission);
++
++    $assignment = $DB->get_record('assignment', array('id' => $submission->assignment));
++    if (!empty($assignment) && ($assignment->assignmenttype === 'uploadsingle' || $assignment->assignmenttype === 'upload')) {
++      // Create directory tree (if necessary)
++      $to_file = "$CFG->dataroot/$assignment->course";
++      if (!is_dir($to_file)) {
++        umask(0000);
++        mkdir($to_file, $CFG->directorypermissions);
++      }
++      $to_file = "$CFG->dataroot/$assignment->course/moddata";
++      if (!is_dir($to_file)) {
++        umask(0000);
++        mkdir($to_file, $CFG->directorypermissions);
++      }
++      $to_file = "$CFG->dataroot/$assignment->course/moddata/assignmentsubmissionrecord";
++      if (!is_dir($to_file)) {
++        umask(0000);
++        mkdir($to_file, $CFG->directorypermissions);
++      }
++      $to_file = "$CFG->dataroot/$assignment->course/moddata/assignmentsubmissionrecord/$submission->assignment";
++      if (!is_dir($to_file)) {
++        umask(0000);
++        mkdir($to_file, $CFG->directorypermissions);
++      }
++      $to_file = "$CFG->dataroot/$assignment->course/moddata/assignmentsubmissionrecord/$submission->assignment/$submission->userid";
++      if (!is_dir($to_file)) {
++        umask(0000);
++        mkdir($to_file, $CFG->directorypermissions);
++      }
++      $to_file = "$CFG->dataroot/$assignment->course/moddata/assignmentsubmissionrecord/$submission->assignment/$submission->userid/$submission->timemodified";
++      if (!is_dir($to_file)) {
++        umask(0000);
++        mkdir($to_file, $CFG->directorypermissions);
++      }
++
++      // Copy the files for record purposes
++      //$this->copy_dir(
++      //  "$CFG->dataroot/$assignment->course/moddata/assignment/$submission->assignment/$submission->userid",
++      //  "$CFG->dataroot/$assignment->course/moddata/assignmentsubmissionrecord/$submission->assignment/$submission->userid/$submission->timemodified"
++      //);
++
++      require_once($CFG->libdir . '/filelib.php');
++
++      $fs = get_file_storage();
++
++      $files = $fs->get_area_files($this->context->id, 'mod_assignment', 'submission', $submission->id, 'timemodified', false);
++
++      foreach ($files as $file) {
++        $filepath = $file->get_filepath();
++
++        $dirpath = trim($filepath, '/');
++        $dirs = explode('/', $dirpath);
++
++        // Create directory tree (if necessary)
++        $dirpath = '';
++        foreach ($dirs as $dir) {
++          if (!empty($dir)) {
++            $dirpath .= '/' . $dir;
++            $to_file = "$CFG->dataroot/$assignment->course/moddata/assignmentsubmissionrecord/$submission->assignment/$submission->userid/$submission->timemodified" . $dirpath;
++
++            if (!is_dir($to_file)) {
++              umask(0000);
++              mkdir($to_file, $CFG->directorypermissions);
++            }
++          }
++        }
++
++        $filename = $file->get_filename();
++
++        //$link = file_encode_url($CFG->wwwroot.'/pluginfile.php', '/'.$this->context->id.'/mod_assignment/submission/'.$submission->id.'/'.$filename);
++        //$fullpath = "/{$this->context->id}/mod_assignment/submission/$submission->id/$filename";
++        //$file = $fs->get_file_by_hash(sha1($fullpath));
++
++        $filedata = $file->get_content();
++
++        $fp = fopen("$CFG->dataroot/$assignment->course/moddata/assignmentsubmissionrecord/$submission->assignment/$submission->userid/$submission->timemodified" . $filepath . $filename, 'wb');
++        fwrite($fp, $filedata);
++        fclose($fp);
++      }
++    }
++  }
++}
++// ALAN END
++
++
+     /**
+      * Top-level function for handling of submissions called by submissions.php
+      *

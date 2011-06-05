@@ -1,0 +1,12 @@
+--- grade_item.bak.php	Sat Jun  4 16:05:29 2011
++++ grade_item.php	Sat Jun  4 16:31:24 2011
+@@ -649,6 +649,9 @@
+             // aggregate category grade item
+             $category = $this->get_item_category();
+             $category->grade_item =& $this;
++
++            if ($this->is_course_item()) return true; // ALAN 20090819 Peoples-uni do not want the course (total) grade to be calculated in any way, must be set manually
++
+             if ($category->generate_grades($userid)) {
+                 return true;
+             } else {
