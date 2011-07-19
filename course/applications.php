@@ -44,6 +44,7 @@ CREATE TABLE mdl_peoplesapplication (
   currentjob text NOT NULL,
   education text NOT NULL,
   reasons text NOT NULL,
+  sponsoringorganisation text NOT NULL DEFAULT '',
   methodofpayment VARCHAR(255) NOT NULL DEFAULT '',
   paymentidentification VARCHAR(255) NOT NULL DEFAULT '',
   costowed VARCHAR(10) NOT NULL DEFAULT '0',
@@ -84,6 +85,8 @@ ALTER TABLE mdl_peoplesapplication ADD coursename4 VARCHAR(255) NOT NULL DEFAULT
 
 Will be used to support new Webform...
 ALTER TABLE mdl_peoplesapplication ADD dob VARCHAR(20) NOT NULL DEFAULT '' AFTER semester;
+
+ALTER TABLE mdl_peoplesapplication ADD sponsoringorganisation text NOT NULL DEFAULT '' AFTER reasons;
 ))
 */
 
@@ -766,6 +769,7 @@ else {
     'Postgraduate Qualification',
     'Education Details',
     'Reasons for wanting to enrol',
+    'Sponsoring organisation',
     'Desired Moodle Username',
     'Moodle UserID',
     '',
@@ -815,6 +819,8 @@ Previous educational experience
 8
 Reasons for wanting to enrol
 10
+Sponsoring organisation
+sponsoringorganisation
 Method of payment
 31
 Payment Identification
@@ -937,6 +943,7 @@ foreach ($applications as $sid => $application) {
       $z .= '<textarea name="7" rows="10" cols="100" wrap="hard">'  . $application->currentjob         . '</textarea>';
       $z .= '<textarea name="8" rows="10" cols="100" wrap="hard">'  . $application->education          . '</textarea>';
       $z .= '<textarea name="10" rows="10" cols="100" wrap="hard">' . $application->reasons            . '</textarea>';
+      $z .= '<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard">' . $application->sponsoringorganisation . '</textarea>';
       $z .= '<textarea name="32" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
       $z .= '</span>';
       $z .= '<input type="hidden" name="sid" value="' . $sid . '" />';
@@ -1022,6 +1029,8 @@ foreach ($applications as $sid => $application) {
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
 
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
+
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
 
       $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
 

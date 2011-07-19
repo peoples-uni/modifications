@@ -64,7 +64,11 @@ Previous educational experience
 Reasons for wanting to enrol
 (text area, locked, visible to user)
 
--qualification			[Added 20080217]
+-sponsoringorganisation [Added 20110717]
+Sponsoring organisation
+(text area, visible to user)
+
+-qualification      [Added 20080217]
 Higher Education Qualification
 (text area, locked, visible to user)
 
@@ -288,9 +292,12 @@ elseif (!empty($_POST['username']) && (
 	if (!empty($_POST['education'])) {
 		$user->education = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['education']), ENT_COMPAT, 'UTF-8')));
 	}
-	if (!empty($_POST['reasons'])) {
-		$user->reasons = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['reasons']), ENT_COMPAT, 'UTF-8')));
-	}
+  if (!empty($_POST['reasons'])) {
+    $user->reasons = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['reasons']), ENT_COMPAT, 'UTF-8')));
+  }
+  if (!empty($_POST['sponsoringorganisation'])) {
+    $user->sponsoringorganisation = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['sponsoringorganisation']), ENT_COMPAT, 'UTF-8')));
+  }
 	if (!empty($qualificationname[$_POST['qualification']])) {
 		$user->qualification = $qualificationname[$_POST['qualification']];
 	}
@@ -301,7 +308,7 @@ elseif (!empty($_POST['username']) && (
 		$user->employment = $employmentname[$_POST['employment']];
 	}
 
-  $fields = $DB->get_records_sql("SELECT id, shortname FROM mdl_user_info_field WHERE shortname IN ('dateofbirth', 'applicationaddress', 'currentjob', 'education', 'reasons', 'gender', 'qualification', 'higherqualification', 'employment')");
+  $fields = $DB->get_records_sql("SELECT id, shortname FROM mdl_user_info_field WHERE shortname IN ('dateofbirth', 'applicationaddress', 'currentjob', 'education', 'reasons', 'sponsoringorganisation', 'gender', 'qualification', 'higherqualification', 'employment')");
 	if (!empty($fields)) {
     foreach ($fields as $field) {
 			$data = new object();

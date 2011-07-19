@@ -318,6 +318,7 @@ elseif ($data = $editform->get_data()) {
   $application->currentjob            = $oldapplication->currentjob;
   $application->education             = $oldapplication->education;
   $application->reasons               = $oldapplication->reasons;
+  $application->sponsoringorganisation= $oldapplication->sponsoringorganisation;
   $application->methodofpayment       = $oldapplication->methodofpayment;
   $application->paymentidentification = $oldapplication->paymentidentification;
 
@@ -362,6 +363,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Gender: $application->gender\n\n";
   $message .= "Application Address:\n" . htmlspecialchars_decode($application->applicationaddress, ENT_COMPAT) . "\n\n";
   $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
+  $message .= "Sponsoring organisation:\n" . htmlspecialchars_decode($application->sponsoringorganisation, ENT_COMPAT) . "\n\n";
 
     $employmentname[  ''] = 'Select...';
     $employmentname[ '1'] = 'None';

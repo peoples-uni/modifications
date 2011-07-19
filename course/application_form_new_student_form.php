@@ -372,8 +372,7 @@ $countryname['ZW'] = 'Zimbabwe';
 
     $mform->addElement('textarea', 'applicationaddress', 'Address', 'wrap="HARD" rows="7" cols="50"');
     $mform->addRule('applicationaddress', 'Address is required', 'required', null, 'client');
-
-    $mform->addElement('static', 'explainapplicationaddress', '&nbsp;', 'Your full postal address.<br />');
+    $mform->addElement('static', 'explainapplicationaddress', '&nbsp;', 'Your full postal address. This must be a permanent long term address which can be used for postal delivery if/when necessary.<br />');
 
     $mform->addElement('text', 'city', 'City/Town', 'maxlength="20" size="50"');
     $mform->addRule('city', 'City/Town is required', 'required', null, 'client');
@@ -387,6 +386,9 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addElement('textarea', 'reasons', 'Reasons for wanting to enrol', 'wrap="HARD" rows="10" cols="100"');
     $mform->addRule('reasons', 'Reasons for wanting to enrol is required', 'required', null, 'client');
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to enrol in this course in up to 150 words.<br />');
+
+    $mform->addElement('textarea', 'sponsoringorganisation', 'Sponsoring organisation', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('static', 'explainsponsoringorganisation', '&nbsp;', 'Indicate any organisation that is sponsoring or supporting your application.<br />');
 
     $mform->addElement('text', 'username', 'Preferred Username', 'maxlength="100" size="50"');
     $mform->addRule('username', 'Preferred Username is required', 'required', null, 'client');
@@ -417,8 +419,10 @@ $countryname['ZW'] = 'Zimbabwe';
     $mform->addRule('higherqualification', 'Postgraduate Qualification is required', 'required', null, 'client');
     $mform->addElement('static', 'explainhigherqualification', '&nbsp;', 'Select the option that best describes your Postgraduate Qualification.<br />');
 
-    $mform->addElement('textarea', 'education', 'Other relevant qualifications or educational experience', 'wrap="HARD" rows="10" cols="100"');
-    $mform->addElement('static', 'explaineducation', '&nbsp;', 'You can add any details about any of your relevant qualifications or educational experience.<br />');
+    $mform->addElement('textarea', 'education', 'Relevant qualifications or educational experience', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('static', 'explaineducation', '&nbsp;', 'Add details about any of your relevant qualifications or educational experience.<br />
+If you have a degree please indicate name of degree, awarding institution and also the language of instruction.<br />
+If you have a postgraduate qualification, please indicate name of qualification, awarding institution and also the language of instruction.<br />');
 
     $employmentname[  ''] = 'Select...';
     $employmentname[ '1'] = 'None';

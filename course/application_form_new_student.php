@@ -393,6 +393,10 @@ elseif ($data = $editform->get_data()) {
   // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
+  $dataitem = $data->sponsoringorganisation;
+  if (empty($dataitem)) $dataitem = '';
+  $application->sponsoringorganisation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
   $dataitem = $data->username;
   $dataitem = strip_tags($dataitem);
   $dataitem = str_replace("<", '', $dataitem);
@@ -424,6 +428,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Country: " . $countryname[$application->country] . "\n\n";
   $message .= "Preferred Username: $application->username\n\n";
   $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
+  $message .= "Sponsoring organisation:\n" . htmlspecialchars_decode($application->sponsoringorganisation, ENT_COMPAT) . "\n\n";
 
     $employmentname[  ''] = 'Select...';
     $employmentname[ '1'] = 'None';
