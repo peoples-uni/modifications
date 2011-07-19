@@ -300,7 +300,7 @@ $countryname['ZW'] = 'Zimbabwe';
     $count = count($listforunavailable);
     $listforunavailable = implode(", ", $listforunavailable);
 
-    $text = 'Please select the first course module you are applying for from the drop down box.';
+    $text = 'Please select the first course module you are applying for from the drop down box (you should not apply for Masters Dissertation until given permission to do so).';
     if ($count > 1) {
       $text .= ' Note: ' . $listforunavailable . ' are not available for this semester because they are full.';
     }
