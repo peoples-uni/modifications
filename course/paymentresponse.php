@@ -45,7 +45,7 @@ if (empty($_POST['transId'])) {
 	die();
 }
 
-if (empty($_POST['M_donate']) && empty($_POST['M_wikitox'])) {
+if (empty($_POST['M_donate']) && empty($_POST['M_wikitox']) && empty($_POST['M_mph'])) {
 	if (empty($_POST['M_sid'])) {
 		error_log('RBS WorldPay M_sid Empty!');
 		email_error_to_payments('RBS WorldPay M_sid Empty!', $_POST);
@@ -256,6 +256,116 @@ Peoples-uni Payments";
   $ret = email_to_user($payments, $supportuser, $subject, $message);
 
   $payments->email = 'ahdawson@gmail.com';
+  //$payments->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($payments, $supportuser, $subject, $message);
+}
+elseif (!empty($_POST['M_mph'])) {
+  /*
+  CREATE TABLE mdl_peoples_mph_payment (
+    id BIGINT(10) unsigned NOT NULL auto_increment,
+    sid BIGINT(10) unsigned NOT NULL,
+    userid BIGINT(10) unsigned NOT NULL,
+    amount VARCHAR(10),
+    currency VARCHAR(3),
+    name VARCHAR(255),
+    email VARCHAR(100),
+    address TEXT,
+    country VARCHAR(2),
+    M_mph BIGINT(10) UNSIGNED,
+    datafromworldpay VARCHAR(255),
+    CONSTRAINT  PRIMARY KEY (id)
+  );
+  */
+
+  $peoples_mph_payment = new object();
+  $peoples_mph_payment->sid = 0;
+  $peoples_mph_payment->userid = 0;
+
+  if (empty($_POST['amount'])) {
+    $peoples_mph_payment->amount = '0';
+  }
+  else {
+    $peoples_mph_payment->amount = $_POST['amount'];
+  }
+
+  if (empty($_POST['currency'])) {
+    $peoples_mph_payment->currency = '';
+  }
+  else {
+    $peoples_mph_payment->currency = $_POST['currency'];
+  }
+
+  if (empty($_POST['name'])) {
+    $peoples_mph_payment->name = '';
+  }
+  else {
+    $peoples_mph_payment->name = $_POST['name'];
+  }
+
+  if (empty($_POST['email'])) {
+    $peoples_mph_payment->email = '';
+  }
+  else {
+    $peoples_mph_payment->email = $_POST['email'];
+  }
+
+  if (empty($_POST['address'])) {
+    $peoples_mph_payment->address = '';
+  }
+  else {
+    $peoples_mph_payment->address = $_POST['address'];
+  }
+
+  if (empty($_POST['country'])) {
+    $peoples_mph_payment->country = '';
+  }
+  else {
+    $peoples_mph_payment->country = $_POST['country'];
+  }
+
+  $peoples_mph_payment->M_mph = $_POST['M_mph'];
+
+  $peoples_mph_payment->datafromworldpay = (int)$_POST['transId'];
+
+  $DB->insert_record('peoples_mph_payment', $peoples_mph_payment);
+
+  // e-mail all relevant people
+  $amount   = $peoples_mph_payment->amount;
+  $currency = $peoples_mph_payment->currency;
+  $name     = dontstripslashes($peoples_mph_payment->name);
+  $email    = dontstripslashes($peoples_mph_payment->email);
+  $address  = dontstripslashes($peoples_mph_payment->address);
+  $country  = $peoples_mph_payment->country;
+  $time     = $peoples_mph_payment->M_mph;
+  $transid  = $peoples_mph_payment->datafromworldpay;
+
+  $subject = "MPH Payment of $amount for $name";
+  $message = "MPH Payment via RBS WorldPay
+
+Name   : $name
+Amount : $amount $currency
+e-mail : $email
+Address: $address
+Country: $country
+Date   : " . gmdate('d/m/Y H:i', $time) . "
+
+Transaction ID: $transid
+
+Peoples-uni Payments";
+
+  // Dummy User
+  $payments = new stdClass();
+  $payments->id = 999999999;
+  $payments->maildisplay = true;
+  $payments->mnethostid = $CFG->mnet_localhost_id;
+
+  $supportuser = new stdClass();
+  $supportuser->email = 'payments@peoples-uni.org';
+  $supportuser->firstname = 'Peoples-uni Payments';
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
+
+  $payments->email = 'payments@peoples-uni.org';
   //$payments->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($payments, $supportuser, $subject, $message);
 }
