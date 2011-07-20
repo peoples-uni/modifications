@@ -16,6 +16,7 @@ CREATE TABLE mdl_peoplesapplication (
   state_2 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   state_3 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   state_4 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  ready BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
   username VARCHAR(100) NOT NULL DEFAULT '',
   firstname VARCHAR(100) NOT NULL DEFAULT '',
@@ -87,6 +88,7 @@ Will be used to support new Webform...
 ALTER TABLE mdl_peoplesapplication ADD dob VARCHAR(20) NOT NULL DEFAULT '' AFTER semester;
 
 ALTER TABLE mdl_peoplesapplication ADD sponsoringorganisation text NOT NULL DEFAULT '' AFTER reasons;
+ALTER TABLE mdl_peoplesapplication ADD ready BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER state_4;
 ))
 */
 
@@ -911,6 +913,8 @@ foreach ($applications as $sid => $application) {
     if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';
     elseif ($state === 033) $z = '<span style="color:green">Yes</span>';
     else $z = '<span style="color:blue">Some</span>';
+
+    if ($application->ready && $application->nid != 80) $z .= '<br />(Ready)';
 
     if ($application->notepresent) $z .= '<br />(Note Present)';
 

@@ -364,6 +364,12 @@ if (!empty($_POST['add2newapproved'])) {
 
   $refreshparent = true;
 }
+if (!empty($_POST['markreadyenrol'])) {
+
+  updateapplication($_POST['sid'], 'ready', 1);
+
+  $refreshparent = true;
+}
 if (!empty($_POST['note']) && !empty($_POST['markaddnote'])) {
   $newnote = new object();
   if (!empty($_REQUEST['29']))  $newnote->userid = $_REQUEST['29'];
@@ -621,6 +627,13 @@ echo '<tr>';
 echo '<td>Payment Info</td>';
 echo '<td>' . htmlspecialchars($application->datafromworldpay, ENT_COMPAT, 'UTF-8') . '</td>';
 echo '</tr>';
+
+if ($application->nid != 80) {
+  echo '<tr>';
+  echo '<td>Confirmed Ready to Enrol?<br />(Can set below)</td>';
+  echo '<td>' . ($application->ready ? 'Yes' : 'No') . '</td>';
+  echo '</tr>';
+}
 
 $sid = $_REQUEST['sid'];
 $notes = $DB->get_records_sql("SELECT * FROM mdl_peoplesstudentnotes WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
@@ -1501,6 +1514,48 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <br />
 <?php
 	}
+}
+
+if (!$application->ready && $application->nid != 80) {
+?>
+<br />To mark a student as having confirmed that they are ready to enrol, press "Confirm...".<br />
+<form id="readyenrolform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
+<input type="hidden" name="state" value="<?php echo $state; ?>" />
+<input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="1" value="<?php echo htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="2" value="<?php echo htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="11" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
+<input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
+<input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
+<input type="hidden" name="12" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="14" value="<?php echo htmlspecialchars($_REQUEST['14'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="13" value="<?php echo htmlspecialchars($_REQUEST['13'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="34" value="<?php echo htmlspecialchars($_REQUEST['34'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="35" value="<?php echo htmlspecialchars($_REQUEST['35'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<span style="display: none;">
+<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+</span>
+<input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
+<input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<input type="hidden" name="markreadyenrol" value="1" />
+<input type="submit" name="readyenrol" value="Confirm Student is Ready to Enrol" />
+</form>
+<br />
+<?php
 }
 
 ?>
