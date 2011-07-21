@@ -90,7 +90,24 @@ ALTER TABLE mdl_peoplesapplication ADD dob VARCHAR(20) NOT NULL DEFAULT '' AFTER
 ALTER TABLE mdl_peoplesapplication ADD sponsoringorganisation text NOT NULL DEFAULT '' AFTER reasons;
 ALTER TABLE mdl_peoplesapplication ADD ready BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER state_4;
 ))
+
+CREATE TABLE mdl_peoplesmph (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  sid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) UNSIGNED NOT NULL,
+  mphstatus BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  note text default '' NOT NULL,
+CONSTRAINT PRIMARY KEY (id)
+);
+CREATE INDEX mdl_peoplesmph_uid_ix ON mdl_peoplesmph (userid);
+CREATE INDEX mdl_peoplesmph_sid_ix ON mdl_peoplesmph (sid);
+
+"sid" so can use before userid assigned.
+(userid will be set when it is known.)
 */
+
+
 
 $countryname['AF'] = 'Afghanistan';
 $countryname['AX'] = 'Åland Islands';
@@ -577,9 +594,10 @@ function displayoptions($name, $options, $selectedvalue) {
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
 $applications = $DB->get_records_sql('
-  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent
+  SELECT DISTINCT a.sid AS appsid, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph
   FROM mdl_peoplesapplication a
   LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
+  LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
   WHERE hidden=0 ORDER BY a.datesubmitted DESC');
 if (empty($applications)) {
   $applications = array();
@@ -915,8 +933,8 @@ foreach ($applications as $sid => $application) {
     else $z = '<span style="color:blue">Some</span>';
 
     if ($application->ready && $application->nid != 80) $z .= '<br />(Ready)';
-
     if ($application->notepresent) $z .= '<br />(Note Present)';
+    if ($application->mph) $z .= '<br />(MPH)';
 
     $rowdata[] = $z;
 

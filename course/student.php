@@ -61,6 +61,13 @@ $application = $DB->get_record_sql("SELECT sid FROM mdl_peoplesapplication
 if (!empty($application)) {
   echo '<br />Most recent Registration Number (SID): ' . $application->sid;
 }
+
+$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid=$userid ORDER BY datesubmitted DESC");
+if (!empty($mphs)) {
+  foreach ($mphs as $mph) {
+    echo '<br />Student was Enrolled in MPH (' . gmdate('d/m/Y H:i', $mph->datesubmitted) . ')';
+  }
+}
 echo '<br /><br /><br />';
 
 

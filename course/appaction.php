@@ -348,6 +348,14 @@ elseif (!empty($_POST['username']) && (
     }
   }
 
+  $mphs = $DB->get_records('peoplesmph', array('sid' => $_POST['sid']));
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $mph->userid = $user->id;
+      $DB->update_record('peoplesmph', $mph);
+    }
+  }
+
   get_context_instance(CONTEXT_USER, $user->id);
 
 	events_trigger('user_created', $user);
