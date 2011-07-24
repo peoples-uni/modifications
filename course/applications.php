@@ -105,6 +105,21 @@ CREATE INDEX mdl_peoplesmph_sid_ix ON mdl_peoplesmph (sid);
 
 "sid" so can use before userid assigned.
 (userid will be set when it is known.)
+
+CREATE TABLE mdl_peoplespaymentnote (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  sid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) UNSIGNED NOT NULL,
+  paymentstatus BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  note text default '' NOT NULL,
+CONSTRAINT PRIMARY KEY (id)
+);
+CREATE INDEX mdl_peoplespaymentnote_uid_ix ON mdl_peoplespaymentnote (userid);
+CREATE INDEX mdl_peoplespaymentnote_sid_ix ON mdl_peoplespaymentnote (sid);
+
+"sid" so can use before userid assigned.
+(userid will be set when it is known.)
 */
 
 
@@ -594,10 +609,11 @@ function displayoptions($name, $options, $selectedvalue) {
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
 $applications = $DB->get_records_sql('
-  SELECT DISTINCT a.sid AS appsid, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph
+  SELECT DISTINCT a.sid AS appsid, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, p.id IS NOT NULL AS paymentnote
   FROM mdl_peoplesapplication a
   LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
   LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
+  LEFT JOIN mdl_peoplespaymentnote  p ON (a.sid=p.sid AND p.sid!=0) OR (a.userid=p.userid AND p.userid!=0)
   WHERE hidden=0 ORDER BY a.datesubmitted DESC');
 if (empty($applications)) {
   $applications = array();
@@ -782,7 +798,7 @@ else {
     'Gender',
     'City/Town',
     'Country',
-    'Address</td>',
+    'Address',
     'Current employment',
     'Current employment details',
     'Qualification',
@@ -926,6 +942,7 @@ foreach ($applications as $sid => $application) {
     if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
     elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
     else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+    if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
     $rowdata[] = $z;
 
     if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';

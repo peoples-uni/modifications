@@ -104,6 +104,21 @@ elseif (!empty($_POST['marksetowed'])) {
 
     notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
+elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+
+  $newpaymentnote = new object();
+  $newpaymentnote->userid        = $application->userid;
+  $newpaymentnote->sid           = $_POST['sid'];
+  $newpaymentnote->datesubmitted = time();
+  $newpaymentnote->paymentstatus = 0;
+
+  // textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
+  $newpaymentnote->note = dontaddslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
+  $DB->insert_record('peoplespaymentnote', $newpaymentnote);
+
+  notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+}
 
 echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
@@ -141,6 +156,7 @@ Select the new payment status: <select name="paymentmechanism">
 <input type="hidden" name="markpayconfirm" value="1" />
 <input type="submit" name="payconfirm" value="Submit the Payment Status" />
 </form>
+
 <br /><br /><br />
 <p>If the person did not pay the full amount (or even overpaid) set the Amount Paid here and then click "Submit the New Amount Paid".<br />
 (You can also set the Amount Owed if that has to be changed for some special reason.)</p>
@@ -157,6 +173,36 @@ Amount Owed: <input type="text" size="60" name="costowed" value="<?php echo $app
 <input type="hidden" name="marksetowed" value="1" />
 <input type="submit" name="setowed" value="Submit the New Amount Paid (& Owed)" />
 </form>
+
+<br /><br /><br />
+<?php
+$paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
+if (!empty($paymentnotes)) {
+  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+  echo '<tr><td colspan="2">Payment Notes (can add more below)...</td></tr>';
+
+  foreach ($paymentnotes as $paymentnote) {
+    echo '<tr><td>';
+    echo gmdate('d/m/Y H:i', $paymentnote->datesubmitted);
+    echo '</td><td>';
+    echo $paymentnote->note;
+    echo '</td></tr>';
+  }
+
+  echo '</table>';
+}
+?>
+
+<form id="paymentnoteform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
+
+<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<textarea name="note" rows="5" cols="100" wrap="hard"></textarea><br />
+
+<input type="hidden" name="markpaymentnote" value="1" />
+<input type="submit" name="paymentnote" value="Add this Payment Note to this Student (will be seen on this page in future semesters)" />
+</form>
+
 <br /><br />
 </div>
 

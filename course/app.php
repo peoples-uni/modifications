@@ -622,10 +622,19 @@ elseif ($application->paymentmechanism == 108) $mechanism = 'Posted Cash Confirm
 elseif ($application->paymentmechanism == 109) $mechanism = 'MoneyGram Confirmed';
 else  $mechanism = '';
 
+$sid = $_REQUEST['sid'];
+
+$pnote = '';
+$paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
+if (!empty($paymentnotes)) {
+  $pnote = '<br />(Payment Note Present)';
+}
+
 echo '<tr>';
 echo '<td>Payment Mechanism</td>';
 echo '<td>' . $mechanism;
 echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Change Payment Confirmation</a>';
+echo $pnote;
 echo '</td>';
 echo '</tr>';
 
@@ -647,7 +656,6 @@ if ($application->nid != 80) {
   echo '</tr>';
 }
 
-$sid = $_REQUEST['sid'];
 $notes = $DB->get_records_sql("SELECT * FROM mdl_peoplesstudentnotes WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($notes)) {
   echo '<tr><td colspan="2">Notes (can add more below)...</td></tr>';
