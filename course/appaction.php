@@ -356,6 +356,14 @@ elseif (!empty($_POST['username']) && (
     }
   }
 
+  $paymentnotes = $DB->get_records('peoplespaymentnote', array('sid' => $_POST['sid']));
+  if (!empty($paymentnotes)) {
+    foreach ($paymentnotes as $paymentnote) {
+      $paymentnote->userid = $user->id;
+      $DB->update_record('peoplespaymentnote', $paymentnote);
+    }
+  }
+
   get_context_instance(CONTEXT_USER, $user->id);
 
 	events_trigger('user_created', $user);
