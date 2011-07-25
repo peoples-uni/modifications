@@ -609,7 +609,7 @@ function displayoptions($name, $options, $selectedvalue) {
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
 $applications = $DB->get_records_sql('
-  SELECT DISTINCT a.sid AS appsid, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, p.id IS NOT NULL AS paymentnote
+  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, p.id IS NOT NULL AS paymentnote
   FROM mdl_peoplesapplication a
   LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
   LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
