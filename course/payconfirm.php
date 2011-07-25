@@ -203,6 +203,81 @@ if (!empty($paymentnotes)) {
 <input type="submit" name="paymentnote" value="Add this Payment Note to this Student (will be seen on this page in future semesters)" />
 </form>
 
+
+<?php
+$applications = $DB->get_records_sql("
+  SELECT DISTINCT a.sid AS appsid, a.*
+  FROM mdl_peoplesapplication a
+  WHERE a.userid={$application->userid} AND a.userid!=0 AND sid!=$sid AND hidden=0
+  ORDER BY a.datesubmitted DESC");
+if (!empty($applications)) {
+
+  echo '<br /><br /><br />Other Applications...<br />';
+
+  $table = new html_table();
+  $table->head = array(
+    'Semester',
+    'sid',
+    'Paid?',
+    'Registered?',
+    'Amount Owed',
+    'Amount Paid'
+  );
+
+  foreach ($applications as $sid => $app) {
+    $state = (int)$app->state;
+    if ($state === 2) {
+      $state = 022;
+    }
+    if ($state === 1) {
+      $state = 011;
+    }
+    $state1 = $state & 07;
+    $state2 = $state & 070;
+
+    $rowdata = array();
+    $rowdata[] = htmlspecialchars($app->semester, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = $sid;
+
+    if (empty($app->paymentmechanism)) $mechanism = '';
+    elseif ($app->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
+    elseif ($app->paymentmechanism == 2) $mechanism = ' Barclays';
+    elseif ($app->paymentmechanism == 3) $mechanism = ' Diamond';
+    elseif ($app->paymentmechanism == 4) $mechanism = ' Western Union';
+    elseif ($app->paymentmechanism == 5) $mechanism = ' Indian Confederation';
+    elseif ($app->paymentmechanism == 6) $mechanism = ' Promised End Semester';
+    elseif ($app->paymentmechanism == 7) $mechanism = ' Posted Travellers Cheques';
+    elseif ($app->paymentmechanism == 8) $mechanism = ' Posted Cash';
+    elseif ($app->paymentmechanism == 9) $mechanism = ' MoneyGram';
+    elseif ($app->paymentmechanism == 100) $mechanism = ' Waiver';
+    elseif ($app->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
+    elseif ($app->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
+    elseif ($app->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
+    elseif ($app->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
+    elseif ($app->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';
+    elseif ($app->paymentmechanism == 108) $mechanism = ' Posted Cash Confirmed';
+    elseif ($app->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
+    else  $mechanism = '';
+    if ($app->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
+    elseif (abs($app->costowed - $app->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+    else $z = '<span style="color:blue">' . "Paid $app->costpaid out of $app->costowed" . $mechanism . '</span>';
+    $rowdata[] = $z;
+
+    if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';
+    elseif ($state === 033) $z = '<span style="color:green">Yes</span>';
+    else $z = '<span style="color:blue">Some</span>';
+    $rowdata[] = $z;
+
+    $rowdata[] = $app->costowed;
+    $rowdata[] = $app->costpaid;
+
+    $table->data[] = $rowdata;
+  }
+  echo html_writer::table($table);
+}
+?>
+
+
 <br /><br />
 </div>
 
