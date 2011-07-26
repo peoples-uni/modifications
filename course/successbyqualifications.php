@@ -337,6 +337,7 @@ $liststatus[] = 'No Course Grade';
 $liststatus[] = 'Un-Enrolled';
 $liststatus[] = 'Not informed of Grade and Not Marked to be NOT Graded';
 $liststatus[] = 'Will NOT be Graded, because they did Not Complete';
+$liststatus[] = 'Will NOT be Graded, because of Exceptional Factors';
 $liststatus[] = 'Will NOT be Graded, but will get a Certificate of Participation';
 $liststatus[] = 'Will NOT be Graded, because they did Not Pay';
 
@@ -349,6 +350,7 @@ elseif ($chosenstatus === 'No Course Grade') $gradesql = 'WHERE ISNULL(y.finalgr
 elseif ($chosenstatus === 'Un-Enrolled')                                        $statussql = 'AND e.enrolled=0';
 elseif ($chosenstatus === 'Not informed of Grade and Not Marked to be NOT Graded') $statussql = 'AND e.notified=0';
 elseif ($chosenstatus === 'Will NOT be Graded, because they did Not Complete') $statussql = 'AND e.notified=2';
+elseif ($chosenstatus === 'Will NOT be Graded, because of Exceptional Factors') $statussql = 'AND e.notified=5';
 elseif ($chosenstatus === 'Will NOT be Graded, but will get a Certificate of Participation') $statussql = 'AND e.notified=3';
 elseif ($chosenstatus === 'Will NOT be Graded, because they did Not Pay') $statussql = 'AND e.notified=4';
 
@@ -506,6 +508,9 @@ if (!empty($enrols)) {
     }
     elseif ($enrol->notified == 2) {
       $rowdata[] = 'No, did Not Complete';
+    }
+    elseif ($enrol->notified == 5) {
+      $rowdata[] = 'No, Exceptional Factors';
     }
     elseif ($enrol->notified == 3) {
       $rowdata[] = 'Yes, Certificate of Participation';

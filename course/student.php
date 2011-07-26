@@ -161,6 +161,15 @@ elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradedstudent'])) {
     $DB->update_record('enrolment', $enrolment);
 	}
 }
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradedstudentexceptionalfactors'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
+  if (!empty($enrolment)) {
+    $enrolment->semester = dontaddslashes($enrolment->semester);
+    $enrolment->notified = 5;
+    $DB->update_record('enrolment', $enrolment);
+  }
+}
 elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradedcertificatestudent'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 	$email = $userrecord->email;
@@ -317,6 +326,12 @@ if (!empty($enrols)) {
 				<input type="hidden" name="marknotgradedstudent" value="1" />
 				<input type="submit" name="notgradedstudent" value="Click to indicate Student will NOT be Graded, because they did Not Complete" style="width:40em" />
 				</form><br />
+        <form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+        <input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+        <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+        <input type="hidden" name="marknotgradedstudentexceptionalfactors" value="1" />
+        <input type="submit" name="notgradedstudentexceptionalfactors" value="Click to indicate Student will NOT be Graded, because of Exceptional Factors" style="width:40em" />
+        </form><br />
 				<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
 				<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
 				<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
