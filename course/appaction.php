@@ -20,11 +20,14 @@ CREATE TABLE mdl_enrolment (
 	notified TINYINT(2) unsigned NOT NULL DEFAULT 0,
 	datenotified BIGINT(10) unsigned NOT NULL DEFAULT 0,
 	gradenotified BIGINT(10) unsigned,
+  percentgrades BIGINT(10) unsigned NOT NULL DEFAULT 0,
 CONSTRAINT  PRIMARY KEY (id)
 );
 CREATE INDEX mdl_enrol_uid_ix ON mdl_enrolment (userid);
 CREATE INDEX mdl_enrol_cid_ix ON mdl_enrolment (courseid);
 CREATE INDEX mdl_enrol_sem_ix ON mdl_enrolment (semester);
+
+(ALTER TABLE mdl_enrolment ADD percentgrades BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER gradenotified;)
 
 CREATE TABLE mdl_applicantqualifications (
 	id BIGINT(10) unsigned NOT NULL auto_increment,
