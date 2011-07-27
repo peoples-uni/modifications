@@ -322,7 +322,8 @@ $chosenstatus = dontstripslashes(optional_param('chosenstatus', 'All', PARAM_NOT
 
 $liststatus[] = 'All';
 if (!isset($chosenstatus)) $chosenstatus = 'All';
-$liststatus[] = 'Passed';
+$liststatus[] = 'Passed 45+';
+$liststatus[] = 'Passed 50+';
 $liststatus[] = 'Failed';
 $liststatus[] = 'Did not Pass';
 $liststatus[] = 'No Course Grade';
@@ -335,9 +336,10 @@ $liststatus[] = 'Will NOT be Graded, because they did Not Pay';
 
 $statussql = '';
 $gradesql = '';
-if     ($chosenstatus === 'Passed')          $gradesql = 'WHERE IFNULL(y.finalgrade, 2.0)<=1.99999';
-elseif ($chosenstatus === 'Failed')          $gradesql = 'WHERE IFNULL(y.finalgrade, 1.0)>1.99999';
-elseif ($chosenstatus === 'Did not Pass')    $gradesql = 'WHERE IFNULL(y.finalgrade, 2.0)>1.99999';
+if     ($chosenstatus === 'Passed 45+')  $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0) >44.99999))';
+elseif ($chosenstatus === 'Passed 50+')  $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0) >49.99999))';
+elseif ($chosenstatus === 'Failed')      $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 1.0) >1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade, 100.0)<=44.99999))';
+elseif ($chosenstatus === 'Did not Pass')$gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0) >1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0)<=44.99999))';
 elseif ($chosenstatus === 'No Course Grade') $gradesql = 'WHERE ISNULL(y.finalgrade)';
 elseif ($chosenstatus === 'Un-Enrolled')                                        $statussql = 'AND e.enrolled=0';
 elseif ($chosenstatus === 'Not informed of Grade and Not Marked to be NOT Graded') $statussql = 'AND e.notified=0';
@@ -529,9 +531,12 @@ if (!empty($enrols)) {
 		}
     $rowdata[] = $z;
 
-    if (empty($enrol->finalgrade))        $rowdata[] = '';
-    elseif ($enrol->finalgrade > 1.99999) $rowdata[] = 'Failed';
-    else                                  $rowdata[] = 'Passed';
+    if     (empty($enrol->finalgrade))    $rowdata[] = ''; // MySQL Decimal '0.00000' is not empty which is good
+    elseif (($enrol->percentgrades == 0) AND ($enrol->finalgrade > 1.99999)) $rowdata[] = 'Failed';
+    elseif ($enrol->percentgrades == 0)     $rowdata[] = 'Passed';
+    elseif ($enrol->finalgrade <= 44.99999) $rowdata[] = 'Failed ('     . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+    elseif ($enrol->finalgrade  > 49.99999) $rowdata[] = 'Passed 50+ (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+    else                                    $rowdata[] = 'Passed 45+ (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
 
 		if ($enrol->notified == 0) {
       $rowdata[] = '';
