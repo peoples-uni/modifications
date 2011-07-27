@@ -266,6 +266,7 @@ if (!empty($_POST['markfilter'])) {
     . '&chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
     . (empty($_POST['sortbyaccess']) ? '&sortbyaccess=0' : '&sortbyaccess=1')
     . '&showmissingfordays=' . urlencode(dontstripslashes($_POST['showmissingfordays']))
+    . (empty($_POST['showpaymentstatus']) ? '&showpaymentstatus=0' : '&showpaymentstatus=1')
     );
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
@@ -362,6 +363,7 @@ if (empty($chosensemester) || ($chosensemester == 'All')) {
 else {
   $semestersql = 'AND e.semester=?';
 }
+
 if (!empty($_REQUEST['sortbyaccess'])) {
 	$sortbyaccess = true;
 	$orderby ='x.lastaccess DESC, x.firstname ASC, username ASC, fullname ASC';
@@ -395,6 +397,12 @@ else {
   $showmissingfordayssql = 'AND ((u.lastaccess=0) OR (((' . time() . ' - u.lastaccess)/86400) >  ' . ((int)$showmissingfordays) . '))';
 }
 
+if (!empty($_REQUEST['showpaymentstatus'])) {
+  $showpaymentstatus = true;
+}
+else {
+  $showpaymentstatus = false;
+}
 
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/coursegrades.php'; ?>">
@@ -406,6 +414,7 @@ Display entries using the following filters...
     <td>Semester</td>
     <td>Sort by Last Access</td>
     <td>Show Students Not Logged on for this many Days</td>
+    <td>Show Payment Status</td>
   </tr>
   <tr>
     <td>
@@ -429,6 +438,7 @@ Display entries using the following filters...
     <?php
     displayoptions('showmissingfordays', $listshowmissingfordays, $showmissingfordays);
     ?>
+    <td><input type="checkbox" name="showpaymentstatus" <?php if ($showpaymentstatus) echo ' CHECKED'; ?>></td>
 	</tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
@@ -489,6 +499,7 @@ $table->head = array(
   '',
   ''
   );
+if ($showpaymentstatus) $table->head[] = 'Payment Status for indicated semester';
 
 $n = 0;
 $lastname = '';
@@ -552,6 +563,40 @@ if (!empty($enrols)) {
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">Student Grades</a>' . $inmph;
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $enrol->userid . '" target="_blank">Student Submissions</a>';
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/grade/report/user/index.php?id=' . $enrol->courseid . '&userid=' . $enrol->userid . '" target="_blank">Moodle Grade report</a>';
+
+    if ($showpaymentstatus) {
+      $z = '';
+      $application = $DB->get_record_sql("SELECT * FROM mdl_peoplesapplication
+        WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27) AND userid=? AND semester=?
+        ORDER BY datesubmitted DESC", array($userid, $enrol->semester), IGNORE_MULTIPLE);
+      if (!empty($application)) {
+        if (empty($application->paymentmechanism)) $mechanism = '';
+        elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
+        elseif ($application->paymentmechanism == 2) $mechanism = ' Barclays';
+        elseif ($application->paymentmechanism == 3) $mechanism = ' Diamond';
+        elseif ($application->paymentmechanism == 4) $mechanism = ' Western Union';
+        elseif ($application->paymentmechanism == 5) $mechanism = ' Indian Confederation';
+        elseif ($application->paymentmechanism == 6) $mechanism = ' Promised End Semester';
+        elseif ($application->paymentmechanism == 7) $mechanism = ' Posted Travellers Cheques';
+        elseif ($application->paymentmechanism == 8) $mechanism = ' Posted Cash';
+        elseif ($application->paymentmechanism == 9) $mechanism = ' MoneyGram';
+        elseif ($application->paymentmechanism == 100) $mechanism = ' Waiver';
+        elseif ($application->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
+        elseif ($application->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
+        elseif ($application->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
+        elseif ($application->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
+        elseif ($application->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';
+        elseif ($application->paymentmechanism == 108) $mechanism = ' Posted Cash Confirmed';
+        elseif ($application->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
+        else  $mechanism = '';
+
+        if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
+        elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+        else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+        if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
+      }
+      $rowdata[] = $z;
+    }
 
 		$listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
 
@@ -643,7 +688,8 @@ Look at list of e-mails sent to verify they went!<br />
     . '&chosenstatus=' . urlencode($chosenstatus)
     . '&chosensemester=' . urlencode($chosensemester)
     . (empty($sortbyaccess) ? '&sortbyaccess=0' : '&sortbyaccess=1')
-    . '&showmissingfordays=' . urlencode($showmissingfordays);
+    . '&showmissingfordays=' . urlencode($showmissingfordays)
+    . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1');
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 <textarea name="emailbody" rows="31" cols="75" wrap="hard">
@@ -670,7 +716,8 @@ Look at list of e-mails sent to verify they went!<br />
     . '&chosenstatus=' . urlencode($chosenstatus)
     . '&chosensemester=' . urlencode($chosensemester)
     . (empty($sortbyaccess) ? '&sortbyaccess=0' : '&sortbyaccess=1')
-    . '&showmissingfordays=' . urlencode($showmissingfordays);
+    . '&showmissingfordays=' . urlencode($showmissingfordays)
+    . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1');
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 <textarea name="emailbody" rows="31" cols="75" wrap="hard">

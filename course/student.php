@@ -55,11 +55,37 @@ echo '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $userid . '" target="_
 echo ', Last access: ' . ($userrecord->lastaccess ? format_time(time() - $userrecord->lastaccess) : get_string('never'));
 
 
-$application = $DB->get_record_sql("SELECT sid FROM mdl_peoplesapplication
+$application = $DB->get_record_sql("SELECT * FROM mdl_peoplesapplication
   WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27 OR state=9 OR state=10 OR state=17) AND userid=?
   ORDER BY datesubmitted DESC", array($userid), IGNORE_MULTIPLE);
 if (!empty($application)) {
   echo '<br />Most recent Registration Number (SID): ' . $application->sid;
+
+  if (empty($application->paymentmechanism)) $mechanism = '';
+  elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
+  elseif ($application->paymentmechanism == 2) $mechanism = ' Barclays';
+  elseif ($application->paymentmechanism == 3) $mechanism = ' Diamond';
+  elseif ($application->paymentmechanism == 4) $mechanism = ' Western Union';
+  elseif ($application->paymentmechanism == 5) $mechanism = ' Indian Confederation';
+  elseif ($application->paymentmechanism == 6) $mechanism = ' Promised End Semester';
+  elseif ($application->paymentmechanism == 7) $mechanism = ' Posted Travellers Cheques';
+  elseif ($application->paymentmechanism == 8) $mechanism = ' Posted Cash';
+  elseif ($application->paymentmechanism == 9) $mechanism = ' MoneyGram';
+  elseif ($application->paymentmechanism == 100) $mechanism = ' Waiver';
+  elseif ($application->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
+  elseif ($application->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
+  elseif ($application->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
+  elseif ($application->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
+  elseif ($application->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';
+  elseif ($application->paymentmechanism == 108) $mechanism = ' Posted Cash Confirmed';
+  elseif ($application->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
+  else  $mechanism = '';
+
+  if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
+  elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+  else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+  if ($application->paymentnote) $z .= ' (Payment Note Present)';
+  echo '<br />Payment Status for most recent Application: ' . $z;
 }
 
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid=$userid ORDER BY datesubmitted DESC");
