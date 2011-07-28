@@ -842,6 +842,7 @@ function enrolincourse($course, $user, $semester) {
       $enrolment->semester = $semester;
       $enrolment->datefirstenrolled = time();
       $enrolment->enrolled = 1;
+      $enrolment->percentgrades = 1;
 
       $DB->insert_record('enrolment', $enrolment);
     }
