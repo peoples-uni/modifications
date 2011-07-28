@@ -528,6 +528,7 @@ if (!empty($enrols)) {
 echo '<br /><br />';
 
 
+// This has now (20110728) changed Diploma: 6, Certificate: 3 (also foundation/problems are no longer hard coded)
 // A Diploma when 8 modules have been passed,
 // Provided at least two are from each of the Foundation Sciences and Public Health problems groupings.
 //// THESE LISTS MUST BE KEEPT UP TO DATE HERE AND ALSO IN peoplescertificate.php WHERE THIS IS RECHECKED
@@ -569,7 +570,7 @@ $countp = 0;
 foreach ($enrols as $enrol) {
 	//Test: $enrol->finalgrade = 1.0; (old grading system)
 	//Test: $enrol->notified = 1;
-	if (!empty($enrol->finalgrade) && ($enrol->finalgrade <= 1.99999) && ($enrol->notified == 1)) {
+  if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
 		if ($first) {
 			$first = false;
 			echo '<b>Download your Academic Transcript by clicking on the links below...</b><br />';
@@ -591,10 +592,10 @@ foreach ($enrols as $enrol) {
 	}
 }
 
-if ($certificate >= 4) {
+if ($certificate >= 3) {
 	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate" target="_blank">Your Peoples Open Access Educational Initiative Certificate</a><br />';
 }
-if (($certificate >= 8) && ($countf >= 2) && ($countp >= 2)) {
+if (($certificate >= 6) && ($countf >= 2) && ($countp >= 2)) {
 	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma" target="_blank">Your Peoples Open Access Educational Initiative Diploma</a><br />';
 }
 
