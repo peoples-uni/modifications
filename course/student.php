@@ -143,7 +143,7 @@ print a PDF academic transcript for the module at that link.
 		$enrolment->semester = dontaddslashes($enrolment->semester);
 		$enrolment->notified = 1;
 		$enrolment->datenotified = time();
-		$enrolment->gradenotified = 1; // Pass
+    $enrolment->gradenotified = 1; // Pass (not used at present)
     $DB->update_record('enrolment', $enrolment);
 	}
 }
@@ -174,7 +174,7 @@ try to reach a pass grade, and we will be happy to give you any advice that woul
 		$enrolment->semester = dontaddslashes($enrolment->semester);
 		$enrolment->notified = 1;
 		$enrolment->datenotified = time();
-		$enrolment->gradenotified = 0; // Fail
+    $enrolment->gradenotified = 0; // Fail (not used at present)
     $DB->update_record('enrolment', $enrolment);
 	}
 }
@@ -500,12 +500,12 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 		echo '</table>';
 	}
 ?>
-<br />To add a note to this student's grading record, add text below and press "Add...".<br />
+<br />To add a note to this student's record, add text below and press "Add...".<br />
 <form id="addnoteform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
 <textarea name="note" rows="5" cols="100" wrap="hard"></textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markaddnote" value="1" />
-<input type="submit" name="addnote" value="Add This Note to Student Grading Record" />
+<input type="submit" name="addnote" value="Add This Note to Student Record" />
 </form>
 <br /><br />
 <?php
