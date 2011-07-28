@@ -531,7 +531,7 @@ if (!empty($enrols)) {
 		}
     $rowdata[] = $z;
 
-    if     (empty($enrol->finalgrade))    $rowdata[] = ''; // MySQL Decimal '0.00000' is not empty which is good
+    if     (empty($enrol->finalgrade)) $rowdata[] = ''; // MySQL Decimal '0.00000' is not empty which is good
     elseif (($enrol->percentgrades == 0) AND ($enrol->finalgrade > 1.99999)) $rowdata[] = 'Failed';
     elseif ($enrol->percentgrades == 0)     $rowdata[] = 'Passed';
     elseif ($enrol->finalgrade <= 44.99999) $rowdata[] = 'Failed ('     . ((int)($enrol->finalgrade + 0.00001)) . '%)';

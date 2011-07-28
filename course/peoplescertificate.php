@@ -28,7 +28,7 @@ if ($cert == 'transcript') {
 	//AND g.userid=$userid AND g.itemid=i.id AND i.itemtype='course' AND i.courseid=$courseid");
 
 	$enrolid = required_param('enrolid', PARAM_INT);
-	$enrol = $DB->get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified, g.finalgrade
+  $enrol = $DB->get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified, e.percentgrades, g.finalgrade
 	FROM mdl_enrolment e, mdl_course c, mdl_grade_grades g, mdl_grade_items i
 	WHERE e.id=$enrolid AND e.courseid=c.id AND e.userid=g.userid AND g.itemid=i.id AND i.itemtype='course' AND e.courseid=i.courseid");
 	if (empty($enrol)) {
@@ -74,7 +74,7 @@ if ($cert == 'transcript') {
 		error('You may only print your own certificate.');
 	}
 
-	if (empty($enrol->finalgrade) || ($enrol->finalgrade > 1.99999) || ($enrol->notified != 1)) {
+  if (empty($enrol->finalgrade) || !(($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) || ($enrol->notified != 1)) {
 		error('Not finally graded or not Passed');
 	}
 
@@ -165,7 +165,7 @@ if ($cert == 'transcript') {
 }
 elseif ($cert == 'participation') {
 	$enrolid = required_param('enrolid', PARAM_INT);
-	$enrol = $DB->get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified FROM mdl_enrolment e WHERE e.id=$enrolid");
+  $enrol = $DB->get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified, e.percentgrades FROM mdl_enrolment e WHERE e.id=$enrolid");
 	if (empty($enrol)) {
 		error('enrolment not found');
 	}
@@ -317,7 +317,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 	$lastestdate = 0;
 	$modules[] = 'Modules completed:';
 	foreach ($enrols as $enrol) {
-		if (!empty($enrol->finalgrade) && ($enrol->finalgrade <= 1.99999) && ($enrol->notified == 1)) {
+		if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
 			$certificate++;
 			$matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches);	// Take out course code without Year/Semester part
 			if ($matched && !empty($foundation[$matches[1]])) $countf++;
@@ -328,10 +328,10 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 		}
 	}
 
-	if (($cert == 'certificate') && ($certificate >= 4)) {
+	if (($cert == 'certificate') && ($certificate >= 3)) {
 		$award = 'Certificate in Public Health';
 	}
-	elseif (($cert == 'diploma') && ($certificate >= 8) && ($countf >= 2) && ($countp >= 2)) {
+	elseif (($cert == 'diploma') && ($certificate >= 6) && ($countf >= 2) && ($countp >= 2)) {
 			$award = 'Diploma in Public Health';
 	}
 	elseif ($cert == 'testcertificate') {
