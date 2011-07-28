@@ -139,13 +139,13 @@ print a PDF academic transcript for the module at that link.
 		die();
 	}
   $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
-	if (!empty($enrolment)) {
-		$enrolment->semester = dontaddslashes($enrolment->semester);
-		$enrolment->notified = 1;
-		$enrolment->datenotified = time();
+  if (!empty($enrolment)) {
+    $enrolment->semester = dontaddslashes($enrolment->semester);
+    $enrolment->notified = 1;
+    $enrolment->datenotified = time();
     $enrolment->gradenotified = 1; // Pass (not used at present)
     $DB->update_record('enrolment', $enrolment);
-	}
+  }
 }
 elseif (!empty($_POST['courseid']) && !empty($_POST['marknotifiedstudentfail'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -177,6 +177,100 @@ try to reach a pass grade, and we will be happy to give you any advice that woul
     $enrolment->gradenotified = 0; // Fail (not used at present)
     $DB->update_record('enrolment', $enrolment);
 	}
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotifiedstudentpassdiploma'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $email = $userrecord->email;
+  $course = $DB->get_record('course', array('id' => $_POST['courseid']));
+  $coursename = empty($course->fullname) ? '' : $course->fullname;
+  $body = "Dear $userrecord->firstname,
+
+We have now completed the assessment process of your course module '$coursename',
+and you can see the final result if you go to... $CFG->wwwroot/course/student.php?id=$userid
+
+I am pleased to tell you that you have passed at diploma level (" . $_POST['finalgrade'] . "%),
+and that you can download and print a PDF academic transcript for the module at that link.
+
+    Peoples Open Access Education Initiative Administrator.";
+  $subject = 'Peoples-Uni Grading Complete for: ' . $coursename;
+
+  if (!sendapprovedmail($email, $subject, $body)) {
+    echo '<br /><br /><br /><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
+    echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+    print_footer();
+    die();
+  }
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
+  if (!empty($enrolment)) {
+    $enrolment->semester = dontaddslashes($enrolment->semester);
+    $enrolment->notified = 1;
+    $enrolment->datenotified = time();
+    $enrolment->gradenotified = $_POST['finalgrade']; // Not used at present
+    $DB->update_record('enrolment', $enrolment);
+  }
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotifiedstudentpassmasters'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $email = $userrecord->email;
+  $course = $DB->get_record('course', array('id' => $_POST['courseid']));
+  $coursename = empty($course->fullname) ? '' : $course->fullname;
+  $body = "Dear $userrecord->firstname,
+
+We have now completed the assessment process of your course module '$coursename',
+and you can see the final result if you go to... $CFG->wwwroot/course/student.php?id=$userid
+
+I am pleased to tell you that you have passed at masters level (" . $_POST['finalgrade'] . "%),
+and that you can download and print a PDF academic transcript for the module at that link.
+
+    Peoples Open Access Education Initiative Administrator.";
+  $subject = 'Peoples-Uni Grading Complete for: ' . $coursename;
+
+  if (!sendapprovedmail($email, $subject, $body)) {
+    echo '<br /><br /><br /><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
+    echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+    print_footer();
+    die();
+  }
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
+  if (!empty($enrolment)) {
+    $enrolment->semester = dontaddslashes($enrolment->semester);
+    $enrolment->notified = 1;
+    $enrolment->datenotified = time();
+    $enrolment->gradenotified = $_POST['finalgrade']; // Not used at present
+    $DB->update_record('enrolment', $enrolment);
+  }
+}
+elseif (!empty($_POST['courseid']) && !empty($_POST['marknotifiedstudentfaildiploma'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $email = $userrecord->email;
+  $course = $DB->get_record('course', array('id' => $_POST['courseid']));
+  $coursename = empty($course->fullname) ? '' : $course->fullname;
+  $body = "Dear $userrecord->firstname,
+
+We have now completed the assessment process of your course module '$coursename',
+and you can see the final result if you go to... $CFG->wwwroot/course/student.php?id=$userid
+
+I am sorry to tell you that you have not passed (" . $_POST['finalgrade'] . "%).
+You are welcome to enrol once more to try to reach a pass grade,
+and we will be happy to give you any advice that would help.
+
+    Peoples Open Access Education Initiative Administrator.";
+  $subject = 'Peoples-Uni Grading Complete for: ' . $coursename;
+
+  if (!sendapprovedmail($email, $subject, $body)) {
+    echo '<br /><br /><br /><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
+    echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+    print_footer();
+    die();
+  }
+  $enrolment = $DB->get_record('enrolment', array('userid' => $userid, 'courseid' => $_POST['courseid']));
+  if (!empty($enrolment)) {
+    $enrolment->semester = dontaddslashes($enrolment->semester);
+    $enrolment->notified = 1;
+    $enrolment->datenotified = time();
+    $enrolment->gradenotified = $_POST['finalgrade']; // Not used at present
+    $DB->update_record('enrolment', $enrolment);
+  }
 }
 elseif (!empty($_POST['courseid']) && !empty($_POST['marknotgradedstudent'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -324,26 +418,64 @@ if (!empty($enrols)) {
 		if ($enrol->notified == 0) {
 			if ($isteacher) {
 				if (!empty($enrol->finalgrade)) {
-					if ($enrol->finalgrade > 1.99999) {
-						?>
-						<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
-						<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
-						<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
-						<input type="hidden" name="marknotifiedstudentfail" value="1" />
-						<input type="submit" name="notifiedstudentfail" value="Mark Grading Complete and Notify Student: They Failed" style="width:40em" />
-						</form>
-						<?php
-					}
-					else {
-						?>
-						<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
-						<input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
-						<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
-						<input type="hidden" name="marknotifiedstudentpass" value="1" />
-						<input type="submit" name="notifiedstudentpass" value="Mark Grading Complete and Notify Student: They Passed" style="width:40em" />
-						</form>
-						<?php
-					}
+          if ($enrol->percentgrades == 0) {
+            if ($enrol->finalgrade > 1.99999) {
+              ?>
+              <form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+              <input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+              <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+              <input type="hidden" name="marknotifiedstudentfail" value="1" />
+              <input type="submit" name="notifiedstudentfail" value="Mark Grading Complete and Notify Student: They Failed" style="width:40em" />
+              </form>
+              <?php
+            }
+            else {
+              ?>
+              <form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+              <input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+              <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+              <input type="hidden" name="marknotifiedstudentpass" value="1" />
+              <input type="submit" name="notifiedstudentpass" value="Mark Grading Complete and Notify Student: They Passed" style="width:40em" />
+              </form>
+              <?php
+            }
+          }
+          else {
+            $finalgrade = (int)($enrol->finalgrade + 0.00001);
+            if ($finalgrade < 45) {
+              ?>
+              <form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+              <input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+              <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+              <input type="hidden" name="finalgrade" value="<?php echo $finalgrade; ?>" />
+              <input type="hidden" name="marknotifiedstudentfaildiploma" value="1" />
+              <input type="submit" name="notifiedstudentfaildiploma" value="Mark Grading Complete and Notify Student: They Failed (<?php echo $finalgrade; ?>%)" style="width:40em" />
+              </form>
+              <?php
+            }
+            elseif ($finalgrade < 50) {
+              ?>
+              <form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+              <input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+              <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+              <input type="hidden" name="finalgrade" value="<?php echo $finalgrade; ?>" />
+              <input type="hidden" name="marknotifiedstudentpassdiploma" value="1" />
+              <input type="submit" name="notifiedstudentpassdiploma" value="Mark Grading Complete and Notify Student: They Passed Diploma Level (<?php echo $finalgrade; ?>%)" style="width:40em" />
+              </form>
+              <?php
+            }
+            else {
+              ?>
+              <form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+              <input type="hidden" name="courseid" value="<?php echo $courseid; ?>" />
+              <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+              <input type="hidden" name="finalgrade" value="<?php echo $finalgrade; ?>" />
+              <input type="hidden" name="marknotifiedstudentpassmasters" value="1" />
+              <input type="submit" name="notifiedstudentpassmasters" value="Mark Grading Complete and Notify Student: They Passed Masters Level (<?php echo $finalgrade; ?>%)" style="width:40em" />
+              </form>
+              <?php
+            }
+          }
 				}
 				?>
 				<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
@@ -435,7 +567,7 @@ $certificate = 0;
 $countf = 0;
 $countp = 0;
 foreach ($enrols as $enrol) {
-	//Test: $enrol->finalgrade = 1.0;
+	//Test: $enrol->finalgrade = 1.0; (old grading system)
 	//Test: $enrol->notified = 1;
 	if (!empty($enrol->finalgrade) && ($enrol->finalgrade <= 1.99999) && ($enrol->notified == 1)) {
 		if ($first) {
