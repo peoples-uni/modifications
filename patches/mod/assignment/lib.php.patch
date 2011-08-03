@@ -1,13 +1,13 @@
---- lib.bak.php	Sat Jun  4 16:06:02 2011
-+++ lib.php	Sat Jun  4 16:42:18 2011
-@@ -582,8 +582,142 @@
+--- lib.bak.php	Wed Aug  3 07:29:14 2011
++++ lib.php	Wed Aug  3 08:03:44 2011
+@@ -585,7 +585,141 @@
       */
      function update_grade($submission) {
          assignment_update_grades($this->assignment, $submission->userid);
 +
 +        $this->record_submission($submission); //ALAN
      }
- 
++
 +
 +// ALAN START
 +/*
@@ -139,7 +139,6 @@
 +}
 +// ALAN END
 +
-+
+ 
      /**
       * Top-level function for handling of submissions called by submissions.php
-      *
