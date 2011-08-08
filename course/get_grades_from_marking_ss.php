@@ -135,20 +135,25 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
       }
     }
 
-    if (empty($columns_for_headers['Overall Module Grade: Pass/fail'])) {
-      echo "<br /><br /><strong>Error: Unable to find header for 'Overall Module Grade: Pass/fail'.</strong><br /><br />";
+    if (empty($columns_for_headers['Overall Module Grade: Pass/fail']) && empty($columns_for_headers['Overall Module Grade (%)'])) {
+      echo "<br /><br /><strong>Error: Unable to find header for 'Overall Module Grade (%)'.</strong><br /><br />";
 
       echo '<br /><strong><a href="javascript:window.close();">Close Window</a></strong>';
       print_footer();
       die();
     }
-    $col = $columns_for_headers['Overall Module Grade: Pass/fail'];
+    if (!empty($columns_for_headers['Overall Module Grade: Pass/fail'])) {
+      $col = $columns_for_headers['Overall Module Grade: Pass/fail'];
+    }
+    if (!empty($columns_for_headers['Overall Module Grade (%)'])) {
+      $col = $columns_for_headers['Overall Module Grade (%)'];
+    }
 
     $n_grades = 0;
     $grades = array();
     echo '<table>';
     foreach ($users as $row => $user_id) {
-      if (!empty($ss[$row][$col])) {
+      if (isset($ss[$row][$col])) {
         $grades[$user_id] = $ss[$row][$col];
         echo "<tr><td>{$usertexts[$row]}:&nbsp;</td><td>{$grades[$user_id]}</td></tr>";
         $n_grades++;
@@ -184,7 +189,8 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
     $n_updated = 0;
     foreach ($users as $row => $user_id) {
       $grade = $grades[$user_id];
-      $nograde = empty($grade) || (stripos($grade, 'P')===FALSE && stripos($grade, 'F')===FALSE);
+      //$nograde = empty($grade) || (stripos($grade, 'P')===FALSE && stripos($grade, 'F')===FALSE);
+      $nograde = (!isset($grade)) || (!is_numeric($grade)) || ($grade < 0) || ($grade > 100);
 
       $grade_grade = $DB->get_record('grade_grades', array('itemid' => $grade_item->id, 'userid' => $user_id));
 
@@ -195,8 +201,9 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
         // Need to Insert a grade in Moodle
         $record = new object();
 
-        if     (stripos($grade, 'P') !== FALSE) $record->finalgrade = 1.0;
-        elseif (stripos($grade, 'F') !== FALSE) $record->finalgrade = 2.0;
+        //if     (stripos($grade, 'P') !== FALSE) $record->finalgrade = 1.0;
+        //elseif (stripos($grade, 'F') !== FALSE) $record->finalgrade = 2.0;
+        $record->finalgrade = (float)$grade;
 
         $record->itemid       = $grade_item->id;
         $record->userid       = $user_id;
@@ -223,9 +230,10 @@ if (!empty($_POST['markgetgradesfromss']) && !empty($_POST['course_id'])) {
         $record = new object();
         $record->id = $grade_grade->id;
 
-        if     ($nograde)                       $record->finalgrade = NULL;
-        elseif (stripos($grade, 'P') !== FALSE) $record->finalgrade = 1.0;
-        elseif (stripos($grade, 'F') !== FALSE) $record->finalgrade = 2.0;
+        if ($nograde) $record->finalgrade = NULL;
+        else          $record->finalgrade = (float)$grade;
+        //elseif (stripos($grade, 'P') !== FALSE) $record->finalgrade = 1.0;
+        //elseif (stripos($grade, 'F') !== FALSE) $record->finalgrade = 2.0;
 
         if (is_null($grade_grade->finalgrade) && is_null($record->finalgrade)) continue;
         if (isset($grade_grade->finalgrade) && isset($record->finalgrade) && (abs($grade_grade->finalgrade - $record->finalgrade) < 0.00001)) continue;
@@ -270,7 +278,7 @@ else {
   if (empty($course)) die();
 
   echo '<script type="text/JavaScript">function areyousuregetgradesfromss() { var sure = false; sure = confirm("Are you sure you want to Retrieve the Course Total Grades (only) from the Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking for: ' . htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8')
-    . '. These are taken from the column \"Overall Module Grade: Pass/fail\" and stored in the Moodle Grade Book (and will overwrite any existing grades for this course in Moodle... e.g. if a grade is not set in the spreadsheet but is set in Moodle, it will overwritten to be No Grade)."); return sure;}</script>';
+    . '. These are taken from the column \"Overall Module Grade (%)\" and stored in the Moodle Grade Book (and will overwrite any existing grades for this course in Moodle... e.g. if a grade is not set in the spreadsheet but is set in Moodle, it will overwritten to be No Grade)."); return sure;}</script>';
   ?>
 
   <form method="post" action="<?php echo $CFG->wwwroot . '/course/get_grades_from_marking_ss.php'; ?>" onSubmit="return areyousuregetgradesfromss()">
