@@ -280,7 +280,8 @@ foreach ($rows as $row) {
 $rows->close();
 
 
-echo '<h1>On Once Off Basis ONLY!... Import Drupal Webform Interest Submisisons to Moodle Database</h1>';
+echo '<h1>On Once Off Basis ONLY!... Import Drupal Webform Interest Submisisons to Moodle Database... die()</h1>';
+die();
 
 
 $table = new html_table();
