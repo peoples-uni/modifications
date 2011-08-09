@@ -1625,7 +1625,7 @@ if (empty($mphs)) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markmph" value="1" />
-<input type="submit" name="mph" value="Record that the has been enrolled in the MPH" />
+<input type="submit" name="mph" value="Record that the Student has been enrolled in the MPH" />
 </form>
 <br />
 <?php
