@@ -573,7 +573,7 @@ if (!empty($enrols)) {
       $z = '';
       $application = $DB->get_record_sql("SELECT * FROM mdl_peoplesapplication
         WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27) AND userid=? AND semester=?
-        ORDER BY datesubmitted DESC", array($userid, $enrol->semester), IGNORE_MULTIPLE);
+        ORDER BY datesubmitted DESC", array($enrol->userid, $enrol->semester), IGNORE_MULTIPLE);
       if (!empty($application)) {
         if (empty($application->paymentmechanism)) $mechanism = '';
         elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
