@@ -598,7 +598,7 @@ if (!empty($enrols)) {
         if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
         elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
         else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
-        if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
+        if ($application->paymentnote) $z .= '<br />(Payment Note Present)'; // Not enabled at present
       }
       $rowdata[] = $z;
     }
