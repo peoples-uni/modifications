@@ -114,7 +114,7 @@ elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
   $newpaymentnote->paymentstatus = 0;
 
   // textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
-  $newpaymentnote->note = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_POST['note']), ENT_COMPAT, 'UTF-8'));
+  $newpaymentnote->note = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_POST['note'], ENT_COMPAT, 'UTF-8')));
   $DB->insert_record('peoplespaymentnote', $newpaymentnote);
 
   notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
