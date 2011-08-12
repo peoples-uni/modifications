@@ -84,7 +84,12 @@ if (!empty($application)) {
   if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
   elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
   else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
-  if ($application->paymentnote) $z .= ' (Payment Note Present)';
+
+  $paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid={$application->sid} AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
+  if (!empty($paymentnotes)) {
+    $z .= ' (Payment Note Present)';
+  }
+
   echo '<br />Payment Status for most recent Application: ' . $z;
 }
 
