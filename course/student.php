@@ -515,7 +515,18 @@ if (!empty($enrols)) {
 			echo '<i>Grading for this module is complete.</i>';
 		}
 		else {
-			echo '<i>This module will not be graded.</i>';
+      if ($enrol->notified == 5) {
+        echo '<i>This module will not be graded (Exceptional Factors).</i>';
+      }
+      elseif ($enrol->notified == 3) {
+        echo '<i>This module will not be graded (Certificate of Participation).</i>';
+      }
+      elseif ($enrol->notified == 4) {
+        echo '<i>This module will not be graded (Did Not Pay).</i>';
+      }
+      else {
+        echo '<i>This module will not be graded (Did Not Complete).</i>';
+      }
 			if ($isteacher) {
 				?>
 				<br />
