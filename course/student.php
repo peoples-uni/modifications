@@ -481,6 +481,7 @@ if (!empty($enrols)) {
               <?php
             }
           }
+          <br />
 				}
 				?>
 				<form method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
