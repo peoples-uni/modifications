@@ -38,7 +38,7 @@ SELECT
   GROUP_CONCAT(c.idnumber ORDER BY c.idnumber ASC SEPARATOR ', ') AS codespassed,
   SUM(IF(codes.type='foundation', 1, 0)) AS foundationspassed,
   SUM(IF(codes.type='problems', 1, 0)) AS problemspassed,
-  IF(COUNT(*)>=6 AND SUM(IF(codes.type='foundation', 1, 0))>=2 AND SUM(IF(codes.type='problems', 1, 0)>=2), 'Diploma', IF(COUNT(*)>=3, 'Certificate', '')) AS qualification
+  IF(COUNT(*)>=6 AND SUM(IF(codes.type='foundation', 1, 0))>=2 AND SUM(IF(codes.type='problems', 1, 0))>=2, 'Diploma', IF(COUNT(*)>=3, 'Certificate', '')) AS qualification
 FROM
   mdl_enrolment e,
   mdl_course c,
