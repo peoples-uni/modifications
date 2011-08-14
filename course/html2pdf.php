@@ -5,7 +5,7 @@
 //http://www.streetpc.tk
 
 //define('FPDF_FONTPATH','font/');
-require($CFG->libdir.'/fpdf/fpdf.php');
+//require($CFG->libdir.'/fpdf/fpdf.php');
 
 //function hex2dec
 //returns an associative array (keys: R,G,B) from
