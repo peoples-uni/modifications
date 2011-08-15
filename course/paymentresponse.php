@@ -339,8 +339,8 @@ elseif (!empty($_POST['M_mph'])) {
   $time     = $peoples_mph_payment->M_mph;
   $transid  = $peoples_mph_payment->datafromworldpay;
 
-  $subject = "MPH Payment of $amount for $name";
-  $message = "MPH Payment via RBS WorldPay
+  $subject = "MMU MPH Payment of $amount for $name";
+  $message = "MMU MPH Payment via RBS WorldPay
 
 Name   : $name
 Amount : $amount $currency

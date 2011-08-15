@@ -95,11 +95,11 @@ function checkemail(str) {
 
 <form action="<?php echo $payurl; ?>" method="post" onSubmit="return verify()" name="donateform">
 <input type="hidden" name="instId" value="232634" />
-<input type="hidden" name="cartId" value="MPH <?php echo $donatetime; ?>" />
+<input type="hidden" name="cartId" value="MMU MPH <?php echo $donatetime; ?>" />
 <input type="hidden" name="currency" value="GBP" />
 
 <strong>Amount you wish to Pay (in UK Pounds):&nbsp;</strong><input type="text" size="10" name="amount" /><br /><br />
-<input type="hidden" name="desc" value="MPH Course Payment <?php echo $donatetime; ?>" />
+<input type="hidden" name="desc" value="MMU MPH Course Payment <?php echo $donatetime; ?>" />
 
 <?php
 if ($test) {

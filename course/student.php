@@ -96,7 +96,7 @@ if (!empty($application)) {
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid=$userid ORDER BY datesubmitted DESC");
 if (!empty($mphs)) {
   foreach ($mphs as $mph) {
-    echo '<br />Student was Enrolled in MPH (' . gmdate('d/m/Y H:i', $mph->datesubmitted) . ')';
+    echo '<br />Student was Enrolled in MMU MPH (' . gmdate('d/m/Y H:i', $mph->datesubmitted) . ')';
   }
 }
 echo '<br /><br /><br />';

@@ -560,7 +560,7 @@ if (!empty($enrols)) {
     $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$enrol->userid} ORDER BY datesubmitted DESC");
     if (!empty($mphs)) {
       foreach ($mphs as $mph) {
-        $inmph = '<br />(MPH)';
+        $inmph = '<br />(MMU MPH)';
       }
     }
     else $inmph = '';

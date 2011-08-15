@@ -951,7 +951,7 @@ foreach ($applications as $sid => $application) {
 
     if ($application->ready && $application->nid != 80) $z .= '<br />(Ready)';
     if ($application->notepresent) $z .= '<br />(Note Present)';
-    if ($application->mph) $z .= '<br />(MPH)';
+    if ($application->mph) $z .= '<br />(MMU MPH)';
 
     $rowdata[] = $z;
 

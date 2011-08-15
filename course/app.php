@@ -671,11 +671,13 @@ if (!empty($notes)) {
 
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($mphs)) {
+  echo '<tr><td colspan="2">MMU MPH Status...</td></tr>';
+
   foreach ($mphs as $mph) {
     echo '<tr><td>';
     echo gmdate('d/m/Y H:i', $mph->datesubmitted);
     echo '</td><td>';
-    echo 'Student was Enrolled in MPH';
+    echo 'Student was Enrolled in MMU MPH';
     echo '</td></tr>';
   }
 }
@@ -1591,7 +1593,7 @@ if (!$application->ready && $application->nid != 80) {
 
 if (empty($mphs)) {
 ?>
-<br />To record that the student has been enrolled in the Masters in Public Health (MPH), press "Record...".<br />
+<br />To record that the student has been enrolled in the MMU Masters in Public Health (MMU MPH), press "Record...".<br />
 <form id="mphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
 <input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
@@ -1625,7 +1627,7 @@ if (empty($mphs)) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markmph" value="1" />
-<input type="submit" name="mph" value="Record that the Student has been enrolled in the MPH" />
+<input type="submit" name="mph" value="Record that the Student has been enrolled in the MMU MPH" />
 </form>
 <br />
 <?php
