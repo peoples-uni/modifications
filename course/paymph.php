@@ -1,7 +1,7 @@
 <?php  // $Id: paymph.php,v 1.1 2011/07/19 15:02:00 alanbarrett Exp $
 /**
 *
-* Pay for MPH
+* Pay for MMU MPH
 *
 */
 
@@ -11,7 +11,7 @@ $test = false;
 
 require("../config.php");
 
-print_header('Payment for MPH');
+print_header('Payment for MMU MPH');
 
 print_simple_box_start("center");
 
@@ -27,9 +27,9 @@ echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p><br />';
 
-echo '<p><b>You should only pay if you have been notified that you have been accepted on the MPH.</b></p>';
+echo '<p><b>You should only pay if you have been notified that you have been accepted on the Manchester Metropolitan University Master of Public Health programme.</b></p>';
 
-echo '<p><b>Enter the amount 1000 UK Pounds if you wish to pay for the MPH course, enter your contact information and then click the button below to make your payment with RBS WorldPay.</b></p>';
+echo '<p><b>Enter the amount 1500 UK Pounds (or instalment amount if this has been agreed) if you wish to pay for the MMU MPH course, enter your contact information and then click the button below to make your payment with RBS WorldPay.</b></p>';
 
 $donatetime = time();
 ?>
