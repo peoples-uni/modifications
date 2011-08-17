@@ -35,6 +35,7 @@ CREATE TABLE mdl_peoplesapplication (
   coursename2 VARCHAR(255) NOT NULL DEFAULT '',
   coursename3 VARCHAR(255) NOT NULL DEFAULT '',
   coursename4 VARCHAR(255) NOT NULL DEFAULT '',
+  applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   semester VARCHAR(255) NOT NULL DEFAULT '',
   dob VARCHAR(20) NOT NULL DEFAULT '',
   dobday VARCHAR(2) NOT NULL DEFAULT '',
@@ -46,6 +47,7 @@ CREATE TABLE mdl_peoplesapplication (
   education text NOT NULL,
   reasons text NOT NULL,
   sponsoringorganisation text NOT NULL DEFAULT '',
+  scholarship TEXT NOT NULL DEFAULT '',
   methodofpayment VARCHAR(255) NOT NULL DEFAULT '',
   paymentidentification VARCHAR(255) NOT NULL DEFAULT '',
   costowed VARCHAR(10) NOT NULL DEFAULT '0',
@@ -89,6 +91,9 @@ ALTER TABLE mdl_peoplesapplication ADD dob VARCHAR(20) NOT NULL DEFAULT '' AFTER
 
 ALTER TABLE mdl_peoplesapplication ADD sponsoringorganisation text NOT NULL DEFAULT '' AFTER reasons;
 ALTER TABLE mdl_peoplesapplication ADD ready BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER state_4;
+
+ALTER TABLE mdl_peoplesapplication ADD applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER coursename4;
+ALTER TABLE mdl_peoplesapplication ADD scholarship TEXT NOT NULL DEFAULT '' AFTER sponsoringorganisation;
 ))
 
 CREATE TABLE mdl_peoplesmph (

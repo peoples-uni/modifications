@@ -67,6 +67,13 @@ class application_form_returning_student_form extends moodleform {
     $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
     $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br />');
 
+    $listforselect = array();
+    $listforselect[1] = 'No, continue with Peoples-uni';
+    $listforselect[2] = 'Yes';
+    $listforselect[3] = 'I am already enrolled in MMU MPH';
+    $mform->addElement('select', 'applymmumph', 'Apply for Manchester Metropolitan University Master of Public Health programme', $listforselect);
+    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Manchester Metropolitan University Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />');
+
 
     $mform->addElement('header', 'personaldetails', 'Your Existing Moodle User Name');
 
@@ -74,6 +81,16 @@ class application_form_returning_student_form extends moodleform {
     $mform->addRule('username', 'Moodle Username is required', 'required', null, 'client');
     $mform->setType('username', PARAM_MULTILANG);
     $mform->addElement('static', 'explainusername', '&nbsp;', 'The user name you use to login to your course modules.<br />');
+
+
+    $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
+
+    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to request a reduction or waiver of the fees, please state here:<br />
+1. What is your current income<br />
+2. What is the reason you are unable to pay the fees<br />
+3. Whether you are able to pay a portion of the fees and if so how much<br />
+4. How you plan to use the skills/qualifications you will gain from Peoples-uni or Manchester Metropolitan University for the health of the population (up to 150 words)<br />');
+    $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
 
     $this->add_action_buttons();
   }

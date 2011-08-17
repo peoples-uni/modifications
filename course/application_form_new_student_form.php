@@ -439,6 +439,16 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('textarea', 'currentjob', 'Current Employment Details', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'You can add any details about your current employment.<br />');
 
+
+    $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
+
+    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to request a reduction or waiver of the fees, please state here:<br />
+1. What is your current income<br />
+2. What is the reason you are unable to pay the fees<br />
+3. Whether you are able to pay a portion of the fees and if so how much<br />
+4. How you plan to use the skills/qualifications you will gain from Peoples-uni or Manchester Metropolitan University for the health of the population (up to 150 words)<br />');
+    $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
+
     $this->add_action_buttons();
 
     //$this->set_data($data);

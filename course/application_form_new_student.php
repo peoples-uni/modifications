@@ -397,6 +397,10 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = '';
   $application->sponsoringorganisation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
+  $dataitem = $data->scholarship;
+  if (empty($dataitem)) $dataitem = '';
+  $application->scholarship = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
   $dataitem = $data->username;
   $dataitem = strip_tags($dataitem);
   $dataitem = str_replace("<", '', $dataitem);
@@ -407,6 +411,8 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = 'user1';  // Just in case it becomes empty
   $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
   $application->username = $dataitem;
+
+  $application->applymmumph = 0;
 
   $DB->insert_record('peoplesapplication', $application);
 
@@ -456,7 +462,8 @@ elseif ($data = $editform->get_data()) {
   $message .= "Postgraduate Qualification: " . $higherqualificationname[$application->higherqualification] . "\n\n";
 
   $message .= "Current Employment Details:\n" . htmlspecialchars_decode($application->currentjob, ENT_COMPAT) . "\n\n";
-  $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n";
+  $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n\n";
+  $message .= "Scholarship:\n" . htmlspecialchars_decode($application->scholarship, ENT_COMPAT) . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Application Form Submission From: $application->lastname, $application->firstname", $message);
   sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Application Form Submission From: $application->lastname, $application->firstname", $message);
