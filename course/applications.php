@@ -811,6 +811,7 @@ else {
     'Education Details',
     'Reasons for wanting to enrol',
     'Sponsoring organisation',
+    'Scholarship',
     'Desired Moodle Username',
     'Moodle UserID',
     '',
