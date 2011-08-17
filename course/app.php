@@ -673,7 +673,7 @@ if (!empty($notes)) {
   }
 }
 
-$applymmumphtext = array(0 => '', 1 => '', 2 => 'Wants to Apply for MMU MPH', 3 => 'Says Already in MMU MPH');
+$applymmumphtext = array('0' => '', '1' => '', '2' => 'Wants to Apply for MMU MPH', '3' => 'Says Already in MMU MPH');
 $applymmumphtext = $applymmumphtext[$_REQUEST['applymmumph']];
 
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
