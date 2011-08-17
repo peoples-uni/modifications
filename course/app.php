@@ -680,7 +680,7 @@ $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND s
 if (!empty($mphs) || !empty($applymmumphtext)) {
   echo '<tr><td colspan="2">MMU MPH Status...</td></tr>';
 
-  if (!empty($applymmumphtext)) echo '<tr><td colspan="2">' . $applymmumphtext . '</td></tr>';
+  if (!empty($applymmumphtext)) echo '<tr><td></td><td>' . $applymmumphtext . '</td></tr>';
 
   foreach ($mphs as $mph) {
     echo '<tr><td>';
