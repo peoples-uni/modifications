@@ -862,6 +862,10 @@ Reasons for wanting to enrol
 10
 Sponsoring organisation
 sponsoringorganisation
+Applying for MMU MPH
+applymmumph
+Scholarship
+scholarship
 Method of payment
 31
 Payment Identification
@@ -922,6 +926,8 @@ foreach ($applications as $sid => $application) {
     elseif ($state === 022) $z = '<span style="color:blue">Denied or Deferred</span>';
     elseif ($state1===02 || $state2===020) $z = '<span style="color:blue">Some</span>';
     else $z = '<span style="color:green">Yes</span>';
+    $applymmumphtext = array(0 => '', 1 => '', 2 => '<br />(Apply MMU MPH)', 3 => '<br />(Say already MMU MPH)');
+    $z .= $applymmumphtext[$application->applymmumph];
     $rowdata[] = $z;
 
     if (empty($application->paymentmechanism)) $mechanism = '';
@@ -988,8 +994,10 @@ foreach ($applications as $sid => $application) {
       $z .= '<textarea name="8" rows="10" cols="100" wrap="hard">'  . $application->education          . '</textarea>';
       $z .= '<textarea name="10" rows="10" cols="100" wrap="hard">' . $application->reasons            . '</textarea>';
       $z .= '<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard">' . $application->sponsoringorganisation . '</textarea>';
+      $z .= '<textarea name="scholarship" rows="10" cols="100" wrap="hard">' . $application->scholarship . '</textarea>';
       $z .= '<textarea name="32" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
       $z .= '</span>';
+      $z .= '<input type="hidden" name="applymmumph" value="' . $application->applymmumph . '" />';
       $z .= '<input type="hidden" name="sid" value="' . $sid . '" />';
       $z .= '<input type="hidden" name="nid" value="' . $application->nid . '" />';
       $z .= '<input type="hidden" name="sesskey" value="' . $USER->sesskey . '" />';
@@ -1075,6 +1083,8 @@ foreach ($applications as $sid => $application) {
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
 
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
+
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
 
       $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
 
