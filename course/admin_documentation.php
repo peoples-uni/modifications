@@ -657,7 +657,7 @@ The "Add This Note to Student Record" button adds a note entered above that butt
 All notes for the student (if any are present, either entered here or in "Student Grades"/student.php) will be listed further up the details page.<br />
 <br />
 The purpose of these notes is to allow a record to be kept of the following sorts of things for a student...<br />
-Record that they have sent an e-mail confirming that they went to the "Are you ready for Peoples-uni" module.<br />
+(*)[[NO]]Record that they have sent an e-mail confirming that they went to the "Are you ready for Peoples-uni" module.<br />
 Record over or under payments so we can remember this for following semesters etc.<br />
 Record that they should be given a waiver because they previously failed a module and are allowed retake it for free.<br />
 <br />
@@ -863,7 +863,7 @@ Family name (with link to Student Profile)<br />
 Given name (with link to Student Profile)<br />
 Username<br />
 Last access, this can be very useful to see if a student is active. Also displayed here is whether the student was un-enrolled and whether the student was re-enrolled in same module for a future semester.<br />
-(*)Grade for Module (Passed, Failed, not set yet).<br />
+Grade for Module (and category: Passed 45+, Passed 50+, Failed, not set yet).<br />
 Has the student been informed of their grade? (by student.php, see below)<br />
 A link to "Student Grades" (student.php) with all the details for the student, from this the teacher can select assignments and grade them, I think this could be very useful as a way of quickly rectifying missing grades.<br />
 A link to the "Student Submissions" page<br />
@@ -873,19 +873,22 @@ A link to the (student's) Moodle Grade report (gives a subset of the "Student Gr
 To make use of this page easier there are filters...<br />
 Select one Module rather than all<br />
 Select by Grading Status:<br />
-(*) - Passed,<br />
+ - Passed 45+,<br />
+ - Passed 50+,<br />
  - Failed,<br />
  - Did not Pass (i.e. Failed or not graded)<br />
  - No Course Grade<br />
  - Un-Enrolled<br />
- - Not informed of Grade and Not Marked to be Ignored<br />
+ - Not informed of Grade and Not Marked to be NOT Graded<br />
  - Will NOT be Graded, because they did Not complete<br />
+ - Will NOT be Graded, because of Exceptional Factors<br />
  - Will NOT be Graded, but will get a certificate of participation<br />
  - Will NOT be Graded, because they did Not Pay.<br />
 (The above are mostly set in "Student Grades" (student.php), see below)<br />
 Select by Semester (defaults to current Semester, can also view All Semesters if you want)
 Sort by Last Access
 Show Students Not Logged on for this many Days (if set to a specific number of days, this can be used to select only students who have not logged on for that number of days or more. With those students selected it is possible to send a reminder e-mail to them at the bottom of the "Course Grades" page.)
+[[(*)    . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1');]]
 </li>
 <li>
 You can also get to this page from student.php and indirectly from applications.php and app.php
@@ -937,6 +940,11 @@ There are a number of buttons for each course module in "Student Grades" which c
 <li>
 (*)"Mark Grading Complete and Notify Student: They Failed"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Overall Module Grade" has been set to the correct value (Passed or Failed) before pressing this button.
 </li>
+[[[(*)
++              <input type="submit" name="notifiedstudentpassdiploma" value="Mark Grading Complete and Notify Student: They Passed Diploma Level (<?php echo $finalgrade; ?>%)" style="width:40em" />
++              <input type="submit" name="notifiedstudentpassmasters" value="Mark Grading Complete and Notify Student: They Passed Masters Level (<?php echo $finalgrade; ?>%)" style="width:40em" />
+REPLACE/DEL NEXT...
+]]]
 <li>
 (*)"Mark Grading Complete and Notify Student: They Passed"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Overall Module Grade" has been set to the correct value (Passed or Failed) before pressing this button. The student will be able to download an academic transcript PDF file further down this same page for all course modules that they have passed. (Teachers and Admins will also be able to download the student's transcripts also.)
 </li>
@@ -946,6 +954,7 @@ There are a number of buttons for each course module in "Student Grades" which c
 <li>
 "Click to indicate Student will NOT be Graded, because they did Not Pay"... to be used if someone did not finally pay by the end of the semester and we do not wish them to get any certificate for the course... This will be shown on the coursegrades.php report (and successbyqualifications.php).
 </li>
+[[(*)        <input type="submit" name="notgradedstudentexceptionalfactors" value="Click to indicate Student will NOT be Graded, because of Exceptional Factors" style="width:40em" />]]
 <li>
 "Click to indicate Student will NOT be Graded, but will get a 'Certificate of Participation'"... to be used if someone is on the CPD stream and you only want to give them a certificate of attendance and not academic transcripts counting towards a certificate/diploma. This will be shown on the coursegrades.php report (and successbyqualifications.php). Additionally, the person will get an e-mail telling them the Certificate of Participation is available. And finally they (or you if you want to for some reason) can download the Certificate of Participation from "Student Grades"/student.php.
 </li>
