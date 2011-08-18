@@ -445,17 +445,11 @@ In Grades... Report Settings... User Report... De-select "Show Percentage".  Thi
 For each course make sure that in Grades... Choose an Action... Select Settings/Course, for the User Report set "Show Percentage" to "Hide" or "Default (Hide)". It might be this way already.
 </li>
 <li>
-The Course Total Grade must be set to Pass/fail:<br />
-For each course... Select Grades... Select an action: Categories and Items/Full View... Click the edit icon under actions in the pink module header line (above the individual grade or category lines) which brings you to "Edit category". This (should be) the Course Total grade which needs to be set to a scale of "Pass/fail" (you may have to set the Grade type to "Scale" first). The "Category name" and "Item name" will be blank, but that is OK. Note that the aggregation calculation is ignored due to a custom software patch for Peoples-uni... The course total is always set manually (to Passed or Failed).
+The Course Total Grade must be set to Percentage:<br />
+(*)For each course... Select Grades... Select an action: Categories and Items/Full View... Click the edit icon under actions in the module header line (above the individual grade or category lines) which brings you to "Edit category". This (should be) the Course Total grade which needs to be set to a Grade type of "Value" (no Scale), a Maximum grade of 100.00 and a Minimum grade of 0.00. The "Category name" will be blank, but that is OK. Note that the aggregation calculation is ignored due to a custom software patch for Peoples-uni... The course total is always set manually.
 </li>
 <li>
 Each course module needs to have the Block "Track Marking" added (on the bottom right hand side). This will allow teachers to access the Marking Spreadsheet see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.
-</li>
-<li>
-The following item should now NOT be done as we are in a transition to a process in which the grade will not be set until it has been fully agreed all markers and potentially the external examiner. So the setting "Stop all student e-mail notifications" should now be verified to be off. Here are the previous instructions...<br />
-For each course, go into the final assignment for the course, Select "Update this Assignment"... Set "Stop all student e-mail notifications" to "Yes". This will mean that no e-mails for the final assignment will go out to students. The idea is that we do not want students to be notified about the grade of their final assignment and the feedback until this is agreed. Note the final assignment mark will normally be used to (manually) set the overall course total grade of Passed or Failed for the course module.
-<br />
-There may be various processes around the final grading for a course module, but if a process is followed that wants to avoid students being notified about their final assignment grades, then this setting should be set to "Yes". However there is nothing to stop students looking at their grade if it has been entered, even if they are not notified.
 </li>
 <li>
 Note: At a later stage (when assignments are setup), all the assignments should be configured as the multiple file upload type "Advanced uploading of files". This is so students can have feedback on their submissions uploaded by the teacher as an annotated copy of the student's submitted file using "track changes". Also students will be able to resubmit assignments.
@@ -516,7 +510,11 @@ When the "Details" button is pressed for an application, additional applicant da
 "Student Submissions" Launches a report on all the assignment submissions made by this student. "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a>" below,
 </li>
 <li>
-"Paid?" indicates whether the student is believed to have paid for this semester or not (They are marked as paid if either they have indicated they have paid or they have been confirmed as having paid or they have been given a waiver).
+(*)"Paid?" indicates whether the student is believed to have paid for this semester or not (They are marked as paid if either they have indicated they have paid or they have been confirmed as having paid or they have been given a waiver).
+[[(*)if ($application->paymentnote) $z .= '<br />(Payment Note Present)';]]
+[[[(*)echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Change Payment Confirmation</a>';
+echo $pnote;
+]]]
 <br />
 If they have over or under paid, the amount paid and the total originally owed is indicated.
 </li>
@@ -540,8 +538,9 @@ If they have over or under paid, the amount paid and the total originally owed i
 The student can set 'Barclays Bank Transfer', 'Diamond Bank Transfer' and 'MoneyGram' using the paydetails.php link they will have been sent in their approval e-mail (the link includes the SID unique application ID). The credit card one is set automatically and the rest are set manually by us as described in the next bullet point.
 </li>
 <li>
-"Change Payment Confirmation" is a link (to payconfirm.php with the applicant SID as a parameter) that brings up a page that allows us to update the data in the previous bullet point by setting the "Payment Mechanism" and pressing the "Submit the Payment Status" button. The "Amount Paid" is set to the "Amount Owed" at the same time (unless it is just marked as promised to pay in which case the "Amount Paid" is not changed).<br />This page also allows the "Amount Paid" and the "Amount Owed" to be changed because someone has underpaid or overpaid or previously made a prepayment.<br />
-Note, be careful here as the indication of payment mechanism sets "Amount Paid" to the "Amount Owed", which overwrites any "Amount Paid" set here. So the data for "Amount Paid" MUST be entered and the "Submit the New Amount Paid (& Owed)" button pressed after the "Submit the Payment Status" button is pressed to update the "Payment Mechanism". And any time the
+(*)"Change Payment Confirmation" is a link (to payconfirm.php with the applicant SID as a parameter) that brings up a page that allows us to update the data in the previous bullet point by setting the "Payment Mechanism" and pressing the "Submit the Payment Status" button. The "Amount Paid" is set to the "Amount Owed" at the same time (unless it is just marked as promised to pay in which case the "Amount Paid" is not changed).<br />This page also allows the "Amount Paid" and the "Amount Owed" to be changed because someone has underpaid or overpaid or previously made a prepayment.<br />
+Note, be careful here as the indication of payment mechanism sets "Amount Paid" to the "Amount Owed", which overwrites any "Amount Paid" set here. So the data for "Amount Paid" MUST be entered and the "Submit the New Amount Paid (& Owed)" button pressed after the "Submit the Payment Status" button is pressed to update the "Payment Mechanism".
+[[(*)]]
 </li>
 <li>
 "Date Paid" is set to the date they paid by credit card or if the student gave us payment details online through paydetails.php. It is not set if we entered the fact that they paid.
@@ -551,7 +550,8 @@ Note, be careful here as the indication of payment mechanism sets "Amount Paid" 
 </li>
 <li>
 "Approve Full Application" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail outlined above under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which requests payment.<br />
-The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Yes" as opposed to "No", "Some" (if only one application is approved, see below) or "Denied or Deferred" (if the application has been un-approved after being approved.)
+(*)The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Yes" as opposed to "No", "Some" (if only one application is approved, see below) or "Denied or Deferred" (if the application has been un-approved after being approved.)
+[[(*)    $applymmumphtext = array(0 => '', 1 => '', 2 => '<br />(Apply MMU MPH)', 3 => '<br />(Say already MMU MPH)');]]
 </li>
 <li>
 "Approve Module '...' only:" is a button that allows either one of the modules to be approved and not the other. Note in this case no e-mail is sent. So instructions about how to pay need to be sent manually.
@@ -591,7 +591,11 @@ There is a link to your course at the bottom of the profile or you can click:
 <br />
 They will also get a notification of the current semester's Students Corner in another e-mail.
 <br />
-The "Registered?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
+(*)The "Registered?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
+[[(*)    if ($application->ready && $application->nid != 80) $z .= '<br />(Ready)';
+    if ($application->notepresent) $z .= '<br />(Note Present)';
+    if ($application->mph) $z .= '<br />(MMU MPH)';
+]]
 </li>
 <li>
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
@@ -649,7 +653,7 @@ TECHSUPPORT_EMAIL_HERE
 </li>
 <li>
 The "Add This Note to Student Record" button adds a note entered above that button to the student record.<br />
-(When there are any notes for a student it will be indicated in the applications.php spreadsheet in the "Registered?" column by the words "(Note Present)".)<br />
+(*)(When there are any notes for a student it will be indicated in the applications.php spreadsheet in the "Registered?" column by the words "(Note Present)".)<br />
 All notes for the student (if any are present, either entered here or in "Student Grades"/student.php) will be listed further up the details page.<br />
 <br />
 The purpose of these notes is to allow a record to be kept of the following sorts of things for a student...<br />
@@ -749,10 +753,10 @@ However the Course Total Grades can (and should be) automatically retrieved from
 While tutors (or admins) are free to edit the module's spreadsheet, the following restrictions must be obeyed...<br />
 Students are identified by something like "Firstname Secondname (999) in first column. The (999) part, which is their user ID must not be removed."<br />
 The column header "Overall Module Grade: Pass/fail" for the column that contains the Course Total Grades MUST be kept EXACTLY as is (although columns before or after it can be changed, added or removed.<br />
-Currently the Course Total Grade must be "Pass", "Fail" or empty which implies No Grade. Any text containing a "P" or "F" in either case will work. But no numeric marks out of 100 can be entered. This can be easily changed when we decide to, but is fixed at Pass/fail for the moment.
+(*)Currently the Course Total Grade must be "Pass", "Fail" or empty which implies No Grade. Any text containing a "P" or "F" in either case will work. But no numeric marks out of 100 can be entered. This can be easily changed when we decide to, but is fixed at Pass/fail for the moment.
 </li>
 <li>
-At a later stage it would be possible to write code to update assignment grades (in addition to the Course Total Grades) from the spreadsheet into Moodle if that makes sense, but we have decided not to do that for now.<br />
+(*)At a later stage it would be possible to write code to update assignment grades (in addition to the Course Total Grades) from the spreadsheet into Moodle if that makes sense, but we have decided not to do that for now.<br />
 Also it would be possible to write code to automatically record in the spreadsheet stuff such as the fact that a student has made a submission (or resubmission), but this is currently a manual process.
 </li>
 </ol>
@@ -859,7 +863,7 @@ Family name (with link to Student Profile)<br />
 Given name (with link to Student Profile)<br />
 Username<br />
 Last access, this can be very useful to see if a student is active. Also displayed here is whether the student was un-enrolled and whether the student was re-enrolled in same module for a future semester.<br />
-Grade for Module (Passed, Failed, not set yet).<br />
+(*)Grade for Module (Passed, Failed, not set yet).<br />
 Has the student been informed of their grade? (by student.php, see below)<br />
 A link to "Student Grades" (student.php) with all the details for the student, from this the teacher can select assignments and grade them, I think this could be very useful as a way of quickly rectifying missing grades.<br />
 A link to the "Student Submissions" page<br />
@@ -869,7 +873,7 @@ A link to the (student's) Moodle Grade report (gives a subset of the "Student Gr
 To make use of this page easier there are filters...<br />
 Select one Module rather than all<br />
 Select by Grading Status:<br />
- - Passed,<br />
+(*) - Passed,<br />
  - Failed,<br />
  - Did not Pass (i.e. Failed or not graded)<br />
  - No Course Grade<br />
@@ -922,7 +926,7 @@ From "Course Grades" at <a href="http://courses.peoples-uni.org/course/coursegra
 //So...
 ?>
 <li>
-Note... The "Course Total" grade is normally based on the grade for the final course assignment. The "Course Total" grades for each course should be set by the tutor. This is done in the Moodle grade report for the course... turn editing on and set the course total grades (on far right) to Passed/Failed or No Grade.
+(*)Note... The "Course Total" grade is normally based on the grade for the final course assignment. The "Course Total" grades for each course should be set by the tutor. This is done in the Moodle grade report for the course... turn editing on and set the course total grades (on far right) to Passed/Failed or No Grade.
 </li>
 <li>
 After that diversion... Back to "Course Grades"/"student Grades"... Go to: <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> and click on "Student Grades" for an individual student.
@@ -931,13 +935,13 @@ After that diversion... Back to "Course Grades"/"student Grades"... Go to: <a hr
 There are a number of buttons for each course module in "Student Grades" which can be pressed (not visible to a student when they see their own version of this page). Not all will be visible at any one time...
 </li>
 <li>
-"Mark Grading Complete and Notify Student: They Failed"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Overall Module Grade" has been set to the correct value (Passed or Failed) before pressing this button.
+(*)"Mark Grading Complete and Notify Student: They Failed"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Overall Module Grade" has been set to the correct value (Passed or Failed) before pressing this button.
 </li>
 <li>
-"Mark Grading Complete and Notify Student: They Passed"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Overall Module Grade" has been set to the correct value (Passed or Failed) before pressing this button. The student will be able to download an academic transcript PDF file further down this same page for all course modules that they have passed. (Teachers and Admins will also be able to download the student's transcripts also.)
+(*)"Mark Grading Complete and Notify Student: They Passed"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Overall Module Grade" has been set to the correct value (Passed or Failed) before pressing this button. The student will be able to download an academic transcript PDF file further down this same page for all course modules that they have passed. (Teachers and Admins will also be able to download the student's transcripts also.)
 </li>
 <li>
-"Click to indicate Student will NOT be Graded, because they did Not Complete"... to be used if someone did not complete the semester. This will be shown on the coursegrades.php report (and successbyqualifications.php).
+(*)"Click to indicate Student will NOT be Graded, because they did Not Complete"... to be used if someone did not complete the semester. This will be shown on the coursegrades.php report (and successbyqualifications.php).
 </li>
 <li>
 "Click to indicate Student will NOT be Graded, because they did Not Pay"... to be used if someone did not finally pay by the end of the semester and we do not wish them to get any certificate for the course... This will be shown on the coursegrades.php report (and successbyqualifications.php).
@@ -946,7 +950,7 @@ There are a number of buttons for each course module in "Student Grades" which c
 "Click to indicate Student will NOT be Graded, but will get a 'Certificate of Participation'"... to be used if someone is on the CPD stream and you only want to give them a certificate of attendance and not academic transcripts counting towards a certificate/diploma. This will be shown on the coursegrades.php report (and successbyqualifications.php). Additionally, the person will get an e-mail telling them the Certificate of Participation is available. And finally they (or you if you want to for some reason) can download the Certificate of Participation from "Student Grades"/student.php.
 </li>
 <li>
-Additionally if the student has met the criteria for receiving a Certificate (4 modules passed, 2 of each type) or Diploma (8 modules passed) from Peoples-uni. They will be able to download them here.
+Additionally if the student has met the criteria for receiving a Certificate (3 modules passed) or Diploma (6 modules passed, 2 of each type) from Peoples-uni. They will be able to download them here.
 </li>
 <li>
 Other options on this page are:<br />
