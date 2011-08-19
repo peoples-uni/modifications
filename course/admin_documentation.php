@@ -544,7 +544,7 @@ In payconfirm.php it is possible to add a Payment Note for the Student (which wi
 payconfirm.php also lists payment details for all previous applications for earlier semesters by this student.
 </li>
 <li>
-NOTE: For the moment, Credit Card payments for the MMU MPH are handled separately. This is described below in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Registering Interest in Future Semesters, Making a Donation, Paying for MMU MPH</a><br />. The process for MMU MPH payments is likely to evolve and there is only minimal support for it at present.
+NOTE: For the moment, Credit Card payments for the MMU MPH are handled separately. This is described below in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Registering Interest in Future Semesters, Making a Donation, Paying for MMU MPH</a>.<br />The process for MMU MPH payments is likely to evolve and there is only minimal support for it at present.
 </li>
 <li>
 "Date Paid" is set to the date they paid by credit card or if the student gave us payment details online through paydetails.php. It is not set if we entered the fact that they paid.
