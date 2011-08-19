@@ -722,7 +722,7 @@ The Moodle form "Peoples-uni Application Form - Expressions of Interest in Futur
 The following page is linked from the Drupal menus to allow donations: <a href="http://courses.peoples-uni.org/course/donate.php" target="_blank">http://courses.peoples-uni.org/course/donate.php</a>
 </li>
 <li>
-There is a special page to allow credit card payments for MMU MPH: <a href="http://courses.peoples-uni.org/course/paymph.php" target="_blank">http://courses.peoples-uni.org/course/donate.php</a>. This allows a variable payment amount to be set by the student based on instructions from us.
+There is a special page to allow credit card payments for MMU MPH: <a href="http://courses.peoples-uni.org/course/paymph.php" target="_blank">http://courses.peoples-uni.org/course/paymph.php</a>. This allows a variable payment amount to be set by the student based on instructions from us.
 </li>
 </ol>
 
