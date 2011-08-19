@@ -41,7 +41,7 @@ class block_track_marking extends block_base {
       if ($admin) {
         if (!empty($this->content->text)) $this->content->text .= '<br />';
         $this->content->text .= '<a href="' . $CFG->wwwroot . '/course/create_marking_ss.php?id=' . $COURSE->id . '" target="_blank">Re-Create Marking Spreadsheet</a>';
-        $this->content->text .= '<br /><a href="' . $CFG->wwwroot . '/course/get_grades_from_marking_ss.php?id=' . $COURSE->id . '" target="_blank">Store Course Total Grades into Moodle</a>';
+        // $this->content->text .= '<br /><a href="' . $CFG->wwwroot . '/course/get_grades_from_marking_ss.php?id=' . $COURSE->id . '" target="_blank">Store Course Total Grades into Moodle</a>';
       }
     }
 
