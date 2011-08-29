@@ -716,6 +716,25 @@ same time and will involve a heavy workload - please be sure you do have the tim
   }
 
   $peoples_approval_email = htmlspecialchars($peoples_approval_email, ENT_COMPAT, 'UTF-8');
+
+  if ($application->nid == 80) $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_old_students_bursary_email');
+  else                         $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_bursary_email');
+
+  $peoples_approval_email_bursary = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email_bursary);
+  $peoples_approval_email_bursary = str_replace('COURSE_MODULE_1_NAME_HERE', $course1, $peoples_approval_email_bursary);
+  $peoples_approval_email_bursary = str_replace('SID_HERE',                  $sid, $peoples_approval_email_bursary);
+  if (!empty($course2)) {
+    $peoples_approval_email_bursary = str_replace('COURSE_MODULE_2_TEXT_HERE', "and the Course Module '" . $course2 . "' ", $peoples_approval_email_bursary);
+    $peoples_approval_email_bursary = str_replace('COURSE_MODULE_2_WARNING_TEXT_HERE', "Please note that you have applied to take two modules, these run at the
+same time and will involve a heavy workload - please be sure you do have the time for this.", $peoples_approval_email_bursary);
+  }
+  else {
+    $peoples_approval_email_bursary = str_replace('COURSE_MODULE_2_TEXT_HERE',         '', $peoples_approval_email_bursary);
+    $peoples_approval_email_bursary = str_replace('COURSE_MODULE_2_WARNING_TEXT_HERE', '', $peoples_approval_email_bursary);
+  }
+
+  $peoples_approval_email_bursary = htmlspecialchars($peoples_approval_email_bursary, ENT_COMPAT, 'UTF-8');
+
 ?>
 <br />To approve this application and send an e-mail to applicant (edit e-mail text if you wish), press "Approve Full Application".
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/appaction.php'; ?>">
@@ -728,6 +747,20 @@ same time and will involve a heavy workload - please be sure you do have the tim
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markapproveapplication" value="1" />
 <input type="submit" name="approveapplication" value="Approve Full Application" />
+</form>
+<br />
+
+<br />To approve this application WITH BURSARY TEXT and send an e-mail to applicant (edit e-mail text if you wish), press "Approve Full Application BURSARY".
+<form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/appaction.php'; ?>">
+<input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
+<input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
+<input type="hidden" name="email" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
+<textarea name="approvedtext" rows="15" cols="75" wrap="hard">
+<?php echo $peoples_approval_email_bursary; ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markapproveapplication" value="1" />
+<input type="submit" name="approveapplication" value="Approve Full Application BURSARY" />
 </form>
 <br />
 <?php
