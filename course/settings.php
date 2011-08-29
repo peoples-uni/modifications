@@ -240,7 +240,7 @@ for ($year = (int)gmdate('Y'); $year <= 2031; $year++) $yearname[$year] = $year;
 <form id="setlastdateform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetlastdate" value="1" />
-<input type="submit" name="setlastdate" value="Set Last Allowed Date (display only, not enforced) for Applications to:" style="width:45em" />
+<input type="submit" name="setlastdate" value="Set Last Allowed Date (display only, not enforced) for Applications to:" style="width:45em" /><br />
 
 <select name="lastdateyear">
 <?php
