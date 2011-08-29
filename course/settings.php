@@ -167,10 +167,20 @@ if (!empty($_POST['mark_approval_email']) && !empty($_POST['value_approval_email
   $value_approval_email = $_POST['value_approval_email'];
   set_config('peoples_approval_email', $value_approval_email);
 }
+if (!empty($_POST['mark_approval_bursary_email']) && !empty($_POST['value_approval_bursary_email'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $value_approval_bursary_email = $_POST['value_approval_bursary_email'];
+  set_config('peoples_approval_bursary_email', $value_approval_bursary_email);
+}
 if (!empty($_POST['mark_approval_old_students_email']) && !empty($_POST['value_approval_old_students_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $value_approval_old_students_email = $_POST['value_approval_old_students_email'];
   set_config('peoples_approval_old_students_email', $value_approval_old_students_email);
+}
+if (!empty($_POST['mark_approval_old_students_bursary_email']) && !empty($_POST['value_approval_old_students_bursary_email'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $value_approval_old_students_bursary_email = $_POST['value_approval_old_students_bursary_email'];
+  set_config('peoples_approval_old_students_bursary_email', $value_approval_old_students_bursary_email);
 }
 if (!empty($_POST['mark_batch_reminder_email']) && !empty($_POST['value_batch_reminder_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -470,6 +480,16 @@ foreach ($courses as $course) {
 </form>
 <br />
 
+<form id="approval_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<textarea name="value_approval_bursary_email" rows="15" cols="75" wrap="hard">
+<?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_approval_bursary_email" value="1" />
+<input type="submit" name="set_approval_bursary_email" value="Set the above text as the New Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
+</form>
+<br />
+
 <form id="approval_old_students_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_old_students_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_old_students_email'), ENT_COMPAT, 'UTF-8'); ?>
@@ -477,6 +497,16 @@ foreach ($courses as $course) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_old_students_email" value="1" />
 <input type="submit" name="set_approval_old_students_email" value="Set the above text as the Returning Students Approval e-mail wording (in Application Details/app.php)" style="width:45em" />
+</form>
+<br />
+
+<form id="approval_old_students_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<textarea name="value_approval_old_students_bursary_email" rows="15" cols="75" wrap="hard">
+<?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_old_students_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_approval_old_students_bursary_email" value="1" />
+<input type="submit" name="set_approval_old_students_bursary_email" value="Set the above text as the Returning Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
 </form>
 <br />
 
