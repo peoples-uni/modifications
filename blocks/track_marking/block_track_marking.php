@@ -2,7 +2,7 @@
 
 // Stored in /blocks/track_marking/
 
-// Allow teachers to view the Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking
+// Allow tutors to view the Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking
 
 
 class block_track_marking extends block_base {
@@ -30,7 +30,7 @@ class block_track_marking extends block_base {
 
     $this->content->text = '';
 
-    // If this is a site admin or teacher/teachers in that course show the block
+    // If this is a site admin or Module Leader/Tutors in that course show the block
     if (has_capability('moodle/grade:edit', get_context_instance(CONTEXT_COURSE, $COURSE->id)) || $admin) {
 
       $google_ss = $DB->get_record('peoples_google_ss', array('course_id' => $COURSE->id));

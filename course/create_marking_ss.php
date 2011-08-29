@@ -234,7 +234,7 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
 
 
   echo "<br /><br /><br />Spreadsheet Created ($number students): <strong>" . htmlspecialchars($title, ENT_COMPAT, 'UTF-8') . '</strong>';
-  echo '<br /><br />The URL, which will be visible to Admins and Teacher/Teachers in the course, is:<br />';
+  echo '<br /><br />The URL, which will be visible to Admins and Module Leader/Tutors in the course, is:<br />';
   echo '<strong><a href="' . htmlspecialchars($newlink, ENT_COMPAT, 'UTF-8') . '">' . htmlspecialchars($newlink, ENT_COMPAT, 'UTF-8') . '</a></strong><br /><br />';
 }
 else {

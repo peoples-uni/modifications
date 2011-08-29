@@ -301,7 +301,7 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
-if (!$isteacher) {echo '<h1>You must be a teacher to do this!</h1>'; die();}
+if (!$isteacher) {echo '<h1>You must be a tutor to do this!</h1>'; die();}
 
 $courseid = optional_param('id', 0, PARAM_INT);
 if ($courseid) {
@@ -667,7 +667,7 @@ function is_peoples_teacher() {
       ra.userid=? AND
       ra.roleid=r.id AND
       ra.contextid=con.id AND
-      r.name IN ('Teacher', 'Teachers') AND
+      r.name IN ('Module Leader', 'Tutors') AND
       con.contextlevel=50",
     array($USER->id));
 

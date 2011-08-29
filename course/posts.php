@@ -30,7 +30,7 @@ if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>
 
 $isteacher = is_peoples_teacher();
 if (!$isteacher) {
-	echo '<h1>You must be a teacher to do this!</h1>';
+	echo '<h1>You must be a tutor to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");
 }
 
@@ -315,7 +315,7 @@ function is_peoples_teacher() {
       ra.userid=? AND
       ra.roleid=r.id AND
       ra.contextid=con.id AND
-      r.name IN ('Teacher', 'Teachers') AND
+      r.name IN ('Module Leader', 'Tutors') AND
       con.contextlevel=50",
     array($USER->id));
 

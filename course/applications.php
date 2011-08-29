@@ -440,8 +440,7 @@ $PAGE->set_pagelayout('embedded');   // Needs as much space as possible
 
 require_login();
 
-// Access to applications.php is given by the "Manage Applications" role
-// which is based on authenticated user with moodle/site:viewparticipants
+// Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
 //require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));

@@ -19,7 +19,7 @@ if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>
 
 $isteacher = is_peoples_teacher();
 if (!$isteacher) {
-	echo '<h1>You must be a teacher to do this!</h1>';
+  echo '<h1>You must be a Tutor to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");
 }
 
@@ -462,10 +462,10 @@ The Course Total calculation (calculator icon on course total line of Categories
 Note: Course Total used have to be entered manually because of a custom patch to Moodle, but this will now be removed so an automatic calculation is required.
 </li>
 <li>
-Each course module needs to have the Block "Track Marking" added (on the bottom right hand side). This will allow teachers to access the Marking Spreadsheet see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.
+Each course module needs to have the Block "Track Marking" added (on the bottom right hand side). This will allow Tutors to access the Marking Spreadsheet see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.
 </li>
 <li>
-Note: At a later stage (when assignments are setup), all the assignments should be configured as the multiple file upload type "Advanced uploading of files". This is so students can have feedback on their submissions uploaded by the teacher as an annotated copy of the student's submitted file using "track changes". Also students will be able to resubmit assignments.
+Note: At a later stage (when assignments are setup), all the assignments should be configured as the multiple file upload type "Advanced uploading of files". This is so students can have feedback on their submissions uploaded by the Tutor as an annotated copy of the student's submitted file using "track changes". Also students will be able to resubmit assignments.
 </li>
 </ol>
 
@@ -499,10 +499,10 @@ E-mails of all the students in the spreadsheet (i.e. after any filters have been
 It is also possible to programmatically send a reminder or other e-mail to all of the students in the spreadsheet (i.e. after any filters have been applied) by using the form at the end of the page (instuctions for the form are given there).
 </li>
 <li>
-Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student given by the System-wide "Manage Applications" or "Administrator" roles. "Manage Applications" is the same as a normal authenticated user with just an additional permission of: moodle/site:viewparticipants.
+Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 <li>
-If someone is given the "Manage Applications" role (instead of the "Administrator" role) it may be useful to make them a teacher in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Education Officer" role in each desired course.
+If someone is given the "Manager" role (instead of the "Administrator" role) it may be useful to make them a "Tutors" in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Education coordinator" role in each desired course.
 </li>
 </ol>
 
@@ -598,7 +598,7 @@ The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applicat
 "Update Username" is a button that allows the Applicant's suggested user name to be changed (because it conflicts with an existing Moodle username).
 </li>
 <li>
-"Enrol User in Module ... only" button causes the user to be enrolled in the one module only and not the other. The following e-mail will be sent from the module teacher:<br />
+"Enrol User in Module ... only" button causes the user to be enrolled in the one module only and not the other. The following e-mail will be sent from the Module Leader:<br />
 <pre>
 Welcome to $a->coursename!
 
@@ -620,7 +620,7 @@ The "Registered?" column in <a href="http://courses.peoples-uni.org/course/appli
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
 </li>
 <li>
-"Create User & Enrol in Module ... only" creates a new user (for a new application) and then enrolls the user as above. The following e-mail with be sent from techsupport@peopes-uni.org (in addition to the one above sent on behalf of the module teacher):<br />
+"Create User & Enrol in Module ... only" creates a new user (for a new application) and then enrolls the user as above. The following e-mail with be sent from techsupport@peopes-uni.org (in addition to the one above sent on behalf of the Module Leader):<br />
 <pre>
 Hi FULL_NAME_HERE,
 
@@ -724,7 +724,7 @@ This should be done some time before assignment submission and grading starts.
 <h2>Misc: Enrolling Tutors in Tutors Corner, Registering Interest in Future Semesters, Making a Donation, Paying for MMU MPH</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">http://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Teacher", "Teachers" or "Education Officer" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
+<a href="http://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">http://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Module Leader", "Tutors" or "Education coordinator" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
 The names or contextid of these two modules should not be changed.
 </li>
 <li>
@@ -743,9 +743,9 @@ There is a special page to allow credit card payments for MMU MPH: <a href="http
 <h2>Collaborative Assignment Marking and Resubmission Tracking</h2>
 <ol>
 <li>
-A process has been designed which allows teachers of a course module to use a (Google Apps) spreadsheet to collaborate on tracking assignment submissions and their grading (as well as overall module grading).
+A process has been designed which allows Tutors for a course module to use a (Google Apps) spreadsheet to collaborate on tracking assignment submissions and their grading (as well as overall module grading).
 <li>
-It is driven by a small Block "Track Marking" which should have been added to every relevant Module (on the bottom right hand side). The block is only visible to site administrators or to course teacher/teachers (more specifically users who have moodle/grade:edit for the course). It is not visible to students. Also the Block will not be displayed to teacher/teachers if the spreadsheet has not yet been created.
+It is driven by a small Block "Track Marking" which should have been added to every relevant Module (on the bottom right hand side). The block is only visible to site administrators or to Module Leader/Tutors (more specifically users who have moodle/grade:edit for the course). It is not visible to students. Also the Block will not be displayed to Module Leader/Tutors if the spreadsheet has not yet been created.
 </li>
 <li>
 When all students have been registered (enrolled) for a module, then the Marking Spreadsheet will need to be created. This should be done some time before assignment submission and grading starts. This can be done by a Moodle Admin using the second link "Re-Create Marking Spreadsheet" in that block. This link, when clicked, brings up a page with a button which allows the Marking Spreadsheet to be created (or recreated). There is a warning popup to make sure you really want to overwrite the spreadsheet (and any marking that is contains, although Alan Barrett should be able to get the spreadsheet back if necessary, through the admin@files.peoples-uni.org Google account!).
@@ -757,13 +757,13 @@ The spreadsheet that is created is based on a standard spreadsheet and has all t
 The standard spreadsheet used in each case as a starting point is called Marking.xls which is stored in the Moodle course directory and can be changed through "git" source control.
 </li>
 <li>
-A teacher will just see one link in the Block: "Edit Marking Spreadsheet"... this launches the Marking Spreadsheet which allows immediate editing (and almost immediate automatic saving of any changes including format/layout changes). Layout can be changed as well as content.
+A tutor will just see one link in the Block: "Edit Marking Spreadsheet"... this launches the Marking Spreadsheet which allows immediate editing (and almost immediate automatic saving of any changes including format/layout changes). Layout can be changed as well as content.
 </li>
 <li>
 Two or more editors should be able to edit at the same time and will see the other person's edits as they happen.
 </li>
 <li>
-The editing is anonymous (unless an editor is logged into their own Google account). Users will not be logged into the admin@files.peoples-uni.org Google account which owns the spreadsheet. Any user (including a student!) who has been given the link would be able to edit, so the links should not be given out! Teachers will be able to see the link to the spreadsheet for their own module but not other modules, although they can obviously be given the link if desired. The actual link is quite long and also contains an authorisation key which cannot be figured out unless given away.
+The editing is anonymous (unless an editor is logged into their own Google account). Users will not be logged into the admin@files.peoples-uni.org Google account which owns the spreadsheet. Any user (including a student!) who has been given the link would be able to edit, so the links should not be given out! Tutors will be able to see the link to the spreadsheet for their own module but not other modules, although they can obviously be given the link if desired. The actual link is quite long and also contains an authorisation key which cannot be figured out unless given away.
 </li>
 <li>
 Note, it is possible get access to any previous revision of the spreadsheet via "File"... "See Revision History". This allows some auditing of changes. This is only possible for logged on Google users (any Google account). It is also possible for an editor to change the permissions on the spreadsheet... this should not be done! Alan Barrett will however be able to recover any hidden spreadsheets in an emergency (through admin@files.peoples-uni.org).
@@ -804,7 +804,7 @@ The "Student Submissions" link will display (In the first table) a list of all s
 The "Student Submissions" link will display (in the second table) a list of all grade changes for the student along with all tutors feedback comments made (as they changed) by the tutor.
 </li>
 <li>
-Access to "Student Submissions" is available to any teacher or admin. None of this is visible to students, all they see is their own academic transcript in student.php.
+Access to "Student Submissions" is available to any tutor or admin. None of this is visible to students, all they see is their own academic transcript in student.php.
 </li>
 <li>
 There is a parameter you can add to the end of the "Student Submissions" URL "&hidequiz=1", which hides display of quizzes if it becomes too cluttered for a particular student.
@@ -847,13 +847,13 @@ There is yet another filter called "Don't Show Number of Posts" which just shows
 <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module etc. (as well as the filters mentioned above).
 </li>
 <li>
-Access to posts.php is available to any teacher or admin.
+Access to posts.php is available to any tutor or admin.
 </li>
 <li>
 To view posts made by Tutors to discussion forums go to: <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a>.
 </li>
 <li>
-This lists all posts for each Tutor ("Teacher" or "Teachers", not others), giving Module, Forum Name, Subject and Date of post.<br />
+This lists all posts for each Tutor ("Module Leader" or "Tutors", not others), giving Module, Forum Name, Subject and Date of post.<br />
 Note the posts are sorted by date so it is possible to determine if the appropriate discussions have been started by the Tutors. An e-mail address is listed which, if clicked on, will launch your mailer so you can send an e-mail to the Tutor.
 </li>
 <li>
@@ -870,7 +870,7 @@ After the main body of posts there are tables (one per course) that show, for ea
 <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module etc.
 </li>
 <li>
-Access to tutorposts.php is available to any teacher or admin.
+Access to tutorposts.php is available to any tutor or admin.
 </li>
 </ol>
 
@@ -891,7 +891,7 @@ Username<br />
 Last access, this can be very useful to see if a student is active. Also displayed here is whether the student was un-enrolled and whether the student was re-enrolled in same module for a future semester.<br />
 Grade for Module (and category: Passed 45+, Passed 50+, Failed, not set yet).<br />
 Has the student been informed of their grade? (by student.php, see below)<br />
-A link to "Student Grades" (student.php) with all the details for the student, from this the teacher can select assignments and grade them, I think this could be very useful as a way of quickly rectifying missing grades.<br />
+A link to "Student Grades" (student.php) with all the details for the student, from this the tutor can select assignments and grade them, I think this could be very useful as a way of quickly rectifying missing grades.<br />
 A link to the "Student Submissions" page<br />
 A link to the (student's) Moodle Grade report (gives a subset of the "Student Grades" link, but also gives direct access to Moodle Grade UI)<br />
 </li>
@@ -935,7 +935,7 @@ The first form is typically used to send students a reminder of the their Applic
 The second is typically used to send students a reminder that they have not logged on to Peoples-uni since the start of the Semester. But to do this correctly (i.e. select the appropriate students to send this e-mail to), it is necessary to set the "Show Students Not Logged on for this many Days" filter at the top of the page to an appropriate number of days before sending the e-mail.
 </li>
 <li>
-"Course Grades" is only available to any teacher or admin. None of this is visible to students; all they see is their own academic transcript in student.php.
+"Course Grades" is only available to any tutor or admin. None of this is visible to students; all they see is their own academic transcript in student.php.
 </li>
 </ol>
 
@@ -971,10 +971,10 @@ There are a number of buttons for each course module in "Student Grades" which c
 "Mark Grading Complete and Notify Student: They Failed (xx%)"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Course Total"/"Overall Module Grade" has been set to the correct value before pressing this button.
 </li>
 <li>
-"Mark Grading Complete and Notify Student: They Passed Diploma Level (xx%)"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Course Total"/"Overall Module Grade" has been set to the correct value before pressing this button. The student will be able to download an academic transcript PDF file further down this same page for all course modules that they have passed. (Teachers and Admins will also be able to download the student's transcripts also.)
+"Mark Grading Complete and Notify Student: They Passed Diploma Level (xx%)"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Course Total"/"Overall Module Grade" has been set to the correct value before pressing this button. The student will be able to download an academic transcript PDF file further down this same page for all course modules that they have passed. (Tutors and Admins will also be able to download the student's transcripts also.)
 </li>
 <li>
-"Mark Grading Complete and Notify Student: They Passed Masters Level (xx%)"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Course Total"/"Overall Module Grade" has been set to the correct value before pressing this button. The student will be able to download an academic transcript PDF file further down this same page for all course modules that they have passed. (Teachers and Admins will also be able to download the student's transcripts also.)
+"Mark Grading Complete and Notify Student: They Passed Masters Level (xx%)"... an e-mail is sent to the student with a link to a student version of this same page which shows the final marking and comments. However you obviously need to make sure that the "Course Total"/"Overall Module Grade" has been set to the correct value before pressing this button. The student will be able to download an academic transcript PDF file further down this same page for all course modules that they have passed. (Tutors and Admins will also be able to download the student's transcripts also.)
 </li>
 <li>
 "Click to indicate Student will NOT be Graded, because they did Not Complete"... to be used if someone did not complete the semester. This will be shown on the coursegrades.php report (and successbyqualifications.php).
@@ -1093,7 +1093,7 @@ function is_peoples_teacher() {
       ra.userid=? AND
       ra.roleid=r.id AND
       ra.contextid=con.id AND
-      r.name IN ('Teacher', 'Teachers') AND
+      r.name IN ('Module Leader', 'Tutors') AND
       con.contextlevel=50",
     array($USER->id));
 

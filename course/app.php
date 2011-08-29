@@ -2020,7 +2020,7 @@ function get_peoples_teacher($course) {
 
   $context = get_context_instance(CONTEXT_COURSE, $course->id);
 
-  $role = $DB->get_record('role', array('name' => 'Teacher'));
+  $role = $DB->get_record('role', array('name' => 'Module Leader'));
 
   if ($teachers = get_role_users($role->id, $context)) {
     foreach ($teachers as $teacher) {
