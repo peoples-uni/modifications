@@ -77,6 +77,13 @@ if (!empty($_POST['markaddsemester']) && !empty($_POST['semester'])) {
   $semester_current->semester = $newsemester;
   $DB->update_record('semester_current', $semester_current);
 }
+if (!empty($_POST['marksetlastdate'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+
+  $lastdate = gmmktime(0, 0, 0, $_POST['lastdatemonth'], $_POST['lastdateday'], $_POST['lastdateyear']);
+
+  set_config('peoples_last_application_date', $lastdate);
+}
 if (!empty($_POST['markaddfoundation']) && !empty($_POST['foundation'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $_POST['foundation'] = strip_tags($_POST['foundation']);
@@ -208,6 +215,65 @@ echo '</table>';
 <input type="hidden" name="markaddsemester" value="1" />
 <input type="submit" name="addsemester" value="Set Current Semester to:" style="width:45em" />
 <input type="text" size="40" name="semester" value="<?php echo htmlspecialchars($latest_semester, ENT_COMPAT, 'UTF-8'); ?>" />
+</form>
+<br />
+<?php
+
+$lastdate = get_config(NULL, 'peoples_last_application_date');
+
+for ($day = 1; $day <= 31; $day++) $dayname[$day] = $day;
+$monthname[ 1] = 'Jan';
+$monthname[ 2] = 'Feb';
+$monthname[ 3] = 'Mar';
+$monthname[ 4] = 'Apr';
+$monthname[ 5] = 'May';
+$monthname[ 6] = 'Jun';
+$monthname[ 7] = 'Jul';
+$monthname[ 8] = 'Aug';
+$monthname[ 9] = 'Sep';
+$monthname[10] = 'Oct';
+$monthname[11] = 'Nov';
+$monthname[12] = 'Dec';
+for ($year = (int)gmdate('Y'); $year <= 2031; $year++) $yearname[$year] = $year;
+
+?>
+<form id="setlastdateform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="marksetlastdate" value="1" />
+<input type="submit" name="setlastdate" value="Set Last Allowed Date (display only, not enforced) for Applications to:" style="width:45em" />
+
+<select name="lastdateyear">
+<?php
+foreach ($yearname as $i => $value) {
+  if ($i == (int)gmdate('Y')) $selected = 'selected="selected"';
+  else $selected = '';
+  echo '<option value="' . $i . '" ' . $selected . '>' . $value . '</option>';
+}
+?>
+</select>
+
+<select name="lastdatemonth">
+<?php
+foreach ($monthname as $i => $value) {
+  if ($i == (int)gmdate('n')) $selected = 'selected="selected"';
+  else $selected = '';
+  echo '<option value="' . $i . '" ' . $selected . '>' . $value . '</option>';
+}
+?>
+</select>
+
+<select name="lastdateday">
+<?php
+foreach ($dayname as $i => $value) {
+  if ($i == (int)gmdate('j')) $selected = 'selected="selected"';
+  else $selected = '';
+  echo '<option value="' . $i . '" ' . $selected . '>' . $value . '</option>';
+}
+?>
+</select>
+
+<?php echo '<br />(currently selected Last Allowed Date is: ' . gmdate('jS F Y', $lastdate) . ')'; ?>
+
 </form>
 <br />
 <?php
