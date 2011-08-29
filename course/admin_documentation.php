@@ -100,6 +100,9 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter a New Semester name like "Starting September 2009" and click "Set Current Semester to:".
 </li>
 <li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on applications forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
+</li>
+<li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> each new module has to be individually added by selecting the new module from the selection list (making sure it is the correct version of the module for the new semester). This selection is beside the "Add this Module to above Active Module list for Applications:" button. When an individual module is selected then click "Add this Module to above Active Module list for Applications:", repeat this until the full set of modules for the new semester is listed.<br />
 NOTE: once any module is added (which is not then immediately marked as full... see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a>), application forms will be opened for students!
 </li>
@@ -196,6 +199,9 @@ enjoy the experience and find it useful.
 </pre>
 </li>
 <li>
+Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the New Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
+</li>
+<li>
 Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default RETURNING STUDENTS Approval e-mail wording for dates and banking and then click "Set the above text as the Returning Students Approval e-mail wording (in Application Details/app.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
@@ -272,6 +278,9 @@ enjoy the experience and find it useful.
 
     Peoples Open Access Education Initiative Administrator.
 </pre>
+</li>
+<li>
+Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default RETURNING STUDENTS Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the Returning Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default batch reminder e-mail wording for dates and banking and then click "Set above text as Batch Reminder e-mail wording (in applications.php spreadsheet)". Here is a sample of previous wording...
@@ -563,6 +572,9 @@ NOTE: For the moment, Credit Card payments for the MMU MPH are handled separatel
 <li>
 "Approve Full Application" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail outlined above under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which requests payment.<br />
 The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Yes" as opposed to "No", "Some" (if only one application is approved, see below) or "Denied or Deferred" (if the application has been un-approved after being approved.)
+</li>
+<li>
+"Approve Full Application BURSARY" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail specified under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which indicates they have a bursary (as well as other information).
 </li>
 <li>
 "Approve Module '...' only:" is a button that allows either one of the modules to be approved and not the other. Note in this case no e-mail is sent. So instructions about how to pay need to be sent manually.
