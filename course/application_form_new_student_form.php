@@ -450,7 +450,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni or Manchester Metropolitan University for the health of the population (up to 150 words)<br />');
     $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
 
-    $this->add_action_buttons();
+    $this->add_action_buttons(false, 'Submit Form');
 
     //$this->set_data($data);
   }
