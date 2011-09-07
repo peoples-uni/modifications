@@ -761,22 +761,22 @@ foreach ($applications as $sid => $application) {
   }
 
   if (!empty($chosenmmu) && $chosenmmu !== 'Any') {
-    if ($chosenmmu === 'Yes' && $application->applymmumph >= 2) {
+    if ($chosenmmu === 'No' && $application->applymmumph >= 2) {
       unset($applications[$sid]);
       continue;
     }
-    if ($chosenmmu === 'No' && $application->applymmumph < 2) {
+    if ($chosenmmu === 'Yes' && $application->applymmumph < 2) {
       unset($applications[$sid]);
       continue;
     }
   }
 
   if (!empty($chosenscholarship) && $chosenscholarship !== 'Any') {
-    if ($chosenscholarship === 'Yes' && !empty($application->applymmumph)) {
+    if ($chosenscholarship === 'No' && !empty($application->applymmumph)) {
       unset($applications[$sid]);
       continue;
     }
-    if ($chosenscholarship === 'No' && empty($application->applymmumph)) {
+    if ($chosenscholarship === 'Yes' && empty($application->applymmumph)) {
       unset($applications[$sid]);
       continue;
     }
