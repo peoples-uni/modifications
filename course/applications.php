@@ -777,11 +777,11 @@ foreach ($applications as $sid => $application) {
   }
 
   if (!empty($chosenscholarship) && $chosenscholarship !== 'Any') {
-    if ($chosenscholarship === 'No' && !empty($application->applymmumph)) {
+    if ($chosenscholarship === 'No' && !empty($application->scholarship)) {
       unset($applications[$sid]);
       continue;
     }
-    if ($chosenscholarship === 'Yes' && empty($application->applymmumph)) {
+    if ($chosenscholarship === 'Yes' && empty($application->scholarship)) {
       unset($applications[$sid]);
       continue;
     }
