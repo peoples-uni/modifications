@@ -420,6 +420,7 @@ if (!empty($_POST['markfilter'])) {
     . '&chosenreenrol=' . urlencode($_POST['chosenreenrol'])
     . '&chosenmmu=' . urlencode($_POST['chosenmmu'])
     . '&chosenscholarship=' . urlencode($_POST['chosenscholarship'])
+    . (empty($_POST['displayscholarship']) ? '&displayscholarship=0' : '&displayscholarship=1')
     . (empty($_POST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
     );
 }
@@ -482,6 +483,8 @@ if (!empty($_REQUEST['chosenpay'])) $chosenpay = $_REQUEST['chosenpay'];
 if (!empty($_REQUEST['chosenreenrol'])) $chosenreenrol = $_REQUEST['chosenreenrol'];
 if (!empty($_REQUEST['chosenmmu'])) $chosenmmu = $_REQUEST['chosenmmu'];
 if (!empty($_REQUEST['chosenscholarship'])) $chosenscholarship = $_REQUEST['chosenscholarship'];
+if (!empty($_REQUEST['displayscholarship'])) $displayscholarship = true;
+else $displayscholarship = false;
 if (!empty($_REQUEST['displayextra'])) $displayextra = true;
 else $displayextra = false;
 
@@ -584,6 +587,7 @@ Display entries using the following filters...
     <td>Re&#8209;enrolment?</td>
     <td>Applied MMU?</td>
     <td>Applied Scholarship?</td>
+    <td>Show Scholarship Relevant Columns</td>
     <td>Show Extra Details</td>
   </tr>
   <tr>
@@ -604,6 +608,7 @@ Display entries using the following filters...
     displayoptions('chosenmmu', $listchosenmmu, $chosenmmu);
     displayoptions('chosenscholarship', $listchosenscholarship, $chosenscholarship);
     ?>
+    <td><input type="checkbox" name="displayscholarship" <?php if ($displayscholarship) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="displayextra" <?php if ($displayextra) echo ' CHECKED'; ?>></td>
   </tr>
 </table>
@@ -803,7 +808,7 @@ if ($sendemails) {
 
 $table = new html_table();
 
-if (!$displayextra) {
+if (!$displayextra && !$displayscholarship) {
   $table->head = array(
     'Submitted',
     'sid',
@@ -824,6 +829,23 @@ if (!$displayextra) {
     '',
     ''
   );
+}
+elseif ($displayscholarship) {
+  $table->head = array(
+    'sid',
+    '',
+    'Family name',
+    'Given name',
+    'Country',
+    'Scholarship',
+    'Reasons for wanting to enrol (1st Application)',
+    'Current employment (1st Application)',
+    'Current employment details (1st Application)',
+    'Qualification (1st Application)',
+    'Postgraduate Qualification (1st Application)',
+    'Education Details (1st Application)',
+  );
+
 }
 else {
   $table->head = array(
@@ -958,7 +980,7 @@ foreach ($applications as $sid => $application) {
     $rowdata = array();
     //echo '<tr>';
     //echo '<td>' . gmdate('d/m/Y H:i', $application->datesubmitted) . '</td>';
-    $rowdata[] = gmdate('d/m/Y H:i', $application->datesubmitted);
+    if (!$displayscholarship) $rowdata[] = gmdate('d/m/Y H:i', $application->datesubmitted);
     //echo '<td>' . $sid . '</td>';
     $rowdata[] = $sid;
 
@@ -968,7 +990,7 @@ foreach ($applications as $sid => $application) {
     else $z = '<span style="color:green">Yes</span>';
     $applymmumphtext = array(0 => '', 1 => '', 2 => '<br />(Apply MMU MPH)', 3 => '<br />(Say already MMU MPH)');
     $z .= $applymmumphtext[$application->applymmumph];
-    $rowdata[] = $z;
+    if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($application->paymentmechanism)) $mechanism = '';
     elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
@@ -994,7 +1016,7 @@ foreach ($applications as $sid => $application) {
     elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
     else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
     if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
-    $rowdata[] = $z;
+    if (!$displayscholarship) $rowdata[] = $z;
 
     if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';
     elseif ($state === 033) $z = '<span style="color:green">Yes</span>';
@@ -1004,9 +1026,9 @@ foreach ($applications as $sid => $application) {
     if ($application->notepresent) $z .= '<br />(Note Present)';
     if ($application->mph) $z .= '<br />(MMU MPH)';
 
-    $rowdata[] = $z;
+    if (!$displayscholarship) $rowdata[] = $z;
 
-    if (!$displayextra) {
+    if (!$displayextra || $displayscholarship) {
       $z  = '<form method="post" action="' .  $CFG->wwwroot . '/course/app.php" target="_blank">';
 
       $z .= '<input type="hidden" name="state" value="' . $state . '" />';
@@ -1059,9 +1081,9 @@ foreach ($applications as $sid => $application) {
     else {
       $z = '<span style="color:navy">**</span>' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
     }
-    $rowdata[] = $z;
+    if (!$displayscholarship) $rowdata[] = $z;
 
-    $rowdata[] = htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8');
+    if (!$displayscholarship) $rowdata[] = htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8');
 
     if ($state1 === 02) {
       $z = '<span style="color:red">';
@@ -1075,7 +1097,7 @@ foreach ($applications as $sid => $application) {
     else {
       $z = '<span>';
     }
-    $rowdata[] = $z . htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '</span>';
+    if (!$displayscholarship) $rowdata[] = $z . htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '</span>';
 
     if ($state2 === 020) {
       $z = '<span style="color:red">';
@@ -1089,19 +1111,40 @@ foreach ($applications as $sid => $application) {
     else {
       $z = '<span>';
     }
-    $rowdata[] = $z . htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span>';
+    if (!$displayscholarship) $rowdata[] = $z . htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span>';
 
-    $rowdata[] = $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
+    if (!$displayscholarship) $rowdata[] = $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
 
-    $rowdata[] = $application->gender;
+    if (!$displayscholarship) $rowdata[] = $application->gender;
 
-    $rowdata[] = htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8');
+    if (!$displayscholarship) $rowdata[] = htmlspecialchars($application->city, ENT_COMPAT, 'UTF-8');
 
     if (empty($countryname[$application->country])) $z = '';
     else $z = $countryname[$application->country];
     $rowdata[] = $z;
 
-    if ($displayextra) {
+    if ($displayscholarship) {
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
+
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
+
+      if (empty($employmentname[$application->employment])) $z = '';
+      else $z = $employmentname[$application->employment];
+      $rowdata[] = $z;
+
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob));
+
+      if (empty($qualificationname[$application->qualification])) $z = '';
+      else $z = $qualificationname[$application->qualification];
+      $rowdata[] = $z;
+
+      if (empty($higherqualificationname[$application->higherqualification])) $z = '';
+      else $z = $higherqualificationname[$application->higherqualification];
+      $rowdata[] = $z;
+
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
+    }
+    elseif ($displayextra) {
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->applicationaddress));
 
       if (empty($employmentname[$application->employment])) $z = '';
@@ -1135,11 +1178,11 @@ foreach ($applications as $sid => $application) {
 
     if (empty($application->userid)) $z = '';
     else $z = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $application->userid . '" target="_blank">Student Grades</a>';
-    $rowdata[] = $z;
+    if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($application->userid)) $z = '';
     else $z = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a>';
-    $rowdata[] = $z;
+    if (!$displayscholarship) $rowdata[] = $z;
 
 
     if (empty($modules[$application->coursename1])) {
@@ -1314,6 +1357,7 @@ Also look at list of e-mails sent to verify they went! (No subject and they will
       . '&chosenreenrol=' . urlencode($_REQUEST['chosenreenrol'])
       . '&chosenmmu=' . urlencode($_REQUEST['chosenmmu'])
       . '&chosenscholarship=' . urlencode($_REQUEST['chosenscholarship'])
+      . (empty($_REQUEST['displayscholarship']) ? '&displayscholarship=0' : '&displayscholarship=1')
       . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1');
   }
   else {
