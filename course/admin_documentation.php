@@ -476,7 +476,7 @@ Note: At a later stage (when assignments are setup), all the assignments should 
 Go to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>. You can see a list of applicants for this semester.
 </li>
 <li>
-It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment status and by whether the student is a Re&#8209;enrolment or a New student. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
+It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment status, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or is) MMU MPH and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
 </li>
 It is also possible to display all the application data for each student in extra columns by clicking "Show Extra Details" and then "Apply Filters".
 <li>
