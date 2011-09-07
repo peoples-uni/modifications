@@ -478,7 +478,12 @@ Go to <a href="http://courses.peoples-uni.org/course/applications.php" target="_
 <li>
 It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment status, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or is) MMU MPH and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
 </li>
+<li>
+It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
+</li>
+<li>
 It is also possible to display all the application data for each student in extra columns by clicking "Show Extra Details" and then "Apply Filters".
+</li>
 <li>
 The "sid" value against each student is a unique identifier which is used to track the application including payments by the student.
 </li>
@@ -491,7 +496,9 @@ In particular the one or two modules that the student has applied for are displa
 <li>
 "Approved?", "Paid?", "Registered?", "Details", "Student Grades" and "Student Submissions" will be described later.
 </li>
+<li>
 Statistics are displayed at the end of the page.
+</li>
 <li>
 E-mails of all the students in the spreadsheet (i.e. after any filters have been applied) are listed at the end of the page so that e-mails can be manually sent to a large group of applicants.
 </li>
