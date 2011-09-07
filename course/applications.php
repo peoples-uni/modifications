@@ -418,6 +418,8 @@ if (!empty($_POST['markfilter'])) {
     . '&chosensearch=' . urlencode(dontstripslashes($_POST['chosensearch']))
     . '&chosenpay=' . urlencode($_POST['chosenpay'])
     . '&chosenreenrol=' . urlencode($_POST['chosenreenrol'])
+    . '&chosenmmu=' . urlencode($_POST['chosenmmu'])
+    . '&chosenscholarship=' . urlencode($_POST['chosenscholarship'])
     . (empty($_POST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
     );
 }
@@ -478,6 +480,8 @@ if (!empty($_REQUEST['chosensearch'])) $chosensearch = dontstripslashes($_REQUES
 else $chosensearch = '';
 if (!empty($_REQUEST['chosenpay'])) $chosenpay = $_REQUEST['chosenpay'];
 if (!empty($_REQUEST['chosenreenrol'])) $chosenreenrol = $_REQUEST['chosenreenrol'];
+if (!empty($_REQUEST['chosenmmu'])) $chosenmmu = $_REQUEST['chosenmmu'];
+if (!empty($_REQUEST['chosenscholarship'])) $chosenscholarship = $_REQUEST['chosenscholarship'];
 if (!empty($_REQUEST['displayextra'])) $displayextra = true;
 else $displayextra = false;
 
@@ -521,6 +525,16 @@ $listchosenreenrol[] = 'Any';
 if (!isset($chosenreenrol)) $chosenreenrol = 'Any';
 $listchosenreenrol[] = 'Re-enrolment';
 $listchosenreenrol[] = 'New student';
+
+$listchosenmmu[] = 'Any';
+if (!isset($chosenmmu)) $chosenmmu = 'Any';
+$listchosenmmu[] = 'Yes';
+$listchosenmmu[] = 'No';
+
+$listchosenscholarship[] = 'Any';
+if (!isset($chosenscholarship)) $chosenscholarship = 'Any';
+$listchosenscholarship[] = 'Yes';
+$listchosenscholarship[] = 'No';
 
 for ($i = 2008; $i <= (int)gmdate('Y'); $i++) {
   if (!isset($chosenstartyear)) $chosenstartyear = $i;
@@ -568,6 +582,8 @@ Display entries using the following filters...
     <td>Name or e-mail Contains</td>
     <td>"Paid?" Value</td>
     <td>Re&#8209;enrolment?</td>
+    <td>Applied MMU?</td>
+    <td>Applied Scholarship?</td>
     <td>Show Extra Details</td>
   </tr>
   <tr>
@@ -585,6 +601,8 @@ Display entries using the following filters...
     <?php
     displayoptions('chosenpay', $listchosenpay, $chosenpay);
     displayoptions('chosenreenrol', $listchosenreenrol, $chosenreenrol);
+    displayoptions('chosenmmu', $listchosenmmu, $chosenmmu);
+    displayoptions('chosenscholarship', $listchosenscholarship, $chosenscholarship);
     ?>
     <td><input type="checkbox" name="displayextra" <?php if ($displayextra) echo ' CHECKED'; ?>></td>
   </tr>
@@ -737,6 +755,28 @@ foreach ($applications as $sid => $application) {
       continue;
     }
     if ($chosenreenrol === 'New student' && $application->nid == 80) {
+      unset($applications[$sid]);
+      continue;
+    }
+  }
+
+  if (!empty($chosenmmu) && $chosenmmu !== 'Any') {
+    if ($chosenmmu === 'Yes' && $application->applymmumph >= 2) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenmmu === 'No' && $application->applymmumph < 2) {
+      unset($applications[$sid]);
+      continue;
+    }
+  }
+
+  if (!empty($chosenscholarship) && $chosenscholarship !== 'Any') {
+    if ($chosenscholarship === 'Yes' && !empty($application->applymmumph)) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenscholarship === 'No' && empty($application->applymmumph)) {
       unset($applications[$sid]);
       continue;
     }
@@ -1272,6 +1312,8 @@ Also look at list of e-mails sent to verify they went! (No subject and they will
       . '&chosensearch=' . urlencode(dontstripslashes($_REQUEST['chosensearch']))
       . '&chosenpay=' . urlencode($_REQUEST['chosenpay'])
       . '&chosenreenrol=' . urlencode($_REQUEST['chosenreenrol'])
+      . '&chosenmmu=' . urlencode($_REQUEST['chosenmmu'])
+      . '&chosenscholarship=' . urlencode($_REQUEST['chosenscholarship'])
       . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1');
   }
   else {
