@@ -845,7 +845,7 @@ elseif ($displayscholarship) {
     'Postgraduate Qualification (1st Application)',
     'Education Details (1st Application)',
   );
-
+  $table->align = array('left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left');
 }
 else {
   $table->head = array(
