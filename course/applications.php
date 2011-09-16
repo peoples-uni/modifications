@@ -776,7 +776,7 @@ foreach ($applications as $sid => $application) {
     }
   }
 
-  $x = trim($application->scholarship);
+  $x = strtolower(trim($application->scholarship));
   $scholarshipempty = empty($x) || ($x ==  'none') || ($x ==  'n/a') || ($x ==  'none.');
   if (!empty($chosenscholarship) && $chosenscholarship !== 'Any') {
     if ($chosenscholarship === 'No' && !$scholarshipempty) {
