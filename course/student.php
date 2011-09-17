@@ -65,6 +65,7 @@ if (!empty($application)) {
   elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
   elseif ($application->paymentmechanism == 2) $mechanism = ' Barclays';
   elseif ($application->paymentmechanism == 3) $mechanism = ' Diamond';
+  elseif ($application->paymentmechanism ==10) $mechanism = ' Ecobank';
   elseif ($application->paymentmechanism == 4) $mechanism = ' Western Union';
   elseif ($application->paymentmechanism == 5) $mechanism = ' Indian Confederation';
   elseif ($application->paymentmechanism == 6) $mechanism = ' Promised End Semester';
@@ -74,6 +75,7 @@ if (!empty($application)) {
   elseif ($application->paymentmechanism == 100) $mechanism = ' Waiver';
   elseif ($application->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
   elseif ($application->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
+  elseif ($application->paymentmechanism == 110) $mechanism = ' Ecobank Confirmed';
   elseif ($application->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
   elseif ($application->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
   elseif ($application->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';

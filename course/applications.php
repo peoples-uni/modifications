@@ -507,6 +507,7 @@ if (!isset($chosenpay)) $chosenpay = 'Any';
 $listchosenpay[] = 'No Indication Given';
 $listchosenpay[] = 'Not Confirmed (all)';
 $listchosenpay[] = 'Barclays not confirmed';
+$listchosenpay[] = 'Ecobank not confirmed';
 $listchosenpay[] = 'Diamond not confirmed';
 $listchosenpay[] = 'MoneyGram not confirmed';
 $listchosenpay[] = 'Western Union not confirmed';
@@ -517,6 +518,7 @@ $listchosenpay[] = 'Promised End Semester';
 $listchosenpay[] = 'Waiver';
 $listchosenpay[] = 'RBS Confirmed';
 $listchosenpay[] = 'Barclays Confirmed';
+$listchosenpay[] = 'Ecobank Confirmed';
 $listchosenpay[] = 'Diamond Confirmed';
 $listchosenpay[] = 'MoneyGram Confirmed';
 $listchosenpay[] = 'Western Union Confirmed';
@@ -692,6 +694,10 @@ foreach ($applications as $sid => $application) {
       unset($applications[$sid]);
       continue;
     }
+    if ($chosenpay === 'Ecobank not confirmed' && $application->paymentmechanism != 10) {
+      unset($applications[$sid]);
+      continue;
+    }
     if ($chosenpay === 'Western Union not confirmed' && $application->paymentmechanism != 4) {
       unset($applications[$sid]);
       continue;
@@ -729,6 +735,10 @@ foreach ($applications as $sid => $application) {
       continue;
     }
     if ($chosenpay === 'Diamond Confirmed' && $application->paymentmechanism != 103) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($chosenpay === 'Ecobank Confirmed' && $application->paymentmechanism != 110) {
       unset($applications[$sid]);
       continue;
     }
@@ -998,6 +1008,7 @@ foreach ($applications as $sid => $application) {
     elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
     elseif ($application->paymentmechanism == 2) $mechanism = ' Barclays';
     elseif ($application->paymentmechanism == 3) $mechanism = ' Diamond';
+    elseif ($application->paymentmechanism ==10) $mechanism = ' Ecobank';
     elseif ($application->paymentmechanism == 4) $mechanism = ' Western Union';
     elseif ($application->paymentmechanism == 5) $mechanism = ' Indian Confederation';
     elseif ($application->paymentmechanism == 6) $mechanism = ' Promised End Semester';
@@ -1007,6 +1018,7 @@ foreach ($applications as $sid => $application) {
     elseif ($application->paymentmechanism == 100) $mechanism = ' Waiver';
     elseif ($application->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
     elseif ($application->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
+    elseif ($application->paymentmechanism == 110) $mechanism = ' Ecobank Confirmed';
     elseif ($application->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
     elseif ($application->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
     elseif ($application->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';

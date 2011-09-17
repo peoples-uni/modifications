@@ -538,6 +538,7 @@ If they have over or under paid, the amount paid and the total originally owed i
 "Payment Mechanism" can be one of...<br />
 'RBS WorldPay Confirmed': They paid online with a credit card (using the link they were sent in their approval e-mail which brings then to http://courses.peoples-uni.org/course/pay.php?sid=XXX (XXX being their SID, the unique application ID number noted in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details").<br />
 'Barclays Bank Transfer': They have indicated they have paid by bank transfer to Barclays, but we have not confirmed that.<br />
+'Ecobank Transfer': They have indicated they have paid by bank transfer to Ecobank, but we have not confirmed that.<br />
 'Diamond Bank Transfer': They have indicated they have paid by bank transfer to Diamond Bank, but we have not confirmed that.<br />
 'MoneyGram': They have indicated they have paid by MoneyGram, but we have not confirmed that.<br />
 'Indian Confederation': They have indicated they have paid locally in India, but we have not confirmed that.<br />
@@ -546,12 +547,13 @@ If they have over or under paid, the amount paid and the total originally owed i
 'Promised End Semester': They have promised to pay by end semester!<br />
 'Waiver': We have given them a scholarship.<br />
 'Barclays Bank Transfer Confirmed': Payment has been confirmed.<br />
+'Ecobank Transfer Confirmed': Payment has been confirmed.<br />
 'Diamond Bank Transfer Confirmed': Payment has been confirmed.<br />
 'MoneyGram Confirmed': Payment has been confirmed.<br />
 'Indian Confederation Confirmed': Payment has been confirmed.<br />
 'Posted Travellers Cheques': Payment has been confirmed.<br />
 'Posted Cash': Payment has been confirmed.<br />
-The student can set 'Barclays Bank Transfer', 'Diamond Bank Transfer' and 'MoneyGram' using the paydetails.php link they will have been sent in their approval e-mail (the link includes the SID unique application ID). The credit card one is set automatically and the rest are set manually by us as described in the next bullet point.
+The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram' using the paydetails.php link they will have been sent in their approval e-mail (the link includes the SID unique application ID). The credit card one is set automatically and the rest are set manually by us as described in the next bullet point.
 </li>
 <li>
 "Change Payment Confirmation" is a link (to payconfirm.php with the applicant SID as a parameter) that brings up a page that allows us to update the data in the previous bullet point by setting the "Payment Mechanism" and pressing the "Submit the Payment Status" button. The "Amount Paid" is set to the "Amount Owed" at the same time (unless it is just marked as promised to pay in which case the "Amount Paid" is not changed).<br />This page also allows the "Amount Paid" and the "Amount Owed" to be changed because someone has underpaid or overpaid or previously made a prepayment.<br />

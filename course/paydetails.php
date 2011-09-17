@@ -60,6 +60,10 @@ if (!empty($_POST['markpaydetails'])) {
     $updated->paymentmechanism = 3;
     $mechanism = 'Diamond';
   }
+  elseif ($_POST['paymentmechanism'] ==10) {
+    $updated->paymentmechanism = 10;
+    $mechanism = 'Ecobank';
+  }
   elseif ($_POST['paymentmechanism'] == 4) {
     $updated->paymentmechanism = 4;
     $mechanism = 'Western Union';
@@ -130,9 +134,10 @@ echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt
 Select the method you used for Payment: <select name="paymentmechanism">
 <option value="0">Select one...</option>
 <option value="2">Barclays Bank Transfer</option>
-<option value="3">Diamond Bank Plc. Transfer</option>
+<option value="10">Ecobank Nigeria PLC. Transfer</option>
 <option value="9">MoneyGram Payment</option>
 <?php
+//<option value="3">Diamond Bank Plc. Transfer</option>
 //<option value="4">Western Union Payment</option>
 //<option value="5">Indian Confederation for Healthcare Accreditation for those taking Patient Safety module from India</option>
 //<option value="7">Posted Travellers Cheques</option>

@@ -136,6 +136,7 @@ echo '<br /><p>Update the payment confirmation status and then click "Submit the
 Select the new payment status: <select name="paymentmechanism">
 <option value="0">Select one...</option>
 <option value="2">Barclays Bank Transfer</option>
+<option value="10">Ecobank Nigeria PLC. Transfer</option>
 <option value="3">Diamond Bank Plc. Transfer</option>
 <option value="9">MoneyGram Payment</option>
 <option value="4">Western Union Payment</option>
@@ -145,6 +146,7 @@ Select the new payment status: <select name="paymentmechanism">
 <option value="6">Promised to Pay by End of Semester</option>
 <option value="100">Waiver</option>
 <option value="102">Confirmed: Barclays Bank Transfer</option>
+<option value="110">Confirmed: Ecobank Transfer</option>
 <option value="103">Confirmed: Diamond Bank Transfer</option>
 <option value="109">Confirmed: MoneyGram</option>
 <option value="104">Confirmed: Western Union</option>
@@ -243,6 +245,7 @@ if (!empty($applications)) {
     elseif ($app->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
     elseif ($app->paymentmechanism == 2) $mechanism = ' Barclays';
     elseif ($app->paymentmechanism == 3) $mechanism = ' Diamond';
+    elseif ($app->paymentmechanism ==10) $mechanism = ' Ecobank';
     elseif ($app->paymentmechanism == 4) $mechanism = ' Western Union';
     elseif ($app->paymentmechanism == 5) $mechanism = ' Indian Confederation';
     elseif ($app->paymentmechanism == 6) $mechanism = ' Promised End Semester';
@@ -252,6 +255,7 @@ if (!empty($applications)) {
     elseif ($app->paymentmechanism == 100) $mechanism = ' Waiver';
     elseif ($app->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
     elseif ($app->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
+    elseif ($app->paymentmechanism == 110) $mechanism = ' Ecobank Confirmed';
     elseif ($app->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
     elseif ($app->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
     elseif ($app->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';
