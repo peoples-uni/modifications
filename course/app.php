@@ -601,9 +601,9 @@ echo '<td>' . $_REQUEST['sid'] . '</td>';
 echo '</tr>';
 echo '<tr>';
 echo '<td>Paid?</td>';
-if ($application->costpaid < .01) echo '<td><span style="color:red">No</span></td>';
-elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes</span></td>';
-else echo '<td><span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . '</span></td>';
+if ($application->costpaid < .01) echo '<td><span style="color:red">No: &pound;' . $application->costowed . ' Owed</span></td>';
+elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes: &pound;' . $application->costowed . '</span></td>';
+else echo '<td><span style="color:blue">' . "Paid &pound;$application->costpaid out of &pound;$application->costowed" . '</span></td>';
 echo '</tr>';
 
 if (empty($application->paymentmechanism)) $mechanism = '';
