@@ -10,7 +10,7 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 $PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
 $PAGE->set_url('/course/paydetails.php');
-$PAGE->set_pagelayout('standard');
+$PAGE->set_pagelayout('embedded');
 
 $PAGE->set_title('Peoples-uni Payment Details');
 $PAGE->set_heading('Peoples-uni Payment Details');

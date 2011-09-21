@@ -258,10 +258,17 @@ $countryname['ZW'] = 'Zimbabwe';
 
 
 require("../config.php");
+require_once($CFG->dirroot .'/course/lib.php');
 
-print_header('Peoples-uni Payment');
+$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_url('/course/pay.php');
+$PAGE->set_pagelayout('embedded');
 
-print_simple_box_start("center");
+$PAGE->set_title('Peoples-uni Payment');
+$PAGE->set_heading('Peoples-uni Payment');
+echo $OUTPUT->header();
+
+echo $OUTPUT->box_start('generalbox boxaligncenter');
 
 
 $sid = (int)$_REQUEST['sid'];
@@ -426,6 +433,6 @@ else {
 
 <?php
 
-print_simple_box_end();
-print_footer();
+echo $OUTPUT->box_end();
+echo $OUTPUT->footer();
 ?>
