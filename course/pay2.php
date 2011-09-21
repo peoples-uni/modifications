@@ -350,7 +350,8 @@ echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/co
 
 echo "<p><br /><br /><b>Cost for your chosen modules (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
 // echo '<p><img alt="WorldPay" src="https://www.paypal.com/en_US/i/logo/PayPal_mark_60x38.gif" /></p>';
-echo "<p>Use the button below to pay for your enrolment in $modulespurchasedlong with RBS WorldPay.</p>";
+echo "<p>Use the button below to pay for your enrolment in $modulespurchasedlong with RBS WorldPay.<br />
+(Or to pay for Manchester Metropolitan University Master of Public Health programme.)</p>";
 echo '<p>(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy" target="_blank">http://www.peoples-uni.org/content/refund-policy</a>)</p>';
 ?>
 <form action="<?php echo $payurl; ?>" method="post">
