@@ -694,7 +694,7 @@ displaystat($country,'Country');
 echo '<br />';
 echo '<a href="' . $CFG->wwwroot . '/course/successbyqualifications.php" target="_blank">Success by Qualifications Report</a>';
 
-echo '<br /><br />';
+echo '<br /><br /><br /><br />';
 
 
 if ($isteacher) {
