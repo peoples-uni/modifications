@@ -946,7 +946,7 @@ The first form is typically used to send students a reminder of the their Applic
 The second is typically used to send students a reminder that they have not logged on to Peoples-uni since the start of the Semester. But to do this correctly (i.e. select the appropriate students to send this e-mail to), it is necessary to set the "Show Students Not Logged on for this many Days" filter at the top of the page to an appropriate number of days before sending the e-mail.
 </li>
 <li>
-"Course Grades" is fully only available to any tutor or admin (a user with the "Lurker" role can view but not perform any actions). None of this is visible to students; all they see is their own academic transcript in student.php.
+"Course Grades" is fully only available to any tutor or admin (a user with the "Lurker" role, actually system wide "moodle/course:view", can view but not perform any actions). None of this is visible to students; all they see is their own academic transcript in student.php.
 </li>
 </ol>
 
