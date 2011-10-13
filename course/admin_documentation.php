@@ -18,7 +18,8 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
-if (!$isteacher) {
+$islurker = has_capability('moodle/course:view', get_context_instance(CONTEXT_SYSTEM));
+if (!$isteacher && !$islurker) {
   echo '<h1>You must be a Tutor to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");
 }
@@ -923,7 +924,8 @@ Select by Grading Status:<br />
 Select by Semester (defaults to current Semester, can also view All Semesters if you want)<br />
 Sort by Last Access<br />
 Show Students Not Logged on for this many Days (if set to a specific number of days, this can be used to select only students who have not logged on for that number of days or more. With those students selected it is possible to send a reminder e-mail to them at the bottom of the "Course Grades" page.)<br />
-Show Payment Status... This is typically used to see if a student has paid before they are notified of grading.
+Show Payment Status... This is typically used to see if a student has paid before they are notified of grading.<br />
+Show MMU MPH Only.
 <br />
 </li>
 <li>
@@ -944,7 +946,7 @@ The first form is typically used to send students a reminder of the their Applic
 The second is typically used to send students a reminder that they have not logged on to Peoples-uni since the start of the Semester. But to do this correctly (i.e. select the appropriate students to send this e-mail to), it is necessary to set the "Show Students Not Logged on for this many Days" filter at the top of the page to an appropriate number of days before sending the e-mail.
 </li>
 <li>
-"Course Grades" is only available to any tutor or admin. None of this is visible to students; all they see is their own academic transcript in student.php.
+"Course Grades" is fully only available to any tutor or admin (a user with the "Lurker" role can view but not perform any actions). None of this is visible to students; all they see is their own academic transcript in student.php.
 </li>
 </ol>
 

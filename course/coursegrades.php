@@ -267,6 +267,7 @@ if (!empty($_POST['markfilter'])) {
     . (empty($_POST['sortbyaccess']) ? '&sortbyaccess=0' : '&sortbyaccess=1')
     . '&showmissingfordays=' . urlencode(dontstripslashes($_POST['showmissingfordays']))
     . (empty($_POST['showpaymentstatus']) ? '&showpaymentstatus=0' : '&showpaymentstatus=1')
+    . (empty($_POST['showmmumphonly']) ? '&showmmumphonly=0' : '&showmmumphonly=1')
     );
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
@@ -289,7 +290,8 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
-if (!$isteacher) {
+$islurker = has_capability('moodle/course:view', get_context_instance(CONTEXT_SYSTEM));
+if (!$isteacher && !$islurker) {
 	echo '<h1>You must be a tutor to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");
 }
@@ -406,6 +408,13 @@ else {
   $showpaymentstatus = false;
 }
 
+if (!empty($_REQUEST['showmmumphonly'])) {
+  $showmmumphonly = true;
+}
+else {
+  $showmmumphonly = false;
+}
+
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/coursegrades.php'; ?>">
 Display entries using the following filters...
@@ -417,6 +426,7 @@ Display entries using the following filters...
     <td>Sort by Last Access</td>
     <td>Show Students Not Logged on for this many Days</td>
     <td>Show Payment Status</td>
+    <td>Show MMU MPH Only</td>
   </tr>
   <tr>
     <td>
@@ -441,6 +451,7 @@ Display entries using the following filters...
     displayoptions('showmissingfordays', $listshowmissingfordays, $showmissingfordays);
     ?>
     <td><input type="checkbox" name="showpaymentstatus" <?php if ($showpaymentstatus) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="showmmumphonly" <?php if ($showmmumphonly) echo ' CHECKED'; ?>></td>
 	</tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
@@ -508,6 +519,17 @@ $lastname = '';
 $countnondup = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
+
+    $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$enrol->userid} ORDER BY datesubmitted DESC");
+    if (!empty($mphs)) {
+      foreach ($mphs as $mph) {
+        $inmph = '<br />(MMU MPH)';
+      }
+    }
+    else $inmph = '';
+
+    if (empty($inmph) && $showmmumphonly) continue;
+
     $rowdata = array();
     $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
@@ -556,14 +578,6 @@ if (!empty($enrols)) {
 		elseif ($enrol->notified == 4) {
       $rowdata[] = 'No, did Not Pay';
 		}
-
-    $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$enrol->userid} ORDER BY datesubmitted DESC");
-    if (!empty($mphs)) {
-      foreach ($mphs as $mph) {
-        $inmph = '<br />(MMU MPH)';
-      }
-    }
-    else $inmph = '';
 
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">Student Grades</a>' . $inmph;
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $enrol->userid . '" target="_blank">Student Submissions</a>';
@@ -683,6 +697,7 @@ echo '<a href="' . $CFG->wwwroot . '/course/successbyqualifications.php" target=
 echo '<br /><br />';
 
 
+if ($isteacher) {
 $peoples_batch_email_to_enrolled = get_config(NULL, 'peoples_batch_email_to_enrolled');
 
 $peoples_batch_email_to_enrolled = htmlspecialchars($peoples_batch_email_to_enrolled, ENT_COMPAT, 'UTF-8');
@@ -696,7 +711,9 @@ Look at list of e-mails sent to verify they went!<br />
     . '&chosensemester=' . urlencode($chosensemester)
     . (empty($sortbyaccess) ? '&sortbyaccess=0' : '&sortbyaccess=1')
     . '&showmissingfordays=' . urlencode($showmissingfordays)
-    . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1');
+    . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1')
+    . (empty($showmmumphonly) ? '&showmmumphonly=0' : '&showmmumphonly=1')
+    ;
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 <textarea name="emailbody" rows="31" cols="75" wrap="hard">
@@ -709,8 +726,10 @@ Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 </form>
 <br /><br />
 <?php
+}
 
 
+if ($isteacher) {
 $peoples_batch_email_to_enrolled_missing = get_config(NULL, 'peoples_batch_email_to_enrolled_missing');
 
 $peoples_batch_email_to_enrolled_missing = htmlspecialchars($peoples_batch_email_to_enrolled_missing, ENT_COMPAT, 'UTF-8');
@@ -724,7 +743,9 @@ Look at list of e-mails sent to verify they went!<br />
     . '&chosensemester=' . urlencode($chosensemester)
     . (empty($sortbyaccess) ? '&sortbyaccess=0' : '&sortbyaccess=1')
     . '&showmissingfordays=' . urlencode($showmissingfordays)
-    . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1');
+    . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1')
+    . (empty($showmmumphonly) ? '&showmmumphonly=0' : '&showmmumphonly=1')
+    ;
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 <textarea name="emailbody" rows="31" cols="75" wrap="hard">
@@ -737,6 +758,7 @@ Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 </form>
 <br /><br />
 <?php
+}
 
 
 echo $OUTPUT->footer();
