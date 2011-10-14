@@ -290,7 +290,7 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
-$islurker = has_capability('moodle/course:view', get_context_instance(CONTEXT_SYSTEM));
+$islurker = has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_SYSTEM));
 if (!$isteacher && !$islurker) {
 	echo '<h1>You must be a tutor to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");

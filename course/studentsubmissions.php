@@ -19,8 +19,9 @@ require_login();
 // Might possibly be Guest??... Anyway Guest user will not have any enrolment
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die(); }
 
-// has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))
-if (!is_peoples_teacher())  {echo '<h1>You do not have rights to do this!</h1>'; die(); };
+$isteacher = is_peoples_teacher();
+$islurker = has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_SYSTEM));
+if (!$isteacher && !$islurker)  {echo '<h1>You do not have rights to do this!</h1>'; die(); };
 
 $userid = required_param('id', PARAM_INT);
 $hidequiz = optional_param('hidequiz', 0, PARAM_INT);

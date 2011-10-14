@@ -34,11 +34,11 @@ require_login();
 // Might possibly be Guest??... Anyway Guest user will not have any enrolment
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
-// has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))
 $isteacher = is_peoples_teacher();
+$islurker = has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_SYSTEM));
 
 $userid = optional_param('id', 0, PARAM_INT);
-if (empty($userid) || !$isteacher) $userid = $USER->id;
+if (empty($userid) || (!$isteacher && !$islurker)) $userid = $USER->id;
 if (empty($userid)) {echo '<h1>$userid empty(), should not happen!</h1>'; die();}
 
 $userrecord = $DB->get_record('user', array('id' => $userid));
@@ -664,6 +664,25 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 
 	echo '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $userid . '">Student Submissions</a><br />';
 	echo '<a href="' . $CFG->wwwroot . '/course/coursegrades.php">(Student Enrolments and Grades for All Students)</a><br />';
+}
+elseif ($islurker) {
+  $notes = $DB->get_records('peoplesstudentnotes', array('userid' => $userid), 'datesubmitted DESC');
+  if (!empty($notes)) {
+    echo '<br /><br />Notes...<br />';
+    echo '<table border="1" BORDERCOLOR="RED">';
+    foreach ($notes as $note) {
+      echo '<tr><td>';
+      echo gmdate('d/m/Y H:i', $note->datesubmitted);
+      echo '</td><td>';
+      echo $note->note;
+      echo '</td></tr>';
+    }
+    echo '</table>';
+  }
+
+  echo '<br /><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $userid . '">Student Submissions</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/coursegrades.php">(Student Enrolments and Grades for All Students)</a><br />';
 }
 
 
