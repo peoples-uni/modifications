@@ -416,20 +416,20 @@ echo '</table>';
 if ($state === 0) {
   $given_name = $application->firstname;
 
-  $peoples_approval_email = get_config(NULL, 'peoples_approval_email');
+  $peoples_register_email = get_config(NULL, 'peoples_register_email');
 
-  $peoples_approval_email = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email);
-  $peoples_approval_email = str_replace('SID_HERE',                  $sid, $peoples_approval_email);
+  $peoples_register_email = str_replace('GIVEN_NAME_HERE', $given_name, $peoples_register_email);
+  $peoples_register_email = str_replace('ID_HERE',         $sid, $peoples_register_email);
 
-  $peoples_approval_email = htmlspecialchars($peoples_approval_email, ENT_COMPAT, 'UTF-8');
+  $peoples_register_email = htmlspecialchars($peoples_register_email, ENT_COMPAT, 'UTF-8');
 
 // markcreateuser12
 ?>
-<br />To approve this application and send an e-mail to applicant (edit e-mail text if you wish), press "Approve Full Application".
+<br />To Register this Student and send an e-mail to Student (edit e-mail text if you wish), press "Register Student".
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <textarea name="approvedtext" rows="15" cols="75" wrap="hard">
-<?php echo $peoples_approval_email; ?>
+<?php echo $peoples_register_email; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markapproveapplication" value="1" />
@@ -440,11 +440,11 @@ if ($state === 0) {
 <?php
 }
 else {
-	echo '<span style="color:green">This application is already (part) approved.</span><br />';
+	echo '<span style="color:green">This Student is Registered.</span><br />';
 }
 
 ?>
-<br />To send an e-mail to this applicant (EDIT the e-mail text below!), press "e-mail Applicant".
+<br />To send an e-mail to this Student (EDIT the e-mail text below!), press "e-mail Student".
 <form id="deferapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <textarea name="defertext" rows="10" cols="75" wrap="hard">
@@ -468,7 +468,7 @@ elseif (!empty($application->username)) {
 }
 if (!empty($userrecord)) {
 	if (empty($application->userid)) {
-		echo "<strong>This applicant has not been Registered but there is already a Moodle user with the Username: '" . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . "'...</strong>";
+		echo "<strong>This Student has not been Registered but there is already a Moodle user with the Username: '" . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . "'...</strong>";
 	}
 	else {
 		echo "<strong>Corresponding Registered Moodle Username: '" . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . "'...</strong>";
