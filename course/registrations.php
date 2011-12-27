@@ -274,6 +274,13 @@ $employmentname['40'] = 'Public health';
 $employmentname['50'] = 'Other health related';
 $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 
+$howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
+$howfoundpeoplesname['20'] = 'Informed by someone else';
+$howfoundpeoplesname['30'] = 'Facebook';
+$howfoundpeoplesname['40'] = 'Internet advertisement';
+$howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
+$howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
@@ -519,6 +526,7 @@ else {
     'Education Details',
     'Reasons for wanting to enrol',
     'Sponsoring organisation',
+    'How heard about Peoples-uni',
     'Desired Moodle Username',
     'Moodle UserID',
     '',
@@ -601,6 +609,10 @@ foreach ($applications as $sid => $application) {
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
 
+    if (empty($howfoundpeoplesname[$application->howfoundpeoples])) $z = '';
+    else $z = $howfoundpeoplesname[$application->howfoundpeoples];
+    $rowdata[] = $z;
+
     $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
 
     if (empty($application->userid)) $z = '';
@@ -642,6 +654,13 @@ foreach ($applications as $sid => $application) {
       $country[$countryname[$application->country]]++;
     }
 
+    if (empty($howfoundpeoples[$howfoundpeoplesname[$application->howfoundpeoples]])) {
+      $howfoundpeoples[$howfoundpeoplesname[$application->howfoundpeoples]] = 1;
+    }
+    else {
+      $howfoundpeoples[$howfoundpeoplesname[$application->howfoundpeoples]]++;
+    }
+
     $listofemails[]  = htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
   }
 
@@ -659,9 +678,10 @@ natcasesort($listofemails);
 echo 'e-mails of Registered Students...<br />' . implode(', ', array_unique($listofemails)) . '<br /><br />';
 
 echo 'Statistics for Registered Students...<br />';
-displaystat($gender,'Gender');
-displaystat($age,'Year of Birth');
-displaystat($country,'Country');
+displaystat($gender, 'Gender');
+displaystat($age, 'Year of Birth');
+displaystat($country, 'Country');
+displaystat($howfoundpeoples, 'How heard about Peoples-uni');
 
 
 $peoples_batch_registration_email = get_config(NULL, 'peoples_batch_registration_email');

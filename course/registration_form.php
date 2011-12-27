@@ -400,6 +400,17 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('textarea', 'currentjob', 'Current Employment Details', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'You can add any details about your current employment.<br />');
 
+    $howfoundpeoplesname[  ''] = 'Select...';
+    $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
+    $howfoundpeoplesname['20'] = 'Informed by someone else';
+    $howfoundpeoplesname['30'] = 'Facebook';
+    $howfoundpeoplesname['40'] = 'Internet advertisement';
+    $howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
+    $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+    $mform->addElement('select', 'howfoundpeoples', 'How did you hear about Peoples-uni?', $howfoundpeoplesname);
+    $mform->addRule('howfoundpeoples', 'How did you hear about Peoples-uni is required', 'required', null, 'client');
+    $mform->addElement('static', 'explainhowfoundpeoples', '&nbsp;', 'Select the option that best describes how you heard about Peoples-uni.<br />');
+
 
     $this->add_action_buttons(false, 'Submit Form');
 
@@ -412,7 +423,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
 
     $errors = parent::validation($data, $files);
 
-    if ($data['email'] !== $data['email2'])            $errors['email']       = 'Email address does not match Email verification, they must be the same.';
+    if ($data['email'] !== $data['email2']) $errors['email'] = 'Email address does not match Email verification, they must be the same.';
 
     return $errors;
   }

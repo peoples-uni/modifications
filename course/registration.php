@@ -19,6 +19,7 @@ CREATE TABLE mdl_peoplesregistration (
   qualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
   higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
   employment BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  howfoundpeoples BIGINT(10) unsigned NOT NULL DEFAULT 0,
   dobday VARCHAR(2) NOT NULL DEFAULT '',
   dobmonth VARCHAR(2) NOT NULL DEFAULT '',
   dobyear VARCHAR(4) NOT NULL DEFAULT '',
@@ -371,6 +372,11 @@ elseif ($data = $editform->get_data()) {
   $dataitem = strip_tags($dataitem);
   $application->higherqualification = $dataitem;
 
+  $dataitem = $data->howfoundpeoples;
+  if (empty($dataitem)) $dataitem = '0';
+  $dataitem = strip_tags($dataitem);
+  $application->howfoundpeoples = $dataitem;
+
   $dataitem = $data->education;
   if (empty($dataitem)) $dataitem = '';
   // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
@@ -438,7 +444,16 @@ elseif ($data = $editform->get_data()) {
   $message .= "Postgraduate Qualification: " . $higherqualificationname[$application->higherqualification] . "\n\n";
 
   $message .= "Current Employment Details:\n" . htmlspecialchars_decode($application->currentjob, ENT_COMPAT) . "\n\n";
-  $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n";
+  $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n\n";
+
+    $howfoundpeoplesname[  ''] = 'Select...';
+    $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
+    $howfoundpeoplesname['20'] = 'Informed by someone else';
+    $howfoundpeoplesname['30'] = 'Facebook';
+    $howfoundpeoplesname['40'] = 'Internet advertisement';
+    $howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
+    $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+  $message .= "How heard about Peoples-uni: " . $howfoundpeoplesname[$application->howfoundpeoples] . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
   sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
