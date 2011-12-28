@@ -400,6 +400,9 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('textarea', 'currentjob', 'Current Employment Details', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'You can add any details about your current employment.<br />');
 
+
+    $mform->addElement('header', 'howfounddetails', 'How did you hear about Peoples-uni?');
+
     $howfoundpeoplesname[  ''] = 'Select...';
     $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
     $howfoundpeoplesname['20'] = 'Informed by someone else';
