@@ -311,10 +311,10 @@ echo '<script type="text/JavaScript">function areyousuredeleteentry() { var sure
 
 
 $refreshparent = false;
-if (!empty($_POST['markchangeemail']) && !empty($_POST['11'])) {
-  $application->email = trim($application->email);
+if (!empty($_POST['markchangeemail']) && !empty($_POST['email'])) {
+  $_POST['email'] = trim($_POST['email']);
 
-  updateapplication($_POST['id'], 'email', $application->email);
+  updateapplication($_POST['sid'], 'email', $_POST['email']);
 
   $refreshparent = true;
 }
@@ -423,7 +423,6 @@ if ($state === 0) {
 
   $peoples_register_email = htmlspecialchars($peoples_register_email, ENT_COMPAT, 'UTF-8');
 
-// markcreateuser12
 ?>
 <br />To Register this Student and send an e-mail to Student (edit e-mail text if you wish), press "Register Student".
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
@@ -555,7 +554,7 @@ if ($state === 0 && empty($application->userid)) { // Allow applicant e-mail to 
 <input type="hidden" name="markchangeemail" value="1" />
 <input type="submit" name="changeemail" value="Change Applicant e-mail to:" style="width:40em" />
 
-<input type="text" size="40" name="11" value="<?php echo htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="text" size="40" name="email" value="<?php echo htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8'); ?>" />
 </form>
 <br />
 <?php
