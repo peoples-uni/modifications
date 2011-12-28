@@ -359,7 +359,7 @@ echo "<td>" . $application->gender . "</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td>Address</td>";
-echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->applicationaddress, ENT_COMPAT, 'UTF-8'))) . "</td>";
+echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', $application->applicationaddress)) . "</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td>City/Town</td>";
@@ -377,7 +377,7 @@ else echo "<td>" . $employmentname[$application->employment] . "</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td>Current Employment Details</td>";
-echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->currentjob, ENT_COMPAT, 'UTF-8'))) . "</td>";
+echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob)) . "</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td>Higher Education Qualification</td>";
@@ -391,15 +391,15 @@ else echo "<td>" . $higherqualificationname[$application->higherqualification] .
 echo "</tr>";
 echo "<tr>";
 echo "<td>Other relevant qualifications or educational experience</td>";
-echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->education, ENT_COMPAT, 'UTF-8'))) . "</td>";
+echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', $application->education)) . "</td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td>Reasons for wanting to enrol</td>";
-echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->reasons, ENT_COMPAT, 'UTF-8'))) . "</td>";
+echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', $application->reasons)) . "</td>";
 echo "</tr>";
 echo '<tr>';
 echo '<td>Sponsoring organisation</td>';
-echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($application->sponsoringorganisation, ENT_COMPAT, 'UTF-8'))) . '</td>';
+echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation)) . '</td>';
 echo '</tr>';
 echo '<tr>';
 if (empty($howfoundpeoplesname[$application->howfoundpeoples])) echo "<td></td>";
@@ -439,7 +439,7 @@ if ($state === 0) {
 <?php
 }
 else {
-	echo '<span style="color:green">This Student is Registered.</span><br />';
+  echo '<span style="color:green">This Student is Registered.</span><br />';
 }
 
 ?>
@@ -466,65 +466,65 @@ elseif (!empty($application->username)) {
   $userrecord = $DB->get_record('user', array('username' => ($application->username)));
 }
 if (!empty($userrecord)) {
-	if (empty($application->userid)) {
-		echo "<strong>This Student has not been Registered but there is already a Moodle user with the Username: '" . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . "'...</strong>";
-	}
-	else {
-		echo "<strong>Corresponding Registered Moodle Username: '" . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . "'...</strong>";
-	}
+  if (empty($application->userid)) {
+    echo "<strong>This Student has not been Registered but there is already a Moodle user with the Username: '" . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . "'...</strong>";
+  }
+  else {
+    echo "<strong>Corresponding Registered Moodle Username: '" . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . "'...</strong>";
+  }
 
-	echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
 
-	echo "<tr>";
-	echo "<td>lastname</td>";
-	if (!empty($userrecord->lastname)) { echo "<td>" . $userrecord->lastname . "</td>"; } else { echo "<td></td>"; }
-	echo "</tr>";
+  echo "<tr>";
+  echo "<td>lastname</td>";
+  if (!empty($userrecord->lastname)) { echo "<td>" . $userrecord->lastname . "</td>"; } else { echo "<td></td>"; }
+  echo "</tr>";
 
-	echo "<tr>";
-	echo "<td>firstname</td>";
-	if (!empty($userrecord->firstname)) { echo "<td>" . $userrecord->firstname . "</td>"; } else { echo "<td></td>"; }
-	echo "</tr>";
+  echo "<tr>";
+  echo "<td>firstname</td>";
+  if (!empty($userrecord->firstname)) { echo "<td>" . $userrecord->firstname . "</td>"; } else { echo "<td></td>"; }
+  echo "</tr>";
 
-	echo "<tr>";
-	echo "<td>email</td>";
-	if (!empty($userrecord->email)) { echo "<td>" . $userrecord->email . "</td>"; } else { echo "<td></td>"; }
-	echo "</tr>";
+  echo "<tr>";
+  echo "<td>email</td>";
+  if (!empty($userrecord->email)) { echo "<td>" . $userrecord->email . "</td>"; } else { echo "<td></td>"; }
+  echo "</tr>";
 
-	echo "<tr>";
-	echo "<td>city</td>";
-	if (!empty($userrecord->city)) { echo "<td>" . $userrecord->city . "</td>"; } else { echo "<td></td>"; }
-	echo "</tr>";
+  echo "<tr>";
+  echo "<td>city</td>";
+  if (!empty($userrecord->city)) { echo "<td>" . $userrecord->city . "</td>"; } else { echo "<td></td>"; }
+  echo "</tr>";
 
-	echo "<tr>";
-	echo "<td>country</td>";
-	if (!empty($countryname[$userrecord->country])) { echo "<td>" . $countryname[$userrecord->country] . "</td>"; } else { echo "<td></td>"; }
-	echo "</tr>";
+  echo "<tr>";
+  echo "<td>country</td>";
+  if (!empty($countryname[$userrecord->country])) { echo "<td>" . $countryname[$userrecord->country] . "</td>"; } else { echo "<td></td>"; }
+  echo "</tr>";
 
-	echo "<tr>";
-	echo "<td>id</td>";
-	if (!empty($userrecord->id)) { echo "<td>" . $userrecord->id . "</td>"; } else { echo "<td></td>"; }
-	echo "</tr>";
+  echo "<tr>";
+  echo "<td>id</td>";
+  if (!empty($userrecord->id)) { echo "<td>" . $userrecord->id . "</td>"; } else { echo "<td></td>"; }
+  echo "</tr>";
 
-	echo '</table>';
+  echo '</table>';
 
-	echo '<br />';
+  echo '<br />';
 
   $courses = enrol_get_users_courses($userrecord->id);
 
-	if (!empty($courses)) {
-		echo "User's courses...";
-		echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
-		foreach ($courses as $key => $course) {
-			echo "<tr>";
-			if (!empty($course->fullname)) { echo "<td>" . $course->fullname . "</td>"; } else { echo "<td></td>"; }
-			echo "</tr>";
-		}
-		echo '</table>';
-	}
-	else {
-		echo 'User ' . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . ' is not enrolled in any courses.';
-	}
-	if (empty($application->userid)) {
+  if (!empty($courses)) {
+    echo "User's courses...";
+    echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+    foreach ($courses as $key => $course) {
+      echo "<tr>";
+      if (!empty($course->fullname)) { echo "<td>" . $course->fullname . "</td>"; } else { echo "<td></td>"; }
+      echo "</tr>";
+    }
+    echo '</table>';
+  }
+  else {
+    echo 'User ' . htmlspecialchars($userrecord->username, ENT_COMPAT, 'UTF-8') . ' is not enrolled in any courses.';
+  }
+  if (empty($application->userid)) {
 ?>
 
 <br />Enter a new suggested user name here (maybe add "1" at the end of the existing name) and then press "Update Username" (you will need to come back to this page to register them).
@@ -537,7 +537,7 @@ if (!empty($userrecord)) {
 </form>
 <br />
 <?php
-	}
+  }
 }
 else {
 ?>
@@ -580,9 +580,9 @@ function updateapplication($sid, $field, $value) {
   global $DB;
 
   $record = $DB->get_record('peoplesregistration', array('sid' => $sid));
-	$application = new object();
-	$application->id = $record->id;
-	$application->{$field} = $value;
+  $application = new object();
+  $application->id = $record->id;
+  $application->{$field} = $value;
 
   $DB->update_record('peoplesregistration', $application);
 }

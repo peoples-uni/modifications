@@ -339,7 +339,6 @@ elseif ($data = $editform->get_data()) {
   $application->dobday = $dataitem;
 
   $dataitem = $data->applicationaddress;
-  // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->applicationaddress = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->city;
@@ -359,7 +358,6 @@ elseif ($data = $editform->get_data()) {
 
   $dataitem = $data->currentjob;
   if (empty($dataitem)) $dataitem = '';
-  // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->currentjob = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->qualification;
@@ -379,11 +377,9 @@ elseif ($data = $editform->get_data()) {
 
   $dataitem = $data->education;
   if (empty($dataitem)) $dataitem = '';
-  // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->reasons;
-  // Currently appaction.php does cleaning, so if these data are used in the future in appaction.php, do not do cleaning twice
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->sponsoringorganisation;

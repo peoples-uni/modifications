@@ -47,57 +47,58 @@ if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 <body>
 <?php
 
-!!!!!!!!!!!!!!!!!!read registration table based on sid... POST
 
+$application = $DB->get_record('peoplesregistration', array('id' => $_POST['sid']));
+if (empty($application)) {
+?>
+<br/><br/><br/><strong>Bad Registration Record Passed!</strong>
+<br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
+</body>
+</html>
+<?php
+}
 
 if (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
-	// Not really defer anymore, just send mail (but update status, might need to be 022)
-ONLY PASSES defertext and sid
-  $email = $_POST['email'];
-	$email = strip_tags($email);
-	$body = $_POST['defertext'];
-	$body = strip_tags($body);
+  $email = $application->email;
+  $body = $_POST['defertext'];
+  $body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-	$subject = 'Peoples-Uni Registration';
+  $subject = 'Peoples-Uni Registration';
 
-	if (!sendapprovedmail($email, $subject, $body)) {
+  if (!sendapprovedmail($email, $subject, $body)) {
 ?>
 <br/><br/><br/><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 </body>
 </html>
 <?php
-		die();
-	}
+    die();
+  }
 }
 elseif (!empty($_POST['username']) && !empty($_POST['markupdateusername'])) {
-	$_POST['username'] = strip_tags($_POST['username']);
-	$_POST['username'] = str_replace("<", '', $_POST['username']);
-	$_POST['username'] = str_replace(">", '', $_POST['username']);
-	$_POST['username'] = str_replace("/", '', $_POST['username']);
-	$_POST['username'] = str_replace("#", '', $_POST['username']);
-	$_POST['username'] = trim(moodle_strtolower($_POST['username']));
+  $_POST['username'] = strip_tags($_POST['username']);
+  $_POST['username'] = str_replace("<", '', $_POST['username']);
+  $_POST['username'] = str_replace(">", '', $_POST['username']);
+  $_POST['username'] = str_replace("/", '', $_POST['username']);
+  $_POST['username'] = str_replace("#", '', $_POST['username']);
+  $_POST['username'] = trim(moodle_strtolower($_POST['username']));
 
-ONLY PASSES USERNAME AND SID
-
-	updateapplication($_POST['sid'], 'username', $_POST['username']);
+  updateapplication($_POST['sid'], 'username', $_POST['username']);
 }
 elseif (!empty($_POST['markdeleteentry'])) {
 
   updateapplication($_POST['sid'], 'hidden', 1);
 }
-elseif (!empty($_POST['username']) && !empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'])) {
-ONLY PASES approvedtext & sid
-  $email = $_POST['email'];
-  $email = strip_tags($email);
+elseif (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'])) {
+  $email = $application->email;
   $body = $_POST['approvedtext'];
   $body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-  $subject = 'Peoples-Uni Application Approved';
+  $subject = 'Peoples-Uni Registration Approved';
 
   if (!sendapprovedmail($email, $subject, $body)) {
 ?>
@@ -109,61 +110,54 @@ ONLY PASES approvedtext & sid
     die();
   }
 
-	$_POST['username'] = strip_tags($_POST['username']);
-	$_POST['username'] = str_replace("<", '', $_POST['username']);
-	$_POST['username'] = str_replace(">", '', $_POST['username']);
-	$_POST['username'] = str_replace("/", '', $_POST['username']);
-	$_POST['username'] = str_replace("#", '', $_POST['username']);
-	$_POST['username'] = trim(moodle_strtolower($_POST['username']));
-
-	$user->username    = $_POST['username'];
-	if (empty($user->username)) {
+  $user->username = $application->username;
+  if (empty($user->username)) {
 ?>
 <br/><br/><br/><strong>Username is BLANK and CANNOT BE CREATED in Moodle!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 </body>
 </html>
 <?php
-		die();
-	}
+    die();
+  }
 
-	$user->password     = (string)rand(100000, 999999);
+  $user->password     = (string)rand(100000, 999999);
 
-	$user->lastname     = $_POST['lastname'];
-	$user->firstname    = $_POST['firstname'];
-	$user->email        = $_POST['email'];
-	$user->city         = $_POST['city'];
-	$user->country      = $_POST['country'];
+  $user->lastname     = $application->lastname;
+  $user->firstname    = $application->firstname;
+  $user->email        = $application->email;
+  $user->city         = $application->city;
+  $user->country      = $application->country;
   $user->lang         = 'en';
   $user->description  = '';
   $user->descriptionformat = 1;
   $user->imagealt     = '';
 
-	$user->confirmed    = 1;
-	$user->deleted      = 0;
+  $user->confirmed    = 1;
+  $user->deleted      = 0;
 
-	$user->timemodified = time();
+  $user->timemodified = time();
   $user->timecreated  = time();
 
-	$user->mnethostid   = $CFG->mnet_localhost_id;
-	$user->auth         = 'manual';
+  $user->mnethostid   = $CFG->mnet_localhost_id;
+  $user->auth         = 'manual';
 
-	require_once($CFG->dirroot.'/user/profile/lib.php');
+  require_once($CFG->dirroot.'/user/profile/lib.php');
 
-	$passwordforemail = $user->password;
+  $passwordforemail = $user->password;
 
-	$user->password = hash_internal_user_password($user->password);
+  $user->password = hash_internal_user_password($user->password);
 
   $ur = $DB->get_record('user', array('username' => $user->username));
-	if (!empty($ur)) {
+  if (!empty($ur)) {
 ?>
 <br/><br/><br/><strong>For some reason this Moodle Username ALREADY EXISTS and CANNOT BE CREATED!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
 </body>
 </html>
 <?php
-		die();
-	}
+    die();
+  }
 
   if (!($user->id = $DB->insert_record('user', $user))) {
 ?>
@@ -172,79 +166,78 @@ ONLY PASES approvedtext & sid
 </body>
 </html>
 <?php
-		die();
-	}
+    die();
+  }
 
   set_user_preference('auth_forcepasswordchange', 0, $user->id); // 1 Would force a change on first login!
   set_user_preference('email_bounce_count',       1, $user->id);
   set_user_preference('email_send_count',         1, $user->id);
 
-	if (!empty($_POST['dobday']) && !empty($_POST['dobmonth']) && !empty($_POST['dobyear'])) {
-		$monthnames = array(1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December');
-		$user->dateofbirth = $_POST['dobday'] . ' ' . $monthnames[$_POST['dobmonth']] . ' ' . $_POST['dobyear'];
-	}
-	if (!empty($_POST['gender'])) {
-		$user->gender = $_POST['gender'];
-	}
-	if (!empty($_POST['applicationaddress'])) {
-		// textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
-		$user->applicationaddress = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(($_POST['applicationaddress']), ENT_COMPAT, 'UTF-8')));
-	}
-	if (!empty($_POST['currentjob'])) {
-		$user->currentjob = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(($_POST['currentjob']), ENT_COMPAT, 'UTF-8')));
-	}
-	if (!empty($_POST['education'])) {
-		$user->education = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(($_POST['education']), ENT_COMPAT, 'UTF-8')));
-	}
-  if (!empty($_POST['reasons'])) {
-    $user->reasons = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(($_POST['reasons']), ENT_COMPAT, 'UTF-8')));
+  $monthnames = array(1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December');
+  $user->dateofbirth = $application->dobday . ' ' . $monthnames[$application->dobmonth] . ' ' . $application->dobyear;
+
+  $user->gender = $application->gender;
+
+  // textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
+  $user->applicationaddress = str_replace("\r", '', str_replace("\n", '<br />', $application->applicationaddress));
+
+  if (!empty($application->currentjob)) {
+    $user->currentjob = str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob));
   }
-  if (!empty($_POST['sponsoringorganisation'])) {
-    $user->sponsoringorganisation = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(($_POST['sponsoringorganisation']), ENT_COMPAT, 'UTF-8')));
+
+  $user->education = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
+
+  $user->reasons = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
+
+  if (!empty($application->sponsoringorganisation)) {
+    $user->sponsoringorganisation = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
   }
-	if (!empty($qualificationname[$_POST['qualification']])) {
-		$user->qualification = $qualificationname[$_POST['qualification']];
-	}
-	if (!empty($higherqualificationname[$_POST['higherqualification']])) {
-		$user->higherqualification = $higherqualificationname[$_POST['higherqualification']];
-	}
-	if (!empty($employmentname[$_POST['employment']])) {
-		$user->employment = $employmentname[$_POST['employment']];
-	}
+
+  if (!empty($qualificationname[$application->qualification])) {
+    $user->qualification = $qualificationname[$application->qualification];
+  }
+
+  if (!empty($higherqualificationname[$application->higherqualification])) {
+    $user->higherqualification = $higherqualificationname[$application->higherqualification];
+  }
+
+  if (!empty($employmentname[$application->employment])) {
+    $user->employment = $employmentname[$application->employment];
+  }
 
   $fields = $DB->get_records_sql("SELECT id, shortname FROM mdl_user_info_field WHERE shortname IN ('dateofbirth', 'applicationaddress', 'currentjob', 'education', 'reasons', 'sponsoringorganisation', 'gender', 'qualification', 'higherqualification', 'employment')");
-	if (!empty($fields)) {
+  if (!empty($fields)) {
     foreach ($fields as $field) {
-			$data = new object();
-			$data->userid  = $user->id;
-			$data->fieldid = $field->id;
-			if (!empty($user->{$field->shortname})) {
-				$data->data = ($user->{$field->shortname});
+      $data = new object();
+      $data->userid  = $user->id;
+      $data->fieldid = $field->id;
+      if (!empty($user->{$field->shortname})) {
+        $data->data = ($user->{$field->shortname});
         $DB->insert_record('user_info_data', $data);
-			}
+      }
     }
   }
 
-	if (!empty($qualificationname[$_POST['qualification']]) &&
-		!empty($higherqualificationname[$_POST['higherqualification']]) &&
-		!empty($employmentname[$_POST['employment']])) {
+  if (!empty($qualificationname[$application->qualification]) &&
+    !empty($higherqualificationname[$application->higherqualification]) &&
+    !empty($employmentname[$application->employment])) {
 
-		$data = new object();
-		$data->userid			         = $user->id;
-		$data->parentsid			     = 0;
-		$data->qualification		   = $_POST['qualification'];
-		$data->higherqualification = $_POST['higherqualification'];
-		$data->employment			     = $_POST['employment'];
+    $data = new object();
+    $data->userid              = $user->id;
+    $data->parentsid           = 0;
+    $data->qualification       = $application->qualification;
+    $data->higherqualification = $application->higherqualification;
+    $data->employment          = $application->employment;
     $DB->insert_record('applicantqualifications', $data);
-	}
+  }
 
   $user = $DB->get_record('user', array('id' => $user->id));
 
   get_context_instance(CONTEXT_USER, $user->id);
 
-	events_trigger('user_created', $user);
+  events_trigger('user_created', $user);
 
-	if (!sendunpw($user, $passwordforemail)) {
+  if (!sendunpw($user, $passwordforemail)) {
 ?>
 <br/><br/><br/><strong>Registered user sucessfully, BUT confirmation e-mail FAILED to send!</strong>
 <br/><br/><br/><strong><a href="javascript:window.close();">Close Window</a></strong>
@@ -257,21 +250,21 @@ window.opener.location.reload();
 </html>
 <?php
 
-		updateapplication($_POST['sid'], 'userid', $user->id);
-		updateapplication($_POST['sid'], 'state', 1);
+    updateapplication($_POST['sid'], 'userid', $user->id);
+    updateapplication($_POST['sid'], 'state', 1);
 
-		die();
-	}
+    die();
+  }
 
-	updateapplication($_POST['sid'], 'userid', $user->id);
+  updateapplication($_POST['sid'], 'userid', $user->id);
 
-	// Enrol student in Students Corner
+  // Enrol student in Students Corner
   $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
-	if (!empty($studentscorner)) {
-		enrolincoursesimple($studentscorner, $user);
-	}
+  if (!empty($studentscorner)) {
+    enrolincoursesimple($studentscorner, $user);
+  }
 
-	updateapplication($_POST['sid'], 'state', 1);
+  updateapplication($_POST['sid'], 'state', 1);
 }
 ?>
 <script type="text/javascript">
