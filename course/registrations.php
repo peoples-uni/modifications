@@ -528,9 +528,7 @@ else {
     'Sponsoring organisation',
     'How heard about Peoples-uni',
     'Desired Moodle Username',
-    'Moodle UserID',
-    '',
-    ''
+    'Moodle UserID'
   );
 }
 
@@ -606,8 +604,6 @@ foreach ($applications as $sid => $application) {
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
-
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
 
     if (empty($howfoundpeoplesname[$application->howfoundpeoples])) $z = '';
     else $z = $howfoundpeoplesname[$application->howfoundpeoples];
