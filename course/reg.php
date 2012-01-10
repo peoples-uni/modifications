@@ -433,7 +433,7 @@ if ($state === 0) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markapproveapplication" value="1" />
-<input type="submit" name="approveapplication" value="Approve Full Application" />
+<input type="submit" name="approveapplication" value="Register Student" />
 </form>
 <br />
 
