@@ -536,13 +536,13 @@ if (!empty($userrecord)) {
 <input type="submit" name="updateusername" value="Update Username to:" style="width:40em" />
 <input type="text" size="40" name="username" value="<?php echo htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8'); ?>" />
 </form>
-<br />
+<br /><br />
 <?php
   }
 }
 else {
 ?>
-No Moodle user with the Username: '<?php echo htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8'); ?>'...<br />
+No Moodle user with the Username: '<?php echo htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8'); ?>'<br /><br /><br />
 <?php
 }
 
@@ -580,7 +580,7 @@ echo $OUTPUT->footer();
 function updateapplication($sid, $field, $value) {
   global $DB;
 
-  $record = $DB->get_record('peoplesregistration', array('sid' => $sid));
+  $record = $DB->get_record('peoplesregistration', array('id' => $sid));
   $application = new object();
   $application->id = $record->id;
   $application->{$field} = $value;
