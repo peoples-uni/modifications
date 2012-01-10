@@ -162,6 +162,11 @@ if (!empty($_POST['marksetstudentscorner']) && !empty($_POST['studentscorner']))
   $studentscorner = $_POST['studentscorner'];
   set_config('peoples_students_corner_id', $studentscorner);
 }
+if (!empty($_POST['mark_batch_registration_email']) && !empty($_POST['value_batch_registration_email'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $value_batch_registration_email = $_POST['value_batch_registration_email'];
+  set_config('peoples_batch_registration_email', $value_batch_registration_email);
+}
 if (!empty($_POST['mark_approval_email']) && !empty($_POST['value_approval_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $value_approval_email = $_POST['value_approval_email'];
@@ -469,6 +474,16 @@ foreach ($courses as $course) {
 </select>
 </form>
 <br /><br />
+
+<form id="batch_registration_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<textarea name="value_batch_registration_email" rows="15" cols="75" wrap="hard">
+<?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_registration_email'), ENT_COMPAT, 'UTF-8'); ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_batch_registration_email" value="1" />
+<input type="submit" name="set_batch_registration_email" value="Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)" style="width:45em" />
+</form>
+<br />
 
 <form id="approval_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_email" rows="15" cols="75" wrap="hard">

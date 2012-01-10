@@ -619,7 +619,7 @@ foreach ($applications as $sid => $application) {
 
   $n++;
 
-  if (TRUE || $state !== 0) {
+  if ($state !== 0) {
     $nregistered++;
 
     if (empty($gender[$application->gender])) {
