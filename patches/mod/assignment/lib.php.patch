@@ -1,6 +1,6 @@
---- lib.bak.php	Wed Aug  3 07:29:14 2011
-+++ lib.php	Wed Aug  3 08:03:44 2011
-@@ -585,7 +585,141 @@
+--- lib.bak.php	Tue Jan 10 15:39:47 2012
++++ lib.php	Tue Jan 10 16:00:05 2012
+@@ -596,7 +596,141 @@
       */
      function update_grade($submission) {
          assignment_update_grades($this->assignment, $submission->userid);

@@ -1,5 +1,5 @@
---- grade_item.bak.php	Wed Aug  3 07:28:31 2011
-+++ grade_item.php	Wed Aug  3 07:43:04 2011
+--- grade_item.bak.php	Tue Jan 10 15:38:57 2012
++++ grade_item.php	Tue Jan 10 15:54:55 2012
 @@ -649,6 +649,9 @@
              // aggregate category grade item
              $category = $this->get_item_category();
