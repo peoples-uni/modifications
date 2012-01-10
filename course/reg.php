@@ -402,6 +402,7 @@ echo '<td>Sponsoring organisation</td>';
 echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation)) . '</td>';
 echo '</tr>';
 echo '<tr>';
+echo '<td>How heard about Peoples-uni</td>';
 if (empty($howfoundpeoplesname[$application->howfoundpeoples])) echo "<td></td>";
 else echo "<td>" . $howfoundpeoplesname[$application->howfoundpeoples] . "</td>";
 echo '</tr>';
