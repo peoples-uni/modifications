@@ -314,7 +314,7 @@ $refreshparent = false;
 if (!empty($_POST['markchangeemail']) && !empty($_POST['email'])) {
   $_POST['email'] = trim($_POST['email']);
 
-  updateapplication($_POST['sid'], 'email', $_POST['email']);
+  updateapplication($_POST['id'], 'email', $_POST['email']);
 
   $refreshparent = true;
 }
@@ -550,7 +550,7 @@ if ($state === 0 && empty($application->userid)) { // Allow applicant e-mail to 
 ?>
 
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/reg.php'; ?>">
-<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
+<input type="hidden" name="id" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markchangeemail" value="1" />
 <input type="submit" name="changeemail" value="Change Applicant e-mail to:" style="width:40em" />
