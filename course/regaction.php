@@ -444,12 +444,11 @@ function enrolincoursesimple($course, $user) {
 }
 
 
-function updateapplication($sid, $field, $value) {
+function updateapplication($id, $field, $value) {
   global $DB;
 
-  $record = $DB->get_record('peoplesregistration', array('id' => $sid));
   $application = new object();
-  $application->id = $record->id;
+  $application->id = $id;
   $application->{$field} = $value;
 
   $DB->update_record('peoplesregistration', $application);
