@@ -455,7 +455,7 @@ Dear <?php echo htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8'); 
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markdeferapplication" value="1" />
-<input type="submit" name="deferapplication" value="e-mail Applicant" />
+<input type="submit" name="deferapplication" value="e-mail Student" />
 </form>
 <br />
 <?php
