@@ -272,11 +272,12 @@ $countryname['ZW'] = 'Zimbabwe';
 '<p><strong>There are two steps for enrolment in Peoples-uni courses.<br />
 First is a pre-registration system to allow you to see in detail what the courses entail and<br />
 second is the application for courses themselves.<br /><br /></strong></p>
-<p>This form is for you to take part in the pre-registration system prior to enrolment in Peoples-uni courses for the first time. Once you have sent in this form, you will receive emails with the information required to take part in the pre-registration system.<br />
+<p>This form is for you to take part in the pre-registration system prior to enrolment in Peoples-uni courses for the first time.<br />
+Once you have sent in this form, and after your application has been approved, you will receive e-mails with the information required to take part in the pre-registration system.<br />
 This is a requirement to enrol in Peoples-uni courses.</p>
 <p>For inquires about registration please send an email to <a href="mailto:apply@peoples-uni.org?subject=Registration query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
-<p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send a mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>');
+<p><strong>You should receive an e-mail with a copy of your application soon after you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send a mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>');
 //<p><strong>Note:</strong> You must submit your application on or before ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '.</p>
 
 
