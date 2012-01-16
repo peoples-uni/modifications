@@ -339,18 +339,6 @@ You should also read the student handbook at:
 
 http://peoples-uni.org/content/student-handbook
 
-You will receive separate e-mails, each with a link to one of
-your selected course modules. Please access these and familiarise
-yourself with the way the modules are laid out so you are ready
-to start the course.
-You will also be sent a welcome message when the course actually starts.
-
-Additionally, you have been enrolled in the Students Corner:
-
-http://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
-
-which is available for student chat.
-
 Your profile is at:
 http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
 
