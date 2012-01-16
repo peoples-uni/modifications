@@ -259,9 +259,9 @@ window.opener.location.reload();
   updateapplication($_POST['sid'], 'userid', $user->id);
 
   // Enrol student in Students Corner
-  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
-  if (!empty($studentscorner)) {
-    enrolincoursesimple($studentscorner, $user);
+  $fph = $DB->get_record('course', array('id' => get_config(NULL, 'foundations_public_health_id')));
+  if (!empty($fph)) {
+    enrolincoursesimple($fph, $user);
   }
 
   updateapplication($_POST['sid'], 'state', 1);
