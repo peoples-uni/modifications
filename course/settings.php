@@ -162,6 +162,11 @@ if (!empty($_POST['marksetstudentscorner']) && !empty($_POST['studentscorner']))
   $studentscorner = $_POST['studentscorner'];
   set_config('peoples_students_corner_id', $studentscorner);
 }
+if (!empty($_POST['marksetfph']) && !empty($_POST['fph'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $fph = $_POST['fph'];
+  set_config('foundations_public_health_id', $fph);
+}
 if (!empty($_POST['mark_register_email']) && !empty($_POST['value_register_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $value_register_email = $_POST['value_register_email'];
@@ -470,6 +475,24 @@ foreach ($idnumbers as $idnumber) {
 foreach ($courses as $course) {
   $modulename = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
   if ($course->id == get_config(NULL, 'peoples_students_corner_id')) $selected = 'selected';
+  else $selected = '';
+?>
+<option <?php echo $selected; ?> value="<?php echo $course->id; ?>" ><?php echo $modulename; ?></option>
+<?php
+}
+?>
+</select>
+</form>
+<br /><br />
+<form id="setfphform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="marksetfph" value="1" />
+<input type="submit" name="setfph" value="Make this Module the Foundations of Public Health Module for new Student Registrants:" style="width:45em" />
+<select name="fph">
+<?php
+foreach ($courses as $course) {
+  $modulename = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
+  if ($course->id == get_config(NULL, 'foundations_public_health_id')) $selected = 'selected';
   else $selected = '';
 ?>
 <option <?php echo $selected; ?> value="<?php echo $course->id; ?>" ><?php echo $modulename; ?></option>
