@@ -48,6 +48,7 @@ CREATE TABLE mdl_peoplesapplication (
   reasons text NOT NULL,
   sponsoringorganisation text NOT NULL DEFAULT '',
   scholarship TEXT NOT NULL DEFAULT '',
+  whynotcomplete TEXT NOT NULL DEFAULT '',
   methodofpayment VARCHAR(255) NOT NULL DEFAULT '',
   paymentidentification VARCHAR(255) NOT NULL DEFAULT '',
   costowed VARCHAR(10) NOT NULL DEFAULT '0',
@@ -94,6 +95,7 @@ ALTER TABLE mdl_peoplesapplication ADD ready BIGINT(10) UNSIGNED NOT NULL DEFAUL
 
 ALTER TABLE mdl_peoplesapplication ADD applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER coursename4;
 ALTER TABLE mdl_peoplesapplication ADD scholarship TEXT NOT NULL DEFAULT '' AFTER sponsoringorganisation;
+ALTER TABLE mdl_peoplesapplication ADD whynotcomplete TEXT NOT NULL DEFAULT '' AFTER scholarship;
 ))
 
 CREATE TABLE mdl_peoplesmph (
@@ -885,6 +887,7 @@ else {
     'Reasons for wanting to enrol',
     'Sponsoring organisation',
     'Scholarship',
+    'Why Not Completed Previous Semester',
     'Desired Moodle Username',
     'Moodle UserID',
     '',
@@ -940,6 +943,8 @@ Applying for MMU MPH
 applymmumph
 Scholarship
 scholarship
+Why Not Completed Previous Semester
+whynotcomplete
 Method of payment
 31
 Payment Identification
@@ -1071,6 +1076,7 @@ foreach ($applications as $sid => $application) {
       $z .= '<textarea name="10" rows="10" cols="100" wrap="hard">' . $application->reasons            . '</textarea>';
       $z .= '<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard">' . $application->sponsoringorganisation . '</textarea>';
       $z .= '<textarea name="scholarship" rows="10" cols="100" wrap="hard">' . $application->scholarship . '</textarea>';
+      $z .= '<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard">' . $application->whynotcomplete . '</textarea>';
       $z .= '<textarea name="32" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
       $z .= '</span>';
       $z .= '<input type="hidden" name="applymmumph" value="' . $application->applymmumph . '" />';
@@ -1182,6 +1188,8 @@ foreach ($applications as $sid => $application) {
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
 
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
+
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->whynotcomplete));
 
       $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
 
