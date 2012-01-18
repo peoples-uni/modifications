@@ -310,6 +310,10 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = '';
   $application->scholarship = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
+  $dataitem = $data->whynotcomplete;
+  if (empty($dataitem)) $dataitem = '';
+  $application->whynotcomplete = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
   $user_record = $DB->get_record('user', array('username' => $data->username));
 
   $application->username  = $user_record->username;
@@ -403,7 +407,8 @@ elseif ($data = $editform->get_data()) {
 
   $message .= "Current Employment Details:\n" . htmlspecialchars_decode($application->currentjob, ENT_COMPAT) . "\n\n";
   $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n\n";
-  $message .= "Scholarship:\n" . htmlspecialchars_decode($application->scholarship, ENT_COMPAT) . "\n";
+  $message .= "Scholarship:\n" . htmlspecialchars_decode($application->scholarship, ENT_COMPAT) . "\n\n";
+  $message .= "Why Not Completed Previous Semester:\n" . htmlspecialchars_decode($application->whynotcomplete, ENT_COMPAT) . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Returning Application Form Submission From: $application->lastname, $application->firstname", $message);
   sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Returning Application Form Submission From: $application->lastname, $application->firstname", $message);

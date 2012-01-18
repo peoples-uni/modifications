@@ -73,7 +73,8 @@ class application_form_returning_student_form extends moodleform {
     $listforselect[2] = 'Yes';
     $listforselect[3] = 'I am already enrolled in MMU MPH';
     $mform->addElement('select', 'applymmumph', 'Apply for Manchester Metropolitan University Master of Public Health programme', $listforselect);
-    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Manchester Metropolitan University Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />');
+    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Manchester Metropolitan University Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
+Please do not apply if this is your first semester.<br />');
 
 
     $mform->addElement('header', 'personaldetails', 'Your Existing Moodle User Name');
@@ -92,6 +93,13 @@ class application_form_returning_student_form extends moodleform {
 3. Whether you are able to pay a portion of the fees and if so how much<br />
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni or Manchester Metropolitan University for the health of the population (up to 150 words)<br />');
     $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
+
+
+    $mform->addElement('header', 'whynotcompletedetails', 'Previous Semester');
+
+    $mform->addElement('static', 'explainwhynotcomplete', '&nbsp;', 'If you are a returning student and did not complete your previous semester, please explain why this was so.');
+    $mform->addElement('textarea', 'whynotcomplete', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
+
 
     $this->add_action_buttons(false, 'Submit Form');
   }
