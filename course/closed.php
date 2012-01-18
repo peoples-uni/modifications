@@ -32,19 +32,15 @@ else {
 }
 
 
-echo '<p>Applications for the Semester ' . $semester_current->semester . ' Course Modules have now closed.</p>
-<p><strong>Please use this form to tell us if you might be interested in enrolling for the Semester Starting <u>'
-. $next_date .
-'</u>
+echo '<p>Applications for the Semester ' . $semester_current->semester . ' Course Modules have now closed.</p>';
 
-Go to REegistartion..
-<a href="http://www.peoples-uni.org/book/courses-offered">http://www.peoples-uni.org/book/courses-offered</a>.<br /></strong></p>
+echo '<p><strong>If you are already registered in Moodle you will have to wait untill you are informed that Course Applications are open.<br />';
 
-IF YOU ARE A CURRENT STUDNET YOU WILL BE NOTIFIED WHEN APPLICATIONS OPEN
-<p><strong>We will then send you further information when applications open.</strong></p>');
+echo 'Note:</strong> The closing date for applications for enrolment in courses for the up coming semester is ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '. When enrolments are open you will be informed (this is normally about 2 to 3 weeks before that date).</p>';
 
-DICK I SAID...
-a)  Applications are closed for the semester... It will just display a message indicating that (maybe with a note indication that if they have never registered with Peoples-uni before to use the registration form
+echo '<p><strong>If you have not been registered in Moodle you must apply by <a href="http://courses.peoples-uni.org/course/registration.php">clicking here</a></strong></p>';
+
+echo '<p>For inquires about course enrolment or payment please send an e-mail to <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a>.</p>';
 
 
 echo $OUTPUT->footer();
