@@ -297,7 +297,7 @@ foreach ($dayname as $i => $value) {
 ?>
 </select>
 
-<?php echo '<br />(currently selected Last Allowed Date is: ' . gmdate('jS F Y', $lastdate) . ')'; ?>
+<?php echo '<br />(currently selected Last Allowed Date is: ' . gmdate('jS F Y', $lastdate) . ' which is displayed on Registration and Course Application Forms)'; ?>
 
 </form>
 <br />

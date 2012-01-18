@@ -278,7 +278,19 @@ This is a requirement to enrol in Peoples-uni courses.</p>
 <p><strong>Note:</strong> The closing date for applications for enrolment in courses for the up coming semester is ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '. When enrolments are open you will be informed (this is normally about 2 to 3 weeks before that date).</p>
 <p>For inquires about registration please send an email to <a href="mailto:apply@peoples-uni.org?subject=Registration query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
-<p><strong>You should receive an e-mail with a copy of your application soon after you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>');
+<p><strong>You should receive an e-mail with a copy of your application soon after you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>'
+
+.
+'<p>Please read the information in <a href="http://www.peoples-uni.org/book/essential-information-potential-students">Essential information for potential students</a> before submitting this form, particularly see the information about <a href="http://peoples-uni.org/book/course-fees">Course fees</a></p>
+<p><strong>Use this form to apply to do course modules. You must have already been registered in Moodle. You need to enter the user name that you use when logging into Moodle in the form below.</strong></p>
+<p><strong>If you have not been registered in Moodle you must apply by <a href="http://courses.peoples-uni.org/course/registration.php">clicking here</a> first</strong></p>
+<p>For inquires about course enrolment or payment please send an e-mail to <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a>.</p>
+<p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
+<p><strong>Note:</strong> You must submit your application on or before ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '.</p>
+<p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:techsupport@peoples-uni.org">techsupport@peoples-uni.org</a>.</strong></p>'
+
+
+);
 
 
     $mform->addElement('header', 'personaldetails', 'Personal details');
