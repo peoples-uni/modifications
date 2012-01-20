@@ -420,7 +420,6 @@ if ($state === 0) {
   $peoples_register_email = get_config(NULL, 'peoples_register_email');
 
   $peoples_register_email = str_replace('GIVEN_NAME_HERE', $given_name, $peoples_register_email);
-  $peoples_register_email = str_replace('ID_HERE', $sid, $peoples_register_email);
   $peoples_register_email = str_replace('FOUNDATIONS_PUBLIC_HEALTH_ID_HERE', get_config(NULL, 'foundations_public_health_id'), $peoples_register_email);
 
   $peoples_register_email = htmlspecialchars($peoples_register_email, ENT_COMPAT, 'UTF-8');
