@@ -310,7 +310,7 @@ $currentsemester = $semester_current->semester;
 
 $open_modules = $DB->get_records('activemodules', array('modulefull' => 0));
 if (empty($open_modules)) {
-  echo 'Application forms are currently closed. (Applicants will be sent to Expression of Interest Form.)<br />';
+  echo 'Application forms are currently closed. (Applicants will be sent to Registration Form.)<br />';
   echo 'When at least one Module if not full, applications will be opened.<br /><br />';
   $closed = true;
 }
@@ -324,7 +324,7 @@ if (!$closed) {
 <form id="closesemesterform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markclosesemester" value="1" />
-<input type="submit" name="closesemester" value="Mark All Modules as Full (Applicants will be sent to Expression of Interest Form)" style="width:45em" />
+<input type="submit" name="closesemester" value="Mark All Modules as Full (Applicants will be sent to Registration Form)" style="width:45em" />
 </form>
 <br />
 <?php
@@ -583,6 +583,7 @@ foreach ($courses as $course) {
 </form>
 <br />
 
+<?php if (FALSE) { ?>
 <form id="interest_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_interest_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_interest_email'), ENT_COMPAT, 'UTF-8'); ?>
@@ -592,6 +593,7 @@ foreach ($courses as $course) {
 <input type="submit" name="set_interest_email" value="Set above text as Reply e-mail wording for Expressions of Interest (in int.php)" style="width:45em" />
 </form>
 <br />
+<?php } ?>
 
 <form id="batch_email_to_enrolled_missing_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_batch_email_to_enrolled_missing" rows="15" cols="75" wrap="hard">
