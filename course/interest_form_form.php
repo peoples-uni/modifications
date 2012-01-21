@@ -264,6 +264,9 @@ $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
 
 
+redirect($CFG->wwwroot . '/course/registration.php'); // Disable Permanently
+
+
     $semester_current = $DB->get_record('semester_current', array('id' => 1));
 
 
