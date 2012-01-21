@@ -326,6 +326,9 @@ elseif ($data = $editform->get_data()) {
   $application->country   = $user_record->country;
 
   $oldapplication = $DB->get_record('peoplesapplication', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
+  if (empty($oldapplication)) {
+    $oldapplication = $DB->get_record('peoplesregistration', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
+  }
 
   $application->gender                = $oldapplication->gender;
   $application->applicationaddress    = $oldapplication->applicationaddress;
@@ -333,8 +336,6 @@ elseif ($data = $editform->get_data()) {
   $application->education             = $oldapplication->education;
   $application->reasons               = $oldapplication->reasons;
   $application->sponsoringorganisation= $oldapplication->sponsoringorganisation;
-  $application->methodofpayment       = $oldapplication->methodofpayment;
-  $application->paymentidentification = $oldapplication->paymentidentification;
 
   $application->dobyear               = $oldapplication->dobyear;
   $application->dobmonth              = $oldapplication->dobmonth;

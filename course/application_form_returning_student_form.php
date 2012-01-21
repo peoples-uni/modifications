@@ -113,7 +113,16 @@ Please do not apply if this is your first semester.<br />');
     if ($data['course_id_1'] === $data['course_id_2']) $errors['course_id_1'] = "You have selected the same module as your first and second choice. Either remove the second selection (by selecting the 'Select...' message at the top of the option list) or change the second module selected.";
 
     $user_record = $DB->get_record('user', array('username' => $data['username']));
-    if (empty($user_record)) $errors['username'] = 'The Peoples Uni Moodle Username you have entered does not match any Moodle Username.';
+    if (empty($user_record)) {
+      $errors['username'] = 'The Peoples Uni Moodle Username you have entered does not match any Moodle Username.';
+    }
+    else {
+      $oldapplication = $DB->get_record('peoplesapplication', array('userid' => $user_record->id), '*', IGNORE_MULTIPLE);
+      if (empty($oldapplication)) {
+        $oldapplication = $DB->get_record('peoplesregistration', array('userid' => $user_record->id), '*', IGNORE_MULTIPLE);
+        if (empty($oldapplication)) $errors['username'] = 'The Peoples Uni Moodle Username you have entered does not match any Moodle Student Username.';
+      }
+    }
 
     return $errors;
   }
