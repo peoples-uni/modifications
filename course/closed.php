@@ -36,7 +36,7 @@ echo '<p><strong>Applications for the Semester ' . $semester_current->semester .
 
 echo '<p><strong>If you are already registered in Moodle you will have to wait untill you are informed that Course Applications are open.<br />';
 
-echo 'Note:</strong> The closing date for applications for enrolment in courses for the up coming semester is ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '. When enrolments are open you will be informed (this is normally about 2 to 3 weeks before that date).</p>';
+echo 'Note:</strong> The closing date for applications for enrolment in courses for the up coming semester is ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . ' approximately. When enrolments are open you will be informed (this is normally about 2 weeks before that date).</p>';
 
 echo '<p><strong>If you have not been registered in Moodle you must apply by </strong><a href="http://courses.peoples-uni.org/course/registration.php">Clicking Here</a></p>';
 
