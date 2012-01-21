@@ -263,6 +263,8 @@ $countryname['YE'] = 'Yemen';
 $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
 
+redirect($CFG->wwwroot . '/course/registration.php'); // Disable Permanently
+
     $mform    = $this->_form;
 
 

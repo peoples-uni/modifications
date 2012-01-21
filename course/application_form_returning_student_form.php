@@ -34,7 +34,7 @@ class application_form_returning_student_form extends moodleform {
 
     $open_modules = $DB->get_records('activemodules', array('modulefull' => 0));
     if (empty($open_modules)) {
-      redirect($CFG->wwwroot . '/course/interest_form.php');
+      redirect($CFG->wwwroot . '/course/closed.php');
     }
 
     $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
