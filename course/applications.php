@@ -11,6 +11,7 @@ CREATE TABLE mdl_peoplesapplication (
   datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
   sid BIGINT(10) unsigned NOT NULL,
   nid BIGINT(10) unsigned NOT NULL,
+  reenrolment BIGINT(10) unsigned NOT NULL DEFAULT 0,
   state BIGINT(10) unsigned NOT NULL,
   state_1 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   state_2 BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -96,6 +97,7 @@ ALTER TABLE mdl_peoplesapplication ADD ready BIGINT(10) UNSIGNED NOT NULL DEFAUL
 ALTER TABLE mdl_peoplesapplication ADD applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER coursename4;
 ALTER TABLE mdl_peoplesapplication ADD scholarship TEXT NOT NULL DEFAULT '' AFTER sponsoringorganisation;
 ALTER TABLE mdl_peoplesapplication ADD whynotcomplete TEXT NOT NULL DEFAULT '' AFTER scholarship;
+ALTER TABLE mdl_peoplesapplication ADD reenrolment BIGINT(10) unsigned NOT NULL DEFAULT 0 AFTER nid;
 ))
 
 CREATE TABLE mdl_peoplesmph (
@@ -767,11 +769,11 @@ foreach ($applications as $sid => $application) {
   }
 
   if (!empty($chosenreenrol) && $chosenreenrol !== 'Any') {
-    if ($chosenreenrol === 'Re-enrolment' && $application->nid != 80) {
+    if ($chosenreenrol === 'Re-enrolment' && !$application->reenrolment) {
       unset($applications[$sid]);
       continue;
     }
-    if ($chosenreenrol === 'New student' && $application->nid == 80) {
+    if ($chosenreenrol === 'New student' && $application->reenrolment) {
       unset($applications[$sid]);
       continue;
     }
@@ -1087,7 +1089,7 @@ foreach ($applications as $sid => $application) {
       $z .= '<input type="submit" name="approveapplication" value="Details" />';
 
       $z .= '</form>';
-      if ($application->nid == 80) $z .= 'Re&#8209;enrolment';
+      if ($application->reenrolment) $z .= 'Re&#8209;enrolment';
       $rowdata[] = $z;
     }
 
