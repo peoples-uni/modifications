@@ -325,9 +325,11 @@ elseif ($data = $editform->get_data()) {
   $application->city      = $user_record->city;
   $application->country   = $user_record->country;
 
+  $application->reenrolment = 1;
   $oldapplication = $DB->get_record('peoplesapplication', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
   if (empty($oldapplication)) {
     $oldapplication = $DB->get_record('peoplesregistration', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
+    $application->reenrolment = 0;
   }
 
   $application->gender                = $oldapplication->gender;
