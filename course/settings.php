@@ -551,7 +551,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_old_students_email" value="1" />
-<input type="submit" name="set_approval_old_students_email" value="Set the above text as the Returning Students Approval e-mail wording (in Application Details/app.php)" style="width:45em" />
+<input type="submit" name="set_approval_old_students_email" value="Set the above text as the Students Approval e-mail wording (in Application Details/app.php)" style="width:45em" />
 </form>
 <br />
 
@@ -561,7 +561,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_old_students_bursary_email" value="1" />
-<input type="submit" name="set_approval_old_students_bursary_email" value="Set the above text as the Returning Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
+<input type="submit" name="set_approval_old_students_bursary_email" value="Set the above text as the Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
 </form>
 <br />
 
