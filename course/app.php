@@ -597,6 +597,7 @@ echo '<tr>';
 echo '<td>Desired Moodle Username</td>';
 echo '<td>' . htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8') . '</td>';
 echo '</tr>';
+if (!empty($_REQUEST['29'])) echo '<tr><td></td><td><a href="' . $CFG->wwwroot . '/course/student_completion.php?course=' . get_config(NULL, 'foundations_public_health_id') . '&userid=' . $_REQUEST['29'] . '" target="_blank">Student Foundations Public Health Completion</a></td></tr>';
 if (!empty($_REQUEST['29'])) echo '<tr><td></td><td><a href="' . $CFG->wwwroot . '/course/student.php?id=' . $_REQUEST['29'] . '" target="_blank">Student Grades</a></td></tr>';
 if (!empty($_REQUEST['29'])) echo '<tr><td></td><td><a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $_REQUEST['29'] . '" target="_blank">Student Submissions</a></td></tr>';
 echo '<tr>';
