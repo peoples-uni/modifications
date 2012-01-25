@@ -38,7 +38,8 @@ define('COMPLETION_REPORT_COL_TITLES',  true);
  */
 
 // Get course
-$courseid = 202;
+$courseid = required_param('course', PARAM_INT);
+$userid = required_param('userid', PARAM_INT);
 $format = optional_param('format','',PARAM_ALPHA);
 $sort = optional_param('sort','',PARAM_ALPHA);
 $edituser = optional_param('edituser', 0, PARAM_INT);
@@ -195,6 +196,10 @@ if ($silast !== 'all') {
     $where[] = $DB->sql_like('u.lastname', ':silast', false);
     $where_params['silast'] = $silast.'%';
 }
+
+$where[] = 'u.id=:useridx';
+$where_params['useridx'] = $userid;
+
 
 // Get user match count
 $total = $completion->get_num_tracked_users(implode(' AND ', $where), $where_params, $group);
