@@ -35,6 +35,15 @@ echo $OUTPUT->header();
 <ul>
 <b>
 <li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#configurationreg">Configuration of Registrations Process</a><br />
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#dealingwithregistrations">Dealing with Registrations</a><br />
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#theregdetailsbutton">The "Details" button and the Registration Process</a><br />
+</li>
+<li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#configuration">Configuration of Applications Process for a new Semester</a><br />
 </li>
 <li>
@@ -74,10 +83,285 @@ echo $OUTPUT->header();
 </ul>
 
 
+<a name="configurationreg"></a>
+<h2>Configuration of Registrations Process</h2>
+<ol>
+<li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on applications forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
+</li>
+<li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording and then click "Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)". Here is a sample of previous wording...
+<br /><pre>
+Dear GIVEN_NAME_HERE,
+
+You have been enrolled in pre-registration system for Peoples-uni
+courses.
+
+We have found in the past that those students who fully understand
+what they are letting themselves in for do much better in the courses.
+Since there are more people interested in taking our courses than we
+have places available, we have developed this pre-registration system
+which is a requirement for enrolment in Peoples-uni courses.
+
+You will be sent a separate email with your username and password -
+once you have these, please go to the Demonstration module
+"Foundations of Public Health" at
+http://courses.peoples-uni.org/course/view.php?id=FPH_ID_HERE
+
+You will see that you are required to read through the material and
+complete short quizzes.
+Note: you do not have to achieve a particular score in any of the
+quizzes, they are just to show you something about the course
+content and to show us that you are really interested enough to
+participate.
+
+Once you have completed the quizzes, we will keep your name on
+our database and shortly before the start of the next semester will
+send you a link to an application form which you can use to apply for
+entry to the modules you wish to take.
+We will be asking for more information at that stage.
+
+Unless you complete the quizzes in the demonstration module,
+we will not be able to enrol you in Peoples-uni courses.
+I hope that you find this an interesting exercise and that we will be
+seeing you on the courses soon.
+
+If you have technical problems please email
+techsupport@peoples-uni.org for assistance.
+
+     Peoples Open Access Education Initiative Administrator.
+</pre>
+</li>
+<li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default batch reminder e-mail wording and then click "Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)". Here is a sample of previous wording...
+<br /><pre>
+Dear GIVEN_NAME_HERE,
+
+Thank you for registering with peoples-uni...
+
+We look forward to seeing you on the course soon.
+
+     Peoples Open Access Education Initiative Administrator
+</pre>
+</li>
+<li>
+Note there are two Drupal menu items which now are left permanently enabled and are used for new Registrations and for Course Applications respectively: "Registration form for new students" and "Application form for returning students" (<a href="http://courses.peoples-uni.org/course/registration.php" target="_blank">http://courses.peoples-uni.org/course/registration.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>).<br />
+Note also, that if applications are closed the second fo these will indicate this along with approximate dates when Applications will open.
+</li>
+</ol>
+
+
+<a name="dealingwithregistrations"></a>
+<h2>Dealing with Registrations</h2>
+<ol>
+<li>
+Go to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>. You can see a list of applicants for this semester.
+</li>
+<li>
+It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment status, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or is) MMU MPH and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
+</li>
+<li>
+It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
+</li>
+<li>
+It is also possible to display all the application data for each student in extra columns by clicking "Show Extra Details" and then "Apply Filters".
+</li>
+<li>
+The "sid" value against each student is a unique identifier which is used to track the application including payments by the student.
+</li>
+<li>
+For each student application, data about the student is displayed in a row of the "spreadsheet".
+</li>
+<li>
+In particular the one or two modules that the student has applied for are displayed. They are colour coded <span style="color:red">red</span> for not approved, <span style="color:#FF8C00">orange</span> for approved but not enrolled and <span style="color:green">green</span> for enrolled.
+</li>
+<li>
+"Approved?", "Paid?", "Registered?", "Details", "Student Grades" and "Student Submissions" will be described later.
+</li>
+<li>
+Statistics are displayed at the end of the page.
+</li>
+<li>
+E-mails of all the students in the spreadsheet (i.e. after any filters have been applied) are listed at the end of the page so that e-mails can be manually sent to a large group of applicants.
+</li>
+<li>
+It is also possible to programmatically send a reminder or other e-mail to all of the students in the spreadsheet (i.e. after any filters have been applied) by using the form at the end of the page (instuctions for the form are given there).
+</li>
+<li>
+Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+</li>
+<li>
+If someone is given the "Manager" role (instead of the "Administrator" role) it may be useful to make them a "Tutors" in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Education coordinator" role in each desired course.
+</li>
+</ol>
+
+
+<a name="theregdetailsbutton"></a>
+<h2>The "Details" button and the Registration Process</h2>
+<ol>
+<li>
+First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the person has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. This form needs to be used by returning student so that they are enrolled using their existing Moodle user account. The application is also easier for the applicant because they have to enter very little information (mainly their existing username and desired modules). If they are a new student they use <a href="http://courses.peoples-uni.org/course/application_form_new_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_new_student.php</a> to apply and this gathers much more information.
+</li>
+<li>
+When the "Details" button is pressed for an application, additional applicant data is displayed beyond what is in the "spreadsheet" row.
+</li>
+<li>
+"Student Grades" Launches the Peoples-uni transcript of the grades achieved by this student in all the modules they have done. See "Course Grades" (<a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a>) which is described below in "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>".
+</li>
+<li>
+"Student Submissions" Launches a report on all the assignment submissions made by this student. "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a>" below,
+</li>
+<li>
+"Paid?" indicates whether the student is believed to have paid for this semester or not (They are marked as paid if either they have indicated they have paid or they have been confirmed as having paid or they have been given a waiver).
+<br />
+If they have over or under paid, the amount paid and the total originally owed is indicated.
+</li>
+<li>
+"Change Payment Confirmation" is a link (to payconfirm.php with the applicant SID as a parameter) that brings up a page that allows us to update the data in the previous bullet point by setting the "Payment Mechanism" and pressing the "Submit the Payment Status" button. The "Amount Paid" is set to the "Amount Owed" at the same time (unless it is just marked as promised to pay in which case the "Amount Paid" is not changed).<br />This page also allows the "Amount Paid" and the "Amount Owed" to be changed because someone has underpaid or overpaid or previously made a prepayment.<br />
+Note, be careful here as the indication of payment mechanism sets "Amount Paid" to the "Amount Owed", which overwrites any "Amount Paid" set here. So the data for "Amount Paid" MUST be entered and the "Submit the New Amount Paid (& Owed)" button pressed after the "Submit the Payment Status" button is pressed to update the "Payment Mechanism".<br />
+In payconfirm.php it is possible to add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "paid?" and also on the "Details" page after "Change Payment Confirmation" for all future applications by this student).<br />
+payconfirm.php also lists payment details for all previous applications for earlier semesters by this student.
+</li>
+<li>
+NOTE: For the moment, Credit Card payments for the MMU MPH are handled separately. This is described below in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Registering Interest in Future Semesters, Making a Donation, Paying for MMU MPH</a>.<br />The process for MMU MPH payments is likely to evolve and there is only minimal support for it at present.
+</li>
+<li>
+"Date Paid" is set to the date they paid by credit card or if the student gave us payment details online through paydetails.php. It is not set if we entered the fact that they paid.
+</li>
+<li>
+"Payment Info" is reference data entered by the student when they go to paydetails.php to indicate that they have made a payment by bank transfer. It is not proving very useful. In practice it seems that the only data that apears in our bank statements is the payee's name. Also students do not seems to remember to go to paydetails to notify us they have made a payment, so we have been reduced to just checking bank statements (which we would have to do in any case to confirm all non credit card payments).
+</li>
+<li>
+"Confirmed Ready to Enrol?" indicates whether the student has confirmed they are ready to enrol (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Registered?" as "(Ready)").
+</li>
+<li>
+"Notes" lists any notes that have been added to the student record in "Details" or student.php. If any note is present they the "(Note Present)" indicator will be displayed under the "Registered?" column in applications.php.
+</li>
+<li>
+"MMU MPH Status" indicates whether the student "Wants to Apply for MMU MPH" or "Says Already in MMU MPH" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether "Student was Enrolled in MMU MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Registered?" as "(MMU MPH)").
+<li>
+"Approve Full Application" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail outlined above under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which requests payment.<br />
+The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Yes" as opposed to "No", "Some" (if only one application is approved, see below) or "Denied or Deferred" (if the application has been un-approved after being approved.)
+</li>
+<li>
+"Approve Full Application BURSARY" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail specified under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which indicates they have a bursary (as well as other information).
+</li>
+<li>
+"Approve Module '...' only:" is a button that allows either one of the modules to be approved and not the other. Note in this case no e-mail is sent. So instructions about how to pay need to be sent manually.
+</li>
+<li>
+"Change Module ... Name from '...' to':" allows one or other of the selected modules to be changed to a different one (probably because the module is full and the applicant has been offered a different choice or changed their mind for some reason.). This option only appears when the user is not enrolled in the module. If no second module has been specified, it is possible to add one.
+</li>
+<li>
+"UnApprove Module:" is a button which allows un-approving a module. Note, also that if the applicant has already been enrolled in the course (see below) they will be un-enrolled from that module.
+</li>
+<li>
+"e-mail Applicant" allows an e-mail to be sent to the Applicant, the e-mail to be sent can be edited. the e-mail will come from techsupport@peoples-uni.org as does the approval e-mail. Note these e-nails are copied to the e-mail address applicationresponses@peoples-uni.org.
+</li>
+<li>
+"Corresponding Registered Moodle Username:" shows details for the Moodle user matching the application (if this is not a new application or if the user has been created (see below)).
+</li>
+<li>
+"Users course's" shows the existing courses for the above user.
+</li>
+<li>
+"Update Username" is a button that allows the Applicant's suggested user name to be changed (because it conflicts with an existing Moodle username).
+</li>
+<li>
+"Enrol User in Module ... only" button causes the user to be enrolled in the one module only and not the other. The following e-mail will be sent from the Module Leader:<br />
+<pre>
+Welcome to $a->coursename!
+
+If you have not done so already, you should edit your profile page
+so that we can learn more about you:
+
+  $a->profileurl
+
+There is a link to your course at the bottom of the profile or you can click:
+
+  $a->courseurl
+</pre>
+<br />
+They will also get a notification of the current semester's Students Corner in another e-mail.
+<br />
+The "Registered?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
+</li>
+<li>
+"Enrol User in Modules ... and ..." button will enrol the user in both modules.
+</li>
+<li>
+"Create User & Enrol in Module ... only" creates a new user (for a new application) and then enrolls the user as above. The following e-mail with be sent from techsupport@peopes-uni.org (in addition to the one above sent on behalf of the Module Leader):<br />
+<pre>
+Hi FULL_NAME_HERE,
+
+A new account has been created at 'SITE_NAME_HERE'.
+
+Your new Username is: USERNAME_HERE
+Your New Password is: PASSWORD_HERE
+
+Please go to the following link to login:
+
+LOGIN_LINK_HERE
+
+In most mail programs, this should appear as a blue link
+which you can just click on. If that doesn't work,
+then cut and paste the address into the address
+line at the top of your web browser window.
+
+Be aware that you should use this link to login and
+NOT the main Peoples-uni site (which has a completely
+different login): http://peoples-uni.org
+
+You should also read the student handbook at:
+
+http://peoples-uni.org/content/student-handbook
+
+Your profile is at:
+http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
+
+Note that the private information in this is not visible to other students.
+
+If you need help, please contact the site administrator,
+TECHSUPPORT_EMAIL_HERE
+</pre>
+</li>
+<li>
+"Create User & Enrol in Modules ... and ..." button does the same as above for all modules.
+</li>
+<li>
+"Confirm Student is Ready to Enrol" button does what it says.
+</li>
+<li>
+"Record that the Student has been enrolled in the MMU MPH" button does what it says.
+</li>
+<li>
+The "Add This Note to Student Record" button adds a note entered above that button to the student record. When there are any notes for a student it will be indicated in the applications.php spreadsheet in the "Registered?" column by the words "(Note Present)".<br />
+The purpose of these notes is to allow records to be kept of application or grading data related to the student (There are separate Payment Notes to track payment issues and also now a separate "Ready to Enrol" marker.)<br />
+All notes for the student (if any are present, either entered here or in "Student Grades"/student.php) will be listed further up the details page.<br />
+<br />
+When the student is enrolled, the note is marked as applying to that user so subsequent applications for the same student will reference all the notes for that student, not just notes attached to the current application.<br />
+</li>
+<li>
+"Change Applicant e-mail to:" allows the applicant's e-mail to be changed. (Will not be displayed if the applicant has already been registered in Moodle.)
+</li>
+<li>
+"Enrol Applicant in an Additional Module (beyond the normal 2):" allows the applicant to be enrolled in a 3rd or 4th etc. module. This can only be done after the applicant has been enrolled in the normal modules.
+</li>
+<li>
+"Close Window" closes this window (note the original applications.php spreadsheet will still be there).
+</li>
+<li>
+"Hide this Application Form Entry from All Future Processing" button does what it says.
+</li>
+<li>
+Note that the applications.php spreadsheet is refreshed with any changes that have been made in this details page.
+</li>
+</ol>
+
+
 <a name="configuration"></a>
 <h2>Configuration of Applications Process for a new Semester</h2>
 <ol>
-
 <li>
 Existing modules must be left in place with their names and 'Course ID number' UNCHANGED.
 </li>
@@ -122,25 +406,21 @@ Your application to take the Course Module 'COURSE_MODULE_1_NAME_HERE'
 COURSE_MODULE_2_TEXT_HEREhas been approved.
 COURSE_MODULE_2_WARNING_TEXT_HERE
 
-You will be sent your account Username and Password in a separate email
-along with the address of the web site (URL) you will use to login.
-You will also receive a welcome email for each course module giving
+You will receive a welcome email for each course module giving
 the course module URL and the URL for your profile.
 We will send you all these details on the first day of the course
-orientation week September 20th 2010.
+orientation week September 26th 2011.
 
 Please see the course timetable at:
 http://www.peoples-uni.org/book/course-dates-2010
 
-Please go to 'Are you ready for Peoples-uni?' which you will find at
-http://courses.peoples-uni.org/course/category.php?id=30
-
-You will see that we ask you to send us an email to confirm that you
-are ready to enrol. This is a requirement before you can enrol.
-
-*** Payment will be required before enrolment on 20th of September.
-The fees are £30 sterling if you have been approved for one course
-module or £60 sterling if you have been approved for two modules.
+*** Payment will be required unless you have been approved for a bursary.
+If you can do this before enrolment on 26th of September, it would be
+preferable, otherwise since time is tight you can do this once the semester
+has started.
+The fees for Peoples-uni modules are £30 sterling if you have been approved
+for one course module or £60 sterling if you have been approved for two
+modules.
 
 There are a number of ways you can pay.
 
@@ -172,17 +452,21 @@ and fill in the form so we know about your payment.
 
 IN NIGERIA in local currency, Naira
 Please pay N9,000 for one course module or N18,000 for two into:
-BANK NAME: Diamond Bank Plc.
+BANK NAME: Ecobank Nigeria PLC.
 Branch: Wuse II, Abuja
 Account name: Datasphir Solutions Limited
-Account number: 0412350001544
+Account number: 0122270018
 Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
 When you have made the Bank Transfer you must then click on this web site
 (URL):
 http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
-and fill in the form so we know about your payment.
+and fill in the form so we know about your payment. Note for others in
+Africa: Anyone from the country list at http://ecobank.com/yourcountry.aspx
+can pay in their local currency.  Go to your local Ecobank branch and ask
+to pay the cost of their module/s in Naira to the Peoples-uni account in
+Nigeria.   The banks internal processes takes care of the exchange.
 
 AN ALTERNATIVE WAY, you can use MoneyGram to send money directly.
 Please give the receiver's name as:
@@ -191,7 +475,9 @@ People's Open Access Education Initiative,
 Manchester UK.
 
 If you do use this method, please let us know through
-payments@peoples-uni.org and send us the payment reference number.
+payments@peoples-uni.org and send us the payment reference number, your
+first and middle name, and surname or family name. These should be of the
+sender, if not sent by you.
 
 We look forward to your participation this semester, and hope that you
 enjoy the experience and find it useful.
@@ -203,84 +489,6 @@ enjoy the experience and find it useful.
 Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the New Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
 </li>
 <li>
-Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default RETURNING STUDENTS Approval e-mail wording for dates and banking and then click "Set the above text as the Returning Students Approval e-mail wording (in Application Details/app.php)". Here is a sample of previous wording...
-<br /><pre>
-Dear GIVEN_NAME_HERE,
-
-Your application to take the Course Module 'COURSE_MODULE_1_NAME_HERE'
-COURSE_MODULE_2_TEXT_HEREhas been approved.
-COURSE_MODULE_2_WARNING_TEXT_HERE
-
-You will receive a welcome email for each course module giving
-the course module URL and the URL for your profile.
-We will send you all these details on the first day of the course
-orientation week September 20th 2010.
-
-Please see the course timetable at:
-http://www.peoples-uni.org/book/course-dates-2010
-
-*** Payment will be required before enrolment on 20th of September.
-The fees are £30 sterling if you have been approved for one course
-module or £60 sterling if you have been approved for two modules.
-
-There are a number of ways you can pay.
-
-WITH A CREDIT CARD... You can pay via the secure online
-payment system RBS WorldPay. Please click on the following URL:
-http://courses.peoples-uni.org/course/pay.php?sid=SID_HERE
-
-and follow instructions (Everything happens automatically,
-there is no need to tell us about your payment).
-
-BY BANK TRANSFER (UK or Nigeria)...
-
-DIRECT TO THE UK in Pounds Sterling
-BANK NAME: Barclays
-Branch: Barclays Bank, Manchester City, PO Box 357, 51 Mosley Street,
-Manchester UK.
-Account name: Peoples Open Access Education Initiative
-Account number: 93777308
-Sort code: 20-55-34
-SWIFT: BARCGB22
-IBAN: GB82 BARC 2055 3493 7773 08
-Please be sure to quote this number SID_HERE as a reference in
-addition to giving your name on the lodgement docket.
-When you have made the Bank Transfer you must then click on this web site
-(URL):
-http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
-
-and fill in the form so we know about your payment.
-
-IN NIGERIA in local currency, Naira
-Please pay N9,000 for one course module or N18,000 for two into:
-BANK NAME: Diamond Bank Plc.
-Branch: Wuse II, Abuja
-Account name: Datasphir Solutions Limited
-Account number: 0412350001544
-Please be sure to quote this number SID_HERE as a reference in
-addition to giving your name on the lodgement docket.
-When you have made the Bank Transfer you must then click on this web site
-(URL):
-http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
-
-and fill in the form so we know about your payment.
-
-AN ALTERNATIVE WAY, you can use MoneyGram to send money directly.
-Please give the receiver's name as:
-Professor Rajan Madhok,
-People's Open Access Education Initiative,
-Manchester UK.
-
-If you do use this method, please let us know through
-payments@peoples-uni.org and send us the payment reference number.
-
-We look forward to your participation this semester, and hope that you
-enjoy the experience and find it useful.
-
-    Peoples Open Access Education Initiative Administrator.
-</pre>
-</li>
-<li>
 Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default RETURNING STUDENTS Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the Returning Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
 </li>
 <li>
@@ -288,13 +496,14 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
-We contacted you earlier indicating that your application to Peoples-uni
-for this semester had been approved and giving payment options.
+We contacted you earlier indicating that your application for this semester
+had been approved and giving payment options.
 
 We have so far not received any indication of payment from you. If you have
 only recently paid we may not have a record of that yet. However, if you
-have not paid, we would like to remind you that
-payment will be required before enrolment on 29th of March.
+have not paid, we would like to remind you and ask you to process the
+payment - please send a message to payments@peoples-uni.org and tell us if
+there is a problem.
 
 Your fees are £AMOUNT_OWED_HERE sterling.
 
@@ -320,62 +529,42 @@ SWIFT: BARCGB22
 IBAN: GB82 BARC 2055 3493 7773 08
 Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
-When you have made the Bank Transfer you must then click on this web site (URL):
+When you have made the Bank Transfer you must then click on this web site
+(URL):
 http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
 and fill in the form so we know about your payment.
 
 IN NIGERIA in local currency, Naira
 Please pay N9,000 for one course module or N18,000 for two into:
-BANK NAME: Diamond Bank Plc.
+BANK NAME: Ecobank Nigeria PLC.
 Branch: Wuse II, Abuja
 Account name: Datasphir Solutions Limited
-Account number: 0412350001544
+Account number: 0122270018
 Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
-When you have made the Bank Transfer you must then click on this web site (URL):
+When you have made the Bank Transfer you must then click on this web site
+(URL):
 http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
-and fill in the form so we know about your payment.
+and fill in the form so we know about your payment. Note for others in
+Africa: Anyone from the country list at http://ecobank.com/yourcountry.aspx
+can pay in their local currency.  Go to your local Ecobank branch and ask
+to pay the cost of their module/s in Naira to the Peoples-uni account in
+Nigeria.   The banks internal processes takes care of the exchange.
 
-ALTERNATIVE WAYS OF SENDING MONEY, Travellers Cheques or cash...
-Buy a Travellers Cheque in Sterling, preferably drawn on a UK bank
-(such as Visa, Mastercard or American Express).
-Sign at the top and countersign at the bottom.
-Make this payable to the Peoples Open Access Education Initiative.
-Send it by registered mail to:
-Peoples Open Access Education Initiative,
-34 Stafford Road,
-Ellesmere Park,
-Manchester M30 9ED,
-UK.
-The amount should be 30 pounds for one module or 60 pounds for two modules.
-Notify us of the number of the cheques and the number (or tracking code) of
-the receipt you will have from the registered mail, by clicking on this
-web site (URL):
-http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+AN ALTERNATIVE WAY, you can use MoneyGram to send money directly.
+Please give the receiver's name as:
+Professor Rajan Madhok,
+People's Open Access Education Initiative,
+Manchester UK.
 
-and fill in the form so we know about your payment.
-(or send an e-mail to payments@peoples-uni.org )
-Sterling travellers cheques come in either 20 pounds or 50 pounds,
-so if you are enroling in only one module, you are better to send cash.
-It is possible to send cash for two modules rather than a travellers cheque, but
-make sure it is in sterling. Send it via registered mail and tell us as above.
-(You might fold a piece of paper around the cash so that people cannot easily
-see that cash is being sent!). The equivalent amount if you can only get
-US dollars is $50 per module, but we would prefer sterling if possible.
+If you do use this method, please let us know through
+payments@peoples-uni.org and send us the payment reference number, your
+first and middle name, and surname or family name. These should be of the
+sender, if not sent by you.
 
-
-Please e-mail payments@peoples-uni.org if you have a payment query or
-experience any problems.
-
-If you are unable to pay now, but would still like to take the course,
-please send a message to payments@peoples-uni.org and tell us the reasons.
-A limited number of scholarships are available, and it may also be
-possible to delay payment until after the course has started.
-
-We look forward to your participation this semester, and hope that you
-enjoy the experience and find it useful.
+We hope that you are enjoying the course this semester.
 
     Peoples Open Access Education Initiative Administrator.
 </pre>
@@ -392,29 +581,6 @@ Your SID is: SID_HERE
 This is used both for payment purposes and also to present anonymous data to you.
 
     Peoples Open Access Education Initiative Administrator.
-</pre>
-</li>
-<li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Reply e-mail wording for when someone expresses an interest in Peoples-uni through the Moodle form that is automatically redirected to by the applications forms after applications are closed. Edit it for dates for the next semester after this and then click "Set above text as Reply e-mail wording for Expressions of Interest (in int.php)". Here is a sample of previous wording...
-<br /><pre>
-Dear GIVEN_NAME_HERE,
-
-Thank you for sending an expression of interest to enrol on the next intake
-in the Peoples-uni. The next intake will be in September 2010,
-and we will contact you beforehand when we are open for enrolments.
-In the meantime, you may want to look through the course module Foundations
-of Public Health at http://courses.peoples-uni.org/course/view.php?id=53
-which is freely available as an demonstration course module to show you
-what a module looks like and to set the scene for you.
-You may also want to look in detail through the particular parts of the
-web site http://peoples-uni.org under the section 'Potential Students'.
-You can also ask any question in the section marked 'Ask a Question'
-under the 'Community' heading, and view the Frequently Asked Questions
-(FAQ) on the top right hand corner of the site.
-
-We look forward to seeing you on the course soon.
-
-     Peoples Open Access Education Initiative Administrator.
 </pre>
 </li>
 <li>
@@ -470,6 +636,7 @@ Note: At a later stage (when assignments are setup), all the assignments should 
 </li>
 </ol>
 
+
 <a name="dealingwithapplications"></a>
 <h2>Dealing with Applications</h2>
 <ol>
@@ -516,7 +683,7 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 
 
 <a name="thedetailsbutton"></a>
-<h2>The "Details" button and the Approval Process.</h2>
+<h2>The "Details" button and the Approval Process</h2>
 <ol>
 <li>
 First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the person has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. This form needs to be used by returning student so that they are enrolled using their existing Moodle user account. The application is also easier for the applicant because they have to enter very little information (mainly their existing username and desired modules). If they are a new student they use <a href="http://courses.peoples-uni.org/course/application_form_new_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_new_student.php</a> to apply and this gathers much more information.
