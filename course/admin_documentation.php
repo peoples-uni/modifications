@@ -293,7 +293,7 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 NOTE: once any module is added (which is not then immediately marked as full... see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a>), application forms will be opened for students!
 </li>
 <li>
-You can confirm that both of application the forms have changed by looking at them (<a href="http://courses.peoples-uni.org/course/application_form_new_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_new_student.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed.
+You can confirm that the application form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed.
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the new Students Corner module that will be used for student enrolments in the comming semester and then click "Make this Module the Students Corner for future enrolments:".
