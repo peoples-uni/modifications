@@ -507,7 +507,7 @@ Change wording on module dates etc. in <a href="http://www.peoples-uni.org/" tar
 Mailshot existing students (list of e-mails can be obtained from <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> for the old semester(s))
 </li>
 <li>
-Mailshot potential new students (list of e-mails can be obtained from <a href="http://courses.peoples-uni.org/course/interest.php" target="_blank">http://courses.peoples-uni.org/course/interest.php</a>)
+Mailshot potential new students (lists of e-mails can be obtained from <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a> and old historical expressions of interest can also be found in <a href="http://courses.peoples-uni.org/course/interest.php" target="_blank">http://courses.peoples-uni.org/course/interest.php</a>)
 </li>
 <li>
 In Grades... Report Settings... User Report... De-select "Show Percentage".  This should not have to be done each semester.
