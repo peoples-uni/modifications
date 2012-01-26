@@ -299,7 +299,7 @@ You can confirm that the application form has changed by looking at it (<a href=
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the new Students Corner module that will be used for student enrolments in the comming semester and then click "Make this Module the Students Corner for future enrolments:".
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording for dates and banking and then click "Set the above text as the New Students Approval e-mail wording (in Application Details/app.php)". Here is a sample of previous wording...
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording for dates and banking and then click "Set the above text as the Students Approval e-mail wording (in Application Details/app.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
@@ -387,10 +387,7 @@ enjoy the experience and find it useful.
 </pre>
 </li>
 <li>
-Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the New Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
-</li>
-<li>
-Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default RETURNING STUDENTS Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the Returning Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
+Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default batch reminder e-mail wording for dates and banking and then click "Set above text as Batch Reminder e-mail wording (in applications.php spreadsheet)". Here is a sample of previous wording...
@@ -497,8 +494,8 @@ You can login at http://courses.peoples-uni.org/login/index.php
      Peoples Open Access Education Initiative Administrator.</pre>
 </li>
 <li>
-Note there are two Drupal menu items which now are left permanently enabled and are used for new and returning student applications respectively: "Application form for new students" and "Application form for returning students" (<a href="http://courses.peoples-uni.org/course/application_form_new_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_new_student.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>).<br />
-Note also, that if applications are closed these will redirect to an Expression of Interest form: <a href="http://courses.peoples-uni.org/course/interest_form.php" target="_blank">http://courses.peoples-uni.org/course/interest_form.php</a>
+Note there are two Drupal menu items which now are left permanently enabled and are used for new Registrations and for Course Applications respectively: "Registration form for new students" and "Application form for returning students" (<a href="http://courses.peoples-uni.org/course/registration.php" target="_blank">http://courses.peoples-uni.org/course/registration.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>).<br />
+Note also, that if applications are closed the second of these will indicate this along with approximate dates when Applications will open (from "Last Allowed Date" setting above).
 </li>
 <li>
 One Dummy Student application should be made to test that the Dummy application appears in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>.
@@ -511,9 +508,6 @@ Mailshot existing students (list of e-mails can be obtained from <a href="http:/
 </li>
 <li>
 Mailshot potential new students (list of e-mails can be obtained from <a href="http://courses.peoples-uni.org/course/interest.php" target="_blank">http://courses.peoples-uni.org/course/interest.php</a>)
-</li>
-<li>
-The Moodle form "Peoples-uni Application Form - Expressions of Interest in Future Courses" (<a href="http://courses.peoples-uni.org/course/interest_form.php" target="_blank">http://courses.peoples-uni.org/course/interest_form.php</a>) might possibly need to edited to include new modules that might be offered in the future. The dates in it are automatically adjusted based on the current semester. Any edits would need to be made to the code in git.
 </li>
 <li>
 In Grades... Report Settings... User Report... De-select "Show Percentage".  This should not have to be done each semester.
