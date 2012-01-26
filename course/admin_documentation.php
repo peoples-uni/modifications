@@ -56,7 +56,7 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Registering Interest in Future Semesters, Making a Donation, Paying for MMU MPH</a><br />
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Making a Donation, Paying for MMU MPH</a><br />
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a><br />
@@ -581,7 +581,10 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 <h2>The "Details" button and the Approval Process</h2>
 <ol>
 <li>
-First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the person has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. This form needs to be used by returning student so that they are enrolled using their existing Moodle user account. The application is also easier for the applicant because they have to enter very little information (mainly their existing username and desired modules). If they are a new student they use <a href="http://courses.peoples-uni.org/course/application_form_new_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_new_student.php</a> to apply and this gathers much more information.
+First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student has applied for courses at least twice.
+</li>
+<li>
+Note that the student has applied with the form: <a href="http://courses.peopes-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, Application for MMU (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
 </li>
 <li>
 When the "Details" button is pressed for an application, additional applicant data is displayed beyond what is in the "spreadsheet" row.
@@ -625,16 +628,13 @@ In payconfirm.php it is possible to add a Payment Note for the Student (which wi
 payconfirm.php also lists payment details for all previous applications for earlier semesters by this student.
 </li>
 <li>
-NOTE: For the moment, Credit Card payments for the MMU MPH are handled separately. This is described below in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Registering Interest in Future Semesters, Making a Donation, Paying for MMU MPH</a>.<br />The process for MMU MPH payments is likely to evolve and there is only minimal support for it at present.
+NOTE: For the moment, Credit Card payments for the MMU MPH are handled separately. This is described below in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Making a Donation, Paying for MMU MPH</a>.<br />The process for MMU MPH payments is likely to evolve and there is only minimal support for it at present.
 </li>
 <li>
 "Date Paid" is set to the date they paid by credit card or if the student gave us payment details online through paydetails.php. It is not set if we entered the fact that they paid.
 </li>
 <li>
 "Payment Info" is reference data entered by the student when they go to paydetails.php to indicate that they have made a payment by bank transfer. It is not proving very useful. In practice it seems that the only data that apears in our bank statements is the payee's name. Also students do not seems to remember to go to paydetails to notify us they have made a payment, so we have been reduced to just checking bank statements (which we would have to do in any case to confirm all non credit card payments).
-</li>
-<li>
-"Confirmed Ready to Enrol?" indicates whether the student has confirmed they are ready to enrol (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Registered?" as "(Ready)").
 </li>
 <li>
 "Notes" lists any notes that have been added to the student record in "Details" or student.php. If any note is present they the "(Note Present)" indicator will be displayed under the "Registered?" column in applications.php.
@@ -692,60 +692,6 @@ The "Registered?" column in <a href="http://courses.peoples-uni.org/course/appli
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
 </li>
 <li>
-"Create User & Enrol in Module ... only" creates a new user (for a new application) and then enrolls the user as above. The following e-mail with be sent from techsupport@peopes-uni.org (in addition to the one above sent on behalf of the Module Leader):<br />
-<pre>
-Hi FULL_NAME_HERE,
-
-A new account has been created at 'SITE_NAME_HERE'.
-
-Your new Username is: USERNAME_HERE
-Your New Password is: PASSWORD_HERE
-
-Please go to the following link to login:
-
-LOGIN_LINK_HERE
-
-In most mail programs, this should appear as a blue link
-which you can just click on. If that doesn't work,
-then cut and paste the address into the address
-line at the top of your web browser window.
-
-Be aware that you should use this link to login and
-NOT the main Peoples-uni site (which has a completely
-different login): http://peoples-uni.org
-
-You should also read the student handbook at:
-
-http://peoples-uni.org/content/student-handbook
-
-You will receive separate e-mails, each with a link to one of
-your selected course modules. Please access these and familiarise
-yourself with the way the modules are laid out so you are ready
-to start the course.
-You will also be sent a welcome message when the course actually starts.
-
-Additionally, you have been enrolled in the Students Corner:
-
-http://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
-
-which is available for student chat.
-
-Your profile is at:
-http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
-
-Note that the private information in this is not visible to other students.
-
-If you need help, please contact the site administrator,
-TECHSUPPORT_EMAIL_HERE
-</pre>
-</li>
-<li>
-"Create User & Enrol in Modules ... and ..." button does the same as above for all modules.
-</li>
-<li>
-"Confirm Student is Ready to Enrol" button does what it says.
-</li>
-<li>
 "Record that the Student has been enrolled in the MMU MPH" button does what it says.
 </li>
 <li>
@@ -777,13 +723,13 @@ Note that the applications.php spreadsheet is refreshed with any changes that ha
 <h2>Closing Applications for a Semester</h2>
 <ol>
 <li>
-First it may be desirable to mark some modules as full before all the applications are finally closed. To do this go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> click "Check to mark Module as Full" for any module that is full and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that both the forms have changed by looking at them (<a href="http://courses.peoples-uni.org/course/application_form_new_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_new_student.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed, but also that there is extra wording automatically added to explain that the two modules are full.
+First it may be desirable to mark some modules as full before all the applications are finally closed. To do this go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> click "Check to mark Module as Full" for any module that is full and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed, but also that there is extra wording automatically added to explain that the two modules are full.
 </li>
 <li>
-But to fully close applications go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> and click "Mark All Modules as Full (Applicants will be sent to Expression of Interest Form)". You can confirm that both the forms have closed by looking at them (<a href="http://courses.peoples-uni.org/course/application_form_new_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_new_student.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>).
+But to fully close applications go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> and click "Mark All Modules as Full (Applicants will be sent to Registration Form)". You can confirm that the form has closed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>).
 </li>
 <li>
-In the case that you want to reopen applications temporarily for some reason... Just go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> deselect "Check to mark Module as Full" for any module that you wish to reopen and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that both the forms have changed by looking at them (<a href="http://courses.peoples-uni.org/course/application_form_new_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_new_student.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed.
+In the case that you want to reopen applications temporarily for some reason... Just go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> deselect "Check to mark Module as Full" for any module that you wish to reopen and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed.
 </li>
 <li>
 Note: When all students have been registered (enrolled) for a module, then the Marking Spreadsheet will need to be created see... <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.<br />
@@ -793,14 +739,11 @@ This should be done some time before assignment submission and grading starts.
 
 
 <a name="misc"></a>
-<h2>Misc: Enrolling Tutors in Tutors Corner, Registering Interest in Future Semesters, Making a Donation, Paying for MMU MPH</h2>
+<h2>Misc: Enrolling Tutors in Tutors Corner, Making a Donation, Paying for MMU MPH</h2>
 <ol>
 <li>
 <a href="http://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">http://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Module Leader", "Tutors" or "Education coordinator" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
 The names or contextid of these two modules should not be changed.
-</li>
-<li>
-The Moodle form "Peoples-uni Application Form - Expressions of Interest in Future Courses" (<a href="http://courses.peoples-uni.org/course/interest_form.php" target="_blank">http://courses.peoples-uni.org/course/interest_form.php</a>) allows an interest to be expressed in future semesters. The results of this can be seen at <a href="http://courses.peoples-uni.org/course/interest.php" target="_blank">http://courses.peoples-uni.org/course/interest.php</a>. For each entry, there is a button "e-mail" which brings the user to a page ("int.php") which allows an e-mail to be sent to the person who expressed an interest, enter a permanent comment for that expression of interest or "Hide this Application Form Entry from All Future Processing".
 </li>
 <li>
 The following page is linked from the Drupal menus to allow donations: <a href="http://courses.peoples-uni.org/course/donate.php" target="_blank">http://courses.peoples-uni.org/course/donate.php</a>
