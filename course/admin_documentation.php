@@ -161,25 +161,19 @@ Note also, that if applications are closed the second of these will indicate thi
 Go to <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>. You can see a list of registrants for this semester.
 </li>
 <li>
-It is possible to filter the registrations by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment status, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or is) MMU MPH and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
+It is possible to filter the registrations by registration status, by date and by name or email. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
 </li>
 <li>
-It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
+It is also possible to display all the registration data for each student in extra columns by clicking "Show Extra Details" and then "Apply Filters".
 </li>
 <li>
-It is also possible to display all the application data for each student in extra columns by clicking "Show Extra Details" and then "Apply Filters".
+For each student registration application, data about the student is displayed in a row of the "spreadsheet".
 </li>
 <li>
-The "sid" value against each student is a unique identifier which is used to track the application including payments by the student.
+"Registered?" indicates whether the student has been registered (using the "Details" page) in Moodle.
 </li>
 <li>
-For each student application, data about the student is displayed in a row of the "spreadsheet".
-</li>
-<li>
-In particular the one or two modules that the student has applied for are displayed. They are colour coded <span style="color:red">red</span> for not approved, <span style="color:#FF8C00">orange</span> for approved but not enrolled and <span style="color:green">green</span> for enrolled.
-</li>
-<li>
-"Approved?", "Paid?", "Registered?", "Details", "Student Grades" and "Student Submissions" will be described later.
+"Details" will be described later.
 </li>
 <li>
 Statistics are displayed at the end of the page.
@@ -191,10 +185,7 @@ E-mails of all the students in the spreadsheet (i.e. after any filters have been
 It is also possible to programmatically send a reminder or other e-mail to all of the students in the spreadsheet (i.e. after any filters have been applied) by using the form at the end of the page (instuctions for the form are given there).
 </li>
 <li>
-Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
-</li>
-<li>
-If someone is given the "Manager" role (instead of the "Administrator" role) it may be useful to make them a "Tutors" in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Education coordinator" role in each desired course.
+Access to <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 </ol>
 
@@ -677,7 +668,7 @@ E-mails of all the students in the spreadsheet (i.e. after any filters have been
 It is also possible to programmatically send a reminder or other e-mail to all of the students in the spreadsheet (i.e. after any filters have been applied) by using the form at the end of the page (instuctions for the form are given there).
 </li>
 <li>
-Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 <li>
 If someone is given the "Manager" role (instead of the "Administrator" role) it may be useful to make them a "Tutors" in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Education coordinator" role in each desired course.
