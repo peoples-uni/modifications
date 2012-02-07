@@ -451,7 +451,7 @@ $email_already_in_moodle = $DB->get_records_sql('
   SELECT a.id
   FROM mdl_peoplesregistration a
   LEFT JOIN mdl_user u ON a.email=u.email
-  WHERE a.hidden=0 AND u.id IS NOT NULL');
+  WHERE a.state=0 AND a.hidden=0 AND u.id IS NOT NULL');
 if (empty($email_already_in_moodle)) {
   $email_already_in_moodle = array();
 }
