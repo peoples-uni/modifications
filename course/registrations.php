@@ -447,6 +447,14 @@ if (empty($applications)) {
   $applications = array();
 }
 
+$email_already_in_moodle = $DB->get_records_sql('
+  SELECT a.id
+  FROM mdl_peoplesregistration a
+  LEFT JOIN mdl_user u ON a.email=u.email
+  WHERE a.state=0 AND a.hidden=0 AND u.id IS NOT NULL');
+if (empty($email_already_in_moodle)) {
+  $email_already_in_moodle = array();
+}
 
 $emaildups = 0;
 foreach ($applications as $sid => $application) {
@@ -564,11 +572,13 @@ foreach ($applications as $sid => $application) {
 
   $rowdata[] = htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8');
 
+  if (!empty($email_already_in_moodle[$sid])) $inmoodle = '<span style="color:red">**</span>';
+  else  $inmoodle = '';
   if ($emailcounts[$application->email] === 1) {
-    $z = htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
+    $z = $inmoodle . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
   }
   else {
-    $z = '<span style="color:navy">**</span>' . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
+    $z = '<span style="color:navy">**</span>' . $inmoodle . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
   }
   $rowdata[] = $z;
 
@@ -667,6 +677,8 @@ echo html_writer::table($table);
 echo '<br />Total Applications: ' . $n;
 echo '<br />Total Registered: ' . $nregistered;
 echo '<br /><br />(Duplicated e-mails: ' . $emaildups . ',  see <span style="color:navy">**</span>)';
+echo '<br /><br />(If a Moodle user already has this e-mail then it will be marked with <span style="color:red">**</span>.<br />
+In that case the student is probably already in Moodle and should not be registered.)';
 echo '<br/><br/>';
 
 
