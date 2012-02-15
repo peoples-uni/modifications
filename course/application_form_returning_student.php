@@ -362,8 +362,14 @@ elseif ($data = $editform->get_data()) {
   $DB->insert_record('peoplesapplication', $application);
 
 
-  if ($application->reenrolment == 0) $message = "First Application for...\n\n";
-  else                                $message = "Returning Student Application for...\n\n";
+  if ($application->reenrolment == 0) {
+    $message = "First Application for...\n\n";
+    $returning_in_title = 'First';
+  }
+  else {
+    $message = "Returning Student Application for...\n\n";
+    $returning_in_title = 'Returning';
+  }
   $message .= "Last Name: $application->lastname\n\n";
   $message .= "First Name: $application->firstname\n\n";
   $message .= "e-mail: $application->email\n\n";
@@ -413,8 +419,8 @@ elseif ($data = $editform->get_data()) {
   $message .= "Scholarship:\n" . htmlspecialchars_decode($application->scholarship, ENT_COMPAT) . "\n\n";
   $message .= "Why Not Completed Previous Semester:\n" . htmlspecialchars_decode($application->whynotcomplete, ENT_COMPAT) . "\n";
 
-  sendapprovedmail($application->email, "Peoples-uni Returning Application Form Submission From: $application->lastname, $application->firstname", $message);
-  sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Returning Application Form Submission From: $application->lastname, $application->firstname", $message);
+  sendapprovedmail($application->email, "Peoples-uni $returning_in_title Application Form Submission From: $application->lastname, $application->firstname", $message);
+  sendapprovedmail('apply@peoples-uni.org', "Peoples-uni $returning_in_title Application Form Submission From: $application->lastname, $application->firstname", $message);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
 }
@@ -423,7 +429,7 @@ elseif ($data = $editform->get_data()) {
 // Print the form
 
 $PAGE->set_title("People's Open Access Education Initiative Application Form");
-$PAGE->set_heading('Peoples-uni Course Application form for Returning Students');
+$PAGE->set_heading('Peoples-uni Course Application Form');
 
 echo $OUTPUT->header();
 
