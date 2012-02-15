@@ -362,8 +362,8 @@ elseif ($data = $editform->get_data()) {
   $DB->insert_record('peoplesapplication', $application);
 
 
-  if ($application->nid == 71) $message = "First Application for...\n\n";
-  else                         $message = "Returning Student Application for...\n\n";
+  if ($application->reenrolment == 0) $message = "First Application for...\n\n";
+  else                                $message = "Returning Student Application for...\n\n";
   $message .= "Last Name: $application->lastname\n\n";
   $message .= "First Name: $application->firstname\n\n";
   $message .= "e-mail: $application->email\n\n";
