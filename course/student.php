@@ -598,7 +598,6 @@ foreach ($enrols as $enrol) {
 		echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=transcript" target="_blank">Academic Transcript for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
 		$certificate++;
 		$matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches);	// Take out course code without Year/Semester part
-echo "$enrol->idnumber<br />";//ab
 		if ($matched && !empty($foundation[$matches[1]])) $countf++;
 		if ($matched && !empty($problems  [$matches[1]])) $countp++;
 	}
@@ -612,7 +611,6 @@ echo "$enrol->idnumber<br />";//ab
 	}
 }
 
-echo "$certificate $countf $countp<br />";//ab
 if ($certificate >= 3) {
 	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate" target="_blank">Your Peoples Open Access Educational Initiative Certificate</a><br />';
 }
