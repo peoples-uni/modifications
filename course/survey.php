@@ -8,283 +8,49 @@
 CREATE TABLE mdl_peoples_survey (
   id BIGINT(10) unsigned NOT NULL auto_increment,
   datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  state BIGINT(10) unsigned NOT NULL,
+  state BIGINT(10) unsigned NOT NULL DEFAULT 0,
   userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  username VARCHAR(100) NOT NULL DEFAULT '',
-  firstname VARCHAR(100) NOT NULL DEFAULT '',
-  lastname VARCHAR(100) NOT NULL DEFAULT '',
-  email VARCHAR(100) NOT NULL DEFAULT '',
-  city VARCHAR(20) NOT NULL DEFAULT '',
-  country VARCHAR(2) NOT NULL DEFAULT '',
-  qualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  employment BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  howfoundpeoples BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  dobday VARCHAR(2) NOT NULL DEFAULT '',
-  dobmonth VARCHAR(2) NOT NULL DEFAULT '',
-  dobyear VARCHAR(4) NOT NULL DEFAULT '',
-  gender VARCHAR(6) NOT NULL DEFAULT '',
-  applicationaddress text NOT NULL,
-  currentjob text NOT NULL,
-  education text NOT NULL,
-  reasons text NOT NULL,
-  sponsoringorganisation text NOT NULL DEFAULT '',
-  datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  hidden TINYINT(2) unsigned NOT NULL DEFAULT 0,
-CONSTRAINT  PRIMARY KEY (id)
+
+  deliver_university VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_local_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_national_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_professional_bodies VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_other VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_body VARCHAR(255) NOT NULL DEFAULT '',
+  deliver_diversify VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_research VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_trainers VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_materials VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_network VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_students VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_tutors VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_pastoral VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_other VARCHAR(20) NOT NULL DEFAULT '',
+
+  fund_national_governments VARCHAR(20) NOT NULL DEFAULT '',
+  fund_local_governments VARCHAR(20) NOT NULL DEFAULT '',
+  fund_local_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  fund_national_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  fund_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  fund_body VARCHAR(255) NOT NULL DEFAULT '',
+
+  care_national_governments VARCHAR(20) NOT NULL DEFAULT '',
+  care_local_governments VARCHAR(20) NOT NULL DEFAULT '',
+  care_local_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  care_national_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  care_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
+  care_body VARCHAR(255) NOT NULL DEFAULT '',
+  care_practice VARCHAR(20) NOT NULL DEFAULT '',
+  care_routes VARCHAR(20) NOT NULL DEFAULT '',
+  care_materials VARCHAR(20) NOT NULL DEFAULT '',
+  care_cost VARCHAR(20) NOT NULL DEFAULT '',
+  care_other VARCHAR(20) NOT NULL DEFAULT '',
+
+  CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoples_survey_uid_ix ON mdl_peoples_survey (userid);
 */
-
-
-$countryname[  ''] = 'Select...';
-$countryname['AF'] = 'Afghanistan';
-$countryname['AX'] = 'Åland Islands';
-$countryname['AL'] = 'Albania';
-$countryname['DZ'] = 'Algeria';
-$countryname['AS'] = 'American Samoa';
-$countryname['AD'] = 'Andorra';
-$countryname['AO'] = 'Angola';
-$countryname['AI'] = 'Anguilla';
-$countryname['AQ'] = 'Antarctica';
-$countryname['AG'] = 'Antigua And Barbuda';
-$countryname['AR'] = 'Argentina';
-$countryname['AM'] = 'Armenia';
-$countryname['AW'] = 'Aruba';
-$countryname['AU'] = 'Australia';
-$countryname['AT'] = 'Austria';
-$countryname['AZ'] = 'Azerbaijan';
-$countryname['BS'] = 'Bahamas';
-$countryname['BH'] = 'Bahrain';
-$countryname['BD'] = 'Bangladesh';
-$countryname['BB'] = 'Barbados';
-$countryname['BY'] = 'Belarus';
-$countryname['BE'] = 'Belgium';
-$countryname['BZ'] = 'Belize';
-$countryname['BJ'] = 'Benin';
-$countryname['BM'] = 'Bermuda';
-$countryname['BT'] = 'Bhutan';
-$countryname['BO'] = 'Bolivia';
-$countryname['BA'] = 'Bosnia And Herzegovina';
-$countryname['BW'] = 'Botswana';
-$countryname['BV'] = 'Bouvet Island';
-$countryname['BR'] = 'Brazil';
-$countryname['IO'] = 'British Indian Ocean Territory';
-$countryname['BN'] = 'Brunei Darussalam';
-$countryname['BG'] = 'Bulgaria';
-$countryname['BF'] = 'Burkina Faso';
-$countryname['BI'] = 'Burundi';
-$countryname['KH'] = 'Cambodia';
-$countryname['CM'] = 'Cameroon';
-$countryname['CA'] = 'Canada';
-$countryname['CV'] = 'Cape Verde';
-$countryname['KY'] = 'Cayman Islands';
-$countryname['CF'] = 'Central African Republic';
-$countryname['TD'] = 'Chad';
-$countryname['CL'] = 'Chile';
-$countryname['CN'] = 'China';
-$countryname['CX'] = 'Christmas Island';
-$countryname['CC'] = 'Cocos (Keeling) Islands';
-$countryname['CO'] = 'Colombia';
-$countryname['KM'] = 'Comoros';
-$countryname['CG'] = 'Congo';
-$countryname['CD'] = 'Congo, The Democratic Republic Of The';
-$countryname['CK'] = 'Cook Islands';
-$countryname['CR'] = 'Costa Rica';
-$countryname['CI'] = 'Côte D\'Ivoire';
-$countryname['HR'] = 'Croatia';
-$countryname['CU'] = 'Cuba';
-$countryname['CY'] = 'Cyprus';
-$countryname['CZ'] = 'Czech Republic';
-$countryname['DK'] = 'Denmark';
-$countryname['DJ'] = 'Djibouti';
-$countryname['DM'] = 'Dominica';
-$countryname['DO'] = 'Dominican Republic';
-$countryname['EC'] = 'Ecuador';
-$countryname['EG'] = 'Egypt';
-$countryname['SV'] = 'El Salvador';
-$countryname['GQ'] = 'Equatorial Guinea';
-$countryname['ER'] = 'Eritrea';
-$countryname['EE'] = 'Estonia';
-$countryname['ET'] = 'Ethiopia';
-$countryname['FK'] = 'Falkland Islands (Malvinas)';
-$countryname['FO'] = 'Faroe Islands';
-$countryname['FJ'] = 'Fiji';
-$countryname['FI'] = 'Finland';
-$countryname['FR'] = 'France';
-$countryname['GF'] = 'French Guiana';
-$countryname['PF'] = 'French Polynesia';
-$countryname['TF'] = 'French Southern Territories';
-$countryname['GA'] = 'Gabon';
-$countryname['GM'] = 'Gambia';
-$countryname['GE'] = 'Georgia';
-$countryname['DE'] = 'Germany';
-$countryname['GH'] = 'Ghana';
-$countryname['GI'] = 'Gibraltar';
-$countryname['GR'] = 'Greece';
-$countryname['GL'] = 'Greenland';
-$countryname['GD'] = 'Grenada';
-$countryname['GP'] = 'Guadeloupe';
-$countryname['GU'] = 'Guam';
-$countryname['GT'] = 'Guatemala';
-$countryname['GG'] = 'Guernsey';
-$countryname['GN'] = 'Guinea';
-$countryname['GW'] = 'Guinea-Bissau';
-$countryname['GY'] = 'Guyana';
-$countryname['HT'] = 'Haiti';
-$countryname['HM'] = 'Heard Island And Mcdonald Islands';
-$countryname['VA'] = 'Holy See (Vatican City State)';
-$countryname['HN'] = 'Honduras';
-$countryname['HK'] = 'Hong Kong';
-$countryname['HU'] = 'Hungary';
-$countryname['IS'] = 'Iceland';
-$countryname['IN'] = 'India';
-$countryname['ID'] = 'Indonesia';
-$countryname['IR'] = 'Iran, Islamic Republic Of';
-$countryname['IQ'] = 'Iraq';
-$countryname['IE'] = 'Ireland';
-$countryname['IM'] = 'Isle Of Man';
-$countryname['IL'] = 'Israel';
-$countryname['IT'] = 'Italy';
-$countryname['JM'] = 'Jamaica';
-$countryname['JP'] = 'Japan';
-$countryname['JE'] = 'Jersey';
-$countryname['JO'] = 'Jordan';
-$countryname['KZ'] = 'Kazakhstan';
-$countryname['KE'] = 'Kenya';
-$countryname['KI'] = 'Kiribati';
-$countryname['KP'] = 'Korea, Democratic People\'s Republic Of';
-$countryname['KR'] = 'Korea, Republic Of';
-$countryname['KW'] = 'Kuwait';
-$countryname['KG'] = 'Kyrgyzstan';
-$countryname['LA'] = 'Lao People\'s Democratic Republic';
-$countryname['LV'] = 'Latvia';
-$countryname['LB'] = 'Lebanon';
-$countryname['LS'] = 'Lesotho';
-$countryname['LR'] = 'Liberia';
-$countryname['LY'] = 'Libyan Arab Jamahiriya';
-$countryname['LI'] = 'Liechtenstein';
-$countryname['LT'] = 'Lithuania';
-$countryname['LU'] = 'Luxembourg';
-$countryname['MO'] = 'Macao';
-$countryname['MK'] = 'Macedonia, The Former Yugoslav Republic Of';
-$countryname['MG'] = 'Madagascar';
-$countryname['MW'] = 'Malawi';
-$countryname['MY'] = 'Malaysia';
-$countryname['MV'] = 'Maldives';
-$countryname['ML'] = 'Mali';
-$countryname['MT'] = 'Malta';
-$countryname['MH'] = 'Marshall Islands';
-$countryname['MQ'] = 'Martinique';
-$countryname['MR'] = 'Mauritania';
-$countryname['MU'] = 'Mauritius';
-$countryname['YT'] = 'Mayotte';
-$countryname['MX'] = 'Mexico';
-$countryname['FM'] = 'Micronesia, Federated States Of';
-$countryname['MD'] = 'Moldova, Republic Of';
-$countryname['MC'] = 'Monaco';
-$countryname['MN'] = 'Mongolia';
-$countryname['ME'] = 'Montenegro';
-$countryname['MS'] = 'Montserrat';
-$countryname['MA'] = 'Morocco';
-$countryname['MZ'] = 'Mozambique';
-$countryname['MM'] = 'Myanmar';
-$countryname['NA'] = 'Namibia';
-$countryname['NR'] = 'Nauru';
-$countryname['NP'] = 'Nepal';
-$countryname['NL'] = 'Netherlands';
-$countryname['AN'] = 'Netherlands Antilles';
-$countryname['NC'] = 'New Caledonia';
-$countryname['NZ'] = 'New Zealand';
-$countryname['NI'] = 'Nicaragua';
-$countryname['NE'] = 'Niger';
-$countryname['NG'] = 'Nigeria';
-$countryname['NU'] = 'Niue';
-$countryname['NF'] = 'Norfolk Island';
-$countryname['MP'] = 'Northern Mariana Islands';
-$countryname['NO'] = 'Norway';
-$countryname['OM'] = 'Oman';
-$countryname['PK'] = 'Pakistan';
-$countryname['PW'] = 'Palau';
-$countryname['PS'] = 'Palestinian Territory, Occupied';
-$countryname['PA'] = 'Panama';
-$countryname['PG'] = 'Papua New Guinea';
-$countryname['PY'] = 'Paraguay';
-$countryname['PE'] = 'Peru';
-$countryname['PH'] = 'Philippines';
-$countryname['PN'] = 'Pitcairn';
-$countryname['PL'] = 'Poland';
-$countryname['PT'] = 'Portugal';
-$countryname['PR'] = 'Puerto Rico';
-$countryname['QA'] = 'Qatar';
-$countryname['RE'] = 'Réunion';
-$countryname['RO'] = 'Romania';
-$countryname['RU'] = 'Russian Federation';
-$countryname['RW'] = 'Rwanda';
-$countryname['BL'] = 'Saint Barthélemy';
-$countryname['SH'] = 'Saint Helena';
-$countryname['KN'] = 'Saint Kitts And Nevis';
-$countryname['LC'] = 'Saint Lucia';
-$countryname['MF'] = 'Saint Martin';
-$countryname['PM'] = 'Saint Pierre And Miquelon';
-$countryname['VC'] = 'Saint Vincent And The Grenadines';
-$countryname['WS'] = 'Samoa';
-$countryname['SM'] = 'San Marino';
-$countryname['ST'] = 'Sao Tome And Principe';
-$countryname['SA'] = 'Saudi Arabia';
-$countryname['SN'] = 'Senegal';
-$countryname['RS'] = 'Serbia';
-$countryname['SC'] = 'Seychelles';
-$countryname['SL'] = 'Sierra Leone';
-$countryname['SG'] = 'Singapore';
-$countryname['SK'] = 'Slovakia';
-$countryname['SI'] = 'Slovenia';
-$countryname['SB'] = 'Solomon Islands';
-$countryname['SO'] = 'Somalia';
-$countryname['ZA'] = 'South Africa';
-$countryname['GS'] = 'South Georgia And The South Sandwich Islands';
-$countryname['ES'] = 'Spain';
-$countryname['LK'] = 'Sri Lanka';
-$countryname['SD'] = 'Sudan';
-$countryname['SR'] = 'Suriname';
-$countryname['SJ'] = 'Svalbard And Jan Mayen';
-$countryname['SZ'] = 'Swaziland';
-$countryname['SE'] = 'Sweden';
-$countryname['CH'] = 'Switzerland';
-$countryname['SY'] = 'Syrian Arab Republic';
-$countryname['TW'] = 'Taiwan, Province Of China';
-$countryname['TJ'] = 'Tajikistan';
-$countryname['TZ'] = 'Tanzania, United Republic Of';
-$countryname['TH'] = 'Thailand';
-$countryname['TL'] = 'Timor-Leste';
-$countryname['TG'] = 'Togo';
-$countryname['TK'] = 'Tokelau';
-$countryname['TO'] = 'Tonga';
-$countryname['TT'] = 'Trinidad And Tobago';
-$countryname['TN'] = 'Tunisia';
-$countryname['TR'] = 'Turkey';
-$countryname['TM'] = 'Turkmenistan';
-$countryname['TC'] = 'Turks And Caicos Islands';
-$countryname['TV'] = 'Tuvalu';
-$countryname['UG'] = 'Uganda';
-$countryname['UA'] = 'Ukraine';
-$countryname['AE'] = 'United Arab Emirates';
-$countryname['GB'] = 'United Kingdom';
-$countryname['US'] = 'United States';
-$countryname['UM'] = 'United States Minor Outlying Islands';
-$countryname['UY'] = 'Uruguay';
-$countryname['UZ'] = 'Uzbekistan';
-$countryname['VU'] = 'Vanuatu';
-$countryname['VE'] = 'Venezuela';
-$countryname['VN'] = 'Viet Nam';
-$countryname['VG'] = 'Virgin Islands, British';
-$countryname['VI'] = 'Virgin Islands, U.S.';
-$countryname['WF'] = 'Wallis And Futuna';
-$countryname['EH'] = 'Western Sahara';
-$countryname['YE'] = 'Yemen';
-$countryname['ZM'] = 'Zambia';
-$countryname['ZW'] = 'Zimbabwe';
 
 
 require_once('../config.php');
@@ -295,6 +61,7 @@ $PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/survey.php');
 
+require_login();
 
 $editform = new survey_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
@@ -309,6 +76,48 @@ elseif ($data = $editform->get_data()) {
   $application->state = 0;
 
   $application->datesubmitted = time();
+
+
+TEXT ALL
+'select', 'deliver_university', 'University', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'deliver_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'deliver_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'deliver_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'deliver_professional_bodies', 'Professional Body', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'deliver_other', 'Other', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'text', 'deliver_body', 'Names of Bodies Indicated Above', 'maxlength="255" size="50"');
+
+Yes/''
+'checkbox', 'deliver_diversify', "Diversify the organisation’s range of training delivery routes");
+'checkbox', 'deliver_research', "Provide opportunities for international research");
+'checkbox', 'deliver_trainers', "Provide high quality, accredited training opportunities for trainers");
+'checkbox', 'deliver_materials', "Provide access to high standard training materials");
+'checkbox', 'deliver_network', "Provide access to international professional network (via web platform)");
+'checkbox', 'deliver_students', "Attract students to Peoples-uni");
+'checkbox', 'deliver_tutors', "Attract tutors to Peoples-uni");
+'checkbox', 'deliver_pastoral', "Provide pastoral support");
+'checkbox', 'deliver_other', "Other");
+
+'select', 'fund_national_governments', 'National governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'fund_local_governments', 'Local governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'fund_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'fund_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'fund_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'text', 'fund_body', 'Names of Bodies Indicated Above', 'maxlength="255" size="50"');
+
+'select', 'care_national_governments', 'National governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'care_local_governments', 'Local governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'care_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'care_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'select', 'care_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+'text', 'care_body', 'Names of Bodies Indicated Above', 'maxlength="255" size="50"');
+
+'checkbox', 'care_practice', "Support students to put what they learnt into practice");
+'checkbox', 'care_routes', "Diversify their range of training delivery routes");
+'checkbox', 'care_materials', "Provide access to high standard training materials");
+'checkbox', 'care_cost', "provide low cost training");
+'checkbox', 'care_other', "Other");
+
 
   // Some of the data cleaning done may be obsolete as the Moodle Form can do it now
   $dataitem = $data->lastname;
