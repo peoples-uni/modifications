@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Course completion progress report
  *
- * @package   moodlecore
+ * @package    report
+ * @subpackage completion
  * @copyright 2009 Catalyst IT Ltd
  * @author    Aaron Barnes <aaronb@catalyst.net.nz>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -33,7 +32,7 @@ require_once($CFG->libdir.'/completionlib.php');
 define('COMPLETION_REPORT_PAGE',        25);
 define('COMPLETION_REPORT_COL_TITLES',  true);
 
-/**
+/*
  * Setup page, check permissions
  */
 
@@ -46,6 +45,7 @@ $edituser = optional_param('edituser', 0, PARAM_INT);
 
 
 $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+$context = context_course::instance($course->id);
 
 $url = new moodle_url('/course/student_completion.php', array('course'=>$course->id));
 $PAGE->set_url($url);
@@ -60,8 +60,9 @@ $start   = optional_param('start', 0, PARAM_INT);
 $sifirst = optional_param('sifirst', 'all', PARAM_ALPHA);
 $silast  = optional_param('silast', 'all', PARAM_ALPHA);
 
-// Whether to show idnumber
-$idnumbers = $CFG->grade_report_showuseridnumber;
+// Whether to show extra user identity information
+$extrafields = get_extra_user_fields($context);
+$leftcols = 1 + count($extrafields);
 
 // Function for quoting csv cell values
 function csv_quote($value) {
@@ -78,8 +79,7 @@ function csv_quote($value) {
 // Check permissions
 require_login($course);
 
-$context=get_context_instance(CONTEXT_COURSE, $course->id);
-require_capability('coursereport/completion:view', $context);
+require_capability('report/completion:view', $context);
 
 // Get group mode
 $group = groups_get_course_group($course, true); // Supposed to verify group
@@ -90,6 +90,9 @@ if($group === 0 && $course->groupmode == SEPARATEGROUPS) {
 /**
  * Load data
  */
+
+// Retrieve course_module data for all modules in the course
+$modinfo = get_fast_modinfo($course);
 
 // Get criteria for course
 $completion = new completion_info($course);
@@ -140,12 +143,14 @@ if (!$csv) {
     }
 }
 
-/**
+/*
  * Setup page header
  */
 if ($csv) {
+    $shortname = format_string($course->shortname, true, array('context' => $context));
+    $textlib = textlib_get_instance();
     header('Content-Disposition: attachment; filename=progress.'.
-        preg_replace('/[^a-z0-9-]/','_',strtolower($course->shortname)).'.csv');
+        preg_replace('/[^a-z0-9-]/','_',$textlib->strtolower(strip_tags($shortname))).'.csv');
     // Unicode byte-order mark for Excel
     if($excel) {
         header('Content-Type: text/csv; charset=UTF-16LE');
@@ -176,10 +181,10 @@ if ($csv) {
         )
     );
 
-    $PAGE->requires->js('/course/report/completion/textrotate.js');
+    $PAGE->requires->js('/report/completion/textrotate.js');
 
     // Handle groups (if enabled)
-    groups_print_course_menu($course, $CFG->wwwroot.'/course/report/completion/?course='.$course->id);
+    groups_print_course_menu($course, $CFG->wwwroot.'/report/completion/?course='.$course->id);
 }
 
 
@@ -224,13 +229,14 @@ if ($total) {
         $group,
         $firstnamesort ? 'u.firstname ASC' : 'u.lastname ASC',
         $csv ? 0 : COMPLETION_REPORT_PAGE,
-        $csv ? 0 : $start
+        $csv ? 0 : $start,
+        $context
     );
 }
 
 
 // Build link for paging
-$link = $CFG->wwwroot.'/course/report/completion/?course='.$course->id;
+$link = $CFG->wwwroot.'/report/completion/?course='.$course->id;
 if (strlen($sort)) {
     $link .= '&amp;sort='.$sort;
 }
@@ -244,6 +250,9 @@ $pagingbar = '';
 foreach ($initials as $initial) {
     $var = 'si'.$initial;
 
+    $othervar = $initial == 'first' ? 'silast' : 'sifirst';
+    $othervar = $$othervar != 'all' ? "&amp;{$othervar}={$$othervar}" : '';
+
     $pagingbar .= ' <div class="initialbar '.$initial.'initial">';
     $pagingbar .= get_string($initial.'name').':&nbsp;';
 
@@ -251,7 +260,7 @@ foreach ($initials as $initial) {
         $pagingbar .= '<strong>'.get_string('all').'</strong> ';
     }
     else {
-        $pagingbar .= '<a href="'.$link.'">'.get_string('all').'</a> ';
+        $pagingbar .= "<a href=\"{$link}{$othervar}\">".get_string('all').'</a> ';
     }
 
     foreach ($alphabet as $letter) {
@@ -259,7 +268,7 @@ foreach ($initials as $initial) {
             $pagingbar .= '<strong>'.$letter.'</strong> ';
         }
         else {
-            $pagingbar .= '<a href="'.$link.'&amp;'.$var.'='.$letter.'">'.$letter.'</a> ';
+            $pagingbar .= "<a href=\"$link&amp;$var={$letter}{$othervar}\">$letter</a> ";
         }
     }
 
@@ -273,10 +282,19 @@ if($total > COMPLETION_REPORT_PAGE) {
     $pagingbar .= '<div class="paging">';
     $pagingbar .= get_string('page').': ';
 
+    $sistrings = array();
+    if ($sifirst != 'all') {
+        $sistrings[] =  "sifirst={$sifirst}";
+    }
+    if ($silast != 'all') {
+        $sistrings[] =  "silast={$silast}";
+    }
+    $sistring = !empty($sistrings) ? '&amp;'.implode('&amp;', $sistrings) : '';
+
     // Display previous link
     if ($start > 0) {
         $pstart = max($start - COMPLETION_REPORT_PAGE, 0);
-        $pagingbar .= '(<a class="previous" href="'.$link.$pstart.'">'.get_string('previous').'</a>)&nbsp;';
+        $pagingbar .= "(<a class=\"previous\" href=\"{$link}{$pstart}{$sistring}\">".get_string('previous').'</a>)&nbsp;';
     }
 
     // Create page links
@@ -289,7 +307,7 @@ if($total > COMPLETION_REPORT_PAGE) {
             $pagingbar .= '&nbsp;'.$curpage.'&nbsp;';
         }
         else {
-            $pagingbar .= '&nbsp;<a href="'.$link.$curstart.'">'.$curpage.'</a>&nbsp;';
+            $pagingbar .= "&nbsp;<a href=\"{$link}{$curstart}{$sistring}\">$curpage</a>&nbsp;";
         }
 
         $curstart += COMPLETION_REPORT_PAGE;
@@ -298,14 +316,14 @@ if($total > COMPLETION_REPORT_PAGE) {
     // Display next link
     $nstart = $start + COMPLETION_REPORT_PAGE;
     if ($nstart < $total) {
-        $pagingbar .= '&nbsp;(<a class="next" href="'.$link.$nstart.'">'.get_string('next').'</a>)';
+        $pagingbar .= "&nbsp;(<a class=\"next\" href=\"{$link}{$nstart}{$sistring}\">".get_string('next').'</a>)';
     }
 
     $pagingbar .= '</div>';
 }
 
 
-/**
+/*
  * Draw table header
  */
 
@@ -324,11 +342,13 @@ if(!$csv) {
         exit;
     }
 
+    print '<div id="completion-progress-wrapper" class="no-overflow">';
     print '<table id="completion-progress" class="generaltable flexible boxaligncenter completionreport" style="text-align: left" cellpadding="5" border="1">';
 
     // Print criteria group names
     print PHP_EOL.'<tr style="vertical-align: top">';
-    print '<th scope="row" class="rowheader">'.get_string('criteriagroup', 'completion').'</th>';
+    echo '<th scope="row" class="rowheader" colspan="' . $leftcols . '">' .
+            get_string('criteriagroup', 'completion') . '</th>';
 
     $current_group = false;
     $col_count = 0;
@@ -362,7 +382,8 @@ if(!$csv) {
 
     // Print aggregation methods
     print PHP_EOL.'<tr style="vertical-align: top">';
-    print '<th scope="row" class="rowheader">'.get_string('aggregationmethod', 'completion').'</th>';
+    echo '<th scope="row" class="rowheader" colspan="' . $leftcols . '">' .
+            get_string('aggregationmethod', 'completion').'</th>';
 
     $current_group = false;
     $col_count = 0;
@@ -421,7 +442,8 @@ if(!$csv) {
     if (COMPLETION_REPORT_COL_TITLES) {
 
         print PHP_EOL.'<tr>';
-        print '<th scope="row" class="rowheader">'.get_string('criteria', 'completion').'</th>';
+        echo '<th scope="row" class="rowheader" colspan="' . $leftcols . '">' .
+                get_string('criteria', 'completion') . '</th>';
 
         foreach ($criteria as $criterion) {
             // Get criteria details
@@ -444,21 +466,25 @@ if(!$csv) {
 
     // User heading / sort option
     print '<th scope="col" class="completion-sortchoice" style="clear: both;">';
+
+    $sistring = "&amp;silast={$silast}&amp;sifirst={$sifirst}";
+
     if($firstnamesort) {
         print
-            get_string('firstname').' / <a href="./?course='.$course->id.'">'.
+            get_string('firstname')." / <a href=\"./?course={$course->id}{$sistring}\">".
             get_string('lastname').'</a>';
     } else {
-        print '<a href="./?course='.$course->id.'&amp;sort=firstname">'.
+        print "<a href=\"./?course={$course->id}&amp;sort=firstname{$sistring}\">".
             get_string('firstname').'</a> / '.
             get_string('lastname');
     }
     print '</th>';
 
 
-    // Print user id number column
-    if($idnumbers) {
-        print '<th>'.get_string('idnumber').'</th>';
+    // Print user identity columns
+    foreach ($extrafields as $field) {
+        echo '<th scope="col" class="completion-identifyfield">' .
+                get_user_field_name($field) . '</th>';
     }
 
     ///
@@ -474,13 +500,10 @@ if(!$csv) {
         switch ($criterion->criteriatype) {
 
             case COMPLETION_CRITERIA_TYPE_ACTIVITY:
-                // Load activity
-                $activity = $criterion->get_mod_instance();
-
                 // Display icon
                 $icon = $OUTPUT->pix_url('icon', $criterion->module);
                 $iconlink = $CFG->wwwroot.'/mod/'.$criterion->module.'/view.php?id='.$criterion->moduleinstance;
-                $icontitle = $activity->name;
+                $icontitle = $modinfo->cms[$criterion->moduleinstance]->name;
                 $iconalt = get_string('modulename', $criterion->module);
                 break;
 
@@ -490,8 +513,8 @@ if(!$csv) {
 
                 // Display icon
                 $iconlink = $CFG->wwwroot.'/course/view.php?id='.$criterion->courseinstance;
-                $icontitle = $crs->fullname;
-                $iconalt = $crs->shortname;
+                $icontitle = format_string($crs->fullname, true, array('context' => get_context_instance(CONTEXT_COURSE, $crs->id, MUST_EXIST)));
+                $iconalt = format_string($crs->shortname, true, array('context' => get_context_instance(CONTEXT_COURSE, $crs->id)));
                 break;
 
             case COMPLETION_CRITERIA_TYPE_ROLE:
@@ -527,10 +550,7 @@ if(!$csv) {
 
 
 } else {
-    // TODO
-    if($idnumbers) {
-        print $sep;
-    }
+    // The CSV file does not contain any headers
 }
 
 
@@ -542,16 +562,16 @@ foreach ($progress as $user) {
     // User name
     if($csv) {
         print csv_quote(fullname($user));
-        if($idnumbers) {
-            print $sep.csv_quote($user->idnumber);
+        foreach ($extrafields as $field) {
+            echo $sep . csv_quote($user->{$field});
         }
     } else {
         print PHP_EOL.'<tr id="user-'.$user->id.'">';
 
         print '<th scope="row"><a href="'.$CFG->wwwroot.'/user/view.php?id='.
             $user->id.'&amp;course='.$course->id.'">'.fullname($user).'</a></th>';
-        if($idnumbers) {
-            print '<td>'.htmlspecialchars($user->idnumber).'</td>';
+        foreach ($extrafields as $field) {
+            echo '<td>' . s($user->{$field}) . '</td>';
         }
     }
 
@@ -562,10 +582,7 @@ foreach ($progress as $user) {
         if ($criterion->criteriatype == COMPLETION_CRITERIA_TYPE_ACTIVITY) {
 
             // Load activity
-            $mod = $criterion->get_mod_instance();
-            $activity = $DB->get_record('course_modules', array('id' => $criterion->moduleinstance));
-            $activity->name = $mod->name;
-
+            $activity = $modinfo->cms[$criterion->moduleinstance];
 
             // Get progress information and state
             if(array_key_exists($activity->id,$user->progress)) {
@@ -692,6 +709,7 @@ if($csv) {
     exit;
 }
 print '</table>';
+print '</div>';
 print $pagingbar;
 
 print '<ul class="progress-actions"><li><a href="index.php?course='.$course->id.
