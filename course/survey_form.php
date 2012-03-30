@@ -49,7 +49,7 @@ class survey_form extends moodleform {
     $mform->addElement('select', 'deliver_other', 'Other', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
     $mform->addElement('static', 'explain_deliver_other', '&nbsp;', 'Do you have a link with Other Bodies that deliver public health training?.<br />');
 
-    $mform->addElement('text', 'deliver_body', 'Names of Bodies Indicated Above', 'maxlength="255" size="50"');
+    $mform->addElement('text', 'deliver_body', 'Names of Bodies Indicated Above', 'maxlength="200" size="50"');
     $mform->setType('deliver_body', PARAM_MULTILANG);
     $mform->addElement('static', 'explain_deliver_body', '&nbsp;', 'Enter the Names of all Bodies Indicated Above.<br />');
 
@@ -83,7 +83,7 @@ class survey_form extends moodleform {
     $mform->addElement('select', 'fund_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
     $mform->addElement('static', 'explain_fund_international_ngo', '&nbsp;', 'Do you have a link with International NGOs that fund public health training?.<br />');
 
-    $mform->addElement('text', 'fund_body', 'Names of Bodies Indicated Above', 'maxlength="255" size="50"');
+    $mform->addElement('text', 'fund_body', 'Names of Bodies Indicated Above', 'maxlength="200" size="50"');
     $mform->setType('fund_body', PARAM_MULTILANG);
     $mform->addElement('static', 'explain_fund_body', '&nbsp;', 'Enter the Names of all Bodies Indicated Above.<br />');
 
@@ -105,7 +105,7 @@ class survey_form extends moodleform {
     $mform->addElement('select', 'care_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
     $mform->addElement('static', 'explain_care_international_ngo', '&nbsp;', 'Do you have a link with International NGOs that deliver health promotion/health care?.<br />');
 
-    $mform->addElement('text', 'care_body', 'Names of Bodies Indicated Above', 'maxlength="255" size="50"');
+    $mform->addElement('text', 'care_body', 'Names of Bodies Indicated Above', 'maxlength="200" size="50"');
     $mform->setType('care_body', PARAM_MULTILANG);
     $mform->addElement('static', 'explain_care_body', '&nbsp;', 'Enter the Names of all Bodies Indicated Above.<br />');
 
