@@ -7,6 +7,7 @@
 /*
 CREATE TABLE mdl_peoples_survey (
   id BIGINT(10) unsigned NOT NULL auto_increment,
+  survey_name VARCHAR(255) NOT NULL DEFAULT '',
   datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
   state BIGINT(10) unsigned NOT NULL DEFAULT 0,
   userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
@@ -68,6 +69,8 @@ if ($editform->is_cancelled()) {
   redirect(new moodle_url('http://peoples-uni.org'));
 }
 elseif ($survey = $editform->get_data()) {
+
+  $survey->survey_name = '2012 Spring';
 
   $survey->userid = $USER->id;
 
