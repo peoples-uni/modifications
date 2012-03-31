@@ -73,8 +73,6 @@ if (empty($USER->id) || $USER->id == 1 || $USER->username == 'guest') {
 
   echo "<h1>You Must Login to Complete the Form. Please Login Above.</h1>";
 
-print_r($USER);
-
   echo $OUTPUT->footer();
 }
 else {
