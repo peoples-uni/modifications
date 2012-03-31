@@ -20,7 +20,7 @@ class survey_form extends moodleform {
 
     $mform->addElement('header', 'top', 'Instructions');
 
-    $mform->addElement('static', 'instuctions', '', 'userid: ' . $USER->id .
+    $mform->addElement('static', 'instuctions', '',
 '<p><strong>This form is used to gather information that may be helpful in expanding the reach of Peoples-uni.</p>
 <br />
 <p>We will not contact anybody based on your responses without permission from you.</p>
