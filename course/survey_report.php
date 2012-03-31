@@ -38,12 +38,12 @@ $table = new html_table();
 $table->head = array(
   'Submitted',
   'Name',
-  'Organisations that deliver public health training',
+  'Organisations that deliver public health training...',
   'Bodies',
   'Benefits',
-  'Organisations that fund public health training?',
+  'Organisations that fund public health training...',
   'Bodies',
-  'Organisations that deliver health promotion/health care?',
+  'Organisations that deliver health promotion/health care...',
   'Bodies',
   'Benefits',
 );

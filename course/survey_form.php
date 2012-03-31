@@ -21,11 +21,11 @@ class survey_form extends moodleform {
     $mform->addElement('header', 'top', 'Instructions');
 
     $mform->addElement('static', 'instuctions', '',
-'<p><strong>This form is used to gather information that may be helpfull in expanding teh reach of Peopels-uni.</p>
+'<p><strong>This form is used to gather information that may be helpful in expanding the reach of Peoples-uni.</p>
 <br />
 <p>We will not contact anybody based on your responses without permission from you.</p>
 <br />
-<p><strong>Note:</strong> We may analyse student data to help us improve the course and some of this information might be published in academic journals to help others. No person will be individually identifiable in any publication.</p>
+<p><strong>Note:</strong> We may analyse data to help us improve the course and some of this information might be published in academic journals to help others. No person will be individually identifiable in any publication.</p>
 ');
 
     //--------------
