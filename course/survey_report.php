@@ -17,11 +17,11 @@ if ($USER->id != 337) { // Debs Thompson
   require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 }
 
-$PAGE->set_title('Survey');
-$PAGE->set_heading('Survey');
+$PAGE->set_title('Survey Results');
+$PAGE->set_heading('Survey Results');
 echo $OUTPUT->header();
 
-echo "<h1>Survey</h1>";
+echo "<h1>Survey Results</h1>";
 
 $surveys = $DB->get_records_sql('
   SELECT s.*, u.lastname, u.firstname
@@ -87,6 +87,7 @@ foreach ($surveys as $sid => $survey) {
 
   $rowdata[] = $survey->fund_body;
 
+  $text = '';
   $text = add_link($text, $survey->care_national_governments, 'National governments');
   $text = add_link($text, $survey->care_local_governments, 'Local governments');
   $text = add_link($text, $survey->care_local_ngo, 'Local NGO');
@@ -96,6 +97,7 @@ foreach ($surveys as $sid => $survey) {
 
   $rowdata[] = $survey->care_body;
 
+  $text = '';
   $text = add_benefit($text, $survey->care_practice, "Support students to putinto practice");
   $text = add_benefit($text, $survey->care_routes, "Training delivery routes");
   $text = add_benefit($text, $survey->care_materials, "Training materials");
