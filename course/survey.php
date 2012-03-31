@@ -65,7 +65,7 @@ $PAGE->set_url('/course/survey.php');
 
 require_login();
 
-if (TRUE || empty($USER->id) || $USER->id == 1) {
+if (empty($USER->id) || $USER->id == 1 || $USER->username == 'guest') {
   $PAGE->set_title("People's Open Access Education Initiative Survey Form");
   $PAGE->set_heading('Peoples-uni Survey Form');
 
