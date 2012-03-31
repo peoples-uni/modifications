@@ -65,55 +65,67 @@ $PAGE->set_url('/course/survey.php');
 
 require_login();
 
-$editform = new survey_form(NULL, array('customdata' => array()));
-if ($editform->is_cancelled()) {
-  redirect(new moodle_url('http://peoples-uni.org'));
+if (empty($USER->id) || $USER->id == 1) {
+  $PAGE->set_title("People's Open Access Education Initiative Survey Form");
+  $PAGE->set_heading('Peoples-uni Survey Form');
+
+  echo $OUTPUT->header();
+
+  echo "<h1>You Must Login to Complete the Form. Please Login Above.</h1>";
+
+  echo $OUTPUT->footer();
 }
-elseif ($survey = $editform->get_data()) {
+else {
 
-  $survey->survey_name = '2012 Spring';
+  $editform = new survey_form(NULL, array('customdata' => array()));
+  if ($editform->is_cancelled()) {
+    redirect(new moodle_url('http://peoples-uni.org'));
+  }
+  elseif ($survey = $editform->get_data()) {
 
-  $survey->userid = $USER->id;
+    $survey->survey_name = '2012 Spring';
 
-  $survey->state = 0;
+    $survey->userid = $USER->id;
 
-  $survey->datesubmitted = time();
+    $survey->state = 0;
 
-  $survey->deliver_body = htmlspecialchars($survey->deliver_body, ENT_COMPAT, 'UTF-8');
+    $survey->datesubmitted = time();
 
-  if (!empty($survey->deliver_diversify)) $survey->deliver_diversify = 'Yes';
-  if (!empty($survey->deliver_research)) $survey->deliver_research = 'Yes';
-  if (!empty($survey->deliver_trainers)) $survey->deliver_trainers = 'Yes';
-  if (!empty($survey->deliver_materials)) $survey->deliver_materials = 'Yes';
-  if (!empty($survey->deliver_network)) $survey->deliver_network = 'Yes';
-  if (!empty($survey->deliver_students)) $survey->deliver_students = 'Yes';
-  if (!empty($survey->deliver_tutors)) $survey->deliver_tutors = 'Yes';
-  if (!empty($survey->deliver_pastoral)) $survey->deliver_pastoral = 'Yes';
-  if (!empty($survey->deliver_other_benefit)) $survey->deliver_other_benefit = 'Yes';
+    $survey->deliver_body = htmlspecialchars($survey->deliver_body, ENT_COMPAT, 'UTF-8');
 
-  $survey->fund_body = htmlspecialchars($survey->fund_body, ENT_COMPAT, 'UTF-8');
+    if (!empty($survey->deliver_diversify)) $survey->deliver_diversify = 'Yes';
+    if (!empty($survey->deliver_research)) $survey->deliver_research = 'Yes';
+    if (!empty($survey->deliver_trainers)) $survey->deliver_trainers = 'Yes';
+    if (!empty($survey->deliver_materials)) $survey->deliver_materials = 'Yes';
+    if (!empty($survey->deliver_network)) $survey->deliver_network = 'Yes';
+    if (!empty($survey->deliver_students)) $survey->deliver_students = 'Yes';
+    if (!empty($survey->deliver_tutors)) $survey->deliver_tutors = 'Yes';
+    if (!empty($survey->deliver_pastoral)) $survey->deliver_pastoral = 'Yes';
+    if (!empty($survey->deliver_other_benefit)) $survey->deliver_other_benefit = 'Yes';
 
-  $survey->care_body = htmlspecialchars($survey->care_body, ENT_COMPAT, 'UTF-8');
+    $survey->fund_body = htmlspecialchars($survey->fund_body, ENT_COMPAT, 'UTF-8');
 
-  if (!empty($survey->care_practice)) $survey->care_practice = 'Yes';
-  if (!empty($survey->care_routes)) $survey->care_routes = 'Yes';
-  if (!empty($survey->care_materials)) $survey->care_materials = 'Yes';
-  if (!empty($survey->care_cost)) $survey->care_cost = 'Yes';
-  if (!empty($survey->care_other)) $survey->care_other = 'Yes';
+    $survey->care_body = htmlspecialchars($survey->care_body, ENT_COMPAT, 'UTF-8');
 
-  $DB->insert_record('peoples_survey', $survey);
+    if (!empty($survey->care_practice)) $survey->care_practice = 'Yes';
+    if (!empty($survey->care_routes)) $survey->care_routes = 'Yes';
+    if (!empty($survey->care_materials)) $survey->care_materials = 'Yes';
+    if (!empty($survey->care_cost)) $survey->care_cost = 'Yes';
+    if (!empty($survey->care_other)) $survey->care_other = 'Yes';
 
-  redirect(new moodle_url($CFG->wwwroot . '/course/survey_form_success.php'));
+    $DB->insert_record('peoples_survey', $survey);
+
+    redirect(new moodle_url($CFG->wwwroot . '/course/survey_form_success.php'));
+  }
+
+  // Print the form
+
+  $PAGE->set_title("People's Open Access Education Initiative Survey Form");
+  $PAGE->set_heading('Peoples-uni Survey Form');
+
+  echo $OUTPUT->header();
+
+  $editform->display();
+
+  echo $OUTPUT->footer();
 }
-
-
-// Print the form
-
-$PAGE->set_title("People's Open Access Education Initiative Survey Form");
-$PAGE->set_heading('Peoples-uni Survey Form');
-
-echo $OUTPUT->header();
-
-$editform->display();
-
-echo $OUTPUT->footer();
