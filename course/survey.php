@@ -81,25 +81,25 @@ elseif ($survey = $editform->get_data()) {
 
   $survey->deliver_body = htmlspecialchars($survey->deliver_body, ENT_COMPAT, 'UTF-8');
 
-  if (!empty(survey->deliver_diversify)) survey->deliver_diversify = 'Yes';
-  if (!empty(survey->deliver_research)) survey->deliver_research = 'Yes';
-  if (!empty(survey->deliver_trainers)) survey->deliver_trainers = 'Yes';
-  if (!empty(survey->deliver_materials)) survey->deliver_materials = 'Yes';
-  if (!empty(survey->deliver_network)) survey->deliver_network = 'Yes';
-  if (!empty(survey->deliver_students)) survey->deliver_students = 'Yes';
-  if (!empty(survey->deliver_tutors)) survey->deliver_tutors = 'Yes';
-  if (!empty(survey->deliver_pastoral)) survey->deliver_pastoral = 'Yes';
-  if (!empty(survey->deliver_other_benefit)) survey->deliver_other_benefit = 'Yes';
+  if (!empty($survey->deliver_diversify)) $survey->deliver_diversify = 'Yes';
+  if (!empty($survey->deliver_research)) $survey->deliver_research = 'Yes';
+  if (!empty($survey->deliver_trainers)) $survey->deliver_trainers = 'Yes';
+  if (!empty($survey->deliver_materials)) $survey->deliver_materials = 'Yes';
+  if (!empty($survey->deliver_network)) $survey->deliver_network = 'Yes';
+  if (!empty($survey->deliver_students)) $survey->deliver_students = 'Yes';
+  if (!empty($survey->deliver_tutors)) $survey->deliver_tutors = 'Yes';
+  if (!empty($survey->deliver_pastoral)) $survey->deliver_pastoral = 'Yes';
+  if (!empty($survey->deliver_other_benefit)) $survey->deliver_other_benefit = 'Yes';
 
   $survey->fund_body = htmlspecialchars($survey->fund_body, ENT_COMPAT, 'UTF-8');
 
   $survey->care_body = htmlspecialchars($survey->care_body, ENT_COMPAT, 'UTF-8');
 
-  if (!empty(survey->care_practice)) survey->care_practice = 'Yes';
-  if (!empty(survey->care_routes)) survey->care_routes = 'Yes';
-  if (!empty(survey->care_materials)) survey->care_materials = 'Yes';
-  if (!empty(survey->care_cost)) survey->care_cost = 'Yes';
-  if (!empty(survey->care_other)) survey->care_other = 'Yes';
+  if (!empty($survey->care_practice)) $survey->care_practice = 'Yes';
+  if (!empty($survey->care_routes)) $survey->care_routes = 'Yes';
+  if (!empty($survey->care_materials)) $survey->care_materials = 'Yes';
+  if (!empty($survey->care_cost)) $survey->care_cost = 'Yes';
+  if (!empty($survey->care_other)) $survey->care_other = 'Yes';
 
   $DB->insert_record('peoples_survey', $survey);
 
