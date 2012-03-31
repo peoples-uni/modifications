@@ -65,13 +65,15 @@ $PAGE->set_url('/course/survey.php');
 
 require_login();
 
-if (empty($USER->id) || $USER->id == 1 || $USER->username == 'guest') {
+if (!isloggedin() || isguestuser()) {
   $PAGE->set_title("People's Open Access Education Initiative Survey Form");
   $PAGE->set_heading('Peoples-uni Survey Form');
 
   echo $OUTPUT->header();
 
   echo "<h1>You Must Login to Complete the Form. Please Login Above.</h1>";
+
+  $SESSION->wantsurl =  $CFG->wwwroot . '/course/survey.php';
 
   echo $OUTPUT->footer();
 }
