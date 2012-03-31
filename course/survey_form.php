@@ -55,7 +55,7 @@ class survey_form extends moodleform {
 
     $mform->addElement('static', 'explain_deliver_partnership', '&nbsp;', '<br /><br />What are the main benefits of Peoples-uni developing a partnership with these Bodies?...');
 
-    $mform->addElement('checkbox', 'deliver_diversify', "Diversify the organisation’s range of training delivery routes");
+    $mform->addElement('checkbox', 'deliver_diversify', "Diversify the organisation's range of training delivery routes");
     $mform->addElement('checkbox', 'deliver_research', "Provide opportunities for international research");
     $mform->addElement('checkbox', 'deliver_trainers', "Provide high quality, accredited training opportunities for trainers");
     $mform->addElement('checkbox', 'deliver_materials', "Provide access to high standard training materials");
