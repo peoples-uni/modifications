@@ -63,7 +63,7 @@ class survey_form extends moodleform {
     $mform->addElement('checkbox', 'deliver_students', "Attract students to Peoples-uni");
     $mform->addElement('checkbox', 'deliver_tutors', "Attract tutors to Peoples-uni");
     $mform->addElement('checkbox', 'deliver_pastoral', "Provide pastoral support");
-    $mform->addElement('checkbox', 'deliver_other', "Other");
+    $mform->addElement('checkbox', 'deliver_other_benefit', "Other");
 
     //--------------
     $mform->addElement('header', 'fund', 'What personal or professional links do you have with organisations that fund public health training?');

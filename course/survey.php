@@ -27,7 +27,7 @@ CREATE TABLE mdl_peoples_survey (
   deliver_students VARCHAR(20) NOT NULL DEFAULT '',
   deliver_tutors VARCHAR(20) NOT NULL DEFAULT '',
   deliver_pastoral VARCHAR(20) NOT NULL DEFAULT '',
-  deliver_other VARCHAR(20) NOT NULL DEFAULT '',
+  deliver_other_benefit VARCHAR(20) NOT NULL DEFAULT '',
 
   fund_national_governments VARCHAR(20) NOT NULL DEFAULT '',
   fund_local_governments VARCHAR(20) NOT NULL DEFAULT '',
@@ -89,7 +89,7 @@ elseif ($survey = $editform->get_data()) {
   if (!empty(survey->deliver_students)) survey->deliver_students = 'Yes';
   if (!empty(survey->deliver_tutors)) survey->deliver_tutors = 'Yes';
   if (!empty(survey->deliver_pastoral)) survey->deliver_pastoral = 'Yes';
-  if (!empty(survey->deliver_other)) survey->deliver_other = 'Yes';
+  if (!empty(survey->deliver_other_benefit)) survey->deliver_other_benefit = 'Yes';
 
   $survey->fund_body = htmlspecialchars($survey->fund_body, ENT_COMPAT, 'UTF-8');
 

@@ -74,7 +74,7 @@ foreach ($surveys as $sid => $survey) {
   $text = add_benefit($text, $survey->deliver_students, "Attract students");
   $text = add_benefit($text, $survey->deliver_tutors, "Attract tutors");
   $text = add_benefit($text, $survey->deliver_pastoral, "Pastoral support");
-  $text = add_benefit($text, $survey->deliver_other, "Other");
+  $text = add_benefit($text, $survey->deliver_other_benefit, "Other");
   $rowdata[] = $text;
 
   $text = '';
