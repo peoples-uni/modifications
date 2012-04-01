@@ -84,7 +84,7 @@ if (!empty($_POST['markpayconfirm'])) {
 
   if ($updated->paymentmechanism > 100) { // If Confirmed...
 
-    $message  = "Dear $application->firstname\n\n";
+    $message  = "Dear $application->firstname,\n\n";
     $message .= "Your payment of $updated->costpaid Pounds for Application $sid\n";
     $message .= "has been confirmed received.\n\n";
     $message .= "Semester: $application->semester\n\n";
