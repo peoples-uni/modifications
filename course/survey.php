@@ -18,7 +18,7 @@ CREATE TABLE mdl_peoples_survey (
   deliver_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
   deliver_professional_bodies VARCHAR(20) NOT NULL DEFAULT '',
   deliver_other VARCHAR(20) NOT NULL DEFAULT '',
-  deliver_body VARCHAR(255) NOT NULL DEFAULT '',
+  deliver_body TEXT NOT NULL,
   deliver_diversify VARCHAR(20) NOT NULL DEFAULT '',
   deliver_research VARCHAR(20) NOT NULL DEFAULT '',
   deliver_trainers VARCHAR(20) NOT NULL DEFAULT '',
@@ -34,14 +34,14 @@ CREATE TABLE mdl_peoples_survey (
   fund_local_ngo VARCHAR(20) NOT NULL DEFAULT '',
   fund_national_ngo VARCHAR(20) NOT NULL DEFAULT '',
   fund_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
-  fund_body VARCHAR(255) NOT NULL DEFAULT '',
+  fund_body TEXT NOT NULL,
 
   care_national_governments VARCHAR(20) NOT NULL DEFAULT '',
   care_local_governments VARCHAR(20) NOT NULL DEFAULT '',
   care_local_ngo VARCHAR(20) NOT NULL DEFAULT '',
   care_national_ngo VARCHAR(20) NOT NULL DEFAULT '',
   care_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
-  care_body VARCHAR(255) NOT NULL DEFAULT '',
+  care_body TEXT NOT NULL,
   care_practice VARCHAR(20) NOT NULL DEFAULT '',
   care_routes VARCHAR(20) NOT NULL DEFAULT '',
   care_materials VARCHAR(20) NOT NULL DEFAULT '',
@@ -93,7 +93,9 @@ else {
 
     $survey->datesubmitted = time();
 
+    if (empty($survey->deliver_body)) $survey->deliver_body = '';
     $survey->deliver_body = htmlspecialchars($survey->deliver_body, ENT_COMPAT, 'UTF-8');
+    $survey->deliver_body = str_replace("\r", '', str_replace("\n", '<br />', $survey->deliver_body));
 
     if (!empty($survey->deliver_diversify)) $survey->deliver_diversify = 'Yes';
     if (!empty($survey->deliver_research)) $survey->deliver_research = 'Yes';
@@ -105,9 +107,13 @@ else {
     if (!empty($survey->deliver_pastoral)) $survey->deliver_pastoral = 'Yes';
     if (!empty($survey->deliver_other_benefit)) $survey->deliver_other_benefit = 'Yes';
 
+    if (empty($survey->fund_body)) $survey->fund_body = '';
     $survey->fund_body = htmlspecialchars($survey->fund_body, ENT_COMPAT, 'UTF-8');
+    $survey->fund_body = str_replace("\r", '', str_replace("\n", '<br />', $survey->fund_body));
 
+    if (empty($survey->care_body)) $survey->care_body = '';
     $survey->care_body = htmlspecialchars($survey->care_body, ENT_COMPAT, 'UTF-8');
+    $survey->care_body = str_replace("\r", '', str_replace("\n", '<br />', $survey->care_body));
 
     if (!empty($survey->care_practice)) $survey->care_practice = 'Yes';
     if (!empty($survey->care_routes)) $survey->care_routes = 'Yes';
