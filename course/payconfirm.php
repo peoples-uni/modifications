@@ -82,7 +82,21 @@ if (!empty($_POST['markpayconfirm'])) {
 
   $DB->update_record('peoplesapplication', $updated);
 
-  notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  if ($updated->paymentmechanism > 100) { // If Confirmed...
+
+    $message  = "Dear $application->firstname\n\n";
+    $message .= "Your payment of $updated->costpaid Pounds for Application $sid\n";
+    $message .= "has been confirmed received.\n\n";
+    $message .= "Semester: $application->semester\n\n";
+    $message .= "Peoples Open Access Education Initiative Administrator.\n";
+
+    sendapprovedmail($application->email, "Peoples-uni Payment Confirmed for: $application->lastname, $application->firstname; Application: $sid", $message);
+
+    notice('Success! Data saved (and e-mail sent to Student)!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  }
+  else {
+    notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  }
 }
 elseif (!empty($_POST['marksetowed'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -289,4 +303,32 @@ if (!empty($applications)) {
 
 echo $OUTPUT->box_end();
 echo $OUTPUT->footer();
+
+
+function sendapprovedmail($email, $subject, $message) {
+  global $CFG;
+
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
+
+  $supportuser = new stdClass();
+  $supportuser->email = 'payments@peoples-uni.org';
+  $supportuser->firstname = 'Peoples-uni Payments';
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
+
+  $user->email = 'applicationresponses@peoples-uni.org';
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
+
+  return $ret;
+}
 ?>
