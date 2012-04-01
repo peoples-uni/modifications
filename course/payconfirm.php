@@ -68,41 +68,41 @@ $currency = $application->currency;
 
 
 if (!empty($_POST['markpayconfirm'])) {
-    if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-    $updated = new object();
-    $updated->id = $application->id;
+  $updated = new object();
+  $updated->id = $application->id;
 
-    if (empty($_POST['paymentmechanism'])) notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  if (empty($_POST['paymentmechanism'])) notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 
-    $updated->paymentmechanism = (int)$_POST['paymentmechanism'];
-    if ($updated->paymentmechanism != 6) {
+  $updated->paymentmechanism = (int)$_POST['paymentmechanism'];
+  if ($updated->paymentmechanism != 6) {
 		$updated->costpaid = $application->costowed;
 	}
 
-    $DB->update_record('peoplesapplication', $updated);
+  $DB->update_record('peoplesapplication', $updated);
 
-    notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
 elseif (!empty($_POST['marksetowed'])) {
-    if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-    $updated = new object();
-    $updated->id = $application->id;
+  $updated = new object();
+  $updated->id = $application->id;
 
-    if (!isset($_POST['costpaid']) || !is_numeric($_POST['costpaid'])) {
-		notice('Amount Paid must be a number. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
-	}
-    if (!isset($_POST['costowed']) || !is_numeric($_POST['costowed'])) {
+  if (!isset($_POST['costpaid']) || !is_numeric($_POST['costpaid'])) {
+    notice('Amount Paid must be a number. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  }
+  if (!isset($_POST['costowed']) || !is_numeric($_POST['costowed'])) {
 		notice('Amount Owed must be a number. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
-	}
+  }
 
 	$updated->costpaid = $_POST['costpaid'];
 	$updated->costowed = $_POST['costowed'];
 
-    $DB->update_record('peoplesapplication', $updated);
+  $DB->update_record('peoplesapplication', $updated);
 
-    notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
 elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
