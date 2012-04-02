@@ -18,7 +18,16 @@ CREATE TABLE mdl_peoples_survey (
   deliver_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
   deliver_professional_bodies VARCHAR(20) NOT NULL DEFAULT '',
   deliver_other VARCHAR(20) NOT NULL DEFAULT '',
-  deliver_body TEXT NOT NULL,
+  deliver_body_1 TEXT NOT NULL,
+  country_deliver_body_1 VARCHAR(2) NOT NULL DEFAULT '',
+  interested_deliver_body_1 VARCHAR(20) NOT NULL DEFAULT '',
+  informed_deliver_body_1 VARCHAR(20) NOT NULL DEFAULT '',
+  best_way_deliver_body_1 VARCHAR(35) NOT NULL DEFAULT '',
+  deliver_body_2 TEXT NOT NULL,
+  country_deliver_body_2 VARCHAR(2) NOT NULL DEFAULT '',
+  interested_deliver_body_2 VARCHAR(20) NOT NULL DEFAULT '',
+  informed_deliver_body_2 VARCHAR(20) NOT NULL DEFAULT '',
+  best_way_deliver_body_2 VARCHAR(35) NOT NULL DEFAULT '',
   deliver_diversify VARCHAR(20) NOT NULL DEFAULT '',
   deliver_research VARCHAR(20) NOT NULL DEFAULT '',
   deliver_trainers VARCHAR(20) NOT NULL DEFAULT '',
@@ -34,14 +43,32 @@ CREATE TABLE mdl_peoples_survey (
   fund_local_ngo VARCHAR(20) NOT NULL DEFAULT '',
   fund_national_ngo VARCHAR(20) NOT NULL DEFAULT '',
   fund_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
-  fund_body TEXT NOT NULL,
+  fund_body_1 TEXT NOT NULL,
+  country_fund_body_1 VARCHAR(2) NOT NULL DEFAULT '',
+  interested_fund_body_1 VARCHAR(20) NOT NULL DEFAULT '',
+  informed_fund_body_1 VARCHAR(20) NOT NULL DEFAULT '',
+  best_way_fund_body_1 VARCHAR(35) NOT NULL DEFAULT '',
+  fund_body_2 TEXT NOT NULL,
+  country_fund_body_2 VARCHAR(2) NOT NULL DEFAULT '',
+  interested_fund_body_2 VARCHAR(20) NOT NULL DEFAULT '',
+  informed_fund_body_2 VARCHAR(20) NOT NULL DEFAULT '',
+  best_way_fund_body_2 VARCHAR(35) NOT NULL DEFAULT '',
 
   care_national_governments VARCHAR(20) NOT NULL DEFAULT '',
   care_local_governments VARCHAR(20) NOT NULL DEFAULT '',
   care_local_ngo VARCHAR(20) NOT NULL DEFAULT '',
   care_national_ngo VARCHAR(20) NOT NULL DEFAULT '',
   care_international_ngo VARCHAR(20) NOT NULL DEFAULT '',
-  care_body TEXT NOT NULL,
+  care_body_1 TEXT NOT NULL,
+  country_care_body_1 VARCHAR(2) NOT NULL DEFAULT '',
+  interested_care_body_1 VARCHAR(20) NOT NULL DEFAULT '',
+  informed_care_body_1 VARCHAR(20) NOT NULL DEFAULT '',
+  best_way_care_body_1 VARCHAR(35) NOT NULL DEFAULT '',
+  care_body_2 TEXT NOT NULL,
+  country_care_body_2 VARCHAR(2) NOT NULL DEFAULT '',
+  interested_care_body_2 VARCHAR(20) NOT NULL DEFAULT '',
+  informed_care_body_2 VARCHAR(20) NOT NULL DEFAULT '',
+  best_way_care_body_2 VARCHAR(35) NOT NULL DEFAULT '',
   care_practice VARCHAR(20) NOT NULL DEFAULT '',
   care_routes VARCHAR(20) NOT NULL DEFAULT '',
   care_materials VARCHAR(20) NOT NULL DEFAULT '',
@@ -93,9 +120,13 @@ else {
 
     $survey->datesubmitted = time();
 
-    if (empty($survey->deliver_body)) $survey->deliver_body = '';
-    $survey->deliver_body = htmlspecialchars($survey->deliver_body, ENT_COMPAT, 'UTF-8');
-    $survey->deliver_body = str_replace("\r", '', str_replace("\n", '<br />', $survey->deliver_body));
+    if (empty($survey->deliver_body_1)) $survey->deliver_body_1 = '';
+    $survey->deliver_body_1 = htmlspecialchars($survey->deliver_body_1, ENT_COMPAT, 'UTF-8');
+    $survey->deliver_body_1 = str_replace("\r", '', str_replace("\n", '<br />', $survey->deliver_body_1));
+
+    if (empty($survey->deliver_body_2)) $survey->deliver_body_2 = '';
+    $survey->deliver_body_2 = htmlspecialchars($survey->deliver_body_2, ENT_COMPAT, 'UTF-8');
+    $survey->deliver_body_2 = str_replace("\r", '', str_replace("\n", '<br />', $survey->deliver_body_2));
 
     if (!empty($survey->deliver_diversify)) $survey->deliver_diversify = 'Yes';
     if (!empty($survey->deliver_research)) $survey->deliver_research = 'Yes';
@@ -107,13 +138,21 @@ else {
     if (!empty($survey->deliver_pastoral)) $survey->deliver_pastoral = 'Yes';
     if (!empty($survey->deliver_other_benefit)) $survey->deliver_other_benefit = 'Yes';
 
-    if (empty($survey->fund_body)) $survey->fund_body = '';
-    $survey->fund_body = htmlspecialchars($survey->fund_body, ENT_COMPAT, 'UTF-8');
-    $survey->fund_body = str_replace("\r", '', str_replace("\n", '<br />', $survey->fund_body));
+    if (empty($survey->fund_body_1)) $survey->fund_body_1 = '';
+    $survey->fund_body_1 = htmlspecialchars($survey->fund_body_1, ENT_COMPAT, 'UTF-8');
+    $survey->fund_body_1 = str_replace("\r", '', str_replace("\n", '<br />', $survey->fund_body_1));
 
-    if (empty($survey->care_body)) $survey->care_body = '';
-    $survey->care_body = htmlspecialchars($survey->care_body, ENT_COMPAT, 'UTF-8');
-    $survey->care_body = str_replace("\r", '', str_replace("\n", '<br />', $survey->care_body));
+    if (empty($survey->fund_body_2)) $survey->fund_body_2 = '';
+    $survey->fund_body_2 = htmlspecialchars($survey->fund_body_2, ENT_COMPAT, 'UTF-8');
+    $survey->fund_body_2 = str_replace("\r", '', str_replace("\n", '<br />', $survey->fund_body_2));
+
+    if (empty($survey->care_body_1)) $survey->care_body_1 = '';
+    $survey->care_body_1 = htmlspecialchars($survey->care_body_1, ENT_COMPAT, 'UTF-8');
+    $survey->care_body_1 = str_replace("\r", '', str_replace("\n", '<br />', $survey->care_body_1));
+
+    if (empty($survey->care_body_2)) $survey->care_body_2 = '';
+    $survey->care_body_2 = htmlspecialchars($survey->care_body_2, ENT_COMPAT, 'UTF-8');
+    $survey->care_body_2 = str_replace("\r", '', str_replace("\n", '<br />', $survey->care_body_2));
 
     if (!empty($survey->care_practice)) $survey->care_practice = 'Yes';
     if (!empty($survey->care_routes)) $survey->care_routes = 'Yes';

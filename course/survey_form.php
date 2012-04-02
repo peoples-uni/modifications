@@ -15,6 +15,263 @@ class survey_form extends moodleform {
   function definition() {
     global $DB, $CFG;
 
+$countryname[  ''] = 'Select...';
+$countryname['AF'] = 'Afghanistan';
+$countryname['AX'] = 'Åland Islands';
+$countryname['AL'] = 'Albania';
+$countryname['DZ'] = 'Algeria';
+$countryname['AS'] = 'American Samoa';
+$countryname['AD'] = 'Andorra';
+$countryname['AO'] = 'Angola';
+$countryname['AI'] = 'Anguilla';
+$countryname['AQ'] = 'Antarctica';
+$countryname['AG'] = 'Antigua And Barbuda';
+$countryname['AR'] = 'Argentina';
+$countryname['AM'] = 'Armenia';
+$countryname['AW'] = 'Aruba';
+$countryname['AU'] = 'Australia';
+$countryname['AT'] = 'Austria';
+$countryname['AZ'] = 'Azerbaijan';
+$countryname['BS'] = 'Bahamas';
+$countryname['BH'] = 'Bahrain';
+$countryname['BD'] = 'Bangladesh';
+$countryname['BB'] = 'Barbados';
+$countryname['BY'] = 'Belarus';
+$countryname['BE'] = 'Belgium';
+$countryname['BZ'] = 'Belize';
+$countryname['BJ'] = 'Benin';
+$countryname['BM'] = 'Bermuda';
+$countryname['BT'] = 'Bhutan';
+$countryname['BO'] = 'Bolivia';
+$countryname['BA'] = 'Bosnia And Herzegovina';
+$countryname['BW'] = 'Botswana';
+$countryname['BV'] = 'Bouvet Island';
+$countryname['BR'] = 'Brazil';
+$countryname['IO'] = 'British Indian Ocean Territory';
+$countryname['BN'] = 'Brunei Darussalam';
+$countryname['BG'] = 'Bulgaria';
+$countryname['BF'] = 'Burkina Faso';
+$countryname['BI'] = 'Burundi';
+$countryname['KH'] = 'Cambodia';
+$countryname['CM'] = 'Cameroon';
+$countryname['CA'] = 'Canada';
+$countryname['CV'] = 'Cape Verde';
+$countryname['KY'] = 'Cayman Islands';
+$countryname['CF'] = 'Central African Republic';
+$countryname['TD'] = 'Chad';
+$countryname['CL'] = 'Chile';
+$countryname['CN'] = 'China';
+$countryname['CX'] = 'Christmas Island';
+$countryname['CC'] = 'Cocos (Keeling) Islands';
+$countryname['CO'] = 'Colombia';
+$countryname['KM'] = 'Comoros';
+$countryname['CG'] = 'Congo';
+$countryname['CD'] = 'Congo, The Democratic Republic Of The';
+$countryname['CK'] = 'Cook Islands';
+$countryname['CR'] = 'Costa Rica';
+$countryname['CI'] = 'Côte D\'Ivoire';
+$countryname['HR'] = 'Croatia';
+$countryname['CU'] = 'Cuba';
+$countryname['CY'] = 'Cyprus';
+$countryname['CZ'] = 'Czech Republic';
+$countryname['DK'] = 'Denmark';
+$countryname['DJ'] = 'Djibouti';
+$countryname['DM'] = 'Dominica';
+$countryname['DO'] = 'Dominican Republic';
+$countryname['EC'] = 'Ecuador';
+$countryname['EG'] = 'Egypt';
+$countryname['SV'] = 'El Salvador';
+$countryname['GQ'] = 'Equatorial Guinea';
+$countryname['ER'] = 'Eritrea';
+$countryname['EE'] = 'Estonia';
+$countryname['ET'] = 'Ethiopia';
+$countryname['FK'] = 'Falkland Islands (Malvinas)';
+$countryname['FO'] = 'Faroe Islands';
+$countryname['FJ'] = 'Fiji';
+$countryname['FI'] = 'Finland';
+$countryname['FR'] = 'France';
+$countryname['GF'] = 'French Guiana';
+$countryname['PF'] = 'French Polynesia';
+$countryname['TF'] = 'French Southern Territories';
+$countryname['GA'] = 'Gabon';
+$countryname['GM'] = 'Gambia';
+$countryname['GE'] = 'Georgia';
+$countryname['DE'] = 'Germany';
+$countryname['GH'] = 'Ghana';
+$countryname['GI'] = 'Gibraltar';
+$countryname['GR'] = 'Greece';
+$countryname['GL'] = 'Greenland';
+$countryname['GD'] = 'Grenada';
+$countryname['GP'] = 'Guadeloupe';
+$countryname['GU'] = 'Guam';
+$countryname['GT'] = 'Guatemala';
+$countryname['GG'] = 'Guernsey';
+$countryname['GN'] = 'Guinea';
+$countryname['GW'] = 'Guinea-Bissau';
+$countryname['GY'] = 'Guyana';
+$countryname['HT'] = 'Haiti';
+$countryname['HM'] = 'Heard Island And Mcdonald Islands';
+$countryname['VA'] = 'Holy See (Vatican City State)';
+$countryname['HN'] = 'Honduras';
+$countryname['HK'] = 'Hong Kong';
+$countryname['HU'] = 'Hungary';
+$countryname['IS'] = 'Iceland';
+$countryname['IN'] = 'India';
+$countryname['ID'] = 'Indonesia';
+$countryname['IR'] = 'Iran, Islamic Republic Of';
+$countryname['IQ'] = 'Iraq';
+$countryname['IE'] = 'Ireland';
+$countryname['IM'] = 'Isle Of Man';
+$countryname['IL'] = 'Israel';
+$countryname['IT'] = 'Italy';
+$countryname['JM'] = 'Jamaica';
+$countryname['JP'] = 'Japan';
+$countryname['JE'] = 'Jersey';
+$countryname['JO'] = 'Jordan';
+$countryname['KZ'] = 'Kazakhstan';
+$countryname['KE'] = 'Kenya';
+$countryname['KI'] = 'Kiribati';
+$countryname['KP'] = 'Korea, Democratic People\'s Republic Of';
+$countryname['KR'] = 'Korea, Republic Of';
+$countryname['KW'] = 'Kuwait';
+$countryname['KG'] = 'Kyrgyzstan';
+$countryname['LA'] = 'Lao People\'s Democratic Republic';
+$countryname['LV'] = 'Latvia';
+$countryname['LB'] = 'Lebanon';
+$countryname['LS'] = 'Lesotho';
+$countryname['LR'] = 'Liberia';
+$countryname['LY'] = 'Libyan Arab Jamahiriya';
+$countryname['LI'] = 'Liechtenstein';
+$countryname['LT'] = 'Lithuania';
+$countryname['LU'] = 'Luxembourg';
+$countryname['MO'] = 'Macao';
+$countryname['MK'] = 'Macedonia, The Former Yugoslav Republic Of';
+$countryname['MG'] = 'Madagascar';
+$countryname['MW'] = 'Malawi';
+$countryname['MY'] = 'Malaysia';
+$countryname['MV'] = 'Maldives';
+$countryname['ML'] = 'Mali';
+$countryname['MT'] = 'Malta';
+$countryname['MH'] = 'Marshall Islands';
+$countryname['MQ'] = 'Martinique';
+$countryname['MR'] = 'Mauritania';
+$countryname['MU'] = 'Mauritius';
+$countryname['YT'] = 'Mayotte';
+$countryname['MX'] = 'Mexico';
+$countryname['FM'] = 'Micronesia, Federated States Of';
+$countryname['MD'] = 'Moldova, Republic Of';
+$countryname['MC'] = 'Monaco';
+$countryname['MN'] = 'Mongolia';
+$countryname['ME'] = 'Montenegro';
+$countryname['MS'] = 'Montserrat';
+$countryname['MA'] = 'Morocco';
+$countryname['MZ'] = 'Mozambique';
+$countryname['MM'] = 'Myanmar';
+$countryname['NA'] = 'Namibia';
+$countryname['NR'] = 'Nauru';
+$countryname['NP'] = 'Nepal';
+$countryname['NL'] = 'Netherlands';
+$countryname['AN'] = 'Netherlands Antilles';
+$countryname['NC'] = 'New Caledonia';
+$countryname['NZ'] = 'New Zealand';
+$countryname['NI'] = 'Nicaragua';
+$countryname['NE'] = 'Niger';
+$countryname['NG'] = 'Nigeria';
+$countryname['NU'] = 'Niue';
+$countryname['NF'] = 'Norfolk Island';
+$countryname['MP'] = 'Northern Mariana Islands';
+$countryname['NO'] = 'Norway';
+$countryname['OM'] = 'Oman';
+$countryname['PK'] = 'Pakistan';
+$countryname['PW'] = 'Palau';
+$countryname['PS'] = 'Palestinian Territory, Occupied';
+$countryname['PA'] = 'Panama';
+$countryname['PG'] = 'Papua New Guinea';
+$countryname['PY'] = 'Paraguay';
+$countryname['PE'] = 'Peru';
+$countryname['PH'] = 'Philippines';
+$countryname['PN'] = 'Pitcairn';
+$countryname['PL'] = 'Poland';
+$countryname['PT'] = 'Portugal';
+$countryname['PR'] = 'Puerto Rico';
+$countryname['QA'] = 'Qatar';
+$countryname['RE'] = 'Réunion';
+$countryname['RO'] = 'Romania';
+$countryname['RU'] = 'Russian Federation';
+$countryname['RW'] = 'Rwanda';
+$countryname['BL'] = 'Saint Barthélemy';
+$countryname['SH'] = 'Saint Helena';
+$countryname['KN'] = 'Saint Kitts And Nevis';
+$countryname['LC'] = 'Saint Lucia';
+$countryname['MF'] = 'Saint Martin';
+$countryname['PM'] = 'Saint Pierre And Miquelon';
+$countryname['VC'] = 'Saint Vincent And The Grenadines';
+$countryname['WS'] = 'Samoa';
+$countryname['SM'] = 'San Marino';
+$countryname['ST'] = 'Sao Tome And Principe';
+$countryname['SA'] = 'Saudi Arabia';
+$countryname['SN'] = 'Senegal';
+$countryname['RS'] = 'Serbia';
+$countryname['SC'] = 'Seychelles';
+$countryname['SL'] = 'Sierra Leone';
+$countryname['SG'] = 'Singapore';
+$countryname['SK'] = 'Slovakia';
+$countryname['SI'] = 'Slovenia';
+$countryname['SB'] = 'Solomon Islands';
+$countryname['SO'] = 'Somalia';
+$countryname['ZA'] = 'South Africa';
+$countryname['GS'] = 'South Georgia And The South Sandwich Islands';
+$countryname['ES'] = 'Spain';
+$countryname['LK'] = 'Sri Lanka';
+$countryname['SD'] = 'Sudan';
+$countryname['SR'] = 'Suriname';
+$countryname['SJ'] = 'Svalbard And Jan Mayen';
+$countryname['SZ'] = 'Swaziland';
+$countryname['SE'] = 'Sweden';
+$countryname['CH'] = 'Switzerland';
+$countryname['SY'] = 'Syrian Arab Republic';
+$countryname['TW'] = 'Taiwan, Province Of China';
+$countryname['TJ'] = 'Tajikistan';
+$countryname['TZ'] = 'Tanzania, United Republic Of';
+$countryname['TH'] = 'Thailand';
+$countryname['TL'] = 'Timor-Leste';
+$countryname['TG'] = 'Togo';
+$countryname['TK'] = 'Tokelau';
+$countryname['TO'] = 'Tonga';
+$countryname['TT'] = 'Trinidad And Tobago';
+$countryname['TN'] = 'Tunisia';
+$countryname['TR'] = 'Turkey';
+$countryname['TM'] = 'Turkmenistan';
+$countryname['TC'] = 'Turks And Caicos Islands';
+$countryname['TV'] = 'Tuvalu';
+$countryname['UG'] = 'Uganda';
+$countryname['UA'] = 'Ukraine';
+$countryname['AE'] = 'United Arab Emirates';
+$countryname['GB'] = 'United Kingdom';
+$countryname['US'] = 'United States';
+$countryname['UM'] = 'United States Minor Outlying Islands';
+$countryname['UY'] = 'Uruguay';
+$countryname['UZ'] = 'Uzbekistan';
+$countryname['VU'] = 'Vanuatu';
+$countryname['VE'] = 'Venezuela';
+$countryname['VN'] = 'Viet Nam';
+$countryname['VG'] = 'Virgin Islands, British';
+$countryname['VI'] = 'Virgin Islands, U.S.';
+$countryname['WF'] = 'Wallis And Futuna';
+$countryname['EH'] = 'Western Sahara';
+$countryname['YE'] = 'Yemen';
+$countryname['ZM'] = 'Zambia';
+$countryname['ZW'] = 'Zimbabwe';
+
+$inform_method[''] = 'Select...';
+$inform_method['e-mail'] = 'e-mail';
+$inform_method['Face to face discussion with staff'] = 'Face to face discussion with staff';
+$inform_method['Letter'] = 'Letter';
+$inform_method['Conference presentation'] = 'Conference presentation';
+$inform_method['Social media (eg facebook/twitter)'] = 'Social media (eg facebook/twitter)';
+$inform_method['Other'] = 'Other';
+
+
     $mform    = $this->_form;
 
 
@@ -48,10 +305,37 @@ class survey_form extends moodleform {
     $mform->addElement('static', 'explain_deliver_other', '&nbsp;', '<br />Do you have a link with Other Bodies that deliver public health training?');
     $mform->addElement('select', 'deliver_other', 'Other', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_body', '&nbsp;', '<br />Enter the Names of all Bodies Indicated Above.');
-    $mform->addElement('textarea', 'deliver_body', 'Names of Bodies Indicated Above', 'wrap="HARD" rows="3" cols="50"');
+    $mform->addElement('static', 'explain_deliver_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
+    $mform->addElement('textarea', 'deliver_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_deliver_partnership', '&nbsp;', '<br /><br />What are the main benefits of Peoples-uni developing a partnership with these Bodies?...');
+    $mform->addElement('static', 'explain_country_deliver_body_1', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('select', 'country_deliver_body_1', 'Country of this Organisation', $countryname);
+
+    $mform->addElement('static', 'explain_interested_deliver_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('select', 'interested_deliver_body_1', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_informed_deliver_body_1', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
+    $mform->addElement('select', 'informed_deliver_body_1', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_best_way_deliver_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('select', 'best_way_deliver_body_1', 'Best way of Informing', $inform_method);
+
+    $mform->addElement('static', 'explain_deliver_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
+    $mform->addElement('textarea', 'deliver_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+
+    $mform->addElement('static', 'explain_country_deliver_body_2', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('select', 'country_deliver_body_2', 'Country of this Organisation', $countryname);
+
+    $mform->addElement('static', 'explain_interested_deliver_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('select', 'interested_deliver_body_2', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_informed_deliver_body_2', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
+    $mform->addElement('select', 'informed_deliver_body_2', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_best_way_deliver_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('select', 'best_way_deliver_body_2', 'Best way of Informing', $inform_method);
+
+    $mform->addElement('static', 'explain_deliver_partnership', '&nbsp;', '<br /><br />What do you think would be the main advantage to these organisation(s) of developing a partnership with Peoples-uni?...');
 
     $mform->addElement('checkbox', 'deliver_diversify', "Diversify the organisation's range of training delivery routes");
     $mform->addElement('checkbox', 'deliver_research', "Provide opportunities for international research");
@@ -66,11 +350,11 @@ class survey_form extends moodleform {
     //--------------
     $mform->addElement('header', 'fund', 'What personal or professional links do you have with organisations that fund public health training?');
 
-    $mform->addElement('static', 'explain_fund_national_governments', '&nbsp;', '<br />Do you have a link with National governments that fund public health training?');
-    $mform->addElement('select', 'fund_national_governments', 'National governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+    $mform->addElement('static', 'explain_fund_national_governments', '&nbsp;', '<br />Do you have a link with National Governments that fund public health training?');
+    $mform->addElement('select', 'fund_national_governments', 'National Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_local_governments', '&nbsp;', '<br />Do you have a link with Local governments that fund public health training?');
-    $mform->addElement('select', 'fund_local_governments', 'Local governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+    $mform->addElement('static', 'explain_fund_local_governments', '&nbsp;', '<br />Do you have a link with Local Governments that fund public health training?');
+    $mform->addElement('select', 'fund_local_governments', 'Local Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
     $mform->addElement('static', 'explain_fund_local_ngo', '&nbsp;', '<br />Do you have a link with Local NGOs that fund public health training?');
     $mform->addElement('select', 'fund_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
@@ -81,17 +365,44 @@ class survey_form extends moodleform {
     $mform->addElement('static', 'explain_fund_international_ngo', '&nbsp;', '<br />Do you have a link with International NGOs that fund public health training?');
     $mform->addElement('select', 'fund_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_body', '&nbsp;', '<br />Enter the Names of all Bodies Indicated Above.');
-    $mform->addElement('textarea', 'fund_body', 'Names of Bodies Indicated Above', 'wrap="HARD" rows="3" cols="50"');
+    $mform->addElement('static', 'explain_fund_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
+    $mform->addElement('textarea', 'fund_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+
+    $mform->addElement('static', 'explain_country_fund_body_1', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('select', 'country_fund_body_1', 'Country of this Organisation', $countryname);
+
+    $mform->addElement('static', 'explain_interested_fund_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('select', 'interested_fund_body_1', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_informed_fund_body_1', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
+    $mform->addElement('select', 'informed_fund_body_1', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_best_way_fund_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('select', 'best_way_fund_body_1', 'Best way of Informing', $inform_method);
+
+    $mform->addElement('static', 'explain_fund_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
+    $mform->addElement('textarea', 'fund_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+
+    $mform->addElement('static', 'explain_country_fund_body_2', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('select', 'country_fund_body_2', 'Country of this Organisation', $countryname);
+
+    $mform->addElement('static', 'explain_interested_fund_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('select', 'interested_fund_body_2', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_informed_fund_body_2', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
+    $mform->addElement('select', 'informed_fund_body_2', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_best_way_fund_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('select', 'best_way_fund_body_2', 'Best way of Informing', $inform_method);
 
     //--------------
     $mform->addElement('header', 'care', 'What personal or professional links do you have with organisations that deliver health promotion/health care/ other public health policy or programme?');
 
-    $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', '<br />Do you have a link with National governments that deliver health promotion/health care?');
-    $mform->addElement('select', 'care_national_governments', 'National governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+    $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', '<br />Do you have a link with National Governments that deliver health promotion/health care?');
+    $mform->addElement('select', 'care_national_governments', 'National Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_local_governments', '&nbsp;', '<br />Do you have a link with Local governments that deliver health promotion/health care?');
-    $mform->addElement('select', 'care_local_governments', 'Local governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
+    $mform->addElement('static', 'explain_care_local_governments', '&nbsp;', '<br />Do you have a link with Local Governments that deliver health promotion/health care?');
+    $mform->addElement('select', 'care_local_governments', 'Local Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
     $mform->addElement('static', 'explain_care_local_ngo', '&nbsp;', '<br />Do you have a link with Local NGOs that deliver health promotion/health care?');
     $mform->addElement('select', 'care_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
@@ -102,10 +413,38 @@ class survey_form extends moodleform {
     $mform->addElement('static', 'explain_care_international_ngo', '&nbsp;', '<br />Do you have a link with International NGOs that deliver health promotion/health care?');
     $mform->addElement('select', 'care_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_body', '&nbsp;', '<br />Enter the Names of all Bodies Indicated Above.');
-    $mform->addElement('textarea', 'care_body', 'Names of Bodies Indicated Above', 'wrap="HARD" rows="3" cols="50"');
+    $mform->addElement('static', 'explain_care_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
+    $mform->addElement('textarea', 'care_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_care_partnership', '&nbsp;', '<br /><br />What are the benefits of peoples-uni developing a partnership with this organisation?...');
+    $mform->addElement('static', 'explain_country_care_body_1', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('select', 'country_care_body_1', 'Country of this Organisation', $countryname);
+
+    $mform->addElement('static', 'explain_interested_care_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('select', 'interested_care_body_1', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_informed_care_body_1', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
+    $mform->addElement('select', 'informed_care_body_1', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_best_way_care_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('select', 'best_way_care_body_1', 'Best way of Informing', $inform_method);
+
+    $mform->addElement('static', 'explain_care_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
+    $mform->addElement('textarea', 'care_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+
+    $mform->addElement('static', 'explain_country_care_body_2', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('select', 'country_care_body_2', 'Country of this Organisation', $countryname);
+
+    $mform->addElement('static', 'explain_interested_care_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('select', 'interested_care_body_2', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_informed_care_body_2', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
+    $mform->addElement('select', 'informed_care_body_2', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+
+    $mform->addElement('static', 'explain_best_way_care_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('select', 'best_way_care_body_2', 'Best way of Informing', $inform_method);
+
+    $mform->addElement('static', 'explain_care_partnership', '&nbsp;', '<br /><br />Replace with next line??? What are the main benefits of Peoples-uni developing a partnership with these Organisations?...');
+    $mform->addElement('static', 'explain_care_partnership', '&nbsp;', '<br /><br />What do you think would be the main advantage to these organisation(s) of developing a partnership with Peoples-uni?...');
 
     $mform->addElement('checkbox', 'care_practice', "Support students to put what they learnt into practice");
     $mform->addElement('checkbox', 'care_routes', "Diversify their range of training delivery routes");
