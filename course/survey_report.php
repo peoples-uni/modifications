@@ -392,8 +392,7 @@ $countryname['YE'] = 'Yemen';
 $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
 
-  $text = "$body($countryname[$country])";
-$text .= '##' .$country. '##';
+  $text = "$body";
   if (!empty($country)) $text .= "($countryname[$country])";
   if ($interested == 'Yes') $text .= ', Interested';
   if ($informed == 'Yes') $text .= ', Informed';
