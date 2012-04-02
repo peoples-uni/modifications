@@ -74,6 +74,7 @@ CREATE TABLE mdl_peoples_survey (
   care_materials VARCHAR(20) NOT NULL DEFAULT '',
   care_cost VARCHAR(20) NOT NULL DEFAULT '',
   care_other VARCHAR(20) NOT NULL DEFAULT '',
+
   hidden BIGINT(10) unsigned NOT NULL DEFAULT 0,
 
   CONSTRAINT PRIMARY KEY (id)
