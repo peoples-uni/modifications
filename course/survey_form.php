@@ -30,25 +30,25 @@ class survey_form extends moodleform {
     //--------------
     $mform->addElement('header', 'deliver', 'What personal or professional links do you have with organisations that deliver public health training?');
 
-    $mform->addElement('static', 'explain_deliver_university', '&nbsp;', 'Do you have a link with Universities that deliver public health training?<br />');
+    $mform->addElement('static', 'explain_deliver_university', '&nbsp;', '<br />Do you have a link with Universities that deliver public health training?');
     $mform->addElement('select', 'deliver_university', 'University', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_local_ngo', '&nbsp;', 'Do you have a link with Local NGOs that deliver public health training?<br />');
+    $mform->addElement('static', 'explain_deliver_local_ngo', '&nbsp;', '<br />Do you have a link with Local NGOs that deliver public health training?');
     $mform->addElement('select', 'deliver_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_national_ngo', '&nbsp;', 'Do you have a link with National NGOs that deliver public health training?<br />');
+    $mform->addElement('static', 'explain_deliver_national_ngo', '&nbsp;', '<br />Do you have a link with National NGOs that deliver public health training?');
     $mform->addElement('select', 'deliver_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_international_ngo', '&nbsp;', 'Do you have a link with International NGOs that deliver public health training?<br />');
+    $mform->addElement('static', 'explain_deliver_international_ngo', '&nbsp;', '<br />Do you have a link with International NGOs that deliver public health training?');
     $mform->addElement('select', 'deliver_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_professional_bodies', '&nbsp;', 'Do you have a link with Professional Bodies that deliver public health training?<br />');
+    $mform->addElement('static', 'explain_deliver_professional_bodies', '&nbsp;', '<br />Do you have a link with Professional Bodies that deliver public health training?');
     $mform->addElement('select', 'deliver_professional_bodies', 'Professional Body', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_other', '&nbsp;', 'Do you have a link with Other Bodies that deliver public health training?<br />');
+    $mform->addElement('static', 'explain_deliver_other', '&nbsp;', '<br />Do you have a link with Other Bodies that deliver public health training?');
     $mform->addElement('select', 'deliver_other', 'Other', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_body', '&nbsp;', 'Enter the Names of all Bodies Indicated Above.<br />');
+    $mform->addElement('static', 'explain_deliver_body', '&nbsp;', '<br />Enter the Names of all Bodies Indicated Above.');
     $mform->addElement('textarea', 'deliver_body', 'Names of Bodies Indicated Above', 'wrap="HARD" rows="3" cols="50"');
 
     $mform->addElement('static', 'explain_deliver_partnership', '&nbsp;', '<br /><br />What are the main benefits of Peoples-uni developing a partnership with these Bodies?...');
@@ -66,43 +66,43 @@ class survey_form extends moodleform {
     //--------------
     $mform->addElement('header', 'fund', 'What personal or professional links do you have with organisations that fund public health training?');
 
-    $mform->addElement('static', 'explain_fund_national_governments', '&nbsp;', 'Do you have a link with National governments that fund public health training?<br />');
+    $mform->addElement('static', 'explain_fund_national_governments', '&nbsp;', '<br />Do you have a link with National governments that fund public health training?');
     $mform->addElement('select', 'fund_national_governments', 'National governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_local_governments', '&nbsp;', 'Do you have a link with Local governments that fund public health training?<br />');
+    $mform->addElement('static', 'explain_fund_local_governments', '&nbsp;', '<br />Do you have a link with Local governments that fund public health training?');
     $mform->addElement('select', 'fund_local_governments', 'Local governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_local_ngo', '&nbsp;', 'Do you have a link with Local NGOs that fund public health training?<br />');
+    $mform->addElement('static', 'explain_fund_local_ngo', '&nbsp;', '<br />Do you have a link with Local NGOs that fund public health training?');
     $mform->addElement('select', 'fund_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_national_ngo', '&nbsp;', 'Do you have a link with National NGOs that fund public health training?<br />');
+    $mform->addElement('static', 'explain_fund_national_ngo', '&nbsp;', '<br />Do you have a link with National NGOs that fund public health training?');
     $mform->addElement('select', 'fund_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_international_ngo', '&nbsp;', 'Do you have a link with International NGOs that fund public health training?<br />');
+    $mform->addElement('static', 'explain_fund_international_ngo', '&nbsp;', '<br />Do you have a link with International NGOs that fund public health training?');
     $mform->addElement('select', 'fund_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_body', '&nbsp;', 'Enter the Names of all Bodies Indicated Above.<br />');
+    $mform->addElement('static', 'explain_fund_body', '&nbsp;', '<br />Enter the Names of all Bodies Indicated Above.');
     $mform->addElement('textarea', 'fund_body', 'Names of Bodies Indicated Above', 'wrap="HARD" rows="3" cols="50"');
 
     //--------------
     $mform->addElement('header', 'care', 'What personal or professional links do you have with organisations that deliver health promotion/health care/ other public health policy or programme?');
 
-    $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', 'Do you have a link with National governments that deliver health promotion/health care?<br />');
+    $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', '<br />Do you have a link with National governments that deliver health promotion/health care?');
     $mform->addElement('select', 'care_national_governments', 'National governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_local_governments', '&nbsp;', 'Do you have a link with Local governments that deliver health promotion/health care?<br />');
+    $mform->addElement('static', 'explain_care_local_governments', '&nbsp;', '<br />Do you have a link with Local governments that deliver health promotion/health care?');
     $mform->addElement('select', 'care_local_governments', 'Local governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_local_ngo', '&nbsp;', 'Do you have a link with Local NGOs that deliver health promotion/health care?<br />');
+    $mform->addElement('static', 'explain_care_local_ngo', '&nbsp;', '<br />Do you have a link with Local NGOs that deliver health promotion/health care?');
     $mform->addElement('select', 'care_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_national_ngo', '&nbsp;', 'Do you have a link with National NGOs that deliver health promotion/health care?<br />');
+    $mform->addElement('static', 'explain_care_national_ngo', '&nbsp;', '<br />Do you have a link with National NGOs that deliver health promotion/health care?');
     $mform->addElement('select', 'care_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_international_ngo', '&nbsp;', 'Do you have a link with International NGOs that deliver health promotion/health care?<br />');
+    $mform->addElement('static', 'explain_care_international_ngo', '&nbsp;', '<br />Do you have a link with International NGOs that deliver health promotion/health care?');
     $mform->addElement('select', 'care_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_body', '&nbsp;', 'Enter the Names of all Bodies Indicated Above.<br />');
+    $mform->addElement('static', 'explain_care_body', '&nbsp;', '<br />Enter the Names of all Bodies Indicated Above.');
     $mform->addElement('textarea', 'care_body', 'Names of Bodies Indicated Above', 'wrap="HARD" rows="3" cols="50"');
 
     $mform->addElement('static', 'explain_care_partnership', '&nbsp;', '<br /><br />What are the benefits of peoples-uni developing a partnership with this organisation?...');
