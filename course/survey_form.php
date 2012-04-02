@@ -24,8 +24,7 @@ class survey_form extends moodleform {
 "<p><strong>One of the strengths of Peoples-uni is the international networks we have.  Every year peoples-uni continues to grow and take new directions because of the diverse range of people involved.  As a community of tutors and students we have connections across most countries in the world, and across many work settings and different professions.  To enable peoples-uni to develop we want to make sure we take advantage of existing and potential partnerships.  By filling out this form it will help us to learn more about our current networks, and identify opportunities to grow our community of students and tutors.  We'd really appreciate if you can take 10 minutes to fill out this brief questionnaire.  The questions below ask you to comment on the organisations you have a current/former link with, and to think about what benefits those organisations will get by partnering with peoples-uni.  We'll send you this annually so you can update it with any new questions.  Thanks for your time.</strong></p>
 <br />
 <p>We will not contact anybody based on your responses without permission from you.</p>
-<br />
-<p><strong>Note:</strong> We may analyse data to help us improve the course and some of this information might be published in academic journals to help others. No person will be individually identifiable in any publication.</p>
+<p>We may analyse data to help us improve the course and some of this information might be published in academic journals to help others. No person will be individually identifiable in any publication.</p>
 ");
 
     //--------------
