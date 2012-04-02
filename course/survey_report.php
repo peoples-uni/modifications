@@ -107,7 +107,7 @@ foreach ($surveys as $sid => $survey) {
   $rowdata[] = showbody($survey->care_body_2, $survey->country_care_body_2, $survey->interested_care_body_2, $survey->informed_care_body_2, $survey->best_way_care_body_2);
 
   $text = '';
-  $text = add_benefit($text, $survey->care_practice, "Support students to putinto practice");
+  $text = add_benefit($text, $survey->care_practice, "Support students to put into practice");
   $text = add_benefit($text, $survey->care_routes, "Training delivery routes");
   $text = add_benefit($text, $survey->care_materials, "Training materials");
   $text = add_benefit($text, $survey->care_cost, "Low cost training");
