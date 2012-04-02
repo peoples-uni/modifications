@@ -85,7 +85,7 @@ class survey_form extends moodleform {
     $mform->addElement('static', 'explain_fund_body', '&nbsp;', 'Enter the Names of all Bodies Indicated Above.<br />');
 
     //--------------
-    $mform->addElement('header', 'care', 'What personal or professional links do you have with organisations that deliver health promotion/health care?');
+    $mform->addElement('header', 'care', 'What personal or professional links do you have with organisations that deliver health promotion/health care/ other public health policy or programme?');
 
     $mform->addElement('select', 'care_national_governments', 'National governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
     $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', 'Do you have a link with National governments that deliver health promotion/health care?.<br />');
