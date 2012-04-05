@@ -443,7 +443,6 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('static', 'explain_best_way_care_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_care_body_2', 'Best way of Informing', $inform_method);
 
-    $mform->addElement('static', 'explain_care_partnership', '&nbsp;', '<br /><br />Replace with next line??? What are the main benefits of Peoples-uni developing a partnership with these Organisations?...');
     $mform->addElement('static', 'explain_care_partnership', '&nbsp;', '<br /><br />What do you think would be the main advantage to these organisation(s) of developing a partnership with Peoples-uni?...');
 
     $mform->addElement('checkbox', 'care_practice', "Support students to put what they learnt into practice");
