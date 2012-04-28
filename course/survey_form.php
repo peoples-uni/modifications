@@ -16,6 +16,12 @@ class survey_form extends moodleform {
     global $DB, $CFG;
 
 $countryname[  ''] = 'Select...';
+$countryname['R0'] = 'Worldwide';
+$countryname['R1'] = 'Africa';
+$countryname['R2'] = 'Americas';
+$countryname['R3'] = 'Asia';
+$countryname['R4'] = 'Europe';
+$countryname['R5'] = 'Oceania';
 $countryname['AF'] = 'Afghanistan';
 $countryname['AX'] = 'Åland Islands';
 $countryname['AL'] = 'Albania';
@@ -308,7 +314,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('static', 'explain_deliver_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
     $mform->addElement('textarea', 'deliver_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_deliver_body_1', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('static', 'explain_country_deliver_body_1', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_deliver_body_1', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_deliver_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
@@ -323,7 +329,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('static', 'explain_deliver_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
     $mform->addElement('textarea', 'deliver_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_deliver_body_2', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('static', 'explain_country_deliver_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_deliver_body_2', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_deliver_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
@@ -368,7 +374,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('static', 'explain_fund_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
     $mform->addElement('textarea', 'fund_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_fund_body_1', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('static', 'explain_country_fund_body_1', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_fund_body_1', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_fund_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
@@ -383,7 +389,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('static', 'explain_fund_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
     $mform->addElement('textarea', 'fund_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_fund_body_2', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('static', 'explain_country_fund_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_fund_body_2', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_fund_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
@@ -416,7 +422,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('static', 'explain_care_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
     $mform->addElement('textarea', 'care_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_care_body_1', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('static', 'explain_country_care_body_1', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_care_body_1', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_care_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
@@ -431,7 +437,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('static', 'explain_care_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
     $mform->addElement('textarea', 'care_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_care_body_2', '&nbsp;', '<br />Select the County in which this organisation is based.');
+    $mform->addElement('static', 'explain_country_care_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_care_body_2', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_care_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');

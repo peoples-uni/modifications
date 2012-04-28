@@ -145,6 +145,12 @@ function add_benefit($text, $link, $statement) {
 
 function showbody($body, $country, $interested, $informed, $best_way) {
 $countryname[  ''] = 'Select...';
+$countryname['R0'] = 'Worldwide';
+$countryname['R1'] = 'Africa';
+$countryname['R2'] = 'Americas';
+$countryname['R3'] = 'Asia';
+$countryname['R4'] = 'Europe';
+$countryname['R5'] = 'Oceania';
 $countryname['AF'] = 'Afghanistan';
 $countryname['AX'] = 'Åland Islands';
 $countryname['AL'] = 'Albania';
