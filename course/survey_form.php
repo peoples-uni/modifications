@@ -310,169 +310,169 @@ $inform_method['Other'] = 'Other';
     //--------------
     $mform->addElement('header', 'deliver', 'What personal or professional links do you have with organisations that deliver public health training?');
 
-    $mform->addElement('static', 'explain_deliver_university', '&nbsp;', '<br />Do you have a link with Universities that deliver public health training?');
+    $mform->addElement('static', 'explain_deliver_university', '&nbsp;', '<br />1.1 Do you have a link with Universities that deliver public health training?');
     $mform->addElement('select', 'deliver_university', 'University', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_local_ngo', '&nbsp;', '<br />Do you have a link with Local NGOs that deliver public health training?');
+    $mform->addElement('static', 'explain_deliver_local_ngo', '&nbsp;', '<br />1.2 Do you have a link with Local NGOs that deliver public health training?');
     $mform->addElement('select', 'deliver_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_national_ngo', '&nbsp;', '<br />Do you have a link with National NGOs that deliver public health training?');
+    $mform->addElement('static', 'explain_deliver_national_ngo', '&nbsp;', '<br />1.3 Do you have a link with National NGOs that deliver public health training?');
     $mform->addElement('select', 'deliver_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_international_ngo', '&nbsp;', '<br />Do you have a link with International NGOs that deliver public health training?');
+    $mform->addElement('static', 'explain_deliver_international_ngo', '&nbsp;', '<br />1.4 Do you have a link with International NGOs that deliver public health training?');
     $mform->addElement('select', 'deliver_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_professional_bodies', '&nbsp;', '<br />Do you have a link with Professional Bodies that deliver public health training?');
+    $mform->addElement('static', 'explain_deliver_professional_bodies', '&nbsp;', '<br />1.5 Do you have a link with Professional Bodies that deliver public health training?');
     $mform->addElement('select', 'deliver_professional_bodies', 'Professional Body', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_other', '&nbsp;', '<br />Do you have a link with Other Bodies that deliver public health training?');
+    $mform->addElement('static', 'explain_deliver_other', '&nbsp;', '<br />1.6 Do you have a link with Other Bodies that deliver public health training?');
     $mform->addElement('select', 'deliver_other', 'Other', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_deliver_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
+    $mform->addElement('static', 'explain_deliver_body_1', '&nbsp;', '<br />1.7a Enter the name of the main organisation indicated above.');
     $mform->addElement('textarea', 'deliver_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_deliver_body_1', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
+    $mform->addElement('static', 'explain_country_deliver_body_1', '&nbsp;', '<br />1.8a Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_deliver_body_1', 'Country of this Organisation', $countryname);
 
-    $mform->addElement('static', 'explain_interested_deliver_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('static', 'explain_interested_deliver_body_1', '&nbsp;', '<br />1.9a Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
     $mform->addElement('select', 'interested_deliver_body_1', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_deliver_body_1', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('static', 'explain_informed_deliver_body_1', '&nbsp;', '<br />1.10a Is this organisation already linked with Peoples-uni?');
     $mform->addElement('select', 'informed_deliver_body_1', 'Linked', $array_informed_choices);
 
-    $mform->addElement('static', 'explain_best_way_deliver_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('static', 'explain_best_way_deliver_body_1', '&nbsp;', '<br />1.11a What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_deliver_body_1', 'Best way of Informing', $inform_method);
 
-    $mform->addElement('static', 'explain_deliver_body_2', '&nbsp;', '<br />Enter the names of the other organisations indicated above.');
+    $mform->addElement('static', 'explain_deliver_body_2', '&nbsp;', '<br />1.7b Enter the names of the other organisations indicated above.');
     $mform->addElement('textarea', 'deliver_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_deliver_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
+    $mform->addElement('static', 'explain_country_deliver_body_2', '&nbsp;', '<br />1.8b Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_deliver_body_2', 'Country of this Organisation', $countryname);
 
-    $mform->addElement('static', 'explain_interested_deliver_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('static', 'explain_interested_deliver_body_2', '&nbsp;', '<br />1.9b Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
     $mform->addElement('select', 'interested_deliver_body_2', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_deliver_body_2', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('static', 'explain_informed_deliver_body_2', '&nbsp;', '<br />1.10b Is this organisation already linked with Peoples-uni?');
     $mform->addElement('select', 'informed_deliver_body_2', 'Linked', $array_informed_choices);
 
-    $mform->addElement('static', 'explain_best_way_deliver_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('static', 'explain_best_way_deliver_body_2', '&nbsp;', '<br />1.11b What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_deliver_body_2', 'Best way of Informing', $inform_method);
 
     $mform->addElement('static', 'explain_deliver_partnership', '&nbsp;', '<br /><br />What do you think would be the main advantage to these organisation(s) of developing a partnership with Peoples-uni?...');
 
-    $mform->addElement('checkbox', 'deliver_diversify', "Diversify the organisation's range of training delivery routes");
-    $mform->addElement('checkbox', 'deliver_research', "Provide opportunities for international research");
-    $mform->addElement('checkbox', 'deliver_trainers', "Provide high quality, accredited training opportunities for trainers");
-    $mform->addElement('checkbox', 'deliver_materials', "Provide access to high standard training materials");
-    $mform->addElement('checkbox', 'deliver_network', "Provide access to international professional network (via web platform)");
-    $mform->addElement('checkbox', 'deliver_students', "Attract students to Peoples-uni");
-    $mform->addElement('checkbox', 'deliver_tutors', "Attract tutors to Peoples-uni");
-    $mform->addElement('checkbox', 'deliver_pastoral', "Provide pastoral support");
-    $mform->addElement('checkbox', 'deliver_other_benefit', "Other");
+    $mform->addElement('checkbox', 'deliver_diversify', "1.12 Diversify the organisation's range of training delivery routes");
+    $mform->addElement('checkbox', 'deliver_research', "1.13 Provide opportunities for international research");
+    $mform->addElement('checkbox', 'deliver_trainers', "1.14 Provide high quality, accredited training opportunities for trainers");
+    $mform->addElement('checkbox', 'deliver_materials', "1.15 Provide access to high standard training materials");
+    $mform->addElement('checkbox', 'deliver_network', "1.16 Provide access to international professional network (via web platform)");
+    $mform->addElement('checkbox', 'deliver_students', "1.17 Attract students to Peoples-uni");
+    $mform->addElement('checkbox', 'deliver_tutors', "1.18 Attract tutors to Peoples-uni");
+    $mform->addElement('checkbox', 'deliver_pastoral', "1.19 Provide pastoral support");
+    $mform->addElement('checkbox', 'deliver_other_benefit', "1.20 Other");
 
     //--------------
     $mform->addElement('header', 'fund', 'What personal or professional links do you have with organisations that fund public health training?');
 
-    $mform->addElement('static', 'explain_fund_national_governments', '&nbsp;', '<br />Do you have a link with National Governments that fund public health training?');
+    $mform->addElement('static', 'explain_fund_national_governments', '&nbsp;', '<br />2.1 Do you have a link with National Governments that fund public health training?');
     $mform->addElement('select', 'fund_national_governments', 'National Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_local_governments', '&nbsp;', '<br />Do you have a link with Local Governments that fund public health training?');
+    $mform->addElement('static', 'explain_fund_local_governments', '&nbsp;', '<br />2.2 Do you have a link with Local Governments that fund public health training?');
     $mform->addElement('select', 'fund_local_governments', 'Local Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_local_ngo', '&nbsp;', '<br />Do you have a link with Local NGOs that fund public health training?');
+    $mform->addElement('static', 'explain_fund_local_ngo', '&nbsp;', '<br />2.3 Do you have a link with Local NGOs that fund public health training?');
     $mform->addElement('select', 'fund_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_national_ngo', '&nbsp;', '<br />Do you have a link with National NGOs that fund public health training?');
+    $mform->addElement('static', 'explain_fund_national_ngo', '&nbsp;', '<br />2.4 Do you have a link with National NGOs that fund public health training?');
     $mform->addElement('select', 'fund_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_international_ngo', '&nbsp;', '<br />Do you have a link with International NGOs that fund public health training?');
+    $mform->addElement('static', 'explain_fund_international_ngo', '&nbsp;', '<br />2.5 Do you have a link with International NGOs that fund public health training?');
     $mform->addElement('select', 'fund_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_fund_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
+    $mform->addElement('static', 'explain_fund_body_1', '&nbsp;', '<br />2.6a Enter the name of the main organisation indicated above.');
     $mform->addElement('textarea', 'fund_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_fund_body_1', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
+    $mform->addElement('static', 'explain_country_fund_body_1', '&nbsp;', '<br />2.7a Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_fund_body_1', 'Country of this Organisation', $countryname);
 
-    $mform->addElement('static', 'explain_interested_fund_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('static', 'explain_interested_fund_body_1', '&nbsp;', '<br />2.8a Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
     $mform->addElement('select', 'interested_fund_body_1', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_fund_body_1', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('static', 'explain_informed_fund_body_1', '&nbsp;', '<br />2.9a Is this organisation already linked with Peoples-uni?');
     $mform->addElement('select', 'informed_fund_body_1', 'Linked', $array_informed_choices);
 
-    $mform->addElement('static', 'explain_best_way_fund_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('static', 'explain_best_way_fund_body_1', '&nbsp;', '<br />2.10a What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_fund_body_1', 'Best way of Informing', $inform_method);
 
-    $mform->addElement('static', 'explain_fund_body_2', '&nbsp;', '<br />Enter the names of the other organisations indicated above.');
+    $mform->addElement('static', 'explain_fund_body_2', '&nbsp;', '<br />2.6b Enter the names of the other organisations indicated above.');
     $mform->addElement('textarea', 'fund_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_fund_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
+    $mform->addElement('static', 'explain_country_fund_body_2', '&nbsp;', '<br />2.7b Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_fund_body_2', 'Country of this Organisation', $countryname);
 
-    $mform->addElement('static', 'explain_interested_fund_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('static', 'explain_interested_fund_body_2', '&nbsp;', '<br />2.8b Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
     $mform->addElement('select', 'interested_fund_body_2', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_fund_body_2', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('static', 'explain_informed_fund_body_2', '&nbsp;', '<br />2.9b Is this organisation already linked with Peoples-uni?');
     $mform->addElement('select', 'informed_fund_body_2', 'Linked', $array_informed_choices);
 
-    $mform->addElement('static', 'explain_best_way_fund_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('static', 'explain_best_way_fund_body_2', '&nbsp;', '<br />2.10b What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_fund_body_2', 'Best way of Informing', $inform_method);
 
     //--------------
     $mform->addElement('header', 'care', 'What personal or professional links do you have with organisations that deliver health promotion/health care/ other public health policy or programme?');
 
-    $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', '<br />Do you have a link with National Governments that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', '<br />3.1 Do you have a link with National Governments that deliver health promotion/health care?');
     $mform->addElement('select', 'care_national_governments', 'National Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_local_governments', '&nbsp;', '<br />Do you have a link with Local Governments that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_local_governments', '&nbsp;', '<br />3.2 Do you have a link with Local Governments that deliver health promotion/health care?');
     $mform->addElement('select', 'care_local_governments', 'Local Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_local_ngo', '&nbsp;', '<br />Do you have a link with Local NGOs that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_local_ngo', '&nbsp;', '<br />3.3 Do you have a link with Local NGOs that deliver health promotion/health care?');
     $mform->addElement('select', 'care_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_national_ngo', '&nbsp;', '<br />Do you have a link with National NGOs that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_national_ngo', '&nbsp;', '<br />3.4 Do you have a link with National NGOs that deliver health promotion/health care?');
     $mform->addElement('select', 'care_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_international_ngo', '&nbsp;', '<br />Do you have a link with International NGOs that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_international_ngo', '&nbsp;', '<br />3.5 Do you have a link with International NGOs that deliver health promotion/health care?');
     $mform->addElement('select', 'care_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_body_1', '&nbsp;', '<br />Enter the name of the main organisation indicated above.');
+    $mform->addElement('static', 'explain_care_body_1', '&nbsp;', '<br />3.6a Enter the name of the main organisation indicated above.');
     $mform->addElement('textarea', 'care_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_care_body_1', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
+    $mform->addElement('static', 'explain_country_care_body_1', '&nbsp;', '<br />3.7a Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_care_body_1', 'Country of this Organisation', $countryname);
 
-    $mform->addElement('static', 'explain_interested_care_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('static', 'explain_interested_care_body_1', '&nbsp;', '<br />3.8a Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
     $mform->addElement('select', 'interested_care_body_1', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_care_body_1', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('static', 'explain_informed_care_body_1', '&nbsp;', '<br />3.9a Is this organisation already linked with Peoples-uni?');
     $mform->addElement('select', 'informed_care_body_1', 'Linked', $array_informed_choices);
 
-    $mform->addElement('static', 'explain_best_way_care_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('static', 'explain_best_way_care_body_1', '&nbsp;', '<br />3.10a What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_care_body_1', 'Best way of Informing', $inform_method);
 
-    $mform->addElement('static', 'explain_care_body_2', '&nbsp;', '<br />Enter the names of the other organisations indicated above.');
+    $mform->addElement('static', 'explain_care_body_2', '&nbsp;', '<br />3.6b Enter the names of the other organisations indicated above.');
     $mform->addElement('textarea', 'care_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
-    $mform->addElement('static', 'explain_country_care_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
+    $mform->addElement('static', 'explain_country_care_body_2', '&nbsp;', '<br />3.7b Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_care_body_2', 'Country of this Organisation', $countryname);
 
-    $mform->addElement('static', 'explain_interested_care_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
+    $mform->addElement('static', 'explain_interested_care_body_2', '&nbsp;', '<br />3.8b Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
     $mform->addElement('select', 'interested_care_body_2', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_care_body_2', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('static', 'explain_informed_care_body_2', '&nbsp;', '<br />3.9b Is this organisation already linked with Peoples-uni?');
     $mform->addElement('select', 'informed_care_body_2', 'Linked', $array_informed_choices);
 
-    $mform->addElement('static', 'explain_best_way_care_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
+    $mform->addElement('static', 'explain_best_way_care_body_2', '&nbsp;', '<br />3.10b What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_care_body_2', 'Best way of Informing', $inform_method);
 
     $mform->addElement('static', 'explain_care_partnership', '&nbsp;', '<br /><br />What do you think would be the main advantage to these organisation(s) of developing a partnership with Peoples-uni?...');
 
-    $mform->addElement('checkbox', 'care_practice', "Support students to put what they learnt into practice");
-    $mform->addElement('checkbox', 'care_routes', "Diversify their range of training delivery routes");
-    $mform->addElement('checkbox', 'care_materials', "Provide access to high standard training materials");
-    $mform->addElement('checkbox', 'care_cost', "provide low cost training");
-    $mform->addElement('checkbox', 'care_other', "Other");
+    $mform->addElement('checkbox', 'care_practice', "3.11 Support students to put what they learnt into practice");
+    $mform->addElement('checkbox', 'care_routes', "3.12 Diversify their range of training delivery routes");
+    $mform->addElement('checkbox', 'care_materials', "3.13 Provide access to high standard training materials");
+    $mform->addElement('checkbox', 'care_cost', "3.14 provide low cost training");
+    $mform->addElement('checkbox', 'care_other', "3.15 Other");
 
 
     $this->add_action_buttons(false, 'Submit Form');
