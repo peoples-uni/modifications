@@ -404,6 +404,7 @@ $countryname['ZW'] = 'Zimbabwe';
   if ($interested == 'Yes, they are already a partner') $text .= ', Interested(already a partner)';
   if ($interested == 'Yes, they are not a partner yet') $text .= ', Interested';
   if ($interested == 'Not Yet') $text .= ', Not Yet Interested';
+  if ($interested == "Don't Know") $text .= ", Don't Know Interested";
 
   if ($informed == 'Yes') $text .= ', Linked';
   if ($informed == 'Not Yet') $text .= ', Not Yet Linked';

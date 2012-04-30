@@ -274,6 +274,7 @@ $array_interested_choices = array(
   'Yes, they are already a partner' => 'Yes, they are already a partner',
   'Yes, they are not a partner yet' => 'Yes, they are not a partner yet',
   'Not Yet' => 'Not Yet',
+  "Don't Know" => "Don't Know",
   'No' => 'No',
 );
 
