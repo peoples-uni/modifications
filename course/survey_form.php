@@ -269,6 +269,21 @@ $countryname['YE'] = 'Yemen';
 $countryname['ZM'] = 'Zambia';
 $countryname['ZW'] = 'Zimbabwe';
 
+$array_interested_choices = array(
+  '' => 'Select...',
+  'Yes, they are already a partner' => 'Yes, they are already a partner',
+  'Yes, they are not a partner yet' => 'Yes, they are not a partner yet',
+  'Not Yet' => 'Not Yet',
+  'No' => 'No',
+);
+
+$array_informed_choices = array(
+  '' => 'Select...',
+  'Yes' => 'Yes',
+  'Not Yet' => 'Not Yet',
+  'No' => 'No',
+);
+
 $inform_method[''] = 'Select...';
 $inform_method['e-mail'] = 'e-mail';
 $inform_method['Face to face discussion with staff'] = 'Face to face discussion with staff';
@@ -288,6 +303,7 @@ $inform_method['Other'] = 'Other';
 <br />
 <p>We will not contact anybody based on your responses without permission from you.</p>
 <p>We may analyse data to help us improve the course and some of this information might be published in academic journals to help others. No person will be individually identifiable in any publication.</p>
+<p><strong>If you have more information or ideas that cannot fit into the format below, please send an e-mail to <a href="mailto:debsjkay@gmail.com?subject=Survey">debsjkay@gmail.com</a></strong></p>
 ");
 
     //--------------
@@ -318,25 +334,25 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'country_deliver_body_1', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_deliver_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
-    $mform->addElement('select', 'interested_deliver_body_1', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('select', 'interested_deliver_body_1', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_deliver_body_1', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
-    $mform->addElement('select', 'informed_deliver_body_1', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('static', 'explain_informed_deliver_body_1', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('select', 'informed_deliver_body_1', 'Linked', $array_informed_choices);
 
     $mform->addElement('static', 'explain_best_way_deliver_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_deliver_body_1', 'Best way of Informing', $inform_method);
 
-    $mform->addElement('static', 'explain_deliver_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
-    $mform->addElement('textarea', 'deliver_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('static', 'explain_deliver_body_2', '&nbsp;', '<br />Enter the names of the other organisations indicated above.');
+    $mform->addElement('textarea', 'deliver_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
     $mform->addElement('static', 'explain_country_deliver_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_deliver_body_2', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_deliver_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
-    $mform->addElement('select', 'interested_deliver_body_2', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('select', 'interested_deliver_body_2', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_deliver_body_2', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
-    $mform->addElement('select', 'informed_deliver_body_2', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('static', 'explain_informed_deliver_body_2', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('select', 'informed_deliver_body_2', 'Linked', $array_informed_choices);
 
     $mform->addElement('static', 'explain_best_way_deliver_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_deliver_body_2', 'Best way of Informing', $inform_method);
@@ -378,25 +394,25 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'country_fund_body_1', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_fund_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
-    $mform->addElement('select', 'interested_fund_body_1', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('select', 'interested_fund_body_1', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_fund_body_1', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
-    $mform->addElement('select', 'informed_fund_body_1', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('static', 'explain_informed_fund_body_1', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('select', 'informed_fund_body_1', 'Linked', $array_informed_choices);
 
     $mform->addElement('static', 'explain_best_way_fund_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_fund_body_1', 'Best way of Informing', $inform_method);
 
-    $mform->addElement('static', 'explain_fund_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
-    $mform->addElement('textarea', 'fund_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('static', 'explain_fund_body_2', '&nbsp;', '<br />Enter the names of the other organisations indicated above.');
+    $mform->addElement('textarea', 'fund_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
     $mform->addElement('static', 'explain_country_fund_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_fund_body_2', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_fund_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
-    $mform->addElement('select', 'interested_fund_body_2', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('select', 'interested_fund_body_2', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_fund_body_2', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
-    $mform->addElement('select', 'informed_fund_body_2', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('static', 'explain_informed_fund_body_2', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('select', 'informed_fund_body_2', 'Linked', $array_informed_choices);
 
     $mform->addElement('static', 'explain_best_way_fund_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_fund_body_2', 'Best way of Informing', $inform_method);
@@ -426,25 +442,25 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'country_care_body_1', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_care_body_1', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
-    $mform->addElement('select', 'interested_care_body_1', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('select', 'interested_care_body_1', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_care_body_1', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
-    $mform->addElement('select', 'informed_care_body_1', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('static', 'explain_informed_care_body_1', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('select', 'informed_care_body_1', 'Linked', $array_informed_choices);
 
     $mform->addElement('static', 'explain_best_way_care_body_1', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_care_body_1', 'Best way of Informing', $inform_method);
 
-    $mform->addElement('static', 'explain_care_body_2', '&nbsp;', '<br />Enter the name of the other organisation(s) indicated above.');
-    $mform->addElement('textarea', 'care_body_2', 'Name of Other Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('static', 'explain_care_body_2', '&nbsp;', '<br />Enter the names of the other organisations indicated above.');
+    $mform->addElement('textarea', 'care_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
 
     $mform->addElement('static', 'explain_country_care_body_2', '&nbsp;', '<br />Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_care_body_2', 'Country of this Organisation', $countryname);
 
     $mform->addElement('static', 'explain_interested_care_body_2', '&nbsp;', '<br />Do you think this organisation would be interested in developing a partnership with Peoples-uni?');
-    $mform->addElement('select', 'interested_care_body_2', 'Interested', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('select', 'interested_care_body_2', 'Interested', $array_interested_choices);
 
-    $mform->addElement('static', 'explain_informed_care_body_2', '&nbsp;', '<br />Have you already informed this organisation about Peoples-uni?');
-    $mform->addElement('select', 'informed_care_body_2', 'Informed', array('' => 'Select...', 'Yes' => 'Yes', 'No' => 'No'));
+    $mform->addElement('static', 'explain_informed_care_body_2', '&nbsp;', '<br />Is this organisation already linked with Peoples-uni?');
+    $mform->addElement('select', 'informed_care_body_2', 'Linked', $array_informed_choices);
 
     $mform->addElement('static', 'explain_best_way_care_body_2', '&nbsp;', '<br />What is the best way of informing this organisation/the members about Peoples-uni?');
     $mform->addElement('select', 'best_way_care_body_2', 'Best way of Informing', $inform_method);

@@ -400,8 +400,14 @@ $countryname['ZW'] = 'Zimbabwe';
 
   $text = "$body";
   if (!empty($country)) $text .= "($countryname[$country])";
-  if ($interested == 'Yes') $text .= ', Interested';
-  if ($informed == 'Yes') $text .= ', Informed';
+
+  if ($interested == 'Yes, they are already a partner') $text .= ', Interested(already a partner)';
+  if ($interested == 'Yes, they are not a partner yet') $text .= ', Interested';
+  if ($interested == 'Not Yet') $text .= ', Not Yet Interested';
+
+  if ($informed == 'Yes') $text .= ', Linked';
+  if ($informed == 'Not Yet') $text .= ', Not Yet Linked';
+
   if (!empty($best_way)) $text .= ", $best_way";
   return $text;
 }
