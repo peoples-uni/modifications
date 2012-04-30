@@ -304,7 +304,7 @@ $inform_method['Other'] = 'Other';
 <br />
 <p>We will not contact anybody based on your responses without permission from you.</p>
 <p>We may analyse data to help us improve the course and some of this information might be published in academic journals to help others. No person will be individually identifiable in any publication.</p>
-<p><strong>If you have more information or ideas that cannot fit into the format below, please send an e-mail to <a href="mailto:debsjkay@gmail.com?subject=Survey">debsjkay@gmail.com</a></strong></p>
+<p><strong>If you have more information or ideas that cannot fit into the format below, please send an e-mail to <a href=\"mailto:debsjkay@gmail.com?subject=Survey\">debsjkay@gmail.com</a></strong></p>
 ");
 
     //--------------
