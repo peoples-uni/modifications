@@ -419,21 +419,21 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'best_way_fund_body_2', 'Best way of Informing', $inform_method);
 
     //--------------
-    $mform->addElement('header', 'care', 'What personal or professional links do you have with organisations that deliver health promotion/health care/ other public health policy or programme?');
+    $mform->addElement('header', 'care', 'What personal or professional links do you have with organisations that deliver health promotion/health care/ other public health policy/service?');
 
-    $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', '<br />3.1 Do you have a link with National Governments that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_national_governments', '&nbsp;', '<br />3.1 Do you have a link with National Governments that deliver health promotion/health care/ other public health policy/service?');
     $mform->addElement('select', 'care_national_governments', 'National Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_local_governments', '&nbsp;', '<br />3.2 Do you have a link with Local Governments that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_local_governments', '&nbsp;', '<br />3.2 Do you have a link with Local Governments that deliver health promotion/health care/ other public health policy/service?');
     $mform->addElement('select', 'care_local_governments', 'Local Governments', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_local_ngo', '&nbsp;', '<br />3.3 Do you have a link with Local NGOs that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_local_ngo', '&nbsp;', '<br />3.3 Do you have a link with Local NGOs that deliver health promotion/health care/ other public health policy/service?');
     $mform->addElement('select', 'care_local_ngo', 'Local NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_national_ngo', '&nbsp;', '<br />3.4 Do you have a link with National NGOs that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_national_ngo', '&nbsp;', '<br />3.4 Do you have a link with National NGOs that deliver health promotion/health care/ other public health policy/service?');
     $mform->addElement('select', 'care_national_ngo', 'National NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
-    $mform->addElement('static', 'explain_care_international_ngo', '&nbsp;', '<br />3.5 Do you have a link with International NGOs that deliver health promotion/health care?');
+    $mform->addElement('static', 'explain_care_international_ngo', '&nbsp;', '<br />3.5 Do you have a link with International NGOs that deliver health promotion/health care/ other public health policy/service?');
     $mform->addElement('select', 'care_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
     $mform->addElement('static', 'explain_care_body_1', '&nbsp;', '<br />3.6a Enter the name of the main organisation indicated above.');
