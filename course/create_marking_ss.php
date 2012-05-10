@@ -77,6 +77,7 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
     $client = Zend_Gdata_ClientLogin::getHttpClient('admin@files.peoples-uni.org', 'Schull11', Zend_Gdata_Docs::AUTH_SERVICE_NAME);
     $docs = new Zend_Gdata_Docs($client);
     // Keep as Version 1 (not $docs->setMajorProtocolVersion(3);)
+    // 20120510 actually the default is now version 3 (I believe)
   }
   catch (Zend_Gdata_App_AuthException $e) {
     echo '<br /><br /><strong>Error: Unable to authenticate with files.peoples-uni.org.</strong><br /><br />';
@@ -86,7 +87,8 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
     die();
   }
 
-  $newDocumentEntry = $docs->uploadFile('Marking.xls', $course->fullname, null, Zend_Gdata_Docs::DOCUMENTS_LIST_FEED_URI);
+  $newDocumentEntry = $docs->uploadFile('Marking.xls', $course->fullname, null, 'https://docs.google.com/feeds/documents/private/full');
+  // 20120510 was Zend_Gdata_Docs::DOCUMENTS_LIST_FEED_URI, I changed to HTTPS because Google now seems to require it "Exception - Expected response code 200, got 403 403.4 SSL required"
 
   foreach ($newDocumentEntry->link as $linkentry) {
     if ($linkentry->getRel() === 'alternate') {
@@ -167,6 +169,7 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
     $client = Zend_Gdata_ClientLogin::getHttpClient('admin@files.peoples-uni.org', 'Schull11', Zend_Gdata_Docs::AUTH_SERVICE_NAME);
     $docs = new Zend_Gdata_Docs($client);
     $docs->setMajorProtocolVersion(3); // Need Version 3 of API for this part
+    // 20120510 actually the default is now version 3 (I believe), so this may not be necessary
   }
   catch (Zend_Gdata_App_AuthException $e) {
     echo '<br /><br /><strong>Error: Unable to authenticate with files.peoples-uni.org (to set ACL).</strong><br /><br />';
@@ -182,9 +185,10 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
       "<gAcl:scope type='default' />" .
     "</entry>";
 
+  // 20120510 changed to HTTPS
   $requestData = $docs->prepareRequest(
                    'POST',
-                   'http://docs.google.com/feeds/default/private/full/spreadsheet%3A' . $key . '/acl',
+                   'https://docs.google.com/feeds/default/private/full/spreadsheet%3A' . $key . '/acl',
                     array(),
                     $entryAcl,
                     'application/atom+xml');
@@ -214,7 +218,8 @@ if (!empty($_POST['markcreatess']) && !empty($_POST['course_id'])) {
   $authkey = $nodelist->item(0)->attributes->getNamedItem('key')->nodeValue;
 
   // Example of what is needed: http://spreadsheets.google.com/ccc?key=0Ag3Bj9qWqJ-VdHpmVnNWWVBTTGF3OEE4Z1BzWlN5dUE&hl=en&authkey=CNboh4wB
-  $newlink = 'http://spreadsheets.google.com/ccc?key=' . $key . '&hl=en&authkey=' . $authkey;
+  // 20120510 changed to HTTPS
+  $newlink = 'https://spreadsheets.google.com/ccc?key=' . $key . '&hl=en&authkey=' . $authkey;
 
   $google_ss_existing = $DB->get_record('peoples_google_ss', array('course_id' => $id));
   if (empty($google_ss_existing)) {
