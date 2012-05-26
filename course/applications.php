@@ -423,6 +423,7 @@ if (!empty($_POST['markfilter'])) {
     . '&chosenpay=' . urlencode($_POST['chosenpay'])
     . '&chosenreenrol=' . urlencode($_POST['chosenreenrol'])
     . '&chosenmmu=' . urlencode($_POST['chosenmmu'])
+    . '&acceptedmmu=' . urlencode($_POST['acceptedmmu'])
     . '&chosenscholarship=' . urlencode($_POST['chosenscholarship'])
     . (empty($_POST['displayscholarship']) ? '&displayscholarship=0' : '&displayscholarship=1')
     . (empty($_POST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
@@ -486,6 +487,7 @@ else $chosensearch = '';
 if (!empty($_REQUEST['chosenpay'])) $chosenpay = $_REQUEST['chosenpay'];
 if (!empty($_REQUEST['chosenreenrol'])) $chosenreenrol = $_REQUEST['chosenreenrol'];
 if (!empty($_REQUEST['chosenmmu'])) $chosenmmu = $_REQUEST['chosenmmu'];
+if (!empty($_REQUEST['acceptedmmu'])) $acceptedmmu = $_REQUEST['acceptedmmu'];
 if (!empty($_REQUEST['chosenscholarship'])) $chosenscholarship = $_REQUEST['chosenscholarship'];
 if (!empty($_REQUEST['displayscholarship'])) $displayscholarship = true;
 else $displayscholarship = false;
@@ -540,6 +542,27 @@ if (!isset($chosenmmu)) $chosenmmu = 'Any';
 $listchosenmmu[] = 'Yes';
 $listchosenmmu[] = 'No';
 
+$listacceptedmmu[] = 'Any';
+if (!isset($acceptedmmu)) $acceptedmmu = 'Any';
+$listacceptedmmu[] = 'Yes';
+$listacceptedmmu[] = 'No';
+for ($year = 11; $year <= 16; $year++) {
+  $listacceptedmmu[] = "Accepted {$year}a";
+  $listacceptedmmu[] = "Accepted {$year}a";
+  $listacceptedmmu[] = "Accepted {$year}b";
+  $listacceptedmmu[] = "Accepted {$year}b";
+
+  $stamp_range["Accepted {$year}a"]['start'] = gmmktime( 0, 0, 0,  1,  1, 2000 + $year);
+  $stamp_range["Accepted {$year}a"]['end']   = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
+  $stamp_range["Accepted {$year}b"]['start'] = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
+  $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
+}
+echo '<br />11a start(expect 1293840000) ' . $stamp_range["Accepted 11a"]['start'];
+echo '<br />11a   end(expect 1309478400) ' . $stamp_range["Accepted 11a"]['end'];
+echo '<br />11b start(expect 1309478400) ' . $stamp_range["Accepted 11b"]['start'];
+echo '<br />11b   end(expect 1325375999) ' . $stamp_range["Accepted 11b"]['end'];
+echo '<br />CHECK NONE BEFORE THAT';
+
 $listchosenscholarship[] = 'Any';
 if (!isset($chosenscholarship)) $chosenscholarship = 'Any';
 $listchosenscholarship[] = 'Yes';
@@ -592,6 +615,7 @@ Display entries using the following filters...
     <td>"Paid?" Value</td>
     <td>Re&#8209;enrolment?</td>
     <td>Applied MMU?</td>
+    <td>Accepted MMU?</td>
     <td>Applied Scholarship?</td>
     <td>Show Scholarship Relevant Columns</td>
     <td>Show Extra Details</td>
@@ -612,6 +636,7 @@ Display entries using the following filters...
     displayoptions('chosenpay', $listchosenpay, $chosenpay);
     displayoptions('chosenreenrol', $listchosenreenrol, $chosenreenrol);
     displayoptions('chosenmmu', $listchosenmmu, $chosenmmu);
+    displayoptions('acceptedmmu', $listacceptedmmu, $acceptedmmu);
     displayoptions('chosenscholarship', $listchosenscholarship, $chosenscholarship);
     ?>
     <td><input type="checkbox" name="displayscholarship" <?php if ($displayscholarship) echo ' CHECKED'; ?>></td>
@@ -642,7 +667,7 @@ function displayoptions($name, $options, $selectedvalue) {
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
 $applications = $DB->get_records_sql('
-  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, p.id IS NOT NULL AS paymentnote
+  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp, p.id IS NOT NULL AS paymentnote
   FROM mdl_peoplesapplication a
   LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
   LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
@@ -787,6 +812,23 @@ foreach ($applications as $sid => $application) {
     if ($chosenmmu === 'Yes' && $application->applymmumph < 2) {
       unset($applications[$sid]);
       continue;
+    }
+  }
+
+  if (!empty($acceptedmmu) && $acceptedmmu !== 'Any') {
+    if ($acceptedmmu === 'No' && $application->mph) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($acceptedmmu === 'Yes' && !$application->mph) {
+      unset($applications[$sid]);
+      continue;
+    }
+    if ($acceptedmmu !== 'No' && $acceptedmmu !== 'Yes') {
+      if (!$application->mph || $application->mphdatestamp < $stamp_range[$acceptedmmu]['start'] || $application->mphdatestamp >= $stamp_range[$acceptedmmu]['end']) {
+        unset($applications[$sid]);
+        continue;
+      }
     }
   }
 
@@ -1380,6 +1422,7 @@ Also look at list of e-mails sent to verify they went! (No subject and they will
       . '&chosenpay=' . urlencode($_REQUEST['chosenpay'])
       . '&chosenreenrol=' . urlencode($_REQUEST['chosenreenrol'])
       . '&chosenmmu=' . urlencode($_REQUEST['chosenmmu'])
+      . '&acceptedmmu=' . urlencode($_REQUEST['acceptedmmu'])
       . '&chosenscholarship=' . urlencode($_REQUEST['chosenscholarship'])
       . (empty($_REQUEST['displayscholarship']) ? '&displayscholarship=0' : '&displayscholarship=1')
       . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1');
