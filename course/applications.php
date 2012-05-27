@@ -557,11 +557,6 @@ for ($year = 11; $year <= 16; $year++) {
   $stamp_range["Accepted {$year}b"]['start'] = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
   $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
 }
-echo '<br />11a start(expect 1293840000) ' . $stamp_range["Accepted 11a"]['start'];
-echo '<br />11a   end(expect 1309478400) ' . $stamp_range["Accepted 11a"]['end'];
-echo '<br />11b start(expect 1309478400) ' . $stamp_range["Accepted 11b"]['start'];
-echo '<br />11b   end(expect 1325375999) ' . $stamp_range["Accepted 11b"]['end'];
-echo '<br />CHECK NONE BEFORE THAT';
 
 $listchosenscholarship[] = 'Any';
 if (!isset($chosenscholarship)) $chosenscholarship = 'Any';
