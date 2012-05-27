@@ -548,8 +548,6 @@ $listacceptedmmu[] = 'Yes';
 $listacceptedmmu[] = 'No';
 for ($year = 11; $year <= 16; $year++) {
   $listacceptedmmu[] = "Accepted {$year}a";
-  $listacceptedmmu[] = "Accepted {$year}a";
-  $listacceptedmmu[] = "Accepted {$year}b";
   $listacceptedmmu[] = "Accepted {$year}b";
 
   $stamp_range["Accepted {$year}a"]['start'] = gmmktime( 0, 0, 0,  1,  1, 2000 + $year);
