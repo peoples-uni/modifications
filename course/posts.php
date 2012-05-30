@@ -92,6 +92,7 @@ Display entries using the following filters...
 	<tr>
 		<td>Semester</td>
 		<td>Module</td>
+    <td>Accepted MMU?</td>
 		<td>Skip Introduction Topics</td>
 		<td>Suppress Names on Posts by Student by Forum Topic Report for each Course (& use SID)</td>
 		<td>Don't Show Number of Posts</td>

@@ -409,6 +409,7 @@ Display entries using the following filters...
 		<td>Course</td>
 		<td>Grading Status</td>
 		<td>Semester</td>
+    <td>Accepted MMU?</td>
 		<td>Sort by Last Access</td>
 	</tr>
 	<tr>
