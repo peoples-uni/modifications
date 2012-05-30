@@ -289,6 +289,7 @@ if (!empty($_POST['markfilter'])) {
 		. 'id=' . $_POST['id']
 		. '&chosenstatus=' . urlencode(dontstripslashes($_POST['chosenstatus']))
 		. '&chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
+    . '&acceptedmmu=' . urlencode(dontstripslashes($_POST['acceptedmmu']))
 		. (empty($_POST['sortbyaccess']) ? '&sortbyaccess=0' : '&sortbyaccess=1')
 		);
 }
@@ -374,6 +375,22 @@ else {
   $semestersql = 'AND e.semester=?';
 }
 
+$acceptedmmu = dontstripslashes(optional_param('acceptedmmu', '', PARAM_NOTAGS));
+
+$listacceptedmmu[] = 'Any';
+if (empty($acceptedmmu)) $acceptedmmu = 'Any';
+$listacceptedmmu[] = 'Yes';
+$listacceptedmmu[] = 'No';
+for ($year = 11; $year <= 16; $year++) {
+  $listacceptedmmu[] = "Accepted {$year}a";
+  $listacceptedmmu[] = "Accepted {$year}b";
+
+  $stamp_range["Accepted {$year}a"]['start'] = gmmktime( 0, 0, 0,  1,  1, 2000 + $year);
+  $stamp_range["Accepted {$year}a"]['end']   = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
+  $stamp_range["Accepted {$year}b"]['start'] = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
+  $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
+}
+
 if (!empty($_REQUEST['sortbyaccess'])) {
 	$sortbyaccess = true;
 	$orderby ='x.lastaccess DESC, x.firstname ASC, username ASC, fullname ASC';
@@ -411,6 +428,7 @@ Display entries using the following filters...
 		<?php
 		displayoptions('chosenstatus', $liststatus, $chosenstatus);
 		displayoptions('chosensemester', $listsemester, $chosensemester);
+    displayoptions('acceptedmmu', $listacceptedmmu, $acceptedmmu);
 		?>
 		<td><input type="checkbox" name="sortbyaccess" <?php if ($sortbyaccess) echo ' CHECKED'; ?>></td>
 	</tr>
@@ -442,12 +460,13 @@ $prof = $DB->get_record('user_info_field', array('shortname' => 'gender'));
 if (!empty($prof->id)) $genderid = $prof->id;
 
 
-$enrols = $DB->get_records_sql("SELECT * FROM
+$enrols = $DB->get_records_sql("SELECT x.*, y.*, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp FROM
 (SELECT e.*, c.fullname, c.idnumber, u.lastname, u.firstname, u.email, u.username, u.lastaccess, u.country, q.qualification, q.higherqualification, q.employment FROM
 mdl_enrolment e, mdl_course c, mdl_user u, mdl_applicantqualifications q WHERE e.courseid=c.id AND e.userid=u.id $courseidsql1 $statussql $semestersql AND u.id=q.userid) AS x
 LEFT JOIN
 (SELECT g.userid AS guserid, g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' $courseidsql2) AS y
 ON x.userid=y.guserid AND x.courseid=y.icourseid
+LEFT JOIN mdl_peoplesmph m ON x.userid=m.userid
 $gradesql
 ORDER BY $orderby",
 array($chosensemester));
@@ -475,6 +494,21 @@ $lastname = '';
 $countnondup = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
+
+    if (!empty($acceptedmmu) && $acceptedmmu !== 'Any') {
+      if ($acceptedmmu === 'No' && $enrol->mph) {
+        continue;
+      }
+      if ($acceptedmmu === 'Yes' && !$enrol->mph) {
+        continue;
+      }
+      if ($acceptedmmu !== 'No' && $acceptedmmu !== 'Yes') {
+        if (!$enrol->mph || $enrol->mphdatestamp < $stamp_range[$acceptedmmu]['start'] || $enrol->mphdatestamp >= $stamp_range[$acceptedmmu]['end']) {
+          continue;
+        }
+      }
+    }
+
     $rowdata = array();
     $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');

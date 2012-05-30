@@ -16,6 +16,7 @@ if (!empty($_POST['markfilter'])) {
 	redirect($CFG->wwwroot . '/course/posts.php?'
 		. 'chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
 		. '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
+    . '&acceptedmmu=' . urlencode(dontstripslashes($_POST['acceptedmmu']))
 		. (empty($_POST['skipintro']) ? '&skipintro=0' : '&skipintro=1')
 		. (empty($_POST['suppressnames']) ? '&suppressnames=0' : '&suppressnames=1')
 		. (empty($_POST['showyesonly']) ? '&showyesonly=0' : '&showyesonly=1')
@@ -42,6 +43,7 @@ echo $OUTPUT->header();
 
 if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
 if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
+if (!empty($_REQUEST['acceptedmmu'])) $acceptedmmu = dontstripslashes($_REQUEST['acceptedmmu']);
 if (!empty($_REQUEST['skipintro'])) $skipintro = true;
 else $skipintro = false;
 if (!empty($_REQUEST['suppressnames'])) $suppressnames = true;
@@ -68,6 +70,20 @@ foreach ($courses as $course) {
 	$listmodule[] = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
 }
 
+$listacceptedmmu[] = 'Any';
+if (!isset($acceptedmmu)) $acceptedmmu = 'Any';
+$listacceptedmmu[] = 'Yes';
+$listacceptedmmu[] = 'No';
+for ($year = 11; $year <= 16; $year++) {
+  $listacceptedmmu[] = "Accepted {$year}a";
+  $listacceptedmmu[] = "Accepted {$year}b";
+
+  $stamp_range["Accepted {$year}a"]['start'] = gmmktime( 0, 0, 0,  1,  1, 2000 + $year);
+  $stamp_range["Accepted {$year}a"]['end']   = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
+  $stamp_range["Accepted {$year}b"]['start'] = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
+  $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
+}
+
 
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/posts.php'; ?>">
@@ -84,6 +100,7 @@ Display entries using the following filters...
 		<?php
 		displayoptions('chosensemester', $listsemester, $chosensemester);
 		displayoptions('chosenmodule', $listmodule, $chosenmodule);
+    displayoptions('acceptedmmu', $listacceptedmmu, $acceptedmmu);
 		?>
 		<td><input type="checkbox" name="skipintro" <?php if ($skipintro) echo ' CHECKED'; ?>></td>
 		<td><input type="checkbox" name="suppressnames" <?php if ($suppressnames) echo ' CHECKED'; ?>></td>
@@ -126,9 +143,11 @@ else {
   $modulesql = 'AND c.fullname=?';
 }
 
+
 $enrols = $DB->get_records_sql(
-"SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject
-FROM mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp
+"SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
+FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
+LEFT JOIN mdl_peoplesmph m ON e.userid=m.userid
 WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql
 ORDER BY e.semester, u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC",
 array($chosensemester, $chosenmodule)
@@ -152,6 +171,22 @@ $topiccount = array();
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
+
+    if (!empty($acceptedmmu) && $acceptedmmu !== 'Any') {
+      if ($acceptedmmu === 'No' && $enrol->mph) {
+        continue;
+      }
+      if ($acceptedmmu === 'Yes' && !$enrol->mph) {
+        continue;
+      }
+      if ($acceptedmmu !== 'No' && $acceptedmmu !== 'Yes') {
+        if (!$enrol->mph || $enrol->mphdatestamp < $stamp_range[$acceptedmmu]['start'] || $enrol->mphdatestamp >= $stamp_range[$acceptedmmu]['end']) {
+          continue;
+        }
+      }
+    }
+
+
 		if ($skipintro && (substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 12) === 'introduction')) {
 				continue;
 		}
