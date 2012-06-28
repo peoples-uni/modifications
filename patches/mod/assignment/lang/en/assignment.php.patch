@@ -1,0 +1,22 @@
+--- assignment.bak.php	Wed Jun 27 18:26:31 2012
++++ assignment.php	Thu Jun 28 16:32:04 2012
+@@ -41,12 +41,16 @@
+ 
+ You can see it appended to your assignment submission:
+ 
+-    {$a->url}';
++    {$a->url}
++
++NOTE: These results are provisional until confirmed by the exam board.';
+ $string['assignmentmailhtml'] = '{$a->teacher} has posted some feedback on your
+ assignment submission for \'<i>{$a->assignment}</i>\'<br /><br />
+-You can see it appended to your <a href="{$a->url}">assignment submission</a>.';
++You can see it appended to your <a href="{$a->url}">assignment submission</a>.<br /><br />
++NOTE: These results are provisional until confirmed by the exam board.';
+ $string['assignmentmailsmall'] = '{$a->teacher} has posted some feedback on your
+-assignment submission for \'{$a->assignment}\' You can see it appended to your submission';
++assignment submission for \'{$a->assignment}\' You can see it appended to your submission
++NOTE: These results are provisional until confirmed by the exam board.';
+ $string['assignmentname'] = 'Assignment name';
+ $string['assignment:submit'] = 'Submit assignment';
+ $string['assignmentsubmission'] = 'Assignment submissions';
