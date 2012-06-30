@@ -683,6 +683,7 @@ if (!empty($notes)) {
 $applymmumphtext = array('0' => '', '1' => '', '2' => 'Wants to Apply for MMU MPH', '3' => 'Says Already in MMU MPH');
 $applymmumphtext = $applymmumphtext[$_REQUEST['applymmumph']];
 
+$inmmumph = FALSE;
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($mphs) || !empty($applymmumphtext)) {
   echo '<tr><td colspan="2">MMU MPH Status...</td></tr>';
@@ -690,6 +691,7 @@ if (!empty($mphs) || !empty($applymmumphtext)) {
   if (!empty($applymmumphtext)) echo '<tr><td></td><td>' . $applymmumphtext . '</td></tr>';
 
   foreach ($mphs as $mph) {
+    $inmmumph = TRUE;
     echo '<tr><td>';
     echo gmdate('d/m/Y H:i', $mph->datesubmitted);
     echo '</td><td>';
@@ -706,8 +708,8 @@ if ($state === 022) {
   $course2    = $_REQUEST['19'];
   $sid        = $_REQUEST['sid'];
 
-  if ($application->nid == 80) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
-  else                         $peoples_approval_email = get_config(NULL, 'peoples_approval_email');
+  if (!$inmmumph) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
+  else            $peoples_approval_email = get_config(NULL, 'peoples_approval_email'); // MPH Students
 
   $peoples_approval_email = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email);
   $peoples_approval_email = str_replace('COURSE_MODULE_1_NAME_HERE', $course1, $peoples_approval_email);
@@ -724,8 +726,8 @@ same time and will involve a heavy workload - please be sure you do have the tim
 
   $peoples_approval_email = htmlspecialchars($peoples_approval_email, ENT_COMPAT, 'UTF-8');
 
-  if ($application->nid == 80) $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_old_students_bursary_email');
-  else                         $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_bursary_email');
+  if (!$inmmumph) $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_old_students_bursary_email');
+  else            $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_bursary_email'); // MPH Students
 
   $peoples_approval_email_bursary = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email_bursary);
   $peoples_approval_email_bursary = str_replace('COURSE_MODULE_1_NAME_HERE', $course1, $peoples_approval_email_bursary);
@@ -744,6 +746,9 @@ same time and will involve a heavy workload - please be sure you do have the tim
 
 ?>
 <br />To approve this application and send an e-mail to applicant (edit e-mail text if you wish), press "Approve Full Application".
+<br /><i><b>NOTE: Any student that is doing MPH must, if not already so recorded,<br />
+be recorded as MPH by clicking "Record that the Student has been enrolled in the MMU MPH" BEFORE APPROVAL<br />
+(to pick up correct wording for e-mail).</b></i>
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/appaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />

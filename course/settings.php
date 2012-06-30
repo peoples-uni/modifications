@@ -565,6 +565,26 @@ foreach ($courses as $course) {
 </form>
 <br />
 
+<form id="approval_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<textarea name="value_approval_email" rows="15" cols="75" wrap="hard">
+<?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_email'), ENT_COMPAT, 'UTF-8'); ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_approval_email" value="1" />
+<input type="submit" name="set_approval_email" value="Set the above text as the MPH Students Approval e-mail wording (in Application Details/app.php)" style="width:45em" />
+</form>
+<br />
+
+<form id="approval_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<textarea name="value_approval_bursary_email" rows="15" cols="75" wrap="hard">
+<?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_approval_bursary_email" value="1" />
+<input type="submit" name="set_approval_bursary_email" value="Set the above text as the MPH Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
+</form>
+<br />
+
 <form id="batch_reminder_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_batch_reminder_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_reminder_email'), ENT_COMPAT, 'UTF-8'); ?>
