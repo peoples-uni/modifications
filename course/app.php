@@ -708,12 +708,17 @@ if ($state === 022) {
   $course2    = $_REQUEST['19'];
   $sid        = $_REQUEST['sid'];
 
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $application->userid));
+
+  $amount = amount_to_pay($application, $inmmumph, $payment_schedule);
+
   if (!$inmmumph) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
   else            $peoples_approval_email = get_config(NULL, 'peoples_approval_email'); // MPH Students
 
   $peoples_approval_email = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email);
   $peoples_approval_email = str_replace('COURSE_MODULE_1_NAME_HERE', $course1, $peoples_approval_email);
   $peoples_approval_email = str_replace('SID_HERE',                  $sid, $peoples_approval_email);
+  $peoples_approval_email = str_replace('AMOUNT_TO_PAY_HERE',        $amount, $peoples_approval_email);
   if (!empty($course2)) {
     $peoples_approval_email = str_replace('COURSE_MODULE_2_TEXT_HERE', "and the Course Module '" . $course2 . "' ", $peoples_approval_email);
     $peoples_approval_email = str_replace('COURSE_MODULE_2_WARNING_TEXT_HERE', "Please note that you have applied to take two modules, these run at the
@@ -722,6 +727,12 @@ same time and will involve a heavy workload - please be sure you do have the tim
   else {
     $peoples_approval_email = str_replace('COURSE_MODULE_2_TEXT_HERE',         '', $peoples_approval_email);
     $peoples_approval_email = str_replace('COURSE_MODULE_2_WARNING_TEXT_HERE', '', $peoples_approval_email);
+  }
+  if ($inmmumph && empty($payment_schedule)) {
+    $peoples_approval_email = str_replace('NOTE_ON_INSTALMENTS_HERE', "If you wish to pay by instalments, you may select your preferences at http://courses.peoples-uni.org/course/specify_instalments.php (you will need to log in).", $peoples_approval_email);
+  }
+  else {
+    $peoples_approval_email = str_replace('NOTE_ON_INSTALMENTS_HERE', "", $peoples_approval_email);
   }
 
   $peoples_approval_email = htmlspecialchars($peoples_approval_email, ENT_COMPAT, 'UTF-8');
@@ -749,6 +760,8 @@ same time and will involve a heavy workload - please be sure you do have the tim
 <br /><i><b>NOTE: Any student that is doing MPH must, if not already so recorded,<br />
 be recorded as MPH by clicking "Record that the Student has been enrolled in the MMU MPH" BEFORE APPROVAL<br />
 (to pick up correct wording for e-mail).</b></i>
+<br /><i><b>NOTE: Please check the Amount Owed by the student looks OK before sending.<br />
+To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/student_account.php?userid=' . $application->userid; ?>" target="_blank">click here for the Student Payment Account</a></b></i>
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/appaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1904,6 +1917,39 @@ echo '<br /><strong><a href="javascript:window.close();">Close Window</a></stron
 
 //print_footer();
 echo $OUTPUT->footer();
+
+
+function amount_to_pay($application, $inmmumph, $payment_schedule) {
+  global $DB;
+
+  // Get balance
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$application->userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  if (!$inmmumph) { // NON MPH: Take Outstanding Balance and adjust for new modules
+    if (empty($application->coursename2)) $deltamodules = 1;
+    else $deltamodules = 2;
+    $amount += $deltamodules * MODULE_COST;
+  }
+  else { // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now <= $payment_schedule->due_date_1) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now <= $payment_schedule->due_date_2) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now <= $payment_schedule->due_date_3) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
+  return $amount;
+}
+
 
 function unenrolstudent($userid, $modulename) {
   global $DB;
