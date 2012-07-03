@@ -380,6 +380,19 @@ if (!empty($_POST['markmph'])) {
   $newmph->note = '';
   $DB->insert_record('peoplesmph', $newmph);
 
+  if (!empty($newmph->userid)) {
+    $amount = get_balance($newmph->userid);
+
+    $peoples_student_balance = new object();
+    $peoples_student_balance->userid = $newmph->userid;
+    $peoples_student_balance->amount_delta = 1500;
+    $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
+    $peoples_student_balance->currency = 'GBP';
+    $peoples_student_balance->detail = 'Initial Full amount for MMU MPH';
+    $peoples_student_balance->date = time();
+    $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+  }
+
   $refreshparent = true;
 }
 if (!empty($_POST['note']) && !empty($_POST['markaddnote'])) {
@@ -1920,16 +1933,8 @@ echo $OUTPUT->footer();
 
 
 function amount_to_pay($application, $inmmumph, $payment_schedule) {
-  global $DB;
 
-  // Get balance
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$application->userid} ORDER BY id DESC LIMIT 1");
-  $amount = 0;
-  if (!empty($balances)) {
-    foreach ($balances as $balance) {
-      $amount = $balance->balance;
-    }
-  }
+  $amount = get_balance($application->userid);
 
   if (!$inmmumph) { // NON MPH: Take Outstanding Balance and adjust for new modules
     if (empty($application->coursename2)) $deltamodules = 1;
@@ -1947,6 +1952,21 @@ function amount_to_pay($application, $inmmumph, $payment_schedule) {
   }
 
   if ($amount < 0) $amount = 0;
+  return $amount;
+}
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
   return $amount;
 }
 
