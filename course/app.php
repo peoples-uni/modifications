@@ -618,10 +618,19 @@ echo '<td>sid</td>';
 echo '<td>' . $_REQUEST['sid'] . '</td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Paid?</td>';
-if ($application->costpaid < .01) echo '<td><span style="color:red">No: &pound;' . $application->costowed . ' Owed</span></td>';
-elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes: &pound;' . $application->costowed . '</span></td>';
-else echo '<td><span style="color:blue">' . "Paid &pound;$application->costpaid out of &pound;$application->costowed" . '</span></td>';
+echo '<td>Payment up to date?</td>';
+//if ($application->costpaid < .01) echo '<td><span style="color:red">No: &pound;' . $application->costowed . ' Owed</span></td>';
+//elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes: &pound;' . $application->costowed . '</span></td>';
+//else echo '<td><span style="color:blue">' . "Paid &pound;$application->costpaid out of &pound;$application->costowed" . '</span></td>';
+if (!empty($application->userid)) {
+  $amount = get_balance($application->userid);
+  if ($amount >= .01) echo '<td><span style="color:red">No: &pound;' . $amount . ' Owed</span></td>';
+  elseif (abs($amount) < .01) echo '<td><span style="color:green">Yes</span></td>';
+  else echo '<td><span style="color:blue">' . "Overpaid: &pound;$amount" . '</span></td>';
+}
+else {
+  echo '<td></td>';
+}
 echo '</tr>';
 
 if (empty($application->paymentmechanism)) $mechanism = '';
