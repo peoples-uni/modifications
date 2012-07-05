@@ -937,6 +937,51 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
   }
 
   $DB->update_record('peoplesapplication', $application);
+
+  if ($deltamodules != 0) {
+    $inmmumph = FALSE;
+    $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$record->userid} AND userid!=0 LIMIT 1");
+    if (!empty($mphs)) {
+      foreach ($mphs as $mph) {
+        $inmmumph = TRUE;
+      }
+    }
+    if (!$inmmumph && !empty($record->userid)) { // $record->userid should NOT be empty, but just in case
+      // Update Balance only if this is not an MPH student as MPH students pay an all inclusive fee which is previously set.
+
+      $amount = get_balance($record->userid);
+
+      $peoples_student_balance = new object();
+      $peoples_student_balance->userid = $record->userid;
+      $peoples_student_balance->amount_delta = $deltamodules * MODULE_COST;
+      $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
+      $peoples_student_balance->currency = 'GBP';
+      if (!empty($record->coursename2)) {
+        $course2 = " & '{$record->coursename2}'";
+      }
+      else {
+        $course2 = '';
+      }
+      $peoples_student_balance->detail = "Adjustment for modules '$record->coursename1'{$course2} for Semester $record->semester";
+      $peoples_student_balance->date = time();
+      $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+    }
+  }
+}
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  return $amount;
 }
 
 
