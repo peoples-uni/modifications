@@ -565,6 +565,7 @@ foreach ($courses as $course) {
 </form>
 <br />
 
+<?php if (FALSE) { ?>
 <form id="approval_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_email'), ENT_COMPAT, 'UTF-8'); ?>
@@ -584,6 +585,7 @@ foreach ($courses as $course) {
 <input type="submit" name="set_approval_bursary_email" value="Set the above text as the MPH Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
 </form>
 <br />
+<?php } ?>
 
 <form id="batch_reminder_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_batch_reminder_email" rows="15" cols="75" wrap="hard">

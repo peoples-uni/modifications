@@ -734,8 +734,8 @@ if ($state === 022) {
 
   $amount = amount_to_pay($application, $inmmumph, $payment_schedule);
 
-  if (!$inmmumph) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
-  else            $peoples_approval_email = get_config(NULL, 'peoples_approval_email'); // MPH Students
+  if (TRUE || !$inmmumph) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
+  else $peoples_approval_email = get_config(NULL, 'peoples_approval_email'); // MPH Students
 
   $peoples_approval_email = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email);
   $peoples_approval_email = str_replace('COURSE_MODULE_1_NAME_HERE', $course1, $peoples_approval_email);
@@ -759,8 +759,8 @@ same time and will involve a heavy workload - please be sure you do have the tim
 
   $peoples_approval_email = htmlspecialchars($peoples_approval_email, ENT_COMPAT, 'UTF-8');
 
-  if (!$inmmumph) $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_old_students_bursary_email');
-  else            $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_bursary_email'); // MPH Students
+  if (TRUE || !$inmmumph) $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_old_students_bursary_email');
+  else $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_bursary_email'); // MPH Students
 
   $peoples_approval_email_bursary = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email_bursary);
   $peoples_approval_email_bursary = str_replace('COURSE_MODULE_1_NAME_HERE', $course1, $peoples_approval_email_bursary);
