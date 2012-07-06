@@ -83,16 +83,25 @@ if (!empty($application)) {
   elseif ($application->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
   else  $mechanism = '';
 
-  if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
-  elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
-  else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+  //if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
+  //elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+  //else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+  if (!empty($application->userid)) {
+    $amount = get_balance($application->userid);
+    if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed' . $mechanism . '</span>';
+    elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+    else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $mechanism . '</span>';
+  }
+  else {
+    $z = $mechanism;
+  }
 
   $paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid={$application->sid} AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
   if (!empty($paymentnotes)) {
     $z .= ' (Payment Note Present)';
   }
 
-  echo '<br />Payment Status for most recent Application: ' . $z;
+  echo '<br />Payment up to date?: ' . $z;
 }
 
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid=$userid ORDER BY datesubmitted DESC");
