@@ -605,7 +605,7 @@ Display entries using the following filters...
     <td>End Month</td>
     <td>End Day</td>
     <td>Name or e-mail Contains</td>
-    <td>"Paid?" Value</td>
+    <td>Payment Mechanism</td>
     <td>Re&#8209;enrolment?</td>
     <td>Applied MMU?</td>
     <td>Accepted MMU?</td>
@@ -864,7 +864,7 @@ if (!$displayextra && !$displayscholarship) {
     'Submitted',
     'sid',
     'Approved?',
-    'Paid?',
+    'Payment up to date?',
     'Registered?',
     '',
     'Family name',
@@ -903,7 +903,7 @@ else {
     'Submitted',
     'sid',
     'Approved?',
-    'Paid?',
+    'Payment up to date?',
     'Registered?',
     'Family name',
     'Given name',
@@ -1068,9 +1068,18 @@ foreach ($applications as $sid => $application) {
     elseif ($application->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
     else  $mechanism = '';
 
-    if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
-    elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
-    else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+    //if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
+    //elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+    //else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+    if (!empty($application->userid)) {
+      $amount = get_balance($application->userid);
+      if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed' . $mechanism . '</span>';
+      elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+      else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $mechanism . '</span>';
+    }
+    else {
+      $z = $mechanism;
+    }
     if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
     if (!$displayscholarship) $rowdata[] = $z;
 
@@ -1081,7 +1090,6 @@ foreach ($applications as $sid => $application) {
     if ($application->ready && $application->nid != 80) $z .= '<br />(Ready)';
     if ($application->notepresent) $z .= '<br />(Note Present)';
     if ($application->mph) $z .= '<br />(MMU MPH)';
-
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (!$displayextra || $displayscholarship) {
@@ -1397,7 +1405,7 @@ NOTE, to send an e-mail only to approved and registered students for the current
 or have otherwise been marked as paid or have a waiver... BEFORE SENDING THE E_MAIL,
 set the filters at the top of this page as follows...<br />
 Status: "Part or Fully Approved"<br />
-"Paid?" Value: "No Indication Given"<br />
+Payment Mechanism: "No Indication Given"<br />
 <br />
 Also look at list of e-mails sent to verify they went! (No subject and they will not go!)<br /><br />
 <form id="emailsendform" method="post" action="<?php
