@@ -351,7 +351,7 @@ echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/co
 
 echo "<p><br /><br /><b>Cost for your chosen modules (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
 // echo '<p><img alt="WorldPay" src="https://www.paypal.com/en_US/i/logo/PayPal_mark_60x38.gif" /></p>';
-echo "<p>Use the button below to pay for your enrolment in $modulespurchasedlong with RBS WorldPay.<br />
+echo "<p>Use the button below to pay for your enrolment in $modulespurchasedlong with WorldPay.<br />
 (Or to pay for Manchester Metropolitan University Master of Public Health programme.)</p>";
 echo '<p>(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy" target="_blank">http://www.peoples-uni.org/content/refund-policy</a>)</p>';
 
@@ -398,7 +398,7 @@ else {
 // accId<n>: specifies which merchant code should receive funds for this payment. By default our server tries accId1.
 ?>
 
-<input type="submit" value="Click this to go to the RBS WorldPay website to securely pay <?php echo "$amount $currency"; ?>" />
+<input type="submit" value="Click this to go to the WorldPay website to securely pay <?php echo "$amount $currency"; ?>" />
 
 </form>
 <br /><br />
@@ -407,27 +407,27 @@ else {
 //<script language="JavaScript" src="https://select.worldpay.com/wcc/logo?instId=XXXXX"></script>
 ?>
 
-<img src=https://www.worldpay.com/cgenerator/logos/visa.gif border=0 alt="Visa Credit payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/visa_debit.gif border=0 alt="Visa Debit payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/visa_electron.gif border=0 alt="Visa Electron payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/mastercard.gif border=0 alt="Mastercard payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/maestro.gif border=0 alt="Maestro payments supported by RBS WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/visa.gif border=0 alt="Visa Credit payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/visa_debit.gif border=0 alt="Visa Debit payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/visa_electron.gif border=0 alt="Visa Electron payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/mastercard.gif border=0 alt="Mastercard payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/maestro.gif border=0 alt="Maestro payments supported by WorldPay">
 <?php if (false) { ?>
-<img src=https://www.worldpay.com/cgenerator/logos/amex.gif border=0 alt="American Express payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/diners.gif border=0 alt="Diners payments supported by RBS WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/amex.gif border=0 alt="American Express payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/diners.gif border=0 alt="Diners payments supported by WorldPay">
 <?php } ?>
 <img src=https://www.worldpay.com/cgenerator/logos/jcb.gif border=0 alt="JCB">
-<img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by RBS WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by WorldPay">
 <?php if (false) { ?>
-<img src=https://www.worldpay.com/cgenerator/logos/laser.gif border=0 alt="Laser payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/ELV.gif border=0 alt="ELV payments supported by RBS WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/laser.gif border=0 alt="Laser payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/ELV.gif border=0 alt="ELV payments supported by WorldPay">
 <?php } ?>
 <?php if (true) { ?>
-<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By RBS WorldPay"></a>
+<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 <?php } ?>
 <?php if (false) { ?>
 // Security Certificate Errors...
-<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.rbsworldpay.com/images/cardlogos/poweredByRBSWorldPay.gif border=0 alt="Powered By RBS WorldPay"></a>
+<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.rbsworldpay.com/images/cardlogos/poweredByRBSWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 <?php } ?>
 
 </div>
