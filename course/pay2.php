@@ -319,7 +319,8 @@ else {
 }
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
-$amount = $application->costowed - $application->costpaid;
+//$amount = $application->costowed - $application->costpaid;
+$amount = amount_to_pay($application->userid);
 if ($amount < .01) {
 	notice('Error: There is zero owed for this application to Peoples-uni! Payment cannot be completed.', "$CFG->wwwroot");
 }
@@ -435,4 +436,50 @@ foreach ($countryname as $key => $countryvalue) {
 
 echo $OUTPUT->box_end();
 echo $OUTPUT->footer();
+
+
+function amount_to_pay($userid) {
+  global $DB;
+
+  $amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+
+  if ($inmmumph) {
+    // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now <= $payment_schedule->due_date_1) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now <= $payment_schedule->due_date_2) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now <= $payment_schedule->due_date_3) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
+  return $amount;
+}
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  return $amount;
+}
 ?>
