@@ -5,6 +5,21 @@
 *
 */
 
+/*
+  CREATE TABLE mdl_peoples_student_balance (
+    id BIGINT(10) unsigned NOT NULL auto_increment,
+    userid BIGINT(10) unsigned NOT NULL,
+    amount_delta VARCHAR(10),
+    balance VARCHAR(10),
+    currency VARCHAR(3) NOT NULL DEFAULT 'GBP',
+    detail text NOT NULL,
+    date BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    PRIMARY KEY (id)
+  );
+  CREATE INDEX mdl_peoples_student_balance_uid_ix ON mdl_peoples_student_balance (userid);
+*/
+
+
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
@@ -63,9 +78,6 @@ else {
 }
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
-$amount = $application->costowed;
-$currency = $application->currency;
-
 
 if (!empty($_POST['markpayconfirm'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -76,9 +88,9 @@ if (!empty($_POST['markpayconfirm'])) {
   if (empty($_POST['paymentmechanism'])) notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 
   $updated->paymentmechanism = (int)$_POST['paymentmechanism'];
-  if ($updated->paymentmechanism != 6) {
-		$updated->costpaid = $application->costowed;
-	}
+  //if ($updated->paymentmechanism != 6) {
+  //  $updated->costpaid = $application->costowed;
+  //}
 
   $DB->update_record('peoplesapplication', $updated);
 
@@ -101,21 +113,28 @@ if (!empty($_POST['markpayconfirm'])) {
 elseif (!empty($_POST['marksetowed'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-  $updated = new object();
-  $updated->id = $application->id;
-
-  if (!isset($_POST['costpaid']) || !is_numeric($_POST['costpaid'])) {
-    notice('Amount Paid must be a number. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  if (!isset($_POST['amount_delta']) || !is_numeric($_POST['amount_delta'])) {
+    notice('Payment Amount must be a number. Press Continue and re-enter.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
   }
-  if (!isset($_POST['costowed']) || !is_numeric($_POST['costowed'])) {
-		notice('Amount Owed must be a number. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  if (empty($_POST['detail'])) {
+    notice('Detail must be specified. Press Continue and re-enter.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
   }
 
-	$updated->costpaid = $_POST['costpaid'];
-	$updated->costowed = $_POST['costowed'];
+  if (!empty($application->userid)) { // $application->userid should NOT be empty, but just in case
+    $amount = get_balance($application->userid);
 
-  $DB->update_record('peoplesapplication', $updated);
+    $peoples_student_balance = new object();
+    $peoples_student_balance->userid = $application->userid;
+string -?????????????????????????????????????...
+    $peoples_student_balance->amount_delta = -$_POST['amount_delta'];
+    $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
+    $peoples_student_balance->currency = 'GBP';
+    $peoples_student_balance->detail = $_POST['detail'];
+    $peoples_student_balance->date = time();
+    $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+  }
 
+[[also updates should not use continue just sho page ALSO for MECHANISM]]
   notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
 elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
@@ -137,11 +156,91 @@ elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
 echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 
-echo "<p><br /><br /><b>$name<br />$modulespurchasedlong<br />Amount Owed:&nbsp;&nbsp;&nbsp;$amount $currency<br />Amount Paid:&nbsp;&nbsp;&nbsp;{$application->costpaid} $currency</b></p>";
+echo "<p><b>";
+echo "<br /><br />$name";
+echo "<br />$modulespurchasedlong<br />";
 
-echo '<br /><p>Update the payment confirmation status and then click "Submit the Payment Status".<br />(Note: Amount Paid will be set equal to Amount Owed,<br /> except when "Promised to Pay by End of Semester" is selected.)</p>';
+if (empty($application->paymentmechanism)) $mechanism = '';
+elseif ($application->paymentmechanism == 1) $mechanism = 'RBS Confirmed';
+elseif ($application->paymentmechanism == 2) $mechanism = 'Barclays';
+elseif ($application->paymentmechanism == 3) $mechanism = 'Diamond';
+elseif ($application->paymentmechanism ==10) $mechanism = 'Ecobank';
+elseif ($application->paymentmechanism == 4) $mechanism = 'Western Union';
+elseif ($application->paymentmechanism == 5) $mechanism = 'Indian Confederation';
+elseif ($application->paymentmechanism == 6) $mechanism = 'Promised End Semester';
+elseif ($application->paymentmechanism == 7) $mechanism = 'Posted Travellers Cheques';
+elseif ($application->paymentmechanism == 8) $mechanism = 'Posted Cash';
+elseif ($application->paymentmechanism == 9) $mechanism = 'MoneyGram';
+elseif ($application->paymentmechanism == 100) $mechanism = 'Waiver';
+elseif ($application->paymentmechanism == 102) $mechanism = 'Barclays Confirmed';
+elseif ($application->paymentmechanism == 103) $mechanism = 'Diamond Confirmed';
+elseif ($application->paymentmechanism == 110) $mechanism = 'Ecobank Confirmed';
+elseif ($application->paymentmechanism == 104) $mechanism = 'Western Union Confirmed';
+elseif ($application->paymentmechanism == 105) $mechanism = 'Indian Confederation Confirmed';
+elseif ($application->paymentmechanism == 107) $mechanism = 'Posted Travellers Cheques Confirmed';
+elseif ($application->paymentmechanism == 108) $mechanism = 'Posted Cash Confirmed';
+elseif ($application->paymentmechanism == 109) $mechanism = 'MoneyGram Confirmed';
+else  $mechanism = '';
+if (!empty($mechanism)) echo "<br />Payment Status for this Application: $mechanism<br />";
+
+$inmmumph = FALSE;
+$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC LIMIT 1");
+if (!empty($mphs)) {
+  foreach ($mphs as $mph) {
+    $inmmumph = TRUE;
+    echo '<br />Student was Enrolled in MMU MPH on ' . gmdate('d/m/Y H:i', $mph->datesubmitted) . '<br />';
+  }
+}
+
+echo "</b></p>";
+
+$balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id");
+if (!empty($balances)) {
+  $table = new html_table();
+
+  $table->head = array(
+    'Date',
+    'Detail',
+    'Transaction Amount &pound;s',
+    'Balance &pound;s (+ve means the Student Owes us)',
+  );
+
+  foreach ($balances as $balance) {
+    $rowdata = array();
+    $rowdata[] = gmdate('d/m/Y H:i', $balance->date);
+    $rowdata[] = htmlspecialchars($balance->detail, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = number_format($balance->amount_delta, 2);
+    $rowdata[] = number_format($balance->balance, 2);
+    $table->data[] = $rowdata;
+  }
+
+  echo html_writer::table($table);
+}
+else {
+    echo '<br />No Transactions for this Student';
+}
 
 ?>
+<br /><br />
+<p>To adjust the student balance, enter the Payment Amount & the Detail and then click "Subtract a new Payment Amount from the Student Balance".<br />
+(The should will be +ve if th student has made a payment or are given a full/part Bursary)<br />
+(Prefix the Amount with a "-" if it should increase the balance owed by the Student.)</p>
+
+<form id="setowedform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
+
+<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+Payment Amount: <input type="text" size="60" name="amount_delta" value="" /><br />
+Detail: <input type="text" size="60" name="detail" value="" /><br />
+<br />
+
+<input type="hidden" name="marksetowed" value="1" />
+<input type="submit" name="setowed" value="Subtract a new Payment Amount from the Student Balance" />
+</form>
+
+
+<br /><br /><br /><p>Update the payment confirmation status and then click "Submit the Payment Status".</p>
+
 <form id="payconfirmform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
 
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
@@ -173,22 +272,6 @@ Select the new payment status: <select name="paymentmechanism">
 <input type="submit" name="payconfirm" value="Submit the Payment Status" />
 </form>
 
-<br /><br /><br />
-<p>If the person did not pay the full amount (or even overpaid) set the Amount Paid here and then click "Submit the New Amount Paid".<br />
-(You can also set the Amount Owed if that has to be changed for some special reason.)</p>
-
-<form id="setowedform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
-
-<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
-<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
-
-Amount Paid: <input type="text" size="60" name="costpaid" value="<?php echo $application->costpaid ?>" /><br />
-Amount Owed: <input type="text" size="60" name="costowed" value="<?php echo $application->costowed ?>" /><br />
-<br />
-
-<input type="hidden" name="marksetowed" value="1" />
-<input type="submit" name="setowed" value="Submit the New Amount Paid (& Owed)" />
-</form>
 
 <br /><br /><br />
 <?php
@@ -234,10 +317,8 @@ if (!empty($applications)) {
   $table->head = array(
     'Semester',
     'sid',
-    'Paid?',
+    'Payment Status',
     'Registered?',
-    'Amount Owed',
-    'Amount Paid'
   );
 
   foreach ($applications as $sid => $app) {
@@ -256,38 +337,39 @@ if (!empty($applications)) {
     $rowdata[] = $sid;
 
     if (empty($app->paymentmechanism)) $mechanism = '';
-    elseif ($app->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
-    elseif ($app->paymentmechanism == 2) $mechanism = ' Barclays';
-    elseif ($app->paymentmechanism == 3) $mechanism = ' Diamond';
-    elseif ($app->paymentmechanism ==10) $mechanism = ' Ecobank';
-    elseif ($app->paymentmechanism == 4) $mechanism = ' Western Union';
-    elseif ($app->paymentmechanism == 5) $mechanism = ' Indian Confederation';
-    elseif ($app->paymentmechanism == 6) $mechanism = ' Promised End Semester';
-    elseif ($app->paymentmechanism == 7) $mechanism = ' Posted Travellers Cheques';
-    elseif ($app->paymentmechanism == 8) $mechanism = ' Posted Cash';
-    elseif ($app->paymentmechanism == 9) $mechanism = ' MoneyGram';
-    elseif ($app->paymentmechanism == 100) $mechanism = ' Waiver';
-    elseif ($app->paymentmechanism == 102) $mechanism = ' Barclays Confirmed';
-    elseif ($app->paymentmechanism == 103) $mechanism = ' Diamond Confirmed';
-    elseif ($app->paymentmechanism == 110) $mechanism = ' Ecobank Confirmed';
-    elseif ($app->paymentmechanism == 104) $mechanism = ' Western Union Confirmed';
-    elseif ($app->paymentmechanism == 105) $mechanism = ' Indian Confederation Confirmed';
-    elseif ($app->paymentmechanism == 107) $mechanism = ' Posted Travellers Cheques Confirmed';
-    elseif ($app->paymentmechanism == 108) $mechanism = ' Posted Cash Confirmed';
-    elseif ($app->paymentmechanism == 109) $mechanism = ' MoneyGram Confirmed';
+    elseif ($app->paymentmechanism == 1) $mechanism = 'RBS Confirmed';
+    elseif ($app->paymentmechanism == 2) $mechanism = 'Barclays';
+    elseif ($app->paymentmechanism == 3) $mechanism = 'Diamond';
+    elseif ($app->paymentmechanism ==10) $mechanism = 'Ecobank';
+    elseif ($app->paymentmechanism == 4) $mechanism = 'Western Union';
+    elseif ($app->paymentmechanism == 5) $mechanism = 'Indian Confederation';
+    elseif ($app->paymentmechanism == 6) $mechanism = 'Promised End Semester';
+    elseif ($app->paymentmechanism == 7) $mechanism = 'Posted Travellers Cheques';
+    elseif ($app->paymentmechanism == 8) $mechanism = 'Posted Cash';
+    elseif ($app->paymentmechanism == 9) $mechanism = 'MoneyGram';
+    elseif ($app->paymentmechanism == 100) $mechanism = 'Waiver';
+    elseif ($app->paymentmechanism == 102) $mechanism = 'Barclays Confirmed';
+    elseif ($app->paymentmechanism == 103) $mechanism = 'Diamond Confirmed';
+    elseif ($app->paymentmechanism == 110) $mechanism = 'Ecobank Confirmed';
+    elseif ($app->paymentmechanism == 104) $mechanism = 'Western Union Confirmed';
+    elseif ($app->paymentmechanism == 105) $mechanism = 'Indian Confederation Confirmed';
+    elseif ($app->paymentmechanism == 107) $mechanism = 'Posted Travellers Cheques Confirmed';
+    elseif ($app->paymentmechanism == 108) $mechanism = 'Posted Cash Confirmed';
+    elseif ($app->paymentmechanism == 109) $mechanism = 'MoneyGram Confirmed';
     else  $mechanism = '';
-    if ($app->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
-    elseif (abs($app->costowed - $app->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
-    else $z = '<span style="color:blue">' . "Paid $app->costpaid out of $app->costowed" . $mechanism . '</span>';
-    $rowdata[] = $z;
+    //if ($app->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
+    //elseif (abs($app->costowed - $app->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
+    //else $z = '<span style="color:blue">' . "Paid $app->costpaid out of $app->costowed" . $mechanism . '</span>';
+    //$rowdata[] = $z;
+    $rowdata[] = $mechanism;
 
     if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';
     elseif ($state === 033) $z = '<span style="color:green">Yes</span>';
     else $z = '<span style="color:blue">Some</span>';
     $rowdata[] = $z;
 
-    $rowdata[] = $app->costowed;
-    $rowdata[] = $app->costpaid;
+    //$rowdata[] = $app->costowed;
+    //$rowdata[] = $app->costpaid;
 
     $table->data[] = $rowdata;
   }
@@ -330,5 +412,20 @@ function sendapprovedmail($email, $subject, $message) {
   email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
 
   return $ret;
+}
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  return $amount;
 }
 ?>
