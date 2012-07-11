@@ -75,10 +75,28 @@ if (empty($_POST['M_donate']) && empty($_POST['M_wikitox']) && empty($_POST['M_m
 	$updated = new object();
 	$updated->id = $application->id;
 	$updated->paymentmechanism = 1;
-	$updated->costpaid = $application->costowed;
+	//$updated->costpaid = $application->costowed;
 	$updated->datafromworldpay = (int)$_POST['transId'];
 	$updated->datepaid = time();
   $DB->update_record('peoplesapplication', $updated);
+
+  if (!empty($application->userid)) { // $application->userid should NOT be empty, but just in case
+    $amount = get_balance($application->userid);
+
+    $peoples_student_balance = new object();
+    $peoples_student_balance->userid = $application->userid;
+    if (empty($_POST['amount'])) {
+      $peoples_student_balance->amount_delta = 0;
+    }
+    else {
+      $peoples_student_balance->amount_delta = -$_POST['amount'];
+    }
+    $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
+    $peoples_student_balance->currency = 'GBP';
+    $peoples_student_balance->detail = "WorldPay $updated->datafromworldpay";
+    $peoples_student_balance->date = time();
+    $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+  }
 }
 elseif (!empty($_POST['M_donate'])) {
 	$peoplesdonation = new object();
@@ -404,5 +422,20 @@ function email_error_to_payments($subject, $post) {
 
 function dontstripslashes($x) {
   return $x;
+}
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  return $amount;
 }
 ?>
