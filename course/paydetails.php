@@ -37,9 +37,10 @@ else {
 }
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
-$amount = $application->costowed - $application->costpaid;
-if ($amount < .01) {
-	notice('You have already indicated that you have paid the fees for this application to Peoples-uni!', "$CFG->wwwroot");
+//$amount = $application->costowed - $application->costpaid;
+if (!empty($application->userid)) $amount = get_balance((int)$application->userid);
+if (empty($application->userid) || $amount < .01) {
+  notice('You do not owe anything to Peoples-uni!', "$CFG->wwwroot");
 }
 $currency = $application->currency;
 
@@ -90,7 +91,7 @@ if (!empty($_POST['markpaydetails'])) {
 
   $updated->datafromworldpay = $_POST['datafromworldpay'];
 
-  $updated->costpaid = $application->costowed;
+  //$updated->costpaid = $application->costowed;
 
   $updated->datepaid = time();
 
@@ -119,7 +120,7 @@ Payment info that was entered by applicant: $info";
 
 echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
-echo "<p><br /><br /><b>Cost for your chosen modules (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
+echo "<p><br /><br /><b>Total amount that you owe (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
 
 // echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt information you received when you paid.<br />In particular, if you paid by Western Union, you must enter the Money Transfer Control Number (MTCN).<br />Then click Submit.</p>";
 echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt information you received when you paid.<br />Then click Submit.</p>";
@@ -161,5 +162,20 @@ echo $OUTPUT->footer();
 
 function dontstripslashes($x) {
   return $x;
+}
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  return $amount;
 }
 ?>
