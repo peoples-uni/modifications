@@ -78,6 +78,8 @@ else {
 }
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
+$sendemail = FALSE;
+
 
 if (!empty($_POST['markpayconfirm'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -92,22 +94,44 @@ if (!empty($_POST['markpayconfirm'])) {
   //  $updated->costpaid = $application->costowed;
   //}
 
-  $DB->update_record('peoplesapplication', $updated);
+  if ($updated->paymentmechanism != 199) {
+    $DB->update_record('peoplesapplication', $updated);
+  }
 
   if ($updated->paymentmechanism > 100) { // If Confirmed...
 
     $message  = "Dear $application->firstname,\n\n";
-    $message .= "Your payment of $updated->costpaid Pounds for Application $sid\n";
-    $message .= "has been confirmed received.\n\n";
+    $message .= "Here is a statement of your payment transactions...\n\n";
+
+    $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id");
+    if (!empty($balances)) {
+      $finalbalance = 0;
+      foreach ($balances as $balance) {
+        $finalbalance = $balance->balance;
+        $message .= 'Date: ' . gmdate('d/m/Y H:i', $balance->date) . 'Detail: ' . $balance->detail . 'Amount:' . number_format($balance->amount_delta, 2) . "\n";
+      }
+    }
+    else {
+      $message .= "No Transactions\n";
+    }
+
+    if ($finalbalance >= 0) {
+      $message .= "\nBalance you owe (UK Pounds): " . number_format($finalbalance, 2) . "\n\n";
+    }
+    else {
+      $message .= "\nBalance (Overpaid) (UK Pounds): " . number_format(-$finalbalance, 2) . "\n\n";
+    }
+
     $message .= "Semester: $application->semester\n\n";
     $message .= "Peoples Open Access Education Initiative Administrator.\n";
 
     sendapprovedmail($application->email, "Peoples-uni Payment Confirmed for: $application->lastname, $application->firstname; Application: $sid", $message);
 
-    notice('Success! Data saved (and e-mail sent to Student)!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+    //notice('Success! Data saved (and e-mail sent to Student)!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+    $sendemail = TRUE;
   }
   else {
-    notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+    //notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
   }
 }
 elseif (!empty($_POST['marksetowed'])) {
@@ -125,7 +149,6 @@ elseif (!empty($_POST['marksetowed'])) {
 
     $peoples_student_balance = new object();
     $peoples_student_balance->userid = $application->userid;
-string -?????????????????????????????????????...
     $peoples_student_balance->amount_delta = -$_POST['amount_delta'];
     $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
     $peoples_student_balance->currency = 'GBP';
@@ -134,8 +157,7 @@ string -?????????????????????????????????????...
     $DB->insert_record('peoples_student_balance', $peoples_student_balance);
   }
 
-[[also updates should not use continue just sho page ALSO for MECHANISM]]
-  notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  //notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
 elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -150,11 +172,13 @@ elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
   $newpaymentnote->note = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_POST['note'], ENT_COMPAT, 'UTF-8')));
   $DB->insert_record('peoplespaymentnote', $newpaymentnote);
 
-  notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  //notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
 
 echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
+
+if ($sendemail) echo '<p><b>NOTE: Confirmatory e-mail was sent to Student!</b></p>';
 
 echo "<p><b>";
 echo "<br /><br />$name";
@@ -239,7 +263,9 @@ Detail: <input type="text" size="60" name="detail" value="" /><br />
 </form>
 
 
-<br /><br /><br /><p>Update the payment confirmation status and then click "Submit the Payment Status".</p>
+<br /><br /><br /><p>Update the payment confirmation status and then click "Submit the Payment Status".<br />
+(If you set a "Confirmed" status or "Send e-mail...", the student will be e-mailed with their transactions and current Balance,<br />
+so be sure to set the correct balance first.)</p>
 
 <form id="payconfirmform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
 
@@ -266,6 +292,7 @@ Select the new payment status: <select name="paymentmechanism">
 <option value="105">Confirmed: Indian Confederation</option>
 <option value="107">Confirmed: Posted Travellers Cheques</option>
 <option value="108">Confirmed: Posted Cash</option>
+<option value="199">Send e-mail without changing Status</option>
 </select><br /><br />
 
 <input type="hidden" name="markpayconfirm" value="1" />
