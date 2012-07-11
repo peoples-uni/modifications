@@ -1487,7 +1487,10 @@ function sendemails($applications, $emailsubject, $emailbody, $reg) {
 
     $emailbodytemp = str_replace('GIVEN_NAME_HERE', trim($application->firstname), $emailbody);
     $emailbodytemp = str_replace('SID_HERE', $sid, $emailbodytemp);
-    $emailbodytemp = str_replace('AMOUNT_TO_PAY_HERE', $application->costowed, $emailbodytemp);
+
+    if (!empty($application->userid)) $amount = amount_to_pay($application->userid);
+    else $amount = 0;
+    $emailbodytemp = str_replace('AMOUNT_TO_PAY_HERE', $amount, $emailbodytemp);
 
     $emailbodytemp = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $emailbodytemp); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                                        // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
@@ -1538,5 +1541,50 @@ function dontaddslashes($x) {
 
 function dontstripslashes($x) {
   return $x;
+}
+
+function amount_to_pay($userid) {
+  global $DB;
+
+  $amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+
+  if ($inmmumph) {
+    // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now <= $payment_schedule->due_date_1) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now <= $payment_schedule->due_date_2) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now <= $payment_schedule->due_date_3) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
+  return $amount;
+}
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  return $amount;
 }
 ?>
