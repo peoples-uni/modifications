@@ -853,7 +853,7 @@ foreach ($applications as $sid => $application) {
 
 if ($sendemails) {
   if (empty($_POST['reg'])) $_POST['reg'] = '/^[a-zA-Z0-9_.-]/';
-  sendemails($applications, strip_tags(dontstripslashes($_POST['emailsubject'])), strip_tags(dontstripslashes($_POST['emailbody'])), dontstripslashes($_POST['reg']));
+  sendemails($applications, strip_tags(dontstripslashes($_POST['emailsubject'])), strip_tags(dontstripslashes($_POST['emailbody'])), dontstripslashes($_POST['reg']), $_POST['notforuptodatepayments']);
 }
 
 
@@ -1440,6 +1440,7 @@ Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 <input type="hidden" name="markemailsend" value="1" />
 <input type="submit" name="emailsend" value="Send e-mail to All" />
 <br />Regular expression for included e-mails (defaults to all, so do not change!):&nbsp;<input type="text" size="20" name="reg" value="/^[a-zA-Z0-9_.-]/" />
+<br />Check this if you want e-mails NOT to be sent to any student who is up to date in payments (balance <= 0):&nbsp;<input type="checkbox" name="notforuptodatepayments" />
 </form>
 <br /><br />
 <?php
@@ -1472,7 +1473,7 @@ function displaystat($stat, $title) {
 }
 
 
-function sendemails($applications, $emailsubject, $emailbody, $reg) {
+function sendemails($applications, $emailsubject, $emailbody, $reg, $notforuptodatepayments) {
 
   echo '<br />';
   $i = 1;
@@ -1495,13 +1496,15 @@ function sendemails($applications, $emailsubject, $emailbody, $reg) {
     $emailbodytemp = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $emailbodytemp); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                                        // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-    if (sendapprovedmail($email, $emailsubject, $emailbodytemp)) {
-      echo "($i) $email successfully sent.<br />";
+    if (empty($notforuptodatepayments) || $amount >= .01) {
+      if (sendapprovedmail($email, $emailsubject, $emailbodytemp)) {
+        echo "($i) $email successfully sent.<br />";
+      }
+      else {
+        echo "FAILURE TO SEND $email !!!<br />";
+      }
+      $i++;
     }
-    else {
-      echo "FAILURE TO SEND $email !!!<br />";
-    }
-    $i++;
   }
 }
 
