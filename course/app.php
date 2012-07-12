@@ -381,12 +381,12 @@ if (!empty($_POST['markmph'])) {
   $DB->insert_record('peoplesmph', $newmph);
 
   if (!empty($newmph->userid)) {
-    $amount = get_balance($newmph->userid);
+    $amount_to_pay_total = get_balance($newmph->userid);
 
     $peoples_student_balance = new object();
     $peoples_student_balance->userid = $newmph->userid;
     $peoples_student_balance->amount_delta = 1500;
-    $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
+    $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
     $peoples_student_balance->currency = 'GBP';
     $peoples_student_balance->detail = 'Initial Full amount for MMU MPH';
     $peoples_student_balance->date = time();
@@ -444,7 +444,27 @@ window.opener.location.reload();
 }
 
 
+$sid = $_REQUEST['sid'];
+
 $application = $DB->get_record('peoplesapplication', array('sid' => $_REQUEST['sid']));
+
+$inmmumph = FALSE;
+$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
+if (!empty($mphs)) {
+  foreach ($mphs as $mph) {
+    $inmmumph = TRUE;
+  }
+}
+
+if (!empty($application->userid)) {
+  $amount_to_pay_total = get_balance($application->userid);
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $application->userid));
+  $amount_to_pay_this_semester = amount_to_pay($application, $inmmumph, $payment_schedule);
+}
+else {
+  $amount_to_pay_total = 0;
+  $amount_to_pay_this_semester = 0;
+}
 
 
 $state = (int)$_REQUEST['state'];
@@ -484,25 +504,31 @@ $_REQUEST['35'] = strip_tags($_REQUEST['35']);
 $_REQUEST['36'] = strip_tags($_REQUEST['36']);
 $_REQUEST['21'] = strip_tags($_REQUEST['21']);
 
+
 //echo "<h1>Details for ".htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8').", ".htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8')."</h1>";
 
 echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+
 echo "<tr>";
 echo "<td>Family name</td>";
 echo "<td>" . htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8') . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Given name</td>";
 echo "<td>" . htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8') . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Email address</td>";
 echo "<td>" . htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8') . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Semester</td>";
 echo "<td>" . htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8') . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>First module</td>";
 echo '<td>';
@@ -520,6 +546,7 @@ else {
 }
 echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8') . '</span></td>';
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Second module</td>";
 echo '<td>';
@@ -538,66 +565,81 @@ else {
 echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8') . '</span></td>';
 echo "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>DOB</td>";
 echo "<td>" . $_REQUEST['dobday'] . "/" . $_REQUEST['dobmonth'] . "/" . $_REQUEST['dobyear'] . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Gender</td>";
 echo "<td>" . $_REQUEST['12'] . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Address</td>";
 echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'))) . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>City/Town</td>";
 echo "<td>" . htmlspecialchars($_REQUEST['14'], ENT_COMPAT, 'UTF-8') . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Country</td>";
 if (empty($countryname[$_REQUEST['13']])) echo "<td></td>";
 else echo "<td>" . $countryname[$_REQUEST['13']] . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Current Employment</td>";
 if (empty($employmentname[$_REQUEST['36']])) echo "<td></td>";
 else echo "<td>" . $employmentname[$_REQUEST['36']] . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Current Employment Details</td>";
 echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'))) . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Higher Education Qualification</td>";
 if (empty($qualificationname[$_REQUEST['34']])) echo "<td></td>";
 else echo "<td>" . $qualificationname[$_REQUEST['34']] . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Postgraduate Qualification</td>";
 if (empty($higherqualificationname[$_REQUEST['35']])) echo "<td></td>";
 else echo "<td>" . $higherqualificationname[$_REQUEST['35']] . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Other relevant qualifications or educational experience</td>";
 echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'))) . "</td>";
 echo "</tr>";
+
 echo "<tr>";
 echo "<td>Reasons for wanting to enrol</td>";
 echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'))) . "</td>";
 echo "</tr>";
+
 echo '<tr>';
 echo '<td>Sponsoring organisation</td>';
 echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'))) . '</td>';
 echo '</tr>';
+
 echo '<tr>';
 echo '<td>Scholarship</td>';
 echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'))) . '</td>';
 echo '</tr>';
+
 echo '<tr>';
 echo '<td>Why Not Completed Previous Semester</td>';
 echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'))) . '</td>';
 echo '</tr>';
+
 //echo "<tr>";
 //echo "<td>Method of payment</td>";
 //echo "<td>" . $_REQUEST['31'] . "</td>";
@@ -606,31 +648,39 @@ echo '</tr>';
 //echo "<td>Payment Identification</td>";
 //echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'))) . "</td>";
 //echo "</tr>";
+
 echo '<tr>';
 echo '<td>Desired Moodle Username</td>';
 echo '<td>' . htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8') . '</td>';
 echo '</tr>';
+
 if (!empty($_REQUEST['29'])) echo '<tr><td></td><td><a href="' . $CFG->wwwroot . '/course/student_completion.php?course=' . get_config(NULL, 'foundations_public_health_id') . '&userid=' . $_REQUEST['29'] . '" target="_blank">Student Foundations Public Health Completion</a></td></tr>';
 if (!empty($_REQUEST['29'])) echo '<tr><td></td><td><a href="' . $CFG->wwwroot . '/course/student.php?id=' . $_REQUEST['29'] . '" target="_blank">Student Grades</a></td></tr>';
 if (!empty($_REQUEST['29'])) echo '<tr><td></td><td><a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $_REQUEST['29'] . '" target="_blank">Student Submissions</a></td></tr>';
+
 echo '<tr>';
 echo '<td>sid</td>';
 echo '<td>' . $_REQUEST['sid'] . '</td>';
 echo '</tr>';
+
 echo '<tr>';
 echo '<td>Payment up to date?</td>';
 //if ($application->costpaid < .01) echo '<td><span style="color:red">No: &pound;' . $application->costowed . ' Owed</span></td>';
 //elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes: &pound;' . $application->costowed . '</span></td>';
 //else echo '<td><span style="color:blue">' . "Paid &pound;$application->costpaid out of &pound;$application->costowed" . '</span></td>';
-if (!empty($application->userid)) {
-  $amount = get_balance($application->userid);
-  if ($amount >= .01) echo '<td><span style="color:red">No: &pound;' . $amount . ' Owed</span></td>';
-  elseif (abs($amount) < .01) echo '<td><span style="color:green">Yes</span></td>';
-  else echo '<td><span style="color:blue">' . "Overpaid: &pound;$amount" . '</span></td>';
-}
-else {
-  echo '<td></td>';
-}
+if ($amount_to_pay_total >= .01) $x = '<span style="color:red">No: &pound;' . $amount_to_pay_total . ' Owed</span>';
+elseif (abs($amount_to_pay_total) < .01) $x = '<span style="color:green">Yes</span>';
+else $x = '<span style="color:blue">' . "Overpaid: &pound;$amount_to_pay_total" . '</span>';
+echo '<td>' . $x;
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts or Method/Status</a>';
+echo '</td>';
+echo '</tr>';
+
+echo '<tr>';
+echo '<td>Payment Owed this Semester (might be less because of instalments)</td>';
+echo '<td>&pound;' . $amount_to_pay_this_semester;
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts or Method/Status</a>';
+echo '</td>';
 echo '</tr>';
 
 if (empty($application->paymentmechanism)) $mechanism = '';
@@ -655,8 +705,6 @@ elseif ($application->paymentmechanism == 108) $mechanism = 'Posted Cash Confirm
 elseif ($application->paymentmechanism == 109) $mechanism = 'MoneyGram Confirmed';
 else  $mechanism = '';
 
-$sid = $_REQUEST['sid'];
-
 $pnote = '';
 $paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($paymentnotes)) {
@@ -664,9 +712,9 @@ if (!empty($paymentnotes)) {
 }
 
 echo '<tr>';
-echo '<td>Payment Mechanism</td>';
+echo '<td>Payment Method/Status</td>';
 echo '<td>' . $mechanism;
-echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Change Payment Confirmation</a>';
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts or Method/Status</a>';
 echo $pnote;
 echo '</td>';
 echo '</tr>';
@@ -705,15 +753,12 @@ if (!empty($notes)) {
 $applymmumphtext = array('0' => '', '1' => '', '2' => 'Wants to Apply for MMU MPH', '3' => 'Says Already in MMU MPH');
 $applymmumphtext = $applymmumphtext[$_REQUEST['applymmumph']];
 
-$inmmumph = FALSE;
-$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($mphs) || !empty($applymmumphtext)) {
   echo '<tr><td colspan="2">MMU MPH Status...</td></tr>';
 
   if (!empty($applymmumphtext)) echo '<tr><td></td><td>' . $applymmumphtext . '</td></tr>';
 
   foreach ($mphs as $mph) {
-    $inmmumph = TRUE;
     echo '<tr><td>';
     echo gmdate('d/m/Y H:i', $mph->datesubmitted);
     echo '</td><td>';
@@ -728,11 +773,6 @@ if ($state === 022) {
   $given_name = $_REQUEST['2'];
   $course1    = $_REQUEST['18'];
   $course2    = $_REQUEST['19'];
-  $sid        = $_REQUEST['sid'];
-
-  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $application->userid));
-
-  $amount = amount_to_pay($application, $inmmumph, $payment_schedule);
 
   if (TRUE || !$inmmumph) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
   else $peoples_approval_email = get_config(NULL, 'peoples_approval_email'); // MPH Students
@@ -740,7 +780,7 @@ if ($state === 022) {
   $peoples_approval_email = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email);
   $peoples_approval_email = str_replace('COURSE_MODULE_1_NAME_HERE', $course1, $peoples_approval_email);
   $peoples_approval_email = str_replace('SID_HERE',                  $sid, $peoples_approval_email);
-  $peoples_approval_email = str_replace('AMOUNT_TO_PAY_HERE',        $amount, $peoples_approval_email);
+  $peoples_approval_email = str_replace('AMOUNT_TO_PAY_HERE',        $amount_to_pay_this_semester, $peoples_approval_email);
   if (!empty($course2)) {
     $peoples_approval_email = str_replace('COURSE_MODULE_2_TEXT_HERE', "and the Course Module '" . $course2 . "' ", $peoples_approval_email);
     $peoples_approval_email = str_replace('COURSE_MODULE_2_WARNING_TEXT_HERE', "Please note that you have applied to take two modules, these run at the
@@ -1915,8 +1955,7 @@ foreach ($modules as $key => $modulename) {
 }
 ?>
 </select>
-<br />(Amount Owed will be increased accordingly. If the applicant has already paid the increased amount, you should go to <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid']; ?>" target="_blank">Change Payment Confirmation</a>
-<br />to (re-)indicate payment has been made. Note, the additional module will not be mentioned there.)
+<br />(Payment Balance will be increased accordingly.)
 </form>
 <br />
 <?php
