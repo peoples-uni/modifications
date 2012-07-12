@@ -87,7 +87,7 @@ if (!empty($_POST['markpayconfirm'])) {
   $updated = new object();
   $updated->id = $application->id;
 
-  if (empty($_POST['paymentmechanism'])) notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  if (empty($_POST['paymentmechanism'])) notice('You must select the Payment Method/Status. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 
   $updated->paymentmechanism = (int)$_POST['paymentmechanism'];
   //if ($updated->paymentmechanism != 6) {
@@ -205,7 +205,7 @@ elseif ($application->paymentmechanism == 107) $mechanism = 'Posted Travellers C
 elseif ($application->paymentmechanism == 108) $mechanism = 'Posted Cash Confirmed';
 elseif ($application->paymentmechanism == 109) $mechanism = 'MoneyGram Confirmed';
 else  $mechanism = '';
-if (!empty($mechanism)) echo "<br />Payment Status for this Application: $mechanism<br />";
+if (!empty($mechanism)) echo "<br />Payment Method/Status for this Application: $mechanism<br />";
 
 $inmmumph = FALSE;
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC LIMIT 1");
@@ -263,7 +263,7 @@ Detail: <input type="text" size="60" name="detail" value="" /><br />
 </form>
 
 
-<br /><br /><br /><p>Update the payment confirmation status and then click "Submit the Payment Status".<br />
+<br /><br /><br /><p>Update the payment method/status and then click "Submit the Payment Method/Status".<br />
 (If you set a "Confirmed" status or "Send e-mail...", the student will be e-mailed with their transactions and current Balance,<br />
 so be sure to set the correct balance first.)</p>
 
@@ -272,7 +272,7 @@ so be sure to set the correct balance first.)</p>
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
-Select the new payment status: <select name="paymentmechanism">
+Select the new payment method/status: <select name="paymentmechanism">
 <option value="0">Select one...</option>
 <option value="2">Barclays Bank Transfer</option>
 <option value="10">Ecobank Nigeria PLC. Transfer</option>
@@ -296,7 +296,7 @@ Select the new payment status: <select name="paymentmechanism">
 </select><br /><br />
 
 <input type="hidden" name="markpayconfirm" value="1" />
-<input type="submit" name="payconfirm" value="Submit the Payment Status" />
+<input type="submit" name="payconfirm" value="Submit the Payment Method/Status" />
 </form>
 
 
