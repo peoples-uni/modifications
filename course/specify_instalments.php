@@ -32,6 +32,8 @@ if (empty($userrecord)) {
   die();
 }
 
+$amount_to_pay_total = get_balance($userid);
+
 
 $PAGE->set_title('Specify Instalments');
 $PAGE->set_heading('Specify Instalments');
@@ -43,10 +45,18 @@ echo $OUTPUT->box_start('generalbox boxaligncenter');
 if (!empty($_POST['markspecifyinstalments'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-  if (empty($_POST['paymentmechanism'])) notice('You must select the Payment Method/Status. Press Continue and re-select.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
-  would enter an (up to four semester) schedule for payments.
-  Any individual (non zero) payment would have to be at least 25% of what is owed.
-
+  if (!isset($_POST['amount_1']) || !is_numeric($_POST['amount_1'])) notice('Instalment 1 must be a number. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if (!isset($_POST['amount_2']) || !is_numeric($_POST['amount_2'])) notice('Instalment 2 must be a number. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if (!isset($_POST['amount_3']) || !is_numeric($_POST['amount_3'])) notice('Instalment 3 must be a number. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if (!isset($_POST['amount_4']) || !is_numeric($_POST['amount_4'])) notice('Instalment 4 must be a number. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if ($_POST['amount_4'] != 0.0 && $_POST['amount_3'] == 0.0) notice('Instalment 3 must be non-zero if Instalment 4 is non-zero. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if ($_POST['amount_4'] != 0.0 && $_POST['amount_2'] == 0.0) notice('Instalment 2 must be non-zero if Instalment 4 is non-zero. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if ($_POST['amount_3'] != 0.0 && $_POST['amount_2'] == 0.0) notice('Instalment 2 must be non-zero if Instalment 3 is non-zero. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if (                             ($_POST['amount_1']/$amount_to_pay_total) <= 0.24) notice('Instalment 1 must be at least 25% of the amount owed (UK Pounds ' . $amount_to_pay_total . '). Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if ($_POST['amount_2'] != 0.0 && ($_POST['amount_2']/$amount_to_pay_total) <= 0.24) notice('Instalment 2 must be at least 25% of the amount owed (UK Pounds ' . $amount_to_pay_total . '), or it can be zero if there is only 1 instalment. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if ($_POST['amount_3'] != 0.0 && ($_POST['amount_3']/$amount_to_pay_total) <= 0.24) notice('Instalment 3 must be at least 25% of the amount owed (UK Pounds ' . $amount_to_pay_total . '), or it can be zero if there are only 2 instalments. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if ($_POST['amount_4'] != 0.0 && ($_POST['amount_4']/$amount_to_pay_total) <= 0.24) notice('Instalment 4 must be at least 25% of the amount owed (UK Pounds ' . $amount_to_pay_total . '), or it can be zero. Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
+  if (abs($_POST['amount_2'] + $_POST['amount_2'] + $_POST['amount_3'] + $_POST['amount_4'] - $amount_to_pay_total) > .01) notice('Total must add up to amount owed (UK Pounds ' . $amount_to_pay_total . '). Press Continue and re-specify amounts.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
 
   $peoples_payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
   if (empty($peoples_payment_schedule)) {
@@ -58,14 +68,14 @@ if (!empty($_POST['markspecifyinstalments'])) {
   else {
     $insert = FALSE;
   }
-  $peoples_payment_schedule->amount_1 = $_POST[''];
-  $peoples_payment_schedule->amount_2 = $_POST[''];
-  $peoples_payment_schedule->amount_3 = $_POST[''];
-  $peoples_payment_schedule->amount_4 = $_POST[''];
-  $peoples_payment_schedule->due_date_1 = $_POST[''];
-  $peoples_payment_schedule->due_date_2 = $_POST[''];
-  $peoples_payment_schedule->due_date_3 = $_POST[''];
-  $peoples_payment_schedule->due_date_4 = $_POST[''];
+  $peoples_payment_schedule->amount_1 = $_POST['amount_1'];
+  $peoples_payment_schedule->amount_2 = $_POST['amount_2'];
+  $peoples_payment_schedule->amount_3 = $_POST['amount_3'];
+  $peoples_payment_schedule->amount_4 = $_POST['amount_4'];
+  $peoples_payment_schedule->due_date_1 = ;
+  $peoples_payment_schedule->due_date_2 = ;
+  $peoples_payment_schedule->due_date_3 = ;
+  $peoples_payment_schedule->due_date_4 = ;
   $peoples_payment_schedule->user_who_modified = $USER->id;
   $peoples_payment_schedule->date_modified = time();
   if ($insert) {
@@ -136,15 +146,20 @@ if ($inmmumph && (empty($payment_schedule) || $ismanager)) {
 would enter an (up to four semester) schedule for payments.
 Any individual (non zero) payment would have to be at least 25% of what is owed.
   }
+
+are they allowed set any time yes base date on start of semester or half year????
+on or before but need other date, when to add in next years payment?
+  $due_date_1 =
 ?>
 
 <form id="specifyinstalmentsform" method="post" action="<?php echo $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid; ?>">
 
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
-
-Payment Amount: <input type="text" size="60" name="amount_delta" value="" /><br />
-are they allowed set any time yes base date on start of semester or half year????
+Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $due_date_1); ?>: <input type="text" size="10" name="amount_1" value="<?php echo $amount_to_pay_total ?>" /><br />
+Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $due_date_2); ?>: <input type="text" size="10" name="amount_2" value="0" /><br />
+Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $due_date_3); ?>: <input type="text" size="10" name="amount_3" value="0" /><br />
+Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $due_date_4); ?>: <input type="text" size="10" name="amount_4" value="0" /><br />
 
 <input type="hidden" name="markspecifyinstalments" value="1" />
 <input type="submit" name="specifyinstalments" value="Submit the Instalment Payment Schedule" />
@@ -170,4 +185,19 @@ echo '<br /><br /></div>';
 
 echo $OUTPUT->box_end();
 echo $OUTPUT->footer();
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  return $amount;
+}
 ?>
