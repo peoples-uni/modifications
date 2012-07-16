@@ -345,6 +345,9 @@ if (!empty($payment_schedule)) {
   $table->data[] = $rowdata;
   echo html_writer::table($table);
 
+  $user_who_modified = $DB->get_record('user', array('id' => $payment_schedule->user_who_modified));
+  echo '<br />(last modified by ' . fullname($user_who_modified) . ' on ' . gmdate('d/m/Y H:i', $payment_schedule->date_modified) . ')';
+
   echo '<br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Change Instalments for this Student</a>';
 }
 else {
