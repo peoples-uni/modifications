@@ -30,6 +30,8 @@
     due_date_2 BIGINT(10) unsigned NOT NULL DEFAULT 0,
     due_date_3 BIGINT(10) unsigned NOT NULL DEFAULT 0,
     due_date_4 BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    user_who_modified BIGINT(10) unsigned NOT NULL,
+    date_modified BIGINT(10) unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
   );
   CREATE INDEX mdl_peoples_payment_schedule_uid_ix ON mdl_peoples_payment_schedule (userid);
