@@ -137,14 +137,14 @@ echo '</b></p>';
 if ($inmmumph && (empty($payment_schedule) || $ismanager)) {
 ?>
 <br /><br /><br /><p>Specify the Payment Schedule and then click "Submit the Instalment Payment Schedule".<br />
+You can enter up to four instalments.<br />
+Any individual (non zero) instalment must be at least 25% of what is owed (UK Pounds <?php echo $amount_to_pay_total ?>).<br />
 
 <?php
   if (!$ismanager) {
     echo '<b>Note: You can only enter this schedule once!</b><br />';
     echo '<b>Note: All payments must be completed before you start your Masters dissertation,</b><br />';
     echo '<b>please choose instalments accordingly! If this is a problem please e-mail <a href="mailto:payments@peoples-uni.org?subject=Instalment query">payments@peoples-uni.org</a></b><br />';
-would enter an (up to four semester) schedule for payments.
-Any individual (non zero) payment would have to be at least 25% of what is owed.
   }
 
 are they allowed set any time yes base date on start of semester or half year????
