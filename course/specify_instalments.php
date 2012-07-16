@@ -44,7 +44,8 @@ if (!empty($_POST['markspecifyinstalments'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
   if (empty($_POST['paymentmechanism'])) notice('You must select the Payment Method/Status. Press Continue and re-select.', "$CFG->wwwroot/course/specify_instalments.php?userid=$userid");
-  Any MMU student (if they wanted to pay in instalments) would enter an (up to four semester) schedule for payments. If this is not done the student would have to pay the full amount in one go. Any individual (non zero) payment would have to be at least 25% of what is owed. The form will have a message: "Note: you must have completed all payment before you enrol for the Masters dissertation."
+  would enter an (up to four semester) schedule for payments.
+  Any individual (non zero) payment would have to be at least 25% of what is owed.
 
 
   $peoples_payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
@@ -129,13 +130,11 @@ if ($inmmumph && (empty($payment_schedule) || $ismanager)) {
 
 <?php
   if (!$ismanager) {
-    echo '<b>Note: you can only enter this once!</b><br />';
-    echo '<b>Note: you can only enter this once!</b><br />';
-    Like... not disertation.
-    "All payments [[(including all instalment payments)]] must be completed before you can graduate"
-    before the dissertation
-    Any MMU student (if they wanted to pay in instalments) would enter an (up to four semester) schedule for payments. If this is not done the student would have to pay the full amount in one go. Any individual (non zero) payment would have to be at least 25% of what is owed. The form will have a message: "Note: you must have completed all payment before you enrol for the Masters dissertation."
-
+    echo '<b>Note: You can only enter this schedule once!</b><br />';
+    echo '<b>Note: All payments must be completed before you start your Masters dissertation,</b><br />';
+    echo '<b>please choose instalments accordingly! If this is a problem please e-mail <a href="mailto:payments@peoples-uni.org?subject=Instalment query">payments@peoples-uni.org</a></b><br />';
+would enter an (up to four semester) schedule for payments.
+Any individual (non zero) payment would have to be at least 25% of what is owed.
   }
 ?>
 
