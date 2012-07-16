@@ -342,6 +342,11 @@ if (!empty($payment_schedule)) {
   $rowdata[] = '&pound;' . number_format($payment_schedule->amount_4, 2);
   $table->data[] = $rowdata;
   echo html_writer::table($table);
+
+  echo '<br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Change Instalments for this Student</a>';
+}
+else {
+  echo '<br /><br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Specify Instalments for this Student (normally done by Student themselves)</a>';
 }
 
 echo '<br /><br /><br />';
