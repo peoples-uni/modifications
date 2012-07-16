@@ -17,6 +17,22 @@
     PRIMARY KEY (id)
   );
   CREATE INDEX mdl_peoples_student_balance_uid_ix ON mdl_peoples_student_balance (userid);
+
+  CREATE TABLE mdl_peoples_payment_schedule (
+    id BIGINT(10) unsigned NOT NULL auto_increment,
+    userid BIGINT(10) unsigned NOT NULL,
+    amount_1 VARCHAR(10),
+    amount_2 VARCHAR(10),
+    amount_3 VARCHAR(10),
+    amount_4 VARCHAR(10),
+    currency VARCHAR(3) NOT NULL DEFAULT 'GBP',
+    due_date_1 BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    due_date_2 BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    due_date_3 BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    due_date_4 BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    PRIMARY KEY (id)
+  );
+  CREATE INDEX mdl_peoples_payment_schedule_uid_ix ON mdl_peoples_payment_schedule (userid);
 */
 
 
@@ -300,8 +316,35 @@ Select the new payment method/status: <select name="paymentmechanism">
 </form>
 
 
-<br /><br /><br />
 <?php
+$payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+if (!empty($payment_schedule)) {
+  echo '<br /><br /><br />';
+  $table = new html_table();
+  $table->head = array(
+    'Last Date for Payment of Instalment 1',
+    'Instalment 1 Amount',
+    'Last Date for Payment of Instalment 2',
+    'Instalment 2 Amount',
+    'Last Date for Payment of Instalment 3',
+    'Instalment 3 Amount',
+    'Last Date for Payment of Instalment 4',
+    'Instalment 4 Amount',
+  );
+  $rowdata = array();
+  $rowdata[] = gmdate('d/m/Y', $payment_schedule->due_date_1);
+  $rowdata[] = '&pound;' . number_format($payment_schedule->amount_1, 2);
+  $rowdata[] = gmdate('d/m/Y', $payment_schedule->due_date_2);
+  $rowdata[] = '&pound;' . number_format($payment_schedule->amount_2, 2);
+  $rowdata[] = gmdate('d/m/Y', $payment_schedule->due_date_3);
+  $rowdata[] = '&pound;' . number_format($payment_schedule->amount_3, 2);
+  $rowdata[] = gmdate('d/m/Y', $payment_schedule->due_date_4);
+  $rowdata[] = '&pound;' . number_format($payment_schedule->amount_4, 2);
+  $table->data[] = $rowdata;
+  echo html_writer::table($table);
+}
+
+echo '<br /><br /><br />';
 $paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($paymentnotes)) {
   echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
