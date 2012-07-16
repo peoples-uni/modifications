@@ -83,6 +83,14 @@ echo '<p><b>';
 
 echo '<br /><br />' . fullname($userrecord);
 
+$inmmumph = FALSE;
+$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+if (!empty($mphs)) {
+  foreach ($mphs as $mph) {
+    $inmmumph = TRUE;
+  }
+}
+
 $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
 if (!empty($payment_schedule)) {
   echo '<br /><br /><br />';
@@ -115,18 +123,17 @@ if (!empty($payment_schedule)) {
 
 echo '</b></p>';
 
-if (empty($payment_schedule) || $ismanager) {
+if ($inmmumph && (empty($payment_schedule) || $ismanager)) {
 ?>
 <br /><br /><br /><p>Specify the Payment Schedule and then click "Submit the Instalment Payment Schedule".<br />
 
 <?php
   if (!$ismanager) {
-    echo <b>!NOTE CAN ONLY BE DOEN ONCE FOR STUDNET</b><br />;
-
+    echo '<b>Note: you can only enter this once!</b><br />';
+    echo '<b>Note: you can only enter this once!</b><br />';
     Like... not disertation.
     "All payments [[(including all instalment payments)]] must be completed before you can graduate"
-    NO...
-    Much as I'd like to agree with the proposal in your reply to Dick I'm still of the view that, as we discussed, the break point, for now, needs to come before the dissertation and that we review annually.
+    before the dissertation
     Any MMU student (if they wanted to pay in instalments) would enter an (up to four semester) schedule for payments. If this is not done the student would have to pay the full amount in one go. Any individual (non zero) payment would have to be at least 25% of what is owed. The form will have a message: "Note: you must have completed all payment before you enrol for the Masters dissertation."
 
   }
@@ -147,7 +154,17 @@ are they allowed set any time yes base date on start of semester or half year???
 <?php
 }
 else {
-  YOU HAVE ALREADY SET YOUR PAYMENT SCHEDUEL MAIL TO PAYMENTS IF NOT??????
+  if ($ismanager) {
+    echo '<b>This Student is not in the MMU MPH!</b><br />';
+  }
+  else {
+    if (!$inmmumph) {
+      echo '<b>You are not in the MMU MPH!</b><br />';
+    }
+    else {
+      echo '<b>You have already set your payment schedule. If there is a need to change it please e-mail <a href="mailto:payments@peoples-uni.org?subject=Instalment query">payments@peoples-uni.org</a></b><br />';
+    }
+  }
 }
 
 echo '<br /><br /></div>';
