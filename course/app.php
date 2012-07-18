@@ -823,7 +823,7 @@ same time and will involve a heavy workload - please be sure you do have the tim
 be recorded as MPH by clicking "Record that the Student has been enrolled in the MMU MPH" BEFORE APPROVAL<br />
 (to pick up correct wording for e-mail).</b></i>
 <br /><i><b>NOTE: Please check the Amount Owed by the student looks OK before sending.<br />
-To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/student_account.php?userid=' . $application->userid; ?>" target="_blank">click here for the Student Payment Account</a></b></i>
+To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts or Method/Status</a></b></i>
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/appaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
