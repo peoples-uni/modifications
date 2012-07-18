@@ -30,6 +30,10 @@
     expect_amount_2_date BIGINT(10) unsigned NOT NULL DEFAULT 0,
     expect_amount_3_date BIGINT(10) unsigned NOT NULL DEFAULT 0,
     expect_amount_4_date BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    due_date_1 BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    due_date_2 BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    due_date_3 BIGINT(10) unsigned NOT NULL DEFAULT 0,
+    due_date_4 BIGINT(10) unsigned NOT NULL DEFAULT 0,
     user_who_modified BIGINT(10) unsigned NOT NULL,
     date_modified BIGINT(10) unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY (id)

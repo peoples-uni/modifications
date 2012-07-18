@@ -76,6 +76,10 @@ if (!empty($_POST['markspecifyinstalments'])) {
   $peoples_payment_schedule->expect_amount_2_date = ;
   $peoples_payment_schedule->expect_amount_3_date = ;
   $peoples_payment_schedule->expect_amount_4_date = ;
+  $peoples_payment_schedule->due_date_1 = ;
+  $peoples_payment_schedule->due_date_2 = ;
+  $peoples_payment_schedule->due_date_3 = ;
+  $peoples_payment_schedule->due_date_4 = ;
   $peoples_payment_schedule->user_who_modified = $USER->id;
   $peoples_payment_schedule->date_modified = time();
   if ($insert) {
