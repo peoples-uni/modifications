@@ -1992,9 +1992,9 @@ function amount_to_pay($application, $inmmumph, $payment_schedule) {
   else { // MPH: Take Outstanding Balance and adjust for instalments if necessary
     if (!empty($payment_schedule)) {
       $now = time();
-      if     ($now <= $payment_schedule->due_date_1) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now <= $payment_schedule->due_date_2) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now <= $payment_schedule->due_date_3) $amount -= (                                                            $payment_schedule->amount_4);
+      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
       // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
     }
   }
