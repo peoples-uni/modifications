@@ -72,14 +72,30 @@ if (!empty($_POST['markspecifyinstalments'])) {
   $peoples_payment_schedule->amount_2 = $_POST['amount_2'];
   $peoples_payment_schedule->amount_3 = $_POST['amount_3'];
   $peoples_payment_schedule->amount_4 = $_POST['amount_4'];
-  $peoples_payment_schedule->expect_amount_1_date = ;
-  $peoples_payment_schedule->expect_amount_2_date = ;
-  $peoples_payment_schedule->expect_amount_3_date = ;
-  $peoples_payment_schedule->expect_amount_4_date = ;
-  $peoples_payment_schedule->due_date_1 = ;
-  $peoples_payment_schedule->due_date_2 = ;
-  $peoples_payment_schedule->due_date_3 = ;
-  $peoples_payment_schedule->due_date_4 = ;
+
+  $year = (int)gmdate('Y');
+  $month = (int)gmdate('n');
+  if ($month <= 6) {
+    $peoples_payment_schedule->expect_amount_1_date = gmmktime(0, 0, 0,  1, 1, $year);
+    $peoples_payment_schedule->due_date_1           = gmmktime(0, 0, 0,  4, 1, $year);
+    $peoples_payment_schedule->expect_amount_2_date = gmmktime(0, 0, 0,  7, 1, $year);
+    $peoples_payment_schedule->due_date_2           = gmmktime(0, 0, 0, 10, 1, $year);
+    $peoples_payment_schedule->expect_amount_3_date = gmmktime(0, 0, 0,  1, 1, $year + 1);
+    $peoples_payment_schedule->due_date_3           = gmmktime(0, 0, 0,  4, 1, $year + 1);
+    $peoples_payment_schedule->expect_amount_4_date = gmmktime(0, 0, 0,  7, 1, $year + 1);
+    $peoples_payment_schedule->due_date_4           = gmmktime(0, 0, 0, 10, 1, $year + 1);
+  }
+  else {
+    $peoples_payment_schedule->expect_amount_1_date = gmmktime(0, 0, 0,  7, 1, $year);
+    $peoples_payment_schedule->due_date_1           = gmmktime(0, 0, 0, 10, 1, $year);
+    $peoples_payment_schedule->expect_amount_2_date = gmmktime(0, 0, 0,  1, 1, $year + 1);
+    $peoples_payment_schedule->due_date_2           = gmmktime(0, 0, 0,  4, 1, $year + 1);
+    $peoples_payment_schedule->expect_amount_3_date = gmmktime(0, 0, 0,  7, 1, $year + 1);
+    $peoples_payment_schedule->due_date_3           = gmmktime(0, 0, 0, 10, 1, $year + 1);
+    $peoples_payment_schedule->expect_amount_4_date = gmmktime(0, 0, 0,  1, 1, $year + 2);
+    $peoples_payment_schedule->due_date_4           = gmmktime(0, 0, 0,  4, 1, $year + 2);
+  }
+
   $peoples_payment_schedule->user_who_modified = $USER->id;
   $peoples_payment_schedule->date_modified = time();
   if ($insert) {
@@ -151,19 +167,38 @@ Any individual (non zero) instalment must be at least 25% of what is owed (UK Po
     echo '<b>please choose instalments accordingly! If this is a problem please e-mail <a href="mailto:payments@peoples-uni.org?subject=Instalment query">payments@peoples-uni.org</a></b><br />';
   }
 
-are they allowed set any time yes base date on start of semester or half year????
-on or before but need other date, when to add in next years payment?
-  $due_date_1 =
+  $year = (int)gmdate('Y');
+  $month = (int)gmdate('n');
+  if ($month <= 6) {
+    $peoples_payment_schedule->expect_amount_1_date = gmmktime(0, 0, 0,  1, 1, $year);
+    $peoples_payment_schedule->due_date_1           = gmmktime(0, 0, 0,  4, 1, $year);
+    $peoples_payment_schedule->expect_amount_2_date = gmmktime(0, 0, 0,  7, 1, $year);
+    $peoples_payment_schedule->due_date_2           = gmmktime(0, 0, 0, 10, 1, $year);
+    $peoples_payment_schedule->expect_amount_3_date = gmmktime(0, 0, 0,  1, 1, $year + 1);
+    $peoples_payment_schedule->due_date_3           = gmmktime(0, 0, 0,  4, 1, $year + 1);
+    $peoples_payment_schedule->expect_amount_4_date = gmmktime(0, 0, 0,  7, 1, $year + 1);
+    $peoples_payment_schedule->due_date_4           = gmmktime(0, 0, 0, 10, 1, $year + 1);
+  }
+  else {
+    $peoples_payment_schedule->expect_amount_1_date = gmmktime(0, 0, 0,  7, 1, $year);
+    $peoples_payment_schedule->due_date_1           = gmmktime(0, 0, 0, 10, 1, $year);
+    $peoples_payment_schedule->expect_amount_2_date = gmmktime(0, 0, 0,  1, 1, $year + 1);
+    $peoples_payment_schedule->due_date_2           = gmmktime(0, 0, 0,  4, 1, $year + 1);
+    $peoples_payment_schedule->expect_amount_3_date = gmmktime(0, 0, 0,  7, 1, $year + 1);
+    $peoples_payment_schedule->due_date_3           = gmmktime(0, 0, 0, 10, 1, $year + 1);
+    $peoples_payment_schedule->expect_amount_4_date = gmmktime(0, 0, 0,  1, 1, $year + 2);
+    $peoples_payment_schedule->due_date_4           = gmmktime(0, 0, 0,  4, 1, $year + 2);
+  }
 ?>
 
 <form id="specifyinstalmentsform" method="post" action="<?php echo $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid; ?>">
 
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
-Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $due_date_1); ?>: <input type="text" size="10" name="amount_1" value="<?php echo $amount_to_pay_total ?>" /><br />
-Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $due_date_2); ?>: <input type="text" size="10" name="amount_2" value="0" /><br />
-Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $due_date_3); ?>: <input type="text" size="10" name="amount_3" value="0" /><br />
-Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $due_date_4); ?>: <input type="text" size="10" name="amount_4" value="0" /><br />
+Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $peoples_payment_schedule->due_date_1); ?>: <input type="text" size="10" name="amount_1" value="<?php echo $amount_to_pay_total ?>" /><br />
+Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $peoples_payment_schedule->due_date_2); ?>: <input type="text" size="10" name="amount_2" value="0" /><br />
+Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $peoples_payment_schedule->due_date_3); ?>: <input type="text" size="10" name="amount_3" value="0" /><br />
+Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $peoples_payment_schedule->due_date_4); ?>: <input type="text" size="10" name="amount_4" value="0" /><br />
 
 <input type="hidden" name="markspecifyinstalments" value="1" />
 <input type="submit" name="specifyinstalments" value="Submit the Instalment Payment Schedule" />
