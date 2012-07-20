@@ -56,7 +56,7 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Making a Donation, Paying for MMU MPH</a><br />
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Making a Donation</a><br />
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a><br />
@@ -598,8 +598,9 @@ When the "Details" button is pressed for an application, additional applicant da
 </li>
 <li>
 "Payment up to date?" indicates if there is any payment due from the student (if they are paying by instalments, this indicates the total due, NOT the amount due this semester). It also indicates overpayment.
-<br />
-If they have over or under paid, the amount paid and the total originally owed is indicated.
+</li>
+<li>
+"Payment Owed this Semester (might be less because of instalments)" indicates the amount still due this semester (i.e. instalments due in subsequent semesters are not included).
 </li>
 <li>
 "Payment Method/Status" can be one of...<br />
@@ -623,14 +624,50 @@ If they have over or under paid, the amount paid and the total originally owed i
 The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram' using the paydetails.php link they will have been sent in their approval e-mail (the link includes the SID unique application ID). The credit card one is set automatically and the rest are set manually by us as described in the next bullet point.
 </li>
 <li>
-"Change Payment Confirmation" is a link (to payconfirm.php with the applicant SID as a parameter) that brings up a page that allows us to update the data in the previous bullet point by setting the "Payment Method/Status" and pressing the "Submit the Payment Status" button. The "Amount Paid" is set to the "Amount Owed" at the same time (unless it is just marked as promised to pay in which case the "Amount Paid" is not changed).<br />This page also allows the "Amount Paid" and the "Amount Owed" to be changed because someone has underpaid or overpaid or previously made a prepayment.<br />
-Note, be careful here as the indication of Payment Method/Status sets "Amount Paid" to the "Amount Owed", which overwrites any "Amount Paid" set here. So the data for "Amount Paid" MUST be entered and the "Submit the New Amount Paid (& Owed)" button pressed after the "Submit the Payment Status" button is pressed to update the "Payment Method/Status".<br />
-payconfirm cntains BALLANCE ALSO and if paid by credit card worldpay
-In payconfirm.php it is possible to add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page after "Change Payment Confirmation" for all future applications by this student).<br />
+"Update Payment Amounts or Method/Status" are links (to payconfirm.php with the applicant SID as a parameter) that bring up a page that allows us to update the data in the previous bullet points by:-
+<ol>
+<li>
+Updating the student payment account by adding a new transaction with decreases (or increases) the balance owed. This might be to record that a payment has been made (although WordlPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;30) or for MPH (&pound;1500) are automatically added to the account when a student is approved for modules or for MPH when a student is marked as an MPH student.
+</li>
+<li>
+Setting the "Payment Method/Status".
+</li>
+<li>
+Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page after "Update Payment Amounts or Method/Status" for all future applications by this student).<br />
 payconfirm.php also lists the full student payment account and the "Payment Method/Status" for all previous applications for earlier semesters by this student.
 </li>
 <li>
-NOTE: For the moment, Credit Card payments for the MMU MPH are handled separately. This is described below in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Making a Donation, Paying for MMU MPH</a>.<br />The process for MMU MPH payments is likely to evolve and there is only minimal support for it at present.
+[[[[[[[[[[[[[[[[[[[
++if (!empty($mechanism)) echo "<br />Payment Method/Status for this Application: $mechanism<br />";
+echo '<br />Student was Enrolled in MMU MPH on ' . gmdate('d/m/Y H:i', $mph->datesubmitted) . '<br />';
+
++  $table->head = array(
++    'Date',
++    'Detail',
++    'Transaction Amount &pound;s',
++    'Balance &pound;s (+ve means the Student Owes us)',
++  );
+
++    'Last Date for Payment of Instalment 1',
++    'Instalment 1 Amount',
++    'Last Date for Payment of Instalment 2',
++    'Instalment 2 Amount',
++    'Last Date for Payment of Instalment 3',
++    'Instalment 3 Amount',
++    'Last Date for Payment of Instalment 4',
++    'Instalment 4 Amount',
++  echo '<br />(last modified by ' . fullname($user_who_modified) . ' on ' . gmdate('d/m/Y H:i', $payment_schedule->date_modified) . ')';
++  echo '<br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Change Instalments for this Student</a>';
+
++    'Payment Status',
+-    'Amount Owed',
+-    'Amount Paid'
++    $rowdata[] = $mechanism;
+]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+payconfirm.php also displays!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+payconfirm.php SEND AN confirmatory E_MAIL when all thier paymnet account tarnsactions TO STUDNET WHEN A CONIRMED STATUS IS SET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+</li>
+</ol>
 </li>
 <li>
 "Date Paid" is set to the date they paid by credit card or if the student gave us payment details online through paydetails.php. It is not set if we entered the fact that they paid.
@@ -741,7 +778,7 @@ This should be done some time before assignment submission and grading starts.
 
 
 <a name="misc"></a>
-<h2>Misc: Enrolling Tutors in Tutors Corner, Making a Donation, Paying for MMU MPH</h2>
+<h2>Misc: Enrolling Tutors in Tutors Corner, Making a Donation</h2>
 <ol>
 <li>
 <a href="http://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">http://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Module Leader", "Tutors" or "Education coordinator" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
