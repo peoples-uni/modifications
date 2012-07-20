@@ -540,7 +540,7 @@ Note: At a later stage (when assignments are setup), all the assignments should 
 Go to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>. You can see a list of applicants for this semester.
 </li>
 <li>
-It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment status, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or says they are already in) MMU MPH, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
+It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment method/status, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or says they are already in) MMU MPH, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
 </li>
 <li>
 It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
@@ -558,7 +558,7 @@ For each student application, data about the student is displayed in a row of th
 In particular the one or two modules that the student has applied for are displayed. They are colour coded <span style="color:red">red</span> for not approved, <span style="color:#FF8C00">orange</span> for approved but not enrolled and <span style="color:green">green</span> for enrolled.
 </li>
 <li>
-"Approved?", "Paid?", "Registered?", "Details", "Student Grades" and "Student Submissions" will be described later.
+"Approved?", "Payment up to date?", "Registered?", "Details", "Student Grades" and "Student Submissions" will be described later.
 </li>
 <li>
 Statistics are displayed at the end of the page.
@@ -567,7 +567,7 @@ Statistics are displayed at the end of the page.
 E-mails of all the students in the spreadsheet (i.e. after any filters have been applied) are listed at the end of the page so that e-mails can be manually sent to a large group of applicants.
 </li>
 <li>
-It is also possible to programmatically send a reminder or other e-mail to all of the students in the spreadsheet (i.e. after any filters have been applied) by using the form at the end of the page (instuctions for the form are given there).
+It is also possible to programmatically send a reminder or other e-mail to all of the students in the spreadsheet (i.e. after any filters have been applied) by using the form at the end of the page (instuctions for the form are given there). In particular, there is also a way requesting e-mails NOT to be sent to any student who is up to date in payments (balance adjusted for instalments <= 0).
 </li>
 <li>
 Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
@@ -597,12 +597,12 @@ When the "Details" button is pressed for an application, additional applicant da
 "Student Submissions" Launches a report on all the assignment submissions made by this student. "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a>" below,
 </li>
 <li>
-"Paid?" indicates whether the student is believed to have paid for this semester or not (They are marked as paid if either they have indicated they have paid or they have been confirmed as having paid or they have been given a waiver).
+"Payment up to date?" indicates if there is any payment due from the student (if they are paying by instalments, this indicates the total due, NOT the amount due this semester). It also indicates overpayment.
 <br />
 If they have over or under paid, the amount paid and the total originally owed is indicated.
 </li>
 <li>
-"Payment Mechanism" can be one of...<br />
+"Payment Method/Status" can be one of...<br />
 'RBS WorldPay Confirmed': They paid online with a credit card (using the link they were sent in their approval e-mail which brings then to http://courses.peoples-uni.org/course/pay.php?sid=XXX (XXX being their SID, the unique application ID number noted in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details").<br />
 'Barclays Bank Transfer': They have indicated they have paid by bank transfer to Barclays, but we have not confirmed that.<br />
 'Ecobank Transfer': They have indicated they have paid by bank transfer to Ecobank, but we have not confirmed that.<br />
@@ -623,10 +623,11 @@ If they have over or under paid, the amount paid and the total originally owed i
 The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram' using the paydetails.php link they will have been sent in their approval e-mail (the link includes the SID unique application ID). The credit card one is set automatically and the rest are set manually by us as described in the next bullet point.
 </li>
 <li>
-"Change Payment Confirmation" is a link (to payconfirm.php with the applicant SID as a parameter) that brings up a page that allows us to update the data in the previous bullet point by setting the "Payment Mechanism" and pressing the "Submit the Payment Status" button. The "Amount Paid" is set to the "Amount Owed" at the same time (unless it is just marked as promised to pay in which case the "Amount Paid" is not changed).<br />This page also allows the "Amount Paid" and the "Amount Owed" to be changed because someone has underpaid or overpaid or previously made a prepayment.<br />
-Note, be careful here as the indication of payment mechanism sets "Amount Paid" to the "Amount Owed", which overwrites any "Amount Paid" set here. So the data for "Amount Paid" MUST be entered and the "Submit the New Amount Paid (& Owed)" button pressed after the "Submit the Payment Status" button is pressed to update the "Payment Mechanism".<br />
-In payconfirm.php it is possible to add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "paid?" and also on the "Details" page after "Change Payment Confirmation" for all future applications by this student).<br />
-payconfirm.php also lists payment details for all previous applications for earlier semesters by this student.
+"Change Payment Confirmation" is a link (to payconfirm.php with the applicant SID as a parameter) that brings up a page that allows us to update the data in the previous bullet point by setting the "Payment Method/Status" and pressing the "Submit the Payment Status" button. The "Amount Paid" is set to the "Amount Owed" at the same time (unless it is just marked as promised to pay in which case the "Amount Paid" is not changed).<br />This page also allows the "Amount Paid" and the "Amount Owed" to be changed because someone has underpaid or overpaid or previously made a prepayment.<br />
+Note, be careful here as the indication of Payment Method/Status sets "Amount Paid" to the "Amount Owed", which overwrites any "Amount Paid" set here. So the data for "Amount Paid" MUST be entered and the "Submit the New Amount Paid (& Owed)" button pressed after the "Submit the Payment Status" button is pressed to update the "Payment Method/Status".<br />
+payconfirm cntains BALLANCE ALSO and if paid by credit card worldpay
+In payconfirm.php it is possible to add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page after "Change Payment Confirmation" for all future applications by this student).<br />
+payconfirm.php also lists the full student payment account and the "Payment Method/Status" for all previous applications for earlier semesters by this student.
 </li>
 <li>
 NOTE: For the moment, Credit Card payments for the MMU MPH are handled separately. This is described below in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Making a Donation, Paying for MMU MPH</a>.<br />The process for MMU MPH payments is likely to evolve and there is only minimal support for it at present.
@@ -927,7 +928,7 @@ Select by Grading Status:<br />
 Select by Semester (defaults to current Semester, can also view All Semesters if you want)<br />
 Sort by Last Access<br />
 Show Students Not Logged on for this many Days (if set to a specific number of days, this can be used to select only students who have not logged on for that number of days or more. With those students selected it is possible to send a reminder e-mail to them at the bottom of the "Course Grades" page.)<br />
-Show Payment Status... This is typically used to see if a student has paid before they are notified of grading.<br />
+Show "Payment up to date?" Status... This is typically used to see if a student has paid before they are notified of grading.<br />
 Show MMU MPH Only.
 <br />
 </li>
@@ -976,7 +977,7 @@ Note... The Moodle "Course Total" grade (which is what is displayed and used in 
 ?>
 </li>
 <li>
-After that diversion... Back to "Course Grades"/"student Grades"... Go to: <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> and click on "Student Grades" for an individual student.
+After that diversion... Back to "Course Grades"/"Student Grades"... Go to: <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> and click on "Student Grades" for an individual student.
 </li>
 <li>
 There are a number of buttons for each course module in "Student Grades" which can be pressed (not visible to a student when they see their own version of this page). Not all will be visible at any one time...

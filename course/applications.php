@@ -1440,7 +1440,7 @@ Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 <input type="hidden" name="markemailsend" value="1" />
 <input type="submit" name="emailsend" value="Send e-mail to All" />
 <br />Regular expression for included e-mails (defaults to all, so do not change!):&nbsp;<input type="text" size="20" name="reg" value="/^[a-zA-Z0-9_.-]/" />
-<br />Check this if you want e-mails NOT to be sent to any student who is up to date in payments (balance <= 0):&nbsp;<input type="checkbox" name="notforuptodatepayments" />
+<br />Check this if you want e-mails NOT to be sent to any student who is up to date in payments (balance adjusted for instalments <= 0):&nbsp;<input type="checkbox" name="notforuptodatepayments" />
 </form>
 <br /><br />
 <?php
