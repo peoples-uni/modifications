@@ -630,42 +630,11 @@ The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram'
 Updating the student payment account by adding a new transaction with decreases (or increases) the balance owed. This might be to record that a payment has been made (although WordlPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;30) or for MPH (&pound;1500) are automatically added to the account when a student is approved for modules or for MPH when a student is marked as an MPH student.
 </li>
 <li>
-Setting the "Payment Method/Status".
+Setting the "Payment Method/Status". Note that a confirmatory e-mail is sent to the student with all their payment account transactions when a "Confirmed" status is set.
 </li>
 <li>
-Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page after "Update Payment Amounts or Method/Status" for all future applications by this student).<br />
-payconfirm.php also lists the full student payment account and the "Payment Method/Status" for all previous applications for earlier semesters by this student.
-</li>
-<li>
-[[[[[[[[[[[[[[[[[[[
-+if (!empty($mechanism)) echo "<br />Payment Method/Status for this Application: $mechanism<br />";
-echo '<br />Student was Enrolled in MMU MPH on ' . gmdate('d/m/Y H:i', $mph->datesubmitted) . '<br />';
-
-+  $table->head = array(
-+    'Date',
-+    'Detail',
-+    'Transaction Amount &pound;s',
-+    'Balance &pound;s (+ve means the Student Owes us)',
-+  );
-
-+    'Last Date for Payment of Instalment 1',
-+    'Instalment 1 Amount',
-+    'Last Date for Payment of Instalment 2',
-+    'Instalment 2 Amount',
-+    'Last Date for Payment of Instalment 3',
-+    'Instalment 3 Amount',
-+    'Last Date for Payment of Instalment 4',
-+    'Instalment 4 Amount',
-+  echo '<br />(last modified by ' . fullname($user_who_modified) . ' on ' . gmdate('d/m/Y H:i', $payment_schedule->date_modified) . ')';
-+  echo '<br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Change Instalments for this Student</a>';
-
-+    'Payment Status',
--    'Amount Owed',
--    'Amount Paid'
-+    $rowdata[] = $mechanism;
-]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-payconfirm.php also displays!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-payconfirm.php SEND AN confirmatory E_MAIL when all thier paymnet account tarnsactions TO STUDNET WHEN A CONIRMED STATUS IS SET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page in "Payment Method/Status" for all future applications by this student).<br />
+payconfirm.php also lists the full student payment account, the "Payment Method/Status" for all previous applications for earlier semesters by this student and the student payment schedule for those MPH students that have elected to pay by instalments (there is also a link to override this).
 </li>
 </ol>
 </li>
