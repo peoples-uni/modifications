@@ -77,9 +77,15 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#statistics">Statistics on Success of Students by Qualifications on Entry</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#creatingcertificates">Creating Certificates for Peoples-uni Volunteers</a><br /><br />
-</b>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#creatingcertificates">Creating Certificates for Peoples-uni Volunteers</a><br />
 </li>
+<li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a><br />
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a><br /><br />
+</li>
+</b>
 </ul>
 
 
@@ -634,7 +640,7 @@ Setting the "Payment Method/Status". Note that a confirmatory e-mail is sent to 
 </li>
 <li>
 Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page in "Payment Method/Status" for all future applications by this student).<br />
-payconfirm.php also lists the full student payment account, the "Payment Method/Status" for all previous applications for earlier semesters by this student and the student payment schedule for those MPH students that have elected to pay by instalments (there is also a link to override this).
+payconfirm.php also lists the full student payment account, the "Payment Method/Status" for all previous applications for earlier semesters by this student and the student payment schedule for those MPH students that have elected to pay by instalments (there is also a link to Specify Instalments/specify_instalments.php to specify/change this payment schedule using the same page as the student uses... see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a>).
 </li>
 </ol>
 </li>
@@ -1090,6 +1096,23 @@ The EXACT link that should be sent to recipients for them to retrieve the certif
 You can also list all certificates with the "List All Certificates" link.
 </li>
 </ol>
+
+
+<a name="studentaccount"></a>
+<h2>Page to allow a Student to see their Payment Account</h2>
+<ol>
+<li>
+</li>
+</ol>
+
+
+<a name="specifyinstalments"></a>
+<h2>Specify Instalment Payment Schedule</h2>
+<ol>
+<li>
+</li>
+</ol>
+
 
 <?php
 echo $OUTPUT->footer();
