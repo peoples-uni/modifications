@@ -600,7 +600,7 @@ When the "Details" button is pressed for an application, additional applicant da
 "Student Grades" Launches the Peoples-uni transcript of the grades achieved by this student in all the modules they have done. See "Course Grades" (<a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a>) which is described below in "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>".
 </li>
 <li>
-"Student Submissions" Launches a report on all the assignment submissions made by this student. "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a>" below,
+"Student Submissions" Launches a report on all the assignment submissions made by this student. See "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a>" below.
 </li>
 <li>
 "Payment up to date?" indicates if there is any payment due from the student (if they are paying by instalments, this indicates the total due, NOT the amount due this semester). It also indicates overpayment.
