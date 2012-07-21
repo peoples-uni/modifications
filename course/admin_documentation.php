@@ -633,7 +633,7 @@ The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram'
 "Update Payment Amounts or Method/Status" are links (to payconfirm.php with the applicant SID as a parameter) that bring up a page that allows us to update the data in the previous bullet points by:-
 <ol>
 <li>
-Updating the student payment account by adding a new transaction with decreases (or increases) the balance owed. This might be to record that a payment has been made (although WordlPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;30) or for MPH (&pound;1500) are automatically added to the account when a student is approved for modules or for MPH when a student is marked as an MPH student.
+Updating the student payment account by adding a new transaction which decreases (or increases) the balance owed. This might be to record that a payment has been made (although WordlPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;30) or for MPH (&pound;1500) are automatically added to the account when a student is approved for modules or for MPH when a student is marked as an MPH student.
 </li>
 <li>
 Setting the "Payment Method/Status". Note that a confirmatory e-mail is sent to the student with all their payment account transactions when a "Confirmed" status is set.
