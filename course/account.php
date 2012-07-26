@@ -49,7 +49,7 @@ if (!empty($mphs)) {
 
 echo "</b></p>";
 
-$balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY id");
+$balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date");
 if (!empty($balances)) {
   $table = new html_table();
 
