@@ -156,7 +156,7 @@ echo '</b></p>';
 
 if ($inmmumph && (empty($payment_schedule) || $ismanager)) {
 ?>
-<br /><br /><br /><p>Specify the Payment Schedule and then click "Submit the Instalment Payment Schedule".<br />
+<br /><p>Specify the Payment Schedule and then click "Submit the Instalment Payment Schedule".<br />
 You can enter up to four instalments.<br />
 Any individual (non zero) instalment must be at least 25% of what is owed (UK Pounds <?php echo $amount_to_pay_total ?>).<br />
 
