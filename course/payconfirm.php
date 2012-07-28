@@ -248,7 +248,7 @@ if (!empty($balances)) {
     'Date',
     'Detail',
     'Transaction Amount &pound;s',
-    'Balance &pound;s (+ve means the Student Owes us)',
+    'Balance &pound;s (+ve means the Student Owes Peoples-uni)',
   );
 
   foreach ($balances as $balance) {
