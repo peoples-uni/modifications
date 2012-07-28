@@ -195,10 +195,10 @@ Any individual (non zero) instalment must be at least 25% of what is owed (UK Po
 
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
-Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $peoples_payment_schedule->due_date_1); ?>: <input type="text" size="10" name="amount_1" value="<?php echo $amount_to_pay_total ?>" /><br />
-Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $peoples_payment_schedule->due_date_2); ?>: <input type="text" size="10" name="amount_2" value="0" /><br />
-Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $peoples_payment_schedule->due_date_3); ?>: <input type="text" size="10" name="amount_3" value="0" /><br />
-Instalment (UK Pounds) due on or before <?php gmdate('d/m/Y', $peoples_payment_schedule->due_date_4); ?>: <input type="text" size="10" name="amount_4" value="0" /><br />
+Instalment (UK Pounds) due on or before <?php echo gmdate('d/m/Y', $peoples_payment_schedule->due_date_1); ?>: <input type="text" size="10" name="amount_1" value="<?php echo $amount_to_pay_total ?>" /><br />
+Instalment (UK Pounds) due on or before <?php echo gmdate('d/m/Y', $peoples_payment_schedule->due_date_2); ?>: <input type="text" size="10" name="amount_2" value="0" /><br />
+Instalment (UK Pounds) due on or before <?php echo gmdate('d/m/Y', $peoples_payment_schedule->due_date_3); ?>: <input type="text" size="10" name="amount_3" value="0" /><br />
+Instalment (UK Pounds) due on or before <?php echo gmdate('d/m/Y', $peoples_payment_schedule->due_date_4); ?>: <input type="text" size="10" name="amount_4" value="0" /><br />
 
 <input type="hidden" name="markspecifyinstalments" value="1" />
 <input type="submit" name="specifyinstalments" value="Submit the Instalment Payment Schedule" />
