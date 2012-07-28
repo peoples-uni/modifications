@@ -108,7 +108,7 @@ if (!empty($_POST['markspecifyinstalments'])) {
 
 
 echo '<div align="center">';
-echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
+//echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 
 echo '<p><b>';
 
