@@ -39,7 +39,7 @@ echo "<p><b>";
 echo '<br /><br />' . fullname($userrecord) . '<br />';
 
 $inmmumph = FALSE;
-$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC LIMIT 1");
+$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid=$userid ORDER BY datesubmitted DESC LIMIT 1");
 if (!empty($mphs)) {
   foreach ($mphs as $mph) {
     $inmmumph = TRUE;
