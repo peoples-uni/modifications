@@ -896,4 +896,19 @@ function is_peoples_teacher() {
 function dontstripslashes($x) {
   return $x;
 }
+
+
+function get_balance($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC LIMIT 1");
+  $amount = 0;
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $amount = $balance->balance;
+    }
+  }
+
+  return $amount;
+}
 ?>
