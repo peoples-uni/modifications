@@ -459,7 +459,7 @@ if (!empty($mphs)) {
 if (!empty($application->userid)) {
   $amount_to_pay_total = get_balance($application->userid);
   $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $application->userid));
-  $amount_to_pay_this_semester = amount_to_pay($application, $inmmumph, $payment_schedule);
+  $amount_to_pay_this_semester = amount_to_pay($application->userid);
 }
 else {
   $amount_to_pay_total = 0;
@@ -774,13 +774,15 @@ if ($state === 022) {
   $course1    = $_REQUEST['18'];
   $course2    = $_REQUEST['19'];
 
+  $amount_to_pay_this_semester_adjusted = amount_to_pay_adjusted($application, $inmmumph, $payment_schedule);
+
   if (TRUE || !$inmmumph) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
   else $peoples_approval_email = get_config(NULL, 'peoples_approval_email'); // MPH Students
 
   $peoples_approval_email = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email);
   $peoples_approval_email = str_replace('COURSE_MODULE_1_NAME_HERE', $course1, $peoples_approval_email);
   $peoples_approval_email = str_replace('SID_HERE',                  $sid, $peoples_approval_email);
-  $peoples_approval_email = str_replace('AMOUNT_TO_PAY_HERE',        $amount_to_pay_this_semester, $peoples_approval_email);
+  $peoples_approval_email = str_replace('AMOUNT_TO_PAY_HERE',        $amount_to_pay_this_semester_adjusted, $peoples_approval_email);
   if (!empty($course2)) {
     $peoples_approval_email = str_replace('COURSE_MODULE_2_TEXT_HERE', "and the Course Module '" . $course2 . "' ", $peoples_approval_email);
     $peoples_approval_email = str_replace('COURSE_MODULE_2_WARNING_TEXT_HERE', "Please note that you have applied to take two modules, these run at the
@@ -1980,7 +1982,7 @@ echo '<br /><strong><a href="javascript:window.close();">Close Window</a></stron
 echo $OUTPUT->footer();
 
 
-function amount_to_pay($application, $inmmumph, $payment_schedule) {
+function amount_to_pay_adjusted($application, $inmmumph, $payment_schedule) {
 
   $amount = get_balance($application->userid);
 
@@ -1990,6 +1992,37 @@ function amount_to_pay($application, $inmmumph, $payment_schedule) {
     $amount += $deltamodules * MODULE_COST;
   }
   else { // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
+  return $amount;
+}
+
+
+function amount_to_pay($userid) {
+  global $DB;
+
+  $amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+
+  if ($inmmumph) {
+    // MPH: Take Outstanding Balance and adjust for instalments if necessary
     if (!empty($payment_schedule)) {
       $now = time();
       if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
