@@ -774,7 +774,8 @@ if ($state === 022) {
   $course1    = $_REQUEST['18'];
   $course2    = $_REQUEST['19'];
 
-  $amount_to_pay_this_semester_adjusted = amount_to_pay_adjusted($application, $inmmumph, $payment_schedule);
+  if (!empty($application->userid)) $amount_to_pay_this_semester_adjusted = amount_to_pay_adjusted($application, $inmmumph, $payment_schedule);
+  else $amount_to_pay_this_semester_adjusted = 0;
 
   if (TRUE || !$inmmumph) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
   else $peoples_approval_email = get_config(NULL, 'peoples_approval_email'); // MPH Students
