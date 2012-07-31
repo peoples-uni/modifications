@@ -664,7 +664,7 @@ echo '<td>' . $_REQUEST['sid'] . '</td>';
 echo '</tr>';
 
 echo '<tr>';
-echo '<td>Payment up to date?</td>';
+echo '<td>Payment up to date? (only includes modules already approved for this semester)</td>';
 //if ($application->costpaid < .01) echo '<td><span style="color:red">No: &pound;' . $application->costowed . ' Owed</span></td>';
 //elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes: &pound;' . $application->costowed . '</span></td>';
 //else echo '<td><span style="color:blue">' . "Paid &pound;$application->costpaid out of &pound;$application->costowed" . '</span></td>';
@@ -822,7 +822,7 @@ same time and will involve a heavy workload - please be sure you do have the tim
 <br /><i><b>NOTE: Any student that is doing MPH must, if not already so recorded,<br />
 be recorded as MPH by clicking "Record that the Student has been enrolled in the MMU MPH" BEFORE APPROVAL<br />
 (to pick up correct wording for e-mail).</b></i>
-<br /><i><b>NOTE: Please check the Amount Owed by the student looks OK before sending.<br />
+<br /><i><b>NOTE: Please check the Amount Owed by the student (in e-mail below) looks OK before sending.<br />
 To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts or Method/Status</a></b></i>
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/appaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
