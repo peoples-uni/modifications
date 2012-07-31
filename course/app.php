@@ -1982,30 +1982,6 @@ echo '<br /><strong><a href="javascript:window.close();">Close Window</a></stron
 echo $OUTPUT->footer();
 
 
-function amount_to_pay_adjusted($application, $inmmumph, $payment_schedule) {
-
-  $amount = get_balance($application->userid);
-
-  if (!$inmmumph) { // NON MPH: Take Outstanding Balance and adjust for new modules
-    if (empty($application->coursename2)) $deltamodules = 1;
-    else $deltamodules = 2;
-    $amount += $deltamodules * MODULE_COST;
-  }
-  else { // MPH: Take Outstanding Balance and adjust for instalments if necessary
-    if (!empty($payment_schedule)) {
-      $now = time();
-      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
-      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
-    }
-  }
-
-  if ($amount < 0) $amount = 0;
-  return $amount;
-}
-
-
 function amount_to_pay($userid) {
   global $DB;
 
@@ -2023,6 +1999,30 @@ function amount_to_pay($userid) {
 
   if ($inmmumph) {
     // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
+  return $amount;
+}
+
+
+function amount_to_pay_adjusted($application, $inmmumph, $payment_schedule) {
+
+  $amount = get_balance($application->userid);
+
+  if (!$inmmumph) { // NON MPH: Take Outstanding Balance and adjust for new modules
+    if (empty($application->coursename2)) $deltamodules = 1;
+    else $deltamodules = 2;
+    $amount += $deltamodules * MODULE_COST;
+  }
+  else { // MPH: Take Outstanding Balance and adjust for instalments if necessary
     if (!empty($payment_schedule)) {
       $now = time();
       if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
