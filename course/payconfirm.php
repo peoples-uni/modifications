@@ -65,6 +65,8 @@ if (empty($application)) {
 	notice('Error: The parameter passed does not correspond to a valid application to Peoples-uni!', "$CFG->wwwroot");
 }
 
+$userid = $application->userid;
+
 $name = htmlspecialchars($application->firstname . ' ' . $application->lastname, ENT_COMPAT, 'UTF-8');
 
 $modulespurchased = "Application number $sid for semester '$application->semester'";
@@ -126,8 +128,8 @@ if (!empty($_POST['markpayconfirm'])) {
     $message .= "Here is a statement of your payment transactions...\n\n";
 
     $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date");
-    if (!empty($balances)) {
-      $finalbalance = 0;
+    $finalbalance = 0;
+    if (!empty($balances) && $userid != 0) {
       foreach ($balances as $balance) {
         $finalbalance = $balance->balance;
         $message .= 'Date: ' . gmdate('d/m/Y H:i', $balance->date) . 'Detail: ' . $balance->detail . 'Amount:' . number_format($balance->amount_delta, 2) . "\n";
@@ -241,7 +243,7 @@ if (!empty($mphs)) {
 echo "</b></p>";
 
 $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date");
-if (!empty($balances)) {
+if (!empty($balances) && $userid != 0) {
   $table = new html_table();
 
   $table->head = array(
@@ -324,7 +326,7 @@ Select the new payment method/status: <select name="paymentmechanism">
 
 <?php
 $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
-if (!empty($payment_schedule)) {
+if (!empty($payment_schedule) && $userid != 0) {
   echo '<br /><br /><br />';
   $table = new html_table();
   $table->head = array(
@@ -349,13 +351,17 @@ if (!empty($payment_schedule)) {
   $table->data[] = $rowdata;
   echo html_writer::table($table);
 
+  echo '<br />(Remaining payment due in current instalment period: ' . amount_to_pay($userid) . ')';
+
   $user_who_modified = $DB->get_record('user', array('id' => $payment_schedule->user_who_modified));
   echo '<br />(last modified by ' . fullname($user_who_modified) . ' on ' . gmdate('d/m/Y H:i', $payment_schedule->date_modified) . ')';
 
   echo '<br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Change Instalments for this Student</a>';
 }
 else {
-  echo '<br /><br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Specify Instalments for this Student (normally done by Student themselves)</a>';
+  if ($userid != 0) {
+    echo '<br /><br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Specify Instalments for this Student (normally done by Student themselves)</a>';
+  }
 }
 
 echo '<br /><br /><br />';
@@ -510,6 +516,37 @@ function get_balance($userid) {
     }
   }
 
+  return $amount;
+}
+
+
+function amount_to_pay($userid) {
+  global $DB;
+
+  $amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+
+  if ($inmmumph) {
+    // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
   return $amount;
 }
 ?>
