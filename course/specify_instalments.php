@@ -148,6 +148,8 @@ if (!empty($payment_schedule)) {
   $table->data[] = $rowdata;
   echo html_writer::table($table);
 
+  echo '<br />(Remaining payment due in current instalment period: ' . amount_to_pay($userid) . ')';
+
   $user_who_modified = $DB->get_record('user', array('id' => $payment_schedule->user_who_modified));
   echo '<br />(last modified by ' . fullname($user_who_modified) . ' on ' . gmdate('d/m/Y H:i', $payment_schedule->date_modified) . ')';
 }
@@ -237,6 +239,37 @@ function get_balance($userid) {
     }
   }
 
+  return $amount;
+}
+
+
+function amount_to_pay($userid) {
+  global $DB;
+
+  $amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+
+  if ($inmmumph) {
+    // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
   return $amount;
 }
 ?>
