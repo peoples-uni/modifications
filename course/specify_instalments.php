@@ -148,7 +148,7 @@ if (!empty($payment_schedule)) {
   $table->data[] = $rowdata;
   echo html_writer::table($table);
 
-  echo '<br />(Remaining payment due in current instalment period: ' . amount_to_pay($userid) . ')';
+  echo '<br />(Remaining payment due in current instalment period: &pound;' . number_format(amount_to_pay($userid), 2) . ')';
 
   $user_who_modified = $DB->get_record('user', array('id' => $payment_schedule->user_who_modified));
   echo '<br />(last modified by ' . fullname($user_who_modified) . ' on ' . gmdate('d/m/Y H:i', $payment_schedule->date_modified) . ')';
