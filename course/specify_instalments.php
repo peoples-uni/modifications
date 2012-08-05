@@ -110,9 +110,9 @@ if (!empty($_POST['markspecifyinstalments'])) {
 echo '<div align="center">';
 //echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 
-echo '<p><b>';
+echo '<p>';
 
-echo '<br /><br />' . fullname($userrecord);
+echo '<br /><br /><b>' . fullname($userrecord) . '</b>';
 
 $inmmumph = FALSE;
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
@@ -154,7 +154,7 @@ if (!empty($payment_schedule)) {
   echo '<br />(last modified by ' . fullname($user_who_modified) . ' on ' . gmdate('d/m/Y H:i', $payment_schedule->date_modified) . ')';
 }
 
-echo '</b></p>';
+echo '</p>';
 
 if ($inmmumph && (empty($payment_schedule) || $ismanager)) {
 ?>
