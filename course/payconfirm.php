@@ -132,7 +132,7 @@ if (!empty($_POST['markpayconfirm'])) {
     if (!empty($balances) && $userid != 0) {
       foreach ($balances as $balance) {
         $finalbalance = $balance->balance;
-        $message .= 'Date: ' . gmdate('d/m/Y H:i', $balance->date) . 'Detail: ' . $balance->detail . 'Amount:' . number_format($balance->amount_delta, 2) . "\n";
+        $message .= 'Date: ' . gmdate('d/m/Y H:i', $balance->date) . "\nDetail: " . $balance->detail . "\nAmount (UK Pounds): " . number_format($balance->amount_delta, 2) . "\n\n";
       }
     }
     else {
@@ -271,7 +271,7 @@ else {
 ?>
 <br /><br />
 <p>To adjust the student balance, enter the Payment Amount & the Detail and then click "Subtract a new Payment Amount from the Student Balance".<br />
-(The should will be +ve if th student has made a payment or are given a full/part Bursary)<br />
+(This should be +ve if the student has made a payment or are to be given a full/part Bursary)<br />
 (Prefix the Amount with a "-" if it should increase the balance owed by the Student.)</p>
 
 <form id="setowedform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
@@ -287,7 +287,7 @@ Detail: <input type="text" size="60" name="detail" value="" /><br />
 </form>
 
 
-<br /><br /><br /><p>Update the payment method/status and then click "Submit the Payment Method/Status".<br />
+<br /><br /><br /><p>To update the payment method/status, specify it below and then click "Submit the Payment Method/Status".<br />
 (If you set a "Confirmed" status or "Send e-mail...", the student will be e-mailed with their transactions and current Balance,<br />
 so be sure to set the correct balance first.)</p>
 
@@ -327,7 +327,7 @@ Select the new payment method/status: <select name="paymentmechanism">
 <?php
 $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
 if (!empty($payment_schedule) && $userid != 0) {
-  echo '<br /><br /><br />';
+  echo '<br /><br /><br /><br />';
   $table = new html_table();
   $table->head = array(
     'Last Date for Payment of Instalment 1',
@@ -360,11 +360,11 @@ if (!empty($payment_schedule) && $userid != 0) {
 }
 else {
   if ($userid != 0) {
-    echo '<br /><br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Specify Instalments for this Student (normally done by Student themselves)</a>';
+    echo '<br /><br /><br /><br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Specify Instalments for this Student (normally done by Student themselves)</a>';
   }
 }
 
-echo '<br /><br /><br />';
+echo '<br /><br /><br /><br />';
 $paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($paymentnotes)) {
   echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
