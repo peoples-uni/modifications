@@ -200,7 +200,7 @@ elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
 }
 
 echo '<div align="center">';
-echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
+//echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 
 if ($sendemail) echo '<p><b>NOTE: Confirmatory e-mail was sent to Student!</b></p>';
 
