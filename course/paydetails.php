@@ -38,7 +38,8 @@ else {
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
 //$amount = $application->costowed - $application->costpaid;
-if (!empty($application->userid)) $amount = get_balance((int)$application->userid);
+if (!empty($application->userid)) $amount = amount_to_pay((int)$application->userid);
+
 if (empty($application->userid) || $amount < .01) {
   notice('You do not owe anything to Peoples-uni!', "$CFG->wwwroot");
 }
@@ -99,9 +100,9 @@ if (!empty($_POST['markpaydetails'])) {
 
   $info = strip_tags(dontstripslashes($_POST['datafromworldpay']));
 
-  $message = "$name indicates that payment has been made using $mechanism.
-The application has been marked as paid, assuming that this reflects reality.
-Payment info that was entered by applicant: $info";
+  $message  = "$name indicates that payment has been made using $mechanism.\n";
+  $message .= "Applicant's balance has been adjusted by $amount pounds (not confirmed).\n\n";
+  $message .= "Payment info that was entered by applicant: $info\n";
 
   // Dummy User
   $user = new stdClass();
@@ -120,7 +121,7 @@ Payment info that was entered by applicant: $info";
 
 echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
-echo "<p><br /><br /><b>Total amount that you owe (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
+echo "<p><br /><br /><b>Amount that you owe up to and including this semester (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
 
 // echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt information you received when you paid.<br />In particular, if you paid by Western Union, you must enter the Money Transfer Control Number (MTCN).<br />Then click Submit.</p>";
 echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt information you received when you paid.<br />Then click Submit.</p>";
@@ -162,6 +163,37 @@ echo $OUTPUT->footer();
 
 function dontstripslashes($x) {
   return $x;
+}
+
+
+function amount_to_pay($userid) {
+  global $DB;
+
+  $amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+
+  if ($inmmumph) {
+    // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
+  return $amount;
 }
 
 
