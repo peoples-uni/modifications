@@ -261,6 +261,8 @@ if (!empty($balances) && $userid != 0) {
     'Balance &pound;s (+ve means the Student Owes Peoples-uni)',
   );
 
+  $table->align = array ('left', 'left', 'right', 'left', 'right');
+
   foreach ($balances as $balance) {
     $rowdata = array();
     $rowdata[] = gmdate('d/m/Y H:i', $balance->date);
