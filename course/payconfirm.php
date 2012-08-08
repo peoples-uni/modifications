@@ -133,7 +133,13 @@ if (!empty($_POST['markpayconfirm'])) {
     if (!empty($balances) && $userid != 0) {
       foreach ($balances as $balance) {
         $finalbalance = $balance->balance;
-        $message .= 'Date: ' . gmdate('d/m/Y H:i', $balance->date) . "\nDetail: " . $balance->detail . "\nAmount (UK Pounds): " . number_format($balance->amount_delta, 2) . "\n\n";
+        if ($balance->not_confirmed) {
+          $not_confirmed = ' (not confirmed)';
+        }
+        else {
+          $not_confirmed = '';
+        }
+        $message .= 'Date: ' . gmdate('d/m/Y H:i', $balance->date) . "\nDetail: " . $balance->detail . "\nAmount (UK Pounds): " . number_format($balance->amount_delta, 2) . $not_confirmed . "\n\n";
       }
     }
     else {
