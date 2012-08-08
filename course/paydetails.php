@@ -100,6 +100,21 @@ if (!empty($_POST['markpaydetails'])) {
 
   $info = strip_tags(dontstripslashes($_POST['datafromworldpay']));
 
+  $original_balance = get_balance($application->userid);
+
+  $peoples_student_balance = new object();
+  $peoples_student_balance->userid = $application->userid;
+  $peoples_student_balance->amount_delta = -$amount;
+  $peoples_student_balance->balance = $original_balance + $peoples_student_balance->amount_delta;
+  $peoples_student_balance->currency = 'GBP';
+  $peoples_student_balance->detail = $mechanism;
+  if (!empty($info)) {
+    $peoples_student_balance->detail .= ' ' . $info;
+  }
+  $peoples_student_balance->date = time();
+  $peoples_student_balance->not_confirmed = 1;
+  $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+
   $message  = "$name indicates that payment has been made using $mechanism.\n";
   $message .= "Applicant's balance has been adjusted by $amount pounds (not confirmed).\n\n";
   $message .= "Payment info that was entered by applicant: $info\n";
