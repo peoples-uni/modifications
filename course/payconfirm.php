@@ -253,6 +253,7 @@ if (!empty($balances) && $userid != 0) {
     'Date',
     'Detail',
     'Transaction Amount &pound;s',
+    '',
     'Balance &pound;s (+ve means the Student Owes Peoples-uni)',
   );
 
@@ -261,6 +262,12 @@ if (!empty($balances) && $userid != 0) {
     $rowdata[] = gmdate('d/m/Y H:i', $balance->date);
     $rowdata[] = htmlspecialchars($balance->detail, ENT_COMPAT, 'UTF-8');
     $rowdata[] = number_format($balance->amount_delta, 2);
+    if ($balance->not_confirmed) {
+      $rowdata[] = '(not confirmed)';
+    }
+    else {
+      $rowdata[] = '';
+    }
     $rowdata[] = number_format($balance->balance, 2);
     $table->data[] = $rowdata;
   }
