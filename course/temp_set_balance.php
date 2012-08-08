@@ -48,7 +48,20 @@ foreach ($userids as $useridrow) {
     $DB->update_record('peoples_student_balance', $balance);
     $count++;
   }
-  echo "<br />Total for userid: $userid ($count records) is: $total";
+
+  if ($total != 0) {
+    // Zero the Student total to remove any old issues
+    $peoples_student_balance = new object();
+    $peoples_student_balance->userid = $userid;
+    $peoples_student_balance->amount_delta = -$total;
+    $peoples_student_balance->balance = 0;
+    $peoples_student_balance->currency = 'GBP';
+    $peoples_student_balance->detail = 'Adjust to zero';
+    $peoples_student_balance->date = time();
+    $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+  }
+
+  echo "<br />Total for userid: $userid ($count records) was: $total";
 }
 
 echo "</b></p>";
