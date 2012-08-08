@@ -19,8 +19,6 @@
   );
   CREATE INDEX mdl_peoples_student_balance_uid_ix ON mdl_peoples_student_balance (userid);
 
-  ALTER TABLE mdl_peoples_student_balance ADD not_confirmed BIGINT(10) unsigned NOT NULL DEFAULT 0;
-
   CREATE TABLE mdl_peoples_payment_schedule (
     id BIGINT(10) unsigned NOT NULL auto_increment,
     userid BIGINT(10) unsigned NOT NULL,
