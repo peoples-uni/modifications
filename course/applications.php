@@ -605,7 +605,7 @@ Display entries using the following filters...
     <td>End Month</td>
     <td>End Day</td>
     <td>Name or e-mail Contains</td>
-    <td>Payment Method/Status</td>
+    <td>Payment Method</td>
     <td>Re&#8209;enrolment?</td>
     <td>Applied MMU?</td>
     <td>Accepted MMU?</td>
@@ -1405,7 +1405,7 @@ NOTE, to send an e-mail only to approved and registered students for the current
 or have otherwise been marked as paid or have a waiver... BEFORE SENDING THE E_MAIL,
 set the filters at the top of this page as follows...<br />
 Status: "Part or Fully Approved"<br />
-Payment Method/Status: "No Indication Given"<br />
+Payment Method: "No Indication Given"<br />
 <br />
 Also look at list of e-mails sent to verify they went! (No subject and they will not go!)<br /><br />
 <form id="emailsendform" method="post" action="<?php

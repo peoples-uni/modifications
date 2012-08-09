@@ -672,14 +672,14 @@ if ($amount_to_pay_total >= .01) $x = '<span style="color:red">No: &pound;' . $a
 elseif (abs($amount_to_pay_total) < .01) $x = '<span style="color:green">Yes</span>';
 else $x = '<span style="color:blue">' . "Overpaid: &pound;$amount_to_pay_total" . '</span>';
 echo '<td>' . $x;
-echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts or Method/Status</a>';
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
 echo '</td>';
 echo '</tr>';
 
 echo '<tr>';
 echo '<td>Payment Owed this Semester (might be less because of instalments)</td>';
 echo '<td>&pound;' . $amount_to_pay_this_semester;
-echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts or Method/Status</a>';
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
 echo '</td>';
 echo '</tr>';
 
@@ -712,9 +712,9 @@ if (!empty($paymentnotes)) {
 }
 
 echo '<tr>';
-echo '<td>Payment Method/Status</td>';
+echo '<td>Payment Method</td>';
 echo '<td>' . $mechanism;
-echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts or Method/Status</a>';
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
 echo $pnote;
 echo '</td>';
 echo '</tr>';
@@ -826,7 +826,7 @@ same time and will involve a heavy workload - please be sure you do have the tim
 be recorded as MPH by clicking "Record that the Student has been enrolled in the MMU MPH" BEFORE APPROVAL<br />
 (to pick up correct wording for e-mail).</b></i>
 <br /><i><b>NOTE: Please check the Amount Owed by the student (in e-mail below) looks OK before sending.<br />
-To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts or Method/Status</a></b></i>
+To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts, Method or Confirmed Status</a></b></i>
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/appaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />

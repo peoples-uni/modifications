@@ -546,7 +546,7 @@ Note: At a later stage (when assignments are setup), all the assignments should 
 Go to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>. You can see a list of applicants for this semester.
 </li>
 <li>
-It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment method/status, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or says they are already in) MMU MPH, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
+It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by payment method, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or says they are already in) MMU MPH, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
 </li>
 <li>
 It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
@@ -609,7 +609,7 @@ When the "Details" button is pressed for an application, additional applicant da
 "Payment Owed this Semester (might be less because of instalments)" indicates the amount still due this semester (i.e. instalments due in subsequent semesters are not included).
 </li>
 <li>
-"Payment Method/Status" can be one of...<br />
+"Payment Method" can be one of...<br />
 'RBS WorldPay Confirmed': They paid online with a credit card (using the link they were sent in their approval e-mail which brings then to http://courses.peoples-uni.org/course/pay.php?sid=XXX (XXX being their SID, the unique application ID number noted in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details").<br />
 'Barclays Bank Transfer': They have indicated they have paid by bank transfer to Barclays, but we have not confirmed that.<br />
 'Ecobank Transfer': They have indicated they have paid by bank transfer to Ecobank, but we have not confirmed that.<br />
@@ -630,17 +630,22 @@ When the "Details" button is pressed for an application, additional applicant da
 The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram' using the paydetails.php link they will have been sent in their approval e-mail (the link includes the SID unique application ID). The credit card one is set automatically and the rest are set manually by us as described in the next bullet point.
 </li>
 <li>
-"Update Payment Amounts or Method/Status" are links (to payconfirm.php with the applicant SID as a parameter) that bring up a page that allows us to update the data in the previous bullet points by:-
+"Update Payment Amounts, Method or Confirmed Status" are links (to payconfirm.php with the applicant SID as a parameter) that bring up a page that allows us to update the data in the previous bullet points by:-
 <ol>
 <li>
-Updating the student payment account by adding a new transaction which decreases (or increases) the balance owed. This might be to record that a payment has been made (although WorldPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;30) or for MPH (&pound;1500) are automatically added to the account when a student is approved for modules or for MPH when a student is marked as an MPH student.
+Updating the student payment account by adding a new transaction which decreases (or increases) the balance owed. This might be to record that a payment has been made (although WorldPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;30) or for MPH (&pound;1500) are automatically added to the account when a student is approved for modules or for MPH when a student is marked as an MPH student.<br />
+Any transaction that is added can be marked as "(not confirmed)". All non-credit card transaction added by a student (in paydetails.php) will automatically be "(not confirmed)".
 </li>
 <li>
-Setting the "Payment Method/Status". Note that a confirmatory e-mail is sent to the student with all their payment account transactions when a "Confirmed" status is set.
+Setting the "Payment Method". Note that a confirmatory e-mail is sent to the student with all their payment account transactions when a "Confirmed" status is set.<br />
+(Setting the "Payment Method" does not change the "(not confirmed)" status for any transaction, that should be done when an individual transaction is added or "Mark all Transactions in this Student's Account as Confirmed" can be used.)
 </li>
 <li>
-Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page in "Payment Method/Status" for all future applications by this student).<br />
-payconfirm.php also lists the full student payment account, the "Payment Method/Status" for all previous applications for earlier semesters by this student and the student payment schedule for those MPH students that have elected to pay by instalments (there is also a link to Specify Instalments/specify_instalments.php to specify/change this payment schedule using the same page as the student uses... see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a>).
+Marking all transactions in a student account which are "(not confirmed)" as confirmed.
+</li>
+<li>
+Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page in "Payment Method" for all future applications by this student).<br />
+payconfirm.php also lists the full student payment account, the "Payment Method" for all previous applications for earlier semesters by this student and the student payment schedule for those MPH students that have elected to pay by instalments (there is also a link to Specify Instalments/specify_instalments.php to specify/change this payment schedule using the same page as the student uses... see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a>).
 </li>
 </ol>
 </li>
@@ -1102,7 +1107,7 @@ You can also list all certificates with the "List All Certificates" link.
 <h2>Page to allow a Student to see their Payment Account</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/account.php">http://courses.peoples-uni.org/course/account.php</a> allows a student to see their account, it is no direct use to staff (see "Update Payment Amounts or Method/Status"/payconfirm.php in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">The "Details" button and the Approval Process</a> for a staff view on these data).
+<a href="http://courses.peoples-uni.org/course/account.php">http://courses.peoples-uni.org/course/account.php</a> allows a student to see their account, it is no direct use to staff (see "Update Payment Amounts, Method or Confirmed Status"/payconfirm.php in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">The "Details" button and the Approval Process</a> for a staff view on these data).
 </li>
 <li>
 It shows:-

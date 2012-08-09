@@ -112,7 +112,7 @@ if (!empty($_POST['markpayconfirm'])) {
   $updated = new object();
   $updated->id = $application->id;
 
-  if (empty($_POST['paymentmechanism'])) notice('You must select the Payment Method/Status. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  if (empty($_POST['paymentmechanism'])) notice('You must select the Payment Method. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 
   $updated->paymentmechanism = (int)$_POST['paymentmechanism'];
   //if ($updated->paymentmechanism != 6) {
@@ -249,7 +249,7 @@ elseif ($application->paymentmechanism == 107) $mechanism = 'Posted Travellers C
 elseif ($application->paymentmechanism == 108) $mechanism = 'Posted Cash Confirmed';
 elseif ($application->paymentmechanism == 109) $mechanism = 'MoneyGram Confirmed';
 else  $mechanism = '';
-if (!empty($mechanism)) echo "<br />Payment Method/Status for this Application: $mechanism<br />";
+if (!empty($mechanism)) echo "<br />Payment Method for this Application: $mechanism<br />";
 
 $inmmumph = FALSE;
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC LIMIT 1");
@@ -317,17 +317,17 @@ Check this only if you want the payment to be "(not confirmed)":&nbsp;<input typ
 </form>
 
 
-<br /><br /><br /><p>To update the payment method/status (for this application), specify the payment method below and then click "Submit the Payment Method/Status".<br />
+<br /><br /><br /><p>To update the payment method (for this application), specify the payment method below and then click "Submit the Payment Method".<br />
 (If you set a "Confirmed" status or "Send e-mail...", the student will be e-mailed with their transactions and current Balance,<br />
 so be sure to set the correct balance first.)<br />
-(clicking "Submit the Payment Method/Status" does not change the confirmed/(not confirmed) status for any transaction, that should be done when an individual transaction is added or "Mark all Transactions in this Student's Account as Confirmed" can be used below.)</p>
+(clicking "Submit the Payment Method" does not change the confirmed/(not confirmed) status for any transaction, that should be done when an individual transaction is added or "Mark all Transactions in this Student's Account as Confirmed" can be used below.)</p>
 
 <form id="payconfirmform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
 
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
-Select the new payment method/status: <select name="paymentmechanism">
+Select the new payment method: <select name="paymentmechanism">
 <option value="0">Select one...</option>
 <option value="2">Barclays Bank Transfer</option>
 <option value="10">Ecobank Nigeria PLC. Transfer</option>
@@ -351,7 +351,7 @@ Select the new payment method/status: <select name="paymentmechanism">
 </select><br /><br />
 
 <input type="hidden" name="markpayconfirm" value="1" />
-<input type="submit" name="payconfirm" value="Submit the Payment Method/Status" />
+<input type="submit" name="payconfirm" value="Submit the Payment Method" />
 </form>
 
 <br /><br /><br />
@@ -446,7 +446,7 @@ if (!empty($applications)) {
   $table->head = array(
     'Semester',
     'sid',
-    'Payment Status',
+    'Payment Method',
     'Registered?',
   );
 
