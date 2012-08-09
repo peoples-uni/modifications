@@ -352,6 +352,7 @@ Select the new payment method/status: <select name="paymentmechanism">
 </form>
 
 <br /><br /><br />
+<p>To mark all transactions in this student's account which are "(not confirmed)" as confirmed, click "Mark all Transactions in this Student's Account as Confirmed".</p>
 <form id="transactionconfirmedform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
