@@ -664,21 +664,22 @@ echo '<td>' . $_REQUEST['sid'] . '</td>';
 echo '</tr>';
 
 echo '<tr>';
-echo '<td>Payment up to date? (only includes modules already approved for this semester)</td>';
-//if ($application->costpaid < .01) echo '<td><span style="color:red">No: &pound;' . $application->costowed . ' Owed</span></td>';
-//elseif (abs($application->costowed - $application->costpaid) < .01) echo '<td><span style="color:green">Yes: &pound;' . $application->costowed . '</span></td>';
-//else echo '<td><span style="color:blue">' . "Paid &pound;$application->costpaid out of &pound;$application->costowed" . '</span></td>';
-if ($amount_to_pay_total >= .01) $x = '<span style="color:red">No: &pound;' . $amount_to_pay_total . ' Owed</span>';
-elseif (abs($amount_to_pay_total) < .01) $x = '<span style="color:green">Yes</span>';
-else $x = '<span style="color:blue">' . "Overpaid: &pound;$amount_to_pay_total" . '</span>';
-echo '<td>' . $x;
+echo '<td>Payment up to date? (amount owed includes modules already approved for this semester or any MPH instalments due this semester)</td>';
+echo '<td>';
+if ($amount_to_pay_this_semester >= .01) echo '<span style="color:red">No: &pound;' . $amount_to_pay_this_semester . ' Owed now</span>';
+elseif (abs($amount_to_pay_this_semester) < .01) echo '<span style="color:green">Yes</span>';
+else echo '<span style="color:blue">' . "Overpaid: &pound;$amount_to_pay_this_semester</span>"; // Will never be Overpaid here because of function used
 echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
 echo '</td>';
 echo '</tr>';
 
 echo '<tr>';
-echo '<td>Payment Owed this Semester (might be less because of instalments)</td>';
-echo '<td>&pound;' . $amount_to_pay_this_semester;
+echo '<td>Total Payment Owed (might be more because of future instalments)</td>';
+$neg_amount_to_pay_total = -$amount_to_pay_total;
+if ($amount_to_pay_total >= .01) $x = '<span style="color:red">&pound;' . $amount_to_pay_total . '</span>';
+elseif (abs($amount_to_pay_total) < .01) $x = '<span style="color:green">Nothing</span>';
+else $x = '<span style="color:blue">' . "Overpaid: &pound;$neg_amount_to_pay_total" . '</span>';
+echo '<td>' . $x;
 echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
 echo '</td>';
 echo '</tr>';

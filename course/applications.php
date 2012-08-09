@@ -1072,10 +1072,10 @@ foreach ($applications as $sid => $application) {
     //elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
     //else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
     if (!empty($application->userid)) {
-      $amount = get_balance($application->userid);
-      if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed' . $mechanism . '</span>';
+      $amount = amount_to_pay($application->userid);
+      if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed now' . $mechanism . '</span>';
       elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
-      else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $mechanism . '</span>';
+      else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $mechanism . '</span>'; // Will never be Overpaid here because of function used
     }
     else {
       $z = $mechanism;
@@ -1545,6 +1545,7 @@ function dontaddslashes($x) {
 function dontstripslashes($x) {
   return $x;
 }
+
 
 function amount_to_pay($userid) {
   global $DB;

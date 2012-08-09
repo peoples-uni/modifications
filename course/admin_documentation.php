@@ -603,10 +603,10 @@ When the "Details" button is pressed for an application, additional applicant da
 "Student Submissions" Launches a report on all the assignment submissions made by this student. See "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a>" below.
 </li>
 <li>
-"Payment up to date?" indicates if there is any payment due from the student (if they are paying by instalments, this indicates the total due, NOT the amount due this semester). It also indicates overpayment.
+"Payment up to date? (amount owed includes modules already approved for this semester or any MPH instalments due this semester)" indicates the amount still due this semester (i.e. instalments due in subsequent semesters are not included).
 </li>
 <li>
-"Payment Owed this Semester (might be less because of instalments)" indicates the amount still due this semester (i.e. instalments due in subsequent semesters are not included).
+"Total Payment Owed (might be more because of future instalments)" indicates any payment due from the student (if they are paying by instalments, this indicates the total due, NOT the amount due this semester). It also indicates overpayment.
 </li>
 <li>
 "Payment Method" can be one of...<br />
