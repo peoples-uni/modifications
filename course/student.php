@@ -87,10 +87,10 @@ if (!empty($application)) {
   //elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
   //else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
   if (!empty($application->userid)) {
-    $amount = get_balance($application->userid);
-    if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed' . $mechanism . '</span>';
+    $amount = amount_to_pay($application->userid);
+    if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed now' . $mechanism . '</span>';
     elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
-    else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $mechanism . '</span>';
+    else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $mechanism . '</span>'; // Will never be Overpaid here because of function used
   }
   else {
     $z = $mechanism;
@@ -765,6 +765,37 @@ function dontaddslashes($x) {
 
 function dontstripslashes($x) {
   return $x;
+}
+
+
+function amount_to_pay($userid) {
+  global $DB;
+
+  $amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+
+  if ($inmmumph) {
+    // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    if (!empty($payment_schedule)) {
+      $now = time();
+      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+    }
+  }
+
+  if ($amount < 0) $amount = 0;
+  return $amount;
 }
 
 
