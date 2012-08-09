@@ -351,7 +351,7 @@ Select the new payment method/status: <select name="paymentmechanism">
 <input type="submit" name="payconfirm" value="Submit the Payment Method/Status" />
 </form>
 
-<br /><br />
+<br /><br /><br />
 <form id="transactionconfirmedform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
