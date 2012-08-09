@@ -615,10 +615,12 @@ if (!empty($enrols)) {
         //elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
         //else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
         if (!empty($application->userid)) {
+          $not_confirmed_text = '';
+          if (is_not_confirmed($application->userid)) $not_confirmed_text = ' (not confirmed)';
           $amount = amount_to_pay($application->userid);
-          if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed now' . $mechanism . '</span>';
-          elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
-          else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $mechanism . '</span>'; // Will never be Overpaid here because of function used
+          if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed now' . $not_confirmed_text . $mechanism . '</span>';
+          elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $not_confirmed_text . $mechanism . '</span>';
+          else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $not_confirmed_text . $mechanism . '</span>'; // Will never be Overpaid here because of function used
         }
         else {
           $z = $mechanism;
@@ -941,5 +943,14 @@ function get_balance($userid) {
   }
 
   return $amount;
+}
+
+
+function is_not_confirmed($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} AND not_confirmed=1");
+  if (!empty($balances)) return TRUE;
+  return FALSE;
 }
 ?>

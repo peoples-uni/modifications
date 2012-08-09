@@ -456,10 +456,14 @@ if (!empty($mphs)) {
   }
 }
 
+$not_confirmed_text = '';
+
 if (!empty($application->userid)) {
   $amount_to_pay_total = get_balance($application->userid);
   $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $application->userid));
   $amount_to_pay_this_semester = amount_to_pay($application->userid);
+  if (is_not_confirmed($application->userid)) $not_confirmed_text = ' (not confirmed)';
+
 }
 else {
   $amount_to_pay_total = 0;
@@ -666,9 +670,9 @@ echo '</tr>';
 echo '<tr>';
 echo '<td>Payment up to date? (amount owed includes modules already approved for this semester or any MPH instalments due this semester)</td>';
 echo '<td>';
-if ($amount_to_pay_this_semester >= .01) echo '<span style="color:red">No: &pound;' . $amount_to_pay_this_semester . ' Owed now</span>';
-elseif (abs($amount_to_pay_this_semester) < .01) echo '<span style="color:green">Yes</span>';
-else echo '<span style="color:blue">' . "Overpaid: &pound;$amount_to_pay_this_semester</span>"; // Will never be Overpaid here because of function used
+if ($amount_to_pay_this_semester >= .01) echo '<span style="color:red">No: &pound;' . $amount_to_pay_this_semester . ' Owed now' . $not_confirmed_text . '</span>';
+elseif (abs($amount_to_pay_this_semester) < .01) echo '<span style="color:green">Yes' . $not_confirmed_text . '</span>';
+else echo '<span style="color:blue">' . "Overpaid: &pound;$amount_to_pay_this_semester" . $not_confirmed_text . '</span>'; // Will never be Overpaid here because of function used
 echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
 echo '</td>';
 echo '</tr>';
@@ -2051,6 +2055,15 @@ function get_balance($userid) {
   }
 
   return $amount;
+}
+
+
+function is_not_confirmed($userid) {
+  global $DB;
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} AND not_confirmed=1");
+  if (!empty($balances)) return TRUE;
+  return FALSE;
 }
 
 
