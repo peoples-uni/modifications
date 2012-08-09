@@ -185,6 +185,7 @@ elseif (!empty($_POST['marksetowed'])) {
     $peoples_student_balance->currency = 'GBP';
     $peoples_student_balance->detail = $_POST['detail'];
     $peoples_student_balance->date = time();
+    if (!empty($_POST['not_confirmed'])) $peoples_student_balance->not_confirmed = 1;
     $DB->insert_record('peoples_student_balance', $peoples_student_balance);
   }
 
@@ -306,8 +307,9 @@ else {
 
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
-Payment Amount: <input type="text" size="60" name="amount_delta" value="" /><br />
-Detail: <input type="text" size="60" name="detail" value="" /><br />
+Payment Amount:&nbsp;<input type="text" size="60" name="amount_delta" value="" /><br />
+Detail:&nbsp;<input type="text" size="60" name="detail" value="" /><br />
+Check this only if you want the payment to be "(not confirmed)":&nbsp;<input type="checkbox" name="not_confirmed" /><br />
 <br />
 
 <input type="hidden" name="marksetowed" value="1" />
@@ -315,9 +317,10 @@ Detail: <input type="text" size="60" name="detail" value="" /><br />
 </form>
 
 
-<br /><br /><br /><p>To update the payment method/status, specify it below and then click "Submit the Payment Method/Status".<br />
+<br /><br /><br /><p>To update the payment method/status (for this application), specify the payment method below and then click "Submit the Payment Method/Status".<br />
 (If you set a "Confirmed" status or "Send e-mail...", the student will be e-mailed with their transactions and current Balance,<br />
-so be sure to set the correct balance first.)</p>
+so be sure to set the correct balance first.)<br />
+(clicking "Submit the Payment Method/Status" does not change the confirmed/(not confirmed) status for any transaction, that should be done when an individual transaction is added or "Mark all Transactions in this Student's Account as Confirmed" can be used below.)</p>
 
 <form id="payconfirmform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
 
