@@ -604,10 +604,10 @@ When the "Details" button is pressed for an application, additional applicant da
 </li>
 <li>
 "Payment up to date? (amount owed includes modules already approved for this semester or any MPH instalments due this semester)" indicates the amount still due this semester (i.e. instalments due in subsequent semesters are not included).<br />
-If any of the transactions for this student are "(not confirmed)", this will be indicated. This can be used to find what payments need to be audited.
+If any of the transactions for this student are "(not confirmed)", this will be indicated. This can be used to find students whose payments need to be audited.
 </li>
 <li>
-"Total Payment Owed (might be more because of future instalments)" indicates any payment due from the student (if they are paying by instalments, this indicates the total due, NOT the amount due this semester). It also indicates overpayment.
+"Total Payment Owed (might be more because of future instalments)" indicates any payment due from the student (if they are paying by instalments, this indicates the total due, NOT just the amount due this semester). It also indicates overpayment.
 </li>
 <li>
 "Payment Method" can be one of...<br />
