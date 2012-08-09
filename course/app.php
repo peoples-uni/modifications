@@ -463,7 +463,6 @@ if (!empty($application->userid)) {
   $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $application->userid));
   $amount_to_pay_this_semester = amount_to_pay($application->userid);
   if (is_not_confirmed($application->userid)) $not_confirmed_text = ' (not confirmed)';
-
 }
 else {
   $amount_to_pay_total = 0;
