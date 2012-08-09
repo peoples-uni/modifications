@@ -205,6 +205,18 @@ elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
 
   //notice('Success! Data saved!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
 }
+elseif (!empty($_POST['marktransactionconfirmed'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid}");
+  if (!empty($balances) && $userid != 0) {
+    foreach ($balances as $balance) {
+      $balance->not_confirmed = 0;
+      $DB->update_record('peoples_student_balance', $balance);
+    }
+  }
+}
+
 
 echo '<div align="center">';
 //echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
@@ -339,6 +351,13 @@ Select the new payment method/status: <select name="paymentmechanism">
 <input type="submit" name="payconfirm" value="Submit the Payment Method/Status" />
 </form>
 
+<br /><br />
+<form id="transactionconfirmedform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
+<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="marktransactionconfirmed" value="1" />
+<input type="submit" name="transactionconfirmed" value="Mark all Transactions in this Student's Account as Confirmed" />
+</form>
 
 <?php
 $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
