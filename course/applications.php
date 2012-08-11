@@ -504,9 +504,9 @@ $listsemester[] = 'All';
 $liststatus[] = 'All';
 if (!isset($chosenstatus)) $chosenstatus = 'All';
 $liststatus[] = 'Not fully Approved';
-$liststatus[] = 'Not fully Registered';
+$liststatus[] = 'Not fully Enrolled';
 $liststatus[] = 'Part or Fully Approved';
-$liststatus[] = 'Part or Fully Registered';
+$liststatus[] = 'Part or Fully Enrolled';
 
 $listchosenpay[] = 'Any';
 if (!isset($chosenpay)) $chosenpay = 'Any';
@@ -681,9 +681,9 @@ foreach ($applications as $sid => $application) {
     $application->datesubmitted > $endtime ||
     (($chosensemester !== 'All') && ($application->semester !== $chosensemester)) ||
     (($chosenstatus  === 'Not fully Approved')       && ($state === 011 || $state === 033)) ||
-    (($chosenstatus  === 'Not fully Registered')     && ($state === 033)) ||
+    (($chosenstatus  === 'Not fully Enrolled')     && ($state === 033)) ||
     (($chosenstatus  === 'Part or Fully Approved')   && (!($state === 011 || $state === 012 || $state === 021 || $state === 023 || $state === 032 || $state === 013 || $state === 031 || $state === 033))) ||
-    (($chosenstatus  === 'Part or Fully Registered') && (!($state === 023 || $state === 032 || $state === 013 || $state === 031 || $state === 033)))
+    (($chosenstatus  === 'Part or Fully Enrolled') && (!($state === 023 || $state === 032 || $state === 013 || $state === 031 || $state === 033)))
     ) {
 
     unset($applications[$sid]);
@@ -865,7 +865,7 @@ if (!$displayextra && !$displayscholarship) {
     'sid',
     'Approved?',
     'Payment up to date?',
-    'Registered?',
+    'Enrolled?',
     '',
     'Family name',
     'Given name',
@@ -904,7 +904,7 @@ else {
     'sid',
     'Approved?',
     'Payment up to date?',
-    'Registered?',
+    'Enrolled?',
     'Family name',
     'Given name',
     'Email address',
@@ -992,7 +992,7 @@ Desired Moodle Username
 
 $n = 0;
 $napproved = 0;
-$nregistered = 0;
+$nenrolled = 0;
 
 $modules = array();
 foreach ($applications as $sid => $application) {
@@ -1007,8 +1007,8 @@ foreach ($applications as $sid => $application) {
   // Allowed transitions for Module 1 state (00X0) or Module 2 state (0X00):
   // state 0 (not processed) ..> state 2 (defered) OR state 1 (approved)
   // state 2 (defered) ..> state 1 (approved)
-  // state 1 (approved) ..> state 3 (registered) OR state 2 (defered)
-  // state 3 (registered) ..> state 2 (defered)
+  // state 1 (approved) ..> state 3 (enrolled) OR state 2 (defered)
+  // state 3 (enrolled) ..> state 2 (defered)
   // If any state changes from 0, all must change from 0!
   // If Module 2 is empty, its state should change along with Module 1's
 
@@ -1274,7 +1274,7 @@ foreach ($applications as $sid => $application) {
     if ($state1===01 || $state1===03 || $state2===010 || $state2===030) {
       $napproved++;
 
-      // Is Module 1 Approved/Registered
+      // Is Module 1 Approved/Enrolled
       if ($state1===01 || $state1===03) {
         if (empty($moduleapprovals[$application->coursename1])) {
           $moduleapprovals[$application->coursename1] = 1;
@@ -1284,7 +1284,7 @@ foreach ($applications as $sid => $application) {
         }
       }
 
-      // Is Module 2 Approved/Registered
+      // Is Module 2 Approved/Enrolled
       if ($state2===010 || $state2===030) {
         if (!empty($application->coursename2)) {
           if (empty($moduleapprovals[$application->coursename2])) {
@@ -1327,9 +1327,9 @@ foreach ($applications as $sid => $application) {
       $listofemails[]  = htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
     }
     if ($state1===03 || $state2===030) {
-      $nregistered++;
+      $nenrolled++;
 
-      // Is Module 1 Registered
+      // Is Module 1 Enrolled
       if ($state1 === 03) {
         if (empty($moduleregistrations[$application->coursename1])) {
           $moduleregistrations[$application->coursename1] = 1;
@@ -1339,7 +1339,7 @@ foreach ($applications as $sid => $application) {
         }
       }
 
-      // Is Module 2 Registered
+      // Is Module 2 Enrolled
       if ($state2 === 030) {
         if (!empty($application->coursename2)) {
           if (empty($moduleregistrations[$application->coursename2])) {
@@ -1358,7 +1358,7 @@ echo html_writer::table($table);
 
 echo '<br />Total Applications: ' . $n;
 echo '<br />Total Approved (or part Approved): ' . $napproved;
-echo '<br />Total Registered (or part Registered): ' . $nregistered;
+echo '<br />Total Enrolled (or part Enrolled): ' . $nenrolled;
 echo '<br /><br />(Duplicated e-mails: ' . $emaildups . ',  see <span style="color:navy">**</span>)';
 echo '<br/><br/>';
 
@@ -1367,7 +1367,7 @@ echo "<tr>";
 echo "<td>Module</td>";
 echo "<td>Number of Applications</td>";
 echo "<td>Number Approved</td>";
-echo "<td>Number Registered</td>";
+echo "<td>Number Enrolled</td>";
 echo "</tr>";
 
 ksort($modules);
@@ -1403,7 +1403,7 @@ $peoples_batch_reminder_email = htmlspecialchars($peoples_batch_reminder_email, 
 <br />To send an e-mail to all the students in the main spreadsheet above...
 enter BOTH a subject and optionally edit the e-mail text below and click "Send e-mail to All".<br />
 <br />
-NOTE, to send an e-mail only to approved and registered students for the current semester who have not indicated that they have paid
+NOTE, to send an e-mail only to approved and enrolled students for the current semester who have not indicated that they have paid
 or have otherwise been marked as paid or have a waiver... BEFORE SENDING THE E_MAIL,
 set the filters at the top of this page as follows...<br />
 Status: "Part or Fully Approved"<br />

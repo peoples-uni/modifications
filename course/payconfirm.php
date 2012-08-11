@@ -447,7 +447,7 @@ if (!empty($applications)) {
     'Semester',
     'sid',
     'Payment Method',
-    'Registered?',
+    'Enrolled?',
   );
 
   foreach ($applications as $sid => $app) {

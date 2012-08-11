@@ -564,7 +564,7 @@ For each student application, data about the student is displayed in a row of th
 In particular the one or two modules that the student has applied for are displayed. They are colour coded <span style="color:red">red</span> for not approved, <span style="color:#FF8C00">orange</span> for approved but not enrolled and <span style="color:green">green</span> for enrolled.
 </li>
 <li>
-"Approved?", "Payment up to date?", "Registered?", "Details", "Student Grades" and "Student Submissions" will be described later.
+"Approved?", "Payment up to date?", "Enrolled?", "Details", "Student Grades" and "Student Submissions" will be described later.
 </li>
 <li>
 Statistics are displayed at the end of the page.
@@ -657,10 +657,10 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 "Payment Info" is reference data entered by the student when they go to paydetails.php to indicate that they have made a payment by bank transfer. It is not proving very useful. In practice it seems that the only data that apears in our bank statements is the payee's name. Also students do not seems to remember to go to paydetails to notify us they have made a payment, so we have been reduced to just checking bank statements (which we would have to do in any case to confirm all non credit card payments).
 </li>
 <li>
-"Notes" lists any notes that have been added to the student record in "Details" or student.php. If any note is present they the "(Note Present)" indicator will be displayed under the "Registered?" column in applications.php.
+"Notes" lists any notes that have been added to the student record in "Details" or student.php. If any note is present they the "(Note Present)" indicator will be displayed under the "Enrolled?" column in applications.php.
 </li>
 <li>
-"MMU MPH Status" indicates whether the student "Wants to Apply for MMU MPH" or "Says Already in MMU MPH" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether "Student was Enrolled in MMU MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Registered?" as "(MMU MPH)").
+"MMU MPH Status" indicates whether the student "Wants to Apply for MMU MPH" or "Says Already in MMU MPH" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether "Student was Enrolled in MMU MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(MMU MPH)").
 <li>
 "Approve Full Application" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail outlined above under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which requests payment.<br />
 The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Yes" as opposed to "No", "Some" (if only one application is approved, see below) or "Denied or Deferred" (if the application has been un-approved after being approved.)
@@ -706,7 +706,7 @@ There is a link to your course at the bottom of the profile or you can click:
 <br />
 They will also get a notification of the current semester's Students Corner in another e-mail.
 <br />
-The "Registered?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
+The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
 </li>
 <li>
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
@@ -715,7 +715,7 @@ The "Registered?" column in <a href="http://courses.peoples-uni.org/course/appli
 "Record that the Student has been enrolled in the MMU MPH" button does what it says.
 </li>
 <li>
-The "Add This Note to Student Record" button adds a note entered above that button to the student record. When there are any notes for a student it will be indicated in the applications.php spreadsheet in the "Registered?" column by the words "(Note Present)".<br />
+The "Add This Note to Student Record" button adds a note entered above that button to the student record. When there are any notes for a student it will be indicated in the applications.php spreadsheet in the "Enrolled?" column by the words "(Note Present)".<br />
 The purpose of these notes is to allow records to be kept of application or grading data related to the student (There are separate Payment Notes to track payment issues and also now a separate "Ready to Enrol" marker.)<br />
 All notes for the student (if any are present, either entered here or in "Student Grades"/student.php) will be listed further up the details page.<br />
 <br />
@@ -752,7 +752,7 @@ But to fully close applications go to <a href="http://courses.peoples-uni.org/co
 In the case that you want to reopen applications temporarily for some reason... Just go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> deselect "Check to mark Module as Full" for any module that you wish to reopen and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed.
 </li>
 <li>
-Note: When all students have been registered (enrolled) for a module, then the Marking Spreadsheet will need to be created see... <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.<br />
+Note: When all students have been enrolled for a module, then the Marking Spreadsheet will need to be created see... <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.<br />
 This should be done some time before assignment submission and grading starts.
 </li>
 </ol>
@@ -780,7 +780,7 @@ A process has been designed which allows Tutors for a course module to use a (Go
 It is driven by a small Block "Track Marking" which should have been added to every relevant Module (on the bottom right hand side). The block is only visible to site administrators or to Module Leader/Tutors (more specifically users who have moodle/grade:edit for the course). It is not visible to students. Also the Block will not be displayed to Module Leader/Tutors if the spreadsheet has not yet been created.
 </li>
 <li>
-When all students have been registered (enrolled) for a module, then the Marking Spreadsheet will need to be created. This should be done some time before assignment submission and grading starts. This can be done by a Moodle Admin using the second link "Re-Create Marking Spreadsheet" in that block. This link, when clicked, brings up a page with a button which allows the Marking Spreadsheet to be created (or recreated). There is a warning popup to make sure you really want to overwrite the spreadsheet (and any marking that is contains, although Alan Barrett should be able to get the spreadsheet back if necessary, through the admin@files.peoples-uni.org Google account!).
+When all students have been enrolled for a module, then the Marking Spreadsheet will need to be created. This should be done some time before assignment submission and grading starts. This can be done by a Moodle Admin using the second link "Re-Create Marking Spreadsheet" in that block. This link, when clicked, brings up a page with a button which allows the Marking Spreadsheet to be created (or recreated). There is a warning popup to make sure you really want to overwrite the spreadsheet (and any marking that is contains, although Alan Barrett should be able to get the spreadsheet back if necessary, through the admin@files.peoples-uni.org Google account!).
 </li>
 <li>
 The spreadsheet that is created is based on a standard spreadsheet and has all the names of the enrolled students in the particular course added to it (so they can be collaboratively marked). The process of creating the spreadsheet is slightly slow.
