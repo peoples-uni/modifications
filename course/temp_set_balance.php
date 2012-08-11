@@ -39,7 +39,7 @@ foreach ($userids as $useridrow) {
     SELECT *
     FROM mdl_peoples_student_balance
     WHERE userid=$userid
-    ORDER BY date");
+    ORDER BY date, id");
   $total = 0;
   $count = 0;
   foreach ($balances as $balance) {
