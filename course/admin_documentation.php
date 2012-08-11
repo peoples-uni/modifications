@@ -309,25 +309,25 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
-Your application to take the Course Module 'COURSE_MODULE_1_NAME_HERE'
+Your application to take the Course Module
+'COURSE_MODULE_1_NAME_HERE'
 COURSE_MODULE_2_TEXT_HEREhas been approved.
 COURSE_MODULE_2_WARNING_TEXT_HERE
 
 You will receive a welcome email for each course module giving
 the course module URL and the URL for your profile.
 We will send you all these details on the first day of the course
-orientation week September 26th 2011.
+orientation week September 17th 2012.
 
 Please see the course timetable at:
-http://www.peoples-uni.org/book/course-dates-2010
+http://www.peoples-uni.org/book/course-dates
 
 *** Payment will be required unless you have been approved for a bursary.
-If you can do this before enrolment on 26th of September, it would be
-preferable, otherwise since time is tight you can do this once the semester
-has started.
-The fees for Peoples-uni modules are £30 sterling if you have been approved
-for one course module or £60 sterling if you have been approved for two
-modules.
+If you can do this before enrolment on 17th of September, it would be
+preferable, otherwise since time is tight you can do this once the
+semester has started.
+
+Your fees are £AMOUNT_TO_PAY_HERE sterling for this semester.
 
 There are a number of ways you can pay.
 
@@ -351,8 +351,8 @@ SWIFT: BARCGB22
 IBAN: GB82 BARC 2055 3493 7773 08
 Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
-When you have made the Bank Transfer you must then click on this web site
-(URL):
+When you have made the Bank Transfer you must then click on this
+web site (URL):
 http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
 and fill in the form so we know about your payment.
@@ -365,29 +365,38 @@ Account name: Datasphir Solutions Limited
 Account number: 0122270018
 Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
-When you have made the Bank Transfer you must then click on this web site
-(URL):
+When you have made the Bank Transfer you must then click on this web site (URL):
 http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
-and fill in the form so we know about your payment. Note for others in
-Africa: Anyone from the country list at http://ecobank.com/yourcountry.aspx
-can pay in their local currency.  Go to your local Ecobank branch and ask
-to pay the cost of their module/s in Naira to the Peoples-uni account in
-Nigeria.   The banks internal processes takes care of the exchange.
+and fill in the form so we know about your payment.
 
-AN ALTERNATIVE WAY, you can use MoneyGram to send money directly.
+Note for others in Africa: Anyone from the country list at
+http://ecobank.com/yourcountry.aspx
+can pay in their local currency.  Go to your local Ecobank branch and
+ask to pay the cost of their module/s in Naira to the Peoples-uni
+account in Nigeria.
+The banks internal processes takes care of the exchange.
+
+AN ALTERNATIVE WAY, you can use MoneyGram to send money
+directly.
 Please give the receiver's name as:
 Professor Rajan Madhok,
 People's Open Access Education Initiative,
 Manchester UK.
 
 If you do use this method, please let us know through
-payments@peoples-uni.org and send us the payment reference number, your
-first and middle name, and surname or family name. These should be of the
-sender, if not sent by you.
+payments@peoples-uni.org and send us the payment reference
+number, your first and middle name, and surname or family name.
+These should be of the sender, if not sent by you.
 
-We look forward to your participation this semester, and hope that you
-enjoy the experience and find it useful.
+You can look at your payment account balance and all transactions
+at any time when logged in at this URL:
+http://courses.peoples-uni.org/course/account.php
+
+NOTE_ON_INSTALMENTS_HERE
+
+We look forward to your participation this semester, and hope that
+you enjoy the experience and find it useful.
 
     Peoples Open Access Education Initiative Administrator.
 </pre>
@@ -400,16 +409,16 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
-We contacted you earlier indicating that your application for this semester
-had been approved and giving payment options.
+We contacted you earlier indicating that your application for this
+semester had been approved and giving payment options.
 
-We have so far not received any indication of payment from you. If you have
-only recently paid we may not have a record of that yet. However, if you
-have not paid, we would like to remind you and ask you to process the
-payment - please send a message to payments@peoples-uni.org and tell us if
-there is a problem.
+We have so far not received any indication of payment from you.
+If you have only recently paid we may not have a record of that yet.
+However, if you have not paid, we would like to remind you and ask
+you to process the payment - please send a message to
+payments@peoples-uni.org and tell us if there is a problem.
 
-Your fees are £AMOUNT_OWED_HERE sterling.
+Your fees are £AMOUNT_TO_PAY_HERE sterling for this semester.
 
 Here is a reminder of the payment methods.
 
@@ -433,8 +442,8 @@ SWIFT: BARCGB22
 IBAN: GB82 BARC 2055 3493 7773 08
 Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
-When you have made the Bank Transfer you must then click on this web site
-(URL):
+When you have made the Bank Transfer you must then click on this
+web site (URL):
 http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
 and fill in the form so we know about your payment.
@@ -447,26 +456,29 @@ Account name: Datasphir Solutions Limited
 Account number: 0122270018
 Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
-When you have made the Bank Transfer you must then click on this web site
-(URL):
+When you have made the Bank Transfer you must then click on this
+web site (URL):
 http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
-and fill in the form so we know about your payment. Note for others in
-Africa: Anyone from the country list at http://ecobank.com/yourcountry.aspx
-can pay in their local currency.  Go to your local Ecobank branch and ask
-to pay the cost of their module/s in Naira to the Peoples-uni account in
-Nigeria.   The banks internal processes takes care of the exchange.
+and fill in the form so we know about your payment.
+Note for others in Africa: Anyone from the country list at
+http://ecobank.com/yourcountry.aspx
+can pay in their local currency.  Go to your local Ecobank branch and
+ask to pay the cost of their module/s in Naira to the Peoples-uni
+account in Nigeria.
+The banks internal processes takes care of the exchange.
 
-AN ALTERNATIVE WAY, you can use MoneyGram to send money directly.
+AN ALTERNATIVE WAY, you can use MoneyGram to send money
+directly.
 Please give the receiver's name as:
 Professor Rajan Madhok,
 People's Open Access Education Initiative,
 Manchester UK.
 
 If you do use this method, please let us know through
-payments@peoples-uni.org and send us the payment reference number, your
-first and middle name, and surname or family name. These should be of the
-sender, if not sent by you.
+payments@peoples-uni.org and send us the payment reference
+number, your first and middle name, and surname or family name.
+These should be of the sender, if not sent by you.
 
 We hope that you are enjoying the course this semester.
 
