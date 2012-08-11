@@ -28,10 +28,11 @@ echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 echo "<p><b>";
 echo "<br />";
 
-$userids = $DB->get_records_sql('
-  SELECT DISTINCT userid
-  FROM mdl_peoples_student_balance
-  ORDER BY userid');
+echo 'SHOULD NOT BE RUN, IS DISABLED (see next //s)';
+//$userids = $DB->get_records_sql('
+//  SELECT DISTINCT userid
+//  FROM mdl_peoples_student_balance
+//  ORDER BY userid');
 foreach ($userids as $useridrow) {
   $userid = $useridrow->userid;
 
