@@ -764,6 +764,9 @@ But to fully close applications go to <a href="http://courses.peoples-uni.org/co
 In the case that you want to reopen applications temporarily for some reason... Just go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> deselect "Check to mark Module as Full" for any module that you wish to reopen and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed.
 </li>
 <li>
+Note: Those who have the permission "moodle/site:viewparticipants" (which is the same as gives access to applications.php), can enter an application (presumably for a "late" student application) even if applications are closed. They are also allow make the application for closed modules.
+</li>
+<li>
 Note: When all students have been enrolled for a module, then the Marking Spreadsheet will need to be created see... <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.<br />
 This should be done some time before assignment submission and grading starts.
 </li>
