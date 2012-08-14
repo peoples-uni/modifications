@@ -280,6 +280,7 @@ $howfoundpeoplesname['30'] = 'Facebook';
 $howfoundpeoplesname['40'] = 'Internet advertisement';
 $howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
 $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+$howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
 
 
 require("../config.php");

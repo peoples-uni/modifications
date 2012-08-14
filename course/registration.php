@@ -449,6 +449,7 @@ elseif ($data = $editform->get_data()) {
     $howfoundpeoplesname['40'] = 'Internet advertisement';
     $howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
     $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+    $howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
   $message .= "How heard about Peoples-uni: " . $howfoundpeoplesname[$application->howfoundpeoples] . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
