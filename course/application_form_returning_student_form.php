@@ -32,10 +32,19 @@ class application_form_returning_student_form extends moodleform {
     $semester_current = $DB->get_record('semester_current', array('id' => 1));
     $mform->addElement('header', 'modules', "Course Module Selection for Semester $semester_current->semester");
 
-    $open_modules = $DB->get_records('activemodules', array('modulefull' => 0));
-    if (empty($open_modules)) {
-      redirect($CFG->wwwroot . '/course/closed.php');
+    // Ability to submit form (no matter what) is given by the "Manager" role which has moodle/site:viewparticipants
+    // (administrator also has moodle/site:viewparticipants)
+    $ismanager = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+
+    if (!$ismanager) {
+echo 'NOT A MANAGER ismanager FALSE';//abtest
+      $open_modules = $DB->get_records('activemodules', array('modulefull' => 0));
+      if (empty($open_modules)) {
+        redirect($CFG->wwwroot . '/course/closed.php');
+      }
     }
+else { echo 'IS A MANAGER';//abtest
+} //abtest
 
     $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
 
@@ -43,7 +52,9 @@ class application_form_returning_student_form extends moodleform {
     $listforselect[''] = 'Select...';
     $listforunavailable = array();
     foreach ($activemodules as $activemodule) {
-      if (!$activemodule->modulefull) {
+//abtest
+$activemodule->modulefull = 1;//abtest
+      if (!$activemodule->modulefull || $ismanager) {
         $listforselect[$activemodule->course_id] = $activemodule->fullname;
       }
       else {
