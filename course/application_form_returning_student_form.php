@@ -37,14 +37,11 @@ class application_form_returning_student_form extends moodleform {
     $ismanager = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
     if (!$ismanager) {
-echo 'NOT A MANAGER ismanager FALSE';//abtest
       $open_modules = $DB->get_records('activemodules', array('modulefull' => 0));
       if (empty($open_modules)) {
         redirect($CFG->wwwroot . '/course/closed.php');
       }
     }
-else { echo 'IS A MANAGER';//abtest
-} //abtest
 
     $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
 
@@ -52,8 +49,6 @@ else { echo 'IS A MANAGER';//abtest
     $listforselect[''] = 'Select...';
     $listforunavailable = array();
     foreach ($activemodules as $activemodule) {
-//abtest
-$activemodule->modulefull = 1;//abtest
       if (!$activemodule->modulefull || $ismanager) {
         $listforselect[$activemodule->course_id] = $activemodule->fullname;
       }
