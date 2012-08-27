@@ -175,6 +175,12 @@ elseif (!empty($_POST['marksetowed'])) {
     notice('Detail must be specified. Press Continue and re-enter.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
   }
 
+  $same_payment_should_not_exist = $DB->get_record('peoples_student_balance', array('userid' => $application->userid, 'amount_delta' => $_POST['amount_delta'], 'detail' => $_POST['detail']), '*', IGNORE_MULTIPLE);
+
+  if (!empty($same_payment_should_not_exist)) {
+    notice('The same Payment Amount and Detail have already been specified for this student. Specify a different Detail. Press Continue and re-enter.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  }
+
   if (!empty($application->userid)) { // $application->userid should NOT be empty, but just in case
     $amount = get_balance($application->userid);
 
