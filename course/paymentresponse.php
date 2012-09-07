@@ -76,7 +76,10 @@ if (empty($_POST['M_donate']) && empty($_POST['M_wikitox']) && empty($_POST['M_m
 	$updated->id = $application->id;
 	$updated->paymentmechanism = 1;
 	//$updated->costpaid = $application->costowed;
-	$updated->datafromworldpay = (int)$_POST['transId'];
+  if (!is_numeric($_POST['transId'])) {
+    $_POST['transId'] = (int)$_POST['transId'];
+  }
+	$updated->datafromworldpay = $_POST['transId'];
 	$updated->datepaid = time();
   $DB->update_record('peoplesapplication', $updated);
 
@@ -159,7 +162,10 @@ elseif (!empty($_POST['M_donate'])) {
 		$peoplesdonation->type = 2; // They are willing for their name to be displayed on our site
 	}
 
-	$peoplesdonation->datafromworldpay = (int)$_POST['transId'];
+  if (!is_numeric($_POST['transId'])) {
+    $_POST['transId'] = (int)$_POST['transId'];
+  }
+	$peoplesdonation->datafromworldpay = $_POST['transId'];
 
   $DB->insert_record('peoplesdonation', $peoplesdonation);
 }
@@ -225,7 +231,10 @@ elseif (!empty($_POST['M_wikitox'])) {
 
   $peoples_wikitox_payment->M_wikitox = $_POST['M_wikitox'];
 
-  $peoples_wikitox_payment->datafromworldpay = (int)$_POST['transId'];
+  if (!is_numeric($_POST['transId'])) {
+    $_POST['transId'] = (int)$_POST['transId'];
+  }
+  $peoples_wikitox_payment->datafromworldpay = $_POST['transId'];
 
   $DB->insert_record('peoples_wikitox_payment', $peoples_wikitox_payment);
 
@@ -343,7 +352,10 @@ elseif (!empty($_POST['M_mph'])) {
 
   $peoples_mph_payment->M_mph = $_POST['M_mph'];
 
-  $peoples_mph_payment->datafromworldpay = (int)$_POST['transId'];
+  if (!is_numeric($_POST['transId'])) {
+    $_POST['transId'] = (int)$_POST['transId'];
+  }
+  $peoples_mph_payment->datafromworldpay = $_POST['transId'];
 
   $DB->insert_record('peoples_mph_payment', $peoples_mph_payment);
 
