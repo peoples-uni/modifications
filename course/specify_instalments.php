@@ -216,7 +216,7 @@ else {
   else {
     if (!$inmmumph) {
       if ($fullname == 'Guest User') {
-        notice('You have not logged in ($fullname). Please press "Continue" and log in with your username and password above!', "$CFG->wwwroot/course/specify_instalments.php")
+        notice('You have not logged in ($fullname). Please press "Continue" and log in with your username and password above!', "$CFG->wwwroot/course/specify_instalments.php");
       }
       else {
         echo '<b>You are not in the MMU MPH so cannot specify instalments!</b><br />';
