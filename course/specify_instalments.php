@@ -219,7 +219,7 @@ else {
     if (!$inmmumph) {
       if (empty($fullname) || trim($fullname) == 'Guest User') {
         $SESSION->wantsurl = "$CFG->wwwroot/course/specify_instalments.php";
-        notice('You have not logged in. Please log in with your username and password above!<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+        notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
       }
       else {
         echo '<b>You are not in the MMU MPH so cannot specify instalments!</b><br />';
