@@ -113,7 +113,9 @@ echo '<div align="center">';
 echo '<p>';
 
 $fullname = fullname($userrecord);
-echo '<br /><br /><b>' . $fullname . '</b>';
+if (!empty($fullname) && trim($fullname) != 'Guest User') {
+  echo '<br /><br /><b>' . $fullname . '</b>';
+}
 
 $inmmumph = FALSE;
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
