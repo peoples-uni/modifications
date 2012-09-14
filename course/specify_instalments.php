@@ -13,7 +13,7 @@ $PAGE->set_url('/course/specify_instalments.php');
 $PAGE->set_pagelayout('standard');
 
 
-require_login(0, TRUE, NULL, TRUE);
+require_login();
 // (Might possibly be Guest)
 
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
@@ -216,7 +216,8 @@ else {
   else {
     if (!$inmmumph) {
       if (empty($fullname) || trim($fullname) == 'Guest User') {
-        notice_yesno('You have not logged in. Please press "Yes" and then log in with your username and password above!', "$CFG->wwwroot/course/specify_instalments.php", "$CFG->wwwroot/course/specify_instalments.php");
+        $SESSION->wantsurl = "$CFG->wwwroot/course/specify_instalments.php";
+        notice('You have not logged in. Please log in with your username and password above!');
       }
       else {
         echo '<b>You are not in the MMU MPH so cannot specify instalments!</b><br />';
