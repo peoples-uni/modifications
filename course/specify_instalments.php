@@ -215,11 +215,11 @@ else {
   }
   else {
     if (!$inmmumph) {
-      if (trim($fullname) == 'Guest User') {
-        notice('You have not logged in ($fullname). Please press "Continue" and log in with your username and password above!', "$CFG->wwwroot/course/specify_instalments.php");
+      if (empty($fullname) || trim($fullname) == 'Guest User') {
+        notice('You have not logged in. Please press "Continue" and log in with your username and password above!', "$CFG->wwwroot/course/specify_instalments.php");
       }
       else {
-        echo '<b>You are not in the MMU MPH so cannot specify instalments!</b><br />'.'X'.$fullname.'X';
+        echo '<b>You are not in the MMU MPH so cannot specify instalments!</b><br />';
       }
     }
     else {
