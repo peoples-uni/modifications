@@ -13,8 +13,8 @@ $PAGE->set_url('/course/specify_instalments.php');
 $PAGE->set_pagelayout('standard');
 
 
-require_login();
-// (Might possibly be Guest?)
+require_login(0, TRUE, NULL, TRUE);
+// (Might possibly be Guest)
 
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
