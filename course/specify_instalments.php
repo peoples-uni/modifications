@@ -112,7 +112,8 @@ echo '<div align="center">';
 
 echo '<p>';
 
-echo '<br /><br /><b>' . fullname($userrecord) . '</b>';
+$fullname = fullname($userrecord);
+echo '<br /><br /><b>' . $fullname . '</b>';
 
 $inmmumph = FALSE;
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
@@ -214,7 +215,12 @@ else {
   }
   else {
     if (!$inmmumph) {
-      echo '<b>You are not in the MMU MPH!</b><br />';
+      if ($fullname == 'Guest User') {
+        notice('You have not logged in ($fullname). Please press "Continue" and log in with your username and password above!', "$CFG->wwwroot/course/specify_instalments.php")
+      }
+      else {
+        echo '<b>You are not in the MMU MPH so cannot specify instalments!</b><br />';
+      }
     }
     else {
       echo '<b>You have already set your payment schedule. If there is a need to change it please e-mail <a href="mailto:payments@peoples-uni.org?subject=Instalment query">payments@peoples-uni.org</a></b><br />';
