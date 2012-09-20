@@ -633,8 +633,8 @@ Display entries using the following filters...
     displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
     displayoptions('chosenendday', $listendday, $chosenendday);
     ?>
-    <td><input type="text" size="20" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
-    <td><input type="text" size="20" name="chosenmodule" value="<?php echo htmlspecialchars($chosenmodule, ENT_COMPAT, 'UTF-8'); ?>" /></td>
+    <td><input type="text" size="15" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
+    <td><input type="text" size="15" name="chosenmodule" value="<?php echo htmlspecialchars($chosenmodule, ENT_COMPAT, 'UTF-8'); ?>" /></td>
     <?php
     displayoptions('chosenpay', $listchosenpay, $chosenpay);
     displayoptions('chosenreenrol', $listchosenreenrol, $chosenreenrol);
