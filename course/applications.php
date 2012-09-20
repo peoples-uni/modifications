@@ -1421,7 +1421,8 @@ foreach ($applications as $sid => $application) {
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
+    //$rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
+    $rowdata[] = $application->reasons;
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
 
