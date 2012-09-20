@@ -1409,7 +1409,7 @@ foreach ($applications as $sid => $application) {
     else $z = $employmentname[$application->employment];
     $rowdata[] = $z;
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->currentjob));
 
     if (empty($qualificationname[$application->qualification])) $z = '';
     else $z = $qualificationname[$application->qualification];
@@ -1419,16 +1419,15 @@ foreach ($applications as $sid => $application) {
     else $z = $higherqualificationname[$application->higherqualification];
     $rowdata[] = $z;
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->education));
 
-    //$rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
-    $rowdata[] = $application->reasons;
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->reasons));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->sponsoringorganisation));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->scholarship));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->whynotcomplete));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->whynotcomplete));
 
     $table->data[] = $rowdata;
   }
