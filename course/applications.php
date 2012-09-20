@@ -420,6 +420,7 @@ if (!empty($_POST['markfilter'])) {
     . '&chosenendmonth=' . $_POST['chosenendmonth']
     . '&chosenendday=' . $_POST['chosenendday']
     . '&chosensearch=' . urlencode(dontstripslashes($_POST['chosensearch']))
+    . '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
     . '&chosenpay=' . urlencode($_POST['chosenpay'])
     . '&chosenreenrol=' . urlencode($_POST['chosenreenrol'])
     . '&chosenmmu=' . urlencode($_POST['chosenmmu'])
@@ -485,6 +486,8 @@ else {
 }
 if (!empty($_REQUEST['chosensearch'])) $chosensearch = dontstripslashes($_REQUEST['chosensearch']);
 else $chosensearch = '';
+if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
+else $chosenmodule = '';
 if (!empty($_REQUEST['chosenpay'])) $chosenpay = $_REQUEST['chosenpay'];
 if (!empty($_REQUEST['chosenreenrol'])) $chosenreenrol = $_REQUEST['chosenreenrol'];
 if (!empty($_REQUEST['chosenmmu'])) $chosenmmu = $_REQUEST['chosenmmu'];
@@ -609,6 +612,7 @@ Display entries using the following filters...
     <td>End Month</td>
     <td>End Day</td>
     <td>Name or e-mail Contains</td>
+    <td>Module Name Contains</td>
     <td>Payment Method</td>
     <td>Re&#8209;enrolment?</td>
     <td>Applied MMU?</td>
@@ -630,6 +634,7 @@ Display entries using the following filters...
     displayoptions('chosenendday', $listendday, $chosenendday);
     ?>
     <td><input type="text" size="40" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
+    <td><input type="text" size="40" name="chosenmodule" value="<?php echo htmlspecialchars($chosenmodule, ENT_COMPAT, 'UTF-8'); ?>" /></td>
     <?php
     displayoptions('chosenpay', $listchosenpay, $chosenpay);
     displayoptions('chosenreenrol', $listchosenreenrol, $chosenreenrol);
@@ -701,6 +706,14 @@ foreach ($applications as $sid => $application) {
     stripos($application->lastname, $chosensearch) === false &&
     stripos($application->firstname, $chosensearch) === false &&
     stripos($application->email, $chosensearch) === false) {
+
+    unset($applications[$sid]);
+    continue;
+  }
+
+  if (!empty($chosenmodule) &&
+    stripos($application->coursename1, $chosenmodule) === false &&
+    stripos($application->coursename2, $chosenmodule) === false) {
 
     unset($applications[$sid]);
     continue;
@@ -1489,6 +1502,7 @@ Also look at list of e-mails sent to verify they went! (No subject and they will
       . '&chosenendmonth=' . $_REQUEST['chosenendmonth']
       . '&chosenendday=' . $_REQUEST['chosenendday']
       . '&chosensearch=' . urlencode(dontstripslashes($_REQUEST['chosensearch']))
+      . '&chosenmodule=' . urlencode(dontstripslashes($_REQUEST['chosenmodule']))
       . '&chosenpay=' . urlencode($_REQUEST['chosenpay'])
       . '&chosenreenrol=' . urlencode($_REQUEST['chosenreenrol'])
       . '&chosenmmu=' . urlencode($_REQUEST['chosenmmu'])
