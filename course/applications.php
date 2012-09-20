@@ -457,7 +457,7 @@ require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_
 
 $PAGE->set_title('Student Applications');
 $PAGE->set_heading('Student Applications');
-if (empty($_REQUEST['displayforexcel'])) echo $OUTPUT->header();
+echo $OUTPUT->header();
 
 //echo html_writer::start_tag('div', array('class'=>'course-content'));
 
@@ -1434,7 +1434,10 @@ foreach ($applications as $sid => $application) {
 }
 echo html_writer::table($table);
 
-if ($displayforexcel) die();
+if ($displayforexcel) {
+  echo $OUTPUT->footer();
+  die();
+}
 
 echo '<br />Total Applications: ' . $n;
 echo '<br />Total Approved (or part Approved): ' . $napproved;
