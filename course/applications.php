@@ -924,6 +924,7 @@ elseif ($displayforexcel) {
     'Given name',
     'Country',
     'MMU?',
+    'Tutor Comments',
     'Current employment',
     'Current employment details',
     'Qualification',
@@ -1404,6 +1405,8 @@ foreach ($applications as $sid => $application) {
     if ($application->mph) $z = 'Yes';
     else $z = '';
     $rowdata[] = $z;
+
+    $rowdata[] = '';
 
     if (empty($employmentname[$application->employment])) $z = '';
     else $z = $employmentname[$application->employment];
