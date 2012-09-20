@@ -427,6 +427,7 @@ if (!empty($_POST['markfilter'])) {
     . '&chosenscholarship=' . urlencode($_POST['chosenscholarship'])
     . (empty($_POST['displayscholarship']) ? '&displayscholarship=0' : '&displayscholarship=1')
     . (empty($_POST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
+    . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
     );
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
@@ -455,12 +456,12 @@ require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_
 
 $PAGE->set_title('Student Applications');
 $PAGE->set_heading('Student Applications');
-echo $OUTPUT->header();
+if (empty($_REQUEST['displayforexcel'])) echo $OUTPUT->header();
 
 //echo html_writer::start_tag('div', array('class'=>'course-content'));
 
 
-echo "<h1>Student Applications</h1>";
+if (empty($_REQUEST['displayforexcel'])) echo "<h1>Student Applications</h1>";
 
 if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
 if (!empty($_REQUEST['chosenstatus'])) $chosenstatus = $_REQUEST['chosenstatus'];
@@ -493,6 +494,8 @@ if (!empty($_REQUEST['displayscholarship'])) $displayscholarship = true;
 else $displayscholarship = false;
 if (!empty($_REQUEST['displayextra'])) $displayextra = true;
 else $displayextra = false;
+if (!empty($_REQUEST['displayforexcel'])) $displayforexcel = true;
+else $displayforexcel = false;
 
 $semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
@@ -591,6 +594,7 @@ for ($i = 31; $i >= 1; $i--) {
   $listendday[] = $i;
 }
 
+if (!$displayforexcel) {
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/applications.php'; ?>">
 Display entries using the following filters...
@@ -612,6 +616,7 @@ Display entries using the following filters...
     <td>Applied Scholarship?</td>
     <td>Show Scholarship Relevant Columns</td>
     <td>Show Extra Details</td>
+    <td>Display Student History for Copying and Pasting to Excel</td>
   </tr>
   <tr>
     <?php
@@ -634,6 +639,7 @@ Display entries using the following filters...
     ?>
     <td><input type="checkbox" name="displayscholarship" <?php if ($displayscholarship) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="displayextra" <?php if ($displayextra) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="displayforexcel" <?php if ($displayforexcel) echo ' CHECKED'; ?>></td>
   </tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
@@ -642,6 +648,7 @@ Display entries using the following filters...
 </form>
 <br />
 <?php
+}
 
 
 function displayoptions($name, $options, $selectedvalue) {
@@ -859,7 +866,7 @@ if ($sendemails) {
 
 $table = new html_table();
 
-if (!$displayextra && !$displayscholarship) {
+if (!$displayextra && !$displayscholarship && !$displayforexcel) {
   $table->head = array(
     'Submitted',
     'sid',
@@ -897,6 +904,23 @@ elseif ($displayscholarship) {
     'Education Details (1st Application)',
   );
   $table->align = array('left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left');
+}
+elseif ($displayforexcel) {
+  $table->head = array(
+    'Family name',
+    'Given name',
+    'Country',
+    'MMU?',
+    'Current employment',
+    'Current employment details',
+    'Qualification',
+    'Postgraduate Qualification',
+    'Education Details',
+    'Reasons for wanting to enrol',
+    'Sponsoring organisation',
+    'Scholarship',
+    'Why Not Completed Previous Semester',
+  );
 }
 else {
   $table->head = array(
@@ -1030,7 +1054,7 @@ foreach ($applications as $sid => $application) {
 
   $application->userid = (int)$application->userid;
 
-  if (true) {
+  if (!$displayforexcel) {
     $rowdata = array();
     //echo '<tr>';
     //echo '<td>' . gmdate('d/m/Y H:i', $application->datesubmitted) . '</td>';
@@ -1353,8 +1377,51 @@ foreach ($applications as $sid => $application) {
     }
     $table->data[] = $rowdata;
   }
+  else {
+    $rowdata = array();
+
+    $rowdata[] = htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8');
+
+    $rowdata[] = htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8');
+
+    if (empty($countryname[$application->country])) $z = '';
+    else $z = $countryname[$application->country];
+    $rowdata[] = $z;
+
+    if ($application->mph) $z = 'Yes';
+    else $z = '';
+    $rowdata[] = $z;
+
+    if (empty($employmentname[$application->employment])) $z = '';
+    else $z = $employmentname[$application->employment];
+    $rowdata[] = $z;
+
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob));
+
+    if (empty($qualificationname[$application->qualification])) $z = '';
+    else $z = $qualificationname[$application->qualification];
+    $rowdata[] = $z;
+
+    if (empty($higherqualificationname[$application->higherqualification])) $z = '';
+    else $z = $higherqualificationname[$application->higherqualification];
+    $rowdata[] = $z;
+
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
+
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
+
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
+
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
+
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->whynotcomplete));
+
+    $table->data[] = $rowdata;
+  }
 }
 echo html_writer::table($table);
+
+if ($displayforexcel) die();
 
 echo '<br />Total Applications: ' . $n;
 echo '<br />Total Approved (or part Approved): ' . $napproved;
@@ -1428,7 +1495,9 @@ Also look at list of e-mails sent to verify they went! (No subject and they will
       . '&acceptedmmu=' . urlencode($_REQUEST['acceptedmmu'])
       . '&chosenscholarship=' . urlencode($_REQUEST['chosenscholarship'])
       . (empty($_REQUEST['displayscholarship']) ? '&displayscholarship=0' : '&displayscholarship=1')
-      . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1');
+      . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
+      . (empty($_REQUEST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
+      ;
   }
   else {
     echo $CFG->wwwroot . '/course/applications.php';
