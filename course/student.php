@@ -31,7 +31,7 @@ $PAGE->set_url('/course/student.php'); // Defined here to avoid notices on error
 $PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
 
 require_login();
-// Might possibly be Guest??... Anyway Guest user will not have any enrolment
+// Might possibly be Guest... Anyway Guest user will not have any enrolment
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
@@ -45,6 +45,12 @@ $userrecord = $DB->get_record('user', array('id' => $userid));
 if (empty($userrecord)) {
   echo '<h1>User does not exist!</h1>';
   die();
+}
+
+$fullname = fullname($userrecord);
+if (empty($fullname) || trim($fullname) == 'Guest User') {
+  $SESSION->wantsurl = "$CFG->wwwroot/course/student.php";
+  notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
 }
 
 $PAGE->set_title('Student Enrolments and Grades for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
