@@ -20,8 +20,8 @@ if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>
 $isteacher = is_peoples_teacher();
 $islurker = has_capability('moodle/course:view', get_context_instance(CONTEXT_SYSTEM));
 if (!$isteacher && !$islurker) {
-  echo '<h1>You must be a Tutor to do this!</h1>';
-	notice('Please Login Below', "$CFG->wwwroot/");
+  $SESSION->wantsurl = "$CFG->wwwroot/course/admin_documentation.php";
+  notice('<br /><br /><b>You must be a Tutor to do this! Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
 }
 
 $PAGE->set_title('Administration Documentation for Peoples-uni');
