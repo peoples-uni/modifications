@@ -13,7 +13,7 @@ $PAGE->set_url('/course/account.php');
 $PAGE->set_pagelayout('standard');
 
 require_login();
-// (Might possibly be Guest?)
+// (Might possibly be Guest)
 
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
@@ -26,6 +26,13 @@ if (empty($userrecord)) {
   die();
 }
 
+$fullname = fullname($userrecord);
+
+if (empty($fullname) || trim($fullname) == 'Guest User') {
+  $SESSION->wantsurl = "$CFG->wwwroot/course/account.php";
+  notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+}
+
 $PAGE->set_title('Peoples-uni Student Account');
 $PAGE->set_heading('Peoples-uni Student Account');
 echo $OUTPUT->header();
@@ -36,7 +43,8 @@ echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 
 echo "<p><b>";
-echo '<br /><br />' . fullname($userrecord) . '<br />';
+
+echo '<br /><br />' . $fullname . '<br />';
 
 $inmmumph = FALSE;
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid=$userid ORDER BY datesubmitted DESC LIMIT 1");
