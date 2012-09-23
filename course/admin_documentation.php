@@ -730,6 +730,9 @@ The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applica
 "Record that the Student has been enrolled in the MMU MPH" button does what it says.
 </li>
 <li>
+"Unenroll a student from the MMU Masters in Public Health (MMU MPH)" button does what it says.
+</li>
+<li>
 The "Add This Note to Student Record" button adds a note entered above that button to the student record. When there are any notes for a student it will be indicated in the applications.php spreadsheet in the "Enrolled?" column by the words "(Note Present)".<br />
 The purpose of these notes is to allow records to be kept of application or grading data related to the student (There are separate Payment Notes to track payment issues and also now a separate "Ready to Enrol" marker.)<br />
 All notes for the student (if any are present, either entered here or in "Student Grades"/student.php) will be listed further up the details page.<br />
