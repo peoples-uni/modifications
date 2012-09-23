@@ -384,29 +384,29 @@ if (!empty($_POST['markmph'])) {
   }
   if (!$inmmumph) { // Protect against duplicate submission
 
-  $newmph = new object();
-  if (!empty($_REQUEST['29']))  $newmph->userid = $_REQUEST['29'];
-  if (!empty($_REQUEST['sid'])) $newmph->sid    = $_REQUEST['sid'];
+    $newmph = new object();
+    if (!empty($_REQUEST['29']))  $newmph->userid = $_REQUEST['29'];
+    if (!empty($_REQUEST['sid'])) $newmph->sid    = $_REQUEST['sid'];
 
-  $newmph->datesubmitted = time();
-  $newmph->mphstatus = 1;
-  $newmph->note = '';
-  $DB->insert_record('peoplesmph', $newmph);
+    $newmph->datesubmitted = time();
+    $newmph->mphstatus = 1;
+    $newmph->note = '';
+    $DB->insert_record('peoplesmph', $newmph);
 
-  if (!empty($newmph->userid)) {
-    $amount_to_pay_total = get_balance($newmph->userid);
+    if (!empty($newmph->userid)) {
+      $amount_to_pay_total = get_balance($newmph->userid);
 
-    $peoples_student_balance = new object();
-    $peoples_student_balance->userid = $newmph->userid;
-    $peoples_student_balance->amount_delta = 1500;
-    $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
-    $peoples_student_balance->currency = 'GBP';
-    $peoples_student_balance->detail = 'Initial Full amount for MMU MPH';
-    $peoples_student_balance->date = time();
-    $DB->insert_record('peoples_student_balance', $peoples_student_balance);
-  }
+      $peoples_student_balance = new object();
+      $peoples_student_balance->userid = $newmph->userid;
+      $peoples_student_balance->amount_delta = 1500;
+      $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
+      $peoples_student_balance->currency = 'GBP';
+      $peoples_student_balance->detail = 'Initial Full amount for MMU MPH';
+      $peoples_student_balance->date = time();
+      $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+    }
 
-  $refreshparent = true;
+    $refreshparent = true;
   }
 }
 if (!empty($_POST['note']) && !empty($_POST['markaddnote'])) {
