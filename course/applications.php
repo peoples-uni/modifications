@@ -115,6 +115,18 @@ CREATE INDEX mdl_peoplesmph_sid_ix ON mdl_peoplesmph (sid);
 "sid" so can use before userid assigned.
 (userid will be set when it is known.)
 
+References to the original table never checked mphstatus, so I am adding a second one in which mphstatus can be used...
+CREATE TABLE mdl_peoplesmph2 (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) UNSIGNED NOT NULL,
+  datelastunentolled BIGINT(10) UNSIGNED NOT NULL,
+  mphstatus BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  note text default '' NOT NULL,
+CONSTRAINT PRIMARY KEY (id)
+);
+CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph (userid);
+
 CREATE TABLE mdl_peoplespaymentnote (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,
   userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
