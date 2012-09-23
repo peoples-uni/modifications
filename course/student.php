@@ -112,12 +112,15 @@ if (!empty($application)) {
   echo '<br />Payment up to date?: ' . $z;
 }
 
-$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid=$userid ORDER BY datesubmitted DESC");
-if (!empty($mphs)) {
-  foreach ($mphs as $mph) {
-    echo '<br />Student was Enrolled in MMU MPH (' . gmdate('d/m/Y H:i', $mph->datesubmitted) . ')';
-  }
-}
+//$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid=$userid ORDER BY datesubmitted DESC");
+//if (!empty($mphs)) {
+//  foreach ($mphs as $mph) {
+//    echo '<br />Student was Enrolled in MMU MPH (' . gmdate('d/m/Y H:i', $mph->datesubmitted) . ')';
+//  }
+//}
+$peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
+else $peoplesmph2 = NULL;
+if (!empty($peoplesmph2->note)) echo '<br />' . $peoplesmph2->note;
 echo '<br /><br /><br />';
 
 
