@@ -437,7 +437,11 @@ if (!empty($_POST['markunenrollmph'])) {
     if (!empty($peoplesmph2)) {
       $peoplesmph2->datelastunentolled = time();
       $peoplesmph2->mphstatus = 0;
-      $peoplesmph2->note = $peoplesmph2->note . '<br />Unenrolled from MPH: ' . gmdate('d/m/Y H:i', $peoplesmph2->datelastunentolled);
+
+      if (!empty($_REQUEST['note'])) $usernote = ' (' . htmlspecialchars($_REQUEST['note'], ENT_COMPAT, 'UTF-8') . ')';
+      else  $usernote = '';
+      $peoplesmph2->note = $peoplesmph2->note . '<br />Unenrolled from MPH: ' . gmdate('d/m/Y H:i', $peoplesmph2->datelastunentolled) . $usernote;
+
       $DB->update_record('peoplesmph2', $peoplesmph2);
     }
 
@@ -1902,6 +1906,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markunenrollmph" value="1" />
+Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="40" name="note" /><br />
 <input type="submit" name="unenrollmph" value="Unenroll a student from the MMU Masters in Public Health (MMU MPH)" />
 </form>
 <br />
