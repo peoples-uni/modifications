@@ -403,6 +403,7 @@ if (!empty($_POST['markmph'])) {
         $DB->update_record('peoplesmph2', $peoplesmph2);
       }
       else {
+        $peoplesmph2 = new object();
         $peoplesmph2->userid = $newmph->userid;
         $peoplesmph2->datesubmitted = $newmph->datesubmitted;
         $peoplesmph2->datelastunentolled = 0;
@@ -421,6 +422,23 @@ if (!empty($_POST['markmph'])) {
       $peoples_student_balance->detail = 'Initial Full amount for MMU MPH';
       $peoples_student_balance->date = time();
       $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+    }
+
+    $refreshparent = true;
+  }
+}
+if (!empty($_POST['markunenrollmph'])) {
+  if (!empty($_REQUEST['29'])) {
+    $peoplesmph2userid = $_REQUEST['29'];
+
+    $DB->delete_records('peoplesmph', array('userid' => $peoplesmph2userid))
+
+    $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $peoplesmph2userid));
+    if (!empty($peoplesmph2)) {
+      $peoplesmph2->datelastunentolled = time();
+      $peoplesmph2->mphstatus = 0;
+      $peoplesmph2->note = $peoplesmph2->note . '<br />Unenrolled from MPH: ' . gmdate('d/m/Y H:i', $peoplesmph2->datelastunentolled);
+      $DB->update_record('peoplesmph2', $peoplesmph2);
     }
 
     $refreshparent = true;
@@ -1843,6 +1861,51 @@ if (empty($mphs)) {
 
 <input type="hidden" name="markmph" value="1" />
 <input type="submit" name="mph" value="Record that the Student has been enrolled in the MMU MPH" />
+</form>
+<br />
+<?php
+}
+elseif (!empty($_REQUEST['29'])) {
+?>
+<br />To Unenroll a student from the MMU Masters in Public Health (MMU MPH), press "Unenroll...".<br />
+(This does not affect any course modules or payments.)<br />
+<form id="unenrollmphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
+<input type="hidden" name="state" value="<?php echo $state; ?>" />
+<input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="1" value="<?php echo htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="2" value="<?php echo htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="11" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
+<input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
+<input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
+<input type="hidden" name="12" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="14" value="<?php echo htmlspecialchars($_REQUEST['14'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="13" value="<?php echo htmlspecialchars($_REQUEST['13'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="34" value="<?php echo htmlspecialchars($_REQUEST['34'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="35" value="<?php echo htmlspecialchars($_REQUEST['35'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<span style="display: none;">
+<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+</span>
+<input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
+<input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<input type="hidden" name="markunenrollmph" value="1" />
+<input type="submit" name="unenrollmph" value="Unenroll a student from the MMU Masters in Public Health (MMU MPH)" />
 </form>
 <br />
 <?php
