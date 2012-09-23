@@ -394,6 +394,23 @@ if (!empty($_POST['markmph'])) {
     $DB->insert_record('peoplesmph', $newmph);
 
     if (!empty($newmph->userid)) {
+
+      $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $newmph->userid));
+      if (!empty($peoplesmph2)) {
+        $peoplesmph2->datesubmitted = $newmph->datesubmitted;
+        $peoplesmph2->mphstatus = $newmph->mphstatus;
+        $peoplesmph2->note = $peoplesmph2->note . '<br />Enrolled in MPH: ' . gmdate('d/m/Y H:i', $newmph->datesubmitted);
+        $DB->update_record('peoplesmph2', $peoplesmph2);
+      }
+      else {
+        $peoplesmph2->userid = $newmph->userid;
+        $peoplesmph2->datesubmitted = $newmph->datesubmitted;
+        $peoplesmph2->datelastunentolled = 0;
+        $peoplesmph2->mphstatus = $newmph->mphstatus;
+        $peoplesmph2->note = 'Enrolled in MPH: ' . gmdate('d/m/Y H:i', $newmph->datesubmitted);
+        $DB->insert_record('peoplesmph2', $peoplesmph2);
+      }
+
       $amount_to_pay_total = get_balance($newmph->userid);
 
       $peoples_student_balance = new object();
