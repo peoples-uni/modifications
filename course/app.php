@@ -371,6 +371,19 @@ if (!empty($_POST['markreadyenrol'])) {
   $refreshparent = true;
 }
 if (!empty($_POST['markmph'])) {
+  if (!empty($_REQUEST['29'])) $useridforsearch = $_REQUEST['29'];
+  else $useridforsearch = 0;
+  if (!empty($_REQUEST['sid'])) $sidforsearch = $_REQUEST['sid'];
+  else  $sidforsearch = 0;
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sidforsearch AND sid!=0) OR (userid=$useridforsearch AND userid!=0)");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+  if (!$inmmumph) { // Protect against duplicate submission
+
   $newmph = new object();
   if (!empty($_REQUEST['29']))  $newmph->userid = $_REQUEST['29'];
   if (!empty($_REQUEST['sid'])) $newmph->sid    = $_REQUEST['sid'];
@@ -394,6 +407,7 @@ if (!empty($_POST['markmph'])) {
   }
 
   $refreshparent = true;
+  }
 }
 if (!empty($_POST['note']) && !empty($_POST['markaddnote'])) {
   $newnote = new object();
