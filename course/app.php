@@ -806,18 +806,15 @@ if (!empty($notes)) {
 $applymmumphtext = array('0' => '', '1' => '', '2' => 'Wants to Apply for MMU MPH', '3' => 'Says Already in MMU MPH');
 $applymmumphtext = $applymmumphtext[$_REQUEST['applymmumph']];
 
-if (!empty($mphs) || !empty($applymmumphtext)) {
+if (!empty($application->userid)) $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $application->userid));
+else $peoplesmph2 = NULL;
+
+if (!empty($mphs) || !empty($applymmumphtext) || !empty($peoplesmph2->note)) {
   echo '<tr><td colspan="2">MMU MPH Status...</td></tr>';
 
   if (!empty($applymmumphtext)) echo '<tr><td></td><td>' . $applymmumphtext . '</td></tr>';
 
-  foreach ($mphs as $mph) {
-    echo '<tr><td>';
-    echo gmdate('d/m/Y H:i', $mph->datesubmitted);
-    echo '</td><td>';
-    echo 'Student was Enrolled in MMU MPH';
-    echo '</td></tr>';
-  }
+  if (!empty($peoplesmph2->note)) echo '<tr><td></td><td>' . $peoplesmph2->note . '</td></tr>';
 }
 
 echo '</table>';
