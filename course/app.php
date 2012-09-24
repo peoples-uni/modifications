@@ -421,7 +421,7 @@ if (!empty($_POST['markmph'])) {
       $peoples_student_balance->currency = 'GBP';
       $peoples_student_balance->detail = 'Initial Full amount for MMU MPH';
       $peoples_student_balance->date = time();
-//DELAB      $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+      $DB->insert_record('peoples_student_balance', $peoples_student_balance);
     }
 
     $refreshparent = true;
