@@ -1906,7 +1906,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markunenrollmph" value="1" />
-Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="40" name="note" /><br />
+Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
 <input type="submit" name="unenrollmph" value="Unenroll a student from the MMU Masters in Public Health (MMU MPH)" />
 </form>
 <br />
