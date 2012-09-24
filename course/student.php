@@ -119,7 +119,6 @@ if (!empty($application)) {
 //  }
 //}
 $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
-else $peoplesmph2 = NULL;
 if (!empty($peoplesmph2->note)) echo '<br />' . $peoplesmph2->note;
 echo '<br /><br /><br />';
 
