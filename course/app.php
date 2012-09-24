@@ -431,7 +431,7 @@ if (!empty($_POST['markunenrollmph'])) {
   if (!empty($_REQUEST['29'])) {
     $peoplesmph2userid = $_REQUEST['29'];
 
-    $DB->delete_records('peoplesmph', array('userid' => $peoplesmph2userid))
+    $DB->delete_records('peoplesmph', array('userid' => $peoplesmph2userid));
 
     $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $peoplesmph2userid));
     if (!empty($peoplesmph2)) {
