@@ -335,6 +335,7 @@ $chosenstatus = dontstripslashes(optional_param('chosenstatus', 'All', PARAM_NOT
 $liststatus[] = 'All';
 if (!isset($chosenstatus)) $chosenstatus = 'All';
 $liststatus[] = 'Passed 45+';
+$liststatus[] = 'Passed 45+ <50';
 $liststatus[] = 'Passed 50+';
 $liststatus[] = 'Failed';
 $liststatus[] = 'Did not Pass';
@@ -349,6 +350,7 @@ $liststatus[] = 'Will NOT be Graded, because they did Not Pay';
 $statussql = '';
 $gradesql = '';
 if     ($chosenstatus === 'Passed 45+')  $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0) >44.99999))';
+elseif ($chosenstatus === 'Passed 45+ <50') $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade, 0.0) >44.99999 AND IFNULL(y.finalgrade, 100.0) <=49.99999))';
 elseif ($chosenstatus === 'Passed 50+')  $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0) >49.99999))';
 elseif ($chosenstatus === 'Failed')      $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 1.0) >1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade, 100.0)<=44.99999))';
 elseif ($chosenstatus === 'Did not Pass')$gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0) >1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0)<=44.99999))';
@@ -402,6 +404,14 @@ else {
 	$sortbyaccess = false;
 	$orderby ='x.lastname ASC, x.firstname ASC, username ASC, fullname ASC';
 }
+
+// Taken from posts.php so will have good defaults...
+if (!empty($_REQUEST['skipintro'])) $skipintro = true;
+else $skipintro = false;
+if (!empty($_REQUEST['suppressnames'])) $suppressnames = true;
+else $suppressnames = false;
+if (!empty($_REQUEST['showyesonly'])) $showyesonly = true;
+else $showyesonly = false;
 
 
 ?>
@@ -474,8 +484,127 @@ LEFT JOIN mdl_peoplesmph m ON x.userid=m.userid
 $gradesql
 ORDER BY $orderby",
 array($chosensemester));
-
 // If courseid is not specified this could get very inefficient, in that case I should optimise the JOIN
+
+
+// The following (down to END POSTS Extract) is taken (modified) from posts.php... not all of the data generated is used, but is kept for compatibility
+if (!empty($courserecord->fullname)) $chosenmodule = $courserecord->fullname;
+if (empty($chosenmodule) || ($chosenmodule == 'All')) {
+  $chosenmodule = 'All';
+  $modulesql = 'AND c.fullname!=?';
+}
+else {
+  $modulesql = 'AND c.fullname=?';
+}
+
+
+$enrolposts = $DB->get_records_sql(
+"SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
+FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
+LEFT JOIN mdl_peoplesmph m ON e.userid=m.userid
+WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql
+ORDER BY e.semester, u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC",
+array($chosensemester, $chosenmodule)
+);
+
+$sidsbyuseridsemester = $DB->get_records_sql('SELECT CONCAT(userid, semester) AS i, sid FROM mdl_peoplesapplication WHERE (((state & 0x38)>>3)=3 OR (state & 0x7)=3)');
+
+
+$usercount = array();
+$usercountbyuserid = array();
+$usermodulecount = array();
+$usermodulecountbuseridbymodule = array();
+$topiccount = array();
+$nposts = 0;
+if (!empty($enrolposts)) {
+  foreach ($enrolposts as $enrolpost) {
+
+    if (!empty($acceptedmmu) && $acceptedmmu !== 'Any') {
+      if ($acceptedmmu === 'No' && $enrolpost->mph) {
+        continue;
+      }
+      if ($acceptedmmu === 'Yes' && !$enrolpost->mph) {
+        continue;
+      }
+      if ($acceptedmmu !== 'No' && $acceptedmmu !== 'Yes') {
+        if (!$enrolpost->mph || $enrolpost->mphdatestamp < $stamp_range[$acceptedmmu]['start'] || $enrolpost->mphdatestamp >= $stamp_range[$acceptedmmu]['end']) {
+          continue;
+        }
+      }
+    }
+
+
+    if ($skipintro && (substr(strtolower(trim(strip_tags($enrolpost->forumname))), 0, 12) === 'introduction')) {
+        continue;
+    }
+
+    $hashforcourse = htmlspecialchars($enrolpost->fullname, ENT_COMPAT, 'UTF-8');
+    $courseswithstudentforumstats[$hashforcourse]['forums']['<td>' . htmlspecialchars($enrolpost->forumname, ENT_COMPAT, 'UTF-8') . '</td>'] = 1;
+
+    $hashforstudent = $enrolpost->userid;
+    if (empty($courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent])) {
+      $courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['last'] = '<td>' . htmlspecialchars($enrolpost->lastname, ENT_COMPAT, 'UTF-8') . '</td>';
+      $courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['first'] = '<td>' . htmlspecialchars($enrolpost->firstname, ENT_COMPAT, 'UTF-8') . '</td>';
+      $courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['course'] = '<td>' . htmlspecialchars($enrolpost->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
+      $courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['userid'] = $enrolpost->userid;
+      $courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['semester'] = $enrolpost->semester;
+
+
+      $courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['forums']['<td>' . htmlspecialchars($enrolpost->forumname, ENT_COMPAT, 'UTF-8') . '</td>'] = 1;
+    }
+    else {
+      if (empty($courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['forums']['<td>' . htmlspecialchars($enrolpost->forumname, ENT_COMPAT, 'UTF-8') . '</td>'])) {
+        $courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['forums']['<td>' . htmlspecialchars($enrolpost->forumname, ENT_COMPAT, 'UTF-8') . '</td>'] = 1;
+      }
+      else {
+        $courseswithstudentforumstats[$hashforcourse]['students'][$hashforstudent]['forums']['<td>' . htmlspecialchars($enrolpost->forumname, ENT_COMPAT, 'UTF-8') . '</td>']++;
+      }
+    }
+
+
+    $name = htmlspecialchars(strtolower(trim($enrolpost->lastname . ', ' . $enrolpost->firstname)), ENT_COMPAT, 'UTF-8');
+    if (empty($usercount[$name])) {
+      $usercount[$name] = 1;
+    }
+    else {
+      $usercount[$name]++;
+    }
+    if (empty($usercountbyuserid[$enrolpost->userid])) {
+      $usercountbyuserid[$enrolpost->userid] = 1;
+    }
+    else {
+      $usercountbyuserid[$enrolpost->userid]++;
+    }
+
+
+    $name = htmlspecialchars(strtolower(trim($enrolpost->lastname . ', ' . $enrolpost->firstname . ', ' . $enrolpost->fullname)), ENT_COMPAT, 'UTF-8');
+    if (empty($usermodulecount[$name])) {
+      $usermodulecount[$name] = 1;
+    }
+    else {
+      $usermodulecount[$name]++;
+    }
+    if (empty($usermodulecountbuseridbymodule[$enrolpost->userid][$enrolpost->fullname])) {
+      $usermodulecountbuseridbymodule[$enrolpost->userid][$enrolpost->fullname] = 1;
+    }
+    else {
+      $usermodulecountbuseridbymodule[$enrolpost->userid][$enrolpost->fullname]++;
+    }
+
+
+    $name = htmlspecialchars(strtolower(trim($enrolpost->fullname . ', ' . $enrolpost->forumname)), ENT_COMPAT, 'UTF-8');
+    if (empty($topiccount[$name])) {
+      $topiccount[$name] = 1;
+    }
+    else {
+      $topiccount[$name]++;
+    }
+
+    $nposts++;
+  }
+}
+// END POSTS Extract
+
 
 echo '<b>Data displayed and totalled for students with qualification data only...</b><br />';
 $table = new html_table();
@@ -490,7 +619,8 @@ $table->head = array(
   'Informed?',
   'Qualification',
   'Higherqualification',
-  'Employment'
+  'Employment',
+  'Number of Student Posts in this Module'
   );
 
 $n = 0;
@@ -565,6 +695,13 @@ if (!empty($enrols)) {
     $rowdata[] = $qualificationname[$enrol->qualification];
     $rowdata[] = $higherqualificationname[$enrol->higherqualification];
     $rowdata[] = $employmentname[$enrol->employment];
+
+    if (!empty($usermodulecountbuseridbymodule[$enrol->userid][$enrol->fullname])) {
+      $rowdata[] = $usermodulecountbuseridbymodule[$enrol->userid][$enrol->fullname];
+    }
+    else {
+      $rowdata[] = 0;
+    }
 
 		if ($enrol->username !== $lastname) {
 
