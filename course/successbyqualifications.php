@@ -302,7 +302,10 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
-if (!$isteacher) {echo '<h1>You must be a tutor to do this!</h1>'; die();}
+if (!$isteacher) {
+  $SESSION->wantsurl = "$CFG->wwwroot/course/successbyqualifications.php";
+  notice('<br /><br /><b>You must be a Tutor to do this! Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+}
 
 $courseid = optional_param('id', 0, PARAM_INT);
 if ($courseid) {

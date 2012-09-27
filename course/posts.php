@@ -31,8 +31,8 @@ if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>
 
 $isteacher = is_peoples_teacher();
 if (!$isteacher) {
-	echo '<h1>You must be a tutor to do this!</h1>';
-	notice('Please Login Below', "$CFG->wwwroot/");
+  $SESSION->wantsurl = "$CFG->wwwroot/course/posts.php";
+  notice('<br /><br /><b>You must be a Tutor to do this! Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
 }
 
 echo '<h1>Posts for Enrolled Students</h1>';
