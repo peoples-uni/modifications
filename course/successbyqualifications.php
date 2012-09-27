@@ -422,8 +422,8 @@ if (!empty($_REQUEST['showyesonly'])) $showyesonly = true;
 else $showyesonly = false;
 
 
-?>
 if (!$displayforexcel) {
+?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/successbyqualifications.php'; ?>">
 Display entries using the following filters...
 <table border="2" cellpadding="2">
