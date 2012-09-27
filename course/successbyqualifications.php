@@ -317,9 +317,9 @@ if ($courseid) {
 	}
 	$courseidsql1 = "AND e.courseid=$courseid";
 	$courseidsql2 = "AND i.courseid=$courseid";
-  if (empty($_REQUEST['displayforexcel'])) echo '<h1>Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8') . '</h1>';
-  $PAGE->set_title('Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
-  $PAGE->set_heading('Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
+  if (empty($_REQUEST['displayforexcel'])) echo '<h1>Report on Student Grades versus Qualifications and Employment for course ' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8') . '</h1>';
+  $PAGE->set_title('Report on Student Grades versus Qualifications and Employment for course ' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
+  $PAGE->set_heading('Report on Student Grades versus Qualifications and Employment for course ' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
 }
 else {
 	$courseidsql1 = '';
