@@ -335,7 +335,7 @@ $chosenstatus = dontstripslashes(optional_param('chosenstatus', 'All', PARAM_NOT
 $liststatus[] = 'All';
 if (!isset($chosenstatus)) $chosenstatus = 'All';
 $liststatus[] = 'Passed 45+';
-$liststatus[] = 'Passed 45+ <50';
+$liststatus[] = 'Passed 45 to 49.99';
 $liststatus[] = 'Passed 50+';
 $liststatus[] = 'Failed';
 $liststatus[] = 'Did not Pass';
@@ -350,7 +350,7 @@ $liststatus[] = 'Will NOT be Graded, because they did Not Pay';
 $statussql = '';
 $gradesql = '';
 if     ($chosenstatus === 'Passed 45+')  $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0) >44.99999))';
-elseif ($chosenstatus === 'Passed 45+ <50') $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade, 0.0) >44.99999 AND IFNULL(y.finalgrade, 100.0) <=49.99999))';
+elseif ($chosenstatus === 'Passed 45 to 49.99') $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade, 0.0) >44.99999 AND IFNULL(y.finalgrade, 100.0) <=49.99999))';
 elseif ($chosenstatus === 'Passed 50+')  $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0)<=1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0) >49.99999))';
 elseif ($chosenstatus === 'Failed')      $gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 1.0) >1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade, 100.0)<=44.99999))';
 elseif ($chosenstatus === 'Did not Pass')$gradesql = 'WHERE ((x.percentgrades=0 AND IFNULL(y.finalgrade, 2.0) >1.99999) OR (x.percentgrades=1 AND IFNULL(y.finalgrade,   0.0)<=44.99999))';
