@@ -291,6 +291,7 @@ if (!empty($_POST['markfilter'])) {
 		. '&chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
     . '&acceptedmmu=' . urlencode(dontstripslashes($_POST['acceptedmmu']))
 		. (empty($_POST['sortbyaccess']) ? '&sortbyaccess=0' : '&sortbyaccess=1')
+    . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
 		);
 }
 
@@ -316,14 +317,14 @@ if ($courseid) {
 	}
 	$courseidsql1 = "AND e.courseid=$courseid";
 	$courseidsql2 = "AND i.courseid=$courseid";
-  echo '<h1>Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8') . '</h1>';
+  if (empty($_REQUEST['displayforexcel'])) echo '<h1>Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8') . '</h1>';
   $PAGE->set_title('Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
   $PAGE->set_heading('Report on Student Grades versus Qualifications and Employment for course' . htmlspecialchars($courserecord->fullname, ENT_COMPAT, 'UTF-8'));
 }
 else {
 	$courseidsql1 = '';
 	$courseidsql2 = '';
-  echo '<h1>Report on Student Grades versus Qualifications and Employment</h1>';
+  if (empty($_REQUEST['displayforexcel'])) echo '<h1>Report on Student Grades versus Qualifications and Employment</h1>';
   $PAGE->set_title('Report on Student Grades versus Qualifications and Employment');
   $PAGE->set_heading('Report on Student Grades versus Qualifications and Employment');
 }
@@ -405,6 +406,13 @@ else {
 	$orderby ='x.lastname ASC, x.firstname ASC, username ASC, fullname ASC';
 }
 
+if (!empty($_REQUEST['displayforexcel'])) {
+  $displayforexcel = true;
+}
+else {
+  $displayforexcel = false;
+}
+
 // Taken from posts.php so will have good defaults...
 if (!empty($_REQUEST['skipintro'])) $skipintro = true;
 else $skipintro = false;
@@ -415,6 +423,7 @@ else $showyesonly = false;
 
 
 ?>
+if (!$displayforexcel) {
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/successbyqualifications.php'; ?>">
 Display entries using the following filters...
 <table border="2" cellpadding="2">
@@ -424,6 +433,7 @@ Display entries using the following filters...
 		<td>Semester</td>
     <td>Accepted MMU?</td>
 		<td>Sort by Last Access</td>
+    <td>Display main table only for Copying and Pasting to Excel</td>
 	</tr>
 	<tr>
 		<td>
@@ -445,6 +455,7 @@ Display entries using the following filters...
     displayoptions('acceptedmmu', $listacceptedmmu, $acceptedmmu);
 		?>
 		<td><input type="checkbox" name="sortbyaccess" <?php if ($sortbyaccess) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="displayforexcel" <?php if ($displayforexcel) echo ' CHECKED'; ?>></td>
 	</tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
@@ -453,6 +464,7 @@ Display entries using the following filters...
 </form>
 <br /><br />
 <?php
+}
 
 
 function displayoptions($name, $options, $selectedvalue) {
@@ -606,7 +618,7 @@ if (!empty($enrolposts)) {
 // END POSTS Extract
 
 
-echo '<b>Data displayed and totalled for students with qualification data only...</b><br />';
+if (!$displayforexcel) echo '<b>Data displayed and totalled for students with qualification data only...</b><br />';
 $table = new html_table();
 $table->head = array(
   'Semester',
@@ -651,7 +663,13 @@ if (!empty($enrols)) {
     $rowdata[] = htmlspecialchars($enrol->username, ENT_COMPAT, 'UTF-8');
 
     $z = ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
-    if ($enrol->enrolled == 0) $z .= '<br />Was Un-Enrolled on: ' . gmdate('d M Y', $enrol->dateunenrolled);
+    if ($displayforexcel) {
+      $separator = ' ';
+    }
+    else {
+      $separator = '<br />';
+    }
+    if ($enrol->enrolled == 0) $z .= $separator . 'Was Un-Enrolled on: ' . gmdate('d M Y', $enrol->dateunenrolled);
 
     $enrs = $DB->get_records_sql("SELECT e.datefirstenrolled, e.semester, c.idnumber FROM mdl_enrolment e, mdl_course c
       WHERE e.userid=? AND e.courseid=c.id AND ?<e.datefirstenrolled", array($enrol->userid, $enrol->datefirstenrolled));
@@ -660,7 +678,7 @@ if (!empty($enrols)) {
       $foundb = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enr->idnumber, $matchesb);
       if ($founda && $foundb) {
         if ($matchesa[1] === $matchesb[1]) {
-          $z .= '<br /><span style="color:red">Re-Enrolled in this Module for Semester: ' . htmlspecialchars($enr->semester, ENT_COMPAT, 'UTF-8') . '</span>';
+          $z .= $separator . '<span style="color:red">Re-Enrolled in this Module for Semester: ' . htmlspecialchars($enr->semester, ENT_COMPAT, 'UTF-8') . '</span>';
         }
       }
     }
@@ -779,6 +797,12 @@ if (!empty($enrols)) {
 	}
 }
 echo html_writer::table($table);
+
+if ($displayforexcel) {
+  echo $OUTPUT->footer();
+  die();
+}
+
 echo '<br/>Number of Enrolments: ' . $n;
 echo '<br/>Number of Students: ' . $countnondup;
 
@@ -797,7 +821,8 @@ echo '<br /><br />';
 echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
 echo '<br /><br />';
 
-print_footer();
+//print_footer();
+echo $OUTPUT->footer();
 
 
 function displaystat($stat, $title) {
