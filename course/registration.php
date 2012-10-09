@@ -20,6 +20,7 @@ CREATE TABLE mdl_peoplesregistration (
   higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
   employment BIGINT(10) unsigned NOT NULL DEFAULT 0,
   howfoundpeoples BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  howfoundorganisationname TEXT NOT NULL,
   dobday VARCHAR(2) NOT NULL DEFAULT '',
   dobmonth VARCHAR(2) NOT NULL DEFAULT '',
   dobyear VARCHAR(4) NOT NULL DEFAULT '',
@@ -28,6 +29,10 @@ CREATE TABLE mdl_peoplesregistration (
   currentjob text NOT NULL,
   education text NOT NULL,
   reasons text NOT NULL,
+  whatlearn BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  whylearn BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  whyelearning BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  howuselearning BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   sponsoringorganisation text NOT NULL DEFAULT '',
   datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
   datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
@@ -35,6 +40,12 @@ CREATE TABLE mdl_peoplesregistration (
 CONSTRAINT  PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoplesregistration_uid_ix ON mdl_peoplesregistration (userid);
+
+ALTER TABLE mdl_peoplesregistration ADD howfoundorganisationname TEXT NOT NULL AFTER howfoundpeoples;
+ALTER TABLE mdl_peoplesregistration ADD whatlearn BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER reasons;
+ALTER TABLE mdl_peoplesregistration ADD whylearn BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER whatlearn;
+ALTER TABLE mdl_peoplesregistration ADD whyelearning BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER whylearn;
+ALTER TABLE mdl_peoplesregistration ADD howuselearning BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER whyelearning;
 */
 
 
