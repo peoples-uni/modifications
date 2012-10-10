@@ -393,12 +393,40 @@ elseif ($data = $editform->get_data()) {
   $dataitem = strip_tags($dataitem);
   $application->howfoundpeoples = $dataitem;
 
+/*ABDEL
+  $dataitem = $data->howfoundorganisationname;
+  if (empty($dataitem)) $dataitem = '';
+  $application->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+ABDEL*/
+
   $dataitem = $data->education;
   if (empty($dataitem)) $dataitem = '';
   $application->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->reasons;
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+/*ABDEL
+  $dataitem = $data->whatlearn;
+  if (empty($dataitem)) $dataitem = '0';
+  $dataitem = strip_tags($dataitem);
+  $application->whatlearn = $dataitem;
+
+  $dataitem = $data->whylearn;
+  if (empty($dataitem)) $dataitem = '0';
+  $dataitem = strip_tags($dataitem);
+  $application->whylearn = $dataitem;
+
+  $dataitem = $data->whyelearning;
+  if (empty($dataitem)) $dataitem = '0';
+  $dataitem = strip_tags($dataitem);
+  $application->whyelearning = $dataitem;
+
+  $dataitem = $data->howuselearning;
+  if (empty($dataitem)) $dataitem = '0';
+  $dataitem = strip_tags($dataitem);
+  $application->howuselearning = $dataitem;
+ABDEL*/
 
   $dataitem = $data->sponsoringorganisation;
   if (empty($dataitem)) $dataitem = '';
@@ -430,6 +458,33 @@ elseif ($data = $editform->get_data()) {
   $message .= "Country: " . $countryname[$application->country] . "\n\n";
   $message .= "Preferred Username: $application->username\n\n";
   $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
+
+/*ABDEL
+    $whatlearnname[  ''] = 'Select...';
+    $whatlearnname['10'] = 'I want to improve my knowledge of public health';
+    $whatlearnname['20'] = 'I want to improve my academic skills (writing structured essays, critically reviewing published literature, referencing etc)';
+    $whatlearnname['30'] = 'I want to improve my skills in research';
+    $whatlearnname['40'] = 'I am not sure';
+  $message .= "What do you want to learn: " . $whatlearnname[$application->whatlearn] . "\n\n";
+    $whylearnname[  ''] = 'Select...';
+    $whylearnname['10'] = 'I want to apply what I learn to my current/future work';
+    $whylearnname['20'] = 'I want to improve my career opportunities and this will help me in future job/course applications';
+    $whylearnname['30'] = 'I want to get academic credit';
+    $whylearnname['40'] = 'I am not sure';
+  $message .= "Why do you want to learn: " . $whylearnname[$application->whylearn] . "\n\n";
+    $whyelearningname[  ''] = 'Select...';
+    $whyelearningname['10'] = 'I want to meet and learn with people from other countries';
+    $whyelearningname['20'] = 'I want the opportunity to be flexible about my study time';
+    $whyelearningname['30'] = 'I want a public health training that is affordable';
+    $whyelearningname['40'] = 'I am not sure';
+  $message .= "Reasons you want to do an e-learning course: " . $whyelearningname[$application->whyelearning] . "\n\n";
+    $howuselearningname[  ''] = 'Select...';
+    $howuselearningname['10'] = 'Share knowledge skills with other colleagues';
+    $howuselearningname['20'] = 'Start a new project - please give further details with free text in Reasons for wanting to enrol above';
+    $howuselearningname['30'] = 'I am not sure';
+  $message .= "How will you use your new knowledge and skills to improve population health: " . $howuselearningname[$application->howuselearning] . "\n\n";
+ABDEL*/
+
   $message .= "Sponsoring organisation:\n" . htmlspecialchars_decode($application->sponsoringorganisation, ENT_COMPAT) . "\n\n";
 
     $employmentname[  ''] = 'Select...';
@@ -468,7 +523,11 @@ elseif ($data = $editform->get_data()) {
     $howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
     $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
     $howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
-  $message .= "How heard about Peoples-uni: " . $howfoundpeoplesname[$application->howfoundpeoples] . "\n";
+  $message .= "How heard about Peoples-uni: " . $howfoundpeoplesname[$application->howfoundpeoples] . "\n\n";
+
+/*ABDEL
+  $message .= "Name of the organisation or person:\n" . htmlspecialchars_decode($application->howfoundorganisationname, ENT_COMPAT) . "\n";
+ABDEL*/
 
   sendapprovedmail($application->email, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
   sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);

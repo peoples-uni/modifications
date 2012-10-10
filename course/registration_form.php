@@ -385,10 +385,10 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $whyelearningname['20'] = 'I want the opportunity to be flexible about my study time';
     $whyelearningname['30'] = 'I want a public health training that is affordable';
     $whyelearningname['40'] = 'I am not sure';
-    $select = &$mform->addElement('select', 'whyelearning', 'What is the main reason you want to do an e-learning course?', $whyelearningname);
+    $select = &$mform->addElement('select', 'whyelearning', 'What are the reasons you want to do an e-learning course?', $whyelearningname);
     $select->setMultiple(true);
-    $mform->addRule('whyelearning', 'What is the main reason you want to do an e-learning course is required', 'required', null, 'client');
-    $mform->addElement('static', 'explainwhyelearning', '&nbsp;', 'Select options that best describe What is the main reason you want to do an e-learning course.<br />');
+    $mform->addRule('whyelearning', 'What are the reasons you want to do an e-learning course is required', 'required', null, 'client');
+    $mform->addElement('static', 'explainwhyelearning', '&nbsp;', 'Select options that best describe What are the main reasons you want to do an e-learning course.<br />');
 
     $howuselearningname[  ''] = 'Select...';
     $howuselearningname['10'] = 'Share knowledge skills with other colleagues';
