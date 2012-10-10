@@ -809,7 +809,7 @@ function sendapprovedmail($email, $subject, $message) {
   $user->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
-  $supportuser->email = 'techsupport@peoples-uni.org';
+  $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = 'Peoples-Uni Support';
   $supportuser->lastname = '';
   $supportuser->maildisplay = true;
