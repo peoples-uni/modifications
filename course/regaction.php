@@ -289,7 +289,12 @@ function sendapprovedmail($email, $subject, $message) {
   $user->maildisplay = true;
   $user->mnethostid = $CFG->mnet_localhost_id;
 
-  $supportuser = generate_email_supportuser();
+  //$supportuser = generate_email_supportuser();
+  $supportuser = new stdClass();
+  $supportuser->email = 'apply@peoples-uni.org';
+  $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($user, $supportuser, $subject, $message);
@@ -358,12 +363,18 @@ TECHSUPPORT_EMAIL_HERE";
   $message = str_replace('LOGIN_LINK_HERE',         $CFG->wwwroot . '/login/index.php', $message);
   $message = str_replace('STUDENTS_CORNER_ID_HERE', $studentscorner->id, $message);
   $message = str_replace('USER_ID_HERE',            $user->id, $message);
-  $message = str_replace('TECHSUPPORT_EMAIL_HERE',  generate_email_signoff(), $message);
+  $message = str_replace('TECHSUPPORT_EMAIL_HERE',  "\nPeoples-uni Support\napply@peoples-uni.org\n", $message);
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-  $supportuser = generate_email_supportuser();
+  //$supportuser = generate_email_supportuser();
+  $supportuser = new stdClass();
+  $supportuser->email = 'apply@peoples-uni.org';
+  $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
+
   $subject = format_string($site->fullname) . ': Your Account has been Created';
 
   //$user->email = 'alanabarrett0@gmail.com';
@@ -396,12 +407,18 @@ TECHSUPPORT_EMAIL_HERE";
   $message = str_replace('LOGIN_LINK_HERE',         $CFG->wwwroot . '/login/index.php', $message);
   $message = str_replace('STUDENTS_CORNER_ID_HERE', $studentscorner->id, $message);
   $message = str_replace('USER_ID_HERE',            $user->id, $message);
-  $message = str_replace('TECHSUPPORT_EMAIL_HERE',  generate_email_signoff(), $message);
+  $message = str_replace('TECHSUPPORT_EMAIL_HERE',  "\nPeoples-uni Support\napply@peoples-uni.org\n", $message);
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-  $supportuser = generate_email_supportuser();
+  //$supportuser = generate_email_supportuser();
+  $supportuser = new stdClass();
+  $supportuser->email = 'apply@peoples-uni.org';
+  $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
+
   $subject = format_string($site->fullname) . ': Students Corner';
 
   //$user->email = 'alanabarrett0@gmail.com';
