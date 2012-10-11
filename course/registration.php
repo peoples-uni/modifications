@@ -473,7 +473,7 @@ ABDEL*/
 
 /*ABDEL
     $whatlearnname['10'] = 'I want to improve my knowledge of public health';
-    $whatlearnname['20'] = 'I want to improve my academic skills (writing structured essays, critically reviewing published literature, referencing etc)';
+    $whatlearnname['20'] = 'I want to improve my academic skills';
     $whatlearnname['30'] = 'I want to improve my skills in research';
     $whatlearnname['40'] = 'I am not sure';
   $message .= "What do you want to learn:\n";
@@ -483,7 +483,7 @@ ABDEL*/
   }
   $message .= "\n";
     $whylearnname['10'] = 'I want to apply what I learn to my current/future work';
-    $whylearnname['20'] = 'I want to improve my career opportunities and this will help me in future job/course applications';
+    $whylearnname['20'] = 'I want to improve my career opportunities';
     $whylearnname['30'] = 'I want to get academic credit';
     $whylearnname['40'] = 'I am not sure';
   $message .= "Why do you want to learn:\n";
@@ -503,7 +503,7 @@ ABDEL*/
   }
   $message .= "\n";
     $howuselearningname['10'] = 'Share knowledge skills with other colleagues';
-    $howuselearningname['20'] = 'Start a new project - please give further details with free text in Reasons for wanting to enrol above';
+    $howuselearningname['20'] = 'Start a new project';
     $howuselearningname['30'] = 'I am not sure';
   $message .= "How will you use your new knowledge and skills to improve population health:\n";
   $arrayvalues = explode(',', $application->howuselearning);
