@@ -240,7 +240,7 @@ TECHSUPPORT_EMAIL_HERE
 </pre>
 </li>
 <li>
-"e-mail Applicant" allows an e-mail to be sent to the Applicant, the e-mail to be sent can be edited. the e-mail will come from techsupport@peoples-uni.org (the Moodle Support email) as does the registration approval e-mail. Note these e-mails are copied to the e-mail address applicationresponses@peoples-uni.org.
+"e-mail Applicant" allows an e-mail to be sent to the Applicant, the e-mail to be sent can be edited. the e-mail will come from apply@peoples-uni.org as does the registration approval e-mail. Note these e-mails are copied to the e-mail address applicationresponses@peoples-uni.org.
 </li>
 <li>
 "Corresponding Registered Moodle Username:" shows details for the Moodle user matching the application (if this Student has already been registered on this Details page).
@@ -693,7 +693,7 @@ The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applicat
 "UnApprove Module:" is a button which allows un-approving a module. Note, also that if the applicant has already been enrolled in the course (see below) they will be un-enrolled from that module.
 </li>
 <li>
-"e-mail Applicant" allows an e-mail to be sent to the Applicant, the e-mail to be sent can be edited. the e-mail will come from techsupport@peoples-uni.org (the Moodle Support email) as does the approval e-mail. Note these e-mails are copied to the e-mail address applicationresponses@peoples-uni.org.
+"e-mail Applicant" allows an e-mail to be sent to the Applicant, the e-mail to be sent can be edited. the e-mail will come from apply@peoples-uni.org as does the approval e-mail. Note these e-mails are copied to the e-mail address applicationresponses@peoples-uni.org.
 </li>
 <li>
 "Corresponding Registered Moodle Username:" shows details for the Moodle user matching the application (if this is not a new application or if the user has been created (see below)).
