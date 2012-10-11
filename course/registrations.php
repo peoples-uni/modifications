@@ -287,6 +287,25 @@ $howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
 $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
 $howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
 
+$whatlearnname['10'] = 'I want to improve my knowledge of public health';
+$whatlearnname['20'] = 'I want to improve my academic skills';
+$whatlearnname['30'] = 'I want to improve my skills in research';
+$whatlearnname['40'] = 'I am not sure';
+
+$whylearnname['10'] = 'I want to apply what I learn to my current/future work';
+$whylearnname['20'] = 'I want to improve my career opportunities';
+$whylearnname['30'] = 'I want to get academic credit';
+$whylearnname['40'] = 'I am not sure';
+
+$whyelearningname['10'] = 'I want to meet and learn with people from other countries';
+$whyelearningname['20'] = 'I want the opportunity to be flexible about my study time';
+$whyelearningname['30'] = 'I want a public health training that is affordable';
+$whyelearningname['40'] = 'I am not sure';
+
+$howuselearningname['10'] = 'Share knowledge skills with other colleagues';
+$howuselearningname['20'] = 'Start a new project';
+$howuselearningname['30'] = 'I am not sure';
+
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
