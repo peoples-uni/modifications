@@ -29,10 +29,10 @@ CREATE TABLE mdl_peoplesregistration (
   currentjob text NOT NULL,
   education text NOT NULL,
   reasons text NOT NULL,
-  whatlearn BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  whylearn BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  whyelearning BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  howuselearning BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  whatlearn VARCHAR(100) NOT NULL DEFAULT '',
+  whylearn VARCHAR(100) NOT NULL DEFAULT '',
+  whyelearning VARCHAR(100) NOT NULL DEFAULT '',
+  howuselearning VARCHAR(100) NOT NULL DEFAULT '',
   sponsoringorganisation text NOT NULL DEFAULT '',
   datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
   datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
@@ -44,10 +44,10 @@ CREATE INDEX mdl_peoplesregistration_uid_ix ON mdl_peoplesregistration (userid);
 ALTER TABLE mdl_peoplesregistration ADD howfoundorganisationname TEXT AFTER howfoundpeoples;
 UPDATE mdl_peoplesregistration SET howfoundorganisationname='';
 
-ALTER TABLE mdl_peoplesregistration ADD whatlearn BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER reasons;
-ALTER TABLE mdl_peoplesregistration ADD whylearn BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER whatlearn;
-ALTER TABLE mdl_peoplesregistration ADD whyelearning BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER whylearn;
-ALTER TABLE mdl_peoplesregistration ADD howuselearning BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER whyelearning;
+ALTER TABLE mdl_peoplesregistration ADD whatlearn VARCHAR(100) NOT NULL DEFAULT '' AFTER reasons;
+ALTER TABLE mdl_peoplesregistration ADD whylearn VARCHAR(100) NOT NULL DEFAULT '' AFTER whatlearn;
+ALTER TABLE mdl_peoplesregistration ADD whyelearning VARCHAR(100) NOT NULL DEFAULT '' AFTER whylearn;
+ALTER TABLE mdl_peoplesregistration ADD howuselearning VARCHAR(100) NOT NULL DEFAULT '' AFTER whyelearning;
 */
 
 
@@ -408,24 +408,36 @@ ABDEL*/
 
 /*ABDEL
   $dataitem = $data->whatlearn;
-  if (empty($dataitem)) $dataitem = '0';
-  $dataitem = strip_tags($dataitem);
-  $application->whatlearn = $dataitem;
+  $arraystring = '';
+  foreach ($dataitem as $datax) {
+    $datax = (int)$datax;
+    $arraystring .= $datax . ',';
+  }
+  $application->whatlearn = $arraystring;
 
   $dataitem = $data->whylearn;
-  if (empty($dataitem)) $dataitem = '0';
-  $dataitem = strip_tags($dataitem);
-  $application->whylearn = $dataitem;
+  $arraystring = '';
+  foreach ($dataitem as $datax) {
+    $datax = (int)$datax;
+    $arraystring .= $datax . ',';
+  }
+  $application->whylearn = $arraystring;
 
   $dataitem = $data->whyelearning;
-  if (empty($dataitem)) $dataitem = '0';
-  $dataitem = strip_tags($dataitem);
-  $application->whyelearning = $dataitem;
+  $arraystring = '';
+  foreach ($dataitem as $datax) {
+    $datax = (int)$datax;
+    $arraystring .= $datax . ',';
+  }
+  $application->whyelearning = $arraystring;
 
   $dataitem = $data->howuselearning;
-  if (empty($dataitem)) $dataitem = '0';
-  $dataitem = strip_tags($dataitem);
-  $application->howuselearning = $dataitem;
+  $arraystring = '';
+  foreach ($dataitem as $datax) {
+    $datax = (int)$datax;
+    $arraystring .= $datax . ',';
+  }
+  $application->howuselearning = $arraystring;
 ABDEL*/
 
   $dataitem = $data->sponsoringorganisation;
@@ -460,29 +472,45 @@ ABDEL*/
   $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
 
 /*ABDEL
-    $whatlearnname[  ''] = 'Select...';
     $whatlearnname['10'] = 'I want to improve my knowledge of public health';
     $whatlearnname['20'] = 'I want to improve my academic skills (writing structured essays, critically reviewing published literature, referencing etc)';
     $whatlearnname['30'] = 'I want to improve my skills in research';
     $whatlearnname['40'] = 'I am not sure';
-  $message .= "What do you want to learn: " . $whatlearnname[$application->whatlearn] . "\n\n";
-    $whylearnname[  ''] = 'Select...';
+  $message .= "What do you want to learn:\n";
+  $arrayvalues = explode(',', $application->whatlearn);
+  foreach ($arrayvalues as $v) {
+    if (!empty($v)) $message .= $whatlearnname[$v] . "\n";
+  }
+  $message .= "\n";
     $whylearnname['10'] = 'I want to apply what I learn to my current/future work';
     $whylearnname['20'] = 'I want to improve my career opportunities and this will help me in future job/course applications';
     $whylearnname['30'] = 'I want to get academic credit';
     $whylearnname['40'] = 'I am not sure';
-  $message .= "Why do you want to learn: " . $whylearnname[$application->whylearn] . "\n\n";
-    $whyelearningname[  ''] = 'Select...';
+  $message .= "Why do you want to learn:\n";
+  $arrayvalues = explode(',', $application->whylearn);
+  foreach ($arrayvalues as $v) {
+    if (!empty($v)) $message .= $whylearnname[$v] . "\n";
+  }
+  $message .= "\n";
     $whyelearningname['10'] = 'I want to meet and learn with people from other countries';
     $whyelearningname['20'] = 'I want the opportunity to be flexible about my study time';
     $whyelearningname['30'] = 'I want a public health training that is affordable';
     $whyelearningname['40'] = 'I am not sure';
-  $message .= "Reasons you want to do an e-learning course: " . $whyelearningname[$application->whyelearning] . "\n\n";
-    $howuselearningname[  ''] = 'Select...';
+  $message .= "Reasons you want to do an e-learning course:\n";
+  $arrayvalues = explode(',', $application->whyelearning);
+  foreach ($arrayvalues as $v) {
+    if (!empty($v)) $message .= $whyelearningname[$v] . "\n";
+  }
+  $message .= "\n";
     $howuselearningname['10'] = 'Share knowledge skills with other colleagues';
     $howuselearningname['20'] = 'Start a new project - please give further details with free text in Reasons for wanting to enrol above';
     $howuselearningname['30'] = 'I am not sure';
-  $message .= "How will you use your new knowledge and skills to improve population health: " . $howuselearningname[$application->howuselearning] . "\n\n";
+  $message .= "How will you use your new knowledge and skills to improve population health:\n";
+  $arrayvalues = explode(',', $application->howuselearning);
+  foreach ($arrayvalues as $v) {
+    if (!empty($v)) $message .= $howuselearningname[$v] . "\n";
+  }
+  $message .= "\n";
 ABDEL*/
 
   $message .= "Sponsoring organisation:\n" . htmlspecialchars_decode($application->sponsoringorganisation, ENT_COMPAT) . "\n\n";

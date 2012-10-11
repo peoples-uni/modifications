@@ -360,7 +360,6 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to enrol in this course in up to 150 words.<br />');
 
 /*ABDEL
-    $whatlearnname[  ''] = 'Select...';
     $whatlearnname['10'] = 'I want to improve my knowledge of public health';
     $whatlearnname['20'] = 'I want to improve my academic skills (writing structured essays, critically reviewing published literature, referencing etc)';
     $whatlearnname['30'] = 'I want to improve my skills in research';
@@ -368,9 +367,8 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $select = &$mform->addElement('select', 'whatlearn', 'What do you want to learn?', $whatlearnname);
     $select->setMultiple(true);
     $mform->addRule('whatlearn', 'What do you want to learn is required', 'required', null, 'client');
-    $mform->addElement('static', 'explainwhatlearn', '&nbsp;', 'Select options that best describe What do you want to learn.<br />');
+    $mform->addElement('static', 'explainwhatlearn', '&nbsp;', 'Select options that best describe What do you want to learn (Ctrl Click for multiple options).<br />');
 
-    $whylearnname[  ''] = 'Select...';
     $whylearnname['10'] = 'I want to apply what I learn to my current/future work';
     $whylearnname['20'] = 'I want to improve my career opportunities and this will help me in future job/course applications';
     $whylearnname['30'] = 'I want to get academic credit';
@@ -378,9 +376,8 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $select = &$mform->addElement('select', 'whylearn', 'Why do you want to learn?', $whylearnname);
     $select->setMultiple(true);
     $mform->addRule('whylearn', 'Why do you want to learn is required', 'required', null, 'client');
-    $mform->addElement('static', 'explainwhylearn', '&nbsp;', 'Select options that best describe Why do you want to learn.<br />');
+    $mform->addElement('static', 'explainwhylearn', '&nbsp;', 'Select options that best describe Why do you want to learn (Ctrl Click for multiple options).<br />');
 
-    $whyelearningname[  ''] = 'Select...';
     $whyelearningname['10'] = 'I want to meet and learn with people from other countries';
     $whyelearningname['20'] = 'I want the opportunity to be flexible about my study time';
     $whyelearningname['30'] = 'I want a public health training that is affordable';
@@ -388,16 +385,15 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $select = &$mform->addElement('select', 'whyelearning', 'What are the reasons you want to do an e-learning course?', $whyelearningname);
     $select->setMultiple(true);
     $mform->addRule('whyelearning', 'What are the reasons you want to do an e-learning course is required', 'required', null, 'client');
-    $mform->addElement('static', 'explainwhyelearning', '&nbsp;', 'Select options that best describe What are the main reasons you want to do an e-learning course.<br />');
+    $mform->addElement('static', 'explainwhyelearning', '&nbsp;', 'Select options that best describe What are the main reasons you want to do an e-learning course (Ctrl Click for multiple options).<br />');
 
-    $howuselearningname[  ''] = 'Select...';
     $howuselearningname['10'] = 'Share knowledge skills with other colleagues';
     $howuselearningname['20'] = 'Start a new project - please give further details with free text in Reasons for wanting to enrol above';
     $howuselearningname['30'] = 'I am not sure';
     $select = &$mform->addElement('select', 'howuselearning', 'How will you use your new knowledge and skills to improve population health?', $howuselearningname);
     $select->setMultiple(true);
     $mform->addRule('howuselearning', 'How will you use your new knowledge and skills to improve population health is required', 'required', null, 'client');
-    $mform->addElement('static', 'explainhowuselearning', '&nbsp;', 'Select options that best describe How will you use your new knowledge and skills to improve population health.<br />');
+    $mform->addElement('static', 'explainhowuselearning', '&nbsp;', 'Select options that best describe How will you use your new knowledge and skills to improve population health (Ctrl Click for multiple options).<br />');
 ABDEL*/
 
     $mform->addElement('textarea', 'sponsoringorganisation', 'Sponsoring organisation', 'wrap="HARD" rows="10" cols="100"');
