@@ -421,6 +421,44 @@ echo "<tr>";
 echo "<td>Reasons for wanting to enrol</td>";
 echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', $application->reasons)) . "</td>";
 echo "</tr>";
+
+echo '<tr>';
+echo '<td>What do you want to learn?</td>';
+$z = '';
+$arrayvalues = explode(',', $application->whatlearn);
+foreach ($arrayvalues as $v) {
+ if (!empty($v)) $z .= $whatlearnname[$v] . '<br />';
+}
+echo '<td>' . $z . '</td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td>Why do you want to learn?</td>';
+$z = '';
+$arrayvalues = explode(',', $application->whylearn);
+foreach ($arrayvalues as $v) {
+ if (!empty($v)) $z .= $whylearnname[$v] . '<br />';
+}
+echo '<td>' . $z . '</td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td>What are the reasons you want to do an e-learning course?</td>';
+$z = '';
+$arrayvalues = explode(',', $application->whyelearning);
+foreach ($arrayvalues as $v) {
+ if (!empty($v)) $z .= $whyelearningname[$v] . '<br />';
+}
+echo '<td>' . $z . '</td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td>How will you use your new knowledge and skills to improve population health?</td>';
+$z = '';
+$arrayvalues = explode(',', $application->howuselearning);
+foreach ($arrayvalues as $v) {
+ if (!empty($v)) $z .= $howuselearningname[$v] . '<br />';
+}
+echo '<td>' . $z . '</td>';
+echo '</tr>';
+
 echo '<tr>';
 echo '<td>Sponsoring organisation</td>';
 echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation)) . '</td>';
@@ -430,6 +468,11 @@ echo '<td>How heard about Peoples-uni</td>';
 if (empty($howfoundpeoplesname[$application->howfoundpeoples])) echo "<td></td>";
 else echo "<td>" . $howfoundpeoplesname[$application->howfoundpeoples] . "</td>";
 echo '</tr>';
+echo '<tr>';
+echo '<td>Name of the organisation or person from whom you heard about Peoples-uni</td>';
+echo '<td>' . $application->howfoundorganisationname . '</td>';
+echo '</tr>';
+
 echo '<tr>';
 echo '<td>Desired Moodle Username</td>';
 echo '<td>' . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . '</td>';

@@ -558,8 +558,13 @@ else {
     'Postgraduate Qualification',
     'Education Details',
     'Reasons for wanting to enrol',
+    'What do you want to learn?',
+    'Why do you want to learn?',
+    'What are the reasons you want to do an e-learning course?',
+    'How will you use your new knowledge and skills to improve population health?',
     'Sponsoring organisation',
     'How heard about Peoples-uni',
+    'Name of the organisation or person from whom you heard about Peoples-uni',
     'Desired Moodle Username',
     'Moodle UserID'
   );
@@ -638,11 +643,41 @@ foreach ($applications as $sid => $application) {
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
 
+    $z = '';
+    $arrayvalues = explode(',', $application->whatlearn);
+    foreach ($arrayvalues as $v) {
+     if (!empty($v)) $z .= $whatlearnname[$v] . '<br />';
+    }
+    $rowdata[] = $z;
+
+    $z = '';
+    $arrayvalues = explode(',', $application->whylearn);
+    foreach ($arrayvalues as $v) {
+     if (!empty($v)) $z .= $whylearnname[$v] . '<br />';
+    }
+    $rowdata[] = $z;
+
+    $z = '';
+    $arrayvalues = explode(',', $application->whyelearning);
+    foreach ($arrayvalues as $v) {
+     if (!empty($v)) $z .= $whyelearningname[$v] . '<br />';
+    }
+    $rowdata[] = $z;
+
+    $z = '';
+    $arrayvalues = explode(',', $application->howuselearning);
+    foreach ($arrayvalues as $v) {
+     if (!empty($v)) $z .= $howuselearningname[$v] . '<br />';
+    }
+    $rowdata[] = $z;
+
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
 
     if (empty($howfoundpeoplesname[$application->howfoundpeoples])) $z = '';
     else $z = $howfoundpeoplesname[$application->howfoundpeoples];
     $rowdata[] = $z;
+
+    $rowdata[] = $application->howfoundorganisationname;
 
     $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
 
