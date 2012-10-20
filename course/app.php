@@ -281,6 +281,33 @@ $employmentname['40'] = 'Public health';
 $employmentname['50'] = 'Other health related';
 $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 
+$howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
+$howfoundpeoplesname['20'] = 'Informed by someone else';
+$howfoundpeoplesname['30'] = 'Facebook';
+$howfoundpeoplesname['40'] = 'Internet advertisement';
+$howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
+$howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+$howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
+
+$whatlearnname['10'] = 'I want to improve my knowledge of public health';
+$whatlearnname['20'] = 'I want to improve my academic skills';
+$whatlearnname['30'] = 'I want to improve my skills in research';
+$whatlearnname['40'] = 'I am not sure';
+
+$whylearnname['10'] = 'I want to apply what I learn to my current/future work';
+$whylearnname['20'] = 'I want to improve my career opportunities';
+$whylearnname['30'] = 'I want to get academic credit';
+$whylearnname['40'] = 'I am not sure';
+
+$whyelearningname['10'] = 'I want to meet and learn with people from other countries';
+$whyelearningname['20'] = 'I want the opportunity to be flexible about my study time';
+$whyelearningname['30'] = 'I want a public health training that is affordable';
+$whyelearningname['40'] = 'I am not sure';
+
+$howuselearningname['10'] = 'Share knowledge skills with other colleagues';
+$howuselearningname['20'] = 'Start a new project';
+$howuselearningname['30'] = 'I am not sure';
+
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
@@ -686,9 +713,64 @@ echo "<td>Reasons for wanting to enrol</td>";
 echo "<td>" . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'))) . "</td>";
 echo "</tr>";
 
+$registration = $DB->get_record('peoplesregistration', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
+if (empty($registration)) {
+  $registration->whatlearn = '';
+  $registration->whylearn = '';
+  $registration->whyelearning = '';
+  $registration->howuselearning = '';
+  $registration->howfoundorganisationname = '';
+}
+echo '<tr>';
+echo '<td>What do you want to learn?</td>';
+$z = '';
+$arrayvalues = explode(',', $registration->whatlearn);
+foreach ($arrayvalues as $v) {
+ if (!empty($v)) $z .= $whatlearnname[$v] . '<br />';
+}
+echo '<td>' . $z . '</td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td>Why do you want to learn?</td>';
+$z = '';
+$arrayvalues = explode(',', $registration->whylearn);
+foreach ($arrayvalues as $v) {
+ if (!empty($v)) $z .= $whylearnname[$v] . '<br />';
+}
+echo '<td>' . $z . '</td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td>What are the reasons you want to do an e-learning course?</td>';
+$z = '';
+$arrayvalues = explode(',', $registration->whyelearning);
+foreach ($arrayvalues as $v) {
+ if (!empty($v)) $z .= $whyelearningname[$v] . '<br />';
+}
+echo '<td>' . $z . '</td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td>How will you use your new knowledge and skills to improve population health?</td>';
+$z = '';
+$arrayvalues = explode(',', $registration->howuselearning);
+foreach ($arrayvalues as $v) {
+ if (!empty($v)) $z .= $howuselearningname[$v] . '<br />';
+}
+echo '<td>' . $z . '</td>';
+echo '</tr>';
+
 echo '<tr>';
 echo '<td>Sponsoring organisation</td>';
 echo '<td>' . str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'))) . '</td>';
+echo '</tr>';
+
+echo '<tr>';
+echo '<td>How heard about Peoples-uni</td>';
+if (empty($howfoundpeoplesname[$registration->howfoundpeoples])) echo "<td></td>";
+else echo "<td>" . $howfoundpeoplesname[$registration->howfoundpeoples] . "</td>";
+echo '</tr>';
+echo '<tr>';
+echo '<td>Name of the organisation or person from whom you heard about Peoples-uni</td>';
+echo '<td>' . $registration->howfoundorganisationname . '</td>';
 echo '</tr>';
 
 echo '<tr>';
