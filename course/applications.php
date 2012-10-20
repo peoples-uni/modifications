@@ -975,6 +975,10 @@ elseif ($displayforexcel) {
     'Postgraduate Qualification',
     'Education Details',
     'Reasons for wanting to enrol',
+    'What do you want to learn?',
+    'Why do you want to learn?',
+    'What are the reasons you want to do an e-learning course?',
+    'How will you use your new knowledge and skills to improve population health?',
     'Sponsoring organisation',
     'Scholarship',
     'Why Not Completed Previous Semester',
@@ -1004,7 +1008,13 @@ else {
     'Postgraduate Qualification',
     'Education Details',
     'Reasons for wanting to enrol',
+    'What do you want to learn?',
+    'Why do you want to learn?',
+    'What are the reasons you want to do an e-learning course?',
+    'How will you use your new knowledge and skills to improve population health?',
     'Sponsoring organisation',
+    'How heard about Peoples-uni',
+    'Name of the organisation or person from whom you heard about Peoples-uni',
     'Scholarship',
     'Why Not Completed Previous Semester',
     'Desired Moodle Username',
@@ -1314,7 +1324,41 @@ foreach ($applications as $sid => $application) {
 
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
 
+      $z = '';
+      $arrayvalues = explode(',', $registration->whatlearn);
+      foreach ($arrayvalues as $v) {
+       if (!empty($v)) $z .= $whatlearnname[$v] . '<br />';
+      }
+      $rowdata[] = $z;
+
+      $z = '';
+      $arrayvalues = explode(',', $registration->whylearn);
+      foreach ($arrayvalues as $v) {
+       if (!empty($v)) $z .= $whylearnname[$v] . '<br />';
+      }
+      $rowdata[] = $z;
+
+      $z = '';
+      $arrayvalues = explode(',', $registration->whyelearning);
+      foreach ($arrayvalues as $v) {
+       if (!empty($v)) $z .= $whyelearningname[$v] . '<br />';
+      }
+      $rowdata[] = $z;
+
+      $z = '';
+      $arrayvalues = explode(',', $registration->howuselearning);
+      foreach ($arrayvalues as $v) {
+       if (!empty($v)) $z .= $howuselearningname[$v] . '<br />';
+      }
+      $rowdata[] = $z;
+
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
+
+      if (empty($howfoundpeoplesname[$registration->howfoundpeoples])) $z = '';
+      else $z = $howfoundpeoplesname[$registration->howfoundpeoples];
+      $rowdata[] = $z;
+
+      $rowdata[] = $registration->howfoundorganisationname;
 
       $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
 
@@ -1469,6 +1513,34 @@ foreach ($applications as $sid => $application) {
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->education));
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->reasons));
+
+    $z = '';
+    $arrayvalues = explode(',', $registration->whatlearn);
+    foreach ($arrayvalues as $v) {
+     if (!empty($v)) $z .= $whatlearnname[$v] . ', ';
+    }
+    $rowdata[] = $z;
+
+    $z = '';
+    $arrayvalues = explode(',', $registration->whylearn);
+    foreach ($arrayvalues as $v) {
+     if (!empty($v)) $z .= $whylearnname[$v] . ', ';
+    }
+    $rowdata[] = $z;
+
+    $z = '';
+    $arrayvalues = explode(',', $registration->whyelearning);
+    foreach ($arrayvalues as $v) {
+     if (!empty($v)) $z .= $whyelearningname[$v] . ', ';
+    }
+    $rowdata[] = $z;
+
+    $z = '';
+    $arrayvalues = explode(',', $registration->howuselearning);
+    foreach ($arrayvalues as $v) {
+     if (!empty($v)) $z .= $howuselearningname[$v] . ', ';
+    }
+    $rowdata[] = $z;
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->sponsoringorganisation));
 
