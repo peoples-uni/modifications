@@ -281,6 +281,33 @@ $employmentname['40'] = 'Public health';
 $employmentname['50'] = 'Other health related';
 $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 
+$howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
+$howfoundpeoplesname['20'] = 'Informed by someone else';
+$howfoundpeoplesname['30'] = 'Facebook';
+$howfoundpeoplesname['40'] = 'Internet advertisement';
+$howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
+$howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+$howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
+
+$whatlearnname['10'] = 'I want to improve my knowledge of public health';
+$whatlearnname['20'] = 'I want to improve my academic skills';
+$whatlearnname['30'] = 'I want to improve my skills in research';
+$whatlearnname['40'] = 'I am not sure';
+
+$whylearnname['10'] = 'I want to apply what I learn to my current/future work';
+$whylearnname['20'] = 'I want to improve my career opportunities';
+$whylearnname['30'] = 'I want to get academic credit';
+$whylearnname['40'] = 'I am not sure';
+
+$whyelearningname['10'] = 'I want to meet and learn with people from other countries';
+$whyelearningname['20'] = 'I want the opportunity to be flexible about my study time';
+$whyelearningname['30'] = 'I want a public health training that is affordable';
+$whyelearningname['40'] = 'I am not sure';
+
+$howuselearningname['10'] = 'Share knowledge skills with other colleagues';
+$howuselearningname['20'] = 'Start a new project';
+$howuselearningname['30'] = 'I am not sure';
+
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
@@ -526,6 +553,8 @@ array($chosensemester, $chosenmodule)
 
 $sidsbyuseridsemester = $DB->get_records_sql('SELECT CONCAT(userid, semester) AS i, sid FROM mdl_peoplesapplication WHERE (((state & 0x38)>>3)=3 OR (state & 0x7)=3)');
 
+$registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r');
+
 
 $usercount = array();
 $usercountbyuserid = array();
@@ -637,7 +666,22 @@ $table->head = array(
   'Qualification',
   'Higherqualification',
   'Employment',
-  'Number of Student Posts in this Module'
+  'Number of Student Posts in this Module',
+  'I want to improve my knowledge of public health',
+  'I want to improve my academic skills',
+  'I want to improve my skills in research',
+  'I am not sure(What do you want to learn?)',
+  'I want to apply what I learn to my current/future work',
+  'I want to improve my career opportunities',
+  'I want to get academic credit',
+  'I am not sure(Why do you want to learn?)',
+  'I want to meet and learn with people from other countries',
+  'I want the opportunity to be flexible about my study time',
+  'I want a public health training that is affordable',
+  'I am not sure(What are the reasons you want to do an e-learning course?)',
+  'Share knowledge skills with other colleagues',
+  'Start a new project',
+  'I am not sure(How will you use your new knowledge and skills to improve population health?)',
   );
 
 $n = 0;
@@ -725,6 +769,81 @@ if (!empty($enrols)) {
     else {
       $rowdata[] = 0;
     }
+
+
+    $registration = $registrations[$enrol->userid];
+    if (empty($enrol->userid) || empty($registration)) {
+      $registration->whatlearn = '';
+      $registration->whylearn = '';
+      $registration->whyelearning = '';
+      $registration->howuselearning = '';
+      $registration->howfoundorganisationname = '';
+    }
+
+    $arrayvalues = explode(',', $registration->whatlearn);
+    $z = '';
+    if (in_array('10', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('20', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('30', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('40', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $arrayvalues = explode(',', $registration->whylearn);
+    $z = '';
+    if (in_array('10', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('20', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('30', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('40', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $arrayvalues = explode(',', $registration->whyelearning);
+    $z = '';
+    if (in_array('10', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('20', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('30', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('40', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $arrayvalues = explode(',', $registration->howuselearning);
+    $z = '';
+    if (in_array('10', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('20', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
+    $z = '';
+    if (in_array('30', $arrayvalues)) $z = 1;
+    $rowdata[] = $z;
+
 
 		if ($enrol->username !== $lastname) {
 
