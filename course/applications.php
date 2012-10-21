@@ -726,6 +726,8 @@ if (empty($applications)) {
   $applications = array();
 }
 
+$registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r');
+
 
 $emaildups = 0;
 foreach ($applications as $sid => $application) {
@@ -1121,6 +1123,15 @@ foreach ($applications as $sid => $application) {
   $state2 = $state & 070;
 
   $application->userid = (int)$application->userid;
+
+  $registration = $registrations[$application->userid];
+  if (empty($application->userid) || empty($registration)) {
+    $registration->whatlearn = '';
+    $registration->whylearn = '';
+    $registration->whyelearning = '';
+    $registration->howuselearning = '';
+    $registration->howfoundorganisationname = '';
+  }
 
   if (!$displayforexcel) {
     $rowdata = array();
