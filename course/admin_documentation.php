@@ -1074,7 +1074,7 @@ It includes the list of modules they have passed (Course Codes) and the number o
 <h2>Statistics on Success of Students by Qualifications on Entry</h2>
 <ol>
 <li>
-Analysis of grades versus other characteristics can be found using <a href="http://courses.peoples-uni.org/course/successbyqualifications.php" target="_blank">http://courses.peoples-uni.org/course/successbyqualifications.php</a>
+Analysis of grades versus other characteristics (e.g. qualifications on entry, initial goals and number of postings) can be found using <a href="http://courses.peoples-uni.org/course/successbyqualifications.php" target="_blank">http://courses.peoples-uni.org/course/successbyqualifications.php</a>
 </li>
 <li>
 There you will see (at the bottom of the page), a breakdown of qualifications and employment. Above this the page lists qualifications and employment per person. Note, only students for which we have this data are displayed and counted (some early application forms did not have this data).
