@@ -393,11 +393,9 @@ elseif ($data = $editform->get_data()) {
   $dataitem = strip_tags($dataitem);
   $application->howfoundpeoples = $dataitem;
 
-/*ABDEL
   $dataitem = $data->howfoundorganisationname;
   if (empty($dataitem)) $dataitem = '';
   $application->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
-ABDEL*/
 
   $dataitem = $data->education;
   if (empty($dataitem)) $dataitem = '';
@@ -406,7 +404,6 @@ ABDEL*/
   $dataitem = $data->reasons;
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-/*ABDEL
   $dataitem = $data->whatlearn;
   $arraystring = '';
   foreach ($dataitem as $datax) {
@@ -438,7 +435,6 @@ ABDEL*/
     $arraystring .= $datax . ',';
   }
   $application->howuselearning = $arraystring;
-ABDEL*/
 
   $dataitem = $data->sponsoringorganisation;
   if (empty($dataitem)) $dataitem = '';
@@ -471,7 +467,6 @@ ABDEL*/
   $message .= "Preferred Username: $application->username\n\n";
   $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
 
-/*ABDEL
     $whatlearnname['10'] = 'I want to improve my knowledge of public health';
     $whatlearnname['20'] = 'I want to improve my academic skills';
     $whatlearnname['30'] = 'I want to improve my skills in research';
@@ -511,7 +506,6 @@ ABDEL*/
     if (!empty($v)) $message .= $howuselearningname[$v] . "\n";
   }
   $message .= "\n";
-ABDEL*/
 
   $message .= "Sponsoring organisation:\n" . htmlspecialchars_decode($application->sponsoringorganisation, ENT_COMPAT) . "\n\n";
 
@@ -553,9 +547,7 @@ ABDEL*/
     $howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
   $message .= "How heard about Peoples-uni: " . $howfoundpeoplesname[$application->howfoundpeoples] . "\n\n";
 
-/*ABDEL
   $message .= "Name of the organisation or person:\n" . htmlspecialchars_decode($application->howfoundorganisationname, ENT_COMPAT) . "\n";
-ABDEL*/
 
   sendapprovedmail($application->email, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
   sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);

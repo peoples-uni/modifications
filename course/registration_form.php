@@ -359,7 +359,6 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $mform->addRule('reasons', 'Reasons for wanting to enrol is required', 'required', null, 'client');
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to enrol in this course in up to 150 words.<br />');
 
-/*ABDEL
     $whatlearnname['10'] = 'I want to improve my knowledge of public health';
     $whatlearnname['20'] = 'I want to improve my academic skills (writing structured essays, critically reviewing published literature, referencing etc)';
     $whatlearnname['30'] = 'I want to improve my skills in research';
@@ -394,7 +393,6 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $select->setMultiple(true);
     $mform->addRule('howuselearning', 'How will you use your new knowledge and skills to improve population health is required', 'required', null, 'client');
     $mform->addElement('static', 'explainhowuselearning', '&nbsp;', 'Select options that best describe How will you use your new knowledge and skills to improve population health <b>(Ctrl Click for multiple options)</b>.<br />');
-ABDEL*/
 
     $mform->addElement('textarea', 'sponsoringorganisation', 'Sponsoring organisation', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explainsponsoringorganisation', '&nbsp;', 'Indicate any organisation that is sponsoring or supporting your application.<br />');
@@ -463,11 +461,9 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addRule('howfoundpeoples', 'How did you hear about Peoples-uni is required', 'required', null, 'client');
     $mform->addElement('static', 'explainhowfoundpeoples', '&nbsp;', 'Select the option that best describes how you heard about Peoples-uni.<br />');
 
-/*ABDEL
     $mform->addElement('text', 'howfoundorganisationname', 'Name of the organisation or person from whom you heard about Peoples-uni', 'maxlength="100" size="50"');
     $mform->setType('howfoundorganisationname', PARAM_MULTILANG);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
-ABDEL*/
 
 
     $this->add_action_buttons(false, 'Submit Form');
