@@ -68,60 +68,30 @@ elseif ($data = $editform->get_data()) {
       $DB->update_record('discussionfeedback', $discussionfeedback);
     }
 
-    $message = "Returning Student Application for...\n\n";
-    $returning_in_title = 'Returning';
-    $message .= "Last Name: $discussionfeedback->lastname\n\n";
-    $message .= "First Name: $discussionfeedback->firstname\n\n";
-    $message .= "e-mail: $discussionfeedback->email\n\n";
-    $message .= "Submission ID (SID): $discussionfeedback->sid\n\n";
-    $message .= "Date Submitted: " . gmdate('d/m/Y H:i', $discussionfeedback->datesubmitted) . "\n\n";
-    $message .= "Semester: $discussionfeedback->semester\n\n";
-    $message .= "Module 1: $discussionfeedback->coursename1\n\n";
-    $message .= "Module 2: $discussionfeedback->coursename2\n\n";
-    $message .= "Apply for MMU MPH: $applymmumphtext\n\n";
-    $message .= "City: $discussionfeedback->city\n\n";
-    $message .= "Country: " . $countryname[$discussionfeedback->country] . "\n\n";
-    $message .= "Username: $discussionfeedback->username\n\n";
-    $message .= "Data from original application...\n\n";
-    $message .= "Date of Birth: $discussionfeedback->dob\n\n";
-    $message .= "Gender: $discussionfeedback->gender\n\n";
-    $message .= "Application Address:\n" . htmlspecialchars_decode($discussionfeedback->applicationaddress, ENT_COMPAT) . "\n\n";
-    $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($discussionfeedback->reasons, ENT_COMPAT) . "\n\n";
-    $message .= "Sponsoring organisation:\n" . htmlspecialchars_decode($discussionfeedback->sponsoringorganisation, ENT_COMPAT) . "\n\n";
+    $peoples_discussion_feedback_email = get_config(NULL, 'peoples_discussion_feedback_email');
+    $peoples_discussion_feedback_email = str_replace("\r", '', $peoples_discussion_feedback_email);
 
-      $employmentname[  ''] = 'Select...';
-      $employmentname[ '1'] = 'None';
-      $employmentname['10'] = 'Student';
-      $employmentname['20'] = 'Non-health';
-      $employmentname['30'] = 'Clinical (not specifically public health)';
-      $employmentname['40'] = 'Public health';
-      $employmentname['50'] = 'Other health related';
-      $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
-    $message .= "Current Employment: " . $employmentname[$discussionfeedback->employment] . "\n\n";
-      $qualificationname[  ''] = 'Select...';
-      $qualificationname[ '1'] = 'None';
-      $qualificationname['10'] = 'Degree (not health related)';
-      $qualificationname['20'] = 'Health qualification (non-degree)';
-      $qualificationname['30'] = 'Health qualification (degree, but not medical doctor)';
-      $qualificationname['40'] = 'Medical degree';
-    $message .= "Higher Education Qualification: " . $qualificationname[$discussionfeedback->qualification] . "\n\n";
-      $higherqualificationname[  ''] = 'Select...';
-      $higherqualificationname[ '1'] = 'None';
-      $higherqualificationname['10'] = 'Certificate';
-      $higherqualificationname['20'] = 'Diploma';
-      $higherqualificationname['30'] = 'Masters';
-      $higherqualificationname['40'] = 'Ph.D.';
-      $higherqualificationname['50'] = 'Other';
-    $message .= "Postgraduate Qualification: " . $higherqualificationname[$discussionfeedback->higherqualification] . "\n\n";
+    $userrecord = $DB->get_record('user', array('id' => $discussionfeedback->userid));
 
-    $message .= "Current Employment Details:\n" . htmlspecialchars_decode($discussionfeedback->currentjob, ENT_COMPAT) . "\n\n";
-    $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($discussionfeedback->education, ENT_COMPAT) . "\n\n";
-    $message .= "Scholarship:\n" . htmlspecialchars_decode($discussionfeedback->scholarship, ENT_COMPAT) . "\n\n";
-    $message .= "Why Not Completed Previous Semester:\n" . htmlspecialchars_decode($discussionfeedback->whynotcomplete, ENT_COMPAT) . "\n";
+    $message = "Dear $userrecord->firstname\n\n";
 
-    sendapprovedmail($discussionfeedback->email, "Peoples-uni $returning_in_title Application Form Submission From: $discussionfeedback->lastname, $discussionfeedback->firstname", $message);
-    sendapprovedmail('apply@peoples-uni.org', "Peoples-uni $returning_in_title Application Form Submission From: $discussionfeedback->lastname, $discussionfeedback->firstname", $message);
+    $message .= $peoples_discussion_feedback_email;
+    $message .= "\n\n";
 
+    $assessmentname['10'] = 'Yes';
+    $assessmentname['20'] = 'No';
+    $assessmentname['30'] = 'Could be improved';
+    $message .= "Referred to resources in the topics: $assessmentname[$discussionfeedback->refered_to_resources]\n\n";
+    $message .= "Included critical approach to information: $assessmentname[$discussionfeedback->critical_approach]\n\n";
+    $message .= "Provided references in an appropriate format: $assessmentname[$discussionfeedback->provided_references]\n\n";
+
+    if (!empty($discussionfeedback->assessment_text) $message .= $discussionfeedback->assessment_text . "\n\n";
+
+    $message .= "    Peoples Open Access Education Initiative Administrator.\n";
+
+    $course = $DB->get_record('discussionfeedback', array('course_id' => $_SESSION['peoples_course_id_for_discussion_feedback'], 'userid' => $data->student_id));
+
+    sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname", $message);
   }
 
   //redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
@@ -151,7 +121,7 @@ function sendapprovedmail($email, $subject, $message) {
   $user->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
-  $supportuser->email = 'apply@peoples-uni.org';
+  $supportuser->email = 'education@helpdesk.peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
   $supportuser->maildisplay = true;
