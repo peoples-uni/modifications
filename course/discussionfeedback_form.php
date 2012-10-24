@@ -41,7 +41,8 @@ class discussionfeedback_form extends moodleform {
 
 
     if (empty($_SESSION['peoples_course_id_for_discussion_feedback'])) {
-      $courses = $DB->get_records('course', NULL, 'fullname ASC');
+      $courses = $DB->get_records_sql("SELECT DISTINCT c.id, c.fullname FROM mdl_course c, mdl_enrolment e WHERE c.id=e.courseid ORDER BY c.fullname ASC"));
+
       $listformodules = array();
       $listformodules[''] = 'Select...';
       foreach ($courses as $course) {
@@ -54,13 +55,19 @@ class discussionfeedback_form extends moodleform {
     }
     else {
       $enrols = $DB->get_records_sql("
-        SELECT u.* FROM mdl_user u, mdl_enrolment e WHERE u.id=e.userid AND e.enrolled=1 AND e.courseid=? ORDER BY CONCAT(u.firstname, u.lastname)",
+        SELECT DISTINCT u.*, d.id IS NOT NULL AS already_submitted
+        FROM mdl_user u
+        INNER JOIN mdl_enrolment e ON u.id=e.userid
+        LEFT JOIN mdl_discussionfeedback d ON e.userid=d.userid AND e.courseid=d.course_id
+        WHERE e.enrolled=1 AND e.courseid=?
+        ORDER BY CONCAT(u.firstname, u.lastname)",
         array($_SESSION['peoples_course_id_for_discussion_feedback']));
 
       $listforstudents = array();
       $listforstudents[''] = 'Select...';
       foreach ($enrols as $student) {
         $listforstudents[$student->id] = fullname($student);
+        if ($student->already_submitted) $listforstudents[$student->id] .= '(Already Submitted)';
       }
       $mform->addElement('select', 'student_id', 'Module', $listforstudents);
       $mform->addRule('student_id', 'Student is required', 'required', null, 'client');
