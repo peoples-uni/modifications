@@ -77,6 +77,7 @@ class discussionfeedback_form extends moodleform {
       <p>The data submitted will also be kept for later analysis in <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a></p>
       ');
 
+    $mform->addElement('header', 'assessment_header', 'Assessment');
 
     $enrols = $DB->get_records_sql("
       SELECT DISTINCT u.*, d.id IS NOT NULL AS already_submitted
@@ -93,12 +94,9 @@ class discussionfeedback_form extends moodleform {
       $listforstudents[$student->id] = fullname($student);
       if ($student->already_submitted) $listforstudents[$student->id] .= '(Already Submitted)';
     }
-    $mform->addElement('select', 'student_id', 'Module', $listforstudents);
+    $mform->addElement('select', 'student_id', 'Student', $listforstudents);
     $mform->addRule('student_id', 'Student is required', 'required', null, 'client');
     $mform->addElement('static', 'explain_student_id', '&nbsp;', 'Student for which contributions to discussions will be assessed.<br />');
-
-
-    $mform->addElement('header', 'assessment_header', 'Assessment');
 
     // Referred to resources in the topics
     $assessmentname[  ''] = 'Select...';

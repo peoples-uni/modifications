@@ -51,7 +51,7 @@ if (empty($_SESSION['peoples_course_id_for_discussion_feedback'])) { // Form req
       $_SESSION['peoples_course_id_for_discussion_feedback'] = $data->course_id;
     }
 
-    redirect(new moodle_url($CFG->wwwroot . '/course/discussionfeedback.php'));
+    //redirect(new moodle_url($CFG->wwwroot . '/course/discussionfeedback.php'));
   }
 }
 else { // We already know the module... need Form to to collect criteria for a Student in given Module
@@ -114,8 +114,7 @@ else { // We already know the module... need Form to to collect criteria for a S
 
     sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname", $peoples_discussion_feedback_email);
 
-
-    //redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
+    //redirect(new moodle_url($CFG->wwwroot . '/course/discussionfeedback.php'));
   }
 }
 
