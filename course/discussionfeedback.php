@@ -106,8 +106,8 @@ else { // We already know the module... need Form to to collect criteria for a S
     $provided_references = $discussionfeedback->provided_references;
     $criteria  = "Referred to resources in the topics: $assessmentname[$refered_to_resources]\n\n";
     $criteria .= "Included critical approach to information: $assessmentname[$critical_approach]\n\n";
-    $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n\n";
-    if (!empty($discussionfeedback->assessment_text)) $criteria .= $discussionfeedback->assessment_text . "\n\n";
+    $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n";
+    if (!empty($discussionfeedback->assessment_text)) $criteria .= "\n" . $discussionfeedback->assessment_text . "\n";
     $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
 
     $course = $DB->get_record('discussionfeedback', array('course_id' => $_SESSION['peoples_course_id_for_discussion_feedback'], 'userid' => $data->student_id));
@@ -146,8 +146,7 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->lastname = '';
   $supportuser->maildisplay = true;
 
-$subject .= '('.$user->email.')';
-// COMMENT NEXT LINE, DEL ABOVE
+// COMMENT NEXT LINE!!!!!!!!!!!!!!!!!!!!!!!!!!
   $user->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($user, $supportuser, $subject, $message);
 
