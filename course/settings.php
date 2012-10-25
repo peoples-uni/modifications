@@ -243,7 +243,7 @@ echo '</table>';
 <form id="addsemesterform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markaddsemester" value="1" />
-<input type="submit" name="addsemester" value="Set Current Semester to:" style="width:45em" />
+<input type="submit" name="addsemester" value="Set Current Semester to:" style="width:50em" />
 <input type="text" size="40" name="semester" value="<?php echo htmlspecialchars($latest_semester, ENT_COMPAT, 'UTF-8'); ?>" />
 </form>
 <br />
@@ -270,7 +270,7 @@ for ($year = (int)gmdate('Y'); $year <= 2031; $year++) $yearname[$year] = $year;
 <form id="setlastdateform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetlastdate" value="1" />
-<input type="submit" name="setlastdate" value="Set Last Allowed Date (display only, not enforced) for Applications to:" style="width:45em" /><br />
+<input type="submit" name="setlastdate" value="Set Last Allowed Date (display only, not enforced) for Applications to:" style="width:50em" /><br />
 
 <select name="lastdateyear">
 <?php
@@ -329,7 +329,7 @@ if (!$closed) {
 <form id="closesemesterform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markclosesemester" value="1" />
-<input type="submit" name="closesemester" value="Mark All Modules as Full (Applicants will be sent to Registration Form)" style="width:45em" />
+<input type="submit" name="closesemester" value="Mark All Modules as Full (Applicants will be sent to Registration Form)" style="width:50em" />
 </form>
 <br />
 <?php
@@ -372,14 +372,14 @@ foreach ($activemodules as $activemodule) {
 echo '</table>';
 ?>
 <input type="hidden" name="markupdatemodules" value="1" />
-<input type="submit" name="updatemodules" value="Mark Modules as Full or to be Removed based on Check Boxes Above" style="width:45em" />
+<input type="submit" name="updatemodules" value="Mark Modules as Full or to be Removed based on Check Boxes Above" style="width:50em" />
 </form>
 <br />
 
 <form id="addnewmoduleform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markaddnewmodule" value="1" />
-<input type="submit" name="addnewmodule" value="Add this Module to Above Active Module list for Applications:" style="width:45em" />
+<input type="submit" name="addnewmodule" value="Add this Module to Above Active Module list for Applications:" style="width:50em" />
 <select name="moduletoadd">
 <?php
 foreach ($courses as $course) {
@@ -450,7 +450,7 @@ foreach ($idnumbers as $idnumber) {
 <form id="addfoundationform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markaddfoundation" value="1" />
-<input type="submit" name="addfoundation" value="Add a New Foundation Sciences Course Code (DO NOT INCLUDE YEAR etc.):" style="width:45em" />
+<input type="submit" name="addfoundation" value="Add a New Foundation Sciences Course Code (DO NOT INCLUDE YEAR etc.):" style="width:50em" />
 <input type="text" size="40" name="foundation" value="" />
 </form>
 <br />
@@ -458,7 +458,7 @@ foreach ($idnumbers as $idnumber) {
 <form id="addproblemsform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markaddproblems" value="1" />
-<input type="submit" name="addproblems" value="Add a New Public Health Problems Course Code (DO NOT INCLUDE YEAR etc.):" style="width:45em" />
+<input type="submit" name="addproblems" value="Add a New Public Health Problems Course Code (DO NOT INCLUDE YEAR etc.):" style="width:50em" />
 <input type="text" size="40" name="problems" value="" />
 </form>
 <br />
@@ -474,7 +474,7 @@ foreach ($idnumbers as $idnumber) {
 <form id="setstudentscornerform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetstudentscorner" value="1" />
-<input type="submit" name="setstudentscorner" value="Make this Module the Students Corner for future enrolments:" style="width:45em" />
+<input type="submit" name="setstudentscorner" value="Make this Module the Students Corner for future enrolments:" style="width:50em" />
 <select name="studentscorner">
 <?php
 foreach ($courses as $course) {
@@ -492,7 +492,7 @@ foreach ($courses as $course) {
 <form id="setfphform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetfph" value="1" />
-<input type="submit" name="setfph" value="Make this Module the Foundations of Public Health Module for new Student Registrants:" style="width:45em" />
+<input type="submit" name="setfph" value="Make this Module the Foundations of Public Health Module for new Student Registrants:" style="width:50em" />
 <select name="fph">
 <?php
 foreach ($courses as $course) {
@@ -514,7 +514,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_register_email" value="1" />
-<input type="submit" name="set_register_email" value="Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)" style="width:45em" />
+<input type="submit" name="set_register_email" value="Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)" style="width:50em" />
 </form>
 <br />
 
@@ -524,7 +524,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_registration_email" value="1" />
-<input type="submit" name="set_batch_registration_email" value="Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)" style="width:45em" />
+<input type="submit" name="set_batch_registration_email" value="Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)" style="width:50em" />
 </form>
 <br />
 
@@ -535,7 +535,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_email" value="1" />
-<input type="submit" name="set_approval_email" value="Set the above text as the New Students Approval e-mail wording (in Application Details/app.php)" style="width:45em" />
+<input type="submit" name="set_approval_email" value="Set the above text as the New Students Approval e-mail wording (in Application Details/app.php)" style="width:50em" />
 </form>
 <br />
 
@@ -545,7 +545,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_bursary_email" value="1" />
-<input type="submit" name="set_approval_bursary_email" value="Set the above text as the New Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
+<input type="submit" name="set_approval_bursary_email" value="Set the above text as the New Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:50em" />
 </form>
 <br />
 <?php } ?>
@@ -556,7 +556,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_old_students_email" value="1" />
-<input type="submit" name="set_approval_old_students_email" value="Set the above text as the Students Approval e-mail wording (in Application Details/app.php)" style="width:45em" />
+<input type="submit" name="set_approval_old_students_email" value="Set the above text as the Students Approval e-mail wording (in Application Details/app.php)" style="width:50em" />
 </form>
 <br />
 
@@ -566,7 +566,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_old_students_bursary_email" value="1" />
-<input type="submit" name="set_approval_old_students_bursary_email" value="Set the above text as the Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
+<input type="submit" name="set_approval_old_students_bursary_email" value="Set the above text as the Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:50em" />
 </form>
 <br />
 
@@ -577,7 +577,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_email" value="1" />
-<input type="submit" name="set_approval_email" value="Set the above text as the MPH Students Approval e-mail wording (in Application Details/app.php)" style="width:45em" />
+<input type="submit" name="set_approval_email" value="Set the above text as the MPH Students Approval e-mail wording (in Application Details/app.php)" style="width:50em" />
 </form>
 <br />
 
@@ -587,7 +587,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_bursary_email" value="1" />
-<input type="submit" name="set_approval_bursary_email" value="Set the above text as the MPH Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:45em" />
+<input type="submit" name="set_approval_bursary_email" value="Set the above text as the MPH Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:50em" />
 </form>
 <br />
 <?php } ?>
@@ -598,7 +598,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_reminder_email" value="1" />
-<input type="submit" name="set_batch_reminder_email" value="Set above text as Batch Reminder e-mail wording (in applications.php spreadsheet)" style="width:45em" />
+<input type="submit" name="set_batch_reminder_email" value="Set above text as Batch Reminder e-mail wording (in applications.php spreadsheet)" style="width:50em" />
 </form>
 <br />
 
@@ -608,7 +608,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_email_to_enrolled" value="1" />
-<input type="submit" name="set_batch_email_to_enrolled" value="Set above text as wording for the Batch e-mail to enrolled students (in coursegrades.php)" style="width:45em" />
+<input type="submit" name="set_batch_email_to_enrolled" value="Set above text as wording for the Batch e-mail to enrolled students (in coursegrades.php)" style="width:50em" />
 </form>
 <br />
 
@@ -619,7 +619,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_interest_email" value="1" />
-<input type="submit" name="set_interest_email" value="Set above text as Reply e-mail wording for Expressions of Interest (in int.php)" style="width:45em" />
+<input type="submit" name="set_interest_email" value="Set above text as Reply e-mail wording for Expressions of Interest (in int.php)" style="width:50em" />
 </form>
 <br />
 <?php } ?>
@@ -630,7 +630,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_email_to_enrolled_missing" value="1" />
-<input type="submit" name="set_batch_email_to_enrolled_missing" value="Set above text as wording for the Batch e-mail to Not Logged on students (in coursegrades.php)" style="width:45em" />
+<input type="submit" name="set_batch_email_to_enrolled_missing" value="Set above text as wording for the Batch e-mail to Not Logged on students (in coursegrades.php)" style="width:50em" />
 </form>
 <br />
 
@@ -640,7 +640,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_discussion_feedback_email" value="1" />
-<input type="submit" name="set_discussion_feedback_email" value="Set above text for e-mail sent to students on submission of Discussion Feedback (discussionfeedback.php)" style="width:45em" />
+<input type="submit" name="set_discussion_feedback_email" value="Set above text for e-mail sent to students on submission of Discussion Feedback (discussionfeedback.php)" style="width:50em" />
 </form>
 <br />
 
