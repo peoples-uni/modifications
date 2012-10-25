@@ -101,7 +101,7 @@ elseif ($data = $editform->get_data()) {
     $criteria  = "Referred to resources in the topics: $assessmentname[$refered_to_resources]\n\n";
     $criteria .= "Included critical approach to information: $assessmentname[$critical_approach]\n\n";
     $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n\n";
-    if (!empty($discussionfeedback->assessment_text) $criteria .= $discussionfeedback->assessment_text . "\n\n";
+    if (!empty($discussionfeedback->assessment_text)) $criteria .= $discussionfeedback->assessment_text . "\n\n";
     $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
 
     $course = $DB->get_record('discussionfeedback', array('course_id' => $_SESSION['peoples_course_id_for_discussion_feedback'], 'userid' => $data->student_id));
