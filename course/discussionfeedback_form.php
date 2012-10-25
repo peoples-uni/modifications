@@ -92,7 +92,7 @@ class discussionfeedback_form extends moodleform {
     $listforstudents[''] = 'Select...';
     foreach ($enrols as $student) {
       $listforstudents[$student->id] = fullname($student);
-      if ($student->already_submitted) $listforstudents[$student->id] .= '(Already Submitted)';
+      if ($student->already_submitted) $listforstudents[$student->id] .= ' (Already Submitted)';
     }
     $mform->addElement('select', 'student_id', 'Student', $listforstudents);
     $mform->addRule('student_id', 'Student is required', 'required', null, 'client');
