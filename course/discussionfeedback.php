@@ -110,7 +110,7 @@ else { // We already know the module... need Form to to collect criteria for a S
     if (!empty($discussionfeedback->assessment_text)) $criteria .= "\n" . $discussionfeedback->assessment_text . "\n";
     $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
 
-    $course = $DB->get_record('discussionfeedback', array('course_id' => $_SESSION['peoples_course_id_for_discussion_feedback'], 'userid' => $data->student_id));
+    $course = $DB->get_record('course', array('id' => $_SESSION['peoples_course_id_for_discussion_feedback']));
     $student_name = fullname($userrecord);
     sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname ($student_name)", $peoples_discussion_feedback_email);
 
