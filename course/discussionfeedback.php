@@ -95,9 +95,12 @@ elseif ($data = $editform->get_data()) {
     $assessmentname['10'] = 'Yes';
     $assessmentname['20'] = 'No';
     $assessmentname['30'] = 'Could be improved';
-    $criteria  = "Referred to resources in the topics: $assessmentname[$discussionfeedback->refered_to_resources]\n\n";
-    $criteria .= "Included critical approach to information: $assessmentname[$discussionfeedback->critical_approach]\n\n";
-    $criteria .= "Provided references in an appropriate format: $assessmentname[$discussionfeedback->provided_references]\n\n";
+    $refered_to_resources = $discussionfeedback->refered_to_resources;
+    $critical_approach = $discussionfeedback->critical_approach;
+    $provided_references = $discussionfeedback->provided_references;
+    $criteria  = "Referred to resources in the topics: $assessmentname[$refered_to_resources]\n\n";
+    $criteria .= "Included critical approach to information: $assessmentname[$critical_approach]\n\n";
+    $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n\n";
     if (!empty($discussionfeedback->assessment_text) $criteria .= $discussionfeedback->assessment_text . "\n\n";
     $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
 
