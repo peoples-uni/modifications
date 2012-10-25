@@ -41,7 +41,7 @@ class discussionfeedback_form extends moodleform {
 
 
     if (empty($_SESSION['peoples_course_id_for_discussion_feedback'])) {
-      $courses = $DB->get_records_sql("SELECT DISTINCT c.id, c.fullname FROM mdl_course c, mdl_enrolment e WHERE c.id=e.courseid ORDER BY c.fullname ASC"));
+      $courses = $DB->get_records_sql("SELECT DISTINCT c.id, c.fullname FROM mdl_course c, mdl_enrolment e WHERE c.id=e.courseid ORDER BY c.fullname ASC");
 
       $listformodules = array();
       $listformodules[''] = 'Select...';
