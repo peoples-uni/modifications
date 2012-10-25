@@ -23,7 +23,7 @@ class discussionfeedback_form extends moodleform {
       $course = $DB->get_record('course', array('id' => $_SESSION['peoples_course_id_for_discussion_feedback']));
 
       $course_text = '<p><strong>The Module being assessed is: ' . htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8') . '<br />
-        To change to a different one <a href="http://courses.peoples-uni.org/course/discussionfeedback_reset.php">Click Here to allow re-selection</a></p></strong><br /><br /><br />';
+        To change to a different one <a href="http://courses.peoples-uni.org/course/discussionfeedback_reset.php">Click Here to allow re-selection</a></p></strong><br />';
     }
     else {
       $course_text = '';
