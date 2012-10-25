@@ -120,7 +120,9 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->lastname = '';
   $supportuser->maildisplay = true;
 
-  //$user->email = 'alanabarrett0@gmail.com';
+$subject .= '('.$user->email.')';
+// COMMENT NEXT LINE, DEL ABOVE
+  $user->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($user, $supportuser, $subject, $message);
 
   //$user->email = 'applicationresponses@peoples-uni.org';
