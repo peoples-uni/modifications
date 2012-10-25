@@ -4,6 +4,24 @@
  * Discussion Feedback Form (to send e-mail to student and records data also)
  */
 
+/*
+CREATE TABLE mdl_discussionfeedback (
+  id BIGINT(10) unsigned NOT NULL auto_increment,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  course_id BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  user_id_submitted BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  refered_to_resources BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  critical_approach BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  provided_references BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  assessment_text TEXT NOT NULL,
+CONSTRAINT  PRIMARY KEY (id)
+);
+CREATE INDEX mdl_discussionfeedback_uid_ix ON mdl_discussionfeedback (userid);
+CREATE INDEX mdl_discussionfeedback_cid_ix ON mdl_discussionfeedback (course_id);
+*/
+
+
 require_once('../config.php');
 require_once('discussionfeedback_form.php');
 
