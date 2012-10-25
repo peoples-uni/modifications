@@ -640,7 +640,7 @@ foreach ($courses as $course) {
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_discussion_feedback_email" value="1" />
-<input type="submit" name="set_discussion_feedback_email" value="Set above text as wording for e-mail sent to students when Discussion Feedback form is submitted (in discussionfeedback.php)" style="width:45em" />
+<input type="submit" name="set_discussion_feedback_email" value="Set above text for e-mail sent to students on submission of Discussion Feedback (discussionfeedback.php)" style="width:45em" />
 </form>
 <br />
 
