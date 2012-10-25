@@ -39,21 +39,27 @@ if (!$isteacher && !$islurker) {
   notice('<br /><br /><b>You must be a Tutor to do this! Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
 }
 
-
-$editform = new discussionfeedback_form(NULL, array('customdata' => array()));
-if ($editform->is_cancelled()) {
-  redirect(new moodle_url('http://peoples-uni.org'));
-}
-elseif ($data = $editform->get_data()) {
-
-  if (empty($_SESSION['peoples_course_id_for_discussion_feedback'])) {
+if (empty($_SESSION['peoples_course_id_for_discussion_feedback'])) { // Form required to select Module
+  $editform = new discussionfeedback_module_selection_form(NULL, array('customdata' => array()));
+  if ($editform->is_cancelled()) {
+    redirect(new moodle_url('http://peoples-uni.org'));
+  }
+  elseif ($data = $editform->get_data()) {
 
     $dataitem = $data->course_id;
     if (!empty($dataitem) && is_numeric($dataitem)) {
       $_SESSION['peoples_course_id_for_discussion_feedback'] = $data->course_id;
     }
+
+    //redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
   }
-  else {
+}
+else { // We already know the module... need Form to to collect criteria for a Student in given Module
+  $editform = new discussionfeedback_form(NULL, array('customdata' => array()));
+  if ($editform->is_cancelled()) {
+    redirect(new moodle_url('http://peoples-uni.org'));
+  }
+  elseif ($data = $editform->get_data()) {
 
     $discussionfeedback = $DB->get_record('discussionfeedback', array('course_id' => $_SESSION['peoples_course_id_for_discussion_feedback'], 'userid' => $data->student_id));
 
@@ -107,11 +113,11 @@ elseif ($data = $editform->get_data()) {
     $course = $DB->get_record('discussionfeedback', array('course_id' => $_SESSION['peoples_course_id_for_discussion_feedback'], 'userid' => $data->student_id));
 
     sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname", $peoples_discussion_feedback_email);
+
+
+    //redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
   }
-
-  //redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
 }
-
 
 // Print the form
 
