@@ -72,26 +72,20 @@ elseif ($data = $editform->get_data()) {
     $peoples_discussion_feedback_email = str_replace("\r", '', $peoples_discussion_feedback_email);
 
     $userrecord = $DB->get_record('user', array('id' => $discussionfeedback->userid));
-
-    $message = "Dear $userrecord->firstname\n\n";
-
-    $message .= $peoples_discussion_feedback_email;
-    $message .= "\n\n";
+    $peoples_discussion_feedback_email = str_replace('GIVEN_NAME_HERE', $userrecord->firstname, $peoples_discussion_feedback_email);
 
     $assessmentname['10'] = 'Yes';
     $assessmentname['20'] = 'No';
     $assessmentname['30'] = 'Could be improved';
-    $message .= "Referred to resources in the topics: $assessmentname[$discussionfeedback->refered_to_resources]\n\n";
-    $message .= "Included critical approach to information: $assessmentname[$discussionfeedback->critical_approach]\n\n";
-    $message .= "Provided references in an appropriate format: $assessmentname[$discussionfeedback->provided_references]\n\n";
-
-    if (!empty($discussionfeedback->assessment_text) $message .= $discussionfeedback->assessment_text . "\n\n";
-
-    $message .= "    Peoples Open Access Education Initiative Administrator.\n";
+    $criteria  = "Referred to resources in the topics: $assessmentname[$discussionfeedback->refered_to_resources]\n\n";
+    $criteria .= "Included critical approach to information: $assessmentname[$discussionfeedback->critical_approach]\n\n";
+    $criteria .= "Provided references in an appropriate format: $assessmentname[$discussionfeedback->provided_references]\n\n";
+    if (!empty($discussionfeedback->assessment_text) $criteria .= $discussionfeedback->assessment_text . "\n\n";
+    $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
 
     $course = $DB->get_record('discussionfeedback', array('course_id' => $_SESSION['peoples_course_id_for_discussion_feedback'], 'userid' => $data->student_id));
 
-    sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname", $message);
+    sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname", $peoples_discussion_feedback_email);
   }
 
   //redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));

@@ -229,3 +229,67 @@ You can login at http://courses.peoples-uni.org/login/index.php
 ====================================================================================
 Set above text as wording for Batch e-mail to Not Loggen on students (in coursegrades.php)
 ====================================================================================
+
+
+====================================================================================
+Dear GIVEN_NAME_HERE,
+
+This is to provide feedback to you about your contributions to the
+discussion forums in each of the Topics in the module.
+As you will know from the section in the Student Handbook
+http://peoples-uni.org/content/discussion-contributions
+contributions to the discussion forums should “show reflection
+and critical thought, and understanding of relevant literature.
+You should include reference to your own experience,
+to the resources in the module, and give a reference to a
+published paper or web site”. This is not only to help with your
+learning, but also “help prepare for the assignment –
+the unit assignment requires you to answer questions relating to the
+information presented as relevant to the learning objectives,
+as well as to take a critical approach to the information and to
+support your answer with references”.
+*Please note: as in the assignments, it is important that you
+acknowledge any items you use in the discussions which are taken
+from the work of others. If you copy and paste from another source,
+you must acknowledge the source and reference it*.
+*It is always better to use your own words anyway!*
+
+I have had a look at your discussion contributions, and here are my
+comments on whether you meet the following Criteria...
+
+DISCUSSION_CRITERIA_HERE
+
+There are some helpful resources on how to carry out referencing in
+the Student Handbook and also in the Student Corner - such as the
+tutorial from Monash University:
+http://www.lib.monash.edu.au/tutorials/citing/index.html
+We usually recommend using the Harvard system of referencing, and here
+is the link to a tutorial on this from Nottingham University -
+Referencing your work with Harvard:
+http://equella.nottingham.ac.uk/uon/items/9ba73656-1729-2453-d9eb-6fd932a12753/1/ViewIMS.jsp
+However, the Vancouver style is also frequently used in the medical
+scientific literature. There is information on critical thinking in
+the Student Corner "How can I develop my Critical Thinking skills?":
+http://courses.peoples-uni.org/mod/page/view.php?id=6919&inpopup=1
+
+We will be sending information on the number of posts you have made to
+the discussions in comparison with others on your module at a later
+stage.
+
+The discussion forums do remain open, even after the end of the time
+period for each Topic, so you can post something to them late if you
+have been away.
+
+Please note that contributions to the Student Corner do not count
+for credit – the Student Corner is for discussions amongst the
+students on common problems and interests (there have been some very
+interesting issues discussed so far so please keep this up if you find
+it useful, but do not forget to keep to the spirit of the Peoples-uni
+in the need for evidence rather than just opinion!).
+
+Best wishes.
+
+    Education Coordinator.
+====================================================================================
+Set above text as wording for the e-mail sent to students when Discussion Feedback form is submitted (in discussionfeedback.php)
+====================================================================================

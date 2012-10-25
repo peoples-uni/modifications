@@ -217,6 +217,11 @@ if (!empty($_POST['mark_batch_email_to_enrolled_missing']) && !empty($_POST['val
   $value_batch_email_to_enrolled_missing = $_POST['value_batch_email_to_enrolled_missing'];
   set_config('peoples_batch_email_to_enrolled_missing', $value_batch_email_to_enrolled_missing);
 }
+if (!empty($_POST['mark_discussion_feedback_email']) && !empty($_POST['value_discussion_feedback_email'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $value_discussion_feedback_email = $_POST['value_discussion_feedback_email'];
+  set_config('peoples_discussion_feedback_email', $value_discussion_feedback_email);
+}
 
 
 $semesters = $DB->get_records('semesters', NULL, 'id ASC');
@@ -626,6 +631,16 @@ foreach ($courses as $course) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_email_to_enrolled_missing" value="1" />
 <input type="submit" name="set_batch_email_to_enrolled_missing" value="Set above text as wording for the Batch e-mail to Not Logged on students (in coursegrades.php)" style="width:45em" />
+</form>
+<br />
+
+<form id="discussion_feedback_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<textarea name="value_discussion_feedback_email" rows="15" cols="75" wrap="hard">
+<?php echo htmlspecialchars(get_config(NULL, 'peoples_discussion_feedback_email'), ENT_COMPAT, 'UTF-8'); ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_discussion_feedback_email" value="1" />
+<input type="submit" name="set_discussion_feedback_email" value="Set above text as wording for the e-mail sent to students when Discussion Feedback form is submitted (in discussionfeedback.php)" style="width:45em" />
 </form>
 <br />
 
