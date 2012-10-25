@@ -51,7 +51,7 @@ if (empty($_SESSION['peoples_course_id_for_discussion_feedback'])) { // Form req
       $_SESSION['peoples_course_id_for_discussion_feedback'] = $data->course_id;
     }
 
-    //redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
+    redirect(new moodle_url($CFG->wwwroot . '/course/discussionfeedback.php'));
   }
 }
 else { // We already know the module... need Form to to collect criteria for a Student in given Module
