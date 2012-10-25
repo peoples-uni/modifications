@@ -110,6 +110,9 @@ else { // We already know the module... need Form to to collect criteria for a S
     if (!empty($discussionfeedback->assessment_text)) $criteria .= "\n" . $discussionfeedback->assessment_text . "\n";
     $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
 
+    $peoples_discussion_feedback_email = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $peoples_discussion_feedback_email); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
+                                                                                                                               // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+
     $course = $DB->get_record('course', array('id' => $_SESSION['peoples_course_id_for_discussion_feedback']));
     $student_name = fullname($userrecord);
     sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname ($student_name)", $peoples_discussion_feedback_email);
