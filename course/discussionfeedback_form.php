@@ -125,8 +125,9 @@ class discussionfeedback_form extends moodleform {
     $mform->addRule('provided_references', 'Provided references in an appropriate format is required', 'required', null, 'client');
     $mform->addElement('static', 'explainprovided_references', '&nbsp;', 'Did the student provide references in an appropriate format?<br />');
 
-    $mform->addElement('static', 'explainassessment_text', '&nbsp;', 'Add any free text you wish to be added to the assessment<br />');
-    $mform->addElement('textarea', 'assessment_text', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
+    //$mform->addElement('static', 'explainassessment_text', '&nbsp;', 'Add any free text you wish to be added to the assessment<br />');
+    //$mform->addElement('textarea', 'assessment_text', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'assessment_text', 'Add any free text you wish to be added to the assessment', 'wrap="HARD" rows="10" cols="100"');
 
     $this->add_action_buttons(false, 'Submit Form');
   }
