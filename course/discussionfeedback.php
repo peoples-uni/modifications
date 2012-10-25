@@ -114,7 +114,7 @@ else { // We already know the module... need Form to to collect criteria for a S
 
     sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname", $peoples_discussion_feedback_email);
 
-    //redirect(new moodle_url($CFG->wwwroot . '/course/discussionfeedback.php'));
+    redirect(new moodle_url($CFG->wwwroot . '/course/discussionfeedback.php'));
   }
 }
 
