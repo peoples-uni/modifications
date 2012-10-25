@@ -1171,7 +1171,7 @@ It will be possible to see on the page who has specified the instalment schedule
 <h2>Sending Discussion Feedback to Students</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/discussionfeedback.php">http://courses.peoples-uni.org/course/discussionfeedback.php</a> is a form used by Education Coordinators to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="http://peoples-uni.org/content/discussion-contributions">Student Handbook: Discussion contributions</a>
+<a href="http://courses.peoples-uni.org/course/discussionfeedback.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedback.php</a> is a form used by Education Coordinators to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a>
 </li>
 <li>
 The Education Coordinator will need to specify the module (submit the form) and then select individual students (submitting the form again for each student) to give feedback. As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria.
@@ -1183,10 +1183,17 @@ It is indicated in the form whether the form has already been submitted for each
 The is a link close to the top of the form to allow resetting the module when/if is desired to move to a new module for feedback to students in that module.
 </li>
 <li>
-The data (criteria and free form text) are stored for later analysis and displayed in <a //href="http://courses.peoples-uni.org/course/discussionfeedbacks.php">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>
+The data (criteria and free form text) are stored for later analysis and displayed in <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>
+</li>
+Filters can be used to limit what is displayed on that page.
 </li>
 <li>
-The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php">http://courses.peoples-uni.org/course/settings.php</a>
+There is also a link back to the <a href="http://courses.peoples-uni.org/course/discussionfeedback.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedback.php</a> form on that page.
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> also contains a link to that page.
+<li>
+The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>
 </li>
 </ol>
 

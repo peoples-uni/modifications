@@ -31,12 +31,12 @@ class discussionfeedback_form extends moodleform {
 
     $mform->addElement('static', 'instuctions', '',
       '<p>This form is used to provide feedback to Students about their contributions to the discussion forums in each of the Topics in a module.</p>
-      <p>Guidelines for student contribution are in <a href="http://peoples-uni.org/content/discussion-contributions">Student Handbook: Discussion contributions</a></p>
+      <p>Guidelines for student contribution are in <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a></p>
       <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
       <p><strong>Note: The first time you use this form for a new module you must select the correct module (be sure to pick the one for the correct semester) and Click Submit in order to get the correct list of Students.</strong></p>
       ' . $course_text . '
-      <p>When submitted for a specific student, the student will be sent an e-mail (the wording for which is specified in <a href="http://courses.peoples-uni.org/course/settings.php">http://courses.peoples-uni.org/course/settings.php</a></p>
-      <p>The data submitted will also be kept for later analysis in <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a></p>
+      <p>When submitted for a specific student, the student will be sent an e-mail (the wording for which is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a></p>
+      <p>The data submitted will also be kept for later analysis in <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a></p>
       ');
 
 
