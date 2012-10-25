@@ -83,7 +83,10 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a><br /><br />
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a><br />
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a><br /><br />
 </li>
 </b>
 </ul>
@@ -1160,6 +1163,30 @@ Elsewhere in the software when payment is being asked for, the amount being aske
 </li>
 <li>
 It will be possible to see on the page who has specified the instalment schedule (student or staff member).
+</li>
+</ol>
+
+
+<a name="sendingdiscussion"></a>
+<h2>Sending Discussion Feedback to Students</h2>
+<ol>
+<li>
+<a href="http://courses.peoples-uni.org/course/discussionfeedback.php">http://courses.peoples-uni.org/course/discussionfeedback.php</a> is a form used by Education Coordinators to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="http://peoples-uni.org/content/discussion-contributions">Student Handbook: Discussion contributions</a>
+</li>
+<li>
+The Education Coordinator will need to specify the module (submit the form) and then select individual students (submitting the form again for each student) to give feedback. As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria.
+</li>
+<li>
+It is indicated in the form whether the form has already been submitted for each student, but it is possible to re-submit and e-mail again and overwrite the recorded submission.
+</li>
+<li>
+The is a link close to the top of the form to allow resetting the module when/if is desired to move to a new module for feedback to students in that module.
+</li>
+<li>
+The data (criteria and free form text) are stored for later analysis and displayed in <a //href="http://courses.peoples-uni.org/course/discussionfeedbacks.php">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>
+</li>
+<li>
+The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php">http://courses.peoples-uni.org/course/settings.php</a>
 </li>
 </ol>
 
