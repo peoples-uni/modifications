@@ -267,6 +267,7 @@ We usually recommend using the Harvard system of referencing, and
 here is the link to a tutorial on this from Nottingham University -
 Referencing your work with Harvard:
 http://equella.nottingham.ac.uk/uon/items/9ba73656-1729-2453-d9eb-6fd932a12753/1/ViewIMS.jsp
+(Note you might have to refresh that page to get it to display properly)
 However, the Vancouver style is also frequently used in the medical
 scientific literature. There is information on critical thinking in
 the Student Corner "How can I develop my Critical Thinking skills?":
