@@ -1124,7 +1124,12 @@ foreach ($applications as $sid => $application) {
 
   $application->userid = (int)$application->userid;
 
-  $registration = $registrations[$application->userid];
+  if (empty($registrations[$application->userid])) {
+    $registration = NULL;
+  }
+  else {
+    $registration = $registrations[$application->userid];
+  }
   if (empty($application->userid) || empty($registration)) {
     $registration->whatlearn = '';
     $registration->whylearn = '';
