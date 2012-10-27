@@ -29,7 +29,7 @@ $missingfromtutors = $DB->get_records_sql("
 		(SELECT userid
 			FROM mdl_role_assignments
 			WHERE
-        (roleid=3 OR roleid=17 OR roleid=30) AND
+        (roleid=3 OR roleid=17 OR roleid=38) AND
 				contextid IN (
 					SELECT id FROM mdl_context WHERE contextlevel=50 AND instanceid IN
 						(SELECT c.id FROM mdl_activemodules AS a, mdl_course AS c WHERE a.fullname=c.fullname)
@@ -68,7 +68,7 @@ $missingfromtutors = $DB->get_records_sql("
 		(SELECT userid
 			FROM mdl_role_assignments
 			WHERE
-        (roleid=3 OR roleid=17 OR roleid=30) AND
+        (roleid=3 OR roleid=17 OR roleid=38) AND
 				contextid IN (
 					SELECT id FROM mdl_context WHERE contextlevel=50 AND instanceid IN
 						(SELECT c.id FROM mdl_activemodules AS a, mdl_course AS c WHERE a.fullname=c.fullname)
