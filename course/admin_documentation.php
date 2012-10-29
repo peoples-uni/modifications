@@ -903,7 +903,7 @@ There is yet another filter called "Don't Show Number of Posts" which just shows
 <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
 </li>
 <li>
-Access to posts.php is available to any tutor or admin.
+Access to posts.php is available to any tutor, education coordinator or admin.
 </li>
 <li>
 To view posts made by Tutors to discussion forums go to: <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a>.
@@ -1196,6 +1196,9 @@ There is also a link back to the <a href="http://courses.peoples-uni.org/course/
 </li>
 <li>
 The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>
+</li>
+<li>
+The part about Student Posts in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a> will be useful to see what students have posted.
 </li>
 </ol>
 
