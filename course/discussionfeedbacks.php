@@ -170,6 +170,8 @@ if ($displayforexcel) {
 
 echo '<br />Total Entries: ' . $n;
 echo '<br/><br/>';
+echo '<a href="' . $CFG->wwwroot . '/course/discussionfeedback.php" target="_blank">Click Here to add a new Entry</a>';
+echo '<br/><br/>';
 
 echo $OUTPUT->footer();
 
