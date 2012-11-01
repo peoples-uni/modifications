@@ -160,6 +160,7 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
   }
 
   $table->data[] = $rowdata;
+  $n++;
 }
 echo html_writer::table($table);
 
