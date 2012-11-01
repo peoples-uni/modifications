@@ -19,8 +19,8 @@ $PAGE->set_url('/course/discussionfeedbacks.php'); // Defined here to avoid noti
 
 if (!empty($_POST['markfilter'])) {
   redirect($CFG->wwwroot . '/course/discussionfeedbacks.php?'
-    . 'chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
-    . '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
+    . 'chosensemester=' . urlencode($_POST['chosensemester'])
+    . '&chosenmodule=' . urlencode($_POST['chosenmodule'])
     . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
     );
 }
@@ -47,8 +47,8 @@ echo $OUTPUT->header();
 
 if (empty($_REQUEST['displayforexcel'])) echo "<h1>Discussion Feedback to Students</h1>";
 
-if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
-if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
+if (!empty($_REQUEST['chosensemester'])) $chosensemester = $_REQUEST['chosensemester'];
+if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = $_REQUEST['chosenmodule'];
 else $chosenmodule = '';
 if (!empty($_REQUEST['displayforexcel'])) $displayforexcel = true;
 else $displayforexcel = false;
