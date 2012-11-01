@@ -36,8 +36,8 @@ $isteacher = is_peoples_teacher();
 //$islurker = has_capability('moodle/course:view', get_context_instance(CONTEXT_SYSTEM));
 $islurker = FALSE;
 if (!$isteacher && !$islurker) {
-  $SESSION->wantsurl = "$CFG->wwwroot/course/discussionfeedbacks.php";
-  notice('<br /><br /><b>You must be a Tutor to do this! Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+  $SESSION->wantsurl = "$CFG->wwwroot";
+  notice('<br /><br /><b>You must be a Tutor to do this! Click Continue, log in and come back here!</b><br /><br /><br /><br />');
 }
 
 
