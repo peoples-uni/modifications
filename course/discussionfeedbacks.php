@@ -37,7 +37,7 @@ $isteacher = is_peoples_teacher();
 $islurker = FALSE;
 if (!$isteacher && !$islurker) {
   $SESSION->wantsurl = "$CFG->wwwroot";
-  notice('<br /><br /><b>You must be a Tutor to do this! Click Continue, log in and come back here!</b><br /><br /><br /><br />');
+  notice('<br /><br /><b>You must be a Tutor to do this! <a href="' . $CFG->wwwroot . '" target="_blank">Click Here</a>, log in and come back to this page!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
 }
 
 
