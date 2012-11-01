@@ -709,6 +709,8 @@ displaystat($country,'Country');
 
 echo '<br />';
 echo '<a href="' . $CFG->wwwroot . '/course/successbyqualifications.php" target="_blank">Success by Qualifications Report</a>';
+echo '<br />';
+echo '<a href="' . $CFG->wwwroot . '/course/discussionfeedbacks.php" target="_blank">Click here to see Discussion Feedback to Students</a>';
 
 echo '<br /><br /><br /><br />';
 
