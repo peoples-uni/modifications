@@ -41,11 +41,11 @@ if (!$isteacher && !$islurker) {
 }
 
 
-$PAGE->set_title('Discussion Feedback');
-$PAGE->set_heading('Discussion Feedback');
+$PAGE->set_title('Discussion Feedback to Students');
+$PAGE->set_heading('Discussion Feedback to Students');
 echo $OUTPUT->header();
 
-if (empty($_REQUEST['displayforexcel'])) echo "<h1>Discussion Feedback</h1>";
+if (empty($_REQUEST['displayforexcel'])) echo "<h1>Discussion Feedback to Students</h1>";
 
 if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
 if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
