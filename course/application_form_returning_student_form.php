@@ -59,7 +59,7 @@ class application_form_returning_student_form extends moodleform {
     $count = count($listforunavailable);
     $listforunavailable = implode(", ", $listforunavailable);
 
-    $text = 'Please select the first course module you are applying for from the drop down box (you should not apply for Masters Dissertation until given permission to do so).';
+    $text = "Please select the first course module you are applying for from the drop down box. Note: you should not apply for 'Masters dissertation' until given permission to do so. Note: you should only apply for 'Practice in Patient Safety' if you are doing the Certificate in Patient Safety and also if you have already completed one of the other required modules for the Certificate in Patient Safety ('Evidence Based Practice' or 'Patient Safety').";
     if ($count > 1) {
       $text .= ' Note: ' . $listforunavailable . ' are not available for this semester because they are full.';
     }
