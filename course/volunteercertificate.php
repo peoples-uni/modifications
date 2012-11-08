@@ -47,7 +47,6 @@ if ($volunteercertificate->wikitox_certificate) {
 }
 
 
-
 $certificatedate = '';
 $certdate = $volunteercertificate->datecreated;
 if ($certificate->printdate > 0) {
