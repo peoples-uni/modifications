@@ -35,6 +35,18 @@ $certificate->printseal = 'Logo.png';
 $certificate->printseal = 'tapestry_logo.jpg';
 $certificate->printseal = '';
 
+$url_to_display = 'http://peoples-uni.org';
+$name_to_display = 'Coordinator, Professor Richard Heller';
+
+if ($volunteercertificate->wikitox_certificate) {
+  $url_to_display = 'http://wikitox.peoples-uni.org';
+  $name_to_display = 'Professor Andrew H Dawson';
+  $certificate->printsignature1 = 'dawsonsignature.jpg';
+  $certificate->printsignature2 = '';
+  $certificate->printwmark = 'Toxicology certificate wash.jpg';
+}
+
+
 
 $certificatedate = '';
 $certdate = $volunteercertificate->datecreated;
@@ -71,10 +83,12 @@ print_watermark($certificate->printwmark, $orientation);
 print_seal($certificate->printseal, $orientation, 590, 425, '', '');
 
 $pdf->SetTextColor(0, 0, 0);
-cert_printtext(130, 435, 'L', 'Helvetica', '', 10, utf8_decode('Coordinator, Professor Richard Heller'));
+cert_printtext(130, 435, 'L', 'Helvetica', '', 10, utf8_decode($name_to_display));
 print_signature($certificate->printsignature1, $orientation, 130, 440, '64', '31');
-cert_printtext(130, 475, 'L', 'Helvetica', '', 10, utf8_decode('Chair of the Trustees, Professor Rajan Madhok'));
-print_signature($certificate->printsignature2, $orientation, 130, 480, '59', '31');
+if (!empty($certificate->printsignature2)) {
+  cert_printtext(130, 475, 'L', 'Helvetica', '', 10, utf8_decode('Chair of the Trustees, Professor Rajan Madhok'));
+  print_signature($certificate->printsignature2, $orientation, 130, 480, '59', '31');
+}
 
 // Add text
 $pdf->SetTextColor(0, 0, 120);
@@ -109,7 +123,7 @@ cert_printtext(170, 430, 'C', 'Helvetica', '', 14, utf8_decode($certificatedate)
 
 //cert_printtext(170, 475, 'C', 'Helvetica', '', 15, utf8_decode('Semester: ' . $volunteercertificate->semester));
 cert_printtext(170, 500, 'C', 'Helvetica', '', 10, utf8_decode(isset($course->idnumber) ? $course->idnumber : ''));
-cert_printtext(170, 500, 'R', 'Helvetica', '', 10, utf8_decode('http://peoples-uni.org'));
+cert_printtext(170, 500, 'R', 'Helvetica', '', 10, utf8_decode($url_to_display));
 
 //cert_printtext(150, 430, '', '', '', '', '');
 //$pdf->SetLeftMargin(130);

@@ -16,6 +16,7 @@ CREATE TABLE mdl_volunteercertificate (
 	body3 VARCHAR(255),
 	body4 VARCHAR(255),
 	body5 VARCHAR(255),
+  wikitox_certificate BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
 CONSTRAINT  PRIMARY KEY (id)
 );
 */
@@ -45,6 +46,7 @@ $body2 = 'We gratefully acknowledge this.';
 $body3 = '';
 $body4 = '';
 $body5 = '';
+$wikitox_certificate = 0;
 
 if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['markupdatecertificate']) && !empty($_POST['updatecertificate'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -67,6 +69,16 @@ if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) &&
 	$volunteercertificate->body3 = $_POST['body3'];
 	$volunteercertificate->body4 = $_POST['body4'];
 	$volunteercertificate->body5 = $_POST['body5'];
+
+  if (!empty($_POST['wikitox_certificate'])) {
+    $volunteercertificate->wikitox_certificate = 1;
+    $wikitox_certificate = 1;
+  }
+  else {
+    $volunteercertificate->wikitox_certificate = 0;
+    $wikitox_certificate = 0;
+  }
+
 	$DB->update_record('volunteercertificate', $volunteercertificate);
 
 	$id = $_POST['id'];
@@ -103,7 +115,17 @@ elseif (!empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['mark
 	$volunteercertificate->body3 = $_POST['body3'];
 	$volunteercertificate->body4 = $_POST['body4'];
 	$volunteercertificate->body5 = $_POST['body5'];
-	$id = $DB->insert_record('volunteercertificate', $volunteercertificate);
+
+  if (!empty($_POST['wikitox_certificate'])) {
+    $volunteercertificate->wikitox_certificate = 1;
+    $wikitox_certificate = 1;
+  }
+  else {
+    $volunteercertificate->wikitox_certificate = 0;
+    $wikitox_certificate = 0;
+  }
+
+  $id = $DB->insert_record('volunteercertificate', $volunteercertificate);
 
 	$name = $_POST['name'];
 	$title = $_POST['title'];
@@ -139,6 +161,7 @@ Title&nbsp;of&nbsp;Certificate:&nbsp;<input type="text" size="100" name="title" 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is to certify that<br />
 Person's&nbsp;Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="100" name="name" value="<?php echo $name; ?>" /><br />
 Body:&nbsp;<input type="text" size="200" name="body1" value="<?php echo $body1; ?>" /><br />
+Use WikiTox signatures and images:&nbsp;<input type="checkbox" name="wikitox_certificate" <?php if ($wikitox_certificate) echo ' CHECKED'; ?> /><br />
 <input type="hidden" name="id" value="<?php echo $id ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markupdatecertificate" value="1" />

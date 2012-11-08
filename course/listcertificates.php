@@ -37,6 +37,7 @@ foreach ($volunteercertificates as $volunteercertificate) {
 <input type="hidden" name="title" value="<?php echo htmlspecialchars($volunteercertificate->title, ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="name" value="<?php echo htmlspecialchars($volunteercertificate->name, ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="body1" value="<?php echo htmlspecialchars($volunteercertificate->body1, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="wikitox_certificate" value="<?php echo $volunteercertificate->wikitox_certificate; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markupdatecertificate" value="1" />
 <input type="submit" name="updatecertificate" value="Edit" />

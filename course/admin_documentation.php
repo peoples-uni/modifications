@@ -1110,6 +1110,9 @@ Enter a name in the name field.
 Change the other text as you wish.
 </li>
 <li>
+Optionally select the checkbox to indicate this should use WikiTox signatures and images.
+</li>
+<li>
 Press Create New Certificate... you will be brought to an updated version of the page where you can edit the certificate.
 </li>
 <li>
