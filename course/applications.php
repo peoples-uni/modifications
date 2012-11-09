@@ -130,6 +130,17 @@ CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph (userid);
 
+CREATE TABLE mdl_peoples_cert_ps (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) UNSIGNED NOT NULL,
+  datelastunentolled BIGINT(10) UNSIGNED NOT NULL,
+  cert_psstatus BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  note text default '' NOT NULL,
+CONSTRAINT PRIMARY KEY (id)
+);
+CREATE INDEX mdl_peoples_cert_ps_uid_ix ON mdl_peoples_cert_ps (userid);
+
 CREATE TABLE mdl_peoplespaymentnote (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,
   userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -719,10 +730,11 @@ function displayoptions($name, $options, $selectedvalue) {
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
 $applications = $DB->get_records_sql('
-  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp, p.id IS NOT NULL AS paymentnote
+  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp, IFNULL(ps.cert_psstatus, 0) AS cert_ps, ps.datesubmitted AS cert_psdatestamp, p.id IS NOT NULL AS paymentnote
   FROM mdl_peoplesapplication a
   LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
   LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
+  LEFT JOIN mdl_peoples_cert_ps    ps ON                                a.userid=ps.userid
   LEFT JOIN mdl_peoplespaymentnote  p ON (a.sid=p.sid AND p.sid!=0) OR (a.userid=p.userid AND p.userid!=0)
   WHERE hidden=0 ORDER BY a.datesubmitted DESC');
 if (empty($applications)) {
@@ -1207,6 +1219,7 @@ foreach ($applications as $sid => $application) {
     if ($application->ready && $application->nid != 80) $z .= '<br />(Ready)';
     if ($application->notepresent) $z .= '<br />(Note Present)';
     if ($application->mph) $z .= '<br />(MMU MPH)';
+    if ($application->cert_ps) $z .= '<br />(Cert PS)';
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (!$displayextra || $displayscholarship) {
