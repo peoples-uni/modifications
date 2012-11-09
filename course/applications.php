@@ -1075,6 +1075,8 @@ Sponsoring organisation
 sponsoringorganisation
 Applying for MMU MPH
 applymmumph
+Applying for Certificate in Patient Safety
+applycertpatientsafety
 Scholarship
 scholarship
 Why Not Completed Previous Semester
@@ -1155,6 +1157,8 @@ foreach ($applications as $sid => $application) {
     else $z = '<span style="color:green">Yes</span>';
     $applymmumphtext = array(0 => '', 1 => '', 2 => '<br />(Apply MMU MPH)', 3 => '<br />(Say already MMU MPH)');
     $z .= $applymmumphtext[$application->applymmumph];
+    $applycertpatientsafetytext = array(0 => '', 1 => '', 2 => '<br />(Apply Cert PS)', 3 => '<br />(Say already Cert PS)');
+    $z .= $applycertpatientsafetytext[$application->applycertpatientsafety];
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($application->paymentmechanism)) $mechanism = '';
