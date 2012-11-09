@@ -311,6 +311,12 @@ elseif ($data = $editform->get_data()) {
   $applymmumphtext = array(0 => '', 1 => 'No', 2 => 'Yes', 3 => 'Already');
   $applymmumphtext = $applymmumphtext[$application->applymmumph];
 
+  $dataitem = $data->applycertpatientsafety;
+  if (empty($dataitem)) $dataitem = 0;
+  $application->applycertpatientsafety = $dataitem;
+  $applycertpatientsafetytext = array(0 => '', 1 => 'No', 2 => 'Yes', 3 => 'Already');
+  $applycertpatientsafetytext = $applycertpatientsafetytext[$application->applycertpatientsafety];
+
   $dataitem = $data->scholarship;
   if (empty($dataitem)) $dataitem = '';
   $application->scholarship = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
@@ -384,6 +390,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Module 1: $application->coursename1\n\n";
   $message .= "Module 2: $application->coursename2\n\n";
   $message .= "Apply for MMU MPH: $applymmumphtext\n\n";
+  $message .= "Apply for Certificate in Patient Safety: $applycertpatientsafetytext\n\n";
   $message .= "City: $application->city\n\n";
   $message .= "Country: " . $countryname[$application->country] . "\n\n";
   $message .= "Username: $application->username\n\n";
