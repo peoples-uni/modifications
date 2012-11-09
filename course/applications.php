@@ -37,6 +37,7 @@ CREATE TABLE mdl_peoplesapplication (
   coursename3 VARCHAR(255) NOT NULL DEFAULT '',
   coursename4 VARCHAR(255) NOT NULL DEFAULT '',
   applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  applycertpatientsafety BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   semester VARCHAR(255) NOT NULL DEFAULT '',
   dob VARCHAR(20) NOT NULL DEFAULT '',
   dobday VARCHAR(2) NOT NULL DEFAULT '',
@@ -98,6 +99,8 @@ ALTER TABLE mdl_peoplesapplication ADD applymmumph BIGINT(10) UNSIGNED NOT NULL 
 ALTER TABLE mdl_peoplesapplication ADD scholarship TEXT NOT NULL DEFAULT '' AFTER sponsoringorganisation;
 ALTER TABLE mdl_peoplesapplication ADD whynotcomplete TEXT NOT NULL DEFAULT '' AFTER scholarship;
 ALTER TABLE mdl_peoplesapplication ADD reenrolment BIGINT(10) unsigned NOT NULL DEFAULT 0 AFTER nid;
+
+ALTER TABLE mdl_peoplesapplication ADD applycertpatientsafety BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER applymmumph;
 ))
 
 CREATE TABLE mdl_peoplesmph (

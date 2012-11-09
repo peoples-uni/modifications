@@ -82,6 +82,13 @@ class application_form_returning_student_form extends moodleform {
     $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Manchester Metropolitan University Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
 Please do not apply if this is your first semester.<br />');
 
+    $listforselect = array();
+    $listforselect[1] = 'No';
+    $listforselect[2] = 'Yes';
+    $listforselect[3] = 'I am already enrolled in the Certificate in Patient Safety';
+    $mform->addElement('select', 'applycertpatientsafety', 'Apply for Manchester Metropolitan University Master of Public Health programme', $listforselect);
+    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Manchester Metropolitan University Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
+Please do not apply if this is your first semester.<br />');
 
     $mform->addElement('header', 'personaldetails', 'Your Existing Moodle User Name');
 
