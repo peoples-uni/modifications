@@ -480,86 +480,43 @@ if (!empty($_POST['markunenrollmph'])) {
     $refreshparent = true;
   }
 }
-[[[
-if (!empty($_POST['markcert_ps'])) {
-  if (!empty($_REQUEST['29'])) $useridforsearch = $_REQUEST['29'];
-  else $useridforsearch = 0;
-  if (!empty($_REQUEST['sid'])) $sidforsearch = $_REQUEST['sid'];
-  else  $sidforsearch = 0;
-  $inmmucert_ps = FALSE;
-  $cert_pss = $DB->get_records_sql("SELECT * FROM mdl_peoples_cert_ps WHERE (sid=$sidforsearch AND sid!=0) OR (userid=$useridforsearch AND userid!=0)");
-  if (!empty($cert_pss)) {
-    foreach ($cert_pss as $cert_ps) {
-      $inmmucert_ps = TRUE;
-    }
+if (!empty($_POST['markcert_ps']) && !empty($_REQUEST['29'])) {
+
+  $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $_REQUEST['29']));
+  if (!empty($peoples_cert_ps)) {
+    $peoples_cert_ps->datesubmitted = time();
+    $peoples_cert_ps->cert_psstatus = 1;
+    $peoples_cert_ps->note = $peoples_cert_ps->note . '<br />Enrolled in Certificate in Patient Safety: ' . gmdate('d/m/Y H:i', $peoples_cert_ps->datesubmitted);
+    $DB->update_record('peoples_cert_ps', $peoples_cert_ps);
   }
-  if (!$inmmucert_ps) { // Protect against duplicate submission
-
-    $newcert_ps = new object();
-    if (!empty($_REQUEST['29']))  $newcert_ps->userid = $_REQUEST['29'];
-    if (!empty($_REQUEST['sid'])) $newcert_ps->sid    = $_REQUEST['sid'];
-
-    $newcert_ps->datesubmitted = time();
-    $newcert_ps->cert_psstatus = 1;
-    $newcert_ps->note = '';
-    $DB->insert_record('peoples_cert_ps', $newcert_ps);
-
-    if (!empty($newcert_ps->userid)) {
-
-      $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $newcert_ps->userid));
-      if (!empty($peoples_cert_ps)) {
-        $peoples_cert_ps->datesubmitted = $newcert_ps->datesubmitted;
-        $peoples_cert_ps->cert_psstatus = $newcert_ps->cert_psstatus;
-        $peoples_cert_ps->note = $peoples_cert_ps->note . '<br />Enrolled in cert_ps: ' . gmdate('d/m/Y H:i', $newcert_ps->datesubmitted);
-        $DB->update_record('peoples_cert_ps', $peoples_cert_ps);
-      }
-      else {
-        $peoples_cert_ps = new object();
-        $peoples_cert_ps->userid = $newcert_ps->userid;
-        $peoples_cert_ps->datesubmitted = $newcert_ps->datesubmitted;
-        $peoples_cert_ps->datelastunentolled = 0;
-        $peoples_cert_ps->cert_psstatus = $newcert_ps->cert_psstatus;
-        $peoples_cert_ps->note = 'Enrolled in cert_ps: ' . gmdate('d/m/Y H:i', $newcert_ps->datesubmitted);
-        $DB->insert_record('peoples_cert_ps', $peoples_cert_ps);
-      }
-
-      $amount_to_pay_total = get_balance($newcert_ps->userid);
-
-      $peoples_student_balance = new object();
-      $peoples_student_balance->userid = $newcert_ps->userid;
-      $peoples_student_balance->amount_delta = 1500;
-      $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
-      $peoples_student_balance->currency = 'GBP';
-      $peoples_student_balance->detail = 'Initial Full amount for MMU cert_ps';
-      $peoples_student_balance->date = time();
-      $DB->insert_record('peoples_student_balance', $peoples_student_balance);
-    }
-
-    $refreshparent = true;
+  else {
+    $peoples_cert_ps = new object();
+    $peoples_cert_ps->userid = $_REQUEST['29'];
+    $peoples_cert_ps->datesubmitted = time();
+    $peoples_cert_ps->datelastunentolled = 0;
+    $peoples_cert_ps->cert_psstatus = 1;
+    $peoples_cert_ps->note = 'Enrolled in Certificate in Patient Safety: ' . gmdate('d/m/Y H:i', $peoples_cert_ps->datesubmitted);
+    $DB->insert_record('peoples_cert_ps', $peoples_cert_ps);
   }
+
+  $refreshparent = true;
 }
-if (!empty($_POST['markunenrollcert_ps'])) {
-  if (!empty($_REQUEST['29'])) {
-    $peoples_cert_psuserid = $_REQUEST['29'];
+if (!empty($_POST['markunenrollcert_ps']) && !empty($_REQUEST['29'])) {
 
-    $DB->delete_records('peoples_cert_ps', array('userid' => $peoples_cert_psuserid));
+  $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $_REQUEST['29']));
+  if (!empty($peoples_cert_ps)) {
+    $peoples_cert_ps->datelastunentolled = time();
+    $peoples_cert_ps->cert_psstatus = 0;
 
-    $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $peoples_cert_psuserid));
-    if (!empty($peoples_cert_ps)) {
-      $peoples_cert_ps->datelastunentolled = time();
-      $peoples_cert_ps->cert_psstatus = 0;
+    if (!empty($_REQUEST['note'])) $usernote = ' (' . htmlspecialchars($_REQUEST['note'], ENT_COMPAT, 'UTF-8') . ')';
+    else  $usernote = '';
+    $peoples_cert_ps->note = $peoples_cert_ps->note . '<br />Unenrolled from Certificate in Patient Safety: ' . gmdate('d/m/Y H:i', $peoples_cert_ps->datelastunentolled) . $usernote;
 
-      if (!empty($_REQUEST['note'])) $usernote = ' (' . htmlspecialchars($_REQUEST['note'], ENT_COMPAT, 'UTF-8') . ')';
-      else  $usernote = '';
-      $peoples_cert_ps->note = $peoples_cert_ps->note . '<br />Unenrolled from cert_ps: ' . gmdate('d/m/Y H:i', $peoples_cert_ps->datelastunentolled) . $usernote;
-
-      $DB->update_record('peoples_cert_ps', $peoples_cert_ps);
-    }
-
-    $refreshparent = true;
+    $DB->update_record('peoples_cert_ps', $peoples_cert_ps);
   }
+
+  $refreshparent = true;
 }
-]]]
 if (!empty($_POST['note']) && !empty($_POST['markaddnote'])) {
   $newnote = new object();
   if (!empty($_REQUEST['29']))  $newnote->userid = $_REQUEST['29'];
@@ -987,32 +944,20 @@ if (!empty($mphs) || !empty($applymmumphtext) || !empty($peoplesmph2->note)) {
 
   if (!empty($peoplesmph2->note)) echo '<tr><td></td><td>' . $peoplesmph2->note . '</td></tr>';
 }
-[[[
-applymmumph:applycertpatientsafety
-mdl_peoplesmph:mdl_peoples_cert_ps
-ps.cert_psstatus
-ps.datesubmitted
-((((
-  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp, IFNULL(ps.cert_psstatus, 0) AS cert_ps, ps.datesubmitted AS cert_psdatestamp, p.id IS NOT NULL AS paymentnote
-  FROM mdl_peoplesapplication a
-  LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
-  LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
-  LEFT JOIN mdl_peoples_cert_ps    ps ON                                a.userid=ps.userid
-))))
-$applycertpatientsafetytext = array('0' => '', '1' => '', '2' => 'Wants to Apply for MMU cert_ps', '3' => 'Says Already in MMU cert_ps');
-$applycertpatientsafetytext = $applycertpatientsafetytext[$_REQUEST['applycertpatientsafety']];
+
+$applycertpatientsafetytext = array('0' => '', '1' => '', '2' => 'Wants to Apply for Certificate in Patient Safety', '3' => 'Says Already in Certificate in Patient Safety');
+$applycertpatientsafetytext = $applycertpatientsafetytext[$application->applycertpatientsafety];
 
 if (!empty($application->userid)) $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $application->userid));
 else $peoples_cert_ps = NULL;
 
-if (!empty($cert_pss) || !empty($applycertpatientsafetytext) || !empty($peoples_cert_ps->note)) {
-  echo '<tr><td colspan="2">MMU cert_ps Status...</td></tr>';
+if (!empty($applycertpatientsafetytext) || !empty($peoples_cert_ps->note)) {
+  echo '<tr><td colspan="2">Certificate in Patient Safety Status...</td></tr>';
 
   if (!empty($applycertpatientsafetytext)) echo '<tr><td></td><td>' . $applycertpatientsafetytext . '</td></tr>';
 
   if (!empty($peoples_cert_ps->note)) echo '<tr><td></td><td>' . $peoples_cert_ps->note . '</td></tr>';
 }
-]]]
 
 echo '</table>';
 
@@ -2106,10 +2051,9 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 <?php
 }
 
-[[[
-if (empty($cert_pss)) {
+if (empty($peoples_cert_ps->cert_psstatus)) {
 ?>
-<br />To record that the student has been enrolled in the MMU Masters in Public Health (MMU cert_ps), press "Record...".<br />
+<br />To record that the student has been enrolled in the Certificate in Patient Safety, press "Record...".<br />
 <form id="cert_psform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
 <input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
@@ -2130,7 +2074,7 @@ if (empty($cert_pss)) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="applycertpatientsafety" value="<?php echo htmlspecialchars($_REQUEST['applycertpatientsafety'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2146,14 +2090,14 @@ if (empty($cert_pss)) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markcert_ps" value="1" />
-<input type="submit" name="cert_ps" value="Record that the Student has been enrolled in the MMU cert_ps" />
+<input type="submit" name="cert_ps" value="Record that the Student has been enrolled in the Certificate in Patient Safety" />
 </form>
 <br />
 <?php
 }
 elseif (!empty($_REQUEST['29'])) {
 ?>
-<br />To Unenroll a student from the MMU Masters in Public Health (MMU cert_ps), press "Unenroll...".<br />
+<br />To Unenroll a student from the Certificate in Patient Safety, press "Unenroll...".<br />
 (This does not affect any course modules or payments.)<br />
 <form id="unenrollcert_psform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
@@ -2175,7 +2119,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="applycertpatientsafety" value="<?php echo htmlspecialchars($_REQUEST['applycertpatientsafety'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2192,12 +2136,11 @@ elseif (!empty($_REQUEST['29'])) {
 
 <input type="hidden" name="markunenrollcert_ps" value="1" />
 Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
-<input type="submit" name="unenrollcert_ps" value="Unenroll a student from the MMU Masters in Public Health (MMU cert_ps)" />
+<input type="submit" name="unenrollcert_ps" value="Unenroll a student from the Certificate in Patient Safety" />
 </form>
 <br />
 <?php
 }
-]]]
 
 ?>
 <br />To add a note to this student's record, add text below and press "Add...".<br />
