@@ -120,6 +120,10 @@ if (!empty($application)) {
 //}
 $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
 if (!empty($peoplesmph2->note)) echo '<br />' . $peoplesmph2->note;
+
+$peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $userid));
+if (!empty($peoples_cert_ps->cert_psstatus)) echo '<br />' . $peoples_cert_ps->note;
+
 echo '<br /><br /><br />';
 
 

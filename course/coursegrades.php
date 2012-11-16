@@ -496,6 +496,8 @@ ORDER BY $orderby",
 array($chosensemester));
 // If courseid is not specified this could get very inefficient, in that case I should optimise the JOIN
 
+$peoples_cert_pss = $DB->get_records_sql('SELECT userid AS userid_index, * FROM peoples_cert_ps');
+
 
 if ($sendemails) {
 	if (empty($_POST['reg'])) $_POST['reg'] = '/^[a-zA-Z0-9_.-]/';
@@ -534,6 +536,9 @@ if (!empty($enrols)) {
     else $inmph = '';
 
     if (empty($inmph) && $showmmumphonly) continue;
+
+    if (!empty($peoples_cert_pss[$enrol->userid]) && $peoples_cert_pss[$enrol->userid]->cert_psstatus) $incert_ps = '<br />(Cert PS)';
+    else $incert_ps = '';
 
     $rowdata = array();
     $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
@@ -584,7 +589,7 @@ if (!empty($enrols)) {
       $rowdata[] = 'No, did Not Pay';
 		}
 
-    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">Student Grades</a>' . $inmph;
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">Student Grades</a>' . $inmph . $incert_ps;
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $enrol->userid . '" target="_blank">Student Submissions</a>';
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/grade/report/user/index.php?id=' . $enrol->courseid . '&userid=' . $enrol->userid . '" target="_blank">Moodle Grade report</a>';
 
