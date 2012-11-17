@@ -72,7 +72,7 @@ class application_form_returning_student_form extends moodleform {
     $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
 
     $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
-    $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br />');
+    $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br /><br />');
 
     $listforselect = array();
     $listforselect[1] = 'No, continue with Peoples-uni';
@@ -80,15 +80,15 @@ class application_form_returning_student_form extends moodleform {
     $listforselect[3] = 'I am already enrolled in MMU MPH';
     $mform->addElement('select', 'applymmumph', 'Apply for Manchester Metropolitan University Master of Public Health programme', $listforselect);
     $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Manchester Metropolitan University Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
-Please do not apply if this is your first semester.<br />');
+Please do not apply if this is your first semester.<br /><br />');
 
     $listforselect = array();
     $listforselect[1] = 'No';
     $listforselect[2] = 'Yes';
     $listforselect[3] = 'I am already enrolled in the Certificate in Patient Safety';
-    $mform->addElement('select', 'applycertpatientsafety', 'Apply for Manchester Metropolitan University Master of Public Health programme', $listforselect);
-    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Manchester Metropolitan University Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
-Please do not apply if this is your first semester.<br />');
+    $mform->addElement('select', 'applycertpatientsafety', 'Apply for Certificate in Patient Safety', $listforselect);
+    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Certificate in Patient Safety (see <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
+For this certificate you will need to complete the Evidence Based Practice, Patient Safety & Practice in Patient Safety modules over two semesters.<br />');
 
     $mform->addElement('header', 'personaldetails', 'Your Existing Moodle User Name');
 
