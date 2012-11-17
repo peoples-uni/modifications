@@ -496,7 +496,7 @@ ORDER BY $orderby",
 array($chosensemester));
 // If courseid is not specified this could get very inefficient, in that case I should optimise the JOIN
 
-$peoples_cert_pss = $DB->get_records_sql('SELECT userid AS userid_index, * FROM mdl_peoples_cert_ps');
+$peoples_cert_pss = $DB->get_records_sql('SELECT ps.userid AS userid_index, ps.* FROM mdl_peoples_cert_ps ps');
 
 
 if ($sendemails) {
