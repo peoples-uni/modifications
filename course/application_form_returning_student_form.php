@@ -59,7 +59,7 @@ class application_form_returning_student_form extends moodleform {
     $count = count($listforunavailable);
     $listforunavailable = implode(", ", $listforunavailable);
 
-    $text = "Please select the first course module you are applying for from the drop down box. Note: you should not apply for 'Masters dissertation' until given permission to do so. Note: you should only apply for 'Practice in Patient Safety' if you are doing the Certificate in Patient Safety and also if you have already completed one of the other required modules for the Certificate in Patient Safety ('Evidence Based Practice' or 'Patient Safety').";
+    $text = "Please select the first course module you are applying for from the drop down box. Note: you should not apply for 'Masters dissertation' until given permission to do so. Note: you should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
     if ($count > 1) {
       $text .= ' Note: ' . $listforunavailable . ' are not available for this semester because they are full.';
     }
@@ -87,8 +87,8 @@ Please do not apply if this is your first semester.<br /><br />');
     $listforselect[2] = 'Yes';
     $listforselect[3] = 'I am already enrolled in the Certificate in Patient Safety';
     $mform->addElement('select', 'applycertpatientsafety', 'Apply for Certificate in Patient Safety', $listforselect);
-    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Certificate in Patient Safety (see <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
-For this certificate you will need to complete the Evidence Based Practice, Patient Safety & Practice in Patient Safety modules over two semesters.<br />');
+    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Certificate in Patient Safety (see <a href="http://www.peoples-uni.org/node/281" target="_blank">http://www.peoples-uni.org/node/281</a>)?<br />
+For this certificate you will need to complete the Evidence Based Practice, Patient Safety & Patient Safety in Practice modules.<br />');
 
     $mform->addElement('header', 'personaldetails', 'Your Existing Moodle User Name');
 
