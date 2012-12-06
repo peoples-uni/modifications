@@ -38,6 +38,8 @@ echo '<p><strong>If you are already registered in Moodle you will have to wait u
 
 echo 'Note:</strong> The closing date for applications for enrolment in courses for the upcoming semester is ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . ' approximately. When enrolments are open you will be informed (this is normally about 2 weeks before that date).</p>';
 
+echo '<p><strong>If you wish to apply to Peoples-uni in the upcoming semester please read the information on </strong><a href="http://peoples-uni.org/book/course-fees">Course Fees (Click Here)</a><strong> to make sure that you are prepared.</strong></p>';
+
 echo '<p><strong>If you have not been registered in Moodle you must apply by </strong><a href="http://courses.peoples-uni.org/course/registration.php">Clicking Here</a></p>';
 
 echo '<p>For inquires about course enrolment or payment please send an e-mail to <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a></p>';
