@@ -21,7 +21,7 @@ echo $OUTPUT->box_start('generalbox boxaligncenter');
 
 $sid = (int)$_REQUEST['sid'];
 $application = $DB->get_record('peoplesapplication', array('sid' => $sid));
-if (empty($application)) {
+if (empty($application->userid)) {
 	notice('Error: The parameter passed does not correspond to a valid application to Peoples-uni!', "$CFG->wwwroot");
 }
 
@@ -38,9 +38,9 @@ else {
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
 //$amount = $application->costowed - $application->costpaid;
-if (!empty($application->userid)) $amount = amount_to_pay((int)$application->userid);
+$amount = amount_to_pay((int)$application->userid);
 
-if (empty($application->userid) || $amount < .01) {
+if ($amount < .01) {
   notice('You do not owe anything to Peoples-uni!', "$CFG->wwwroot");
 }
 $currency = $application->currency;
