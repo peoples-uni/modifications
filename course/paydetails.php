@@ -24,6 +24,7 @@ $application = $DB->get_record('peoplesapplication', array('sid' => $sid));
 if (empty($application->userid)) {
 	notice('Error: The parameter passed does not correspond to a valid application to Peoples-uni!', "$CFG->wwwroot");
 }
+$application->userid = (int)$application->userid;
 
 $name = htmlspecialchars($application->firstname . ' ' . $application->lastname, ENT_COMPAT, 'UTF-8');
 
@@ -37,11 +38,16 @@ else {
 }
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
-//$amount = $application->costowed - $application->costpaid;
-$amount = amount_to_pay((int)$application->userid);
+$amount = amount_to_pay($application->userid);
+$original_amount = $amount;
 
 if ($amount < .01) {
-  notice('You do not owe anything to Peoples-uni!', "$CFG->wwwroot");
+  // They have already paid their current instalment... allow them to pay their next instalment, if there is one (even though it is not due)
+  $amount = get_next_unpaid_instalment($application->userid);
+
+  if ($amount == 0) {
+    notice('You do not owe anything to Peoples-uni!', "$CFG->wwwroot");
+  }
 }
 $currency = $application->currency;
 
@@ -136,9 +142,15 @@ if (!empty($_POST['markpaydetails'])) {
 
 echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
-echo "<p><br /><br /><b>Amount that you owe up to and including this semester (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
 
-// echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt information you received when you paid.<br />In particular, if you paid by Western Union, you must enter the Money Transfer Control Number (MTCN).<br />Then click Submit.</p>";
+if ($amount == $original_amount) {
+  echo "<p><br /><br /><b>Amount that you owe up to and including this semester (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
+}
+else {
+  echo "<p><br /><br /><b>You have already paid your main instalment for this semester.</b></p>";
+  echo "<p><b>Amount for next unpaid instalment (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
+}
+
 echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt information you received when you paid.<br />Then click Submit.</p>";
 
 ?>
@@ -223,6 +235,46 @@ function get_balance($userid) {
     }
   }
 
+  return $amount;
+}
+
+
+function get_next_unpaid_instalment($userid) {
+  global $DB;
+
+  $original_amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+  if (!$inmmumph) return 0;
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+  if (empty($payment_schedule)) return 0;
+
+  $now = time();
+
+  // This assumes that zero is currently owing which implies that (at least) instalment 1 has been paid, see amount_to_pay() which has already been called
+  // So let us see if instalment 2 is owing...
+  $amount = $original_amount;
+  if     ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+  elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+  // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+
+  if ($amount < .01) { // So let us see if instalment 3 is owing...
+    $amount = $original_amount;
+    if ($now < $payment_schedule->expect_amount_4_date) $amount -= $payment_schedule->amount_4;
+    // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+  }
+  if ($amount < .01) { // So let us see if instalment 4 is owing...
+    $amount = $original_amount;
+  }
+
+  if ($amount < .01) $amount = 0;
   return $amount;
 }
 ?>
