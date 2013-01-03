@@ -324,10 +324,16 @@ else {
 }
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
-//$amount = $application->costowed - $application->costpaid;
 $amount = amount_to_pay($application->userid);
+$original_amount = $amount;
+
 if ($amount < .01) {
-	notice('Error: There is zero owed for this application to Peoples-uni! Payment cannot be completed.', "$CFG->wwwroot");
+  // They have already paid their current instalment... allow them to pay their next instalment, if there is one (even though it is not due)
+  $amount = get_next_unpaid_instalment($application->userid);
+
+  if ($amount == 0) {
+    notice('Error: There is zero owed for this application to Peoples-uni! Payment cannot be completed.', "$CFG->wwwroot");
+  }
 }
 $currency = $application->currency;
 
@@ -354,10 +360,21 @@ echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>';
 
-echo "<p><br /><br /><b>Cost for your chosen modules (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
-// echo '<p><img alt="WorldPay" src="https://www.paypal.com/en_US/i/logo/PayPal_mark_60x38.gif" /></p>';
-echo "<p>Use the button below to pay for your enrolment in $modulespurchasedlong with WorldPay.<br />
-(Or to pay for Manchester Metropolitan University Master of Public Health programme.)</p>";
+if ($amount == $original_amount) {
+  echo "<p><br /><br /><b>Cost for your chosen modules (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
+
+  echo "<p>Use the button below to pay for your enrolment in $modulespurchasedlong with WorldPay.<br />
+  (Or to pay for Manchester Metropolitan University Master of Public Health programme.)</p>";
+}
+else {
+  echo "<p><br /><br /><b>You have already paid your main instalment for this semester.</b></p>";
+
+  echo "<p><b>Amount of your next instalment (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
+
+  echo "<p>Use the button below to pay for your next unpaid instalment for Manchester Metropolitan University Master of Public Health programme.</p>";
+  $modulespurchasedlong = "Next unpaid instalment for Manchester Metropolitan University Master of Public Health programme";
+}
+
 echo '<p>(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy" target="_blank">http://www.peoples-uni.org/content/refund-policy</a>)</p>';
 ?>
 <form action="<?php echo $payurl; ?>" method="post">
@@ -485,6 +502,46 @@ function get_balance($userid) {
     }
   }
 
+  return $amount;
+}
+
+
+function get_next_unpaid_instalment($userid) {
+  global $DB;
+
+  $original_amount = get_balance($userid);
+
+  $inmmumph = FALSE;
+  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
+  if (!empty($mphs)) {
+    foreach ($mphs as $mph) {
+      $inmmumph = TRUE;
+    }
+  }
+  if (!$inmmumph) return 0;
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+  if (empty($payment_schedule)) return 0;
+
+  $now = time();
+
+  // This assumes that zero is currently owing which implies that (at least) instalment 1 has been paid, see amount_to_pay() which has already been called
+  // So let us see if instalment 2 is owing...
+  $amount = $original_amount;
+  if     ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+  elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+  // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+
+  if ($amount < .01) { // So let us see if instalment 3 is owing...
+    $amount = $original_amount;
+    if ($now < $payment_schedule->expect_amount_4_date) $amount -= $payment_schedule->amount_4;
+    // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+  }
+  if ($amount < .01) { // So let us see if instalment 4 is owing...
+    $amount = $original_amount;
+  }
+
+  if ($amount < .01) $amount = 0;
   return $amount;
 }
 ?>
