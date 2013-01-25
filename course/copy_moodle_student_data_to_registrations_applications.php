@@ -62,7 +62,7 @@ foreach ($all_users as $a_user) {
   if (!empty($userrecord->city)) $record->city = $userrecord->city;
   if (!empty($userrecord->country)) $record->country = $userrecord->country;
 
-  $profile_items = $DB->get_records('user_info_data', array('userid' => $userid);
+  $profile_items = $DB->get_records('user_info_data', array('userid' => $userid));
   if (!empty($profile_items)) {
     foreach ($profile_items as $profile_item) {
 
@@ -125,8 +125,8 @@ foreach ($all_users as $a_user) {
 
 
   $copied_data = FALSE;
-  $records_to_update = $DB->get_records('temppeoplesregistration', array('userid' => $userid);
-//  $records_to_update = $DB->get_records('peoplesregistration', array('userid' => $userid);
+  $records_to_update = $DB->get_records('temppeoplesregistration', array('userid' => $userid));
+//  $records_to_update = $DB->get_records('peoplesregistration', array('userid' => $userid));
   if (!empty($records_to_update)) {
     foreach ($records_to_update as $record_to_update) {
       $record->id = $record_to_update->id;
@@ -136,8 +136,8 @@ foreach ($all_users as $a_user) {
     }
   }
 
-  $records_to_update = $DB->get_records('temppeoplesapplication', array('userid' => $userid);
-//  $records_to_update = $DB->get_records('peoplesapplication', array('userid' => $userid);
+  $records_to_update = $DB->get_records('temppeoplesapplication', array('userid' => $userid));
+//  $records_to_update = $DB->get_records('peoplesapplication', array('userid' => $userid));
   if (!empty($records_to_update)) {
     foreach ($records_to_update as $record_to_update) {
       $record->id = $record_to_update->id;
