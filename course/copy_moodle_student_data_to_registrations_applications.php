@@ -74,7 +74,7 @@ foreach ($all_users as $a_user) {
             $month = array_search($dob_array[1], $monthnames);
             if (!empty($month)) {
               $record->dobday = $dob_array[0];
-              $record->dobmonth = $dob_array[1];
+              $record->dobmonth = $month;
               $record->dobyear = $dob_array[2];
               $record->dob = sprintf('%04d-%02d-%02d', $record->dobyear, $record->dobmonth, $record->dobday);
             }
