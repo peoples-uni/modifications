@@ -72,7 +72,7 @@ foreach ($all_users as $a_user) {
           if (!empty($dob_array[0]) && !empty($dob_array[1]) && !empty($dob_array[2])) {
             $monthnames = array(1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December');
             $month = array_search($dob_array[1], $monthnames);
-            if (!empty($month)) {
+            if (!empty($month) && ($dob_array[0] > 0) && ($dob_array[0] <= 31) && ($dob_array[2] > 1900) && ($dob_array[2] < 2100)) {
               $record->dobday = $dob_array[0];
               $record->dobmonth = $month;
               $record->dobyear = $dob_array[2];
@@ -83,7 +83,7 @@ foreach ($all_users as $a_user) {
       }
 
       if ($profile_item->fieldid == 2) {
-        if (!empty($profile_item->data)) $record->gender = $profile_item->data;
+        if (!empty($profile_item->data) && ($profile_item->data == 'Female' || $profile_item->data == 'Male')) $record->gender = $profile_item->data;
       }
 
       if ($profile_item->fieldid == 3) {
