@@ -14,7 +14,7 @@ CREATE TABLE mdl_peoplesregistration (
   firstname VARCHAR(100) NOT NULL DEFAULT '',
   lastname VARCHAR(100) NOT NULL DEFAULT '',
   email VARCHAR(100) NOT NULL DEFAULT '',
-  city VARCHAR(20) NOT NULL DEFAULT '',
+  city VARCHAR(120) NOT NULL DEFAULT '',
   country VARCHAR(2) NOT NULL DEFAULT '',
   qualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
   higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
@@ -48,6 +48,8 @@ ALTER TABLE mdl_peoplesregistration ADD whatlearn VARCHAR(100) NOT NULL DEFAULT 
 ALTER TABLE mdl_peoplesregistration ADD whylearn VARCHAR(100) NOT NULL DEFAULT '' AFTER whatlearn;
 ALTER TABLE mdl_peoplesregistration ADD whyelearning VARCHAR(100) NOT NULL DEFAULT '' AFTER whylearn;
 ALTER TABLE mdl_peoplesregistration ADD howuselearning VARCHAR(100) NOT NULL DEFAULT '' AFTER whyelearning;
+
+ALTER TABLE mdl_peoplesregistration MODIFY city VARCHAR(120) NOT NULL DEFAULT '';
 */
 
 
@@ -361,7 +363,7 @@ elseif ($data = $editform->get_data()) {
 
   $dataitem = $data->city;
   $dataitem = trim(strip_tags($dataitem));
-  $dataitem = mb_substr($dataitem, 0, 20, 'UTF-8');
+  $dataitem = mb_substr($dataitem, 0, 120, 'UTF-8');
   $application->city = $dataitem;
 
   $dataitem = $data->country;

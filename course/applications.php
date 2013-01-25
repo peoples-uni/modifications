@@ -23,7 +23,7 @@ CREATE TABLE mdl_peoplesapplication (
   firstname VARCHAR(100) NOT NULL DEFAULT '',
   lastname VARCHAR(100) NOT NULL DEFAULT '',
   email VARCHAR(100) NOT NULL DEFAULT '',
-  city VARCHAR(20) NOT NULL DEFAULT '',
+  city VARCHAR(120) NOT NULL DEFAULT '',
   country VARCHAR(2) NOT NULL DEFAULT '',
   qualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
   higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
@@ -155,6 +155,8 @@ CREATE INDEX mdl_peoplespaymentnote_sid_ix ON mdl_peoplespaymentnote (sid);
 
 "sid" so can use before userid assigned.
 (userid will be set when it is known.)
+
+ALTER TABLE mdl_peoplesapplication MODIFY city VARCHAR(120) NOT NULL DEFAULT '';
 */
 
 

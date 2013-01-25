@@ -347,7 +347,7 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $mform->addRule('applicationaddress', 'Address is required', 'required', null, 'client');
     $mform->addElement('static', 'explainapplicationaddress', '&nbsp;', 'Your full postal address. This must be a permanent long term address which can be used for postal delivery if/when necessary.<br />');
 
-    $mform->addElement('text', 'city', 'City/Town', 'maxlength="20" size="50"');
+    $mform->addElement('text', 'city', 'City/Town', 'maxlength="120" size="50"');
     $mform->addRule('city', 'City/Town is required', 'required', null, 'client');
     $mform->setType('city', PARAM_MULTILANG);
     $mform->addElement('static', 'explaincity', '&nbsp;', 'Your City or Town for display in Moodle.<br />');
