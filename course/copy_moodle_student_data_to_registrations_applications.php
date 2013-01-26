@@ -46,7 +46,7 @@ $PAGE->set_heading('copy_moodle_student_data_to_registrations_applications.php')
 echo $OUTPUT->header();
 
 
-$all_users = $DB->get_records('user');
+$all_users = $DB->get_records('user', array('deleted' => 0));
 
 $n = 0;
 foreach ($all_users as $a_user) {
