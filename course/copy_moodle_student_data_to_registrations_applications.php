@@ -87,23 +87,23 @@ foreach ($all_users as $a_user) {
       }
 
       if ($profile_item->fieldid == 3) {
-        if (!empty($profile_item->data)) $record->applicationaddress = strip_tags(str_replace('<br />', "\r\n", $profile_item->data));
+        if (!empty($profile_item->data)) $record->applicationaddress = trim(strip_tags(str_replace('<br />', "\r\n", $profile_item->data)));
       }
 
       if ($profile_item->fieldid == 4) {
-        if (!empty($profile_item->data)) $record->currentjob = strip_tags(str_replace('<br />', "\r\n", $profile_item->data));
+        if (!empty($profile_item->data)) $record->currentjob = trim(strip_tags(str_replace('<br />', "\r\n", $profile_item->data)));
       }
 
       if ($profile_item->fieldid == 5) {
-        if (!empty($profile_item->data)) $record->education = strip_tags(str_replace('<br />', "\r\n", $profile_item->data));
+        if (!empty($profile_item->data)) $record->education = trim(strip_tags(str_replace('<br />', "\r\n", $profile_item->data)));
       }
 
       if ($profile_item->fieldid == 6) {
-        if (!empty($profile_item->data)) $record->reasons = strip_tags(str_replace('<br />', "\r\n", $profile_item->data));
+        if (!empty($profile_item->data)) $record->reasons = trim(strip_tags(str_replace('<br />', "\r\n", $profile_item->data)));
       }
 
       if ($profile_item->fieldid == 10) {
-        if (!empty($profile_item->data)) $record->sponsoringorganisation = strip_tags(str_replace('<br />', "\r\n", $profile_item->data));
+        if (!empty($profile_item->data)) $record->sponsoringorganisation = trim(strip_tags(str_replace('<br />', "\r\n", $profile_item->data)));
       }
 
       if ($profile_item->fieldid == 7) {
