@@ -125,24 +125,20 @@ foreach ($all_users as $a_user) {
 
 
   $copied_data = FALSE;
-  $records_to_update = $DB->get_records('temppeoplesregistration', array('userid' => $userid));
-//  $records_to_update = $DB->get_records('peoplesregistration', array('userid' => $userid));
+  $records_to_update = $DB->get_records('peoplesregistration', array('userid' => $userid));
   if (!empty($records_to_update)) {
     foreach ($records_to_update as $record_to_update) {
       $record->id = $record_to_update->id;
-      $DB->update_record('temppeoplesregistration', $record);
-//      $DB->update_record('peoplesregistration', $record);
+      $DB->update_record('peoplesregistration', $record);
       $copied_data = TRUE;
     }
   }
 
-  $records_to_update = $DB->get_records('temppeoplesapplication', array('userid' => $userid));
-//  $records_to_update = $DB->get_records('peoplesapplication', array('userid' => $userid));
+  $records_to_update = $DB->get_records('peoplesapplication', array('userid' => $userid));
   if (!empty($records_to_update)) {
     foreach ($records_to_update as $record_to_update) {
       $record->id = $record_to_update->id;
-      $DB->update_record('temppeoplesapplication', $record);
-//      $DB->update_record('peoplesapplication', $record);
+      $DB->update_record('peoplesapplication', $record);
       $copied_data = TRUE;
     }
   }

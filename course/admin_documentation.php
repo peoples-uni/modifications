@@ -196,6 +196,13 @@ It is also possible to programmatically send a reminder or other e-mail to all o
 <li>
 Access to <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
+<li>
+At a later stage, when students edit their own profile (e.g. their names, e-mail or address) or when an administrator edits a student profile (e.g. date of birth), the registrations.php data (or for that matter the applications.php data to be described later) will be out of date and will not reflect the updated data in Moodle.<br />
+To bring both registrations.php and applications.php up to date with the Moodle student profiles click on/visit <a href="http://courses.peoples-uni.org/course/copy_moodle_student_data_to_registrations_applications.php" target="_blank">http://courses.peoples-uni.org/course/copy_moodle_student_data_to_registrations_applications.php</a><br />
+This will copy over all the student profile data from Moodle (but not for any deleted accounts) and give an indication of how many student profiles were processed.
+<br />
+Access to this function is only available to the "Administrator" role.
+</li>
 </ol>
 
 
