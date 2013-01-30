@@ -2297,8 +2297,9 @@ foreach ($modules as $key => $modulename) {
 <?php
 }
 else {
-  echo '<br />In exceptional cases you may want to enrol an applicant in a 3rd (or further) module... you can only do this AFTER they have been fully enrolled in their first and second modules.';
-  echo '<br />The module will not be listed at the top of this page or in applications.php where only two modules are shown, but will be seen as a valid course in the "User\'s courses" above and elsewhere throughout the system.<br />';
+  echo '<br />In exceptional cases you may want to enrol an applicant in a 3rd (or further) module...';
+  echo '<br />You can only do this AFTER they have been fully enrolled in their first and second modules.';
+  echo '<br />The module will not be listed at the top of this page or in applications.php where only two modules are shown, but will be seen as a valid course in the "User\'s courses" above and elsewhere throughout the system.<br /><br />';
 }
 
 
