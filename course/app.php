@@ -384,13 +384,13 @@ if (!empty($_POST['change1'])) {
 
 	$refreshparent = true;
 }
-if (!empty($_POST['change2'])) {
+if (!empty($_POST['change2']) && !empty($_POST['19'])) {
 
 	updateapplication($_POST['sid'], 'coursename2', $_REQUEST['19']);
 
 	$refreshparent = true;
 }
-if (!empty($_POST['add2newapproved'])) {
+if (!empty($_POST['add2newapproved']) && !empty($_POST['19'])) {
 
   updateapplication($_POST['sid'], 'coursename2', $_REQUEST['19'], 1); // 1 => Need to increase payment for new approved module
 
@@ -1511,6 +1511,9 @@ foreach ($modules as $key => $modulename) {
 <br />
 <?php
 }
+elseif ($state2 === 030 && empty($_REQUEST['19'])) {
+  echo '<br />The student did not specify a second module. If you need to do that for them, you must first unapprove their first module, then specify a second module and then you may approve both.<br /><br />';
+}
 
 ?>
 <br />To send an e-mail to this applicant (EDIT the e-mail text below!), press "e-mail Applicant".
@@ -2233,7 +2236,7 @@ if ($state1 !== 030 && $state2 !== 030 && empty($_REQUEST['29'])) { // Allow app
 <?php
 }
 
-if ($state1 === 030 || $state2 === 030) { // Add another module (beyond 2)
+if ($state1 === 030 && $state2 === 030 && !empty($_REQUEST['19'])) { // Add another module (beyond 2)
 ?>
 
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
@@ -2288,9 +2291,14 @@ foreach ($modules as $key => $modulename) {
 ?>
 </select>
 <br />(Payment Balance will be increased accordingly.)
+<br />(The module will not be listed at the top of this page or in applications.php where only two modules are shown, but will be seen as a valid course in the "User's courses" above and elsewhere throughout the system.)
 </form>
 <br />
 <?php
+}
+else {
+  echo '<br />In exceptional cases you may want to enrol an applicant in a 3rd (or further) module... you can only do this AFTER they have been fully enrolled in their first and second modules.';
+  echo '<br />The module will not be listed at the top of this page or in applications.php where only two modules are shown, but will be seen as a valid course in the "User\'s courses" above and elsewhere throughout the system.<br />';
 }
 
 
