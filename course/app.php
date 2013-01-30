@@ -2189,7 +2189,7 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 <br />
 <?php
 
-if ($state1 !== 030 && $state2 !== 030 && empty($_REQUEST['29'])) { // Allow applicant e-mail to be changed
+if ($state1 !== 03 && $state2 !== 030 && empty($_REQUEST['29'])) { // Allow applicant e-mail to be changed
 ?>
 
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
@@ -2236,7 +2236,7 @@ if ($state1 !== 030 && $state2 !== 030 && empty($_REQUEST['29'])) { // Allow app
 <?php
 }
 
-if ($state1 === 030 && $state2 === 030 && !empty($_REQUEST['19'])) { // Add another module (beyond 2)
+if ($state1 === 03 && $state2 === 030 && !empty($_REQUEST['19'])) { // Add another module (beyond 2)
 ?>
 
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
