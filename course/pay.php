@@ -344,6 +344,11 @@ $updated->dateattemptedtopay = time();
 $DB->update_record('peoplesapplication', $updated);
 
 
+// In e-mail from WorldPay on 20130219 they say by 30th April don't use IP (which we do not... so we should be OK), but use...
+// Test environment:       https://secure-test.worldpay.com/wcc/purchase
+// Production environment: https://secure.worldpay.com/wcc/purchase
+// (this would apply to other payment pages)
+// I assume, by strictly following their wording, that what we currently use will be OK...
 if ($test) {
 	$payurl = 'https://select-test.worldpay.com/wcc/purchase';
 	$testresult = 'REFUSED';
