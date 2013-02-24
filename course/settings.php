@@ -170,7 +170,7 @@ if (!empty($_POST['marksetfph']) && !empty($_POST['fph'])) {
 if (!empty($_POST['marksetssc']) && !empty($_POST['ssc'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $ssc = $_POST['ssc'];
-  set_config('student_support_id', $ssc);
+  set_config('peoples_student_support_id', $ssc);
 }
 if (!empty($_POST['mark_register_email']) && !empty($_POST['value_register_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -520,7 +520,7 @@ foreach ($courses as $course) {
 <?php
 foreach ($courses as $course) {
   $modulename = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
-  if ($course->id == get_config(NULL, 'student_support_id')) $selected = 'selected';
+  if ($course->id == get_config(NULL, 'peoples_student_support_id')) $selected = 'selected';
   else $selected = '';
 ?>
 <option <?php echo $selected; ?> value="<?php echo $course->id; ?>" ><?php echo $modulename; ?></option>

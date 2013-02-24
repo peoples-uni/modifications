@@ -551,6 +551,13 @@ elseif (!empty($_POST['userid']) && (
     sendstudentscorner($user);
   }
 
+  // Enrol student in Student Support Forums
+  $studentsupportforums = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
+  if (!empty($studentsupportforums)) {
+    enrolincoursesimple($studentsupportforums, $user);
+    sendstudentsupportforums($user);
+  }
+
 	if (empty($_POST['coursename1'])) {
 ?>
 <br/><br/><br/><strong>CAN NOT enrol the user in the first selected course because it is empty!</strong>
@@ -829,6 +836,54 @@ TECHSUPPORT_EMAIL_HERE";
   $supportuser->maildisplay = true;
 
   $subject = format_string($site->fullname) . ': Students Corner';
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  return email_to_user($user, $supportuser, $subject, $message);
+}
+
+
+function sendstudentsupportforums($user) {
+  global $DB;
+  global $CFG;
+
+  $message = "Hi FULL_NAME_HERE,
+
+You have been enrolled in the Student Support Forums module:
+
+http://courses.peoples-uni.org/course/view.php?id=STUDENT_SUPPORT_ID_HERE
+
+This is in addition to the modules which you are going to study and the Students Corner.
+
+Each student will be (or already has been) assigned to a specific discussion forum in the Student Support Forums module.
+Discussion will be led by a Student Support Officer.
+The Student Support Officer's role is to make contact with students as they enrol, continuing throughout the time they are with Peoples-uni, to provide support.
+
+If you need help, please contact the site administrator,
+TECHSUPPORT_EMAIL_HERE";
+
+  $site = get_site();
+
+  $studentsupportforums = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
+
+  $message = str_replace('FULL_NAME_HERE',          fullname($user), $message);
+  $message = str_replace('SITE_NAME_HERE',          format_string($site->fullname), $message);
+  $message = str_replace('USERNAME_HERE',           $user->username, $message);
+  $message = str_replace('LOGIN_LINK_HERE',         $CFG->wwwroot . '/login/index.php', $message);
+  $message = str_replace('STUDENT_SUPPORT_ID_HERE', $studentsupportforums->id, $message);
+  $message = str_replace('USER_ID_HERE',            $user->id, $message);
+  $message = str_replace('TECHSUPPORT_EMAIL_HERE',  "\nPeoples-uni Support\napply@peoples-uni.org\n", $message);
+
+  $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
+                                                                         // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+
+  //$supportuser = generate_email_supportuser();
+  $supportuser = new stdClass();
+  $supportuser->email = 'apply@peoples-uni.org';
+  $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
+
+  $subject = format_string($site->fullname) . ': Student Support Forums';
 
   //$user->email = 'alanabarrett0@gmail.com';
   return email_to_user($user, $supportuser, $subject, $message);
