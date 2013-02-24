@@ -25,6 +25,7 @@ CREATE TABLE mdl_peoplesdonation (
 CONSTRAINT  PRIMARY KEY (id)
 );
 */
+die();
 
 
 require("../config.php");
