@@ -735,6 +735,8 @@ There is a link to your course at the bottom of the profile or you can click:
 <br />
 They will also get a notification of the current semester's Students Corner in another e-mail.
 <br />
+They will also get a notification of the Student Support Forums module in yet another e-mail.
+<br />
 The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
 </li>
 <li>
