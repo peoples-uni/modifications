@@ -18,9 +18,6 @@ class survey_form extends moodleform {
     $select_array = array('' => 'Select...', 'R0' => 'Worldwide', 'R1' => 'Africa', 'R2' => 'Americas', 'R3' => 'Asia', 'R4' => 'Europe', 'R5' => 'Oceania');
     $countryname = get_string_manager()->get_list_of_countries(false);
     $countryname = array_merge($select_array, $countryname);
-foreach ($countryname as $i => $name) {
-  echo '<br />:' . $i . ':' . $name . ';';
-}
 
 $array_interested_choices = array(
   '' => 'Select...',
