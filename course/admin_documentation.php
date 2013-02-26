@@ -809,7 +809,7 @@ This should be done some time before assignment submission and grading starts.
 The names or contextid of these two modules should not be changed.
 </li>
 <li>
-The following page is linked from the Drupal menus to allow donations: <a href="http://courses.peoples-uni.org/course/donate.php" target="_blank">http://courses.peoples-uni.org/course/donate.php</a>
+The following page was linked from the Drupal menus to allow donations: <a href="http://courses.peoples-uni.org/course/donate.php?code=28595" target="_blank">http://courses.peoples-uni.org/course/donate.php?code=28595</a> but now it is not linked (because of usage for fraudulently testing stolen credit cards) but can be given out on request.
 </li>
 </ol>
 
