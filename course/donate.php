@@ -51,6 +51,7 @@ if ($_REQUEST['code'] != 28595 || $_REQUEST['code'] != 69315 || $_REQUEST['code'
   echo '</div>';
   print_simple_box_end();
   print_footer();
+  die();
 }
 
 echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>';
