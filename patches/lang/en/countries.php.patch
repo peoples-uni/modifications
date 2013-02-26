@@ -1,33 +1,6 @@
---- countries.bak.php	Wed Jul 18 15:10:59 2012
-+++ countries.php	Tue Oct  2 15:12:57 2012
-@@ -53,6 +53,7 @@
- $string['BM'] = 'Bermuda';
- $string['BN'] = 'Brunei Darussalam';
- $string['BO'] = 'Bolivia';
-+$string['BQ'] = 'Bonaire, Sint Eustatius and Saba';
- $string['BR'] = 'Brazil';
- $string['BS'] = 'Bahamas';
- $string['BT'] = 'Bhutan';
-@@ -74,6 +75,7 @@
- $string['CR'] = 'Costa Rica';
- $string['CU'] = 'Cuba';
- $string['CV'] = 'Cape Verde';
-+$string['CW'] = 'Curaçao';
- $string['CX'] = 'Christmas Island';
- $string['CY'] = 'Cyprus';
- $string['CZ'] = 'Czech Republic';
-@@ -229,8 +231,10 @@
- $string['SN'] = 'Senegal';
- $string['SO'] = 'Somalia';
- $string['SR'] = 'Suriname';
-+$string['SS'] = 'South Sudan';
- $string['ST'] = 'Sao Tome And Principe';
- $string['SV'] = 'El Salvador';
-+$string['SX'] = 'Sint Maarten (Dutch part)';
- $string['SY'] = 'Syrian Arab Republic';
- $string['SZ'] = 'Swaziland';
- $string['TC'] = 'Turks And Caicos Islands';
-@@ -264,6 +268,7 @@
+--- countries.bak.php	Sat Feb 23 16:22:10 2013
++++ countries.php	Sat Feb 23 16:33:20 2013
+@@ -267,6 +267,7 @@
  $string['VU'] = 'Vanuatu';
  $string['WF'] = 'Wallis And Futuna';
  $string['WS'] = 'Samoa';
