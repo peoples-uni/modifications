@@ -44,7 +44,8 @@ echo '<div align="center">';
 
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 
-if ($_REQUEST['code'] != 28595 && $_REQUEST['code'] != 69315 && $_REQUEST['code'] != 48223) {
+$code = (int)$_REQUEST['code'];
+if ($code != 28595 && $code != 69315 && $code != 48223) {
 
   echo '<p>You have not entered a correct code. Please contact <a href="mailto:payments@peoples-uni.org?subject=Donation Code">payments@peoples-uni.org</a>.</p>';
 
