@@ -25,7 +25,6 @@ CREATE TABLE mdl_peoplesdonation (
 CONSTRAINT  PRIMARY KEY (id)
 );
 */
-die();
 
 
 require("../config.php");
@@ -44,6 +43,16 @@ else {
 echo '<div align="center">';
 
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
+
+if ($_REQUEST['code'] != 28595 || $_REQUEST['code'] != 69315 || $_REQUEST['code'] != 48223) {
+
+  echo "<p>You have not entered a correct code. Please conact <a href="mailto:payments@peoples-uni.org?subject=Donation Code">payments@peoples-uni.org</a>.</p>";
+
+  echo '</div>';
+  print_simple_box_end();
+  print_footer();
+}
+
 echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>';
 
 echo "<p>Enter the amount you wish to donate (minimum 25 UK Pounds Sterling) and your contact information (if you wish) and then click the button below to make your donation with RBS WorldPay.</p>";
