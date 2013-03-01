@@ -131,8 +131,14 @@ if ($cert == 'transcript') {
 	cert_printtext(170, 320, 'C', 'Helvetica', '', 14, utf8_decode("one of the course modules in the People's Open Access Educational Initiative - Peoples-uni."));
 
   if ($certdate > 1291161600) { // December 1st 2010
-    cert_printtext(170, 350, 'C', 'Helvetica', '', 14, utf8_decode('This carries 20 credits towards a Peoples-uni Certificate or Diploma,'));
-    cert_printtext(170, 380, 'C', 'Helvetica', '', 14, utf8_decode(' and 10 credits towards the European Credit Transfer System.'));
+    if (stripos($course->fullname , 'dissertation') === FALSE) { // Not Masters dissertation
+      cert_printtext(170, 350, 'C', 'Helvetica', '', 14, utf8_decode('This carries 20 credits towards a Peoples-uni Certificate or Diploma,'));
+      cert_printtext(170, 380, 'C', 'Helvetica', '', 14, utf8_decode(' and 10 credits towards the European Credit Transfer System.'));
+    }
+    else { // Masters dissertation
+      cert_printtext(170, 350, 'C', 'Helvetica', '', 14, utf8_decode('This carries 60 credits towards a Peoples-uni Certificate or Diploma,'));
+      cert_printtext(170, 380, 'C', 'Helvetica', '', 14, utf8_decode(' and 30 credits towards the European Credit Transfer System.'));
+    }
   }
   else {
     cert_printtext(170, 350, 'C', 'Helvetica', '', 14, utf8_decode('This carries 15 credits towards a Peoples-uni Certificate or Diploma,'));
