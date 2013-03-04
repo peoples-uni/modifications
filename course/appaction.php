@@ -885,14 +885,6 @@ TECHSUPPORT_EMAIL_HERE";
 
   $subject = format_string($site->fullname) . ': Student Support Forums';
 
-//[[[DEL
-  $dummyuser = new stdClass();
-  $dummyuser->id = 999999999;
-  $dummyuser->email = 'alanabarrett0@gmail.com';
-  $dummyuser->maildisplay = true;
-  $dummyuser->mnethostid = $CFG->mnet_localhost_id;
-  email_to_user($dummyuser, $supportuser, $subject, $message);
-//]]]DEL
   //$user->email = 'alanabarrett0@gmail.com';
   return email_to_user($user, $supportuser, $subject, $message);
 }
