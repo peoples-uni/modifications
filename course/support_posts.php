@@ -197,7 +197,7 @@ if (!empty($enrols)) {
       continue;
     }
 
-    if ($skipintro && ((substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 12) === 'introduction') || (substr(strtolower(trim(strip_tags($enrol->subject))), 0, 12) === 'introduction') || (substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 12) === 'welcome') || (substr(strtolower(trim(strip_tags($enrol->subject))), 0, 12) === 'welcome'))) {
+    if ($skipintro && ((substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 12) === 'introduction') || (substr(strtolower(trim(strip_tags($enrol->subject))), 0, 12) === 'introduction') || (substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 7) === 'welcome') || (substr(strtolower(trim(strip_tags($enrol->subject))), 0, 7) === 'welcome'))) {
 				continue;
 		}
 
