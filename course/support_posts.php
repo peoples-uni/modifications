@@ -14,7 +14,7 @@ $PAGE->set_url('/course/support_posts.php');
 
 if (!empty($_POST['markfilter'])) {
 	redirect($CFG->wwwroot . '/course/support_posts.php?'
-    . '&chosenstartyear=' . $_POST['chosenstartyear']
+    . 'chosenstartyear=' . $_POST['chosenstartyear']
     . '&chosenstartmonth=' . $_POST['chosenstartmonth']
     . '&chosenstartday=' . $_POST['chosenstartday']
     . '&chosenendyear=' . $_POST['chosenendyear']
