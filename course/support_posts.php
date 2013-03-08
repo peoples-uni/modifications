@@ -117,7 +117,7 @@ Display entries using the following filters...
     <td>End Day</td>
     <td>Forum Name Contains</td>
     <td>User Name Contains</td>
-		<td>Skip Introduction Topics/Subjects</td>
+		<td>Skip Introduction/Welcome Topics/Subjects</td>
 	</tr>
 	<tr>
 		<?php
@@ -197,7 +197,7 @@ if (!empty($enrols)) {
       continue;
     }
 
-    if ($skipintro && ((substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 12) === 'introduction') || (substr(strtolower(trim(strip_tags($enrol->subject))), 0, 12) === 'introduction'))) {
+    if ($skipintro && ((substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 12) === 'introduction') || (substr(strtolower(trim(strip_tags($enrol->subject))), 0, 12) === 'introduction') || (substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 12) === 'Welcome') || (substr(strtolower(trim(strip_tags($enrol->subject))), 0, 12) === 'Welcome'))) {
 				continue;
 		}
 
