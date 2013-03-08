@@ -62,7 +62,7 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a><br />
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a><br />
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a><br />
@@ -625,7 +625,7 @@ When the "Details" button is pressed for an application, additional applicant da
 "Student Grades" Launches the Peoples-uni transcript of the grades achieved by this student in all the modules they have done. See "Course Grades" (<a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a>) which is described below in "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>".
 </li>
 <li>
-"Student Submissions" Launches a report on all the assignment submissions made by this student. See "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a>" below.
+"Student Submissions" Launches a report on all the assignment submissions made by this student. See "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a>" below.
 </li>
 <li>
 "Payment up to date? (amount owed includes modules already approved for this semester or any MPH instalments due this semester)" indicates the amount still due this semester (i.e. instalments due in subsequent semesters are not included).<br />
@@ -864,7 +864,7 @@ Assignment grades agreed in the spreadsheet will need to be manually entered in 
 
 
 <a name="tracking"></a>
-<h2>Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</h2>
+<h2>Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</h2>
 <ol>
 <li>
 If you go to any of the following links <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>, "Details", <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> or "Student Grades"/student.php, you will see a link called "Student Submissions" for each student which will allow you to view all submissions that students have made for assignments (including re-submissions) and also all the grades received by the student and all comments by the tutors.
@@ -946,6 +946,24 @@ After the main body of posts there are tables (one per course) that show, for ea
 </li>
 <li>
 Access to tutorposts.php is available to any tutor or admin.
+</li>
+<li>
+To view posts made in the Student Support Forums module go to: <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a>.
+</li>
+<li>
+This lists all posts giving Forum Name and Subject.
+</li>
+<li>
+You can also click on the subject to see the discussion details.
+</li>
+<li>
+After the main body of posts there are tables that show for each contributor, the number of posts they have made to each topic and further summaries.
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a> also includes various filters.
+</li>
+<li>
+Access to support_posts.php is available to any tutor, education coordinator or admin.
 </li>
 </ol>
 
@@ -1220,7 +1238,7 @@ There is also a link back to the <a href="http://courses.peoples-uni.org/course/
 The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>
 </li>
 <li>
-The part about Student Posts in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts and Tutor Posts</a> will be useful to see what students have posted.
+The part about Student Posts in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> will be useful to see what students have posted.
 </li>
 </ol>
 
