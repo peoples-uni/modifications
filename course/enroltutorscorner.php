@@ -1,7 +1,7 @@
 <?php  // $Id: enroltutorscorner.php,v 1.1 2009/04/05 18:06:00 alanbarrett Exp $
 /**
 *
-* Enrol All Current Module Leader/Tutors/Education coordinator in Tutors Corner and Guide for online facilitators
+* Enrol All Current Module Leader/Tutors/Student coordinator in Tutors Corner and Guide for online facilitators
 *
 */
 
@@ -17,8 +17,8 @@ require_login();
 
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-$PAGE->set_title('Enrol All Current Module Leader/Tutors/Education coordinator in "Tutors Corner" and "Guide for online facilitators"');
-$PAGE->set_heading('Enrol All Current Module Leader/Tutors/Education coordinator in "Tutors Corner" and "Guide for online facilitators"');
+$PAGE->set_title('Enrol All Current Module Leader/Tutors/Student coordinator in "Tutors Corner" and "Guide for online facilitators"');
+$PAGE->set_heading('Enrol All Current Module Leader/Tutors/Student coordinator in "Tutors Corner" and "Guide for online facilitators"');
 echo $OUTPUT->header();
 
 
@@ -29,7 +29,7 @@ $missingfromtutors = $DB->get_records_sql("
 		(SELECT userid
 			FROM mdl_role_assignments
 			WHERE
-        (roleid=3 OR roleid=17 OR roleid=38) AND
+        (roleid=3 OR roleid=17 OR roleid=38 OR roleid=30) AND
 				contextid IN (
 					SELECT id FROM mdl_context WHERE contextlevel=50 AND instanceid IN
 						(SELECT c.id FROM mdl_activemodules AS a, mdl_course AS c WHERE a.fullname=c.fullname)
@@ -45,7 +45,7 @@ $missingfromtutors = $DB->get_records_sql("
 	// contextid=1641 comes from hovering over Assign roles in the course
 if (empty($missingfromtutors)) {
 	$missingfromtutors = array();
-  echo 'No new Module Leader/Tutors/Education coordinator found to add to "Tutors Corner"<br />';
+  echo 'No new Module Leader/Tutors/Student coordinator found to add to "Tutors Corner"<br />';
 }
 
 foreach ($missingfromtutors as $missing) {
@@ -68,7 +68,7 @@ $missingfromtutors = $DB->get_records_sql("
 		(SELECT userid
 			FROM mdl_role_assignments
 			WHERE
-        (roleid=3 OR roleid=17 OR roleid=38) AND
+        (roleid=3 OR roleid=17 OR roleid=38 OR roleid=30) AND
 				contextid IN (
 					SELECT id FROM mdl_context WHERE contextlevel=50 AND instanceid IN
 						(SELECT c.id FROM mdl_activemodules AS a, mdl_course AS c WHERE a.fullname=c.fullname)
@@ -86,7 +86,7 @@ $missingfromtutors = $DB->get_records_sql("
 	// contextid=765 comes from hovering over Assign roles in the course 765
 if (empty($missingfromtutors)) {
 	$missingfromtutors = array();
-  echo 'No new Module Leader/Tutors/Education coordinator found to add to "Guide for online facilitators"<br />';
+  echo 'No new Module Leader/Tutors/Student coordinator found to add to "Guide for online facilitators"<br />';
 }
 
 foreach ($missingfromtutors as $missing) {

@@ -604,7 +604,7 @@ It is also possible to programmatically send a reminder or other e-mail to all o
 Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 <li>
-If someone is given the "Manager" role (instead of the "Administrator" role) it may be useful to make them a "Tutors" in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Education coordinator" role in each desired course.
+If someone is given the "Manager" role (instead of the "Administrator" role) it may be useful to make them a "Tutors" in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Student coordinator" role in each desired course.
 </li>
 </ol>
 
@@ -805,7 +805,7 @@ This should be done some time before assignment submission and grading starts.
 <h2>Misc: Enrolling Tutors in Tutors Corner, Making a Donation</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">http://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Module Leader", "Tutors" or "Education coordinator" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
+<a href="http://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">http://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Module Leader", "Tutors" or "Student coordinator" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
 The names or contextid of these two modules should not be changed.
 </li>
 <li>
@@ -922,7 +922,7 @@ There is yet another filter called "Don't Show Number of Posts" which just shows
 <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
 </li>
 <li>
-Access to posts.php is available to any tutor, education coordinator or admin.
+Access to posts.php is available to any tutor, Student coordinator or admin.
 </li>
 <li>
 To view posts made by Tutors to discussion forums go to: <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a>.
@@ -963,7 +963,7 @@ After the main body of posts there are tables that show for each contributor, th
 <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a> also includes various filters.
 </li>
 <li>
-Access to support_posts.php is available to any tutor, education coordinator or admin.
+Access to support_posts.php is available to any tutor, Student coordinator or admin.
 </li>
 </ol>
 
@@ -1211,10 +1211,10 @@ It will be possible to see on the page who has specified the instalment schedule
 <h2>Sending Discussion Feedback to Students</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/discussionfeedback.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedback.php</a> is a form used by Education Coordinators to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a>
+<a href="http://courses.peoples-uni.org/course/discussionfeedback.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedback.php</a> is a form used by Student coordinators to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a>
 </li>
 <li>
-The Education Coordinator will need to specify the module (submit the form) and then select individual students (submitting the form again for each student) to give feedback. As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria.
+The Student coordinator will need to specify the module (submit the form) and then select individual students (submitting the form again for each student) to give feedback. As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria.
 </li>
 <li>
 It is indicated in the form whether the form has already been submitted for each student, but it is possible to re-submit and e-mail again and overwrite the recorded submission.
@@ -1269,7 +1269,7 @@ function is_peoples_teacher() {
       ra.userid=? AND
       ra.roleid=r.id AND
       ra.contextid=con.id AND
-      r.name IN ('Module Leader', 'Tutors', 'Education coordinator') AND
+      r.name IN ('Module Leader', 'Tutors', 'Student coordinator', 'Education coordinator_old') AND
       con.contextlevel=50",
     array($USER->id));
 
