@@ -16,6 +16,8 @@ if (!empty($_POST['markfilter'])) {
 	redirect($CFG->wwwroot . '/course/posts.php?'
 		. 'chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
 		. '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
+    . '&chosenssf=' . urlencode(dontstripslashes($_POST['chosenssf']))
+    . '&chosenusersearch=' . urlencode(dontstripslashes($_POST['chosenusersearch']))
     . '&acceptedmmu=' . urlencode(dontstripslashes($_POST['acceptedmmu']))
 		. (empty($_POST['skipintro']) ? '&skipintro=0' : '&skipintro=1')
 		. (empty($_POST['suppressnames']) ? '&suppressnames=0' : '&suppressnames=1')
@@ -43,6 +45,9 @@ echo $OUTPUT->header();
 
 if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
 if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
+if (!empty($_REQUEST['chosenssf'])) $chosenssf = dontstripslashes($_REQUEST['chosenssf']);
+if (!empty($_REQUEST['chosenusersearch'])) $chosenusersearch = dontstripslashes($_REQUEST['chosenusersearch']);
+else $chosenusersearch = '';
 if (!empty($_REQUEST['acceptedmmu'])) $acceptedmmu = dontstripslashes($_REQUEST['acceptedmmu']);
 if (!empty($_REQUEST['skipintro'])) $skipintro = true;
 else $skipintro = false;
@@ -70,6 +75,13 @@ foreach ($courses as $course) {
 	$listmodule[] = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
 }
 
+$studentsupportforumsnames = $DB->get_record('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
+if (!isset($chosenssf)) $chosenssf = 'All';
+$listssf[] = 'All';
+foreach ($studentsupportforumsnames as $studentsupportforumsname) {
+  $listssf[] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
+}
+
 $listacceptedmmu[] = 'Any';
 if (!isset($acceptedmmu)) $acceptedmmu = 'Any';
 $listacceptedmmu[] = 'Yes';
@@ -92,6 +104,8 @@ Display entries using the following filters...
 	<tr>
 		<td>Semester</td>
 		<td>Module</td>
+    <td>Students from this SSF only</td>
+    <td>User Name Contains</td>
     <td>Accepted MMU?</td>
 		<td>Skip Introduction Topics</td>
 		<td>Suppress Names on Posts by Student by Forum Topic Report for each Course (& use SID)</td>
@@ -101,6 +115,10 @@ Display entries using the following filters...
 		<?php
 		displayoptions('chosensemester', $listsemester, $chosensemester);
 		displayoptions('chosenmodule', $listmodule, $chosenmodule);
+    displayoptions('chosenssf', $listssf, $chosenssf);
+    ?>
+    <td><input type="text" size="15" name="chosenusersearch" value="<?php echo htmlspecialchars($chosenusersearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
+    <?php
     displayoptions('acceptedmmu', $listacceptedmmu, $acceptedmmu);
 		?>
 		<td><input type="checkbox" name="skipintro" <?php if ($skipintro) echo ' CHECKED'; ?>></td>
@@ -143,15 +161,35 @@ if (empty($chosenmodule) || ($chosenmodule == 'All')) {
 else {
   $modulesql = 'AND c.fullname=?';
 }
+if (empty($chosenssf) || ($chosenssf == 'All')) {
+  $chosenssf = 'All';
+  $selecteduserids = '999999999';
+  $ssfsql = 'AND e.userid NOT IN(?)';
+}
+else {
+[[(**)
+
+Searching for: GROUP_CONCAT LIKE
+  C:\gitpeoples\moodle2\course\studentprogress.php(38): GROUP_CONCAT(c.idnumber ORDER BY c.idnumber ASC SEPARATOR ', ') AS codespassed,
+  C:\gitpeoples\moodle2\course\tutorposts.php(149): SELECT GROUP_CONCAT(ra.userid SEPARATOR ', ') AS tutors
+
+select u.firstname from mdl_forum_subscriptions fs, mdl_user u WHERE forum=2154 AND fs.userid=u.id AND u.id IN (select userid from mdl_user_enrolments where enrolid=254) ORDER BY u.email ASC;
+SAME AS http://courses.peoples-uni.org/mod/forum/subscribers.php?id=2154
+
+  $selecteduserids =
+(**)]]
+
+  $ssfsql = 'AND e.userid IN(?)';
+}
 
 
 $enrols = $DB->get_records_sql(
 "SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 LEFT JOIN mdl_peoplesmph m ON e.userid=m.userid
-WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql
+WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql
 ORDER BY e.semester, u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC",
-array($chosensemester, $chosenmodule)
+array($chosensemester, $chosenmodule, $selecteduserids)
 );
 
 $sidsbyuseridsemester = $DB->get_records_sql('SELECT CONCAT(userid, semester) AS i, sid FROM mdl_peoplesapplication WHERE (((state & 0x38)>>3)=3 OR (state & 0x7)=3)');
@@ -173,6 +211,12 @@ $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
 
+    if (!empty($chosenusersearch) &&
+      stripos($enrol->lastname, $chosenusersearch) === false &&
+      stripos($enrol->firstname, $chosenusersearch) === false) {
+      continue;
+    }
+
     if (!empty($acceptedmmu) && $acceptedmmu !== 'Any') {
       if ($acceptedmmu === 'No' && $enrol->mph) {
         continue;
@@ -186,7 +230,6 @@ if (!empty($enrols)) {
         }
       }
     }
-
 
 		if ($skipintro && (substr(strtolower(trim(strip_tags($enrol->forumname))), 0, 12) === 'introduction')) {
 				continue;
