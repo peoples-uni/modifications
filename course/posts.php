@@ -150,17 +150,17 @@ function displayoptions($name, $options, $selectedvalue) {
 
 if (empty($chosensemester) || ($chosensemester == 'All')) {
   $chosensemester = 'All';
-  $semestersql = 'AND e.semester!=?';
+  $semestersql = "AND e.semester!='?'";
 }
 else {
-	$semestersql = 'AND e.semester=?';
+  $semestersql = "AND e.semester='?'";
 }
 if (empty($chosenmodule) || ($chosenmodule == 'All')) {
   $chosenmodule = 'All';
-  $modulesql = 'AND c.fullname!=?';
+  $modulesql = "AND c.fullname!='?'";
 }
 else {
-  $modulesql = 'AND c.fullname=?';
+  $modulesql = "AND c.fullname='?'";
 }
 if (empty($chosenssf) || ($chosenssf == 'All')) {
   $chosenssf = 'All';
