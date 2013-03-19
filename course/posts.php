@@ -75,7 +75,7 @@ foreach ($courses as $course) {
 	$listmodule[] = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
 }
 
-$studentsupportforumsnames = $DB->get_record('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
+$studentsupportforumsnames = $DB->get_records('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
 if (!isset($chosenssf)) $chosenssf = 'All';
 $listssf[] = 'All';
 foreach ($studentsupportforumsnames as $studentsupportforumsname) {
