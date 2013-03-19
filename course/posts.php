@@ -150,17 +150,17 @@ function displayoptions($name, $options, $selectedvalue) {
 
 if (empty($chosensemester) || ($chosensemester == 'All')) {
   $chosensemester = 'All';
-  $semestersql = "AND e.semester!='?'";
+  $semestersql = 'AND e.semester!=?';
 }
 else {
-  $semestersql = "AND e.semester='?'";
+  $semestersql = 'AND e.semester=?';
 }
 if (empty($chosenmodule) || ($chosenmodule == 'All')) {
   $chosenmodule = 'All';
-  $modulesql = "AND c.fullname!='?'";
+  $modulesql = 'AND c.fullname!=?';
 }
 else {
-  $modulesql = "AND c.fullname='?'";
+  $modulesql = 'AND c.fullname=?';
 }
 if (empty($chosenssf) || ($chosenssf == 'All')) {
   $chosenssf = 'All';
@@ -189,8 +189,8 @@ else {
 }
 
 
-$semestersqlx = str_replace('?' , $chosensemester, $semestersql);//DELDEL
-$modulesqlx = str_replace('?' , $chosenmodule, $modulesql);//DELDEL
+$semestersqlx = str_replace('?' , "'$chosensemester'", $semestersql);//DELDEL
+$modulesqlx = str_replace('?' , "'$chosenmodule'", $modulesql);//DELDEL
 echo "SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 LEFT JOIN mdl_peoplesmph m ON e.userid=m.userid
