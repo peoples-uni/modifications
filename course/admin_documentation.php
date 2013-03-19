@@ -919,7 +919,7 @@ There is yet another filter called "Don't Show Number of Posts" which just shows
 <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also gives totals by Student after the "Posts by Student by Forum Topic" Reports. It then also gives totals by Student by module and yet again after that there is a summary of contributions per topic at the end of the page.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
+<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by the Student Support Group that the Student is subscribed to in the Student Support Forums, by User Name, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
 </li>
 <li>
 Access to posts.php is available to any tutor, Student coordinator or admin.
