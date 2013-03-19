@@ -81,7 +81,7 @@ $listssf[] = 'All';
 foreach ($studentsupportforumsnames as $studentsupportforumsname) {
   $listssf[] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
 }
-$listssf = natsort($listssf);
+natsort($listssf);
 
 $listacceptedmmu[] = 'Any';
 if (!isset($acceptedmmu)) $acceptedmmu = 'Any';
