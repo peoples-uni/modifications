@@ -185,7 +185,13 @@ else {
         )",
     array($chosenforumid->id, get_config(NULL, 'peoples_student_support_id'))
   );
-  $ssfsql = "AND e.userid IN($recordforselecteduserids->userids)";
+
+  if (!empty($recordforselecteduserids->userids)) {
+    $ssfsql = "AND e.userid IN($recordforselecteduserids->userids)";
+  }
+  else {
+    $ssfsql = '';
+  }
 }
 
 
