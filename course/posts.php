@@ -190,7 +190,7 @@ else {
     $ssfsql = "AND e.userid IN($recordforselecteduserids->userids)";
   }
   else {
-    $ssfsql = '';
+    $ssfsql = "AND e.userid IN(-1)";
   }
 }
 
