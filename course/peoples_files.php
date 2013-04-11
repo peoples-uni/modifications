@@ -9,9 +9,11 @@ require('../config.php');
 require_once("$CFG->dirroot/course/peoples_user_files_form.php");
 require_once("$CFG->dirroot/repository/lib.php");
 
+$student_id = optional_param('student_id', -1, PARAM_INT);
+
 require_login();
 if (isguestuser()) {
-  $SESSION->wantsurl = "$CFG->wwwroot/course/peoples_files.php";
+  $SESSION->wantsurl = "$CFG->wwwroot/course/peoples_files.php?student_id=$student_id";
   notice('<br /><br /><b>You must be a Manager to do this! Please Click "Continue" below, and then log in with your username and password above!</b><br /><br /><br />', "$CFG->wwwroot/");
 }
 
@@ -37,7 +39,6 @@ $data->returnurl = $returnurl;
 
 $options = array('subdirs' => 1, 'maxbytes' => 0, 'maxfiles' => -1, 'accepted_types' => '*', 'areamaxbytes' => FILE_AREA_MAX_BYTES_UNLIMITED);
 
-$student_id = optional_param('student_id', -1, PARAM_INT);
 $student = $DB->get_record('user', array('id' => $student_id));
 if (empty($student)) {
   echo '<h2>No student_id was specified!</h2>';
