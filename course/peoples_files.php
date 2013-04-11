@@ -19,7 +19,7 @@ if (isguestuser()) {
 
 $returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
 if (empty($returnurl)) {
-  $returnurl = new moodle_url('/course/peoples_files.php');
+  $returnurl = new moodle_url("/course/peoples_files.php?student_id=$student_id");
 }
 
 // Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
