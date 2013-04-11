@@ -11,7 +11,8 @@ require_once("$CFG->dirroot/repository/lib.php");
 
 require_login();
 if (isguestuser()) {
-  die();
+  $SESSION->wantsurl = "$CFG->wwwroot/course/peoples_files.php";
+  notice('<br /><br /><b>You must be a Manager to do this! Please Click "Continue" below, and then log in with your username and password above!</b><br /><br /><br />', "$CFG->wwwroot/");
 }
 
 $returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
@@ -39,6 +40,7 @@ $options = array('subdirs' => 1, 'maxbytes' => 0, 'maxfiles' => -1, 'accepted_ty
 $student_id = optional_param('student_id', -1, PARAM_INT);
 $student = $DB->get_record('user', array('id' => $student_id));
 if (empty($student)) {
+  echo '<h2>No student_id was specified!</h2>';
   die();
 }
 $context = context_user::instance($student_id);
