@@ -22,7 +22,15 @@ if (empty($returnurl)) {
   $returnurl = new moodle_url('/course/peoples_files.php', array('student_id' => $student_id));
   echo 'returnurl:'.$returnurl;
 }
-  echo '(2)returnurl:'.$returnurl;
+else {
+  $parts = parse_url($returnurl);
+  $query = $parts['query'];
+  $parms = array();
+  parse_str($query, $parms);
+  $student_id = (int)($parms['student_id']);
+  echo '(else)returnurl:'.$returnurl.' student_id:'.$student_id.' parts:'.$parts;
+}
+  echo '(2)returnurl:'.$returnurl.' student_id:'.$student_id;
 
 // Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
