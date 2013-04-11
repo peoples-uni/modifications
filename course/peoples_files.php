@@ -20,7 +20,9 @@ if (isguestuser()) {
 $returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
 if (empty($returnurl)) {
   $returnurl = new moodle_url('/course/peoples_files.php', array('student_id' => $student_id));
+  echo 'returnurl:'.$returnurl;
 }
+  echo '(2)returnurl:'.$returnurl;
 
 // Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
@@ -52,6 +54,7 @@ file_prepare_standard_filemanager($data, 'files', $options, $context, 'peoples_r
 $mform = new peoples_user_files_form(NULL, array('data' => $data, 'options' => $options));
 
 if ($mform->is_cancelled()) {
+  echo '(3)returnurl:'.$returnurl;
   redirect($returnurl);
 }
 elseif ($formdata = $mform->get_data()) {
