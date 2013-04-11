@@ -17,10 +17,10 @@ if (isguestuser()) {
   notice('<br /><br /><b>You must be a Manager to do this! Please Click "Continue" below, and then log in with your username and password above!</b><br /><br /><br />', "$CFG->wwwroot/");
 }
 
-//$returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
-//if (empty($returnurl)) {
-$returnurl = new moodle_url("/course/peoples_files.php?student_id=$student_id");
-//}
+$returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
+if (empty($returnurl)) {
+  $returnurl = new moodle_url('/course/peoples_files.php', array('student_id' => $student_id));
+}
 
 // Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
