@@ -37,7 +37,7 @@ $PAGE->set_pagelayout('mydashboard');
 $data = new stdClass();
 $data->returnurl = $returnurl;
 
-$options = array('subdirs' => 1, 'maxbytes' => 0, 'maxfiles' => -1, 'accepted_types' => '*', 'areamaxbytes' => FILE_AREA_MAX_BYTES_UNLIMITED);
+$options = array('subdirs' => 1, 'maxbytes' => 0, 'maxfiles' => -1, 'accepted_types' => '*', 'areamaxbytes' => -1);
 
 $student = $DB->get_record('user', array('id' => $student_id));
 if (empty($student)) {
