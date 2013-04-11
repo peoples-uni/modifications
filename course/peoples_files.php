@@ -20,7 +20,6 @@ if (isguestuser()) {
 $returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
 if (empty($returnurl)) {
   $returnurl = new moodle_url('/course/peoples_files.php', array('student_id' => $student_id));
-  echo 'returnurl:'.$returnurl;
 }
 else {
   $parts = parse_url($returnurl);
@@ -28,9 +27,7 @@ else {
   $parms = array();
   parse_str($query, $parms);
   $student_id = (int)($parms['student_id']);
-  echo '(else)returnurl:'.$returnurl.' student_id:'.$student_id.' parts:'.$parts;
 }
-  echo '(2)returnurl:'.$returnurl.' student_id:'.$student_id;
 
 // Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
@@ -62,7 +59,6 @@ file_prepare_standard_filemanager($data, 'files', $options, $context, 'peoples_r
 $mform = new peoples_user_files_form(NULL, array('data' => $data, 'options' => $options));
 
 if ($mform->is_cancelled()) {
-  echo '(3)returnurl:'.$returnurl;
   redirect($returnurl);
 }
 elseif ($formdata = $mform->get_data()) {
@@ -72,6 +68,10 @@ elseif ($formdata = $mform->get_data()) {
 
 echo $OUTPUT->header();
 echo $OUTPUT->box_start('generalbox');
+
+echo "<h2>Peoples-uni Record Files for $student->lastname, $student->firstname ($student->id)</h2>";
+
 $mform->display();
+
 echo $OUTPUT->box_end();
 echo $OUTPUT->footer();
