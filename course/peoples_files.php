@@ -49,7 +49,7 @@ if ($is_manager) {
   $options = array('subdirs' => 1, 'maxbytes' => 0, 'maxfiles' => -1, 'accepted_types' => '*', 'areamaxbytes' => -1, 'is_manager' => TRUE);
 }
 else {
-  $options = array('subdirs' => 0, 'maxbytes' => 1, 'maxfiles' => 0, 'accepted_types' => '', 'areamaxbytes' => 0, 'is_manager' => FALSE);
+  $options = array('subdirs' => 1, 'maxbytes' => 1, 'maxfiles' => 0, 'accepted_types' => '', 'areamaxbytes' => 0, 'is_manager' => FALSE);
 }
 
 $student = $DB->get_record('user', array('id' => $student_id));
