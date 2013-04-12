@@ -82,7 +82,7 @@ echo $OUTPUT->header();
 echo $OUTPUT->box_start('generalbox');
 
 echo "<br /><h2>Peoples-uni Record Files for $student->lastname, $student->firstname ($student->id)</h2><br />";
-if (!$is_manager) echo '(Do not Add a file or Create folder as you will not be able to save them.)<br />';
+if (!$is_manager) echo "(Do not 'Add...' a file or 'Create folder' as you will not be able to permanently save them into Moodle.)<br />";
 
 $mform->display();
 
