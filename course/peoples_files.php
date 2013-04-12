@@ -81,7 +81,7 @@ elseif ($formdata = $mform->get_data()) {
 echo $OUTPUT->header();
 echo $OUTPUT->box_start('generalbox');
 
-echo "<h2>Peoples-uni Record Files for $student->lastname, $student->firstname ($student->id)</h2><br />";
+echo "<br /><h2>Peoples-uni Record Files for $student->lastname, $student->firstname ($student->id)</h2><br />";
 
 $mform->display();
 
