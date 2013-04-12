@@ -85,9 +85,5 @@ echo "<br /><h2>Peoples-uni Record Files for $student->lastname, $student->first
 
 $mform->display();
 
-if (!$is_manager) {
-  echo '<br /><br /><br /><strong><a href="javascript:window.close();">Close Window</a></strong><br />';
-}
-
 echo $OUTPUT->box_end();
 echo $OUTPUT->footer();
