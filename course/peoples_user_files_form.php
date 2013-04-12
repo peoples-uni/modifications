@@ -20,7 +20,9 @@ class peoples_user_files_form extends moodleform {
     $mform->addElement('hidden', 'returnurl', $data->returnurl);
     $mform->setType('returnurl', PARAM_LOCALURL);
 
-    $this->add_action_buttons(TRUE, get_string('savechanges'));
+    if ($options['is_manager']) {
+      $this->add_action_buttons(TRUE, get_string('savechanges'));
+    }
 
     $this->set_data($data);
   }
