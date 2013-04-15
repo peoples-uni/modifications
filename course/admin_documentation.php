@@ -1086,6 +1086,13 @@ There are a number of buttons for each course module in "Student Grades" which c
 Additionally if the student has met the criteria for receiving a Certificate (3 modules passed 45+) or Diploma (6 modules passed 45+, 2 of each type) from Peoples-uni. They will be able to download them here.
 </li>
 <li>
+Additionally if the student has any "Peoples-uni Record Files" there will be a link to a page that lists all of these files and will allow the student to download the files.<br />
+These files would typically be some type of certificate or transcript that is additional to the Peoples-uni ones. One example is MMU Transcripts. But it could be any file we wish to permanently keep for the student (both for the student to access at any time and also as a permanent record for us).<br />
+A Moodle user with the "Manager" role will have a link ("Manage Peoples-uni Record Files for the Student") in this same place in student.php which will bring them to a page similar to that of the student which contains the same files but also allows uploading of new files for the student ("Add...").<br />
+It is possible create folders ("Create folder") and navigate to and put files into these folders if desired.<br />
+Note that the files can be uploaded from a number of sources, but the most likely usage will be "Upload a file" from the Manager's own computer. Also note that the files will not be permanently saved into Moodle until "Save changes" is clicked.
+</li>
+<li>
 Other options on this page are:<br />
 To send another e-mail to the student: "e-mail Student",<br />
 Add a note to the student record (see also the <a href="http://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">details button/page</a>), or<br />
