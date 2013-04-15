@@ -641,6 +641,24 @@ if (($certificate >= 6) && ($countf >= 2) && ($countp >= 2)) {
 	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma" target="_blank">Your Peoples Open Access Educational Initiative Diploma</a><br />';
 }
 
+$sql = 'SELECT FROM {files} f WHERE f.contextid=:contextid AND f.component=:component AND f.filearea=:filearea';
+$context = context_user::instance($student_id);
+$contextid = $context->id;
+$conditions = array('contextid' => $contextid, 'component' => 'peoples_record', 'filearea' => 'student');
+$filerecords = $DB->get_records_sql($sql, $conditions);
+if (!empty($filerecords)) $text_for_records_present = '(' . count($filerecords) . ' present)';
+else $text_for_records_present = '(none currently)';
+
+// Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
+$is_manager = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+
+if ($is_manager) {
+  echo '<a href="' . $CFG->wwwroot . '/course/peoples_files.php?student_id=' . $userid . '" target="_blank">Manage "Peoples-uni Record Files" for the Student</a> ' . $text_for_records_present . '<br />';
+}
+elseif (!empty($filerecords)) {
+  echo '<a href="' . $CFG->wwwroot . '/course/peoples_files.php?student_id=' . $userid . '" target="_blank">Your "Peoples-uni Record Files"</a><br />';
+}
+
 
 if ($isteacher) {
 ?>
