@@ -642,7 +642,7 @@ if (($certificate >= 6) && ($countf >= 2) && ($countp >= 2)) {
 }
 
 $sql = 'SELECT * FROM {files} f WHERE f.contextid=:contextid AND f.component=:component AND f.filearea=:filearea';
-$context = context_user::instance($student_id);
+$context = context_user::instance($userid);
 $contextid = $context->id;
 $conditions = array('contextid' => $contextid, 'component' => 'peoples_record', 'filearea' => 'student');
 $filerecords = $DB->get_records_sql($sql, $conditions);
