@@ -641,7 +641,7 @@ if (($certificate >= 6) && ($countf >= 2) && ($countp >= 2)) {
 	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma" target="_blank">Your Peoples Open Access Educational Initiative Diploma</a><br />';
 }
 
-$sql = 'SELECT FROM {files} f WHERE f.contextid=:contextid AND f.component=:component AND f.filearea=:filearea';
+$sql = 'SELECT * FROM {files} f WHERE f.contextid=:contextid AND f.component=:component AND f.filearea=:filearea';
 $context = context_user::instance($student_id);
 $contextid = $context->id;
 $conditions = array('contextid' => $contextid, 'component' => 'peoples_record', 'filearea' => 'student');
