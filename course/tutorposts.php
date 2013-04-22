@@ -151,7 +151,7 @@ foreach($modules as $module) {
     WHERE
       ra.contextid=$context->id AND
       ra.roleid=r.id AND
-      r.name IN ('Module Leader', 'Tutors')");
+      r.shortname IN ('tutor', 'tutors')");
 
   $posts = $DB->get_records_sql("
     SELECT fp.id AS postid, fd.id AS discid, u.id as userid, u.lastname, u.firstname, u.email, c.fullname, f.name AS forumname, fp.subject, fp.modified
@@ -323,7 +323,7 @@ function is_peoples_teacher() {
       ra.userid=? AND
       ra.roleid=r.id AND
       ra.contextid=con.id AND
-      r.name IN ('Module Leader', 'Tutors') AND
+      r.shortname IN ('tutor', 'tutors') AND
       con.contextlevel=50",
     array($USER->id));
 

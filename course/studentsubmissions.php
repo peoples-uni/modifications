@@ -265,7 +265,7 @@ function is_peoples_teacher() {
       ra.userid=? AND
       ra.roleid=r.id AND
       ra.contextid=con.id AND
-      r.name IN ('Module Leader', 'Tutors') AND
+      r.shortname IN ('tutor', 'tutors') AND
       con.contextlevel=50",
     array($USER->id));
 
