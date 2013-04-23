@@ -345,12 +345,48 @@ foreach ($courseswithstudentforumstats as $coursekey => $coursewithstudentforums
 echo '<br />';
 
 
+$usermodulecountnonzero = count($usermodulecount);
+$usercountnonzero = count($usercount);
+
+if (!empty($enrols)) {
+
+  // We want to display Student/Module combinations that have Zero Posts (in the summary statistics)
+  $all_usermodules = $DB->get_records_sql(
+    "SELECT DISTINCT u.id as userid, u.lastname, u.firstname, c.fullname
+    FROM (mdl_enrolment e, mdl_user u, mdl_course c)
+    WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id $semestersql $modulesql $ssfsql
+    ORDER BY u.lastname ASC, u.firstname ASC, fullname ASC",
+    array($chosensemester, $chosenmodule)
+  );
+  if (!empty($all_usermodules)) {
+    foreach ($all_usermodules as $all_usermodule) {
+      $name = htmlspecialchars(strtolower(trim($all_usermodule->lastname . ', ' . $all_usermodule->firstname . ', ' . $all_usermodule->fullname)), ENT_COMPAT, 'UTF-8');
+      if (empty($usermodulecount[$name])) $usermodulecount[$name] = 0;
+    }
+  }
+
+  // We want to display Student/Module combinations that have Zero Posts (in the summary statistics)
+  $all_users = $DB->get_records_sql(
+    "SELECT DISTINCT u.id as userid, u.lastname, u.firstname
+    FROM (mdl_enrolment e, mdl_user u, mdl_course c)
+    WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id $semestersql $modulesql $ssfsql
+    ORDER BY u.lastname ASC, u.firstname ASC",
+    array($chosensemester, $chosenmodule)
+  );
+  if (!empty($all_users)) {
+    foreach ($all_users as $all_user) {
+      $name = htmlspecialchars(strtolower(trim($all_user->lastname . ', ' . $all_user->firstname)), ENT_COMPAT, 'UTF-8');
+      if (empty($usercount[$name])) $usercount[$name] = 0;
+    }
+  }
+}
+
 displaystat($usercount, 'Student Posts');
-echo 'Number of Students who Posted: ' . count($usercount);
+echo 'Number of Students who Posted: ' . $usercountnonzero;
 echo '<br /><br />';
 
 displaystat($usermodulecount, 'Student Posts per Module');
-echo 'Number of Students who Posted per Module: ' . count($usermodulecount);
+echo 'Number of Students who Posted per Module: ' . $usermodulecountnonzero;
 echo '<br /><br />';
 
 displaystat($topiccount, 'Student Posts by Forum Topic');
