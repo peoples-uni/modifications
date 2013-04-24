@@ -31,13 +31,13 @@ class peoples_user_files_form extends moodleform {
 This is to inform you that the following files have been uploaded for you...
 
 LIST_OF_FILES
-You can access these by going to the 'My Course' page,
-and click on the 'Click here to view Grade & Transcripts'
+You can access these by going to the 'My Courses' page,
+and click on 'Click here to view Grades & Transcripts'
 which is located at the top left corner,
 scroll to the bottom of the page and click on
 'Your Peoples-uni Record Files'.
 
-To download a file, click on the file and select 'download' from the drop down menu.
+To download a file, click on the file and select 'Download'.
 
      Peoples Open Access Education Initiative Administrator.";
 
