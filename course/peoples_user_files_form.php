@@ -26,15 +26,15 @@ class peoples_user_files_form extends moodleform {
       $student = $DB->get_record('user', array('id' => $options['student_id']));
 
       $message =
-"Dear GIVEN_NAME_HERE,&XXX\"'?<>
+"Dear GIVEN_NAME_HERE,
 
 This is to inform you that the following files have been uploaded for you...
 
 LIST_OF_FILES
-
-You can access these by going to the 'My Course' page, and click on the
-'Click here to view Grade & Transcripts'
-which is located at the top left corner, scroll to the bottom of the page and click on
+You can access these by going to the 'My Course' page,
+and click on the 'Click here to view Grade & Transcripts'
+which is located at the top left corner,
+scroll to the bottom of the page and click on
 'Your Peoples-uni Record Files'.
 
 To download a file, click on the file and select 'download' from the drop down menu.

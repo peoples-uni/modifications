@@ -214,8 +214,8 @@ When the "Details" button is pressed for an registration application, additional
 </li>
 "Register Student" is a button which allows the registration application to be approved. The user is sent the e-mail outlined above under <a href="#configurationreg">"Configuration of Registrations Process"</a>.<br />
 The "Registered?" entry in <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a> and "Details" will indicate "Yes" as opposed to "No".<br />
-The following e-mail will ALSO be sent from techsupport@peopes-uni.org:<br />
-<pre>
+The following e-mail will ALSO be sent from techsupport@peoples-uni.org:<br />
+<pre
 Hi FULL_NAME_HERE,
 
 A new account has been created at 'SITE_NAME_HERE'.
@@ -616,7 +616,7 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student has applied for courses at least twice.
 </li>
 <li>
-Note that the student has applied with the form: <a href="http://courses.peopes-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, Application for MMU (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
+Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, Application for MMU (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
 </li>
 <li>
 When the "Details" button is pressed for an application, additional applicant data is displayed beyond what is in the "spreadsheet" row.
@@ -1090,7 +1090,7 @@ Additionally if the student has any "Peoples-uni Record Files" there will be a l
 These files would typically be some type of certificate or transcript that is additional to the Peoples-uni ones. One example is MMU Transcripts. But it could be any file we wish to permanently keep for the student (both for the student to access at any time and also as a permanent record for us).<br />
 A Moodle user with the "Manager" role will have a link ("Manage Peoples-uni Record Files for the Student") in this same place in student.php which will bring them to a page similar to that of the student which contains the same files but also allows uploading of new files for the student ("Add...").<br />
 It is possible create folders ("Create folder") and navigate to and put files into these folders if desired.<br />
-Note that the files can be uploaded from a number of sources, but the most likely usage will be "Upload a file" from the Manager's own computer. Also note that the files will not be permanently saved into Moodle until "Save changes" is clicked.
+Note that the files can be uploaded from a number of sources, but the most likely usage will be "Upload a file" from the Manager's own computer. An e-mail will be sent to the Student informing them of the new files (this can be edited) if any new files are added or changed. Also note that the files will not be permanently saved into Moodle until "Save changes" is clicked.
 </li>
 <li>
 Other options on this page are:<br />

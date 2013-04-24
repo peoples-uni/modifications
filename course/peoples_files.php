@@ -99,7 +99,7 @@ elseif ($formdata = $mform->get_data()) {
       $message = str_replace('LIST_OF_FILES', $list_of_files_updated, $formdata->emailtosend);
 
       $supportuser = new stdClass();
-      $supportuser->email = 'techsupport@peopes-uni.org';
+      $supportuser->email = 'techsupport@peoples-uni.org';
       $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
       $supportuser->lastname = '';
       $supportuser->maildisplay = true;
@@ -131,7 +131,6 @@ echo $OUTPUT->box_start('generalbox');
 echo "<br /><h2>Peoples-uni Record Files for $student->lastname, $student->firstname ($student->id)</h2><br />";
 if (!$is_manager) echo "(Do not 'Add...' a file, 'Create folder' or 'Delete...' etc. as you will not be able to permanently save changes into Moodle.)<br />";
 
-//?????????????????????????$mform->set_data($toform);
 $mform->display();
 
 echo $OUTPUT->box_end();
