@@ -21,6 +21,34 @@ class peoples_user_files_form extends moodleform {
     $mform->setType('returnurl', PARAM_LOCALURL);
 
     if ($options['is_manager']) {
+      $student = $DB->get_record('user', array('id' => $options['student_id']));
+
+      $message =
+"Dear GIVEN_NAME_HERE,&XXX\"'?<>
+
+This is to inform you that the following files have been uploaded for you...
+
+LIST_OF_FILES
+
+You can access these by going to the 'My Course' page, and click on the
+'Click here to view Grade & Transcripts'
+which is located at the top left corner, scroll to the bottom of the page and click on
+'Your Peoples-uni Record Files'.
+
+To download a file, click on the file and select 'download' from the drop down menu.
+
+     Peoples Open Access Education Initiative Administrator.";
+
+      $message = str_replace('GIVEN_NAME_HERE', $student->firstname, $message);
+
+//htmlspecialchars($message, ENT_COMPAT, 'UTF-8')
+
+      $mform->addElement('textarea', 'emailtosend', 'e-mail to send to Student', 'wrap="HARD" rows="10" cols="75"');
+      $mform->setDefault('emailtosend', 'Please enter email');
+      $mform->addElement('static', 'explainemailtosend', '&nbsp;', 'Edit the e-mail as required (e-mail will only be sent if you change the files).<br />');
+
+      $mform->addElement('checkbox', 'dont_send_email', 'Check if you do not want to send an e-mail');
+
       $this->add_action_buttons(TRUE, get_string('savechanges'));
     }
 
