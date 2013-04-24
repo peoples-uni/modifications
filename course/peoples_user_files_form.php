@@ -44,6 +44,7 @@ To download a file, click on the file and select 'download' from the drop down m
       $message = str_replace('GIVEN_NAME_HERE', $student->firstname, $message);
 
 //htmlspecialchars($message, ENT_COMPAT, 'UTF-8')
+      $mform->addElement('static', 'spacing-1', '&nbsp;', '&nbsp;<br />');
 
       $mform->addElement('textarea', 'emailtosend', 'e-mail to send to Student', 'wrap="HARD" rows="10" cols="75"');
       $mform->setDefault('emailtosend', 'Please enter email');
