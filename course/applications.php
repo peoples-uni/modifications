@@ -899,6 +899,7 @@ foreach ($applications as $sid => $application) {
     $registration = $registrations[$application->userid];
   }
   if (empty($application->userid) || empty($registration)) {
+    $registration = new stdClass();
     $registration->whatlearn = '';
     $registration->whylearn = '';
     $registration->whyelearning = '';
