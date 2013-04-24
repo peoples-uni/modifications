@@ -78,7 +78,7 @@ elseif ($formdata = $mform->get_data()) {
 
   if ($is_manager) {
     $sql = "
-      SELECT CONCAT(filepath, filename, ' FILESIZE:' filesize, ' TIMEMODIFIED:', timemodified) AS file_hash, CONCAT(filepath, filename) AS file_name
+      SELECT CONCAT(filepath, filename, ' FILESIZE:', filesize, ' TIMEMODIFIED:', timemodified) AS file_hash, CONCAT(filepath, filename) AS file_name
       FROM {files}
       WHERE contextid=:contextid AND component=:component AND filearea=:filearea AND filesize!=0
       ORDER BY CONCAT(filepath, filename)";
@@ -114,7 +114,7 @@ else {
   // The form has not been submitted, it is being displayed
   if ($is_manager) {
     $sql = "
-      SELECT CONCAT(filepath, filename, ' FILESIZE:' filesize, ' TIMEMODIFIED:', timemodified) AS file_hash, CONCAT(filepath, filename) AS file_name
+      SELECT CONCAT(filepath, filename, ' FILESIZE:', filesize, ' TIMEMODIFIED:', timemodified) AS file_hash, CONCAT(filepath, filename) AS file_name
       FROM {files}
       WHERE contextid=:contextid AND component=:component AND filearea=:filearea AND filesize!=0
       ORDER BY CONCAT(filepath, filename)";
