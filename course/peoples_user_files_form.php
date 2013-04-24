@@ -47,7 +47,7 @@ To download a file, click on the file and select 'download' from the drop down m
       $mform->addElement('static', 'spacing-1', '&nbsp;', '&nbsp;<br />');
 
       $mform->addElement('textarea', 'emailtosend', 'e-mail to send to Student', 'wrap="HARD" rows="10" cols="75"');
-      $mform->setDefault('emailtosend', 'Please enter email');
+      $mform->setDefault('emailtosend', $message);
       $mform->addElement('static', 'explainemailtosend', '&nbsp;', 'Edit the e-mail as required (e-mail will only be sent if you change the files).<br />');
 
       $mform->addElement('checkbox', 'dont_send_email', 'Check if you do not want to send an e-mail');
