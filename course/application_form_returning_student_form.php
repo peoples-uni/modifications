@@ -4,6 +4,18 @@
  * Application form for Peoples-uni for Returning Students (Form Class)
  */
 
+/*
+CREATE TABLE mdl_late_applications_allowed (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  approverid BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  deadline BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  CONSTRAINT PRIMARY KEY (id)
+);
+CREATE INDEX mdl_late_applications_allowed_ix ON mdl_late_applications_allowed (userid);
+*/
+
 
 defined('MOODLE_INTERNAL') || die;
 
