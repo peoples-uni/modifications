@@ -14,11 +14,16 @@ $PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
 $PAGE->set_url('/course/apply.php'); // Defined here to avoid notices on errors etc
 $PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
 
-require_login();
-// Might possibly be Guest... Anyway Guest user will not be able to do anything useful
+$SESSION->wantsurl = "$CFG->wwwroot/course/application_form_returning_student.php";
+require_login(NULL, FALSE);  // Don't make a Guest
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
-//redirect($CFG->wwwroot . '/course/application_form_returning_student.php');
+if (isguestuser()) {  // In case user has been specifically logged in as Guest (on some other page?)
+  $SESSION->wantsurl = "$CFG->wwwroot/course/application_form_returning_student.php";
+  notice('<br /><br /><b>You must be logged in to do this! Please Click "Continue" below, and then log in with your username and password above!</b><br /><br /><br />', "$CFG->wwwroot/");
+}
+
+redirect($CFG->wwwroot . '/course/application_form_returning_student.php');
 
 $PAGE->set_title('Redirect to Application Form');
 $PAGE->set_heading('Redirect to Application Form');
