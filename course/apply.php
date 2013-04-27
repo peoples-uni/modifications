@@ -18,7 +18,7 @@ require_login();
 // Might possibly be Guest... Anyway Guest user will not be able to do anything useful
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
-redirect($CFG->wwwroot . '/course/application_form_returning_student.php');
+//redirect($CFG->wwwroot . '/course/application_form_returning_student.php');
 
 $PAGE->set_title('Redirect to Application Form');
 $PAGE->set_heading('Redirect to Application Form');
