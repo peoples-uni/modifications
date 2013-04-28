@@ -399,7 +399,7 @@ if (!empty($application->userid)) {
   if (!empty($late_applications_allowed)) {
     $deadline = $late_applications_allowed->deadline;
     if (time() < $deadline) {
-      echo '<br />(Current Late Course Application Deadline is: ' . gmdate('d/m/Y H:i', $deadline) . ')';
+      echo '<br />(Current Late Course Application Deadline is: ' . gmdate('d/m/Y H:i', $deadline) . ' am GMT)';
     }
   }
 ?>
