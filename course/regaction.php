@@ -92,7 +92,7 @@ elseif (!empty($_POST['markdeleteentry'])) {
   updateapplication($_POST['sid'], 'hidden', 1);
 }
 elseif (!empty($_POST['markallowlateapplication']) && !empty($application->userid)) {
-  $days_offset = (int)$_POST['days_offset']
+  $days_offset = (int)$_POST['days_offset'];
   $deadline = gmmktime(27, 0, 0); // 3:00am early tomorrow morning (GMT)
   $deadline += (60*60*24) * $days_offset; // Add correct number of days
 
