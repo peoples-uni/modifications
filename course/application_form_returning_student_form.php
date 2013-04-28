@@ -25,7 +25,7 @@ require_once($CFG->libdir.'/completionlib.php');
 class application_form_returning_student_form extends moodleform {
 
   function definition() {
-    global $DB, $CFG;
+    global $DB, $CFG, $USER;
 
     $mform    = $this->_form;
 
@@ -48,7 +48,19 @@ class application_form_returning_student_form extends moodleform {
     // (administrator also has moodle/site:viewparticipants)
     $ismanager = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
-    if (!$ismanager) {
+    // Allow specified Students who have been given a later than normal deadline to apply late
+    $late_application = FALSE;
+    if (!empty($USER->id)) {
+      $late_applications_allowed = $DB->get_record('late_applications_allowed', array('userid' => $USER->id));
+      if (!empty($late_applications_allowed)) {
+        $deadline = $late_applications_allowed->deadline;
+        if (time() < $deadline) {
+          $late_application = TRUE;
+        }
+      }
+    }
+
+    if (!($ismanager || $late_application)) {
       $open_modules = $DB->get_records('activemodules', array('modulefull' => 0));
       if (empty($open_modules)) {
         redirect($CFG->wwwroot . '/course/closed.php');
@@ -61,7 +73,7 @@ class application_form_returning_student_form extends moodleform {
     $listforselect[''] = 'Select...';
     $listforunavailable = array();
     foreach ($activemodules as $activemodule) {
-      if (!$activemodule->modulefull || $ismanager) {
+      if (!$activemodule->modulefull || ($ismanager || $late_application)) {
         $listforselect[$activemodule->course_id] = $activemodule->fullname;
       }
       else {
