@@ -215,7 +215,7 @@ When the "Details" button is pressed for an registration application, additional
 "Register Student" is a button which allows the registration application to be approved. The user is sent the e-mail outlined above under <a href="#configurationreg">"Configuration of Registrations Process"</a>.<br />
 The "Registered?" entry in <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a> and "Details" will indicate "Yes" as opposed to "No".<br />
 The following e-mail will ALSO be sent from techsupport@peoples-uni.org:<br />
-<pre
+<pre>
 Hi FULL_NAME_HERE,
 
 A new account has been created at 'SITE_NAME_HERE'.
