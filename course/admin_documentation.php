@@ -265,7 +265,13 @@ TECHSUPPORT_EMAIL_HERE
 "Change Applicant e-mail to:" allows the applicant's e-mail to be changed. (Will not be displayed if the applicant has already been registered in Moodle.)
 </li>
 <li>
-"Close Window" closes this window (note the original applications.php spreadsheet will still be there).
+"Allow this Student to make a Late Course Application (choose how long...)" allows the Student to make a late application for courses. The deadline can be specified. The deadline is always set to 3:00 am GMT early in the morning of the day after the day specified.<br />
+It will only be possible to set a late application deadline if the Student is already registered (and therefore has a Moodle account) as they have to login to get the benefit of the late registration (so we know who they are).<br />
+In particular they should be told to go to this URL <a href="http://courses.peoples-uni.org/course/apply.php" target="_blank">http://courses.peoples-uni.org/course/apply.php</a> in order to make a late application as this will force them to login first.<br />
+The student will be able to apply for any course module that has been specified in settings.php. If they apply for courses that we do not wish the to apply for, we can change them to suitable modules in the applications.php "Details" page.
+</li>
+<li>
+"Close Window" closes this window (note the original registrations.php spreadsheet will still be there).
 </li>
 <li>
 "Hide this Application Form Entry from All Future Processing" button does what it says.
@@ -792,7 +798,8 @@ But to fully close applications go to <a href="http://courses.peoples-uni.org/co
 In the case that you want to reopen applications temporarily for some reason... Just go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> deselect "Check to mark Module as Full" for any module that you wish to reopen and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>). You will see the list of modules has changed.
 </li>
 <li>
-Note: Those who have the permission "moodle/site:viewparticipants" (which is the same as gives access to applications.php), can enter an application on behalf of a student (presumably for a "late" student application) even if applications are closed. They are also allowed make an application for modules even if those modules are full.
+Note: Those who have the permission "moodle/site:viewparticipants" (which is the same as gives access to applications.php), can enter an application on behalf of a student (presumably for a "late" student application) even if applications are closed. They are also allowed make an application for modules even if those modules are full.<br />
+Also it is possible to allow a student to make a late application (see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#theregdetailsbutton">The "Details" button and the Registration Process</a> above).
 </li>
 <li>
 Note: When all students have been enrolled for a module, then the Marking Spreadsheet will need to be created see... <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.<br />
