@@ -392,7 +392,7 @@ if ($state === 0 && empty($application->userid)) { // Allow applicant e-mail to 
 <option value="7" >In 7 days</option>
 </select>
 </form>
-<br />
+<br /><br />
 <?php
 
 
