@@ -376,9 +376,11 @@ if ($state === 0 && empty($application->userid)) { // Allow applicant e-mail to 
 <?php
 }
 
+if (!empty($application->userid)) {
 ?>
 <br />
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
+<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markallowlateapplication" value="1" />
 <input type="submit" name="allowlateapplication" value="Allow this Student to make a Late Course Application (choose how long...)" style="width:40em" />
@@ -392,9 +394,19 @@ if ($state === 0 && empty($application->userid)) { // Allow applicant e-mail to 
 <option value="6" >In 6 days</option>
 <option value="7" >In 7 days</option>
 </select>
+<?php
+  $late_applications_allowed = $DB->get_record('late_applications_allowed', array('userid' => $application->userid));
+  if (!empty($late_applications_allowed)) {
+    $deadline = $late_applications_allowed->deadline;
+    if (time() < $deadline) {
+      echo '<br />(Current Late Course Application Deadline is: ' . gmdate('d/m/Y H:i', $deadline) . ')';
+    }
+  }
+?>
 </form>
 <br /><br />
 <?php
+}
 
 
 echo '<br /><strong><a href="javascript:window.close();">Close Window</a></strong>';
