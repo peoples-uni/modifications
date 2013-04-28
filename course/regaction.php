@@ -91,6 +91,27 @@ elseif (!empty($_POST['markdeleteentry'])) {
 
   updateapplication($_POST['sid'], 'hidden', 1);
 }
+elseif (!empty($_POST['markallowlateapplication']) && !empty($application->userid)) {
+  $days_offset = (int)$_POST['days_offset']
+  $deadline = gmmktime(27, 0, 0); // 3:00am early tomorrow morning (GMT)
+  $deadline += (60*60*24) * $days_offset; // Add correct number of days
+
+  $late_applications_allowed = $DB->get_record('late_applications_allowed', array('userid' => $application->userid));
+  if (!empty($late_applications_allowed)) {
+    $late_applications_allowed->approverid = $USER->id;
+    $late_applications_allowed->datesubmitted = time();
+    $late_applications_allowed->deadline = $deadline;
+    $DB->update_record('late_applications_allowed', $late_applications_allowed);
+  }
+  else {
+    $late_applications_allowed = new object();
+    $late_applications_allowed->userid = $application->userid;
+    $late_applications_allowed->approverid = $USER->id;
+    $late_applications_allowed->datesubmitted = time();
+    $late_applications_allowed->deadline = $deadline;
+    $DB->insert_record('late_applications_allowed', $late_applications_allowed);
+  }
+}
 elseif (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'])) {
   $email = $application->email;
   $body = $_POST['approvedtext'];
