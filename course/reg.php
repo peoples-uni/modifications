@@ -377,6 +377,7 @@ if ($state === 0 && empty($application->userid)) { // Allow applicant e-mail to 
 }
 
 ?>
+<br />
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markallowlateapplication" value="1" />
