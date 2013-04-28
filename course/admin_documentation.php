@@ -268,7 +268,7 @@ TECHSUPPORT_EMAIL_HERE
 "Allow this Student to make a Late Course Application (choose how long...)" allows the Student to make a late application for courses. The deadline can be specified. The deadline is always set to 3:00 am GMT early in the morning of the day after the day specified.<br />
 It will only be possible to set a late application deadline if the Student is already registered (and therefore has a Moodle account) as they have to login to get the benefit of the late registration (so we know who they are).<br />
 In particular they should be told to go to this URL <a href="http://courses.peoples-uni.org/course/apply.php" target="_blank">http://courses.peoples-uni.org/course/apply.php</a> in order to make a late application as this will force them to login first.<br />
-The student will be able to apply for any course module that has been specified in settings.php. If they apply for courses that we do not wish the to apply for, we can change them to suitable modules in the applications.php "Details" page.
+The student will be able to apply for any course module that has been specified in settings.php. If they apply for courses that we do not wish them to apply for, we can change them to suitable modules in the applications.php "Details" page.
 </li>
 <li>
 "Close Window" closes this window (note the original registrations.php spreadsheet will still be there).
