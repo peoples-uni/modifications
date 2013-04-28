@@ -376,6 +376,25 @@ if ($state === 0 && empty($application->userid)) { // Allow applicant e-mail to 
 <?php
 }
 
+?>
+<form method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markallowlateapplication" value="1" />
+<input type="submit" name="allowlateapplication" value="Allow this Student to make a Late Course Application (choose how long...)" style="width:40em" />
+<select name="days_offset">
+<option value="0" >By the end of today</option>
+<option value="1" >By the end of tomorrow (1 day)</option>
+<option value="2" selected="selected" >By the end of the day after tomorrow (2 days)</option>
+<option value="3" >In 3 days</option>
+<option value="4" >In 4 days</option>
+<option value="5" >In 5 days</option>
+<option value="6" >In 6 days</option>
+<option value="7" >In 7 days</option>
+</select>
+</form>
+<br />
+<?php
+
 
 echo '<br /><strong><a href="javascript:window.close();">Close Window</a></strong>';
 
