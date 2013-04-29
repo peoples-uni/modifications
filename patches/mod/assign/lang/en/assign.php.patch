@@ -1,0 +1,38 @@
+--- assign.bak.php	Tue Apr  9 15:20:10 2013
++++ assign.php	Mon Apr 29 15:19:42 2013
+@@ -53,12 +53,16 @@
+ 
+ You can see it appended to your assignment submission:
+ 
+-    {$a->url}';
++    {$a->url}
++
++NOTE: These results are provisional until confirmed by the exam board.';
+ $string['assignmentmailhtml'] = '{$a->grader} has posted some feedback on your
+ assignment submission for \'<i>{$a->assignment}</i>\'<br /><br />
+-You can see it appended to your <a href="{$a->url}">assignment submission</a>.';
++You can see it appended to your <a href="{$a->url}">assignment submission</a>.<br /><br />
++NOTE: These results are provisional until confirmed by the exam board.';
+ $string['assignmentmailsmall'] = '{$a->grader} has posted some feedback on your
+-assignment submission for \'{$a->assignment}\' You can see it appended to your submission';
++assignment submission for \'{$a->assignment}\' You can see it appended to your submission
++NOTE: These results are provisional until confirmed by the exam board.';
+ $string['assignmentname'] = 'Assignment name';
+ $string['assignmentplugins'] = 'Assignment plugins';
+ $string['assignmentsperpage'] = 'Assignments per page';
+@@ -155,10 +159,13 @@
+ 
+ You can see it appended to your assignment submission:
+ 
+-    {$a->url}';
++    {$a->url}
++
++NOTE: These results are provisional until confirmed by the exam board.';
+ $string['feedbackavailablehtml'] = '{$a->username} has posted some feedback on your
+ assignment submission for \'<i>{$a->assignment}</i>\'<br /><br />
+-You can see it appended to your <a href="{$a->url}">assignment submission</a>.';
++You can see it appended to your <a href="{$a->url}">assignment submission</a>.<br /><br />
++NOTE: These results are provisional until confirmed by the exam board.';
+ $string['feedbackavailablesmall'] = '{$a->username} has given feedback for assignment {$a->assignment}';
+ $string['feedbackplugins'] = 'Feedback plugins';
+ $string['feedbackpluginforgradebook'] = 'Feedback plugin that will push comments to the gradebook';
