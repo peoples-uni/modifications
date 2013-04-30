@@ -65,7 +65,7 @@ echo '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $userid . '" target="_
 echo ', Last access: ' . ($userrecord->lastaccess ? format_time(time() - $userrecord->lastaccess) : get_string('never'));
 echo '<br /><br /><br />';
 
-$recorded_submissions = $DB->get_records_sql("SELECT s.*, a.course, a.name, a.assignmenttype, c.fullname FROM mdl_recorded_submissions s, mdl_assignment a, mdl_course c WHERE s.userid=$userid AND s.assignment=a.id AND a.course=c.id ORDER BY fullname ASC, name ASC, timemodified ASC");
+$recorded_submissions = $DB->get_records_sql("SELECT s.*, c.fullname FROM mdl_recorded_submissions s, mdl_course c WHERE s.userid=$userid AND s.course=c.id ORDER BY fullname ASC, name ASC, timemodified ASC");
 
 $table = new html_table();
 $table->head = array(
