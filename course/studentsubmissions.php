@@ -5,6 +5,30 @@
 *
 */
 
+/*
+CREATE TABLE mdl_recorded_submissions (
+  id BIGINT(10) unsigned NOT NULL auto_increment,
+  submission BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  assignment BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  timemodified BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  data1 TEXT,
+  data2 TEXT,
+  CONSTRAINT PRIMARY KEY (id)
+);
+CREATE INDEX mdl_recorded_submissions_sid_ix ON mdl_recorded_submissions (submission);
+CREATE INDEX mdl_recorded_submissions_aid_ix ON mdl_recorded_submissions (assignment);
+CREATE INDEX mdl_recorded_submissions_uid_ix ON mdl_recorded_submissions (userid);
+CREATE INDEX mdl_recorded_submissions_tim_ix ON mdl_recorded_submissions (timemodified);
+
+mdl_assignment table entries will be deleted as it is upgraded to mdl_assign (Moodle 2.3) so keep all relevant data in this table
+ALTER TABLE mdl_recorded_submissions ADD course BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER data2;
+ALTER TABLE mdl_recorded_submissions ADD assign BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER course;
+ALTER TABLE mdl_recorded_submissions ADD name VARCHAR(255) NOT NULL DEFAULT '' AFTER assign;
+ALTER TABLE mdl_recorded_submissions ADD assignmenttype VARCHAR(50) NOT NULL DEFAULT '' AFTER name;
+*/
+
+
 require("../config.php");
 require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/lib/weblib.php');
