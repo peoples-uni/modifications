@@ -1,5 +1,8 @@
 <?php
 
+require_once($CFG->libdir . '/filelib.php');
+
+
 function file_submission_uploaded($eventdata) {
   record_assign_submission($eventdata);
 }
@@ -34,8 +37,6 @@ function record_assign_submission($eventdata) {
   }
   $recorded_submission->data2 = ''; // format_text() already applied
   $recorded_submission_id = $DB->insert_record('recorded_submissions', $recorded_submission);
-
-  require_once($CFG->libdir . '/filelib.php');
 
   if (!empty($eventdata->pathnamehashes)) {
     foreach ($eventdata->pathnamehashes as $hash) {
