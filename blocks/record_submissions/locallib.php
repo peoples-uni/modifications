@@ -17,6 +17,8 @@ function record_assign_submission($eventdata) {
   global $DB;
   global $CFG;
 
+  if ($eventdata->modulename != 'assign') return;
+
   $assign_submission = $DB->get_record('assign_submission', array('id' => $eventdata->itemid));
 
   $recorded_submission = new object();
