@@ -52,8 +52,8 @@ $hidequiz = optional_param('hidequiz', 0, PARAM_INT);
 
 $userrecord = $DB->get_record('user', array('id' => $userid));
 if (empty($userrecord)) {
-	echo '<h1>User does not exist!</h1>';
-	die();
+  echo '<h1>User does not exist!</h1>';
+  die();
 }
 
 $PAGE->set_title('Student (re)Submisions & (re)Grades for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
@@ -71,55 +71,93 @@ $table = new html_table();
 $table->head = array(
   'Module',
   'Assignment',
-  'Assignment Type',
+  //'Assignment Type',
   'Submission Date',
   'Text Submitted',
   'Files Submitted'
   );
 
 if (!empty($recorded_submissions)) {
-	$lastmodule = '';
-	$lastname = '';
-	foreach ($recorded_submissions as $recorded_submission) {
+  $lastmodule = '';
+  $lastname = '';
+  foreach ($recorded_submissions as $recorded_submission) {
     $rowdata = array();
-		if ($lastmodule !== $recorded_submission->fullname) {
+    if ($lastmodule !== $recorded_submission->fullname) {
       $rowdata[] = '<a href="' . "$CFG->wwwroot/course/view.php?id=$recorded_submission->course" . '" target="_blank">' . htmlspecialchars($recorded_submission->fullname, ENT_COMPAT, 'UTF-8') . '</a>';
-			$lastname = '';
-		}
-		else {
+      $lastname = '';
+    }
+    else {
       $rowdata[] = '';
-		}
-		$lastmodule = $recorded_submission->fullname;
+    }
+    $lastmodule = $recorded_submission->fullname;
 
-		if ($lastname !== $recorded_submission->name) {
-      $rowdata[] = '<a href="' . "$CFG->wwwroot/mod/assignment/view.php?a=$recorded_submission->assignment" . '" target="_blank">' . htmlspecialchars($recorded_submission->name, ENT_COMPAT, 'UTF-8') . '</a>';
-      $rowdata[] = $recorded_submission->assignmenttype;
-		}
-		else {
+    if ($lastname !== $recorded_submission->name) {
+      if ($recorded_submission->assign == 0) {
+        $rowdata[] = '<a href="' . "$CFG->wwwroot/mod/assignment/view.php?a=$recorded_submission->assignment" . '" target="_blank">' . htmlspecialchars($recorded_submission->name, ENT_COMPAT, 'UTF-8') . '</a>';
+      }
+      else {
+        $course_module = $DB->get_record_sql("SELECT cm.id FROM mdl_course_modules cm, mdl_modules m WHERE cm.instance=:instance AND cm.module=m.id AND m.name='assign'", array('instance' => $recorded_submission->assign));
+        $rowdata[] = '<a href="' . "$CFG->wwwroot/mod/assign/view.php?id=$course_module->id" . '" target="_blank">' . htmlspecialchars($recorded_submission->name, ENT_COMPAT, 'UTF-8') . '</a>';
+      }
+      //$rowdata[] = $recorded_submission->assignmenttype;
+    }
+    else {
       $rowdata[] = '';
-      $rowdata[] = '';
-		}
-		$lastname = $recorded_submission->name;
+      //$rowdata[] = '';
+    }
+    $lastname = $recorded_submission->name;
 
     $rowdata[] = gmdate('d/M/Y H:i', $recorded_submission->timemodified);
 
-		if ($recorded_submission->assignmenttype === 'online') {
-      $rowdata[] = format_text($recorded_submission->data1, $recorded_submission->data2);
-		}
-		elseif ($recorded_submission->assignmenttype === 'upload') {
-      $rowdata[] = format_text($recorded_submission->data1, FORMAT_HTML);
-		}
-		else {
-      $rowdata[] = '';
-		}
+    if ($recorded_submission->assign == 0) {
+      if ($recorded_submission->assignmenttype === 'online') {
+        $rowdata[] = format_text($recorded_submission->data1, $recorded_submission->data2);
+      }
+      elseif ($recorded_submission->assignmenttype === 'upload') {
+        $rowdata[] = format_text($recorded_submission->data1, FORMAT_HTML);
+      }
+      else {
+        $rowdata[] = '';
+      }
+    }
+    else {
+      $rowdata[] = $recorded_submission->data1; // format_text() already applied
+    }
 
-		if ($recorded_submission->assignmenttype === 'upload' || $recorded_submission->assignmenttype === 'uploadsingle') {
-			// echo '<td><a href="' . "$CFG->dataroot/$recorded_submission->course/moddata/assignmentsubmissionrecord/$recorded_submission->assignment/$recorded_submission->userid/$recorded_submission->timemodified" . '" target="_blank">Sumbitted Files</a></td>';
+    if ($recorded_submission->assign == 0) {
+      if ($recorded_submission->assignmenttype === 'upload' || $recorded_submission->assignmenttype === 'uploadsingle') {
+        // echo '<td><a href="' . "$CFG->dataroot/$recorded_submission->course/moddata/assignmentsubmissionrecord/$recorded_submission->assignment/$recorded_submission->userid/$recorded_submission->timemodified" . '" target="_blank">Sumbitted Files</a></td>';
 
-	    $basedir  = "$CFG->dataroot/$recorded_submission->course/moddata/assignmentsubmissionrecord/$recorded_submission->assignment/$recorded_submission->userid/$recorded_submission->timemodified";
-			$filearea = "/$recorded_submission->course/moddata/assignmentsubmissionrecord/$recorded_submission->assignment/$recorded_submission->userid/$recorded_submission->timemodified";
+        $basedir  = "$CFG->dataroot/$recorded_submission->course/moddata/assignmentsubmissionrecord/$recorded_submission->assignment/$recorded_submission->userid/$recorded_submission->timemodified";
+        $filearea = "/$recorded_submission->course/moddata/assignmentsubmissionrecord/$recorded_submission->assignment/$recorded_submission->userid/$recorded_submission->timemodified";
 
-			$output = '';
+        $output = '';
+        if ($files = get_directory_list($basedir)) {
+          require_once($CFG->libdir.'/filelib.php');
+          foreach ($files as $key => $file) {
+
+            $ffurl = file_encode_url($CFG->wwwroot . '/course/peoplesfile.php' . $filearea . '/' . $file);
+            $output .= '<a href="' . $ffurl . '" >';
+
+            $icon = mimeinfo('icon', $file);
+            $mimetype = mimeinfo('type', $file);
+            $output .= '<img src="' . $OUTPUT->pix_url(file_mimetype_icon($mimetype)) . '" class="icon" alt="' . $mimetype . '" />';
+
+            $output .= s($file);
+            $output .= '</a><br />';
+          }
+        }
+        $rowdata[] = '<div class="files">'.$output.'</div>';
+      }
+      else {
+        $rowdata[] = '';
+      }
+    }
+    else {
+//NEWSTUFF...
+???ignore '.'?
+
+      $output = '';
         if ($files = get_directory_list($basedir)) {
           require_once($CFG->libdir.'/filelib.php');
           foreach ($files as $key => $file) {
@@ -136,13 +174,11 @@ if (!empty($recorded_submissions)) {
           }
         }
       $rowdata[] = '<div class="files">'.$output.'</div>';
-		}
-		else {
-      $rowdata[] = '';
-		}
+//ENDNEWSTUFF
+    }
 
     $table->data[] = $rowdata;
-	}
+  }
 }
 echo html_writer::table($table);
 echo '<br /><br />';
@@ -163,96 +199,96 @@ $table->head = array(
   );
 
 if (!empty($grade_grades_historys)) {
-	$lastmodule = 'XxxxYxxxX';
-	$lastname = 'XxxxYxxxX';
-	$lastsource = 'XxxxYxxxX';
-	foreach ($grade_grades_historys as $grade_grades_history) {
+  $lastmodule = 'XxxxYxxxX';
+  $lastname = 'XxxxYxxxX';
+  $lastsource = 'XxxxYxxxX';
+  foreach ($grade_grades_historys as $grade_grades_history) {
     $rowdata = array();
 
-		if (!empty($grade_grades_history->source) && !empty($grade_grades_history->itemtype) && (
-				(($grade_grades_history->source . ' ' . $grade_grades_history->itemtype) === 'system course') ||
-				((($grade_grades_history->source . ' ' . $grade_grades_history->itemtype) === 'mod/quiz mod') && $hidequiz)
-		)) {
-			continue;
-		}
+    if (!empty($grade_grades_history->source) && !empty($grade_grades_history->itemtype) && (
+        (($grade_grades_history->source . ' ' . $grade_grades_history->itemtype) === 'system course') ||
+        ((($grade_grades_history->source . ' ' . $grade_grades_history->itemtype) === 'mod/quiz mod') && $hidequiz)
+    )) {
+      continue;
+    }
 
-		if ($lastmodule !== $grade_grades_history->fullname) {
+    if ($lastmodule !== $grade_grades_history->fullname) {
       $rowdata[] = '<a href="' . "$CFG->wwwroot/course/view.php?id=$grade_grades_history->courseid" . '" target="_blank">' . htmlspecialchars($grade_grades_history->fullname, ENT_COMPAT, 'UTF-8') . '</a>';
-			$lastname = 'XxxxYxxxX';
-		}
-		else {
+      $lastname = 'XxxxYxxxX';
+    }
+    else {
       $rowdata[] = '';
-		}
-		$lastmodule = $grade_grades_history->fullname;
+    }
+    $lastmodule = $grade_grades_history->fullname;
 
-		if ($grade_grades_history->itemtype === 'course') {
-			$grade_grades_history->itemname = 'Overall Module Grade';
-			$prefix = '<strong>';
-			$suffix = '</strong>';
-		}
-		else {
-			$prefix = '';
-			$suffix = '';
-		}
+    if ($grade_grades_history->itemtype === 'course') {
+      $grade_grades_history->itemname = 'Overall Module Grade';
+      $prefix = '<strong>';
+      $suffix = '</strong>';
+    }
+    else {
+      $prefix = '';
+      $suffix = '';
+    }
 
-		if (empty($grade_grades_history->itemname)) $grade_grades_history->itemname = '';
-		if ($lastname !== $grade_grades_history->itemname) {
-			if (!empty($grade_grades_history->outcomeid)) $outcome = ' (Outcome)';
-			else  $outcome = '';
+    if (empty($grade_grades_history->itemname)) $grade_grades_history->itemname = '';
+    if ($lastname !== $grade_grades_history->itemname) {
+      if (!empty($grade_grades_history->outcomeid)) $outcome = ' (Outcome)';
+      else  $outcome = '';
       $rowdata[] = $prefix . htmlspecialchars($grade_grades_history->itemname, ENT_COMPAT, 'UTF-8') . $outcome . $suffix;
-			$lastsource = 'XxxxYxxxX';
-		}
-		else {
+      $lastsource = 'XxxxYxxxX';
+    }
+    else {
       $rowdata[] = '';
-		}
-		$lastname = $grade_grades_history->itemname;
+    }
+    $lastname = $grade_grades_history->itemname;
 
-		if (empty($grade_grades_history->source)) $grade_grades_history->source = ' ';
-		if (empty($grade_grades_history->itemtype)) $grade_grades_history->itemtype = ' ';
-		if ($lastsource !== ($grade_grades_history->source . ' ' . $grade_grades_history->itemtype)) {
+    if (empty($grade_grades_history->source)) $grade_grades_history->source = ' ';
+    if (empty($grade_grades_history->itemtype)) $grade_grades_history->itemtype = ' ';
+    if ($lastsource !== ($grade_grades_history->source . ' ' . $grade_grades_history->itemtype)) {
       $rowdata[] = $grade_grades_history->source . ' ' . $grade_grades_history->itemtype;
-		}
-		else {
+    }
+    else {
       $rowdata[] = '';
-		}
-		$lastsource = $grade_grades_history->source . ' ' . $grade_grades_history->itemtype;
+    }
+    $lastsource = $grade_grades_history->source . ' ' . $grade_grades_history->itemtype;
 
     $rowdata[] = gmdate('d/M/Y H:i', $grade_grades_history->gtimemodified);
 
     $rowdata[] = $prefix . grade_format_gradevalue($grade_grades_history->finalgrade, new grade_item($grade_grades_history, false), true) . $suffix;
-//		if (empty($grade_grades_history->finalgrade)) {
-//			echo 'No Grade';
-//		}
-//		elseif (empty($grade_grades_history->scale)) {
-//			echo $grade_grades_history->finalgrade;
-//		}
-//		else {
-//			$scale = explode(',', $grade_grades_history->scale);
-//			$grade = (int)($grade_grades_history->finalgrade + .000001);
-//			if (empty($scale[$grade - 1])) {
-//				echo $grade_grades_history->finalgrade;
-//			}
-//			else {
-//				echo trim($scale[$grade - 1]);
-//			}
-//		}
+//    if (empty($grade_grades_history->finalgrade)) {
+//      echo 'No Grade';
+//    }
+//    elseif (empty($grade_grades_history->scale)) {
+//      echo $grade_grades_history->finalgrade;
+//    }
+//    else {
+//      $scale = explode(',', $grade_grades_history->scale);
+//      $grade = (int)($grade_grades_history->finalgrade + .000001);
+//      if (empty($scale[$grade - 1])) {
+//        echo $grade_grades_history->finalgrade;
+//      }
+//      else {
+//        echo trim($scale[$grade - 1]);
+//      }
+//    }
 
-		if (!empty($grade_grades_history->feedback)) {
+    if (!empty($grade_grades_history->feedback)) {
       $rowdata[] = format_text($grade_grades_history->feedback, $grade_grades_history->feedbackformat);
-		}
-		else {
+    }
+    else {
       $rowdata[] = '';
-		}
+    }
 
-		if (!empty($grade_grades_history->information)) {
+    if (!empty($grade_grades_history->information)) {
       $rowdata[] = format_text($grade_grades_history->information, $grade_grades_history->informationformat);
-		}
-		else {
+    }
+    else {
       $rowdata[] = '';
-		}
+    }
 
     $table->data[] = $rowdata;
-	}
+  }
 }
 echo html_writer::table($table);
 echo '<br /><br />';
