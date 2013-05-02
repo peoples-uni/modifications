@@ -77,7 +77,7 @@ $eventdata->content = 'abc<br />def';
 echo '<pre>';
 print_r($eventdata);
 echo '</pre>';
-events_trigger('assessable_file_uploaded', $eventdata);
+//events_trigger('assessable_file_uploaded', $eventdata);
 
 
 echo $OUTPUT->footer();
