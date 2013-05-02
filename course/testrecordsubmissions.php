@@ -32,10 +32,17 @@ select userid, contextid, itemid AS submissionid, filepath, filename from mdl_fi
 |   1446 |     16692 |            1 | /        | KabezaPUCOMDIS 12adoc |
 |   1446 |     16692 |            1 | /        | .                     |
 +--------+-----------+--------------+----------+-----------------------+
+
+Omo...
++--------+-----------+--------------+-----------------------+------------------+----------+-------------------------------------------------------------------+
+| userid | contextid | submissionid | component             | filearea         | filepath | filename                                                          |
++--------+-----------+--------------+-----------------------+------------------+----------+-------------------------------------------------------------------+
+|      2 |     16720 |           58 | assignsubmission_file | submission_files | /        | White Paper on Nigerian Government Public Key Infrastructure.docx |
++--------+-----------+--------------+-----------------------+------------------+----------+-------------------------------------------------------------------+
 */
 
-$itemid = 1; // Submission
-$contextid = 16692;
+$itemid = 58; // Submission
+$contextid = 16720;
 
 require_once($CFG->libdir . '/filelib.php');
 require_once($CFG->libdir.'/eventslib.php');
