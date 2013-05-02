@@ -48,10 +48,13 @@ function record_assign_submission($eventdata) {
       if (empty($submitted_file)) continue;
 
       $newfilename = $submitted_file->get_filename();
-      if ($newfilename === '.') continue;
+      if ($newfilename === '.') continue; // by the way, a '.' directory will be auto generated
       $newfilename = clean_param($newfilename, PARAM_FILE);
 
       $newfilepath = $submitted_file->get_filepath();
+
+      $filedata = $submitted_file->get_content();
+
 
       $recorded_submission_fs = get_file_storage();
 
@@ -67,8 +70,8 @@ function record_assign_submission($eventdata) {
         $newrecord->timecreated  = $assign_submission->timemodified;
         $newrecord->timemodified = $assign_submission->timemodified;
         $newrecord->mimetype     = mimeinfo('type', $newfilename);
-        $newrecord->userid       = $userid;
-        $recorded_submission_fs->create_file_from_string($newrecord, $content);
+        $newrecord->userid       = $assign_submission->userid;
+        $recorded_submission_fs->create_file_from_string($newrecord, $filedata);
       }
     }
   }
