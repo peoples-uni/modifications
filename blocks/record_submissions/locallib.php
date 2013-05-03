@@ -26,7 +26,7 @@ function record_assign_submission($eventdata) {
   $recorded_submission->assignment   = 0; // This is not mod assignment (2.2)
   $recorded_submission->assign       = $assign_submission->assignment; // mod assign (2.3)
   $recorded_submission->userid       = $assign_submission->userid; // Might be 0 if group (we do not handle); Also there seemed to be some Peoples-uni staff id(s)... hopefully a test?
-  $recorded_submission->timemodified = $assign_submission->timemodified;
+  $recorded_submission->timemodified = time();
   $recorded_submission->course       = $eventdata->courseid;
   $assignment = $DB->get_record('assign', array('id' => $assign_submission->assignment));
   $recorded_submission->name         = $assignment->name;
@@ -67,8 +67,8 @@ function record_assign_submission($eventdata) {
       $newrecord->filepath  = $newfilepath;
       $newrecord->filename  = $newfilename;
       if (!$recorded_submission_fs->file_exists($newrecord->contextid, $newrecord->component, $newrecord->filearea, $newrecord->itemid, $newrecord->filepath, $newrecord->filename)) {
-        $newrecord->timecreated  = $assign_submission->timemodified;
-        $newrecord->timemodified = $assign_submission->timemodified;
+        $newrecord->timecreated  = $recorded_submission->timemodified;
+        $newrecord->timemodified = $recorded_submission->timemodified;
         $newrecord->mimetype     = mimeinfo('type', $newfilename);
         $newrecord->userid       = $assign_submission->userid;
         $recorded_submission_fs->create_file_from_string($newrecord, $filedata);
