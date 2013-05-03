@@ -36,7 +36,15 @@ if (!$file = $fs->get_file_by_hash(sha1($relativepath)) || $file->is_directory()
   print_error('filenotfound');
 }
 
-send_stored_file($file, 86400, 0, true);
+echo '<pre>';
+print_r($relativepath);
+echo '<br />';
+$sha1relativepath = sha1($relativepath);
+print_r($sha1relativepath);
+echo '<br />';
+print_r($file);
+echo '</pre>';
+//send_stored_file($file, 86400, 0, true);
 
 
 function is_peoples_teacher() {
