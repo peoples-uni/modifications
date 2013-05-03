@@ -89,7 +89,7 @@ echo '</pre>';
                   FROM mdl_files f
              LEFT JOIN mdl_files_reference r
                        ON f.referencefileid = r.id
-                 WHERE f.pathnamehash = $sha1relativepath";
+                 WHERE f.pathnamehash = '$sha1relativepath'";
         if ($filerecord = $DB->get_record_sql($sql)) {
             $storedfile = new stored_file($fs, $filerecord, $filedir);
         } else {
