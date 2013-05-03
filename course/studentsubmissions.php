@@ -33,6 +33,7 @@ require("../config.php");
 require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/lib/weblib.php');
 require_once $CFG->libdir . '/gradelib.php';
+require_once($CFG->libdir . '/filelib.php');
 
 $PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
 $PAGE->set_url('/course/studentsubmissions.php');
@@ -66,6 +67,8 @@ echo ', Last access: ' . ($userrecord->lastaccess ? format_time(time() - $userre
 echo '<br /><br /><br />';
 
 $recorded_submissions = $DB->get_records_sql("SELECT s.*, c.fullname FROM mdl_recorded_submissions s, mdl_course c WHERE s.userid=$userid AND s.course=c.id ORDER BY fullname ASC, name ASC, timemodified ASC");
+
+$context = context_user::instance($userid);
 
 $table = new html_table();
 $table->head = array(
@@ -133,7 +136,6 @@ if (!empty($recorded_submissions)) {
 
         $output = '';
         if ($files = get_directory_list($basedir)) {
-          require_once($CFG->libdir.'/filelib.php');
           foreach ($files as $key => $file) {
 
             $ffurl = file_encode_url($CFG->wwwroot . '/course/peoplesfile.php' . $filearea . '/' . $file);
@@ -154,27 +156,27 @@ if (!empty($recorded_submissions)) {
       }
     }
     else {
-//NEWSTUFF...
-???ignore '.'?
-
       $output = '';
-        if ($files = get_directory_list($basedir)) {
-          require_once($CFG->libdir.'/filelib.php');
-          foreach ($files as $key => $file) {
+      $fs = get_file_storage();
+      $stored_files = $fs->get_area_files($context->id, 'peoples_recordedsubmissions', 'student', $recorded_submission->id, 'filepath, filename', false);
+      if (!empty($stored_files)) {
+        foreach ($stored_files as $pathnamehash => $stored_file) {
+          $filepath = $stored_file->get_filepath();
+          $filename = $stored_file->get_filename();
 
-            $ffurl = file_encode_url($CFG->wwwroot . '/course/peoplesfile.php' . $filearea . '/' . $file);
-            $output .= '<a href="' . $ffurl . '" >';
+          $fullpath = '/' . $context->id . '/peoples_recordedsubmissions/student/' . $recorded_submission->id . $filepath . $filename;
+          $ffurl = file_encode_url($CFG->wwwroot . '/course/recordedsubmissionfile.php' .  $fullpath);
+          $output .= '<a href="' . $ffurl . '" >';
 
-            $icon = mimeinfo('icon', $file);
-            $mimetype = mimeinfo('type', $file);
-            $output .= '<img src="' . $OUTPUT->pix_url(file_mimetype_icon($mimetype)) . '" class="icon" alt="' . $mimetype . '" />';
+          $icon = mimeinfo('icon', $filename);
+          $mimetype = mimeinfo('type', $filename);
+          $output .= '<img src="' . $OUTPUT->pix_url(file_mimetype_icon($mimetype)) . '" class="icon" alt="' . $mimetype . '" />';
 
-            $output .= s($file);
-            $output .= '</a><br />';
-          }
+          $output .= s($filepath . $filename);
+          $output .= '</a><br />';
         }
+      }
       $rowdata[] = '<div class="files">'.$output.'</div>';
-//ENDNEWSTUFF
     }
 
     $table->data[] = $rowdata;
