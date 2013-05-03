@@ -107,7 +107,7 @@ echo '</pre>';
 
 
 
-//send_stored_file($file, 86400, 0, true);
+send_stored_file($file, 86400, 0, true);
 
 
 function is_peoples_teacher() {
