@@ -31,7 +31,8 @@ if (!$isteacher && !$islurker) {
 
 $fs = get_file_storage();
 
-if (!$file = $fs->get_file_by_hash(sha1($relativepath)) || $file->is_directory()) {
+$file = $fs->get_file_by_hash(sha1($relativepath));
+if (empty($file) || $file->is_directory()) {
   send_header_404();
   print_error('filenotfound');
 }
