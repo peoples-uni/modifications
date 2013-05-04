@@ -81,6 +81,7 @@ $table->head = array(
   );
 
 if (!empty($recorded_submissions)) {
+  $contenthash_all_files = array();
   $lastmodule = '';
   $lastname = '';
   foreach ($recorded_submissions as $recorded_submission) {
@@ -173,17 +174,22 @@ if (!empty($recorded_submissions)) {
           $output .= '<img src="' . $OUTPUT->pix_url(file_mimetype_icon($mimetype)) . '" class="icon" alt="' . $mimetype . '" />';
 
           $output .= s($filepath . $filename);
-          $output .= '</a><br />';
+          $output .= '</a>';
+
+          $contenthash = $stored_file->get_contenthash();
+          if (!in_array($contenthash, $contenthash_all_files)) $output .= '(*)';
+          $contenthash_all_files[] = $contenthash;
+          $output .= '<br />';
         }
       }
-      $rowdata[] = '<div class="files">'.$output.'</div>';
+      $rowdata[] = '<div class="files">' . $output . '</div>';
     }
 
     $table->data[] = $rowdata;
   }
 }
 echo html_writer::table($table);
-echo '<br /><br />';
+echo '(*) => file is changed.<br /><br />';
 
 
 //$grade_grades_historys = get_records_sql("SELECT g.id AS gid, g.source, g.timemodified AS gtimemodified, g.finalgrade, g.feedback, g.feedbackformat, g.information, g.informationformat, s.scale, i.*, c.fullname FROM mdl_grade_grades_history g LEFT JOIN mdl_scale s ON g.rawscaleid=s.id, mdl_grade_items i, mdl_course c WHERE g.userid=$userid AND g.itemid=i.id AND i.courseid=c.id ORDER BY fullname ASC, itemname ASC, g.timemodified ASC");
