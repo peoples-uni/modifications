@@ -67,10 +67,13 @@ function record_assign_submission($eventdata) {
       $newrecord->filepath  = $newfilepath;
       $newrecord->filename  = $newfilename;
       if (!$recorded_submission_fs->file_exists($newrecord->contextid, $newrecord->component, $newrecord->filearea, $newrecord->itemid, $newrecord->filepath, $newrecord->filename)) {
-        $newrecord->timecreated  = $recorded_submission->timemodified;
-        $newrecord->timemodified = $recorded_submission->timemodified;
-        $newrecord->mimetype     = mimeinfo('type', $newfilename);
-        $newrecord->userid       = $assign_submission->userid;
+        $newrecord->source        = $submitted_file->get_source();
+        $newrecord->author        = $submitted_file->get_author();
+        $newrecord->license       = $submitted_file->get_license();
+        $newrecord->timecreated   = $submitted_file->get_timecreated();
+        $newrecord->timemodified  = $submitted_file->get_timemodified();
+        $newrecord->mimetype      = mimeinfo('type', $newfilename);
+        $newrecord->userid        = $assign_submission->userid;
         $recorded_submission_fs->create_file_from_string($newrecord, $filedata);
       }
     }
