@@ -349,7 +349,7 @@ function is_peoples_teacher() {
   */
 
   $teachers = $DB->get_records_sql("
-    SELECT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    SELECT DISTINCT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
     WHERE
       ra.userid=? AND
       ra.roleid=r.id AND
