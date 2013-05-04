@@ -189,7 +189,7 @@ if (!empty($recorded_submissions)) {
   }
 }
 echo html_writer::table($table);
-echo '(*) => file is changed.<br /><br />';
+echo '<div style="text-align:left">(*) => file is changed.</div><br /><br />';
 
 
 //$grade_grades_historys = get_records_sql("SELECT g.id AS gid, g.source, g.timemodified AS gtimemodified, g.finalgrade, g.feedback, g.feedbackformat, g.information, g.informationformat, s.scale, i.*, c.fullname FROM mdl_grade_grades_history g LEFT JOIN mdl_scale s ON g.rawscaleid=s.id, mdl_grade_items i, mdl_course c WHERE g.userid=$userid AND g.itemid=i.id AND i.courseid=c.id ORDER BY fullname ASC, itemname ASC, g.timemodified ASC");
