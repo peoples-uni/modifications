@@ -139,7 +139,8 @@ if (!empty($recorded_submissions)) {
         if ($files = get_directory_list($basedir)) {
           foreach ($files as $key => $file) {
 
-            $ffurl = file_encode_url($CFG->wwwroot . '/course/peoplesfile.php' . $filearea . '/' . $file);
+            //$ffurl = file_encode_url($CFG->wwwroot . '/course/peoplesfile.php' . $filearea . '/' . $file);
+            $ffurl = moodle_url::make_file_url($CFG->wwwroot . '/course/peoplesfile.php', $filearea . '/' . $file);
             $output .= '<a href="' . $ffurl . '" >';
 
             $icon = mimeinfo('icon', $file);
@@ -166,7 +167,8 @@ if (!empty($recorded_submissions)) {
           $filename = $stored_file->get_filename();
 
           $fullpath = '/' . $context->id . '/peoples_recordedsubmissions/student/' . $recorded_submission->id . $filepath . $filename;
-          $ffurl = file_encode_url($CFG->wwwroot . '/course/recordedsubmissionfile.php' .  $fullpath);
+          //$ffurl = file_encode_url($CFG->wwwroot . '/course/recordedsubmissionfile.php' .  $fullpath);
+          $ffurl = moodle_url::make_file_url($CFG->wwwroot . '/course/recordedsubmissionfile.php', $fullpath);
           $output .= '<a href="' . $ffurl . '" >';
 
           $icon = mimeinfo('icon', $filename);
