@@ -1,0 +1,10 @@
+--- rate.bak.php	Sat May 25 17:26:49 2013
++++ rate.php	Wed May 29 23:07:14 2013
+@@ -101,6 +101,7 @@
+     $options->userid = $USER->id;
+     $options->itemid = $itemid;
+ 
++    $options->use_specific_scale = $scaleid; // If this is one of our three special scales, deal with only the current one (don't combine all three)
+     $rm->delete_ratings($options);
+ }
+ 

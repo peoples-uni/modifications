@@ -1,0 +1,18 @@
+--- rate_ajax.bak.php	Sat May 25 17:26:49 2013
++++ rate_ajax.php	Wed May 29 23:06:28 2013
+@@ -111,6 +111,7 @@
+     $options->userid = $USER->id;
+     $options->itemid = $itemid;
+ 
++    $options->use_specific_scale = $scaleid; // If this is one of our three special scales, deal with only the current one (don't combine all three)
+     $rm->delete_ratings($options);
+ }
+ 
+@@ -140,6 +141,7 @@
+ $ratingoptions->items = array($item);
+ $ratingoptions->aggregate = $aggregationmethod;
+ 
++$ratingoptions->use_specific_scale_only = TRUE; // If this is one of our three special scales, deal with only the current one (don't combine all three)
+ $items = $rm->get_ratings($ratingoptions);
+ $firstrating = $items[0]->rating;
+ 

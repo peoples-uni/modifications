@@ -1,0 +1,10 @@
+--- index.bak.php	Sat May 25 17:26:49 2013
++++ index.php	Wed May 29 23:11:29 2013
+@@ -85,6 +85,7 @@
+ $ratingoptions->sort = $sqlsort;
+ 
+ $rm = new rating_manager();
++$ratingoptions->scaleid = $scaleid;
+ $ratings = $rm->get_all_ratings_for_item($ratingoptions);
+ if (!$ratings) {
+     $msg = get_string('noratings','rating');

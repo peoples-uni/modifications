@@ -1,0 +1,32 @@
+--- lib.bak.php	Sat May 25 17:26:25 2013
++++ lib.php	Wed May 29 23:23:52 2013
+@@ -3505,6 +3505,12 @@
+     if (!empty($post->rating)) {
+         $output .= html_writer::tag('div', $OUTPUT->render($post->rating), array('class'=>'forum-post-rating'));
+     }
++    if (!empty($post->rating2)) {
++        $output .= html_writer::tag('div', $OUTPUT->render($post->rating2), array('class'=>'forum-post-rating'));
++    }
++    if (!empty($post->rating3)) {
++        $output .= html_writer::tag('div', $OUTPUT->render($post->rating3), array('class'=>'forum-post-rating'));
++    }
+ 
+     // Output the commands
+     $commandhtml = array();
+@@ -3589,6 +3595,7 @@
+  */
+ function forum_rating_validate($params) {
+     global $DB, $USER;
++    global $CFG;
+ 
+     // Check the component is mod_forum
+     if ($params['component'] != 'mod_forum') {
+@@ -3618,7 +3625,7 @@
+         throw new rating_exception('invalidcontext');
+     }
+ 
+-    if ($forum->scale != $params['scaleid']) {
++    if (($forum->scale != $params['scaleid']) && ($params['scaleid'] != $CFG->scale_to_use_for_triple_rating_2) && ($params['scaleid'] != $CFG->scale_to_use_for_triple_rating_3)) {
+         //the scale being submitted doesnt match the one in the database
+         throw new rating_exception('invalidscaleid');
+     }
