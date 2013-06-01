@@ -1,5 +1,5 @@
 --- rate_ajax.bak.php	Sat May 25 17:26:49 2013
-+++ rate_ajax.php	Wed May 29 23:06:28 2013
++++ rate_ajax.php	Sat Jun  1 12:54:27 2013
 @@ -111,6 +111,7 @@
      $options->userid = $USER->id;
      $options->itemid = $itemid;
@@ -16,3 +16,17 @@
  $items = $rm->get_ratings($ratingoptions);
  $firstrating = $items[0]->rating;
  
+@@ -167,6 +169,13 @@
+     $result->aggregate = $aggregatetoreturn;
+     $result->count = $firstrating->count;
+     $result->itemid = $itemid;
++
++    if ($scaleid == $CFG->scale_to_use_for_triple_rating ||
++        $scaleid == $CFG->scale_to_use_for_triple_rating_2 ||
++        $scaleid == $CFG->scale_to_use_for_triple_rating_3) {
++
++      $result->itemid = "{$itemid}scale{$scaleid}"; // ALAN: This is used by JavaScript (module.js) to match correct HTML id and then update it
++    }
+ }
+ 
+ echo json_encode($result);
