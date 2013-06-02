@@ -1,5 +1,5 @@
 --- lib.bak.php	Sat May 25 17:26:49 2013
-+++ lib.php	Sat Jun  1 18:05:33 2013
++++ lib.php	Sun Jun  2 18:29:00 2013
 @@ -112,6 +112,11 @@
      public $itemuserid = null;
  
@@ -12,33 +12,7 @@
       * Constructor.
       *
       * @param stdClass $options {
-@@ -129,6 +134,8 @@
-      * }
-      */
-     public function __construct($options) {
-+        global $CFG;
-+
-         $this->context =    $options->context;
-         $this->component =  $options->component;
-         $this->ratingarea = $options->ratingarea;
-@@ -136,6 +143,16 @@
-         $this->scaleid =    $options->scaleid;
-         $this->userid =     $options->userid;
- 
-+        if ($options->scaleid == $CFG->scale_to_use_for_triple_rating ||
-+            $options->scaleid == $CFG->scale_to_use_for_triple_rating_2 ||
-+            $options->scaleid == $CFG->scale_to_use_for_triple_rating_3) {
-+
-+          $this->id_attribute_for_html = "{$options->itemid}scale{$options->scaleid}"; // ALAN: This is used to create HTML id(s)
-+        }
-+        else {
-+          $this->id_attribute_for_html = '';
-+        }
-+
-         if (isset($options->settings)) {
-             $this->settings = $options->settings;
-         }
-@@ -181,6 +198,7 @@
+@@ -181,6 +186,7 @@
          $ratingoptions->userid = $this->userid;
  
          $rm = new rating_manager();
@@ -46,7 +20,7 @@
          $items = $rm->get_ratings($ratingoptions);
          $firstitem = $items[0]->rating;
  
-@@ -392,6 +410,7 @@
+@@ -392,6 +398,7 @@
       */
      public function delete_ratings($options) {
          global $DB;
@@ -54,7 +28,7 @@
  
          if (empty($options->contextid)) {
              throw new coding_exception('The context option is a required option when deleting ratings.');
-@@ -410,6 +429,15 @@
+@@ -410,6 +417,15 @@
                  $conditions[$field] = $options->{$option};
              }
          }
@@ -70,7 +44,7 @@
          $DB->delete_records('rating', $conditions);
      }
  
-@@ -427,6 +455,7 @@
+@@ -427,6 +443,7 @@
       */
      public function get_all_ratings_for_item($options) {
          global $DB;
@@ -78,7 +52,7 @@
  
          if (!isset($options->context)) {
              throw new coding_exception('The context option is a required option when getting ratings for an item.');
-@@ -453,6 +482,17 @@
+@@ -453,6 +470,17 @@
              'ratingarea' => $options->ratingarea,
          );
          $userfields = user_picture::fields('u', null, 'userid');
@@ -96,7 +70,7 @@
          $sql = "SELECT r.id, r.rating, r.itemid, r.userid, r.timemodified, r.component, r.ratingarea, $userfields
                    FROM {rating} r
               LEFT JOIN {user} u ON r.userid = u.id
-@@ -460,6 +500,7 @@
+@@ -460,6 +488,7 @@
                         r.itemid  = :itemid AND
                         r.component = :component AND
                         r.ratingarea = :ratingarea
@@ -104,7 +78,7 @@
                         {$sortclause}";
  
          return $DB->get_records_sql($sql, $params);
-@@ -483,6 +524,7 @@
+@@ -483,6 +512,7 @@
       */
      public function get_ratings($options) {
          global $DB, $USER;
@@ -112,7 +86,7 @@
  
          if (!isset($options->context)) {
              throw new coding_exception('The context option is a required option when getting ratings.');
-@@ -540,6 +582,13 @@
+@@ -540,6 +570,13 @@
          $params['component']    = $options->component;
          $params['ratingarea'] = $options->ratingarea;
  
@@ -126,7 +100,7 @@
          $sql = "SELECT r.id, r.itemid, r.userid, r.scaleid, r.rating AS usersrating
                    FROM {rating} r
                   WHERE r.userid = :userid AND
-@@ -609,6 +658,101 @@
+@@ -609,6 +646,104 @@
  
          return $options->items;
      }
@@ -213,6 +187,9 @@
 +            }
 +
 +            $rating = new rating($ratingoptions);
++
++            $rating->id_attribute_for_html = "{$rating->itemid}scale{$scaleid}"; // ALAN: This is used to create HTML id(s)
++
 +            $rating->itemtimecreated = $this->get_item_time_created($item);
 +            if (!empty($item->{$itemuseridcol})) {
 +                $rating->itemuserid = $item->{$itemuseridcol};
