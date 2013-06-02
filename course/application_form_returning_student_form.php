@@ -159,7 +159,7 @@ For this certificate you will need to complete the Evidence Based Practice, Pati
         $oldapplication = $DB->get_record('peoplesregistration', array('userid' => $user_record->id), '*', IGNORE_MULTIPLE);
         if (empty($oldapplication)) $errors['username'] = 'The Peoples Uni Moodle Username you have entered does not match any Moodle Student Username.';
       }
-    }
+    }
 
     return $errors;
   }
