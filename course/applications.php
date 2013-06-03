@@ -492,7 +492,7 @@ if (empty($applications)) {
   $applications = array();
 }
 
-$registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r');
+$registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r WHERE r.userid!=0');
 
 
 $emaildups = 0;
