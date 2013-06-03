@@ -905,6 +905,7 @@ foreach ($applications as $sid => $application) {
     $registration->whyelearning = '';
     $registration->howuselearning = '';
     $registration->howfoundorganisationname = '';
+    $registration->howfoundpeoples = '';
   }
 
   if (!$displayforexcel) {
