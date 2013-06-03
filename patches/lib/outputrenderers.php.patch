@@ -1,5 +1,5 @@
 --- outputrenderers.bak.php	Sat May 25 17:25:24 2013
-+++ outputrenderers.php	Sat Jun  1 11:38:04 2013
++++ outputrenderers.php	Mon Jun  3 10:55:00 2013
 @@ -1803,6 +1803,13 @@
              return null;//ratings are turned off
          }
@@ -14,8 +14,11 @@
          $ratingmanager = new rating_manager();
          // Initialise the JavaScript so ratings can be done by AJAX.
          $ratingmanager->initialise_rating_javascript($this->page);
-@@ -1816,13 +1823,13 @@
+@@ -1814,15 +1821,16 @@
+         if ($rating->user_can_view_aggregate()) {
+ 
              $aggregatelabel = $ratingmanager->get_aggregate_label($rating->settings->aggregationmethod);
++            if (!empty($rating->id_attribute_for_html)) $aggregatelabel = ''; // For 3 separate scales don't display Aggregate Label
              $aggregatestr   = $rating->get_aggregate_string();
  
 -            $aggregatehtml  = html_writer::tag('span', $aggregatestr, array('id' => 'ratingaggregate'.$rating->itemid, 'class' => 'ratingaggregate')).' ';
@@ -30,7 +33,7 @@
  
              $ratinghtml .= html_writer::tag('span', $aggregatelabel, array('class'=>'rating-aggregate-label'));
              if ($rating->settings->permissions->viewall && $rating->settings->pluginpermissions->viewall) {
-@@ -1847,7 +1854,7 @@
+@@ -1847,7 +1855,7 @@
  
              //start the rating form
              $formattrs = array(
@@ -39,7 +42,7 @@
                  'class'  => 'postratingform',
                  'method' => 'post',
                  'action' => $rateurl->out_omit_querystring()
-@@ -1867,14 +1874,14 @@
+@@ -1867,14 +1875,14 @@
              $ratinghtml = $formstart.$ratinghtml;
  
              $scalearray = array(RATING_UNSET_RATING => $strrate.'...') + $rating->settings->scale->scaleitems;
