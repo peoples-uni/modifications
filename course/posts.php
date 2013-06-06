@@ -18,10 +18,33 @@ if (!empty($_POST['markfilter'])) {
 		. '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
     . '&chosenssf=' . urlencode(dontstripslashes($_POST['chosenssf']))
     . '&chosenusersearch=' . urlencode(dontstripslashes($_POST['chosenusersearch']))
+
+    . '&maximumposts=' . urlencode(dontstripslashes($_POST['maximumposts']))
+
     . '&acceptedmmu=' . urlencode(dontstripslashes($_POST['acceptedmmu']))
+
+    . '&averagereferredtoresources=' . urlencode(dontstripslashes($_POST['averagereferredtoresources']))
+    . '&averagecriticalapproach=' . urlencode(dontstripslashes($_POST['averagecriticalapproach']))
+    . '&averagereferencing=' . urlencode(dontstripslashes($_POST['averagereferencing]))
+
 		. (empty($_POST['skipintro']) ? '&skipintro=0' : '&skipintro=1')
 		. (empty($_POST['suppressnames']) ? '&suppressnames=0' : '&suppressnames=1')
 		. (empty($_POST['showyesonly']) ? '&showyesonly=0' : '&showyesonly=1')
+
+    . (empty($_POST['referredtoresourcesnotrated']) ? '&referredtoresourcesnotrated=0' : '&referredtoresourcesnotrated=1')
+    . (empty($_POST['referredtoresourcesno']) ? '&referredtoresourcesno=0' : '&referredtoresourcesno=1')
+    . (empty($_POST['referredtoresourcessome']) ? '&referredtoresourcessome=0' : '&referredtoresourcessome=1')
+    . (empty($_POST['referredtoresourcesyes']) ? '&referredtoresourcesyes=0' : '&referredtoresourcesyes=1')
+
+    . (empty($_POST['criticalapproachnotrated']) ? '&criticalapproachnotrated=0' : '&criticalapproachnotrated=1')
+    . (empty($_POST['criticalapproachno']) ? '&criticalapproachno=0' : '&criticalapproachno=1')
+    . (empty($_POST['criticalapproachsome']) ? '&criticalapproachsome=0' : '&criticalapproachsome=1')
+    . (empty($_POST['criticalapproachyes']) ? '&criticalapproachyes=0' : '&criticalapproachyes=1')
+
+    . (empty($_POST['referencingnotrated']) ? '&referencingnotrated=0' : '&referencingnotrated=1')
+    . (empty($_POST['referencingnone']) ? '&referencingnone=0' : '&referencingnone=1')
+    . (empty($_POST['referencingwrongformat']) ? '&referencingwrongformat=0' : '&referencingwrongformat=1')
+    . (empty($_POST['referencinggood']) ? '&referencinggood=0' : '&referencinggood=1')
 		);
 }
 
@@ -48,13 +71,47 @@ if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUES
 if (!empty($_REQUEST['chosenssf'])) $chosenssf = dontstripslashes($_REQUEST['chosenssf']);
 if (!empty($_REQUEST['chosenusersearch'])) $chosenusersearch = dontstripslashes($_REQUEST['chosenusersearch']);
 else $chosenusersearch = '';
+
+if (!empty($_REQUEST['maximumposts'])) $maximumposts = (int)dontstripslashes($_REQUEST['maximumposts']);
+else $maximumposts = 99999;
+
 if (!empty($_REQUEST['acceptedmmu'])) $acceptedmmu = dontstripslashes($_REQUEST['acceptedmmu']);
+
+if (!empty($_REQUEST['averagereferredtoresources'])) $averagereferredtoresources = dontstripslashes($_REQUEST['averagereferredtoresources']);
+if (!empty($_REQUEST['averagecriticalapproach'])) $averagecriticalapproach = dontstripslashes($_REQUEST['averagecriticalapproach']);
+if (!empty($_REQUEST['averagereferencing'])) $averagereferencing = dontstripslashes($_REQUEST['averagereferencing']);
+
 if (!empty($_REQUEST['skipintro'])) $skipintro = true;
 else $skipintro = false;
 if (!empty($_REQUEST['suppressnames'])) $suppressnames = true;
 else $suppressnames = false;
 if (!empty($_REQUEST['showyesonly'])) $showyesonly = true;
 else $showyesonly = false;
+
+if (!empty($_REQUEST['referredtoresourcesnotrated'])) $referredtoresourcesnotrated = true;
+else $referredtoresourcesnotrated = false;
+if (!empty($_REQUEST['referredtoresourcesno'])) $referredtoresourcesno = true;
+else $referredtoresourcesno = false;
+if (!empty($_REQUEST['referredtoresourcessome'])) $referredtoresourcessome = true;
+else $referredtoresourcessome = false;
+if (!empty($_REQUEST['referredtoresourcesyes'])) $referredtoresourcesyes = true;
+else $referredtoresourcesyes = false;
+if (!empty($_REQUEST['criticalapproachnotrated'])) $criticalapproachnotrated = true;
+else $criticalapproachnotrated = false;
+if (!empty($_REQUEST['criticalapproachno'])) $criticalapproachno = true;
+else $criticalapproachno = false;
+if (!empty($_REQUEST['criticalapproachsome'])) $criticalapproachsome = true;
+else $criticalapproachsome = false;
+if (!empty($_REQUEST['criticalapproachyes'])) $criticalapproachyes = true;
+else $criticalapproachyes = false;
+if (!empty($_REQUEST['referencingnotrated'])) $referencingnotrated = true;
+else $referencingnotrated = false;
+if (!empty($_REQUEST['referencingnone'])) $referencingnone = true;
+else $referencingnone = false;
+if (!empty($_REQUEST['referencingwrongformat'])) $referencingwrongformat = true;
+else $referencingwrongformat = false;
+if (!empty($_REQUEST['referencinggood'])) $referencinggood = true;
+else $referencinggood = false;
 
 $semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
@@ -97,6 +154,24 @@ for ($year = 11; $year <= 16; $year++) {
   $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
 }
 
+if (!isset($averagereferredtoresources)) $averagereferredtoresources = 'Any';
+$listaveragereferredtoresources[] = 'Any';
+$listaveragereferredtoresources[] = 'No';
+$listaveragereferredtoresources[] = 'Mixed';
+$listaveragereferredtoresources[] = 'Yes';
+
+if (!isset($averagecriticalapproach)) $averagecriticalapproach = 'Any';
+$listaveragecriticalapproach[] = 'Any';
+$listaveragecriticalapproach[] = 'No';
+$listaveragecriticalapproach[] = 'Mixed';
+$listaveragecriticalapproach[] = 'Yes';
+
+if (!isset($averagereferencing)) $averagereferencing = 'Any';
+$listaveragereferencing[] = 'Any';
+$listaveragereferencing[] = 'No';
+$listaveragereferencing[] = 'Mixed';
+$listaveragereferencing[] = 'Yes';
+
 
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/posts.php'; ?>">
@@ -127,6 +202,66 @@ Display entries using the following filters...
 		<td><input type="checkbox" name="showyesonly" <?php if ($showyesonly) echo ' CHECKED'; ?>></td>
 	</tr>
 </table>
+
+<table border="2" cellpadding="2">
+  <tr>
+    <td></td>
+    <td colspan="12">Ratings for Post</td>
+    <td colspan="3">Average Rating of Rated Posts</td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td colspan="4">Referred to resources:</td>
+    <td colspan="4">Critical approach:</td>
+    <td colspan="4">Referencing:</td>
+    <td colspan="3"></td>
+  </tr>
+
+  <tr>
+    <td>Student has &lt;= this number of posts matching the filter</td>
+
+    <td>Not rated</td>
+    <td>No</td>
+    <td>Some</td>
+    <td>Yes</td>
+    <td>Not rated</td>
+    <td>No</td>
+    <td>Some</td>
+    <td>Yes</td>
+    <td>Not rated</td>
+    <td>None</td>
+    <td>Wrong format</td>
+    <td>Good</td>
+
+    <td>Referred to resources:</td>
+    <td>Critical approach:</td>
+    <td>Referencing:</td>
+  </tr>
+  <tr>
+    <td><input type="text" size="15" name="maximumposts" value="<?php echo $maximumposts; ?>" /></td>
+
+    <td><input type="checkbox" name="referredtoresourcesnotrated" <?php if ($referredtoresourcesnotrated) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="referredtoresourcesno" <?php if ($referredtoresourcesno) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="referredtoresourcessome" <?php if ($referredtoresourcessome) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="referredtoresourcesyes" <?php if ($referredtoresourcesyes) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="criticalapproachnotrated" <?php if ($criticalapproachnotrated) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="criticalapproachno" <?php if ($criticalapproachno) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="criticalapproachsome" <?php if ($criticalapproachsome) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="criticalapproachyes" <?php if ($criticalapproachyes) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="referencingnotrated" <?php if ($referencingnotrated) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="referencingnone" <?php if ($referencingnone) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="referencingwrongformat" <?php if ($referencingwrongformat) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="referencinggood" <?php if ($referencinggood) echo ' CHECKED'; ?>></td>
+
+    <?php
+    displayoptions('averagereferredtoresources', $listaveragereferredtoresources, $averagereferredtoresources);
+    displayoptions('averagecriticalapproach', $listaveragecriticalapproach, $averagecriticalapproach);
+    displayoptions('averagereferencing', $listaveragereferencing, $averagereferencing);
+    ?>
+  </tr>
+</table>
+
 <input type="hidden" name="markfilter" value="1" />
 <input type="submit" name="filter" value="Apply Filters" />
 <a href="<?php echo $CFG->wwwroot; ?>/course/posts.php">Reset Filters</a>
