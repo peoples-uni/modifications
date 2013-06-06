@@ -352,8 +352,12 @@ $table->head = array(
   );
 
 $usercount = array();
+$usercount_key_list = array();
+$usercountid = array();
 $usermodulecount = array();
+$usermodulecount_key_list = array();
 $topiccount = array();
+$topiccount_key_list = array();
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
@@ -415,6 +419,7 @@ if (!empty($enrols)) {
 
 
 		$name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname)), ENT_COMPAT, 'UTF-8');
+    $usercount_key_list[$enrol->userid] = $name;
 		if (empty($usercount[$name])) {
 			$usercount[$name] = 1;
 		}
@@ -422,7 +427,15 @@ if (!empty($enrols)) {
 			$usercount[$name]++;
 		}
 
+    if (empty($usercountid[$enrol->userid])) { // Same as above but indexed by userid for safety
+      $usercountid[$enrol->userid] = 1;
+    }
+    else {
+      $usercountid[$enrol->userid]++;
+    }
+
 		$name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname . ', ' . $enrol->fullname)), ENT_COMPAT, 'UTF-8');
+    $usermodulecount_key_list[$enrol->userid] = $name;
 		if (empty($usermodulecount[$name])) {
 			$usermodulecount[$name] = 1;
 		}
@@ -431,6 +444,7 @@ if (!empty($enrols)) {
 		}
 
 		$name = htmlspecialchars(strtolower(trim($enrol->fullname . ', ' . $enrol->forumname)), ENT_COMPAT, 'UTF-8');
+    $topiccount_key_list[$enrol->userid] = $name;
 		if (empty($topiccount[$name])) {
 			$topiccount[$name] = 1;
 		}
@@ -439,8 +453,27 @@ if (!empty($enrols)) {
 		}
 
 		$n++;
+    $rowdata[] = $enrol->userid; // Will be removed below
     $table->data[] = $rowdata;
 	}
+
+  // Remove table rows for which the Student has (in total) <= $maximumposts matching the filter
+  $useridkey = count($rowdata) - 1;
+  foreach ($table->data[] as $key => $row) {
+    $userid_for_row = $table->data[$key][$useridkey];
+
+    unset($table->data[$key][$useridkey]); // userid Remove from the table so it does not add an unwanted column
+
+    if ($usercountid[$userid_for_row] > $maximumposts) unset($table->data[$key]);
+  }
+
+  foreach ($usercountid as $userid => $row) { // Now remove from stats
+    if ($usercountid[$userid] > $maximumposts) {
+      unset($usercount[$usercount_key_list[$userid]]);
+      unset($usermodulecount[$usermodulecount_key_list[$userid]]);
+      unset($topiccount[$topiccount_key_list[$userid]]);
+    }
+  }
 }
 echo html_writer::table($table);
 echo '<br/>Number of Forum Postings: ' . $n;
