@@ -528,6 +528,73 @@ if (!empty($enrols)) {
 				continue;
 		}
 
+    $actual_referredtoresourcesnotrated = false;
+    $actual_referredtoresourcesno = false;
+    $actual_referredtoresourcessome = false;
+    $actual_referredtoresourcesyes = false;
+    if (empty($actual_referredtoresources[$enrol->postid])) $actual_referredtoresourcesnotrated = true;
+    elseif ($actual_referredtoresources[$enrol->postid] < 1.01) $actual_referredtoresourcesno = true;
+    elseif ($actual_referredtoresources[$enrol->postid] <=2.99) $actual_referredtoresourcessome = true;
+    else $actual_referredtoresourcesyes = true;
+    $include_post =
+      ($referredtoresourcesnotrated && $actual_referredtoresourcesnotrated) ||
+      ($referredtoresourcesno && $actual_referredtoresourcesno) ||
+      ($referredtoresourcessome && $actual_referredtoresourcessome) ||
+      ($referredtoresourcesyes && $actual_referredtoresourcesyes);
+    if (!$include_post) continue;
+
+    $actual_criticalapproachnotrated = false;
+    $actual_criticalapproachno = false;
+    $actual_criticalapproachsome = false;
+    $actual_criticalapproachyes = false;
+    if (empty($actual_criticalapproach[$enrol->postid])) $actual_criticalapproachnotrated = true;
+    elseif ($actual_criticalapproach[$enrol->postid] < 1.01) $actual_criticalapproachno = true;
+    elseif ($actual_criticalapproach[$enrol->postid] <=2.99) $actual_criticalapproachsome = true;
+    else $actual_criticalapproachyes = true;
+    $include_post =
+      ($criticalapproachnotrated && $actual_criticalapproachnotrated) ||
+      ($criticalapproachno && $actual_criticalapproachno) ||
+      ($criticalapproachsome && $actual_criticalapproachsome) ||
+      ($criticalapproachyes && $actual_criticalapproachyes);
+    if (!$include_post) continue;
+
+    $actual_referencingnotrated = false;
+    $actual_referencingno = false;
+    $actual_referencingsome = false;
+    $actual_referencingyes = false;
+    if (empty($actual_referencing[$enrol->postid])) $actual_referencingnotrated = true;
+    elseif ($actual_referencing[$enrol->postid] < 1.01) $actual_referencingno = true;
+    elseif ($actual_referencing[$enrol->postid] <=2.99) $actual_referencingsome = true;
+    else $actual_referencingyes = true;
+    $include_post =
+      ($referencingnotrated && $actual_referencingnotrated) ||
+      ($referencingno && $actual_referencingno) ||
+      ($referencingsome && $actual_referencingsome) ||
+      ($referencingyes && $actual_referencingyes);
+    if (!$include_post) continue;
+
+    $include_post =
+      (($averagereferredtoresources == 'Any') ) ||
+      (($averagereferredtoresources == 'No') && ($actual_averagereferredtoresources[$enrol->userid] < 1.01)) ||
+      (($averagereferredtoresources == 'Mixed') && (($actual_averagereferredtoresources[$enrol->userid] >=1.01) && ($actual_averagereferredtoresources[$enrol->userid] <=2.99))) ||
+      (($averagereferredtoresources == 'Yes') && ($actual_averagereferredtoresources[$enrol->userid] > 2.99));
+    if (!$include_post) continue;
+
+    $include_post =
+      (($averagecriticalapproach == 'Any') ) ||
+      (($averagecriticalapproach == 'No') && ($actual_averagecriticalapproach[$enrol->userid] < 1.01)) ||
+      (($averagecriticalapproach == 'Mixed') && (($actual_averagecriticalapproach[$enrol->userid] >=1.01) && ($actual_averagecriticalapproach[$enrol->userid] <=2.99))) ||
+      (($averagecriticalapproach == 'Yes') && ($actual_averagecriticalapproach[$enrol->userid] > 2.99));
+    if (!$include_post) continue;
+
+    $include_post =
+      (($averagereferencing == 'Any') ) ||
+      (($averagereferencing == 'No') && ($actual_averagereferencing[$enrol->userid] < 1.01)) ||
+      (($averagereferencing == 'Mixed') && (($actual_averagereferencing[$enrol->userid] >=1.01) && ($actual_averagereferencing[$enrol->userid] <=2.99))) ||
+      (($averagereferencing == 'Yes') && ($actual_averagereferencing[$enrol->userid] > 2.99));
+    if (!$include_post) continue;
+
+
     $rowdata = array();
     $rowdata[] = htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8');
