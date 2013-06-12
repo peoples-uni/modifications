@@ -339,6 +339,148 @@ ORDER BY e.semester, u.lastname ASC, u.firstname ASC, fullname ASC, forumname AS
 array($chosensemester, $chosenmodule)
 );
 
+
+// (more or less) Duplicate the query but now for ratings (separate query used to reduce re-testing)
+$ratings = $DB->get_records_sql(
+"SELECT
+  r.id as ratingid, r.rating, r.scaleid,
+  fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject
+FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
+LEFT JOIN mdl_rating r ON fp.id=r.itemid
+WHERE
+  e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql AND
+  r.component='mod_forum' AND r.ratingarea='post' AND
+  r.scaleid IN({$CFG->scale_to_use_for_triple_rating}, {$CFG->scale_to_use_for_triple_rating_2}, {$CFG->scale_to_use_for_triple_rating_3})",
+array($chosensemester, $chosenmodule)
+);
+
+// referredtoresources for Post
+$actual_referredtoresources = array();
+$actual_count_referredtoresources = array();
+$actual_user_referredtoresources = array();
+if (!empty($ratings)) {
+  foreach ($ratings as $rating) {
+    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating) {
+      if (empty($actual_referredtoresources[$rating->postid])) {
+        $actual_referredtoresources[$rating->postid] = 0.0 + $rating->rating;
+        $actual_count_referredtoresources[$rating->postid] = 1.0;
+        $actual_user_referredtoresources[$rating->postid] = $rating->userid;
+      }
+      else {
+        $actual_referredtoresources[$rating->postid] =
+          (($actual_referredtoresources[$rating->postid] * $actual_count_referredtoresources[$rating->postid]) + $rating->rating) /
+          ($actual_count_referredtoresources[$rating->postid] + 1.0);
+        $actual_count_referredtoresources[$rating->postid] += 1.0;
+      }
+    }
+  }
+}
+
+// Average referredtoresources for Student
+$actual_averagereferredtoresources = array();
+$actual_count_averagereferredtoresources = array();
+if (!empty($actual_referredtoresources)) {
+  foreach ($actual_referredtoresources as $postid => $item) {
+    $student_to_get_average_for = $actual_user_referredtoresources[$postid]];
+
+    if (empty($actual_averagereferredtoresources[$student_to_get_average_for])) {
+      $actual_averagereferredtoresources[$student_to_get_average_for] = 0.0 + $item;
+      $actual_count_averagereferredtoresources[$student_to_get_average_for] = 1.0;
+    }
+    else {
+      $actual_averagereferredtoresources[$student_to_get_average_for] =
+        (($actual_averagereferredtoresources[$student_to_get_average_for] * $actual_count_averagereferredtoresources[$student_to_get_average_for]) + $item) /
+        ($actual_count_averagereferredtoresources[$student_to_get_average_for] + 1.0);
+      $actual_count_averagereferredtoresources[$student_to_get_average_for] += 1.0;
+    }
+  }
+}
+
+// criticalapproach for Post
+$actual_criticalapproach = array();
+$actual_count_criticalapproach = array();
+$actual_user_criticalapproach = array();
+if (!empty($ratings)) {
+  foreach ($ratings as $rating) {
+    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating) {
+      if (empty($actual_criticalapproach[$rating->postid])) {
+        $actual_criticalapproach[$rating->postid] = 0.0 + $rating->rating;
+        $actual_count_criticalapproach[$rating->postid] = 1.0;
+        $actual_user_criticalapproach[$rating->postid] = $rating->userid;
+      }
+      else {
+        $actual_criticalapproach[$rating->postid] =
+          (($actual_criticalapproach[$rating->postid] * $actual_count_criticalapproach[$rating->postid]) + $rating->rating) /
+          ($actual_count_criticalapproach[$rating->postid] + 1.0);
+        $actual_count_criticalapproach[$rating->postid] += 1.0;
+      }
+    }
+  }
+}
+
+// Average criticalapproach for Student
+$actual_averagecriticalapproach = array();
+$actual_count_averagecriticalapproach = array();
+if (!empty($actual_criticalapproach)) {
+  foreach ($actual_criticalapproach as $postid => $item) {
+    $student_to_get_average_for = $actual_user_criticalapproach[$postid]];
+
+    if (empty($actual_averagecriticalapproach[$student_to_get_average_for])) {
+      $actual_averagecriticalapproach[$student_to_get_average_for] = 0.0 + $item;
+      $actual_count_averagecriticalapproach[$student_to_get_average_for] = 1.0;
+    }
+    else {
+      $actual_averagecriticalapproach[$student_to_get_average_for] =
+        (($actual_averagecriticalapproach[$student_to_get_average_for] * $actual_count_averagecriticalapproach[$student_to_get_average_for]) + $item) /
+        ($actual_count_averagecriticalapproach[$student_to_get_average_for] + 1.0);
+      $actual_count_averagecriticalapproach[$student_to_get_average_for] += 1.0;
+    }
+  }
+}
+
+// referencing for Post
+$actual_referencing = array();
+$actual_count_referencing = array();
+$actual_user_referencing = array();
+if (!empty($ratings)) {
+  foreach ($ratings as $rating) {
+    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating) {
+      if (empty($actual_referencing[$rating->postid])) {
+        $actual_referencing[$rating->postid] = 0.0 + $rating->rating;
+        $actual_count_referencing[$rating->postid] = 1.0;
+        $actual_user_referencing[$rating->postid] = $rating->userid;
+      }
+      else {
+        $actual_referencing[$rating->postid] =
+          (($actual_referencing[$rating->postid] * $actual_count_referencing[$rating->postid]) + $rating->rating) /
+          ($actual_count_referencing[$rating->postid] + 1.0);
+        $actual_count_referencing[$rating->postid] += 1.0;
+      }
+    }
+  }
+}
+
+// Average referencing for Student
+$actual_averagereferencing = array();
+$actual_count_averagereferencing = array();
+if (!empty($actual_referencing)) {
+  foreach ($actual_referencing as $postid => $item) {
+    $student_to_get_average_for = $actual_user_referencing[$postid]];
+
+    if (empty($actual_averagereferencing[$student_to_get_average_for])) {
+      $actual_averagereferencing[$student_to_get_average_for] = 0.0 + $item;
+      $actual_count_averagereferencing[$student_to_get_average_for] = 1.0;
+    }
+    else {
+      $actual_averagereferencing[$student_to_get_average_for] =
+        (($actual_averagereferencing[$student_to_get_average_for] * $actual_count_averagereferencing[$student_to_get_average_for]) + $item) /
+        ($actual_count_averagereferencing[$student_to_get_average_for] + 1.0);
+      $actual_count_averagereferencing[$student_to_get_average_for] += 1.0;
+    }
+  }
+}
+
+
 $sidsbyuseridsemester = $DB->get_records_sql('SELECT CONCAT(userid, semester) AS i, sid FROM mdl_peoplesapplication WHERE (((state & 0x38)>>3)=3 OR (state & 0x7)=3)');
 
 $table = new html_table();
