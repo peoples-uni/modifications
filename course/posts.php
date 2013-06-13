@@ -711,7 +711,7 @@ if (!empty($enrols)) {
 
   // Remove table rows for which the Student has (in total) <= $maximumposts matching the filter
   $useridkey = count($rowdata) - 1;
-  foreach ($table->data[] as $key => $row) {
+  foreach ($table->data as $key => $row) {
     $userid_for_row = $table->data[$key][$useridkey];
 
     unset($table->data[$key][$useridkey]); // userid Remove from the table so it does not add an unwanted column
