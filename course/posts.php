@@ -785,7 +785,7 @@ if (!empty($enrols)) {
     }
   }
 
-  // We want to display Student/Module combinations that have Zero Posts (in the summary statistics)
+  // We want to display Students that have Zero Posts (in the summary statistics)
   $all_users = $DB->get_records_sql(
     "SELECT DISTINCT u.id as userid, u.lastname, u.firstname
     FROM (mdl_enrolment e, mdl_user u, mdl_course c)
@@ -796,7 +796,13 @@ if (!empty($enrols)) {
   if (!empty($all_users)) {
     foreach ($all_users as $all_user) {
       $name = htmlspecialchars(strtolower(trim($all_user->lastname . ', ' . $all_user->firstname)), ENT_COMPAT, 'UTF-8');
-      if (empty($usercount[$name])) $usercount[$name] = 0;
+      if (empty($usercount[$name])) {
+        $usercount[$name] = 0;
+
+        $user_actual_averagereferredtoresources[$name] =  'No Posts';
+        $user_actual_averagecriticalapproach[$name] =  'No Posts';
+        $user_actual_averagereferencing[$name] =  'No Posts';
+      }
     }
   }
 }
