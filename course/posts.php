@@ -490,7 +490,11 @@ $table->head = array(
   'Module',
   'Semester',
   'Discussion Forum Topic',
-  'Subject'
+  'Subject',
+  'Referred to resources:',
+  'Critical approach:',
+  'Referencing:',
+  ''
   );
 
 $usercount = array();
@@ -602,6 +606,24 @@ if (!empty($enrols)) {
     $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($enrol->forumname, ENT_COMPAT, 'UTF-8');
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/mod/forum/discuss.php?d=' . $enrol->discid . '#p' . $enrol->postid . '" target="_blank">' . htmlspecialchars($enrol->subject, ENT_COMPAT, 'UTF-8') . '</a>';
+
+    if ($actual_referredtoresourcesnotrated) $rowdata[] = 'Not rated';
+    if ($actual_referredtoresourcesno) $rowdata[] = 'No';
+    if ($actual_referredtoresourcessome) $rowdata[] = 'Some';
+    if ($actual_referredtoresourcesyes) $rowdata[] = 'Yes';
+
+    if ($actual_criticalapproachnotrated) $rowdata[] = 'Not rated';
+    if ($actual_criticalapproachno) $rowdata[] = 'No';
+    if ($actual_criticalapproachsome) $rowdata[] = 'Some';
+    if ($actual_criticalapproachyes) $rowdata[] = 'Yes';
+
+    if ($actual_referencingnotrated) $rowdata[] = 'Not rated';
+    if ($actual_referencingno) $rowdata[] = 'None';
+    if ($actual_referencingsome) $rowdata[] = 'Wrong format';
+    if ($actual_referencingyes) $rowdata[] = 'Good';
+
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/discussionfeedback_for_student.php?userid=' . $enrol->userid . '" target="_blank">Write discussion feedback for student</a>';
+
 
 		$hashforcourse = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
 		$courseswithstudentforumstats[$hashforcourse]['forums']['<td>' . htmlspecialchars($enrol->forumname, ENT_COMPAT, 'UTF-8') . '</td>'] = 1;
