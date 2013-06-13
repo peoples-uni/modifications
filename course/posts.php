@@ -381,7 +381,7 @@ $actual_averagereferredtoresources = array();
 $actual_count_averagereferredtoresources = array();
 if (!empty($actual_referredtoresources)) {
   foreach ($actual_referredtoresources as $postid => $item) {
-    $student_to_get_average_for = $actual_user_referredtoresources[$postid]];
+    $student_to_get_average_for = $actual_user_referredtoresources[$postid];
 
     if (empty($actual_averagereferredtoresources[$student_to_get_average_for])) {
       $actual_averagereferredtoresources[$student_to_get_average_for] = 0.0 + $item;
@@ -423,7 +423,7 @@ $actual_averagecriticalapproach = array();
 $actual_count_averagecriticalapproach = array();
 if (!empty($actual_criticalapproach)) {
   foreach ($actual_criticalapproach as $postid => $item) {
-    $student_to_get_average_for = $actual_user_criticalapproach[$postid]];
+    $student_to_get_average_for = $actual_user_criticalapproach[$postid];
 
     if (empty($actual_averagecriticalapproach[$student_to_get_average_for])) {
       $actual_averagecriticalapproach[$student_to_get_average_for] = 0.0 + $item;
@@ -465,7 +465,7 @@ $actual_averagereferencing = array();
 $actual_count_averagereferencing = array();
 if (!empty($actual_referencing)) {
   foreach ($actual_referencing as $postid => $item) {
-    $student_to_get_average_for = $actual_user_referencing[$postid]];
+    $student_to_get_average_for = $actual_user_referencing[$postid];
 
     if (empty($actual_averagereferencing[$student_to_get_average_for])) {
       $actual_averagereferencing[$student_to_get_average_for] = 0.0 + $item;
