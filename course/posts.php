@@ -25,7 +25,7 @@ if (!empty($_POST['markfilter'])) {
 
     . '&averagereferredtoresources=' . urlencode(dontstripslashes($_POST['averagereferredtoresources']))
     . '&averagecriticalapproach=' . urlencode(dontstripslashes($_POST['averagecriticalapproach']))
-    . '&averagereferencing=' . urlencode(dontstripslashes($_POST['averagereferencing]))
+    . '&averagereferencing=' . urlencode(dontstripslashes($_POST['averagereferencing']))
 
 		. (empty($_POST['skipintro']) ? '&skipintro=0' : '&skipintro=1')
 		. (empty($_POST['suppressnames']) ? '&suppressnames=0' : '&suppressnames=1')
@@ -504,6 +504,9 @@ $usermodulecount = array();
 $usermodulecount_key_list = array();
 $topiccount = array();
 $topiccount_key_list = array();
+$user_actual_averagereferredtoresources = array();
+$user_actual_averagecriticalapproach = array();
+$user_actual_averagereferencing = array();
 $listofemails = array();
 $n = 0;
 if (!empty($enrols)) {
@@ -666,6 +669,21 @@ if (!empty($enrols)) {
       $usercountid[$enrol->userid]++;
     }
 
+    if (empty($actual_averagereferredtoresources[$enrol->userid])) $user_actual_averagereferredtoresources[$name] =  'Not rated';
+    elseif ($actual_averagereferredtoresources[$enrol->userid] < 1.01) $user_actual_averagereferredtoresources[$name] = 'No';
+    elseif ($actual_averagereferredtoresources[$enrol->userid] <=2.99) $user_actual_averagereferredtoresources[$name] = 'Mixed';
+    else $user_actual_averagereferredtoresources[$name] = 'Yes';
+
+    if (empty($actual_averagecriticalapproach[$enrol->userid])) $user_actual_averagecriticalapproach[$name] =  'Not rated';
+    elseif ($actual_averagecriticalapproach[$enrol->userid] < 1.01) $user_actual_averagecriticalapproach[$name] = 'No';
+    elseif ($actual_averagecriticalapproach[$enrol->userid] <=2.99) $user_actual_averagecriticalapproach[$name] = 'Mixed';
+    else $user_actual_averagecriticalapproach[$name] = 'Yes';
+
+    if (empty($actual_averagereferencing[$enrol->userid])) $user_actual_averagereferencing[$name] =  'Not rated';
+    elseif ($actual_averagereferencing[$enrol->userid] < 1.01) $user_actual_averagereferencing[$name] = 'No';
+    elseif ($actual_averagereferencing[$enrol->userid] <=2.99) $user_actual_averagereferencing[$name] = 'Mixed';
+    else $user_actual_averagereferencing[$name] = 'Yes';
+
 		$name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname . ', ' . $enrol->fullname)), ENT_COMPAT, 'UTF-8');
     $usermodulecount_key_list[$enrol->userid] = $name;
 		if (empty($usermodulecount[$name])) {
@@ -793,6 +811,15 @@ echo '<br /><br />';
 
 displaystat($topiccount, 'Student Posts by Forum Topic');
 echo 'Number of Forum Topics with Posts: ' . count($topiccount);
+echo '<br /><br />';
+
+displaystat($user_actual_averagereferredtoresources, "Average 'Referred to resources' for Student");
+echo '<br /><br />';
+
+displaystat($user_actual_averagecriticalapproach, "Average 'Critical approach' for Student");
+echo '<br /><br />';
+
+displaystat($user_actual_averagereferencing, "Average 'Referencing' for Student");
 echo '<br /><br />';
 
 natcasesort($listofemails);
