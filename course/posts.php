@@ -799,9 +799,9 @@ if (!empty($enrols)) {
       if (empty($usercount[$name])) {
         $usercount[$name] = 0;
 
-        $user_actual_averagereferredtoresources[$name] =  'No Posts';
-        $user_actual_averagecriticalapproach[$name] =  'No Posts';
-        $user_actual_averagereferencing[$name] =  'No Posts';
+        $user_actual_averagereferredtoresources[$name] =  'No posts';
+        $user_actual_averagecriticalapproach[$name] =  'No posts';
+        $user_actual_averagereferencing[$name] =  'No posts';
       }
     }
   }
