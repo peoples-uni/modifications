@@ -331,7 +331,7 @@ else {
 
 
 $enrols = $DB->get_records_sql(
-"SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
+"SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, u.email, c.fullname, f.name AS forumname, fp.subject, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 LEFT JOIN mdl_peoplesmph m ON e.userid=m.userid
 WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql
@@ -504,6 +504,7 @@ $usermodulecount = array();
 $usermodulecount_key_list = array();
 $topiccount = array();
 $topiccount_key_list = array();
+$listofemails = array();
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
@@ -686,6 +687,8 @@ if (!empty($enrols)) {
 		$n++;
     $rowdata[] = $enrol->userid; // Will be removed below
     $table->data[] = $rowdata;
+
+    $listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
 	}
 
   // Remove table rows for which the Student has (in total) <= $maximumposts matching the filter
@@ -790,6 +793,10 @@ echo '<br /><br />';
 
 displaystat($topiccount, 'Student Posts by Forum Topic');
 echo 'Number of Forum Topics with Posts: ' . count($topiccount);
+echo '<br /><br />';
+
+natcasesort($listofemails);
+echo 'e-mails of Selected Students...<br />' . implode(', ', array_unique($listofemails));
 
 
 echo '<br /><br /><br /><br /><br />';
