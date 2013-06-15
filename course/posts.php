@@ -515,12 +515,10 @@ $table->head = array(
   );
 
 $usercount = array();
-$usercount_key_list = array();
 $usercountid = array();
+$students_to_ignore = array();
 $usermodulecount = array();
-$usermodulecount_key_list = array();
 $topiccount = array();
-$topiccount_key_list = array();
 $user_actual_averagereferredtoresources = array();
 $user_actual_averagecriticalapproach = array();
 $user_actual_averagereferencing = array();
@@ -671,7 +669,6 @@ if (!empty($enrols)) {
 
 
 		$name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname)), ENT_COMPAT, 'UTF-8');
-    $usercount_key_list[$enrol->userid] = $name;
 		if (empty($usercount[$name])) {
 			$usercount[$name] = 1;
 		}
@@ -702,7 +699,6 @@ if (!empty($enrols)) {
     else $user_actual_averagereferencing[$name] = 'Yes';
 
 		$name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname . ', ' . $enrol->fullname)), ENT_COMPAT, 'UTF-8');
-    $usermodulecount_key_list[$enrol->userid] = $name;
 		if (empty($usermodulecount[$name])) {
 			$usermodulecount[$name] = 1;
 		}
@@ -711,7 +707,6 @@ if (!empty($enrols)) {
 		}
 
 		$name = htmlspecialchars(strtolower(trim($enrol->fullname . ', ' . $enrol->forumname)), ENT_COMPAT, 'UTF-8');
-    $topiccount_key_list[$enrol->userid] = $name;
 		if (empty($topiccount[$name])) {
 			$topiccount[$name] = 1;
 		}
@@ -738,9 +733,7 @@ if (!empty($enrols)) {
 
   foreach ($usercountid as $userid => $row) { // Now remove from stats
     if ($usercountid[$userid] > $maximumposts) {
-      unset($usercount[$usercount_key_list[$userid]]);
-      unset($usermodulecount[$usermodulecount_key_list[$userid]]);
-      unset($topiccount[$topiccount_key_list[$userid]]);
+      $students_to_ignore[] = $userid;
     }
   }
 }
@@ -782,9 +775,8 @@ foreach ($courseswithstudentforumstats as $coursekey => $coursewithstudentforums
 echo '<br />';
 
 
-$usermodulecountnonzero = count($usermodulecount);
-$usercountnonzero = count($usercount);
-
+$usermodulecountnonzero = 0;
+$usercountnonzero = 0;
 if (!empty($enrols)) {
 
   // We want to display Student/Module combinations that have Zero Posts (in the summary statistics)
@@ -799,6 +791,11 @@ if (!empty($enrols)) {
     foreach ($all_usermodules as $all_usermodule) {
       $name = htmlspecialchars(strtolower(trim($all_usermodule->lastname . ', ' . $all_usermodule->firstname . ', ' . $all_usermodule->fullname)), ENT_COMPAT, 'UTF-8');
       if (empty($usermodulecount[$name])) $usermodulecount[$name] = 0;
+
+      if (in_array($all_usermodule->userid, $students_to_ignore)) {
+        unset($usermodulecount[$name]);
+      }
+      elseif ($usermodulecount[$name] != 0) $usermodulecountnonzero++;
     }
   }
 
@@ -820,6 +817,14 @@ if (!empty($enrols)) {
         $user_actual_averagecriticalapproach[$name] =  'No posts';
         $user_actual_averagereferencing[$name] =  'No posts';
       }
+
+      if (in_array($all_user->userid, $students_to_ignore)) {
+        unset($usercount[$name]);
+        unset($user_actual_averagereferredtoresources[$name]);
+        unset($user_actual_averagecriticalapproach[$name]);
+        unset($user_actual_averagereferencing[$name]);
+      }
+      elseif ($usercount[$name] != 0) $usercountnonzero++;
     }
   }
 }
@@ -832,9 +837,11 @@ displaystat($usermodulecount, 'Student Posts per Module');
 echo 'Number of Students who Posted per Module: ' . $usermodulecountnonzero;
 echo '<br /><br />';
 
-displaystat($topiccount, 'Student Posts by Forum Topic');
-echo 'Number of Forum Topics with Posts: ' . count($topiccount);
-echo '<br /><br />';
+if ($maximumposts >= 99999) { // Will be wrong if some posts should not be counted
+  displaystat($topiccount, 'Student Posts by Forum Topic');
+  echo 'Number of Forum Topics with Posts: ' . count($topiccount);
+  echo '<br /><br />';
+}
 
 displaystat($user_actual_averagereferredtoresources, "Average 'Referred to resources' for Student");
 echo '<br /><br />';
