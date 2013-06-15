@@ -113,6 +113,23 @@ else $referencingwrongformat = false;
 if (!empty($_REQUEST['referencinggood'])) $referencinggood = true;
 else $referencinggood = false;
 
+// If there are no URL or POST parameters, then default referencing checkboxes to TRUE
+if (empty($_REQUEST['chosensemester'])) {
+  $referredtoresourcesnotrated = true;
+  $referredtoresourcesno = true;
+  $referredtoresourcessome = true;
+  $referredtoresourcesyes = true;
+  $criticalapproachnotrated = true;
+  $criticalapproachno = true;
+  $criticalapproachsome = true;
+  $criticalapproachyes = true;
+  $referencingnotrated = true;
+  $referencingnone = true;
+  $referencingwrongformat = true;
+  $referencinggood = true;
+}
+
+
 $semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
 	$listsemester[] = $semester->semester;
