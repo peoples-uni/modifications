@@ -718,7 +718,7 @@ if (!empty($enrols)) {
     $rowdata[] = $enrol->userid; // Will be removed below
     $table->data[] = $rowdata;
 
-    $listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
+    $listofemails[$enrol->userid] = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
 	}
 
   // Remove table rows for which the Student has (in total) <= $maximumposts matching the filter
@@ -731,6 +731,7 @@ if (!empty($enrols)) {
     if ($usercountid[$userid_for_row] > $maximumposts) {
       $n--;
       unset($table->data[$key]);
+      unset($listofemails[$userid_for_row]);
     }
   }
 
