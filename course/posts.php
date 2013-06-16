@@ -728,7 +728,10 @@ if (!empty($enrols)) {
 
     unset($table->data[$key][$useridkey]); // userid Remove from the table so it does not add an unwanted column
 
-    if ($usercountid[$userid_for_row] > $maximumposts) unset($table->data[$key]);
+    if ($usercountid[$userid_for_row] > $maximumposts) {
+      $n--;
+      unset($table->data[$key]);
+    }
   }
 
   foreach ($usercountid as $userid => $row) { // Now remove from stats
@@ -757,7 +760,9 @@ foreach ($courseswithstudentforumstats as $coursekey => $coursewithstudentforums
 	}
 	echo '</tr>';
 
-	foreach ($coursewithstudentforumstats['students'] as $studententry) {
+  foreach ($coursewithstudentforumstats['students'] as $userid => $studententry) {
+    if (in_array($userid, $students_to_ignore)) continue;
+
 		echo '<tr>';
 		if ($suppressnames) echo '<td>' . $sidsbyuseridsemester[$studententry['userid'] . $studententry['semester']]->sid . '</td>';
 		else echo $studententry['last'] . $studententry['first'];
