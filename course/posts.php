@@ -419,7 +419,7 @@ $actual_count_criticalapproach = array();
 $actual_user_criticalapproach = array();
 if (!empty($ratings)) {
   foreach ($ratings as $rating) {
-    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating) {
+    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating_2) {
       if (empty($actual_criticalapproach[$rating->postid])) {
         $actual_criticalapproach[$rating->postid] = 0.0 + $rating->rating;
         $actual_count_criticalapproach[$rating->postid] = 1.0;
@@ -461,7 +461,7 @@ $actual_count_referencing = array();
 $actual_user_referencing = array();
 if (!empty($ratings)) {
   foreach ($ratings as $rating) {
-    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating) {
+    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating_3) {
       if (empty($actual_referencing[$rating->postid])) {
         $actual_referencing[$rating->postid] = 0.0 + $rating->rating;
         $actual_count_referencing[$rating->postid] = 1.0;
