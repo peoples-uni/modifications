@@ -582,18 +582,18 @@ if (!empty($enrols)) {
     if (!$include_post) continue;
 
     $actual_referencingnotrated = false;
-    $actual_referencingno = false;
-    $actual_referencingsome = false;
-    $actual_referencingyes = false;
+    $actual_referencingnone = false;
+    $actual_referencingwrongformat = false;
+    $actual_referencinggood = false;
     if (empty($actual_referencing[$enrol->postid])) $actual_referencingnotrated = true;
-    elseif ($actual_referencing[$enrol->postid] < 1.01) $actual_referencingno = true;
-    elseif ($actual_referencing[$enrol->postid] <=2.99) $actual_referencingsome = true;
-    else $actual_referencingyes = true;
+    elseif ($actual_referencing[$enrol->postid] < 1.01) $actual_referencingnone = true;
+    elseif ($actual_referencing[$enrol->postid] <=2.99) $actual_referencingwrongformat = true;
+    else $actual_referencinggood = true;
     $include_post =
       ($referencingnotrated && $actual_referencingnotrated) ||
-      ($referencingno && $actual_referencingno) ||
-      ($referencingsome && $actual_referencingsome) ||
-      ($referencingyes && $actual_referencingyes);
+      ($referencingnone && $actual_referencingnone) ||
+      ($referencingwrongformat && $actual_referencingwrongformat) ||
+      ($referencinggood && $actual_referencinggood);
     if (!$include_post) continue;
 
     $include_post =
@@ -637,9 +637,9 @@ if (!empty($enrols)) {
     if ($actual_criticalapproachyes) $rowdata[] = 'Yes';
 
     if ($actual_referencingnotrated) $rowdata[] = 'Not rated';
-    if ($actual_referencingno) $rowdata[] = 'None';
-    if ($actual_referencingsome) $rowdata[] = 'Wrong format';
-    if ($actual_referencingyes) $rowdata[] = 'Good';
+    if ($actual_referencingnone) $rowdata[] = 'None';
+    if ($actual_referencingwrongformat) $rowdata[] = 'Wrong format';
+    if ($actual_referencinggood) $rowdata[] = 'Good';
 
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/discussionfeedback_for_student.php?userid=' . $enrol->userid . '" target="_blank">Write discussion feedback</a>';
 
