@@ -72,7 +72,7 @@ if (!empty($_REQUEST['chosenssf'])) $chosenssf = dontstripslashes($_REQUEST['cho
 if (!empty($_REQUEST['chosenusersearch'])) $chosenusersearch = dontstripslashes($_REQUEST['chosenusersearch']);
 else $chosenusersearch = '';
 
-if (!empty($_REQUEST['maximumposts'])) $maximumposts = (int)dontstripslashes($_REQUEST['maximumposts']);
+if (isset($_REQUEST['maximumposts'])) $maximumposts = (int)dontstripslashes($_REQUEST['maximumposts']);
 else $maximumposts = 99999;
 
 if (!empty($_REQUEST['acceptedmmu'])) $acceptedmmu = dontstripslashes($_REQUEST['acceptedmmu']);
