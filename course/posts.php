@@ -511,7 +511,7 @@ $table->head = array(
   'Referred to resources:',
   'Critical approach:',
   'Referencing:',
-  ''
+  'Write discussion feedback for student...'
   );
 
 $usercount = array();
@@ -641,7 +641,7 @@ if (!empty($enrols)) {
     if ($actual_referencingsome) $rowdata[] = 'Wrong format';
     if ($actual_referencingyes) $rowdata[] = 'Good';
 
-    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/discussionfeedback_for_student.php?userid=' . $enrol->userid . '" target="_blank">Write discussion feedback for student</a>';
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/discussionfeedback_for_student.php?userid=' . $enrol->userid . '" target="_blank">Write discussion feedback</a>';
 
 
 		$hashforcourse = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
