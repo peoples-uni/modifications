@@ -185,9 +185,9 @@ $listaveragecriticalapproach[] = 'Yes';
 
 if (!isset($averagereferencing)) $averagereferencing = 'Any';
 $listaveragereferencing[] = 'Any';
-$listaveragereferencing[] = 'No';
+$listaveragereferencing[] = 'None';
 $listaveragereferencing[] = 'Mixed';
-$listaveragereferencing[] = 'Yes';
+$listaveragereferencing[] = 'Good';
 
 
 ?>
@@ -612,9 +612,9 @@ if (!empty($enrols)) {
 
     $include_post =
       (($averagereferencing == 'Any') ) ||
-      (($averagereferencing == 'No') && ($actual_averagereferencing[$enrol->userid] < 1.01)) ||
+      (($averagereferencing == 'None') && ($actual_averagereferencing[$enrol->userid] < 1.01)) ||
       (($averagereferencing == 'Mixed') && (($actual_averagereferencing[$enrol->userid] >=1.01) && ($actual_averagereferencing[$enrol->userid] <=2.99))) ||
-      (($averagereferencing == 'Yes') && ($actual_averagereferencing[$enrol->userid] > 2.99));
+      (($averagereferencing == 'Good') && ($actual_averagereferencing[$enrol->userid] > 2.99));
     if (!$include_post) continue;
 
 
@@ -694,9 +694,9 @@ if (!empty($enrols)) {
     else $user_actual_averagecriticalapproach[$name] = 'Yes';
 
     if (empty($actual_averagereferencing[$enrol->userid])) $user_actual_averagereferencing[$name] =  'Not rated';
-    elseif ($actual_averagereferencing[$enrol->userid] < 1.01) $user_actual_averagereferencing[$name] = 'No';
+    elseif ($actual_averagereferencing[$enrol->userid] < 1.01) $user_actual_averagereferencing[$name] = 'None';
     elseif ($actual_averagereferencing[$enrol->userid] <=2.99) $user_actual_averagereferencing[$name] = 'Mixed';
-    else $user_actual_averagereferencing[$name] = 'Yes';
+    else $user_actual_averagereferencing[$name] = 'Good';
 
 		$name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname . ', ' . $enrol->fullname)), ENT_COMPAT, 'UTF-8');
 		if (empty($usermodulecount[$name])) {
