@@ -787,7 +787,7 @@ if (!empty($enrols)) {
 
   // We want to display Student/Module combinations that have Zero Posts (in the summary statistics)
   $all_usermodules = $DB->get_records_sql(
-    "SELECT DISTINCT u.id as userid, u.lastname, u.firstname, c.fullname
+    "SELECT DISTINCT CONCAT(u.id, c.id) AS ucindex, u.id AS userid, u.lastname, u.firstname, c.fullname
     FROM (mdl_enrolment e, mdl_user u, mdl_course c)
     WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id $semestersql $modulesql $ssfsql
     ORDER BY u.lastname ASC, u.firstname ASC, fullname ASC",
