@@ -371,6 +371,22 @@ WHERE
 array($chosensemester, $chosenmodule)
 );
 
+
+// (more or less) Duplicate the query but now for discussionfeedbacks (separate query used to reduce re-testing)
+$discussionfeedbacks = $DB->get_records_sql("
+SELECT
+  fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, u.email, c.fullname, f.name AS forumname, fp.subject,
+  d.refered_to_resources, d.critical_approach, d.provided_references
+FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
+INNER JOIN mdl_discussionfeedback d ON e.userid=d.userid AND e.courseid=d.course_id
+WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql",
+array($chosensemester, $chosenmodule)
+);
+if (empty($discussionfeedbacks)) {
+  $discussionfeedbacks = array();
+}
+
+
 // referredtoresources for Post
 $actual_referredtoresources = array();
 $actual_count_referredtoresources = array();
@@ -641,7 +657,23 @@ if (!empty($enrols)) {
     if ($actual_referencingwrongformat) $rowdata[] = 'Wrong format';
     if ($actual_referencinggood) $rowdata[] = 'Good';
 
-    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/discussionfeedback_for_student.php?userid=' . $enrol->userid . '" target="_blank">Write discussion feedback</a>';
+    $spancolour = '<span>';
+    if (!empty($discussionfeedbacks[$enrol->postid])) {
+      if     ($discussionfeedbacks[$enrol->postid]->refered_to_resources == 10 &&
+              $discussionfeedbacks[$enrol->postid]->critical_approach == 10 &&
+              $discussionfeedbacks[$enrol->postid]->provided_references == 10) {
+        $spancolour = '<span style="color:green">';
+      }
+      elseif ($discussionfeedbacks[$enrol->postid]->refered_to_resources == 20 &&
+              $discussionfeedbacks[$enrol->postid]->critical_approach == 20 &&
+              $discussionfeedbacks[$enrol->postid]->provided_references == 20) {
+        $spancolour = '<span style="color:red">';
+      }
+      else {
+        $spancolour = '<span style="color:#FF8C00">';
+      }
+    }
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/discussionfeedback_for_student.php?userid=' . $enrol->userid . '" target="_blank">' . $spancolour . 'Write discussion feedback</span></a>';
 
 
 		$hashforcourse = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
