@@ -5,6 +5,7 @@
 *
 */
 
+$assessmentname[  ''] = 'Select...';
 $assessmentname['10'] = 'Yes';
 $assessmentname['20'] = 'No';
 $assessmentname['30'] = 'Could be improved';
@@ -34,6 +35,73 @@ if (empty($userrecord)) {
   echo '<h1>User does not exist!</h1>';
   die();
 }
+
+
+if (!empty($_POST['refered_to_resources']) && !empty($_POST['critical_approach']) && !empty($_POST['provided_references'])) {
+  $refered_to_resources = (int)$_POST['refered_to_resources'];
+  $critical_approach    = (int)$_POST['critical_approach'];
+  $provided_references  = (int)$_POST['provided_references'];
+}
+else {
+  $refered_to_resources = 0;
+  $critical_approach    = 0;
+  $provided_references  = 0;
+}
+
+if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $refered_to_resources && $critical_approach && $provided_references) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $course_id = (int)$_POST['course_id'];
+  $course = $DB->get_record('course', array('id' => $course_id));
+  if (empty($course)) {echo '<h1>Bad course, should not happen!</h1>'; die();}
+
+  $discussionfeedback = $DB->get_record('discussionfeedback', array('course_id' => $course_id, 'userid' => $userid_for_student));
+
+  if (empty($discussionfeedback)) {
+    $discussionfeedback = new object();
+
+    $doinsert = TRUE;
+  }
+  else {
+    $doinsert = FALSE;
+  }
+
+  $discussionfeedback->refered_to_resources = $refered_to_resources;
+  $discussionfeedback->critical_approach = $critical_approach;
+  $discussionfeedback->provided_references = $provided_references;
+
+  $dataitem = $_POST['assessment_text'];
+  if (empty($dataitem)) $dataitem = '';
+  $discussionfeedback->assessment_text = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+  $discussionfeedback->course_id = $course_id;
+  $discussionfeedback->userid = $userid_for_student;
+  $discussionfeedback->user_id_submitted = $USER->id;
+  $discussionfeedback->datesubmitted = time();
+
+  if ($doinsert) {
+    $DB->insert_record('discussionfeedback', $discussionfeedback);
+  }
+  else {
+    $DB->update_record('discussionfeedback', $discussionfeedback);
+  }
+
+  $peoples_discussion_feedback_email = get_config(NULL, 'peoples_discussion_feedback_email');
+  $peoples_discussion_feedback_email = str_replace("\r", '', $peoples_discussion_feedback_email);
+  $peoples_discussion_feedback_email = str_replace('GIVEN_NAME_HERE', $userrecord->firstname, $peoples_discussion_feedback_email);
+
+  $criteria  = "Referred to resources in the topics: $assessmentname[$refered_to_resources]\n\n";
+  $criteria .= "Included critical approach to information: $assessmentname[$critical_approach]\n\n";
+  $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n";
+  if (!empty($discussionfeedback->assessment_text)) $criteria .= "\n" . $discussionfeedback->assessment_text . "\n";
+  $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
+
+  $peoples_discussion_feedback_email = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $peoples_discussion_feedback_email); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
+                                                                                                                             // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+
+  $student_name = fullname($userrecord);
+  sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname ($student_name)", $peoples_discussion_feedback_email);
+}
+
 
 echo '<h1>Write Discussion Feedback for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8') . '</h1>';
 $PAGE->set_title('Write Discussion Feedback for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
@@ -255,6 +323,82 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
   $n++;
 }
 echo html_writer::table($table);
+echo '<br /><br />';
+
+
+$all_courses = $DB->get_records_sql("
+SELECT c.id, c.fullname
+FROM mdl_enrolment e, mdl_course c
+WHERE e.enrolled!=0 AND e.courseid=c.id AND e.userid=? AND e.semester=?
+ORDER BY c.fullname ASC",
+array($userid_for_student, $chosensemester)
+);
+if (!empty($all_courses)) {
+
+  echo '<script type="text/JavaScript">';
+  foreach ($all_courses as $all_course) {
+?>
+
+function verify<?php echo $all_course->id ?>() {
+  var refered_to_resources = document.feedbackdiscussionform<?php echo $all_course->id ?>.refered_to_resources.value;
+  if (refered_to_resources == "") {
+    alert("You must enter feedback for 'Referred to resources in the topics'");
+    document.feedbackdiscussionform<?php echo $all_course->id ?>.refered_to_resources.focus();
+    return false;
+  }
+  var critical_approach = document.feedbackdiscussionform<?php echo $all_course->id ?>.critical_approach.value;
+  if (critical_approach == "") {
+    alert("You must enter feedback for 'Included critical approach to information'");
+    document.feedbackdiscussionform<?php echo $all_course->id ?>.critical_approach.focus();
+    return false;
+  }
+  var provided_references = document.feedbackdiscussionform<?php echo $all_course->id ?>.provided_references.value;
+  if (provided_references == "") {
+    alert("You must enter feedback for 'Provided references in an appropriate format'");
+    document.feedbackdiscussionform<?php echo $all_course->id ?>.provided_references.focus();
+    return false;
+  }
+  return true;
+}
+
+<?php
+  }
+  echo '</script>';
+
+  foreach ($all_courses as $all_course) {
+?>
+<br />
+<form method="post" action="<?php echo $CFG->wwwroot . "/course/discussionfeedback_for_student.php?userid=$userid_for_student"; ?>"  onSubmit="return verify<?php echo $all_course->id ?>()" name="feedbackdiscussionform<?php echo $all_course->id ?>">
+Write Discussion Feedback for <?php echo htmlspecialchars($all_course->fullname, ENT_COMPAT, 'UTF-8'); ?> (Student: <?php echo htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'); ?>)...<br /><br />
+
+<table border="2" cellpadding="2">
+<tr>
+  <td>Referred to resources in the topics:</td>
+  <?php displayoptions('refered_to_resources', $assessmentname, 'Select...'); ?>
+</tr>
+<tr>
+  <td>Included critical approach to information:</td>
+  <?php displayoptions('critical_approach', $assessmentname, 'Select...'); ?>
+</tr>
+<tr>
+  <td>Provided references in an appropriate format:</td>
+  <?php displayoptions('provided_references', $assessmentname, 'Select...'); ?>
+</tr>
+<tr>
+  <td>Add any free text you wish to be added to the e-mail after the assessment:</td>
+  <td><textarea name="assessment_text" rows="10" cols="100" wrap="hard"></textarea></td>
+</tr>
+</table>
+
+<input type="hidden" name="course_id" value="<?php echo $all_course->id ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markfeedbackdiscussion" value="1" />
+<input type="submit" name="feedbackdiscussion" value="Submit Form" />
+</form>
+<br />
+<?php
+  }
+}
 
 
 echo '<br /><br /><br /><br /><br />';
@@ -307,5 +451,32 @@ function is_peoples_teacher() {
 
   if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
   else return false;
+}
+
+
+function sendapprovedmail($email, $subject, $message) {
+  global $CFG;
+
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
+
+  $supportuser = new stdClass();
+  $supportuser->email = 'education@helpdesk.peoples-uni.org';
+  $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
+  $supportuser->lastname = '';
+  $supportuser->maildisplay = true;
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
+
+  //$user->email = 'applicationresponses@peoples-uni.org';
+  //$user->email = 'alanabarrett0@gmail.com';
+  //email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
+
+  return $ret;
 }
 ?>
