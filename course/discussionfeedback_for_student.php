@@ -143,14 +143,14 @@ array($userid_for_student)
 
 
 // From discussionfeedbacks.php
-$discussionfeedbacks = $DB->get_records_sql('
+$discussionfeedbacks = $DB->get_records_sql("
   SELECT DISTINCT d.*, u.lastname, u.firstname, c.fullname, e.semester
   FROM mdl_discussionfeedback d
   INNER JOIN mdl_user u ON d.userid=u.id
   INNER JOIN mdl_course c ON d.course_id=c.id
   INNER JOIN mdl_enrolment e ON d.userid=e.userid AND d.course_id=e.courseid
   WHERE e.userid=?
-  ORDER BY STR_TO_DATE(SUBSTRING(e.semester, 10), '%M %Y'), c.fullname, u.lastname, u.firstname',
+  ORDER BY STR_TO_DATE(SUBSTRING(e.semester, 10), '%M %Y'), c.fullname, u.lastname, u.firstname",
 array($userid_for_student)
 );
 if (empty($discussionfeedbacks)) {
