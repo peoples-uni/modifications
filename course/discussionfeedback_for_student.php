@@ -389,7 +389,7 @@ Write Discussion Feedback for <?php echo htmlspecialchars($all_course->fullname,
   <td><textarea name="assessment_text" rows="10" cols="100" wrap="hard"></textarea></td>
 </tr>
 <tr>
-  <td colspan="2">
+  <td colspan="2" align="center">
     <input type="hidden" name="course_id" value="<?php echo $all_course->id ?>" />
     <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
     <input type="hidden" name="markfeedbackdiscussion" value="1" />
