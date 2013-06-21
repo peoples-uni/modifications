@@ -389,11 +389,11 @@ Write Discussion Feedback for <?php echo htmlspecialchars($all_course->fullname,
   <td><textarea name="assessment_text" rows="10" cols="100" wrap="hard"></textarea></td>
 </tr>
 <tr>
-  <td colspan="2" align="center">
+  <td colspan="2">
     <input type="hidden" name="course_id" value="<?php echo $all_course->id ?>" />
     <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
     <input type="hidden" name="markfeedbackdiscussion" value="1" />
-    <input type="submit" name="feedbackdiscussion" value="Submit Form" />
+    <input type="submit" name="feedbackdiscussion" value="&nbsp;&nbsp;&nbsp;&nbsp;Submit Discussion Feedback&nbsp;&nbsp;&nbsp;&nbsp;" />
   </td>
 </tr>
 </table>
