@@ -109,7 +109,7 @@ $PAGE->set_heading('Write Discussion Feedback for ' . htmlspecialchars($userreco
 
 echo $OUTPUT->header();
 
-$semesters = $DB->get_records('semesters', NULL, 'id DESC');
+$semesters = $DB->get_records_sql("SELECT semester FROM mdl_semesters ORDER BY STR_TO_DATE(SUBSTRING(semester, 10), '%M %Y') DESC");
 foreach ($semesters as $semester) {
 	if (!isset($chosensemester)) $chosensemester = $semester->semester;
 }
@@ -121,7 +121,7 @@ $enrols = $DB->get_records_sql(
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 LEFT JOIN mdl_peoplesmph m ON e.userid=m.userid
 WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id AND e.userid=?
-ORDER BY e.semester, u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC",
+ORDER BY STR_TO_DATE(SUBSTRING(e.semester, 10), '%M %Y'), u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC",
 array($userid_for_student)
 );
 
@@ -150,7 +150,7 @@ $discussionfeedbacks = $DB->get_records_sql('
   INNER JOIN mdl_course c ON d.course_id=c.id
   INNER JOIN mdl_enrolment e ON d.userid=e.userid AND d.course_id=e.courseid
   WHERE e.userid=?
-  ORDER BY e.semester, c.fullname, u.lastname, u.firstname',
+  ORDER BY STR_TO_DATE(SUBSTRING(e.semester, 10), '%M %Y'), c.fullname, u.lastname, u.firstname',
 array($userid_for_student)
 );
 if (empty($discussionfeedbacks)) {
