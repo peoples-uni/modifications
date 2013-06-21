@@ -294,7 +294,7 @@ if (!empty($enrols)) {
 }
 echo html_writer::table($table);
 echo '<br/>Number of Forum Postings: ' . $n;
-echo '<br /><br />';
+echo '<br /><br /><br /><br />';
 
 
 $table = new html_table();
@@ -388,12 +388,15 @@ Write Discussion Feedback for <?php echo htmlspecialchars($all_course->fullname,
   <td>Add any free text you wish to be added to the e-mail after the assessment:</td>
   <td><textarea name="assessment_text" rows="10" cols="100" wrap="hard"></textarea></td>
 </tr>
+<tr>
+  <td colspan="2">
+    <input type="hidden" name="course_id" value="<?php echo $all_course->id ?>" />
+    <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+    <input type="hidden" name="markfeedbackdiscussion" value="1" />
+    <input type="submit" name="feedbackdiscussion" value="Submit Form" />
+  </td>
+</tr>
 </table>
-
-<input type="hidden" name="course_id" value="<?php echo $all_course->id ?>" />
-<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
-<input type="hidden" name="markfeedbackdiscussion" value="1" />
-<input type="submit" name="feedbackdiscussion" value="Submit Form" />
 </form>
 <br />
 <?php
@@ -471,6 +474,7 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';
+$user->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($user, $supportuser, $subject, $message);
 
   //$user->email = 'applicationresponses@peoples-uni.org';
