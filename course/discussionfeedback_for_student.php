@@ -69,9 +69,9 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $discussionfeedback->critical_approach = $critical_approach;
   $discussionfeedback->provided_references = $provided_references;
 
-  $dataitem = $_POST['assessment_text'];
-  if (empty($dataitem)) $dataitem = '';
-  $discussionfeedback->assessment_text = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $assessment_text = $_POST['assessment_text'];
+  if (empty($assessment_text)) $assessment_text = '';
+  $discussionfeedback->assessment_text = htmlspecialchars($assessment_text, ENT_COMPAT, 'UTF-8');
 
   $discussionfeedback->course_id = $course_id;
   $discussionfeedback->userid = $userid_for_student;
@@ -92,8 +92,10 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $criteria  = "Referred to resources in the topics: $assessmentname[$refered_to_resources]\n\n";
   $criteria .= "Included critical approach to information: $assessmentname[$critical_approach]\n\n";
   $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n";
-  if (!empty($discussionfeedback->assessment_text)) $criteria .= "\n" . $discussionfeedback->assessment_text . "\n";
+  if (!empty($assessment_text)) $criteria .= "\n" . $assessment_text . "\n";
   $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
+
+  $peoples_discussion_feedback_email = strip_tags($peoples_discussion_feedback_email);
 
   $peoples_discussion_feedback_email = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $peoples_discussion_feedback_email); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                                                                              // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
