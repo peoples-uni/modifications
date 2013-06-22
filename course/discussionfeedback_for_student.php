@@ -374,15 +374,15 @@ Write Discussion Feedback for <?php echo htmlspecialchars($all_course->fullname,
 <table border="2" cellpadding="2">
 <tr>
   <td>Referred to resources in the topics:</td>
-  <?php displayoptions('refered_to_resources', $assessmentname, 'Select...'); ?>
+  <?php displaynumericoptions('refered_to_resources', $assessmentname, 'Select...'); ?>
 </tr>
 <tr>
   <td>Included critical approach to information:</td>
-  <?php displayoptions('critical_approach', $assessmentname, 'Select...'); ?>
+  <?php displaynumericoptions('critical_approach', $assessmentname, 'Select...'); ?>
 </tr>
 <tr>
   <td>Provided references in an appropriate format:</td>
-  <?php displayoptions('provided_references', $assessmentname, 'Select...'); ?>
+  <?php displaynumericoptions('provided_references', $assessmentname, 'Select...'); ?>
 </tr>
 <tr>
   <td>Add any free text you wish to be added to the e-mail after the assessment:</td>
@@ -411,14 +411,14 @@ echo '<br /><br />';
 echo $OUTPUT->footer();
 
 
-function displayoptions($name, $options, $selectedvalue) {
+function displaynumericoptions($name, $options, $selectedvalue) {
   echo '<td><select name="' . $name . '">';
-  foreach ($options as $option) {
+  foreach ($options as $key => $option) {
     if ($option === $selectedvalue) $selected = 'selected="selected"';
     else $selected = '';
 
     $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
-    echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+    echo '<option value="' . $key . '" ' . $selected . '>' . $opt . '</option>';
   }
   echo '</select></td>';
 }
