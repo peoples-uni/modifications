@@ -1269,192 +1269,118 @@ Green indicates the Feedback was completely "Good" (for that course).<br />
 Red indicates the Feedback was completely "Bad" (for that course).<br />
 Yellow indicates the Feedback was mixed.<br />
 <br />
-When this column entry is clicked for a Post, a page is brought up which allows Feedback to be recorded and sent (by e-mail) to a Student for Discussion contributions to a Course.<br />
+When this column entry is clicked for a Post, a page is brought up which allows Feedback to be recorded and sent (by e-mail) to a Student for Discussion contributions to any of the (individual) Courses that the Student is taking this Semester.<br />
 There are 3 criteria (that match the 3 ratings) that must be selected as "Yes", "No" or "Could be improved"<br />
 As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria feedback.<br />
 Note: It is possible to re-submit and e-mail again and overwrite the recorded submission.<br />
 <br />
 The data (criteria and free form text) are stored for later analysis and can be accessed from again from posts.php (and are also displayed in the old Discussion Feedback page at <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>)<br />
 <br />
-The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>
-(**)[[GIVE SAMPLE]]
-(**)FROM a existing data is dispalyed
+The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a><br />
+Here is an example of an e-mail that is sent out (including wording from settings.php, the criteria feedback, free form text placed after the criteria feedback and the rest of the settings.php text):-
+<pre>
+Dear Dick,
+
+This is to provide feedback to you about your contributions to the
+discussion forums in each of the Topics in the module.
+As you will know from the section in the Student Handbook
+http://peoples-uni.org/content/discussion-contributions
+
+contributions to the discussion forums should “show reflection
+and critical thought, and understanding of relevant literature.
+You should include reference to your own experience,
+to the resources in the module, and give a reference to a
+published paper or web site”. This is not only to help with your
+learning, but also “help prepare for the assignment –
+the unit assignment requires you to answer questions relating to the
+information presented as relevant to the learning objectives,
+as well as to take a critical approach to the information and to
+support your answer with references”.
+*Please note: as in the assignments, it is important that you
+acknowledge any items you use in the discussions which are taken
+from the work of others. If you copy and paste from another source,
+you must acknowledge the source and reference it*.
+*It is always better to use your own words anyway!*
+
+I have had a look at your discussion contributions, and here are my
+comments on whether you meet the following Criteria...
+
+Referred to resources in the topics: Yes
+
+Included critical approach to information: Yes
+
+Provided references in an appropriate format: Yes
+
+FREE FORM TEXT HERE
+
+There are some helpful resources on how to carry out referencing in
+the Student Handbook and also in the Student Corner - such as the
+tutorial from Monash University:
+http://www.lib.monash.edu.au/tutorials/citing/index.html
+
+We usually recommend using the Harvard system of referencing, and
+here is the link to a tutorial on this from Nottingham University -
+Referencing your work with Harvard:
+http://equella.nottingham.ac.uk/uon/items/9ba73656-1729-2453-d9eb-6fd932a12753/1/ViewIMS.jsp
+
+(Note you might have to refresh that page to get it to display properly)
+However, the Vancouver style is also frequently used in the medical
+scientific literature. There is information on critical thinking in
+the Student Corner "How can I develop my Critical Thinking skills?":
+http://courses.peoples-uni.org/mod/page/view.php?id=6919&inpopup=1
+
+We will be sending information on the number of posts you have made
+to the discussions in comparison with others on your module at a
+later stage.
+
+The discussion forums do remain open, even after the end of the time
+period for each Topic, so you can post something to them late if you
+have been away.
+
+Please note that contributions to the Student Corner do not count
+for credit – the Student Corner is for discussions amongst the
+students on common problems and interests (there have been some
+very interesting issues discussed so far so please keep this up if you
+find it useful, but do not forget to keep to the spirit of the
+Peoples-uni in the need for evidence rather than just opinion!).
+
+Best wishes.
+
+    Education Coordinator.
+</pre>
+<br /><br />
+At the top of the Feedback page all existing Postings with Ratings and existing Feedback is displayed in tables to assist in determining the Student's progress.
 </li>
 <li>
-
-(**)filters
-+if (!isset($averagereferredtoresources)) $averagereferredtoresources = 'Any';
-+$listaveragereferredtoresources[] = 'Any';
-+$listaveragereferredtoresources[] = 'No';
-+$listaveragereferredtoresources[] = 'Mixed';
-+$listaveragereferredtoresources[] = 'Yes';
-+
-+if (!isset($averagecriticalapproach)) $averagecriticalapproach = 'Any';
-+$listaveragecriticalapproach[] = 'Any';
-+$listaveragecriticalapproach[] = 'No';
-+$listaveragecriticalapproach[] = 'Mixed';
-+$listaveragecriticalapproach[] = 'Yes';
-+
-+if (!isset($averagereferencing)) $averagereferencing = 'Any';
-+$listaveragereferencing[] = 'Any';
-+$listaveragereferencing[] = 'None';
-+$listaveragereferencing[] = 'Mixed';
-+$listaveragereferencing[] = 'Good';
-+
-
-
-+<table border="2" cellpadding="2">
-+  <tr>
-+    <td></td>
-+    <td colspan="12">Ratings for Post</td>
-+    <td colspan="3">Average Rating of Rated Posts</td>
-+  </tr>
-+
-+  <tr>
-+    <td></td>
-+    <td colspan="4">Referred to resources:</td>
-+    <td colspan="4">Critical approach:</td>
-+    <td colspan="4">Referencing:</td>
-+    <td colspan="3"></td>
-+  </tr>
-+
-+  <tr>
-+    <td>Student has &lt;= this number of posts matching the filter</td>
-+
-+    <td>Not rated</td>
-+    <td>No</td>
-+    <td>Some</td>
-+    <td>Yes</td>
-+    <td>Not rated</td>
-+    <td>No</td>
-+    <td>Some</td>
-+    <td>Yes</td>
-+    <td>Not rated</td>
-+    <td>None</td>
-+    <td>Wrong format</td>
-+    <td>Good</td>
-+
-+    <td>Referred to resources:</td>
-+    <td>Critical approach:</td>
-+    <td>Referencing:</td>
-+  </tr>
-+  <tr>
-+    <td><input type="text" size="15" name="maximumposts" value="<?php echo $maximumposts; ?>" /></td>
-+
-+    <td><input type="checkbox" name="referredtoresourcesnotrated" <?php if ($referredtoresourcesnotrated) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="referredtoresourcesno" <?php if ($referredtoresourcesno) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="referredtoresourcessome" <?php if ($referredtoresourcessome) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="referredtoresourcesyes" <?php if ($referredtoresourcesyes) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="criticalapproachnotrated" <?php if ($criticalapproachnotrated) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="criticalapproachno" <?php if ($criticalapproachno) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="criticalapproachsome" <?php if ($criticalapproachsome) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="criticalapproachyes" <?php if ($criticalapproachyes) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="referencingnotrated" <?php if ($referencingnotrated) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="referencingnone" <?php if ($referencingnone) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="referencingwrongformat" <?php if ($referencingwrongformat) echo ' CHECKED'; ?>></td>
-+    <td><input type="checkbox" name="referencinggood" <?php if ($referencinggood) echo ' CHECKED'; ?>></td>
-+
-+    <?php
-+    displayoptions('averagereferredtoresources', $listaveragereferredtoresources, $averagereferredtoresources);
-+    displayoptions('averagecriticalapproach', $listaveragecriticalapproach, $averagecriticalapproach);
-+    displayoptions('averagereferencing', $listaveragereferencing, $averagereferencing);
-+    ?>
-+  </tr>
-+</table>
-
-+    if (empty($actual_referredtoresources[$enrol->postid])) $actual_referredtoresourcesnotrated = true;
-+    elseif ($actual_referredtoresources[$enrol->postid] < 1.01) $actual_referredtoresourcesno = true;
-+    elseif ($actual_referredtoresources[$enrol->postid] <=2.99) $actual_referredtoresourcessome = true;
-+    else $actual_referredtoresourcesyes = true;
-+    $include_post =
-+      ($referredtoresourcesnotrated && $actual_referredtoresourcesnotrated) ||
-+      ($referredtoresourcesno && $actual_referredtoresourcesno) ||
-+      ($referredtoresourcessome && $actual_referredtoresourcessome) ||
-+      ($referredtoresourcesyes && $actual_referredtoresourcesyes);
-+    if (!$include_post) continue;
-+
-+    $actual_criticalapproachnotrated = false;
-+    $actual_criticalapproachno = false;
-+    $actual_criticalapproachsome = false;
-+    $actual_criticalapproachyes = false;
-+    if (empty($actual_criticalapproach[$enrol->postid])) $actual_criticalapproachnotrated = true;
-+    elseif ($actual_criticalapproach[$enrol->postid] < 1.01) $actual_criticalapproachno = true;
-+    elseif ($actual_criticalapproach[$enrol->postid] <=2.99) $actual_criticalapproachsome = true;
-+    else $actual_criticalapproachyes = true;
-+    $include_post =
-+      ($criticalapproachnotrated && $actual_criticalapproachnotrated) ||
-+      ($criticalapproachno && $actual_criticalapproachno) ||
-+      ($criticalapproachsome && $actual_criticalapproachsome) ||
-+      ($criticalapproachyes && $actual_criticalapproachyes);
-+    if (!$include_post) continue;
-+
-+    $actual_referencingnotrated = false;
-+    $actual_referencingnone = false;
-+    $actual_referencingwrongformat = false;
-+    $actual_referencinggood = false;
-+    if (empty($actual_referencing[$enrol->postid])) $actual_referencingnotrated = true;
-+    elseif ($actual_referencing[$enrol->postid] < 1.01) $actual_referencingnone = true;
-+    elseif ($actual_referencing[$enrol->postid] <=2.99) $actual_referencingwrongformat = true;
-+    else $actual_referencinggood = true;
-+    $include_post =
-+      ($referencingnotrated && $actual_referencingnotrated) ||
-+      ($referencingnone && $actual_referencingnone) ||
-+      ($referencingwrongformat && $actual_referencingwrongformat) ||
-+      ($referencinggood && $actual_referencinggood);
-+    if (!$include_post) continue;
-+
-+    $include_post =
-+      (($averagereferredtoresources == 'Any') ) ||
-+      (($averagereferredtoresources == 'No') && ($actual_averagereferredtoresources[$enrol->userid] < 1.01)) ||
-+      (($averagereferredtoresources == 'Mixed') && (($actual_averagereferredtoresources[$enrol->userid] >=1.01) && ($actual_averagereferredtoresources[$enrol->userid] <=2.99))) ||
-+      (($averagereferredtoresources == 'Yes') && ($actual_averagereferredtoresources[$enrol->userid] > 2.99));
-+    if (!$include_post) continue;
-+
-+    $include_post =
-+      (($averagecriticalapproach == 'Any') ) ||
-+      (($averagecriticalapproach == 'No') && ($actual_averagecriticalapproach[$enrol->userid] < 1.01)) ||
-+      (($averagecriticalapproach == 'Mixed') && (($actual_averagecriticalapproach[$enrol->userid] >=1.01) && ($actual_averagecriticalapproach[$enrol->userid] <=2.99))) ||
-+      (($averagecriticalapproach == 'Yes') && ($actual_averagecriticalapproach[$enrol->userid] > 2.99));
-+    if (!$include_post) continue;
-+
-+    $include_post =
-+      (($averagereferencing == 'Any') ) ||
-+      (($averagereferencing == 'None') && ($actual_averagereferencing[$enrol->userid] < 1.01)) ||
-+      (($averagereferencing == 'Mixed') && (($actual_averagereferencing[$enrol->userid] >=1.01) && ($actual_averagereferencing[$enrol->userid] <=2.99))) ||
-+      (($averagereferencing == 'Good') && ($actual_averagereferencing[$enrol->userid] > 2.99));
-+    if (!$include_post) continue;
-+
-+
-
-
-+if ($maximumposts >= 99999) { // Will be wrong if some posts should not be counted
-+  displaystat($topiccount, 'Student Posts by Forum Topic');
-+  echo 'Number of Forum Topics with Posts: ' . count($topiccount);
-+  echo '<br /><br />';
-+}
-+
-[[
-(can look at cumulative or previous semesters)
-]]
+There are a number of filters in posts.php added to allow searching for Students with issues or otherwise. This can obviously be combined with the existing filters such as by Student Support Group. Students can also be looked at over multiple Semesters. Filters are...<br />
+<br />
+Student has less that a number of posts matching the filter<br />
+<br />
+Ratings for Post, Referred to resources: Not rated (checkbox)<br />
+Ratings for Post, Referred to resources: No (checkbox)<br />
+Ratings for Post, Referred to resources: Some (checkbox)<br />
+Ratings for Post, Referred to resources: Yes (checkbox)<br />
+Ratings for Post, Critical approach: Not rated (checkbox)<br />
+Ratings for Post, Critical approach: No (checkbox)<br />
+Ratings for Post, Critical approach: Some (checkbox)<br />
+Ratings for Post, Critical approach: Yes (checkbox)<br />
+Ratings for Post, Referencing: Not rated (checkbox)<br />
+Ratings for Post, Referencing: None (checkbox)<br />
+Ratings for Post, Referencing: Wrong format (checkbox)<br />
+Ratings for Post, Referencing: Good (checkbox)<br />
+<br />
+Average Rating of Rated Posts, Referred to resources: ("Any", "No", "Mixed", "Yes")<br />
+Average Rating of Rated Posts, Critical approach: ("Any", "No", "Mixed", "Yes")<br />
+Average Rating of Rated Posts, Referencing: ("Any", "None", "Mixed", "Good")<br />
 </li>
 <li>
-
-(**)summary tables
-+displaystat($user_actual_averagereferredtoresources, "Average 'Referred to resources' for Student");
-+echo '<br /><br />';
-+
-+displaystat($user_actual_averagecriticalapproach, "Average 'Critical approach' for Student");
-+echo '<br /><br />';
-+
-+displaystat($user_actual_averagereferencing, "Average 'Referencing' for Student");
-+echo '<br /><br />';
-
+There are new summary tables in posts.php...<br />
+Average 'Referred to resources' for Student<br />
+Average 'Critical approach' for Student<br />
+Average 'Referencing' for Student
 </li>
 <li>
-
-+natcasesort($listofemails);
-+echo 'e-mails of Selected Students...<br />' . implode(', ', array_unique($listofemails));
-(**)
+And to allow sending general messages to filtered groups of Students there is a listing close to the end of the page of all Student e-mails matching the selected filters.
 </li>
 </ol>
 
