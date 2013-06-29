@@ -1230,7 +1230,8 @@ It will be possible to see on the page who has specified the instalment schedule
 <ol>
 <li>
 Student coordinators need to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a><br />
-They should now do that using <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a>
+They should now do that using <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a><br />
+<br />
 </li>
 <li>
 But for this to happen successfully, each Discussion Forum that needs feedback should be configured by Technical Support to have the appropriate rating scales.<br />
@@ -1238,7 +1239,7 @@ In Forum Settings for all the relevant forums, in the "Ratings" Section...<br />
 The "Aggregate type" should be set to "Average of ratings" and <br />
 the "Scale" should be set to "Scale: Referred to resources"<br />
 This specific scale must be used as it is the one that triggers the two other necessary scales to be silently added also ("Critical approach" and "Referencing")<br />
-This particular scale should be used only in Forums (not in other places that scales can be used).
+This particular scale should be used only in Forums (not in other places that scales can be used).<br />
 <br />
 </li>
 <li>
@@ -1260,11 +1261,12 @@ Referencing: Wrong format<br />
 Referencing: Good<br />
 <br />
 Students will only see ratings for their own posts, not the ratings for other Student's Posts.<br />
-Ratings will appear in a Student's Grade Book.
+Ratings will appear in a Student's Grade Book.<br />
 <br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> has 3 new columns with the (averaged if more than one Tutor rated) value of each of the 3 ratings for each Student Post (or "Not rated").
+<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> has 3 new columns with the (averaged if more than one Tutor rated) value of each of the 3 ratings for each Student Post (or "Not rated").<br />
+<br />
 </li>
 There is a fourth new column "Write discussion feedback for student..." which is colour coded to indicate if the student has been sent Discussion Feedback for the Module containing the Discussion Post. It is coloured Green/Yellow/Red, if feedback has been sent.<br />
 Green indicates the Feedback was completely "Good" (for that course).<br />
@@ -1351,7 +1353,7 @@ Best wishes.
     Education Coordinator.
 </pre>
 <br />
-At the top of the Feedback page all existing Postings with Ratings and existing Feedback is displayed in tables to assist in determining the Student's progress.
+At the top of the Feedback page all existing Postings with Ratings and existing Feedback is displayed in tables to assist in determining the Student's progress.<br />
 <br />
 </li>
 <li>
