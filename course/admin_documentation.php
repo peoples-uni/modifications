@@ -1238,28 +1238,30 @@ In Forum Settings for all the relevant forums, in the "Ratings" Section...<br />
 The "Aggregate type" should be set to "Average of ratings" and <br />
 the "Scale" should be set to "Scale: Referred to resources"<br />
 This specific scale must be used as it is the one that triggers the two other necessary scales to be silently added also ("Critical approach" and "Referencing")<br />
-This particular scale should be used only Forums (not in other places that scales can be used).
+This particular scale should be used only in Forums (not in other places that scales can be used).
+<br />
 </li>
 <li>
 Tutors are expected to use these three scales to rate relevant Student Posts (not all will need to be rated). More than one Tutor can rate the same Post and they will be averaged, but is expected that normally only one Tutor will rate each post.<br />
 The Ratings that the Tutors will be able to select are for each of the 3 Scales...<br />
-For Scale "Referred to resources":<br />
+For Scale "Referred to resources":-<br />
 Referred to resources: No<br />
 Referred to resources: Some<br />
 Referred to resources: Yes<br />
 <br />
-For Scale "Critical approach":<br />
+For Scale "Critical approach":-<br />
 Critical approach: No<br />
 Critical approach: Some<br />
 Critical approach: Yes<br />
 <br />
-For Scale "Referencing":<br />
+For Scale "Referencing":-<br />
 Referencing: None<br />
 Referencing: Wrong format<br />
 Referencing: Good<br />
 <br />
 Students will only see ratings for their own posts, not the ratings for other Student's Posts.<br />
 Ratings will appear in a Student's Grade Book.
+<br />
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> has 3 new columns with the (averaged if more than one Tutor rated) value of each of the 3 ratings for each Student Post (or "Not rated").
@@ -1274,7 +1276,7 @@ There are 3 criteria (that match the 3 ratings) that must be selected as "Yes", 
 As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria feedback.<br />
 Note: It is possible to re-submit and e-mail again and overwrite the recorded submission.<br />
 <br />
-The data (criteria and free form text) are stored for later analysis and can be accessed from again from posts.php (and are also displayed in the old Discussion Feedback page at <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>)<br />
+The data (criteria and free form text) are stored for later analysis and can be accessed from again from posts.php (and are also displayed in the old Discussion Feedback page at <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>).<br />
 <br />
 The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a><br />
 Here is an example of an e-mail that is sent out (including wording from settings.php, the criteria feedback, free form text placed after the criteria feedback and the rest of the settings.php text):-
@@ -1348,8 +1350,9 @@ Best wishes.
 
     Education Coordinator.
 </pre>
-<br /><br />
+<br />
 At the top of the Feedback page all existing Postings with Ratings and existing Feedback is displayed in tables to assist in determining the Student's progress.
+<br />
 </li>
 <li>
 There are a number of filters in posts.php added to allow searching for Students with issues or otherwise. This can obviously be combined with the existing filters such as by Student Support Group. Students can also be looked at over multiple Semesters. Filters are...<br />
@@ -1372,12 +1375,14 @@ Ratings for Post, Referencing: Good (checkbox)<br />
 Average Rating of Rated Posts, Referred to resources: ("Any", "No", "Mixed", "Yes")<br />
 Average Rating of Rated Posts, Critical approach: ("Any", "No", "Mixed", "Yes")<br />
 Average Rating of Rated Posts, Referencing: ("Any", "None", "Mixed", "Good")<br />
+<br />
 </li>
 <li>
 There are new summary tables in posts.php...<br />
 Average 'Referred to resources' for Student<br />
 Average 'Critical approach' for Student<br />
-Average 'Referencing' for Student
+Average 'Referencing' for Student<br />
+<br />
 </li>
 <li>
 And to allow sending general messages to filtered groups of Students there is a listing close to the end of the page of all Student e-mails matching the selected filters.
