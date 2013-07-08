@@ -100,10 +100,14 @@ class application_form_returning_student_form extends moodleform {
 
     $listforselect = array();
     $listforselect[1] = 'No, continue with Peoples-uni';
-    $listforselect[2] = 'Yes';
+    //$listforselect[2] = 'Yes, apply for MMU MPH';
     $listforselect[3] = 'I am already enrolled in MMU MPH';
-    $mform->addElement('select', 'applymmumph', 'Apply for Manchester Metropolitan University Master of Public Health programme', $listforselect);
-    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Manchester Metropolitan University Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
+    $listforselect[4] = 'Yes, apply for Peoples-uni MPH';
+    $listforselect[5] = 'I am already enrolled in Peoples-uni MPH';
+    //$listforselect[6] = 'Yes, apply for OTHER MPH';
+    //$listforselect[7] = 'I am already enrolled in OTHER MPH';
+    $mform->addElement('select', 'applymmumph', 'Apply for Master of Public Health programme', $listforselect);
+    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
 Please do not apply if this is your first semester.<br /><br />');
 
     $listforselect = array();

@@ -130,6 +130,12 @@ CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph (userid);
 
+mphstatus...
+1 => MMU MPH
+2 => Peoples MPH
+3 => OTHER(to be determined) MPH
+
+
 CREATE TABLE mdl_peoples_cert_ps (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,
   userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,

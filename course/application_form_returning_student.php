@@ -55,6 +55,13 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = 0;
   $application->applymmumph = $dataitem;
   $applymmumphtext = array(0 => '', 1 => 'No', 2 => 'Yes', 3 => 'Already');
+  $applymmumphtext[1] = 'No, continue with Peoples-uni';
+  $applymmumphtext[2] = 'Yes, apply for MMU MPH';
+  $applymmumphtext[3] = 'I am already enrolled in MMU MPH';
+  $applymmumphtext[4] = 'Yes, apply for Peoples-uni MPH';
+  $applymmumphtext[5] = 'I am already enrolled in Peoples-uni MPH';
+  $applymmumphtext[6] = 'Yes, apply for OTHER MPH';
+  $applymmumphtext[7] = 'I am already enrolled in OTHER MPH';
   $applymmumphtext = $applymmumphtext[$application->applymmumph];
 
   $dataitem = $data->applycertpatientsafety;
