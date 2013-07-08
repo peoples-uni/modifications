@@ -118,7 +118,7 @@ CREATE INDEX mdl_peoplesmph_sid_ix ON mdl_peoplesmph (sid);
 "sid" so can use before userid assigned.
 (userid will be set when it is known.)
 
-References to the original table never checked mphstatus, so I am adding a second one in which mphstatus can be used...
+Original peoplesmph table records get deleted, this one is always maintained (i.e. for note)
 CREATE TABLE mdl_peoplesmph2 (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,
   userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -130,7 +130,8 @@ CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph (userid);
 
-mphstatus...
+mphstatus (in both tables)...
+0 => Un-enrolled (in peoplesmph2, not used in peoplesmph)
 1 => MMU MPH
 2 => Peoples MPH
 3 => OTHER(to be determined) MPH
@@ -430,8 +431,8 @@ Display entries using the following filters...
     <td>Module Name Contains</td>
     <td>Payment Method</td>
     <td>Re&#8209;enrolment?</td>
-    <td>Applied MMU?</td>
-    <td>Accepted MMU?</td>
+    <td>Applied MPH?</td>
+    <td>Accepted MPH?</td>
     <td>Applied Scholarship?</td>
     <td>Show Scholarship Relevant Columns</td>
     <td>Show Extra Details</td>
@@ -487,7 +488,7 @@ function displayoptions($name, $options, $selectedvalue) {
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
 $applications = $DB->get_records_sql('
-  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp, IFNULL(ps.cert_psstatus, 0) AS cert_ps, ps.datesubmitted AS cert_psdatestamp, p.id IS NOT NULL AS paymentnote
+  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, m.mphstatus, m.datesubmitted AS mphdatestamp, IFNULL(ps.cert_psstatus, 0) AS cert_ps, ps.datesubmitted AS cert_psdatestamp, p.id IS NOT NULL AS paymentnote
   FROM mdl_peoplesapplication a
   LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
   LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
@@ -741,7 +742,7 @@ elseif ($displayforexcel) {
     'Family name',
     'Given name',
     'Country',
-    'MMU?',
+    'MPH?',
     'Tutor Comments',
     'Current employment',
     'Current employment details',
@@ -842,7 +843,7 @@ Reasons for wanting to enrol
 10
 Sponsoring organisation
 sponsoringorganisation
-Applying for MMU MPH
+Applying for MPH
 applymmumph
 Applying for Certificate in Patient Safety
 applycertpatientsafety
@@ -927,6 +928,12 @@ foreach ($applications as $sid => $application) {
     elseif ($state1===02 || $state2===020) $z = '<span style="color:blue">Some</span>';
     else $z = '<span style="color:green">Yes</span>';
     $applymmumphtext = array(0 => '', 1 => '', 2 => '<br />(Apply MMU MPH)', 3 => '<br />(Say already MMU MPH)');
+    $applymmumphtext[2] = '<br />(Apply MMU MPH)';
+    $applymmumphtext[3] = '<br />(Say already MMU MPH)';
+    $applymmumphtext[4] = '<br />(Apply Peoples-uni MPH)';
+    $applymmumphtext[5] = '<br />(Say already Peoples-uni MPH)';
+    $applymmumphtext[6] = '<br />(Apply OTHER MPH)';
+    $applymmumphtext[7] = '<br />(Say already OTHER MPH)';
     $z .= $applymmumphtext[$application->applymmumph];
     $applycertpatientsafetytext = array(0 => '', 1 => '', 2 => '<br />(Apply Cert PS)', 3 => '<br />(Say already Cert PS)');
     $z .= $applycertpatientsafetytext[$application->applycertpatientsafety];
@@ -977,7 +984,9 @@ foreach ($applications as $sid => $application) {
 
     if ($application->ready && $application->nid != 80) $z .= '<br />(Ready)';
     if ($application->notepresent) $z .= '<br />(Note Present)';
-    if ($application->mph) $z .= '<br />(MMU MPH)';
+    if ($application->mph && ($application->mphstatus == 1)) $z .= '<br />(MMU MPH)';
+    if ($application->mph && ($application->mphstatus == 2)) $z .= '<br />(Peoples MPH)';
+    if ($application->mph && ($application->mphstatus == 3)) $z .= '<br />(OTHER MPH)';
     if ($application->cert_ps) $z .= '<br />(Cert PS)';
     if (!$displayscholarship) $rowdata[] = $z;
 
@@ -1285,7 +1294,9 @@ foreach ($applications as $sid => $application) {
     else $z = $countryname[$application->country];
     $rowdata[] = $z;
 
-    if ($application->mph) $z = 'Yes';
+    if     ($application->mph && ($application->mphstatus == 1)) $z = 'MMU MPH';
+    elseif ($application->mph && ($application->mphstatus == 2)) $z = 'Peoples MPH';
+    elseif ($application->mph && ($application->mphstatus == 3)) $z = 'OTHER MPH';
     else $z = '';
     $rowdata[] = $z;
 
