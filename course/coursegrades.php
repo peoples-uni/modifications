@@ -181,7 +181,7 @@ Display entries using the following filters...
     <td>Sort by Last Access</td>
     <td>Show Students Not Logged on for this many Days</td>
     <td>Show "Payment up to date?" Status</td>
-    <td>Show MMU MPH Only</td>
+    <td>Show MPH Only</td>
   </tr>
   <tr>
     <td>
@@ -280,7 +280,9 @@ if (!empty($enrols)) {
     $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$enrol->userid} ORDER BY datesubmitted DESC");
     if (!empty($mphs)) {
       foreach ($mphs as $mph) {
-        $inmph = '<br />(MMU MPH)';
+        if     ($mph->mphstatus == 1) $inmph = '<br />(MMU MPH)';
+        elseif ($mph->mphstatus == 3) $inmph = '<br />(OTHER MPH)';
+        else                          $inmph = '<br />(Peoples-uni MPH)';
       }
     }
     else $inmph = '';
