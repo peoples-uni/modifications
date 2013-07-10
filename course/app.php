@@ -149,7 +149,7 @@ if (!empty($_POST['markreadyenrol'])) {
 
   $refreshparent = true;
 }
-if (!empty($_POST['markmph'])) {
+if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
   if (!empty($_REQUEST['29'])) $useridforsearch = $_REQUEST['29'];
   else $useridforsearch = 0;
   if (!empty($_REQUEST['sid'])) $sidforsearch = $_REQUEST['sid'];
@@ -168,8 +168,11 @@ if (!empty($_POST['markmph'])) {
     if (!empty($_REQUEST['sid'])) $newmph->sid    = $_REQUEST['sid'];
 
     $newmph->datesubmitted = time();
-    $newmph->mphstatus = 1;
-    $mphuniversity = 'MMU MPH';
+    $mphstatus = (int)$_POST['mphstatus'];
+    $newmph->mphstatus = $mphstatus;
+    if     ($mphstatus == 1) $mphuniversity = 'MMU MPH';
+    elseif ($mphstatus == 3) $mphuniversity = 'OTHER MPH';
+    else                     $mphuniversity = 'Peoples-uni MPH';
     $newmph->note = '';
     $DB->insert_record('peoplesmph', $newmph);
 
@@ -1720,7 +1723,7 @@ if (!$application->ready && $application->nid != 80) {
 
 if (empty($mphs)) {
 ?>
-<br />To record that the student has been enrolled in the MMU Masters in Public Health (MMU MPH), press "Record...".<br />
+<br />To record that the student has been enrolled in the Masters in Public Health (MPH), select programme & press "Record...".<br />
 <form id="mphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
 <input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
@@ -1757,6 +1760,13 @@ if (empty($mphs)) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markmph" value="1" />
+MPH$nbsp;programme:$nbsp;
+<select name="mphstatus">
+<option value="3" selected>OTHER MPH></option>
+<option value="2"         >Peoples-uni MPH></option>
+<option value="1"         >MMU MPH></option>
+</select>
+<br />
 <input type="submit" name="mph" value="Record that the Student has been enrolled in the MPH" />
 </form>
 <br />
