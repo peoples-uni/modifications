@@ -169,6 +169,7 @@ if (!empty($_POST['markmph'])) {
 
     $newmph->datesubmitted = time();
     $newmph->mphstatus = 1;
+    $mphuniversity = 'MMU MPH';
     $newmph->note = '';
     $DB->insert_record('peoplesmph', $newmph);
 
@@ -178,7 +179,7 @@ if (!empty($_POST['markmph'])) {
       if (!empty($peoplesmph2)) {
         $peoplesmph2->datesubmitted = $newmph->datesubmitted;
         $peoplesmph2->mphstatus = $newmph->mphstatus;
-        $peoplesmph2->note = $peoplesmph2->note . '<br />Enrolled in MPH: ' . gmdate('d/m/Y H:i', $newmph->datesubmitted);
+        $peoplesmph2->note = $peoplesmph2->note . "<br />Enrolled in {$mphuniversity}: " . gmdate('d/m/Y H:i', $newmph->datesubmitted);
         $DB->update_record('peoplesmph2', $peoplesmph2);
       }
       else {
@@ -187,7 +188,7 @@ if (!empty($_POST['markmph'])) {
         $peoplesmph2->datesubmitted = $newmph->datesubmitted;
         $peoplesmph2->datelastunentolled = 0;
         $peoplesmph2->mphstatus = $newmph->mphstatus;
-        $peoplesmph2->note = 'Enrolled in MPH: ' . gmdate('d/m/Y H:i', $newmph->datesubmitted);
+        $peoplesmph2->note = "Enrolled in {$mphuniversity}: " . gmdate('d/m/Y H:i', $newmph->datesubmitted);
         $DB->insert_record('peoplesmph2', $peoplesmph2);
       }
 
@@ -198,7 +199,7 @@ if (!empty($_POST['markmph'])) {
       $peoples_student_balance->amount_delta = 1500;
       $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
       $peoples_student_balance->currency = 'GBP';
-      $peoples_student_balance->detail = 'Initial Full amount for MMU MPH';
+      $peoples_student_balance->detail = "Initial Full amount for {$mphuniversity}";
       $peoples_student_balance->date = time();
       $DB->insert_record('peoples_student_balance', $peoples_student_balance);
     }
@@ -680,13 +681,19 @@ if (!empty($notes)) {
 }
 
 $applymmumphtext = array('0' => '', '1' => '', '2' => 'Wants to Apply for MMU MPH', '3' => 'Says Already in MMU MPH');
+$applymmumphtext['2'] = 'Wants to Apply for MMU MPH';
+$applymmumphtext['3'] = 'Says already in MMU MPH';
+$applymmumphtext['4'] = 'Wants to Apply for Peoples-uni MPH';
+$applymmumphtext['5'] = 'Says already in Peoples-uni MPH';
+$applymmumphtext['6'] = 'Wants to Apply for OTHER MPH';
+$applymmumphtext['7'] = 'Says already in OTHER MPH';
 $applymmumphtext = $applymmumphtext[$_REQUEST['applymmumph']];
 
 if (!empty($application->userid)) $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $application->userid));
 else $peoplesmph2 = NULL;
 
 if (!empty($mphs) || !empty($applymmumphtext) || !empty($peoplesmph2->note)) {
-  echo '<tr><td colspan="2">MMU MPH Status...</td></tr>';
+  echo '<tr><td colspan="2">MPH Status...</td></tr>';
 
   if (!empty($applymmumphtext)) echo '<tr><td></td><td>' . $applymmumphtext . '</td></tr>';
 
@@ -763,7 +770,7 @@ same time and will involve a heavy workload - please be sure you do have the tim
 ?>
 <br />To approve this application and send an e-mail to applicant (edit e-mail text if you wish), press "Approve Full Application".
 <br /><i><b>NOTE: Any student that is doing MPH must, if not already so recorded,<br />
-be recorded as MPH by clicking "Record that the Student has been enrolled in the MMU MPH" BEFORE APPROVAL<br />
+be recorded as MPH by clicking "Record that the Student has been enrolled in the MPH" BEFORE APPROVAL<br />
 (to pick up correct wording for e-mail).</b></i>
 <br /><i><b>NOTE: Please check the Amount Owed by the student (in e-mail below) looks OK before sending.<br />
 To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts, Method or Confirmed Status</a></b></i>
@@ -1750,14 +1757,14 @@ if (empty($mphs)) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markmph" value="1" />
-<input type="submit" name="mph" value="Record that the Student has been enrolled in the MMU MPH" />
+<input type="submit" name="mph" value="Record that the Student has been enrolled in the MPH" />
 </form>
 <br />
 <?php
 }
 elseif (!empty($_REQUEST['29'])) {
 ?>
-<br />To Unenroll a student from the MMU Masters in Public Health (MMU MPH), press "Unenroll...".<br />
+<br />To Unenroll a student from the Masters in Public Health (MPH), press "Unenroll...".<br />
 (This does not affect any course modules or payments.)<br />
 <form id="unenrollmphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
@@ -1796,7 +1803,7 @@ elseif (!empty($_REQUEST['29'])) {
 
 <input type="hidden" name="markunenrollmph" value="1" />
 Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
-<input type="submit" name="unenrollmph" value="Unenroll a student from the MMU Masters in Public Health (MMU MPH)" />
+<input type="submit" name="unenrollmph" value="Unenroll a student from the Masters in Public Health (MPH)" />
 </form>
 <br />
 <?php
