@@ -263,7 +263,7 @@ $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND s
 if (!empty($mphs)) {
   foreach ($mphs as $mph) {
     $inmmumph = TRUE;
-    echo '<br />Student was Enrolled in MMU MPH on ' . gmdate('d/m/Y H:i', $mph->datesubmitted) . '<br />';
+    echo '<br />Student was Enrolled in MPH on ' . gmdate('d/m/Y H:i', $mph->datesubmitted) . '<br />';
   }
 }
 

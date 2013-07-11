@@ -213,7 +213,7 @@ Instalment (UK Pounds) due on or before <?php echo gmdate('d/m/Y', $peoples_paym
 }
 else {
   if ($ismanager) {
-    echo '<b>This Student is not in the MMU MPH!</b><br />';
+    echo '<b>This Student is not in the MPH!</b><br />';
   }
   else {
     if (!$inmmumph) {
@@ -222,7 +222,7 @@ else {
         notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
       }
       else {
-        echo '<b>You are not in the MMU MPH so cannot specify instalments!</b><br />';
+        echo '<b>You are not in the MPH so cannot specify instalments!</b><br />';
       }
     }
     else {
