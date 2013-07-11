@@ -199,7 +199,7 @@ Display entries using the following filters...
 		<td>Module</td>
     <td>Students from this SSF only</td>
     <td>User Name Contains</td>
-    <td>Accepted MMU?</td>
+    <td>Accepted MPH?</td>
 		<td>Skip Introduction Topics</td>
 		<td>Suppress Names on Posts by Student by Forum Topic Report for each Course (& use SID)</td>
 		<td>Don't Show Number of Posts</td>
