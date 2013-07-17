@@ -539,9 +539,11 @@ $user_actual_averagereferredtoresources = array();
 $user_actual_averagecriticalapproach = array();
 $user_actual_averagereferencing = array();
 $listofemails = array();
+(**)$post_matching_main_sql_filters_found = array();
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
+(**)$post_matching_main_sql_filters_found[$enrol->userid] = TRUE;
 
     if (!empty($chosenusersearch) &&
       stripos($enrol->lastname, $chosenusersearch) === false &&
@@ -815,6 +817,7 @@ echo '<br />';
 
 $usermodulecountnonzero = 0;
 $usercountnonzero = 0;
+(**)$students_with_zero_posts = array();
 if (!empty($enrols)) {
 
   // We want to display Student/Module combinations that have Zero Posts (in the summary statistics)
@@ -863,6 +866,14 @@ if (!empty($enrols)) {
         unset($user_actual_averagereferencing[$name]);
       }
       elseif ($usercount[$name] != 0) $usercountnonzero++;
+
+      if (empty($post_matching_main_sql_filters_found[$all_user->userid])) {
+        // Students who have zero posts matching the main filters (Semester, Module, SSF)
+        // (But they could have other posts)
+        // Also there could be some students with zero posts who should have been filtered out by other filters (e.g. name)
+        $students_with_zero_posts[$name . 'XYZIDXYZ' . $all_user->userid] = array('lastname' => $all_user->lastname, 'firstname' => $all_user->firstname, 'userid' => $all_user->userid);
+(**)((ksort later)) display last, first, link as above;; wording in comments above???
+      }
     }
   }
 }
