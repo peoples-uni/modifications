@@ -959,7 +959,7 @@ After the main body of posts there are tables (one per course) that show, for ea
 <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module etc.
 </li>
 <li>
-Access to tutorposts.php is available to any tutor or admin.
+Access to tutorposts.php is available to any tutor or admin.<br /><br />
 </li>
 <li>
 To view posts made in the Student Support Forums module go to: <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a>.
