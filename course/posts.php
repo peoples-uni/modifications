@@ -539,11 +539,11 @@ $user_actual_averagereferredtoresources = array();
 $user_actual_averagecriticalapproach = array();
 $user_actual_averagereferencing = array();
 $listofemails = array();
-(**)$post_matching_main_sql_filters_found = array();
+$post_matching_main_sql_filters_found = array();
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
-(**)$post_matching_main_sql_filters_found[$enrol->userid] = TRUE;
+    $post_matching_main_sql_filters_found[$enrol->userid] = TRUE;
 
     if (!empty($chosenusersearch) &&
       stripos($enrol->lastname, $chosenusersearch) === false &&
@@ -817,7 +817,8 @@ echo '<br />';
 
 $usermodulecountnonzero = 0;
 $usercountnonzero = 0;
-(**)$students_with_zero_posts = array();
+$students_with_zero_posts = array();
+$listofemails_for_students_with_zero_posts = array();
 if (!empty($enrols)) {
 
   // We want to display Student/Module combinations that have Zero Posts (in the summary statistics)
@@ -842,7 +843,7 @@ if (!empty($enrols)) {
 
   // We want to display Students that have Zero Posts (in the summary statistics)
   $all_users = $DB->get_records_sql(
-    "SELECT DISTINCT u.id as userid, u.lastname, u.firstname
+    "SELECT DISTINCT u.id as userid, u.lastname, u.firstname, u.email
     FROM (mdl_enrolment e, mdl_user u, mdl_course c)
     WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id $semestersql $modulesql $ssfsql
     ORDER BY u.lastname ASC, u.firstname ASC",
@@ -871,8 +872,11 @@ if (!empty($enrols)) {
         // Students who have zero posts matching the main filters (Semester, Module, SSF)
         // (But they could have other posts)
         // Also there could be some students with zero posts who should have been filtered out by other filters (e.g. name)
+
+        // currently not used (display e-mails instead)...
         $students_with_zero_posts[$name . 'XYZIDXYZ' . $all_user->userid] = array('lastname' => $all_user->lastname, 'firstname' => $all_user->firstname, 'userid' => $all_user->userid);
-(**)((ksort later)) display last, first, link as above;; wording in comments above???
+
+        $listofemails_for_students_with_zero_posts[$all_user->userid] = htmlspecialchars($all_user->email, ENT_COMPAT, 'UTF-8');
       }
     }
   }
@@ -903,6 +907,16 @@ echo '<br /><br />';
 
 natcasesort($listofemails);
 echo 'e-mails of Selected Students...<br />' . implode(', ', array_unique($listofemails));
+echo '<br /><br />';
+
+if (!empty($listofemails_for_students_with_zero_posts)) {
+  natcasesort($listofemails_for_students_with_zero_posts);
+
+  echo 'e-mails of Students who have zero posts matching the main filters (Semester, Module, SSF)...<br />';
+  echo '(note: if you have used other filters beyond those main ones,<br />';
+  echo 'e-mails that should be hidden because of those additional filters might still be listed)<br />';
+  echo implode(', ', array_unique($listofemails_for_students_with_zero_posts));
+}
 
 
 echo '<br /><br /><br /><br /><br />';
