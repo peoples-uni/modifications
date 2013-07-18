@@ -936,7 +936,7 @@ There is yet another filter called "Don't Show Number of Posts" which just shows
 At the end of the <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> page there is a list of e-mails for all Students who have a post matching the filters, there is also a list of e-mails for all Students matching the main filters who have no posts (this could be used to send out reminders).
 </li>
 <li>
-Access to posts.php is available to any tutor, Student coordinator or admin.
+Access to posts.php is available to any tutor, Student coordinator or admin.<br /><br />
 </li>
 <li>
 To view posts made by Tutors to discussion forums go to: <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a>.
