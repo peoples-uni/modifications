@@ -277,7 +277,7 @@ $countnondup = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
 
-    $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$enrol->userid} ORDER BY datesubmitted DESC");
+    $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph2 WHERE userid={$enrol->userid} AND mphstatus!=0 ORDER BY datesubmitted DESC");
     if (!empty($mphs)) {
       foreach ($mphs as $mph) {
         if     ($mph->mphstatus == 1) $inmph = '<br />(MMU MPH)';
