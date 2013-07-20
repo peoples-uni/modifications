@@ -191,6 +191,8 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
         $peoplesmph2->datesubmitted = $newmph->datesubmitted;
         $peoplesmph2->datelastunentolled = 0;
         $peoplesmph2->mphstatus = $newmph->mphstatus;
+        $peoplesmph2->graduated = 0;
+        $peoplesmph2->semester_graduated = '';
         $peoplesmph2->note = "Enrolled in {$mphuniversity}: " . gmdate('d/m/Y H:i', $newmph->datesubmitted);
         $DB->insert_record('peoplesmph2', $peoplesmph2);
       }
