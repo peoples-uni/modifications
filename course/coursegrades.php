@@ -277,15 +277,18 @@ $countnondup = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
 
-    $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph2 WHERE userid={$enrol->userid} AND mphstatus!=0 ORDER BY datesubmitted DESC");
-    if (!empty($mphs)) {
-      foreach ($mphs as $mph) {
-        if     ($mph->mphstatus == 1) $inmph = '<br />(MMU MPH)';
-        elseif ($mph->mphstatus == 3) $inmph = '<br />(OTHER MPH)';
-        else                          $inmph = '<br />(Peoples-uni MPH)';
+    $inmph = '';
+    $graduated_text = '';
+    $mph2s = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph2 WHERE userid={$enrol->userid} AND mphstatus!=0 ORDER BY datesubmitted DESC");
+    if (!empty($mph2s)) {
+      foreach ($mph2s as $mph2) { // There is only ever one, but I am leaving code the same
+        if ($mph2->mphstatus == 1) $inmph = '<br />(MMU MPH)';
+        if ($mph2->mphstatus == 2) $inmph = '<br />(Peoples-uni MPH)';
+        if ($mph2->mphstatus == 3) $inmph = '<br />(OTHER MPH)';
+
+        if ($mph2->graduated) $graduated_text = '<br />(graduated MPH)';
       }
     }
-    else $inmph = '';
 
     if (empty($inmph) && $showmmumphonly) continue;
 
@@ -341,7 +344,7 @@ if (!empty($enrols)) {
       $rowdata[] = 'No, did Not Pay';
 		}
 
-    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">Student Grades</a>' . $inmph . $incert_ps;
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">Student Grades</a>' . $inmph . $graduated_text . $incert_ps;
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $enrol->userid . '" target="_blank">Student Submissions</a>';
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/grade/report/user/index.php?id=' . $enrol->courseid . '&userid=' . $enrol->userid . '" target="_blank">Moodle Grade report</a>';
 
