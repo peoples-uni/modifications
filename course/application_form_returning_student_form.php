@@ -132,7 +132,7 @@ For this certificate you will need to complete the Evidence Based Practice, Pati
 1. What is your current income<br />
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
-4. How you plan to use the skills/qualifications you will gain from Peoples-uni or Manchester Metropolitan University for the health of the population (up to 150 words)<br />');
+4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />');
     $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
 
 
