@@ -716,6 +716,29 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 <input type="submit" name="addnote" value="Add This Note to Student Record" />
 </form>
 <br /><br />
+
+<br />To mark this student as graduated with MPH, select semester (defaults to current) below and press "Mark...".<br />
+<form id="graduatedform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+$semesters = $DB->get_records('semesters', NULL, 'id ASC');
+$latest_semester = '';
+foreach ($semesters as $semester) {
+  $latest_semester = $semester->semester;
+}
+<select name="semester_graduated">
+<?php
+foreach ($semesters as $semester) {
+  if ($semester->semester == $latest_semester) $selected = 'selected="selected"';
+  else $selected = '';
+  echo '<option value="' . htmlspecialchars($semester->semester, ENT_COMPAT, 'UTF-8') . '" ' . $selected . '>' . htmlspecialchars($semester->semester, ENT_COMPAT, 'UTF-8') . '</option>';
+}
+?>
+</select>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markgraduated" value="1" />
+<input type="submit" name="graduated" value="Mark this Student as Graduated with MPH" />
+</form>
+<br /><br />
+
 <?php
 
 	echo '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $userid . '">Student Submissions</a><br />';
