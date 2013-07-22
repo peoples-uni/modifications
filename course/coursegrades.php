@@ -471,6 +471,8 @@ echo '<br />';
 echo '<a href="' . $CFG->wwwroot . '/course/successbyqualifications.php" target="_blank">Success by Qualifications Report</a>';
 echo '<br />';
 echo '<a href="' . $CFG->wwwroot . '/course/discussionfeedbacks.php" target="_blank">Click here to see Discussion Feedback to Students</a>';
+echo '<br />';
+echo '<a href="' . $CFG->wwwroot . '/course/list_of_mph_graduates.php" target="_blank">Click here to see a List of MPH Graduates</a>';
 
 echo '<br /><br /><br /><br />';
 
