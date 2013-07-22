@@ -83,7 +83,7 @@ class application_form_returning_student_form extends moodleform {
     $count = count($listforunavailable);
     $listforunavailable = implode(", ", $listforunavailable);
 
-    $text = "Please select the first course module you are applying for from the drop down box. Note: you should not apply for 'Masters dissertation' until given permission to do so. Note: you should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
+    $text = "Please select the first course module you are applying for from the drop down box. Note: you should not apply for 'Masters dissertation' until given permission to do so. Note: Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student. Note: you should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
     if ($count > 1) {
       $text .= ' Note: ' . $listforunavailable . ' are not available for this semester because they are full.';
     }
@@ -107,8 +107,11 @@ class application_form_returning_student_form extends moodleform {
     //$listforselect[6] = 'Yes, apply for OTHER MPH';
     //$listforselect[7] = 'I am already enrolled in OTHER MPH';
     $mform->addElement('select', 'applymmumph', 'Apply for Master of Public Health programme', $listforselect);
-    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
-Please do not apply if this is your first semester.<br /><br />');
+    //$mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
+//Please do not apply if this is your first semester.<br /><br />');
+    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Applications for enrolment in the Manchester Metropolitan University Master of Public Health programme are not available this semester.<br />
+Please see the link <a href="http://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a> for further information about this.<br /><br />');
+
 
     $listforselect = array();
     $listforselect[1] = 'No';
