@@ -121,17 +121,9 @@ if (!empty($application)) {
 $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
 if (!empty($peoplesmph2->note)) echo '<br />' . $peoplesmph2->note;
 
-$graduateds = $DB->get_records_sql("
-SELECT m.id, m.semester_graduated, m.mphstatus
-FROM mdl_peoplesmph2 m
-WHERE m.userid=? AND m.graduated=1
-",
-array($userid));
-if (!empty($graduateds)) {
-  foreach ($graduateds as $graduated) {
-    $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
-    echo '<br />Graduated with MPH in Semester ' . $graduated->semester_graduated . ' (Certified by ' . $certifying[$graduated->mphstatus] . ')'.
-  }
+if (!empty($peoplesmph2)) {
+  $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
+  echo '<br />Graduated with MPH in Semester ' . $peoplesmph2->semester_graduated . ' (Certified by ' . $certifying[$peoplesmph2->mphstatus] . ')'.
 }
 
 $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $userid));
