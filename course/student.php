@@ -121,7 +121,11 @@ if (!empty($application)) {
 $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
 if (!empty($peoplesmph2->note)) echo '<br />' . $peoplesmph2->note;
 
-if (!empty($peoplesmph2)) {
+if (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && $isteacher) {
+  $peoplesmph2->graduated = 1;
+  $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
+}
+if (!empty($peoplesmph2->graduated)) {
   $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
   echo '<br />Graduated with MPH in Semester ' . $peoplesmph2->semester_graduated . ' (Certified by ' . $certifying[$peoplesmph2->mphstatus] . ')'.
 }
@@ -380,6 +384,12 @@ elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
 	// textarea with hard wrap will send CRLF so we end up with extra CRs, so we should remove \r's for niceness
 	$newnote->note = dontaddslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
   $DB->insert_record('peoplesstudentnotes', $newnote);
+}
+elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && $isteacher) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $peoplesmph2->graduated = 1;
+  $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
+  $DB->update_record('peoplesmph2', $peoplesmph2);
 }
 
 
