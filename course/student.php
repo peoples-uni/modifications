@@ -391,10 +391,7 @@ elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($
   $newpeoplesmph2->id = $peoplesmph2->id;
   $newpeoplesmph2->graduated = 1;
   $newpeoplesmph2->semester_graduated = $_POST['semester_graduated'];
-echo "<br />HERE {$newpeoplesmph2->id} {$newpeoplesmph2->graduated} {$newpeoplesmph2->semester_graduated}---------------------------------------------------------------------------<br />";
   $DB->update_record('peoplesmph2', $newpeoplesmph2);
-//unset ($peoplesmph2->id);
-//$DB->insert_record('peoplesmph2', $peoplesmph2);//????????????
 }
 
 
