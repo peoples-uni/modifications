@@ -389,7 +389,7 @@ elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $peoplesmph2->graduated = 1;
   $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
-echo '"<br />HERE {$peoplesmph2->id} {$peoplesmph2->graduated} {$peoplesmph2->semester_graduated}---------------------------------------------------------------------------<br />";
+echo "<br />HERE {$peoplesmph2->id} {$peoplesmph2->graduated} {$peoplesmph2->semester_graduated}---------------------------------------------------------------------------<br />";
   $DB->update_record('peoplesmph2', $peoplesmph2);
 }
 
