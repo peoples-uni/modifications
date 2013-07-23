@@ -389,6 +389,7 @@ elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $peoplesmph2->graduated = 1;
   $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
+echo '"<br />HERE {$peoplesmph2->id} {$peoplesmph2->graduated} {$peoplesmph2->semester_graduated}---------------------------------------------------------------------------<br />";
   $DB->update_record('peoplesmph2', $peoplesmph2);
 }
 
@@ -717,6 +718,7 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 </form>
 <br /><br />
 
+<?php if (!empty($peoplesmph2)) { ?>
 <br />To mark this student as graduated with MPH, select semester (defaults to current) below and press "Mark...".<br />
 <form id="graduatedform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
 <?php
@@ -740,6 +742,7 @@ foreach ($semesters as $semester) {
 <input type="submit" name="graduated" value="Mark this Student as Graduated with MPH" />
 </form>
 <br /><br />
+<?php } ?>
 
 <?php
 
