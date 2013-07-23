@@ -719,11 +719,13 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 
 <br />To mark this student as graduated with MPH, select semester (defaults to current) below and press "Mark...".<br />
 <form id="graduatedform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
+<?php
 $semesters = $DB->get_records('semesters', NULL, 'id ASC');
 $latest_semester = '';
 foreach ($semesters as $semester) {
   $latest_semester = $semester->semester;
 }
+?>
 <select name="semester_graduated">
 <?php
 foreach ($semesters as $semester) {
