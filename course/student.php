@@ -127,7 +127,7 @@ if (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POS
 }
 if (!empty($peoplesmph2->graduated)) {
   $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
-  echo '<br />Graduated with MPH in Semester ' . $peoplesmph2->semester_graduated . ' (Certified by ' . $certifying[$peoplesmph2->mphstatus] . ')'.
+  echo '<br />Graduated with MPH in Semester ' . $peoplesmph2->semester_graduated . ' (Certified by ' . $certifying[$peoplesmph2->mphstatus] . ')';
 }
 
 $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $userid));
