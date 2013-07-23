@@ -574,7 +574,7 @@ Note: At a later stage (when assignments are setup), all the assignments should 
 Go to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>. You can see a list of applicants for this semester.
 </li>
 <li>
-It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by module name, by payment method, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or says they are already in) MMU MPH, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
+It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by module name, by payment method, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or says they are already in) MPH, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted) and by whether the student has applied for a Scholarship. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
 </li>
 <li>
 It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
@@ -622,7 +622,7 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student has applied for courses at least twice.
 </li>
 <li>
-Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, Application for MMU (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
+Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, Application for MPH (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
 </li>
 <li>
 When the "Details" button is pressed for an application, additional applicant data is displayed beyond what is in the "spreadsheet" row.
@@ -691,7 +691,7 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 "Notes" lists any notes that have been added to the student record in "Details" or student.php. If any note is present they the "(Note Present)" indicator will be displayed under the "Enrolled?" column in applications.php.
 </li>
 <li>
-"MMU MPH Status" indicates whether the student "Wants to Apply for MMU MPH" or "Says Already in MMU MPH" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(MMU MPH)"). If a Student was "Enrolled in MPH" and then "Unenrolled from MPH" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
+"MPH Status" indicates whether the student "Wants to Apply for ... MPH" or "Says Already in ... MPH" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(... MPH)"). If a Student was "Enrolled in MPH" and then "Unenrolled from MPH" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
 </li>
 <li>
 "Certificate in Patient Safety Status" indicates whether the student "Wants to Apply for Certificate in Patient Safety" or "Says Already in Certificate in Patient Safety" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in Certificate in Patient Safety" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(Cert PS)"). If a Student was "Enrolled in Certificate in Patient Safety" and then "Unenrolled from Certificate in Patient Safety" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
@@ -749,10 +749,10 @@ The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applica
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
 </li>
 <li>
-"Record that the Student has been enrolled in the MMU MPH" button does what it says.
+"Record that the Student has been enrolled in the MPH" button does what it says.
 </li>
 <li>
-"Unenroll a student from the MMU Masters in Public Health (MMU MPH)" button does what it says.
+"Unenroll a student from the Masters in Public Health (MPH)" button does what it says.
 </li>
 <li>
 "Record that the Student has been enrolled in the Certificate in Patient Safety" button does what it says.
@@ -930,7 +930,7 @@ There is yet another filter called "Don't Show Number of Posts" which just shows
 <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also gives totals by Student after the "Posts by Student by Forum Topic" Reports. It then also gives totals by Student by module and yet again after that there is a summary of contributions per topic at the end of the page.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by the Student Support Group that the Student is subscribed to in the Student Support Forums, by User Name, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
+<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by the Student Support Group that the Student is subscribed to in the Student Support Forums, by User Name, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
 </li>
 <li>
 At the end of the <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> page there is a list of e-mails for all Students who have a post matching the filters, there is also a list of e-mails for all Students matching the main filters who have no posts (this could be used to send out reminders).
@@ -1022,7 +1022,7 @@ Select by Semester (defaults to current Semester, can also view All Semesters if
 Sort by Last Access<br />
 Show Students Not Logged on for this many Days (if set to a specific number of days, this can be used to select only students who have not logged on for that number of days or more. With those students selected it is possible to send a reminder e-mail to them at the bottom of the "Course Grades" page.)<br />
 Show "Payment up to date?" Status... This is typically used to see if a student has paid before they are notified of grading.<br />
-Show MMU MPH Only.
+Show MPH Only.
 <br />
 </li>
 <li>
@@ -1144,7 +1144,7 @@ There you will see (at the bottom of the page), a breakdown of qualifications an
 To actually see this data for those that either Passed 50+, Passed 45+, Failed or who were Not Graded etc. only, you can set the filters to just select students with that type of grade. Obviously you would want to wait for grading to be complete for the semester you are interested in.
 </li>
 <li>
-There are also filters that limit scope to e.g. one module, by whether the student has been accepted into MMU MPH (and, if desired, during which period they were accepted) etc.
+There are also filters that limit scope to e.g. one module, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted) etc.
 </li>
 </ol>
 
@@ -1197,7 +1197,7 @@ You can also list all certificates with the "List All Certificates" link.
 </li>
 <li>
 It shows:-
-<br />Whether they are enrolled in MMU MPH.
+<br />Whether they are enrolled in MPH.
 <br />All their payment account transactions.
 <br />Their instalment payment schedule, if any.
 </li>
