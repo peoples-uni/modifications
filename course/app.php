@@ -1762,11 +1762,11 @@ if (empty($mphs)) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markmph" value="1" />
-MPH$nbsp;programme:$nbsp;
+MPH&nbsp;programme:&nbsp;
 <select name="mphstatus">
-<option value="3" selected>OTHER MPH></option>
-<option value="2"         >Peoples-uni MPH></option>
-<option value="1"         >MMU MPH></option>
+<option value="3" selected="selected">OTHER MPH</option>
+<option value="2"                    >Peoples-uni MPH</option>
+<option value="1"                    >MMU MPH</option>
 </select>
 <br />
 <input type="submit" name="mph" value="Record that the Student has been enrolled in the MPH" />
