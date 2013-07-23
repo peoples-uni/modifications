@@ -388,11 +388,11 @@ elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
 elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && $isteacher) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $peoplesmph2->graduated = 1;
-  $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
+  $peoplesmph2->semester_graduated = 'xx';//$_POST['semester_graduated'];
 echo "<br />HERE {$peoplesmph2->id} {$peoplesmph2->graduated} {$peoplesmph2->semester_graduated}---------------------------------------------------------------------------<br />";
   $DB->update_record('peoplesmph2', $peoplesmph2);
-unset ($peoplesmph2->id);
-$DB->insert_record('peoplesmph2', $peoplesmph2);//????????????
+//unset ($peoplesmph2->id);
+//$DB->insert_record('peoplesmph2', $peoplesmph2);//????????????
 }
 
 
