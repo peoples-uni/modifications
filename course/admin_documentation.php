@@ -1038,6 +1038,12 @@ As another extra it generates the same statistics as are generated in applicatio
  - By Country
 </li>
 <li>
+After this there are links to the...<br />
+<a href="http://courses.peoples-uni.org/course/successbyqualifications.php" target="_blank">Success by Qualifications Report</a><br />
+<a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">Discussion Feedback to Students</a><br />
+<a href="http://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">List of MPH Graduates</a><br />
+</li>
+<li>
 At the bottom of the page, there are two forms to send e-mails to all the above students (those that are selected by the filters). The two sets of default wording are set in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>.<br />
 The first form is typically used to send students a reminder of the their Application ID/SID.<br />
 The second is typically used to send students a reminder that they have not logged on to Peoples-uni since the start of the Semester. But to do this correctly (i.e. select the appropriate students to send this e-mail to), it is necessary to set the "Show Students Not Logged on for this many Days" filter at the top of the page to an appropriate number of days before sending the e-mail.
