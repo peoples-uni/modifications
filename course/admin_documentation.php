@@ -749,7 +749,7 @@ The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applica
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
 </li>
 <li>
-"Record that the Student has been enrolled in the MPH" button does what it says.
+"Record that the Student has been enrolled in the MPH" button does what it says (it is necessary to say whether it is a Peoples-uni or OTHER (university) MPH).
 </li>
 <li>
 "Unenroll a student from the Masters in Public Health (MPH)" button does what it says.
