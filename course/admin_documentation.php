@@ -1117,7 +1117,8 @@ Other options on this page are:<br />
 To send another e-mail to the student: "e-mail Student",<br />
 Add a note to the student record (see also the <a href="http://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">details button/page</a>), or<br />
 Look at "Student Submissions".<br />
-Note that the student's most recent approved SID/Application ID/Registration Number is shown near the top of "Student Grades" and a student may be directed here to find their most recent SID.
+Note that the student's most recent approved SID/Application ID/Registration Number is shown near the top of "Student Grades" and a student may be directed here to find their most recent SID.<br />
+To "Mark this Student as Graduated with MPH", set the Semester in which the Student Graduated with MPH and click the button. A list of those Graduated is in <a href="http://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">http://courses.peoples-uni.org/course/list_of_mph_graduates.php</a> as noted above.
 </li>
 </ol>
 
