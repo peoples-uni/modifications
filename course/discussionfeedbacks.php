@@ -20,6 +20,7 @@ $PAGE->set_url('/course/discussionfeedbacks.php'); // Defined here to avoid noti
 if (!empty($_POST['markfilter'])) {
   redirect($CFG->wwwroot . '/course/discussionfeedbacks.php?'
     . 'chosensemester=' . urlencode($_POST['chosensemester'])
+    . '&chosenssf=' . urlencode(dontstripslashes($_POST['chosenssf']))
     . '&chosenmodule=' . urlencode($_POST['chosenmodule'])
     . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
     );
@@ -48,6 +49,7 @@ echo $OUTPUT->header();
 if (empty($_REQUEST['displayforexcel'])) echo "<h1>Discussion Feedback to Students</h1>";
 
 if (!empty($_REQUEST['chosensemester'])) $chosensemester = $_REQUEST['chosensemester'];
+if (!empty($_REQUEST['chosenssf'])) $chosenssf = $_REQUEST['chosenssf'];
 if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = $_REQUEST['chosenmodule'];
 else $chosenmodule = '';
 if (!empty($_REQUEST['displayforexcel'])) $displayforexcel = true;
@@ -60,6 +62,46 @@ foreach ($semesters as $semester) {
 }
 $listsemester[] = 'All';
 
+$studentsupportforumsnames = $DB->get_records('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
+if (empty($chosenssf)) $chosenssf = 'All';
+$listssf[] = 'All';
+foreach ($studentsupportforumsnames as $studentsupportforumsname) {
+  $listssf[] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
+}
+natsort($listssf);
+
+if (empty($chosenssf) || ($chosenssf == 'All')) {
+  $chosenssf = 'All';
+  $ssfsql = '';
+}
+else {
+  $chosenforumid = $DB->get_record('forum', array('name' => $chosenssf));
+
+  // Look for all User Subscriptions to a Forum in the 'Student Support Forums' Course which are for Students Enrolled in the Course (not Tutors)
+  $recordforselecteduserids = $DB->get_record_sql(
+    "SELECT
+      GROUP_CONCAT(u.id SEPARATOR ', ') AS userids
+    FROM
+      mdl_forum_subscriptions fs,
+      mdl_user u
+    WHERE
+      forum=? AND
+      fs.userid=u.id AND
+      u.id IN
+        (
+          SELECT userid from mdl_user_enrolments where enrolid=?
+        )",
+    array($chosenforumid->id, get_config(NULL, 'peoples_student_support_id'))
+  );
+
+  if (!empty($recordforselecteduserids->userids)) {
+    $ssfsql = "AND e.userid IN($recordforselecteduserids->userids)";
+  }
+  else {
+    $ssfsql = "AND e.userid IN(-1)";
+  }
+}
+
 if (!$displayforexcel) {
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/discussionfeedbacks.php'; ?>">
@@ -69,6 +111,7 @@ Display entries using the following filters...
     <td>Semester</td>
     <td>Module Name Contains</td>
     <td>Display for Copying and Pasting to Excel</td>
+    <td>Students from this SSF only</td>
   </tr>
   <tr>
     <?php
@@ -76,6 +119,9 @@ Display entries using the following filters...
     ?>
     <td><input type="text" size="15" name="chosenmodule" value="<?php echo htmlspecialchars($chosenmodule, ENT_COMPAT, 'UTF-8'); ?>" /></td>
     <td><input type="checkbox" name="displayforexcel" <?php if ($displayforexcel) echo ' CHECKED'; ?>></td>
+    <?php
+    displayoptions('chosenssf', $listssf, $chosenssf);
+    ?>
   </tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
@@ -100,13 +146,13 @@ function displayoptions($name, $options, $selectedvalue) {
 }
 
 
-$discussionfeedbacks = $DB->get_records_sql('
+$discussionfeedbacks = $DB->get_records_sql("
   SELECT DISTINCT d.*, u.lastname, u.firstname, c.fullname, e.semester
   FROM mdl_discussionfeedback d
   INNER JOIN mdl_user u ON d.userid=u.id
   INNER JOIN mdl_course c ON d.course_id=c.id
-  INNER JOIN mdl_enrolment e ON d.userid=e.userid AND d.course_id=e.courseid
-  ORDER BY e.semester, c.fullname, u.lastname, u.firstname');
+  INNER JOIN mdl_enrolment e ON d.userid=e.userid AND d.course_id=e.courseid $ssfsql
+  ORDER BY e.semester, c.fullname, u.lastname, u.firstname");
 if (empty($discussionfeedbacks)) {
   $discussionfeedbacks = array();
 }

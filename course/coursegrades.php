@@ -19,6 +19,7 @@ if (!empty($_POST['markfilter'])) {
     . 'id=' . $_POST['id']
     . '&chosenstatus=' . urlencode(dontstripslashes($_POST['chosenstatus']))
     . '&chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
+    . '&chosenssf=' . urlencode(dontstripslashes($_POST['chosenssf']))
     . (empty($_POST['sortbyaccess']) ? '&sortbyaccess=0' : '&sortbyaccess=1')
     . '&showmissingfordays=' . urlencode(dontstripslashes($_POST['showmissingfordays']))
     . (empty($_POST['showpaymentstatus']) ? '&showpaymentstatus=0' : '&showpaymentstatus=1')
@@ -123,6 +124,48 @@ else {
   $semestersql = 'AND e.semester=?';
 }
 
+$chosenssf = dontstripslashes(optional_param('chosenssf', '', PARAM_NOTAGS));
+
+$studentsupportforumsnames = $DB->get_records('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
+if (empty($chosenssf)) $chosenssf = 'All';
+$listssf[] = 'All';
+foreach ($studentsupportforumsnames as $studentsupportforumsname) {
+  $listssf[] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
+}
+natsort($listssf);
+
+if (empty($chosenssf) || ($chosenssf == 'All')) {
+  $chosenssf = 'All';
+  $ssfsql = '';
+}
+else {
+  $chosenforumid = $DB->get_record('forum', array('name' => $chosenssf));
+
+  // Look for all User Subscriptions to a Forum in the 'Student Support Forums' Course which are for Students Enrolled in the Course (not Tutors)
+  $recordforselecteduserids = $DB->get_record_sql(
+    "SELECT
+      GROUP_CONCAT(u.id SEPARATOR ', ') AS userids
+    FROM
+      mdl_forum_subscriptions fs,
+      mdl_user u
+    WHERE
+      forum=? AND
+      fs.userid=u.id AND
+      u.id IN
+        (
+          SELECT userid from mdl_user_enrolments where enrolid=?
+        )",
+    array($chosenforumid->id, get_config(NULL, 'peoples_student_support_id'))
+  );
+
+  if (!empty($recordforselecteduserids->userids)) {
+    $ssfsql = "AND e.userid IN($recordforselecteduserids->userids)";
+  }
+  else {
+    $ssfsql = "AND e.userid IN(-1)";
+  }
+}
+
 if (!empty($_REQUEST['sortbyaccess'])) {
 	$sortbyaccess = true;
 	$orderby ='x.lastaccess DESC, x.firstname ASC, username ASC, fullname ASC';
@@ -182,6 +225,7 @@ Display entries using the following filters...
     <td>Show Students Not Logged on for this many Days</td>
     <td>Show "Payment up to date?" Status</td>
     <td>Show MPH Only</td>
+    <td>Students from this SSF only</td>
   </tr>
   <tr>
     <td>
@@ -207,6 +251,9 @@ Display entries using the following filters...
     ?>
     <td><input type="checkbox" name="showpaymentstatus" <?php if ($showpaymentstatus) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="showmmumphonly" <?php if ($showmmumphonly) echo ' CHECKED'; ?>></td>
+    <?php
+    displayoptions('chosenssf', $listssf, $chosenssf);
+    ?>
 	</tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
@@ -237,7 +284,7 @@ if (!empty($prof->id)) $genderid = $prof->id;
 
 
 $enrols = $DB->get_records_sql("SELECT * FROM
-(SELECT e.*, c.fullname, c.idnumber, u.lastname, u.firstname, u.email, u.username, u.lastaccess, u.country FROM mdl_enrolment e, mdl_course c, mdl_user u WHERE e.courseid=c.id AND e.userid=u.id $courseidsql1 $statussql $semestersql $showmissingfordayssql) AS x
+(SELECT e.*, c.fullname, c.idnumber, u.lastname, u.firstname, u.email, u.username, u.lastaccess, u.country FROM mdl_enrolment e, mdl_course c, mdl_user u WHERE e.courseid=c.id AND e.userid=u.id $courseidsql1 $statussql $semestersql $showmissingfordayssql $ssfsql) AS x
 LEFT JOIN
 (SELECT g.userid AS guserid, g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' $courseidsql2) AS y
 ON x.userid=y.guserid AND x.courseid=y.icourseid
@@ -489,6 +536,7 @@ Look at list of e-mails sent to verify they went!<br />
     . 'id=' . $courseid
     . '&chosenstatus=' . urlencode($chosenstatus)
     . '&chosensemester=' . urlencode($chosensemester)
+    . '&chosenssf=' . urlencode($chosenssf)
     . (empty($sortbyaccess) ? '&sortbyaccess=0' : '&sortbyaccess=1')
     . '&showmissingfordays=' . urlencode($showmissingfordays)
     . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1')
@@ -521,6 +569,7 @@ Look at list of e-mails sent to verify they went!<br />
     . 'id=' . $courseid
     . '&chosenstatus=' . urlencode($chosenstatus)
     . '&chosensemester=' . urlencode($chosensemester)
+    . '&chosenssf=' . urlencode($chosenssf)
     . (empty($sortbyaccess) ? '&sortbyaccess=0' : '&sortbyaccess=1')
     . '&showmissingfordays=' . urlencode($showmissingfordays)
     . (empty($showpaymentstatus) ? '&showpaymentstatus=0' : '&showpaymentstatus=1')
