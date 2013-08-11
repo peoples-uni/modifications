@@ -1022,7 +1022,8 @@ Select by Semester (defaults to current Semester, can also view All Semesters if
 Sort by Last Access<br />
 Show Students Not Logged on for this many Days (if set to a specific number of days, this can be used to select only students who have not logged on for that number of days or more. With those students selected it is possible to send a reminder e-mail to them at the bottom of the "Course Grades" page.)<br />
 Show "Payment up to date?" Status... This is typically used to see if a student has paid before they are notified of grading.<br />
-Show MPH Only.
+Show MPH Only.<br />
+Select by Student Support Group.
 <br />
 </li>
 <li>
