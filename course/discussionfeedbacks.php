@@ -20,7 +20,7 @@ $PAGE->set_url('/course/discussionfeedbacks.php'); // Defined here to avoid noti
 if (!empty($_POST['markfilter'])) {
   redirect($CFG->wwwroot . '/course/discussionfeedbacks.php?'
     . 'chosensemester=' . urlencode($_POST['chosensemester'])
-    . '&chosenssf=' . urlencode(dontstripslashes($_POST['chosenssf']))
+    . '&chosenssf=' . urlencode($_POST['chosenssf'])
     . '&chosenmodule=' . urlencode($_POST['chosenmodule'])
     . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
     );
