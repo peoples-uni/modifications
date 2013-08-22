@@ -134,7 +134,7 @@ elseif ($data = $editform->get_data()) {
     $message = "Returning Student Application for...\n\n";
     $returning_in_title = 'Returning';
   }
-  $message .= "Last Name: $application->lastname\n\n";
+  $message .= "Family Name: $application->lastname\n\n";
   $message .= "First Name: $application->firstname\n\n";
   $message .= "e-mail: $application->email\n\n";
   $message .= "Submission ID (SID): $application->sid\n\n";

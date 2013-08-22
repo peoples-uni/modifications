@@ -203,7 +203,7 @@ elseif ($data = $editform->get_data()) {
 
 
   $message  = "Registration request for...\n\n";
-  $message .= "Last Name: $application->lastname\n\n";
+  $message .= "Family Name: $application->lastname\n\n";
   $message .= "First Name: $application->firstname\n\n";
   $message .= "e-mail: $application->email\n\n";
   $message .= "Date Submitted: " . gmdate('d/m/Y H:i', $application->datesubmitted) . "\n\n";
