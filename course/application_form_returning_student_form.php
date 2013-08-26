@@ -83,7 +83,8 @@ class application_form_returning_student_form extends moodleform {
     $count = count($listforunavailable);
     $listforunavailable = implode(", ", $listforunavailable);
 
-    $text = "Please select the first course module you are applying for from the drop down box. Note: you should not apply for 'Masters dissertation' until given permission to do so. Note: Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student. Note: you should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
+    //$text = "Please select the first course module you are applying for from the drop down box. Note: you should not apply for 'Masters dissertation' until given permission to do so. Note: Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student. Note: you should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
+    $text = "Please select the first course module you are applying for from the drop down box. Note: The 'Masters dissertation' is restricted to those who have passed sufficient prior modules. Note: Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student. Note: you should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
     if ($count > 1) {
       $text .= ' Note: ' . $listforunavailable . ' are not available for this semester because they are full.';
     }
