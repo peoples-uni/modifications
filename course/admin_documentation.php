@@ -1273,6 +1273,7 @@ Referencing: Good<br />
 <br />
 Students will only see ratings for their own posts, not the ratings for other Student's Posts.<br />
 Ratings will appear in a Student's Grade Book.<br />
+There is also a link "Notes" on the right hand side of the ratings which gives Tutors a quick link to the Moodle Notes for a Student.<br />
 <br />
 </li>
 <li>
