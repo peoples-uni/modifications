@@ -1,5 +1,5 @@
 --- lib252.bak.php	Wed Sep 18 14:41:59 2013
-+++ lib252.php	Fri Sep 20 14:59:41 2013
++++ lib.php	Fri Sep 20 14:59:41 2013
 @@ -3506,6 +3506,16 @@
      if (!empty($post->rating)) {
          $output .= html_writer::tag('div', $OUTPUT->render($post->rating), array('class'=>'forum-post-rating'));
