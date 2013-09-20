@@ -1,6 +1,6 @@
---- lib.bak.php	Sat May 25 17:26:25 2013
-+++ lib.php	Wed May 29 23:23:52 2013
-@@ -3505,6 +3505,12 @@
+--- lib252.bak.php	Wed Sep 18 14:41:59 2013
++++ lib252.php	Fri Sep 20 14:59:41 2013
+@@ -3506,6 +3506,16 @@
      if (!empty($post->rating)) {
          $output .= html_writer::tag('div', $OUTPUT->render($post->rating), array('class'=>'forum-post-rating'));
      }
@@ -9,11 +9,15 @@
 +    }
 +    if (!empty($post->rating3)) {
 +        $output .= html_writer::tag('div', $OUTPUT->render($post->rating3), array('class'=>'forum-post-rating'));
++
++        if ($post->rating3->user_can_rate()) { // Conditionally add a link to the Notes for the Student ALAN
++            $output .= html_writer::tag('div', html_writer::link(new moodle_url('/notes/index.php', array('user'=>$post->userid)), 'Notes', array('target'=>'_blank')), array('class'=>'commands'));
++        }
 +    }
  
      // Output the commands
      $commandhtml = array();
-@@ -3589,6 +3595,7 @@
+@@ -3590,6 +3600,7 @@
   */
  function forum_rating_validate($params) {
      global $DB, $USER;
@@ -21,7 +25,7 @@
  
      // Check the component is mod_forum
      if ($params['component'] != 'mod_forum') {
-@@ -3618,7 +3625,7 @@
+@@ -3619,7 +3630,7 @@
          throw new rating_exception('invalidcontext');
      }
  
