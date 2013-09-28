@@ -89,11 +89,31 @@ elseif ($data = $editform->get_data()) {
   $application->city      = $user_record->city;
   $application->country   = $user_record->country;
 
-  $application->reenrolment = 1;
   $oldapplication = $DB->get_record('peoplesapplication', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
   if (empty($oldapplication)) {
     $oldapplication = $DB->get_record('peoplesregistration', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
-    $application->reenrolment = 0;
+  }
+
+  $application->reenrolment = 0;
+  // Set reenrolment only if the Student was actually at least partially enrolled in a previous (not current) semester
+  // Partially enrolled states:
+  // Octal Decimal
+  //    23      19
+  //    32      26
+  //    13      11
+  //    31      25
+  //    33      27
+  $semester_current = $DB->get_record('semester_current', array('id' => 1));
+  $previous_enrolments = $DB->get_records_sql('
+    SELECT id
+    FROM mdl_peoplesapplication
+    WHERE
+      userid=? AND
+      semester!=? AND
+      state IN (19, 26, 11, 25, 27)',
+    array($application->userid, $semester_current->semester));
+  if (!empty($previous_enrolments)) {
+    $application->reenrolment = 1;
   }
 
   $application->gender                = $oldapplication->gender;
