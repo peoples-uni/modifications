@@ -619,7 +619,7 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 <h2>The "Details" button and the Approval Process</h2>
 <ol>
 <li>
-First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student has applied for courses at least twice.
+First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student was enrolled in a previous semester.
 </li>
 <li>
 Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_returning_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_returning_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, Application for MPH (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
