@@ -18,6 +18,7 @@ if ($editform->is_cancelled()) {
   redirect(new moodle_url('http://peoples-uni.org'));
 }
 elseif ($data = $editform->get_data()) {
+  unset($_SESSION['peoples_filling_in_application_form']);
 
   $application = new object();
 
