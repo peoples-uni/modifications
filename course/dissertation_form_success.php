@@ -19,7 +19,7 @@ echo $OUTPUT->heading("People's Open Access Education Initiative Dissertation Fo
 
 
 $semester_current = $DB->get_record('semester_current', array('id' => 1));
-$submitted = $DB->get_record('peoplesapplication', array('userid' => $USER->id, 'semester' => $semester_current), '*', IGNORE_MULTIPLE);
+$submitted = $DB->get_record('peoplesapplication', array('userid' => $USER->id, 'semester' => $semester_current->semester), '*', IGNORE_MULTIPLE);
 
 
 echo '<p>Thank you for submitting your dissertation idea. You should receive an email copy of your Dissertation Form. If after an hour or two you have not received the email contact our support staff at - <strong><a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a></strong> with your details.</p>';
