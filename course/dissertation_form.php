@@ -27,7 +27,7 @@ class dissertation_form extends moodleform {
     $mform->addElement('header', 'dissertationdetails', 'Dissertation');
 
     $mform->addElement('static', 'explaindissertation', '&nbsp;', 'Describe the health issue you want to study in your dissertation (up to 150 words)<br />');
-    $mform->addElement('textarea', 'Health issue you want to study in your dissertation', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'dissertation', 'Health issue you want to study in your dissertation', 'wrap="HARD" rows="10" cols="100"');
     $mform->addRule('dissertation', 'Dissertation Health Issue is required', 'required', null, 'client');
 
     $this->add_action_buttons(false, 'Submit Form');
