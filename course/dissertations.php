@@ -132,7 +132,7 @@ $n = 0;
 if (!empty($dissertations)) {
 	foreach ($dissertations as $dissertation) {
     $rowdata = array();
-    $rowdata[] = gmdate('d/m/Y H:i', $dissertation->datesubmitted);
+    $rowdata[] = '<a name="' .  $dissertation->id . '"></a>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted);
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $dissertation->userid . '" target="_blank">' . htmlspecialchars($dissertation->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $dissertation->userid . '" target="_blank">' . htmlspecialchars($dissertation->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
     $rowdata[] = '<a href="mailto:' . $dissertation->email . '" target="_blank">' . htmlspecialchars($dissertation->email, ENT_COMPAT, 'UTF-8') . '</a>';
