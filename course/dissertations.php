@@ -56,7 +56,7 @@ $PAGE->set_heading('Student Dissertation Proposals');
 echo $OUTPUT->header();
 
 
-$chosensemester = dontstripslashes(optional_param('chosensemester', '', PARAM_NOTAGS));
+$chosensemester = optional_param('chosensemester', '', PARAM_NOTAGS);
 
 $semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
