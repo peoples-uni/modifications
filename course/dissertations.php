@@ -108,11 +108,12 @@ function displayoptions($name, $options, $selectedvalue) {
 }
 
 
-$dissertations = $DB->get_records_sql("SELECT * FROM
-SELECT d.*, u.lastname, u.firstname, u.email, u.username, u.lastaccess, u.country FROM mdl_peoplesdissertation d, mdl_user u
-WHERE d.userid=u.id $semestersql
-ORDER BY d.id DESC",
-array($chosensemester));
+$dissertations = $DB->get_records_sql("
+  SELECT d.*, u.lastname, u.firstname, u.email, u.username, u.lastaccess, u.country
+  FROM mdl_peoplesdissertation d, mdl_user u
+  WHERE d.userid=u.id $semestersql
+  ORDER BY d.id DESC",
+  array($chosensemester));
 
 $table = new html_table();
 $table->head = array(
