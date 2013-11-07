@@ -76,6 +76,7 @@ else {
 
 
 ?>
+<div style="text-align:left">
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/dissertations.php'; ?>">
 Display entries using the following filters...
 <table border="2" cellpadding="2">
@@ -92,6 +93,7 @@ Display entries using the following filters...
 <input type="submit" name="filter" value="Apply Filters" />
 <a href="<?php echo $CFG->wwwroot; ?>/course/dissertations.php">Reset Filters</a>
 </form>
+</div>
 <br /><br />
 <?php
 
@@ -124,6 +126,7 @@ $table->head = array(
   'Email address',
   'Dissertation',
   );
+$table->align = array('left', 'left', 'left', 'left', 'left');
 
 $n = 0;
 if (!empty($dissertations)) {
