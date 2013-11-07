@@ -504,6 +504,14 @@ if (empty($applications)) {
   $applications = array();
 }
 
+$dissertations = $DB->get_records_sql('
+  SELECT d.userid, GROUP_CONCAT(d.id ORDER BY d.id DESC) AS ids
+  FROM mdl_peoplesdissertation d
+  GROUP BY d.userid');
+if (empty($dissertations)) {
+  $dissertations = array();
+}
+
 $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r WHERE r.userid!=0');
 
 
@@ -942,6 +950,12 @@ foreach ($applications as $sid => $application) {
     $z .= $applymmumphtext[$application->applymmumph];
     $applycertpatientsafetytext = array(0 => '', 1 => '', 2 => '<br />(Apply Cert PS)', 3 => '<br />(Say already Cert PS)');
     $z .= $applycertpatientsafetytext[$application->applycertpatientsafety];
+    if (!empty($dissertations[$application->userid])) {
+      $ids = explode(',', $dissertations[$application->userid]);
+      foreach ($ids as $id) {
+        $z .= '<br />(<a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $id . '">Dissertation</a>)';
+      }
+    }
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($application->paymentmechanism)) $mechanism = '';
