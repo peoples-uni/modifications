@@ -54,6 +54,7 @@ $PAGE->set_title('Student Dissertation Proposals');
 $PAGE->set_heading('Student Dissertation Proposals');
 
 echo $OUTPUT->header();
+echo "<h1>Student Dissertation Proposals</h1>";
 
 
 $chosensemester = optional_param('chosensemester', '', PARAM_NOTAGS);
