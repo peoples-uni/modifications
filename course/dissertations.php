@@ -143,10 +143,6 @@ if (!empty($dissertations)) {
 echo html_writer::table($table);
 
 echo '<br/>Number of Records: ' . $n;
-
-
-echo '<br /><br /><br /><br /><br />';
-echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
 echo '<br /><br />';
 
 natcasesort($listofemails);
