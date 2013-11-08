@@ -697,6 +697,12 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 "Certificate in Patient Safety Status" indicates whether the student "Wants to Apply for Certificate in Patient Safety" or "Says Already in Certificate in Patient Safety" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in Certificate in Patient Safety" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(Cert PS)"). If a Student was "Enrolled in Certificate in Patient Safety" and then "Unenrolled from Certificate in Patient Safety" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
 </li>
 <li>
+"Student Dissertation Proposals" displays any proposal submitted by the Student (links to these proposals are also displayed on the main applications.php spreadsheet under "Approved?").
+These proposals are submitted by the Student by clicking on a link in the Course Application Form (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>).
+There are instructions about what to do there.
+They can also be entered at other times by the Student clicking directly on <a href="http://courses.peoples-uni.org/course/dissertation.php" target="_blank">http://courses.peoples-uni.org/course/dissertation.php</a>
+</li>
+<li>
 "Approve Full Application" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail outlined above under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which requests payment.<br />
 The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Yes" as opposed to "No", "Some" (if only one application is approved, see below) or "Denied or Deferred" (if the application has been un-approved after being approved.)
 </li>
