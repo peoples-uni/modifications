@@ -719,6 +719,23 @@ if (!empty($applycertpatientsafetytext) || !empty($peoples_cert_ps->note)) {
   if (!empty($peoples_cert_ps->note)) echo '<tr><td></td><td>' . $peoples_cert_ps->note . '</td></tr>';
 }
 
+if (!empty($application->userid)) {
+  $dissertations = $DB->get_records_sql("
+    SELECT d.*
+    FROM mdl_peoplesdissertation d
+    WHERE d.userid=$application->userid
+    ORDER BY d.id DESC");
+  if (!empty($dissertations)) {
+    echo '<tr><td colspan="2">Student Dissertation Proposals...</td></tr>';
+    foreach ($dissertations as $dissertation) {
+      echo '<tr>';
+      echo '<td>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted) . '</td>';
+      echo '<td><a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $dissertation->id . '">' . str_replace("\r", '', str_replace("\n", '<br />', $dissertation->dissertation)) . '</a></td>';
+      echo '</tr>';
+    }
+  }
+}
+
 echo '</table>';
 
 if ($state === 022) {
