@@ -730,7 +730,7 @@ if (!empty($application->userid)) {
     foreach ($dissertations as $dissertation) {
       echo '<tr>';
       echo '<td>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted) . '</td>';
-      echo '<td><a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $dissertation->id . '">' . str_replace("\r", '', str_replace("\n", '<br />', $dissertation->dissertation)) . '</a></td>';
+      echo '<td><a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $dissertation->id . '" target="_blank">' . str_replace("\r", '', str_replace("\n", '<br />', $dissertation->dissertation)) . '</a></td>';
       echo '</tr>';
     }
   }

@@ -953,7 +953,7 @@ foreach ($applications as $sid => $application) {
     if (!empty($dissertations[$application->userid])) {
       $ids = explode(',', $dissertations[$application->userid]);
       foreach ($ids as $id) {
-        $z .= '<br />(<a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $id . '">Dissertation</a>)';
+        $z .= '<br />(<a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $id . '" target="_blank">Dissertation</a>)';
       }
     }
     if (!$displayscholarship) $rowdata[] = $z;
