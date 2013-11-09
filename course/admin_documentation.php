@@ -700,7 +700,8 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 "Student Dissertation Proposals" displays any proposal submitted by the Student (links to these proposals are also displayed on the main applications.php spreadsheet under "Approved?").
 These proposals are submitted by the Student by clicking on a link in the Course Application Form (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>).
 There are instructions about what to do there.
-They can also be entered at other times by the Student clicking directly on <a href="http://courses.peoples-uni.org/course/dissertation.php" target="_blank">http://courses.peoples-uni.org/course/dissertation.php</a>
+They can also be entered at other times by the Student clicking directly on <a href="http://courses.peoples-uni.org/course/dissertation.php" target="_blank">http://courses.peoples-uni.org/course/dissertation.php</a><br />
+Access to <a href="http://courses.peoples-uni.org/course/dissertations.php" target="_blank">http://courses.peoples-uni.org/course/dissertations.php</a>, which is where Dissertation Proposals are displayed is available to any Tutor, Lurker or Admin.
 </li>
 <li>
 "Approve Full Application" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail outlined above under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which requests payment.<br />
@@ -845,7 +846,7 @@ The spreadsheet that is created is based on a standard spreadsheet and has all t
 The standard spreadsheet used in each case as a starting point is called Marking.xls which is stored in the Moodle course directory and can be changed through "git" source control.
 </li>
 <li>
-A tutor will just see one link in the Block: "Edit Marking Spreadsheet"... this launches the Marking Spreadsheet which allows immediate editing (and almost immediate automatic saving of any changes including format/layout changes). Layout can be changed as well as content.
+A Tutor will just see one link in the Block: "Edit Marking Spreadsheet"... this launches the Marking Spreadsheet which allows immediate editing (and almost immediate automatic saving of any changes including format/layout changes). Layout can be changed as well as content.
 </li>
 <li>
 Two or more editors should be able to edit at the same time and will see the other person's edits as they happen.
@@ -880,7 +881,7 @@ Assignment grades agreed in the spreadsheet will need to be manually entered in 
 <h2>Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</h2>
 <ol>
 <li>
-If you go to any of the following links <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>, "Details", <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> or "Student Grades"/student.php, you will see a link called "Student Submissions" for each student which will allow you to view all submissions that students have made for assignments (including re-submissions) and also all the grades received by the student and all comments by the tutors.
+If you go to any of the following links <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>, "Details", <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> or "Student Grades"/student.php, you will see a link called "Student Submissions" for each student which will allow you to view all submissions that students have made for assignments (including re-submissions) and also all the grades received by the Student and all comments by the Tutors.
 </li>
 <li>
 Note: "Student Submissions" may now be somewhat less useful as we are transitioning to a process where grades will only be entered when finally agreed so will not change. Also we are changing to a multiple file upload assignment type which will allow multiple files to be stored.
@@ -889,10 +890,10 @@ Note: "Student Submissions" may now be somewhat less useful as we are transition
 The "Student Submissions" link will display (In the first table) a list of all submissions made by the student. Note that the files can always be downloaded to your machine by clicking on them.
 </li>
 <li>
-The "Student Submissions" link will display (in the second table) a list of all grade changes for the student along with all tutors feedback comments made (as they changed) by the tutor.
+The "Student Submissions" link will display (in the second table) a list of all grade changes for the Student along with all Tutors feedback comments made (as they changed) by the Tutor.
 </li>
 <li>
-Access to "Student Submissions" is available to any tutor or admin. None of this is visible to students, all they see is their own academic transcript in student.php.
+Access to "Student Submissions" is available to any Tutor or Admin. None of this is visible to students, all they see is their own academic transcript in student.php.
 </li>
 <li>
 There is a parameter you can add to the end of the "Student Submissions" URL "&hidequiz=1", which hides display of quizzes if it becomes too cluttered for a particular student.
@@ -942,7 +943,7 @@ There is yet another filter called "Don't Show Number of Posts" which just shows
 At the end of the <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> page there is a list of e-mails for all Students who have a post matching the filters, there is also a list of e-mails for all Students matching the main filters who have no posts (this could be used to send out reminders).
 </li>
 <li>
-Access to posts.php is available to any tutor, Student coordinator or admin.<br /><br />
+Access to posts.php is available to any Tutor, Student coordinator or Admin.<br /><br />
 </li>
 <li>
 To view posts made by Tutors to discussion forums go to: <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a>.
@@ -965,7 +966,7 @@ After the main body of posts there are tables (one per course) that show, for ea
 <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module etc.
 </li>
 <li>
-Access to tutorposts.php is available to any tutor or admin.<br /><br />
+Access to tutorposts.php is available to any Tutor or Admin.<br /><br />
 </li>
 <li>
 To view posts made in the Student Support Forums module go to: <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a>.
@@ -983,7 +984,7 @@ After the main body of posts there are tables that show for each contributor, th
 <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a> also includes various filters.
 </li>
 <li>
-Access to support_posts.php is available to any tutor, Student coordinator or admin.
+Access to support_posts.php is available to any Tutor, Student coordinator or Admin.
 </li>
 </ol>
 
@@ -1056,7 +1057,7 @@ The first form is typically used to send students a reminder of the their Applic
 The second is typically used to send students a reminder that they have not logged on to Peoples-uni since the start of the Semester. But to do this correctly (i.e. select the appropriate students to send this e-mail to), it is necessary to set the "Show Students Not Logged on for this many Days" filter at the top of the page to an appropriate number of days before sending the e-mail.
 </li>
 <li>
-"Course Grades" is fully only available to any tutor or admin (a user with the "Lurker" role, actually system wide "moodle/grade:viewall", can view but not perform any actions). None of this is visible to students; all they see is their own academic transcript in student.php.
+"Course Grades" is fully only available to any Tutor or Admin (a user with the "Lurker" role, actually system wide "moodle/grade:viewall", can view but not perform any actions). None of this is visible to students; all they see is their own academic transcript in student.php.
 </li>
 </ol>
 
@@ -1065,7 +1066,7 @@ The second is typically used to send students a reminder that they have not logg
 <h2>Informing Students of Semester Final Grade Results</h2>
 <ol>
 <li>
-From "Course Grades" at <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> you can select "Student Grades" to see the grades received by a given student for all that student's modules along with feedback from the tutor for all assignments.
+From "Course Grades" at <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> you can select "Student Grades" to see the grades received by a given Student for all that Student's modules along with feedback from the Tutor for all assignments.
 </li>
 <?php
 //<li>
