@@ -26,7 +26,7 @@ echo '<p>Thank you for submitting your dissertation idea. You should receive an 
 
 if (empty($submitted)) { // Is the Course Application Form yet to be submitted for this Semester?
   echo '<p>Please note that you still have to submit the Course Application Form</p>';
-  if ((time() - $_SESSION['peoples_filling_in_application_form']) > (20 * 60)) { // Has 20 minutes passed?
+  if (empty($_SESSION['peoples_filling_in_application_form']) || ((time() - $_SESSION['peoples_filling_in_application_form']) > (20 * 60))) { // Has 20 minutes passed?
     echo '<p><strong><a href="' . $CFG->wwwroot . '/course/application_form_student.php">Click here to fill in the Course Application Form</a></strong></p>';
   }
   else {
