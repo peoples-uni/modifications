@@ -39,6 +39,7 @@ if (empty($userrecord)) {
 $fullname = fullname($userrecord);
 
 if (empty($fullname) || trim($fullname) == 'Guest User') {
+  $PAGE->set_pagelayout('standard');
   $SESSION->wantsurl = "$CFG->wwwroot/course/dissertation.php";
   notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
 }
