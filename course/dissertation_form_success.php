@@ -24,7 +24,7 @@ $submitted = $DB->get_record('peoplesapplication', array('userid' => $USER->id, 
 
 echo '<p>Thank you for submitting your dissertation idea. You should receive an email copy of your Dissertation Form. If after an hour or two you have not received the email contact our support staff at - <strong><a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a></strong> with your details.</p>';
 
-$_SESSION['peoples_filling_in_application_form'] = time() + 40*60;////////////////////////////////////////////////
+$_SESSION['peoples_filling_in_application_form'] = time();////////////////////////////////////////////////
 if (empty($submitted)) { // Is the Course Application Form yet to be submitted for this Semester?
   echo '<p>Please note that you still have to submit the Course Application Form</p>';
   if (empty($_SESSION['peoples_filling_in_application_form']) || ((time() - $_SESSION['peoples_filling_in_application_form']) > (20 * 60))) { // Has 20 minutes passed?
