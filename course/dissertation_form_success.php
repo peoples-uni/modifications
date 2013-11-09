@@ -31,7 +31,7 @@ if (empty($submitted)) { // Is the Course Application Form yet to be submitted f
     echo '<p><strong><a href="' . $CFG->wwwroot . '/course/application_form_student.php">Click here to fill in the Course Application Form</a></strong></p>';
   }
   else {
-    echo '<p><strong><a href="javascript:window.close();">Click here to Close this Window and Return to your Course Application Form (if you are in the middle of filling it out)</a></strong></p>';
+    echo '<p><strong>Close this Window and Return to your Course Application Form (if you are in the middle of filling it out)</strong></p>';
     echo '<p><strong>OR</strong></p>';
     echo '<p><strong><a href="' . $CFG->wwwroot . '/course/application_form_student.php">Click here to fill in a new Course Application Form</a></strong></p>';
   }
