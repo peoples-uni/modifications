@@ -951,7 +951,7 @@ foreach ($applications as $sid => $application) {
     $applycertpatientsafetytext = array(0 => '', 1 => '', 2 => '<br />(Apply Cert PS)', 3 => '<br />(Say already Cert PS)');
     $z .= $applycertpatientsafetytext[$application->applycertpatientsafety];
     if (!empty($dissertations[$application->userid])) {
-      $ids = explode(',', $dissertations[$application->userid]);
+      $ids = explode(',', $dissertations[$application->userid]->ids);
       foreach ($ids as $id) {
         $z .= '<br />(<a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $id . '" target="_blank">Dissertation</a>)';
       }
