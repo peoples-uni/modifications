@@ -506,11 +506,13 @@ echo "</tr>";
 
 $registration = $DB->get_record('peoplesregistration', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
 if (empty($registration)) {
+  $registration = new object();
   $registration->whatlearn = '';
   $registration->whylearn = '';
   $registration->whyelearning = '';
   $registration->howuselearning = '';
   $registration->howfoundorganisationname = '';
+  $registration->howfoundpeoples = '';
 }
 echo '<tr>';
 echo '<td>What do you want to learn?</td>';
