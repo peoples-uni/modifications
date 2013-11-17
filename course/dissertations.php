@@ -204,8 +204,6 @@ echo '<br /><br />';
 natcasesort($listofemails);
 echo 'e-mails of Above Students...<br />' . implode(', ', array_unique($listofemails)) . '<br /><br />';
 
-echo $OUTPUT->footer();
-
 
 ?>
 <script type="text/javascript">
@@ -217,6 +215,9 @@ Y.use('dissertation_semester', function(Y) { M.dissertation_semester.init(Y); })
 //]]>
 </script>
 <?php
+
+
+echo $OUTPUT->footer();
 
 
 function is_peoples_teacher() {
