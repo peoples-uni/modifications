@@ -88,6 +88,7 @@ Display entries using the following filters...
 <table border="2" cellpadding="2">
   <tr>
     <td>Semester</td>
+    <td>Display for Copying and Pasting to Excel</td>
   </tr>
   <tr>
     <?php
@@ -145,11 +146,11 @@ if (!empty($dissertations)) {
     if (!$displayforexcel) {
       $rowdata[] = '<a name="' .  $dissertation->id . '"></a>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted);
 
-      $a  = '<form id="dissertationsemester<?php echo $dissertation->id; ?>" class="dissertationsemesterform" method="post" action="http://courses.peoples-uni.org/SHOULDNOTBEHERE.php">';
-      $a .= '  <input type="hidden" class="dissertationsemesterinput" name="dissertationid" value="<?php echo $dissertation->id; ?>" />';
-      $a .= '  <input type="hidden" class="dissertationsemesterinput" name="sesskey" value="<?php echo $USER->sesskey; ?>" />';
+      $a  = '<form id="dissertationsemester' . $dissertation->id . '" class="dissertationsemesterform" method="post" action="http://courses.peoples-uni.org/SHOULDNOTBEHERE.php">';
+      $a .= '  <input type="hidden" class="dissertationsemesterinput" name="dissertationid" value="' . $dissertation->id . '" />';
+      $a .= '  <input type="hidden" class="dissertationsemesterinput" name="sesskey" value="' . $USER->sesskey . '" />';
 
-      $a .= '  <select class="select dissertationsemestermenu dissertationsemesterinput" id="menudissertationsemester<?php echo $dissertation->id; ?>" name="dissertationsemester">';
+      $a .= '  <select class="select dissertationsemestermenu dissertationsemesterinput" id="menudissertationsemester' . $dissertation->id . '" name="dissertationsemester">';
       $year = (int)gmdate('Y');
       $options = array();
       $options[] = ($year - 1) . 'a';
@@ -166,7 +167,7 @@ if (!empty($dissertations)) {
         $a .= '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
       }
       $a .= '  </select>';
-      $a .= '  <input type="submit" class="dissertationsemestermenusubmit" id="dissertationsemestersubmit<?php echo $dissertation->id; ?>" value="SHOULD NOT SEE THIS" />';
+      $a .= '  <input type="submit" class="dissertationsemestermenusubmit" id="dissertationsemestersubmit' . $dissertation->id . '" value="SHOULD NOT SEE THIS" />';
       $a .= '</form>';
       $rowdata[] = $a;
 
