@@ -15,6 +15,7 @@ $PAGE->set_url('/course/dissertations.php');
 if (!empty($_POST['markfilter'])) {
   redirect($CFG->wwwroot . '/course/dissertations.php?'
     . '&chosensemester=' . urlencode($_POST['chosensemester'])
+    . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
     );
 }
 
@@ -55,8 +56,11 @@ $PAGE->set_title('Student Dissertation Proposals');
 $PAGE->set_heading('Student Dissertation Proposals');
 
 echo $OUTPUT->header();
-echo "<h1>Student Dissertation Proposals</h1>";
+if (empty($_REQUEST['displayforexcel'])) echo "<h1>Student Dissertation Proposals</h1>";
 
+
+if (!empty($_REQUEST['displayforexcel'])) $displayforexcel = true;
+else $displayforexcel = false;
 
 $chosensemester = optional_param('chosensemester', '', PARAM_NOTAGS);
 
@@ -76,6 +80,7 @@ else {
 }
 
 
+if (!$displayforexcel) {
 ?>
 <div style="text-align:left">
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/dissertations.php'; ?>">
@@ -86,9 +91,10 @@ Display entries using the following filters...
   </tr>
   <tr>
     <?php
-		displayoptions('chosensemester', $listsemester, $chosensemester);
-		?>
-	</tr>
+    displayoptions('chosensemester', $listsemester, $chosensemester);
+    ?>
+    <td><input type="checkbox" name="displayforexcel" <?php if ($displayforexcel) echo ' CHECKED'; ?>></td>
+  </tr>
 </table>
 <input type="hidden" name="markfilter" value="1" />
 <input type="submit" name="filter" value="Apply Filters" />
@@ -97,6 +103,7 @@ Display entries using the following filters...
 </div>
 <br /><br />
 <?php
+}
 
 
 function displayoptions($name, $options, $selectedvalue) {
@@ -122,22 +129,60 @@ $dissertations = $DB->get_records_sql("
 $table = new html_table();
 $table->head = array(
   'Submitted',
+  'Semester',
   'Family name',
   'Given name',
   'Email address',
   'Dissertation',
   );
-$table->align = array('left', 'left', 'left', 'left', 'left');
+$table->align = array('left','left', 'left', 'left', 'left', 'left');
 
 $n = 0;
 if (!empty($dissertations)) {
 	foreach ($dissertations as $dissertation) {
     $rowdata = array();
-    $rowdata[] = '<a name="' .  $dissertation->id . '"></a>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted);
-    $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $dissertation->userid . '" target="_blank">' . htmlspecialchars($dissertation->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
-    $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $dissertation->userid . '" target="_blank">' . htmlspecialchars($dissertation->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
-    $rowdata[] = '<a href="mailto:' . $dissertation->email . '" target="_blank">' . htmlspecialchars($dissertation->email, ENT_COMPAT, 'UTF-8') . '</a>';
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $dissertation->dissertation));
+
+    if (!$displayforexcel) {
+      $rowdata[] = '<a name="' .  $dissertation->id . '"></a>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted);
+
+      $a  = '<form id="dissertationsemester<?php echo $dissertation->id; ?>" class="dissertationsemesterform" method="post" action="http://courses.peoples-uni.org/SHOULDNOTBEHERE.php">';
+      $a .= '  <input type="hidden" class="dissertationsemesterinput" name="dissertationid" value="<?php echo $dissertation->id; ?>" />';
+      $a .= '  <input type="hidden" class="dissertationsemesterinput" name="sesskey" value="<?php echo $USER->sesskey; ?>" />';
+
+      $a .= '  <select class="select dissertationsemestermenu dissertationsemesterinput" id="menudissertationsemester<?php echo $dissertation->id; ?>" name="dissertationsemester">';
+      $year = (int)gmdate('Y');
+      $options = array();
+      $options[] = ($year - 1) . 'a';
+      $options[] = ($year - 1) . 'b';
+      $options[] = ($year + 0) . 'a';
+      $options[] = ($year + 0) . 'b';
+      $options[] = ($year + 1) . 'a';
+      $options[] = ($year + 1) . 'b';
+      foreach ($options as $option) {
+        if ($option === $dissertation->semester) $selected = 'selected="selected"';
+        else $selected = '';
+
+        $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
+        $a .= '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+      }
+      $a .= '  </select>';
+      $a .= '  <input type="submit" class="dissertationsemestermenusubmit" id="dissertationsemestersubmit<?php echo $dissertation->id; ?>" value="SHOULD NOT SEE THIS" />';
+      $a .= '</form>';
+      $rowdata[] = $a;
+
+      $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $dissertation->userid . '" target="_blank">' . htmlspecialchars($dissertation->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
+      $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $dissertation->userid . '" target="_blank">' . htmlspecialchars($dissertation->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
+      $rowdata[] = '<a href="mailto:' . $dissertation->email . '" target="_blank">' . htmlspecialchars($dissertation->email, ENT_COMPAT, 'UTF-8') . '</a>';
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $dissertation->dissertation));
+    }
+    else {
+      $rowdata[] = gmdate('d/m/Y H:i', $dissertation->datesubmitted);
+      $rowdata[] = $dissertation->semester;
+      $rowdata[] = htmlspecialchars($dissertation->lastname, ENT_COMPAT, 'UTF-8');
+      $rowdata[] = htmlspecialchars($dissertation->firstname, ENT_COMPAT, 'UTF-8');
+      $rowdata[] = htmlspecialchars($dissertation->email, ENT_COMPAT, 'UTF-8');
+      $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $dissertation->dissertation));
+    }
 
 		$listofemails[]  = htmlspecialchars($dissertation->email, ENT_COMPAT, 'UTF-8');
 
@@ -147,6 +192,11 @@ if (!empty($dissertations)) {
 }
 echo html_writer::table($table);
 
+if ($displayforexcel) {
+  echo $OUTPUT->footer();
+  die();
+}
+
 echo '<br/>Number of Records: ' . $n;
 echo '<br /><br />';
 
@@ -154,6 +204,18 @@ natcasesort($listofemails);
 echo 'e-mails of Above Students...<br />' . implode(', ', array_unique($listofemails)) . '<br /><br />';
 
 echo $OUTPUT->footer();
+
+
+?>
+<script type="text/javascript">
+//<![CDATA[
+M.yui.add_module({"dissertation_semester":{"name":"dissertation_semester","fullpath":"http:\/\/courses.peoples-uni.org\/course\/dissertation_semester.js","requires":["node","event","overlay","io-base","json"]}});
+
+Y.use('dissertation_semester', function(Y) { M.dissertation_semester.init(Y); });
+
+//]]>
+</script>
+<?php
 
 
 function is_peoples_teacher() {
