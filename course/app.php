@@ -731,7 +731,7 @@ if (!empty($application->userid)) {
     echo '<tr><td colspan="2">Student Dissertation Proposals...</td></tr>';
     foreach ($dissertations as $dissertation) {
       echo '<tr>';
-      echo '<td>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted) . '</td>';
+      echo '<td>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted) . '(<a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $dissertation->id . '" target="_blank">' . $dissertation->semester . '</a>)</td>';
       echo '<td><a href="' . $CFG->wwwroot . '/course/dissertations.php#' . $dissertation->id . '" target="_blank">' . str_replace("\r", '', str_replace("\n", '<br />', $dissertation->dissertation)) . '</a></td>';
       echo '</tr>';
     }
