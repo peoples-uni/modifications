@@ -64,7 +64,10 @@ else $displayforexcel = false;
 
 $chosensemester = optional_param('chosensemester', '', PARAM_NOTAGS);
 
-$semesters = $DB->get_records('semesters', NULL, 'id DESC');
+$semesters = $DB->get_records_sql("
+  SELECT DISTINCT d.semester
+  FROM mdl_peoplesdissertation d
+  ORDER BY d.semester DESC");
 foreach ($semesters as $semester) {
 	$listsemester[] = $semester->semester;
 	if (empty($chosensemester)) $chosensemester = $semester->semester;
