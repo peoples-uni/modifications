@@ -58,8 +58,13 @@ elseif ($data = $editform->get_data()) {
   $dissertation->userid  = $userid;
   $dissertation->datesubmitted  = time();
 
-  $semester_current = $DB->get_record('semester_current', array('id' => 1));
-  $dissertation->semester = $semester_current->semester;
+  $semesters = $DB->get_records_sql("
+    SELECT DISTINCT d.semester
+    FROM mdl_peoplesdissertation d
+    ORDER BY d.semester DESC");
+  foreach ($semesters as $semester) {
+    if (empty($dissertation->semester)) $dissertation->semester = $semester->semester;
+  }
 
   $dataitem = $data->dissertation;
   if (empty($dataitem)) $dataitem = '';
