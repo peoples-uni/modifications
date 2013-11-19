@@ -156,12 +156,12 @@ if (!empty($dissertations)) {
       $a .= '  <select class="select dissertationsemestermenu dissertationsemesterinput" id="menudissertationsemester' . $dissertation->id . '" name="dissertationsemester">';
       $year = (int)gmdate('Y');
       $options = array();
-      $options[] = ($year - 1) . 'a';
-      $options[] = ($year - 1) . 'b';
-      $options[] = ($year + 0) . 'a';
-      $options[] = ($year + 0) . 'b';
-      $options[] = ($year + 1) . 'a';
       $options[] = ($year + 1) . 'b';
+      $options[] = ($year + 1) . 'a';
+      $options[] = ($year + 0) . 'b';
+      $options[] = ($year + 0) . 'a';
+      $options[] = ($year - 1) . 'b';
+      $options[] = ($year - 1) . 'a';
       foreach ($options as $option) {
         if ($option === $dissertation->semester) $selected = 'selected="selected"';
         else $selected = '';
