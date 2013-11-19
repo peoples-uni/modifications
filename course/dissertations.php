@@ -14,7 +14,7 @@ $PAGE->set_url('/course/dissertations.php');
 
 if (!empty($_POST['markfilter'])) {
   redirect($CFG->wwwroot . '/course/dissertations.php?'
-    . '&chosensemester=' . urlencode($_POST['chosensemester'])
+    . 'chosensemester=' . urlencode($_POST['chosensemester'])
     . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
     );
 }
