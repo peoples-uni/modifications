@@ -701,7 +701,10 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 These proposals are submitted by the Student by clicking on a link in the Course Application Form (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>).
 There are instructions about what to do there.
 They can also be entered at other times by the Student clicking directly on <a href="http://courses.peoples-uni.org/course/dissertation.php" target="_blank">http://courses.peoples-uni.org/course/dissertation.php</a><br />
-Access to <a href="http://courses.peoples-uni.org/course/dissertations.php" target="_blank">http://courses.peoples-uni.org/course/dissertations.php</a>, which is where Dissertation Proposals are displayed is available to any Tutor, Lurker or Admin.
+Access to <a href="http://courses.peoples-uni.org/course/dissertations.php" target="_blank">http://courses.peoples-uni.org/course/dissertations.php</a>, which is where Dissertation Proposals are displayed is available to any Tutor, Lurker or Admin.<br />
+When the Student submits the dissertation form, the Semester for that entry is set to the most recent dissertation Semester. Any entry in dissertations.php can have its Semester changed by selecting a different Semester for that entry using the drop down beside the displayed Semester.<br />
+There is a filter on dissertations.php for selecting a particular Semester or "All".<br />
+There is a filter "Display for Copying and Pasting to Excel" to suppress extraneous information so that copying will work effectively.
 </li>
 <li>
 "Approve Full Application" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail outlined above under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which requests payment.<br />
