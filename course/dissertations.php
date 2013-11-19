@@ -213,7 +213,7 @@ echo 'e-mails of Above Students...<br />' . implode(', ', array_unique($listofem
 //<![CDATA[
 M.yui.add_module({"dissertation_semester":{"name":"dissertation_semester","fullpath":"http:\/\/courses.peoples-uni.org\/course\/dissertation_semester.js","requires":["node","event","overlay","io-base","json"]}});
 
-Y.use('dissertation_semester', function(Y) { M.dissertation_semester.init(Y); });
+YUI().use('dissertation_semester', function(Y) { M.dissertation_semester.init(Y); });
 
 //]]>
 </script>
