@@ -170,7 +170,7 @@ if (!empty($dissertations)) {
         $a .= '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
       }
       $a .= '  </select>';
-      $a .= '  <input type="submit" class="dissertationsemestermenusubmit" id="dissertationsemestersubmit' . $dissertation->id . '" value="SHOULD NOT SEE THIS" />';
+      $a .= '  <input type="submit" class="dissertationsemestermenusubmit" id="dissertationsemestersubmit' . $dissertation->id . '" value="SHOULD NOT SEE THIS" style="display: none;"/>';
       $a .= '</form>';
       $rowdata[] = $a;
 
