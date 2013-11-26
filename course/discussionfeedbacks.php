@@ -147,7 +147,7 @@ function displayoptions($name, $options, $selectedvalue) {
 
 
 $discussionfeedbacks = $DB->get_records_sql("
-  SELECT DISTINCT d.*, u.lastname, u.firstname, c.fullname, e.semester
+  SELECT DISTINCT d.*, u.lastname, u.firstname, u.email, c.fullname, e.semester
   FROM mdl_discussionfeedback d
   INNER JOIN mdl_user u ON d.userid=u.id
   INNER JOIN mdl_course c ON d.course_id=c.id
@@ -184,6 +184,7 @@ $table->head = array(
   );
 
 $n = 0;
+$listofemails = array();
 foreach ($discussionfeedbacks as $discussionfeedback) {
   $rowdata = array();
 
@@ -206,6 +207,7 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
   }
 
   $table->data[] = $rowdata;
+  $listofemails[] = htmlspecialchars($discussionfeedback->email, ENT_COMPAT, 'UTF-8');
   $n++;
 }
 echo html_writer::table($table);
@@ -219,6 +221,10 @@ echo '<br />Total Entries: ' . $n;
 echo '<br/><br/>';
 echo '<a href="' . $CFG->wwwroot . '/course/discussionfeedback.php" target="_blank">Click Here to add a new Entry</a>';
 echo '<br/><br/>';
+
+echo '<br/>';
+natcasesort($listofemails);
+echo 'e-mails of Students sent feedback...<br />' . implode(', ', array_unique($listofemails)) . '<br /><br />';
 
 echo $OUTPUT->footer();
 

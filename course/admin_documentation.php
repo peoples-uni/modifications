@@ -1300,7 +1300,7 @@ There are 3 criteria (that match the 3 ratings) that must be selected as "Yes", 
 As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria feedback.<br />
 Note: It is possible to re-submit and e-mail again and overwrite the recorded submission.<br />
 <br />
-The data (criteria and free form text) are stored for later analysis and can be accessed from again from posts.php (and are also displayed in the old Discussion Feedback page at <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>).<br />
+The data (criteria and free form text) are stored for later analysis and can be accessed again from posts.php (and are also displayed in the old Discussion Feedback page at <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>   where a list of e-mails of Students sent feedback can also be seen.).<br />
 <br />
 The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a><br />
 Here is an example of an e-mail that is sent out (including wording from settings.php, the criteria feedback, free form text placed after the criteria feedback and the rest of the settings.php text):-
@@ -1431,6 +1431,7 @@ There is a link close to the top of the form to allow resetting the module when/
 </li>
 <li>
 The data (criteria and free form text) are stored for later analysis and displayed in <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>
+<br />A list of e-mails of Students sent feedback can also be seen here.
 </li>
 <li>
 Filters can be used to limit what is displayed on that page.
