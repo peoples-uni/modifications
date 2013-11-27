@@ -78,12 +78,12 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $discussionfeedback->user_id_submitted = $USER->id;
   $discussionfeedback->datesubmitted = time();
 
-//  if ($doinsert) {
-//    $DB->insert_record('discussionfeedback', $discussionfeedback);
-//  }
-//  else {
-//    $DB->update_record('discussionfeedback', $discussionfeedback);
-//  }
+  if ($doinsert) {
+    $DB->insert_record('discussionfeedback', $discussionfeedback);
+  }
+  else {
+    $DB->update_record('discussionfeedback', $discussionfeedback);
+  }
 
   $peoples_discussion_feedback_email = get_config(NULL, 'peoples_discussion_feedback_email');
   $peoples_discussion_feedback_email = str_replace("\r", '', $peoples_discussion_feedback_email);
@@ -481,7 +481,6 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';
-$user->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($user, $supportuser, $subject, $message);
 
   //$user->email = 'applicationresponses@peoples-uni.org';
