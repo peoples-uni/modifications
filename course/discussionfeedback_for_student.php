@@ -94,6 +94,8 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n";
   if (!empty($assessment_text)) $criteria .= "\n" . $assessment_text . "\n";
   $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
+  $senders_name_here = fullname($USER);
+  $peoples_discussion_feedback_email = str_replace('SENDERS_NAME_HERE', $criteria, $peoples_discussion_feedback_email);
 
   $peoples_discussion_feedback_email = strip_tags($peoples_discussion_feedback_email);
 
@@ -461,6 +463,7 @@ function is_peoples_teacher() {
 
 function sendapprovedmail($email, $subject, $message) {
   global $CFG;
+  global $USER;
 
   // Dummy User
   $user = new stdClass();
@@ -473,6 +476,8 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->email = 'education@helpdesk.peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstname = $USER->firstname;
+  $supportuser->lastname  = $USER->lastname;
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';

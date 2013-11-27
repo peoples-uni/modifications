@@ -109,6 +109,8 @@ else { // We already know the module... need Form to to collect criteria for a S
     $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n";
     if (!empty($discussionfeedback->assessment_text)) $criteria .= "\n" . $discussionfeedback->assessment_text . "\n";
     $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
+    $senders_name_here = fullname($USER);
+    $peoples_discussion_feedback_email = str_replace('SENDERS_NAME_HERE', $criteria, $peoples_discussion_feedback_email);
 
     $peoples_discussion_feedback_email = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $peoples_discussion_feedback_email); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                                                                                // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
@@ -135,6 +137,7 @@ echo $OUTPUT->footer();
 
 function sendapprovedmail($email, $subject, $message) {
   global $CFG;
+  global $USER;
 
   // Dummy User
   $user = new stdClass();
@@ -147,6 +150,8 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->email = 'education@helpdesk.peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstname = $USER->firstname;
+  $supportuser->lastname  = $USER->lastname;
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';
