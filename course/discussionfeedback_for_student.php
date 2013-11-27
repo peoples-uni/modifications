@@ -95,7 +95,7 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   if (!empty($assessment_text)) $criteria .= "\n" . $assessment_text . "\n";
   $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
   $senders_name_here = fullname($USER);
-  $peoples_discussion_feedback_email = str_replace('SENDERS_NAME_HERE', $criteria, $peoples_discussion_feedback_email);
+  $peoples_discussion_feedback_email = str_replace('SENDERS_NAME_HERE', $senders_name_here, $peoples_discussion_feedback_email);
 
   $peoples_discussion_feedback_email = strip_tags($peoples_discussion_feedback_email);
 
