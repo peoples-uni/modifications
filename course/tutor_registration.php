@@ -29,11 +29,11 @@ CREATE TABLE mdl_peoples_tutor_registration (
   currentjob text NOT NULL,
   education text NOT NULL,
   reasons text NOT NULL,
-  whatlearn VARCHAR(100) NOT NULL DEFAULT '',
-  whylearn VARCHAR(100) NOT NULL DEFAULT '',
-  whyelearning VARCHAR(100) NOT NULL DEFAULT '',
-  howuselearning VARCHAR(100) NOT NULL DEFAULT '',
-  sponsoringorganisation text NOT NULL DEFAULT '',
+  //whatlearn VARCHAR(100) NOT NULL DEFAULT '',
+  //whylearn VARCHAR(100) NOT NULL DEFAULT '',
+  //whyelearning VARCHAR(100) NOT NULL DEFAULT '',
+  //howuselearning VARCHAR(100) NOT NULL DEFAULT '',
+  //sponsoringorganisation text NOT NULL DEFAULT '',
   datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
   datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
   hidden TINYINT(2) unsigned NOT NULL DEFAULT 0,
@@ -142,6 +142,7 @@ elseif ($data = $editform->get_data()) {
   $dataitem = $data->reasons;
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
+/*
   $dataitem = $data->whatlearn;
   $arraystring = '';
   foreach ($dataitem as $datax) {
@@ -177,6 +178,7 @@ elseif ($data = $editform->get_data()) {
   $dataitem = $data->sponsoringorganisation;
   if (empty($dataitem)) $dataitem = '';
   $application->sponsoringorganisation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+*/
 
   $dataitem = $data->username;
   $dataitem = strip_tags($dataitem);
@@ -204,6 +206,7 @@ elseif ($data = $editform->get_data()) {
   $countryname = get_string_manager()->get_list_of_countries(false);
   $message .= "Country: " . $countryname[$application->country] . "\n\n";
   $message .= "Preferred Username: $application->username\n\n";
+/*
   $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
 
     $whatlearnname['10'] = 'I want to improve my knowledge of public health';
@@ -247,6 +250,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "\n";
 
   $message .= "Sponsoring organisation:\n" . htmlspecialchars_decode($application->sponsoringorganisation, ENT_COMPAT) . "\n\n";
+*/
 
     $employmentname[  ''] = 'Select...';
     $employmentname[ '1'] = 'None';
@@ -277,7 +281,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n\n";
 
     $howfoundpeoplesname[  ''] = 'Select...';
-    $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
+    $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student or tutor';
     $howfoundpeoplesname['20'] = 'Informed by someone else';
     $howfoundpeoplesname['30'] = 'Facebook';
     $howfoundpeoplesname['40'] = 'Internet advertisement';

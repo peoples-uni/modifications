@@ -107,10 +107,11 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $mform->addRule('country', 'Country is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincountry', '&nbsp;', 'Your country of residence. Select from list.<br />');
 
-    $mform->addElement('textarea', 'reasons', 'Reasons for wanting to enrol', 'wrap="HARD" rows="10" cols="100"');
-    $mform->addRule('reasons', 'Reasons for wanting to enrol is required', 'required', null, 'client');
-    $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to enrol in this course in up to 150 words.<br />');
+    $mform->addElement('textarea', 'reasons', 'Reasons for wanting to enrol as tutor', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addRule('reasons', 'Reasons for wanting to enrol as tutor is required', 'required', null, 'client');
+    $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to enrol as a tutor in up to 150 words.<br />');
 
+/*
     $whatlearnname['10'] = 'I want to improve my knowledge of public health';
     $whatlearnname['20'] = 'I want to improve my academic skills (writing structured essays, critically reviewing published literature, referencing etc)';
     $whatlearnname['30'] = 'I want to improve my skills in research';
@@ -148,6 +149,7 @@ This is a requirement to enrol in Peoples-uni courses.</p>
 
     $mform->addElement('textarea', 'sponsoringorganisation', 'Sponsoring organisation', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('static', 'explainsponsoringorganisation', '&nbsp;', 'Indicate any organisation that is sponsoring or supporting your application.<br />');
+*/
 
     $mform->addElement('text', 'username', 'Preferred Username', 'maxlength="100" size="50"');
     $mform->addRule('username', 'Preferred Username is required', 'required', null, 'client');
@@ -202,7 +204,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('header', 'howfounddetails', 'How did you hear about Peoples-uni?');
 
     $howfoundpeoplesname[  ''] = 'Select...';
-    $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
+    $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student or tutor';
     $howfoundpeoplesname['20'] = 'Informed by someone else';
     $howfoundpeoplesname['30'] = 'Facebook';
     $howfoundpeoplesname['40'] = 'Internet advertisement';
