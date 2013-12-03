@@ -197,8 +197,9 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addRule('employment', 'Current Employment is required', 'required', null, 'client');
     $mform->addElement('static', 'explainemployment', '&nbsp;', 'Select the option that best describes your Current Employment.<br />');
 
-    $mform->addElement('textarea', 'currentjob', 'Current Employment Details', 'wrap="HARD" rows="10" cols="100"');
-    $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'You can add any details about your current employment.<br />');
+    $mform->addElement('textarea', 'currentjob', 'Current Employment Details and Affiliations', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addRule('currentjob', 'Current Employment Details and Affiliations is required', 'required', null, 'client');
+    $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'Add details about your current employment and affiliations.<br />');
 
 
     $mform->addElement('header', 'howfounddetails', 'How did you hear about Peoples-uni?');
