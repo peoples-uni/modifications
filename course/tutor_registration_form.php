@@ -83,13 +83,14 @@ This is a requirement to enrol in Peoples-uni courses.</p>
     $mform->addElement('static', 'explainusername', '&nbsp;', 'Please enter your desired Username for logging in to our education site, for example your first name.<br />');
 
     $mform->addElement('textarea', 'reasons', 'Reasons for wanting to volunteer for Peoples-uni', 'wrap="HARD" rows="10" cols="100"');
-    $mform->addRule('reasons', 'Reasons for wanting to volunteer for PU is required', 'required', null, 'client');
+    $mform->addRule('reasons', 'Reasons for wanting to volunteer for Peoples-uni is required', 'required', null, 'client');
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to volunteer as a tutor for Peoples-uni in up to 150 words.<br />');
 
 
     $mform->addElement('header', 'educationdetails', 'Education and Employment details');
 
     $mform->addElement('textarea', 'education', 'Relevant qualifications (academic and professional)', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addRule('education', 'Relevant qualifications (academic and professional) is required', 'required', null, 'client');
     $mform->addElement('static', 'explaineducation', '&nbsp;', 'Add details about any of your Relevant qualifications (academic and professional).<br />
 If you have a degree please indicate name of degree, awarding institution and also the language of instruction.<br />
 If you have a postgraduate qualification, please indicate name of qualification, awarding institution and also the language of instruction.<br />');

@@ -94,10 +94,10 @@ elseif ($data = $editform->get_data()) {
 
   $dataitem = $data->country;
   $dataitem = trim(strip_tags($dataitem));
-  // (Drupal select fields are protected by Drupal Form API)
   $application->country = $dataitem;
 
   $dataitem = $data->reasons;
+  if (empty($dataitem)) $dataitem = '';
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->education;
