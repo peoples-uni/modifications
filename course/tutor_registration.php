@@ -11,29 +11,20 @@ CREATE TABLE mdl_peoples_tutor_registration (
   state BIGINT(10) unsigned NOT NULL,
   userid BIGINT(10) unsigned NOT NULL DEFAULT 0,
   username VARCHAR(100) NOT NULL DEFAULT '',
-  firstname VARCHAR(100) NOT NULL DEFAULT '',
   lastname VARCHAR(100) NOT NULL DEFAULT '',
+  firstname VARCHAR(100) NOT NULL DEFAULT '',
+  gender VARCHAR(6) NOT NULL DEFAULT '',
   email VARCHAR(100) NOT NULL DEFAULT '',
   city VARCHAR(120) NOT NULL DEFAULT '',
   country VARCHAR(2) NOT NULL DEFAULT '',
-  qualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  higherqualification BIGINT(10) unsigned NOT NULL DEFAULT 0,
-  employment BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  reasons text NOT NULL,
+  education text NOT NULL,
+  tutoringexperience text NOT NULL,
+  currentjob text NOT NULL,
+  currentrole text NOT NULL,
+  otherinformation text NOT NULL,
   howfoundpeoples BIGINT(10) unsigned NOT NULL DEFAULT 0,
   howfoundorganisationname TEXT,
-  dobday VARCHAR(2) NOT NULL DEFAULT '',
-  dobmonth VARCHAR(2) NOT NULL DEFAULT '',
-  dobyear VARCHAR(4) NOT NULL DEFAULT '',
-  gender VARCHAR(6) NOT NULL DEFAULT '',
-  applicationaddress text NOT NULL,
-  currentjob text NOT NULL,
-  education text NOT NULL,
-  reasons text NOT NULL,
-  //whatlearn VARCHAR(100) NOT NULL DEFAULT '',
-  //whylearn VARCHAR(100) NOT NULL DEFAULT '',
-  //whyelearning VARCHAR(100) NOT NULL DEFAULT '',
-  //howuselearning VARCHAR(100) NOT NULL DEFAULT '',
-  //sponsoringorganisation text NOT NULL DEFAULT '',
   datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
   datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
   hidden TINYINT(2) unsigned NOT NULL DEFAULT 0,
@@ -60,125 +51,11 @@ elseif ($data = $editform->get_data()) {
 
   $application = new object();
 
-  $application->userid = 0;
+  $application->datesubmitted = time();
 
   $application->state = 0;
 
-  $application->datesubmitted = time();
-
-  // Some of the data cleaning done may be obsolete as the Moodle Form can do it now
-  $dataitem = $data->lastname;
-  $dataitem = trim(strip_tags($dataitem));
-  $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
-  $application->lastname = $dataitem;
-
-  $dataitem = $data->firstname;
-  $dataitem = trim(strip_tags($dataitem));
-  $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
-  $application->firstname = $dataitem;
-
-  $dataitem = $data->email;
-  $dataitem = trim(strip_tags($dataitem));
-  $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
-  $application->email = $dataitem;
-
-  $dataitem = $data->gender;
-  $application->gender = $dataitem;
-
-  $dataitem = $data->dobyear;
-  $application->dobyear = $dataitem;
-
-  $dataitem = $data->dobmonth;
-  $application->dobmonth = $dataitem;
-
-  $dataitem = $data->dobday;
-  $application->dobday = $dataitem;
-
-  $dataitem = $data->applicationaddress;
-  $application->applicationaddress = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
-
-  $dataitem = $data->city;
-  $dataitem = trim(strip_tags($dataitem));
-  $dataitem = mb_substr($dataitem, 0, 120, 'UTF-8');
-  $application->city = $dataitem;
-
-  $dataitem = $data->country;
-  $dataitem = trim(strip_tags($dataitem));
-  // (Drupal select fields are protected by Drupal Form API)
-  $application->country = $dataitem;
-
-  $dataitem = $data->employment;
-  if (empty($dataitem)) $dataitem = '0';
-  $dataitem = strip_tags($dataitem);
-  $application->employment = $dataitem;
-
-  $dataitem = $data->currentjob;
-  if (empty($dataitem)) $dataitem = '';
-  $application->currentjob = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
-
-  $dataitem = $data->qualification;
-  if (empty($dataitem)) $dataitem = '0';
-  $dataitem = strip_tags($dataitem);
-  $application->qualification = $dataitem;
-
-  $dataitem = $data->higherqualification;
-  if (empty($dataitem)) $dataitem = '0';
-  $dataitem = strip_tags($dataitem);
-  $application->higherqualification = $dataitem;
-
-  $dataitem = $data->howfoundpeoples;
-  if (empty($dataitem)) $dataitem = '0';
-  $dataitem = strip_tags($dataitem);
-  $application->howfoundpeoples = $dataitem;
-
-  $dataitem = $data->howfoundorganisationname;
-  if (empty($dataitem)) $dataitem = '';
-  $application->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
-
-  $dataitem = $data->education;
-  if (empty($dataitem)) $dataitem = '';
-  $application->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
-
-  $dataitem = $data->reasons;
-  $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
-
-/*
-  $dataitem = $data->whatlearn;
-  $arraystring = '';
-  foreach ($dataitem as $datax) {
-    $datax = (int)$datax;
-    $arraystring .= $datax . ',';
-  }
-  $application->whatlearn = $arraystring;
-
-  $dataitem = $data->whylearn;
-  $arraystring = '';
-  foreach ($dataitem as $datax) {
-    $datax = (int)$datax;
-    $arraystring .= $datax . ',';
-  }
-  $application->whylearn = $arraystring;
-
-  $dataitem = $data->whyelearning;
-  $arraystring = '';
-  foreach ($dataitem as $datax) {
-    $datax = (int)$datax;
-    $arraystring .= $datax . ',';
-  }
-  $application->whyelearning = $arraystring;
-
-  $dataitem = $data->howuselearning;
-  $arraystring = '';
-  foreach ($dataitem as $datax) {
-    $datax = (int)$datax;
-    $arraystring .= $datax . ',';
-  }
-  $application->howuselearning = $arraystring;
-
-  $dataitem = $data->sponsoringorganisation;
-  if (empty($dataitem)) $dataitem = '';
-  $application->sponsoringorganisation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
-*/
+  $application->userid = 0;
 
   $dataitem = $data->username;
   $dataitem = strip_tags($dataitem);
@@ -191,94 +68,86 @@ elseif ($data = $editform->get_data()) {
   $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
   $application->username = $dataitem;
 
+  // Some of the data cleaning done may be obsolete as the Moodle Form can do it now
+  $dataitem = $data->lastname;
+  $dataitem = trim(strip_tags($dataitem));
+  $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
+  $application->lastname = $dataitem;
+
+  $dataitem = $data->firstname;
+  $dataitem = trim(strip_tags($dataitem));
+  $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
+  $application->firstname = $dataitem;
+
+  $dataitem = $data->gender;
+  $application->gender = $dataitem;
+
+  $dataitem = $data->email;
+  $dataitem = trim(strip_tags($dataitem));
+  $dataitem = mb_substr($dataitem, 0, 100, 'UTF-8');
+  $application->email = $dataitem;
+
+  $dataitem = $data->city;
+  $dataitem = trim(strip_tags($dataitem));
+  $dataitem = mb_substr($dataitem, 0, 120, 'UTF-8');
+  $application->city = $dataitem;
+
+  $dataitem = $data->country;
+  $dataitem = trim(strip_tags($dataitem));
+  // (Drupal select fields are protected by Drupal Form API)
+  $application->country = $dataitem;
+
+  $dataitem = $data->reasons;
+  $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+  $dataitem = $data->education;
+  if (empty($dataitem)) $dataitem = '';
+  $application->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+  $dataitem = $data->tutoringexperience;
+  if (empty($dataitem)) $dataitem = '';
+  $application->tutoringexperience = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+  $dataitem = $data->currentjob;
+  if (empty($dataitem)) $dataitem = '';
+  $application->currentjob = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+  $dataitem = $data->currentrole;
+  if (empty($dataitem)) $dataitem = '';
+  $application->currentrole = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+  $dataitem = $data->otherinformation;
+  if (empty($dataitem)) $dataitem = '';
+  $application->otherinformation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+  $dataitem = $data->howfoundpeoples;
+  if (empty($dataitem)) $dataitem = '0';
+  $dataitem = strip_tags($dataitem);
+  $application->howfoundpeoples = $dataitem;
+
+  $dataitem = $data->howfoundorganisationname;
+  if (empty($dataitem)) $dataitem = '';
+  $application->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
   $DB->insert_record('peoples_tutor_registration', $application);
 
 
   $message  = "Tutor Registration request for...\n\n";
   $message .= "Family Name: $application->lastname\n\n";
   $message .= "First Name: $application->firstname\n\n";
-  $message .= "e-mail: $application->email\n\n";
-  $message .= "Date Submitted: " . gmdate('d/m/Y H:i', $application->datesubmitted) . "\n\n";
-  $message .= "Date of Birth: $application->dobday/$application->dobmonth/$application->dobyear\n\n";
   $message .= "Gender: $application->gender\n\n";
-  $message .= "Application Address:\n" . htmlspecialchars_decode($application->applicationaddress, ENT_COMPAT) . "\n\n";
+  $message .= "e-mail: $application->email\n\n";
   $message .= "City: $application->city\n\n";
   $countryname = get_string_manager()->get_list_of_countries(false);
   $message .= "Country: " . $countryname[$application->country] . "\n\n";
+  $message .= "Date Submitted: " . gmdate('d/m/Y H:i', $application->datesubmitted) . "\n\n";
   $message .= "Preferred Username: $application->username\n\n";
-/*
-  $message .= "Reasons for wanting to enrol:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
-
-    $whatlearnname['10'] = 'I want to improve my knowledge of public health';
-    $whatlearnname['20'] = 'I want to improve my academic skills';
-    $whatlearnname['30'] = 'I want to improve my skills in research';
-    $whatlearnname['40'] = 'I am not sure';
-  $message .= "What do you want to learn:\n";
-  $arrayvalues = explode(',', $application->whatlearn);
-  foreach ($arrayvalues as $v) {
-    if (!empty($v)) $message .= $whatlearnname[$v] . "\n";
-  }
-  $message .= "\n";
-    $whylearnname['10'] = 'I want to apply what I learn to my current/future work';
-    $whylearnname['20'] = 'I want to improve my career opportunities';
-    $whylearnname['30'] = 'I want to get academic credit';
-    $whylearnname['40'] = 'I am not sure';
-  $message .= "Why do you want to learn:\n";
-  $arrayvalues = explode(',', $application->whylearn);
-  foreach ($arrayvalues as $v) {
-    if (!empty($v)) $message .= $whylearnname[$v] . "\n";
-  }
-  $message .= "\n";
-    $whyelearningname['10'] = 'I want to meet and learn with people from other countries';
-    $whyelearningname['20'] = 'I want the opportunity to be flexible about my study time';
-    $whyelearningname['30'] = 'I want a public health training that is affordable';
-    $whyelearningname['40'] = 'I am not sure';
-  $message .= "Reasons you want to do an e-learning course:\n";
-  $arrayvalues = explode(',', $application->whyelearning);
-  foreach ($arrayvalues as $v) {
-    if (!empty($v)) $message .= $whyelearningname[$v] . "\n";
-  }
-  $message .= "\n";
-    $howuselearningname['10'] = 'Share knowledge skills with other colleagues';
-    $howuselearningname['20'] = 'Start a new project';
-    $howuselearningname['30'] = 'I am not sure';
-  $message .= "How will you use your new knowledge and skills to improve population health:\n";
-  $arrayvalues = explode(',', $application->howuselearning);
-  foreach ($arrayvalues as $v) {
-    if (!empty($v)) $message .= $howuselearningname[$v] . "\n";
-  }
-  $message .= "\n";
-
-  $message .= "Sponsoring organisation:\n" . htmlspecialchars_decode($application->sponsoringorganisation, ENT_COMPAT) . "\n\n";
-*/
-
-    $employmentname[  ''] = 'Select...';
-    $employmentname[ '1'] = 'None';
-    $employmentname['10'] = 'Student';
-    $employmentname['20'] = 'Non-health';
-    $employmentname['30'] = 'Clinical (not specifically public health)';
-    $employmentname['40'] = 'Public health';
-    $employmentname['50'] = 'Other health related';
-    $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
-  $message .= "Current Employment: " . $employmentname[$application->employment] . "\n\n";
-    $qualificationname[  ''] = 'Select...';
-    $qualificationname[ '1'] = 'None';
-    $qualificationname['10'] = 'Degree (not health related)';
-    $qualificationname['20'] = 'Health qualification (non-degree)';
-    $qualificationname['30'] = 'Health qualification (degree, but not medical doctor)';
-    $qualificationname['40'] = 'Medical degree';
-  $message .= "Higher Education Qualification: " . $qualificationname[$application->qualification] . "\n\n";
-    $higherqualificationname[  ''] = 'Select...';
-    $higherqualificationname[ '1'] = 'None';
-    $higherqualificationname['10'] = 'Certificate';
-    $higherqualificationname['20'] = 'Diploma';
-    $higherqualificationname['30'] = 'Masters';
-    $higherqualificationname['40'] = 'Ph.D.';
-    $higherqualificationname['50'] = 'Other';
-  $message .= "Postgraduate Qualification: " . $higherqualificationname[$application->higherqualification] . "\n\n";
-
-  $message .= "Current Employment Details:\n" . htmlspecialchars_decode($application->currentjob, ENT_COMPAT) . "\n\n";
-  $message .= "Other relevant qualifications or educational experience:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n\n";
+  $message .= "Reasons for wanting to volunteer for Peoples-uni:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
+  $message .= "Relevant qualifications:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n\n";
+  $message .= "Educational/tutoring experience:\n" . htmlspecialchars_decode($application->tutoringexperience, ENT_COMPAT) . "\n\n";
+  $message .= "Current employer:\n" . htmlspecialchars_decode($application->currentjob, ENT_COMPAT) . "\n\n";
+  $message .= "Current role:\n" . htmlspecialchars_decode($application->currentrole, ENT_COMPAT) . "\n\n";
+  $message .= "Other information:\n" . htmlspecialchars_decode($application->otherinformation, ENT_COMPAT) . "\n\n";
 
     $howfoundpeoplesname[  ''] = 'Select...';
     $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student or tutor';
