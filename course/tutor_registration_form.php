@@ -26,10 +26,10 @@ class tutor_registration_form extends moodleform {
 
     $mform->addElement('static', 'instuctions', '',
 '
-(**)<p>This form is for you to take part in the pre-registration system prior to enrolment in Peoples-uni courses for the first time.<br />
-Once you have sent in this form, and after your application has been approved, you will receive e-mails with the information required to take part in the pre-registration system.<br />
-This is a requirement to enrol in Peoples-uni courses.</p>
-<p>For inquires about volunteering as a tutor please send an email to <a href="mailto:apply@peoples-uni.org?subject=Volunteering query">apply@peoples-uni.org</a>.</p>
+<p>This form is for you to volunteer as a tutor with Peoples-uni.<br />
+Once you have submitted this form, and after your application has been approved, you will receive e-mails with further information.<br /></p>
+<p><strong>Note:</strong> Only use this from if you are new to Peoples-uni and therefore do not have a Moodle account. If you have a courses.peoples-uni.org account, <a href="' . $CFG->wwwroot . '/course/tutor_registration_existing.php">please Click Here to volunteer.</a></p>
+<p>For inquiries about volunteering as a tutor please send an email to <a href="mailto:apply@peoples-uni.org?subject=Volunteering query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
 <p><strong>You should receive an e-mail with a copy of your application soon after you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a>.</strong></p>
 ');
