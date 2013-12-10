@@ -155,8 +155,9 @@ elseif ($data = $editform->get_data()) {
     $howfoundpeoplesname['30'] = 'Facebook';
     $howfoundpeoplesname['40'] = 'Internet advertisement';
     $howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
-    $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+    $howfoundpeoplesname['60'] = 'I used a search engine to look for courses, volunteering opportunities or other';
     $howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
+    $howfoundpeoplesname['80'] = 'Read or heard about from news article, journal or advertisement';
   $message .= "How heard about Peoples-uni: " . $howfoundpeoplesname[$application->howfoundpeoples] . "\n\n";
 
   $message .= "Name of the organisation or person:\n" . htmlspecialchars_decode($application->howfoundorganisationname, ENT_COMPAT) . "\n";

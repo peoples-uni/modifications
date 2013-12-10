@@ -113,8 +113,9 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $howfoundpeoplesname['30'] = 'Facebook';
     $howfoundpeoplesname['40'] = 'Internet advertisement';
     $howfoundpeoplesname['50'] = 'Link from another website or discussion forum';
-    $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
+    $howfoundpeoplesname['60'] = 'I used a search engine to look for courses, volunteering opportunities or other';
     $howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
+    $howfoundpeoplesname['80'] = 'Read or heard about from news article, journal or advertisement';
     $mform->addElement('select', 'howfoundpeoples', 'How did you hear about Peoples-uni?', $howfoundpeoplesname);
     $mform->addRule('howfoundpeoples', 'How did you hear about Peoples-uni is required', 'required', null, 'client');
     $mform->addElement('static', 'explainhowfoundpeoples', '&nbsp;', 'Select the option that best describes how you heard about Peoples-uni.<br />');
