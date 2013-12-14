@@ -13,6 +13,27 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/tutor_registration_existing.php');
 
 
+[[[(**)LOOK AT ACCOUNTS OR SOMETHING AS BETTER EXAMPLE???]]]
+require_login();
+// Might possibly be Guest... Anyway Guest user will not have any enrolment
+if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
+
+$userid = $USER->id;
+if (empty($userid)) {echo '<h1>$userid empty(), should not happen!</h1>'; die();}
+
+$userrecord = $DB->get_record('user', array('id' => $userid));
+if (empty($userrecord)) {
+  echo '<h1>User does not exist!</h1>';
+  die();
+}
+
+$fullname = fullname($userrecord);
+if (empty($fullname) || trim($fullname) == 'Guest User') {
+  $SESSION->wantsurl = "$CFG->wwwroot/course/tutor_registration_existing.php";
+  notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+}
+
+
 $editform = new tutor_registration_existing_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url('http://peoples-uni.org'));
@@ -25,9 +46,9 @@ elseif ($data = $editform->get_data()) {
 
   $application->state = 0;
 
-  $application->userid = $USER->id;(**)
+  $application->userid = $USER->id;
 
-  $application->username = '';
+  $application->username = '';$userrecord(**)
   $application->lastname = '';
   $application->firstname = '';
   $application->gender = '';
