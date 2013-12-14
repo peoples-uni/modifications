@@ -22,9 +22,9 @@ class tutor_registration_existing_form extends moodleform {
 
     $mform->addElement('static', 'instuctions', '',
 '
-<p>This form is for you to volunteer for Peoples-uni.<br />
-Once you have submitted this form, and after your application has been approved, you will receive e-mails with further information.<br /></p>
-<p>For inquiries about volunteering please send an email to <a href="mailto:apply@peoples-uni.org?subject=Volunteering query">apply@peoples-uni.org</a>.</p>
+<p>This form is for you to volunteer for Peoples-uni.<br /></p>
+<p>Many thanks for offering to volunteer for Peoples-uni. This form is to help us with record keeping. Once you have submitted this form and we have read it, you will receive e-mails with further information.<br /></p>
+<p>For inquiries about volunteering please send an email to <a href="mailto:contact@peoples-uni.org?subject=Volunteering query">contact@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
 <p><strong>You should receive an e-mail with a copy of your application soon after you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a>.</strong></p>
 ');
