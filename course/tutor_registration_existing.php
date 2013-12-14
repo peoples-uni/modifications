@@ -13,9 +13,9 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/tutor_registration_existing.php');
 
 
-[[[(**)LOOK AT ACCOUNTS OR SOMETHING AS BETTER EXAMPLE???]]]
 require_login();
-// Might possibly be Guest... Anyway Guest user will not have any enrolment
+// (Might possibly be Guest)
+
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $userid = $USER->id;
@@ -48,13 +48,23 @@ elseif ($data = $editform->get_data()) {
 
   $application->userid = $USER->id;
 
-  $application->username = '';$userrecord(**)
-  $application->lastname = '';
-  $application->firstname = '';
+  $application->username = $userrecord->username;
+  $application->lastname = $userrecord->lastname;
+  $application->firstname = $userrecord->firstname;
+
   $application->gender = '';
-  $application->email = '';
-  $application->city = '';
-  $application->country = '';
+  $prof = $DB->get_record('user_info_field', array('shortname' => 'gender'));
+  if (!empty($prof->id)) $genderid = $prof->id;
+  if ($genderid) {
+    $data = $DB->get_record('user_info_data', array('userid' => $application->userid, 'fieldid' => $genderid));
+    if (!empty($data->data)) {
+      $application->gender = $data->data;
+    }
+  }
+
+  $application->email = $userrecord->email;
+  $application->city = $userrecord->city;
+  $application->country = $userrecord->country;
 
   $dataitem = $data->reasons;
   if (empty($dataitem)) $dataitem = '';
@@ -93,15 +103,15 @@ elseif ($data = $editform->get_data()) {
 
 
   $message  = "Tutor Registration request (existing account) for...\n\n";
-  $message .= "Family Name: $application->lastname\n\n";(**)
-  $message .= "First Name: $application->firstname\n\n";(**)
-  $message .= "Gender: $application->gender\n\n";(**)
-  $message .= "e-mail: $application->email\n\n";(**)
-  $message .= "City: $application->city\n\n";(**)
-  $countryname = get_string_manager()->get_list_of_countries(false);(**)
-  $message .= "Country: " . $countryname[$application->country] . "\n\n";(**)
+  $message .= "Family Name: $application->lastname\n\n";
+  $message .= "First Name: $application->firstname\n\n";
+  $message .= "Gender: $application->gender\n\n";
+  $message .= "e-mail: $application->email\n\n";
+  $message .= "City: $application->city\n\n";
+  $countryname = get_string_manager()->get_list_of_countries(false);
+  $message .= "Country: " . $countryname[$application->country] . "\n\n";
   $message .= "Date Submitted: " . gmdate('d/m/Y H:i', $application->datesubmitted) . "\n\n";
-  $message .= "Preferred Username: $application->username\n\n";(**)
+  $message .= "Username: $application->username\n\n";
   $message .= "Reasons for wanting to volunteer for Peoples-uni:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
   $message .= "Relevant qualifications:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n\n";
   $message .= "Educational/tutoring experience:\n" . htmlspecialchars_decode($application->tutoringexperience, ENT_COMPAT) . "\n\n";
