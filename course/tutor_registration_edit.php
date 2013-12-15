@@ -37,7 +37,7 @@ if ($editform->is_cancelled()) {
 }
 elseif ($data = $editform->get_data()) {
 
-  $application = new object();
+  $application = new object();(**) set id!
 
   $dataitem = $data->reasons;
   if (empty($dataitem)) $dataitem = '';
@@ -72,7 +72,7 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = '';
   $application->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-  $DB->insert_record('peoples_tutor_registration', $application);(**)update
+  $DB->update_record('peoples_tutor_registration', $application);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success.php'));(**)
 }
