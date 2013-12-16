@@ -74,7 +74,7 @@ elseif ($data = $editform->get_data()) {
 
   $DB->update_record('peoples_tutor_registration', $application);
 
-  redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success.php'));(**)
+  redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success(**).php'));
 }
 
 
