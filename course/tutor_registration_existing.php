@@ -33,6 +33,13 @@ if (empty($fullname) || trim($fullname) == 'Guest User') {
   notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
 }
 
+$application = $DB->get_record('peoples_tutor_registration', array('userid' => $userid));
+if (!empty($application)) {
+  echo '<h1>You have already volunteered, no need to fill in form again!<br />
+  For inquiries about volunteering please send an email to <a href="mailto:contact@peoples-uni.org?subject=Volunteering query">contact@peoples-uni.org</a></h1>';
+  die();
+}
+
 
 $editform = new tutor_registration_existing_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
