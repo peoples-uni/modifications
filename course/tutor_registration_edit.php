@@ -21,58 +21,53 @@ require_login();
 require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
 
 
-$userid = optional_param('id', 0, PARAM_INT);
-if (empty($userid)) {echo '<h1>$userid empty(), should not happen!</h1>'; die();}
-
-$userrecord = $DB->get_record('user', array('id' => $userid));(**)verify is a tutor??? YES CHECK THER IS A RECORD... OR NO???
-if (empty($userrecord)) {
-  echo '<h1>User does not exist!</h1>';
-  die();
-}
+$id = optional_param('id', 0, PARAM_INT);
+if (empty($id)) {echo '<h1>id not passed, should not happen!</h1>'; die();}
 
 
-$editform = new tutor_registration_edit_form(NULL, array('customdata' => array('userid' => $userid)));
+$editform = new tutor_registration_edit_form(NULL, array('customdata' => array('id' => $id)));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url('http://peoples-uni.org'));
 }
 elseif ($data = $editform->get_data()) {
 
-  $application = new object();(**) set id!
+  $peoples_tutor_registration = new object();
+  $peoples_tutor_registration->id = $id
 
   $dataitem = $data->reasons;
   if (empty($dataitem)) $dataitem = '';
-  $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->education;
   if (empty($dataitem)) $dataitem = '';
-  $application->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->tutoringexperience;
   if (empty($dataitem)) $dataitem = '';
-  $application->tutoringexperience = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->tutoringexperience = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->currentjob;
   if (empty($dataitem)) $dataitem = '';
-  $application->currentjob = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->currentjob = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->currentrole;
   if (empty($dataitem)) $dataitem = '';
-  $application->currentrole = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->currentrole = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->otherinformation;
   if (empty($dataitem)) $dataitem = '';
-  $application->otherinformation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->otherinformation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->howfoundpeoples;
   if (empty($dataitem)) $dataitem = '0';
   $dataitem = strip_tags($dataitem);
-  $application->howfoundpeoples = $dataitem;
+  $peoples_tutor_registration->howfoundpeoples = $dataitem;
 
   $dataitem = $data->howfoundorganisationname;
   if (empty($dataitem)) $dataitem = '';
-  $application->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-  $DB->update_record('peoples_tutor_registration', $application);
+  $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success(**).php'));
 }
