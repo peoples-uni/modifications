@@ -432,6 +432,7 @@ $table->head = array(
   'Share knowledge skills with other colleagues',
   'Start a new project',
   'I am not sure(How will you use your new knowledge and skills to improve population health?)',
+  'ID',
   );
 
 $n = 0;
@@ -594,6 +595,7 @@ if (!empty($enrols)) {
     if (in_array('30', $arrayvalues)) $z = 1;
     $rowdata[] = $z;
 
+    $rowdata[] = $enrol->userid;
 
 		if ($enrol->username !== $lastname) {
 
