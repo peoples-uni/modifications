@@ -137,7 +137,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
       $mform->addElement('hidden', 'returnurl', $data->returnurl);
       $mform->setType('returnurl', PARAM_LOCALURL);
 
-      $mform->addElement('checkbox', 'Register_in_moodle', 'Check to register volunteer in Moodle');
+      $mform->addElement('checkbox', 'register_in_moodle', 'Check to register volunteer in Moodle');
     }
 
 

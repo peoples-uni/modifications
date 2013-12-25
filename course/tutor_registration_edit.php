@@ -67,6 +67,24 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = '';
   $peoples_tutor_registration->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
+  $dataitem = $data->volunteertype;
+  $arraystring = '';
+  foreach ($dataitem as $datax) {
+    $datax = (int)$datax;
+    $arraystring .= $datax . ',';
+  }
+  if (!empty($arraystring)) $arraystring = substr($arraystring, 0, strlen($arraystring) - 1);
+  $peoples_tutor_registration->volunteertype = $arraystring;
+
+  $dataitem = $data->modulesofinterest;
+  if (empty($dataitem)) $dataitem = '';
+  $peoples_tutor_registration->modulesofinterest = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+  $dataitem = $data->notes;
+  if (empty($dataitem)) $dataitem = '';
+  $peoples_tutor_registration->notes = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+
   $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success(**).php'));
