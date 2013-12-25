@@ -27,10 +27,21 @@ CREATE TABLE mdl_peoples_tutor_registration (
   howfoundorganisationname TEXT,
   datefirstapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
   datelastapproved BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  volunteertype VARCHAR(100) NOT NULL DEFAULT '',
+  modulesofinterest TEXT NOT NULL DEFAULT '',
+  notes TEXT NOT NULL DEFAULT '',
   hidden TINYINT(2) unsigned NOT NULL DEFAULT 0,
 CONSTRAINT  PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoples_tutor_registration_uid_ix ON mdl_peoples_tutor_registration (userid);
+
+ALTER TABLE mdl_peoples_tutor_registration ADD volunteertype VARCHAR(100) NOT NULL DEFAULT '' AFTER datelastapproved;
+ALTER TABLE mdl_peoples_tutor_registration ADD modulesofinterest TEXT NOT NULL DEFAULT '' AFTER volunteertype;
+ALTER TABLE mdl_peoples_tutor_registration ADD notes TEXT NOT NULL DEFAULT '' AFTER modulesofinterest;
+
+UPDATE mdl_peoples_tutor_registration SET volunteertype='';
+UPDATE mdl_peoples_tutor_registration SET modulesofinterest='';
+UPDATE mdl_peoples_tutor_registration SET notes='';
 */
 
 
