@@ -49,14 +49,14 @@ if (empty($tutorswithoutrole)) {
 else {
   foreach ($tutorswithoutrole as $missing) {
 
-    role_assign(41, $missing->userid, 1);
+    //(**)role_assign(41, $missing->userid, 1);
 
     $userrecord = $DB->get_record('user', array('id' => $missing->userid));
     if (!empty($userrecord)) {
-      echo "Adding to \"View Full User Profiles Role\": $userrecord->lastname, $userrecord->firstname<br />";
+      echo "Adding to \"View Full User Profiles\" Role: $userrecord->lastname, $userrecord->firstname<br />";
     }
   }
-  add_to_log(1, 'role', 'assign', 'admin/roles/assign.php?contextid=1&roleid=41', 'View Full User Profiles Sitewide', '', $USER->id);
+  add_to_log(1, 'role', 'assign', 'admin/roles/assign.php?contextid=1&roleid=41', 'View Full User Profiles', '', $USER->id);
 }
 
 echo $OUTPUT->footer();
