@@ -56,7 +56,7 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Making a Donation</a><br />
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</a><br />
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a><br />
@@ -559,7 +559,10 @@ The Course Total calculation (calculator icon on course total line of Categories
 Note: Course Total used have to be entered manually because of a custom patch to Moodle, but this will now be removed so an automatic calculation is required.
 </li>
 <li>
-Each course module needs to have the Block "Track Marking" added (on the bottom right hand side). This will allow Tutors to access the Marking Spreadsheet see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.
+Note: At a later stage (when students have been enrolled in their courses and any new tutors assigned), <a href="http://courses.peoples-uni.org/course/give_tutors_viewprofiles.php" target="_blank">http://courses.peoples-uni.org/course/give_tutors_viewprofiles.php</a> should be visited to give all Module Leader/Tutors/Student coordinator the sitewide Moodle Role "View Full User Profiles". See <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</a>.
+</li>
+<li>
+Obsolete: Each course module needs to have the Block "Track Marking" added (on the bottom right hand side). This will allow Tutors to access the Marking Spreadsheet see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.
 </li>
 <li>
 Note: At a later stage (when assignments are setup), all the assignments should be configured as the multiple file upload type "Advanced uploading of files". This is so students can have feedback on their submissions uploaded by the Tutor as an annotated copy of the student's submitted file using "track changes". Also students will be able to resubmit assignments.
@@ -819,11 +822,15 @@ This should be done some time before assignment submission and grading starts.
 
 
 <a name="misc"></a>
-<h2>Misc: Enrolling Tutors in Tutors Corner, Making a Donation</h2>
+<h2>Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</h2>
 <ol>
 <li>
 <a href="http://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">http://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Module Leader", "Tutors" or "Student coordinator" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
 The names or contextid of these two modules should not be changed.
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/give_tutors_viewprofiles.php" target="_blank">http://courses.peoples-uni.org/course/give_tutors_viewprofiles.php</a> can be run at any time to give all Module Leader/Tutors/Student coordinator the sitewide Moodle Role "View Full User Profiles". The script should normally be run every semester after students have been enrolled as it picks up all tutors (etc.) for those courses which have enrolled students (enrolled by our enrolment system for current or previous semesters). It does not apply to tutors in other courses e.g. techie check or test/demo/introductory/student support courses.<br />
+This sitewide role "View Full User Profiles" allows users to see the full profiles of other users. When a user is given this role they will be able to see all profiles (not just those for students in their own course) and will even be able to see profiles of other tutors (but we do not use the custom profile fields for tutors, so there is little to see except city/country).
 </li>
 <li>
 The following page was linked from the Drupal menus to allow donations: <a href="http://courses.peoples-uni.org/course/donate.php?code=28595" target="_blank">http://courses.peoples-uni.org/course/donate.php?code=28595</a> but now it is not linked (because of usage for fraudulently testing stolen credit cards) but can be given out on request.
