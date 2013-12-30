@@ -49,7 +49,7 @@ if (empty($tutorswithoutrole)) {
 else {
   foreach ($tutorswithoutrole as $missing) {
 
-    //(**)role_assign(41, $missing->userid, 1);
+    role_assign(41, $missing->userid, 1);
 
     $userrecord = $DB->get_record('user', array('id' => $missing->userid));
     if (!empty($userrecord)) {
