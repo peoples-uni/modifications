@@ -165,10 +165,11 @@ elseif ($data = $editform->get_data()) {
   $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
 
 
-(**)???Does it have to be registered first ((at same time??))
-Do...
-C:\gitpeoples\moodle2\course\peoples_files.php
-//function file_prepare_standard_filemanager($data, $field[in form], array $options, $context=null, $component=null, $filearea=null, $itemid=null) {...}
+  if (!empty($data->files_filemanager)) {
+
+    (**)Do... C:\gitpeoples\moodle2\course\peoples_files.php
+              //function file_prepare_standard_filemanager($data, $field[in form], array $options, $context=null, $component=null, $filearea=null, $itemid=null) {...}
+  }
 
 
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success(**).php'));
