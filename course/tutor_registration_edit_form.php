@@ -25,13 +25,15 @@ class tutor_registration_edit_form extends moodleform {
       die();
     }
 
-    $userrecord = $DB->get_record('user', array('id' => $peoples_tutor_registration->userid));
-    if (!empty($userrecord)) {
-      $peoples_tutor_registration->lastname = $userrecord->lastname;
-      $peoples_tutor_registration->firstname = $userrecord->firstname;
-      $registered = 'Registered in Moodle';
+    if (!empty($peoples_tutor_registration->userid)) {
+      $userrecord = $DB->get_record('user', array('id' => $peoples_tutor_registration->userid));
+      if (!empty($userrecord)) {
+        $peoples_tutor_registration->lastname = $userrecord->lastname;
+        $peoples_tutor_registration->firstname = $userrecord->firstname;
+        $registered = 'Registered in Moodle';
+      }
     }
-    else {
+    if (empty($userrecord)) {
       $registered = 'Not yet registered in Moodle';
     }
 
@@ -136,7 +138,9 @@ If you have a postgraduate qualification, please indicate name of qualification,
       $mform->addElement('filemanager', 'files_filemanager', get_string('files'), NULL, $options);
       $mform->addElement('hidden', 'returnurl', $data->returnurl);
       $mform->setType('returnurl', PARAM_LOCALURL);
+    }
 
+    if (empty($userrecord)) {
       $mform->addElement('checkbox', 'register_in_moodle', 'Check to register volunteer in Moodle');
     }
 
