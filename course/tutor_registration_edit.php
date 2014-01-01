@@ -172,7 +172,7 @@ elseif ($data = $editform->get_data()) {
   }
 
 
-  redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success(**).php'));
+  redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
 }
 
 
@@ -204,7 +204,7 @@ function sendunpw($user, $passwordforemail) {
   global $DB;
   global $CFG;
 
-  $message = "Hi FULL_NAME_HERE,(**)
+  $message = "Hi FULL_NAME_HERE,
 
 A new account has been created at 'SITE_NAME_HERE'.
 
@@ -224,14 +224,8 @@ Be aware that you should use this link to login and
 NOT the main Peoples-uni site (which has a completely
 different login): http://peoples-uni.org
 
-You should also read the student handbook at:
-
-http://peoples-uni.org/content/student-handbook
-
 Your profile is at:
 http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
-
-Note that the private information in this is not visible to other students.
 
 If you need help, please contact the site administrator,
 TECHSUPPORT_EMAIL_HERE";
@@ -245,8 +239,9 @@ TECHSUPPORT_EMAIL_HERE";
   $message = str_replace('USERNAME_HERE',           $user->username, $message);
   $message = str_replace('PASSWORD_HERE',           $passwordforemail, $message);
   $message = str_replace('LOGIN_LINK_HERE',         $CFG->wwwroot . '/login/index.php', $message);
-  $message = str_replace('STUDENTS_CORNER_ID_HERE', $studentscorner->id, $message);
+  //$message = str_replace('STUDENTS_CORNER_ID_HERE', $studentscorner->id, $message);
   $message = str_replace('USER_ID_HERE',            $user->id, $message);
+  //$message = str_replace('TECHSUPPORT_EMAIL_HERE',  "\nPeoples-uni Support\ntechsupport@helpdesk.peoples-uni.org\n", $message);
   $message = str_replace('TECHSUPPORT_EMAIL_HERE',  "\nPeoples-uni Support\napply@peoples-uni.org\n", $message);
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
@@ -254,6 +249,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();
+  //$supportuser->email = 'techsupport@helpdesk.peoples-uni.org';
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
