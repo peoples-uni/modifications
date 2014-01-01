@@ -24,10 +24,28 @@ require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_
 $id = optional_param('id', 0, PARAM_INT);
 if (empty($id)) {echo '<h1>id not passed, should not happen!</h1>'; die();}
 
+$peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
+if (empty($peoples_tutor_registration)) {
+  echo '<h1>peoples_tutor_registration matching id does not exist!</h1>';
+  die();
+}
 
-$editform = new tutor_registration_edit_form(NULL, array('customdata' => array('id' => $id)));
+
+$data = new stdClass();
+
+$options = array('subdirs' => 1, 'maxbytes' => 0, 'maxfiles' => -1, 'accepted_types' => '*', 'areamaxbytes' => -1);
+
+if (!empty($peoples_tutor_registration->userid)) {
+  $context = context_user::instance($peoples_tutor_registration->userid);
+
+  //function file_prepare_standard_filemanager($data, $field[in form will expect "{$field}_filemanager"], array $options, $context=null, $component=null, $filearea=null, $itemid=null) {...}
+  file_prepare_standard_filemanager($data, 'files', $options, $context, 'peoples_record_tutor', 'tutor', 0);(**)parms incl $data?? CHECK MOODLE CODE USES FFOM THIS
+}
+
+
+$editform = new tutor_registration_edit_form(NULL, array('customdata' => array('id' => $id), 'options' => $options));
 if ($editform->is_cancelled()) {
-  redirect(new moodle_url('http://peoples-uni.org'));
+  redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
 }
 elseif ($data = $editform->get_data()) {
 
@@ -165,10 +183,8 @@ elseif ($data = $editform->get_data()) {
   $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
 
 
-  if (!empty($data->files_filemanager)) {
-
-    (**)Do... C:\gitpeoples\moodle2\course\peoples_files.php
-              //function file_prepare_standard_filemanager($data, $field[in form], array $options, $context=null, $component=null, $filearea=null, $itemid=null) {...}
+  if (!empty($data->files_filemanager) && !empty($context)) {
+    $data = file_postupdate_standard_filemanager($data, 'files', $options, $context, 'peoples_record_tutor', 'tutor', 0);(**)FIELDS?
   }
 
 
@@ -186,6 +202,7 @@ echo $OUTPUT->header();
 if ($failure) {
   echo '<h1>Requested username could not be used or simply modified, so no Moodle account was created!</h1>';
 }
+
 
 $editform->display();
 
@@ -232,7 +249,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $site = get_site();
 
-  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
+  //$studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
 
   $message = str_replace('FULL_NAME_HERE',          fullname($user), $message);
   $message = str_replace('SITE_NAME_HERE',          format_string($site->fullname), $message);

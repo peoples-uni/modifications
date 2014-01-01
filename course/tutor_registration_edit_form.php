@@ -136,8 +136,6 @@ If you have a postgraduate qualification, please indicate name of qualification,
       $options = $this->_customdata['options'];
 
       $mform->addElement('filemanager', 'files_filemanager', get_string('files'), NULL, $options);
-      $mform->addElement('hidden', 'returnurl', $data->returnurl);
-      $mform->setType('returnurl', PARAM_LOCALURL);
     }
 
     if (empty($userrecord)) {
@@ -145,7 +143,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
     }
 
 
-    $this->add_action_buttons(false, 'Submit Form');
+    $this->add_action_buttons(TRUE, get_string('savechanges'));
 
     //$this->set_data($data);
   }
