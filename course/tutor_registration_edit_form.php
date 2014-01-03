@@ -16,6 +16,7 @@ class tutor_registration_edit_form extends moodleform {
     global $DB, $CFG;
 
     $mform = $this->_form;
+    $data = $this->_customdata['data'];
     $customdata = $this->_customdata['customdata'];
     $id = $customdata['id'];
 
@@ -132,7 +133,6 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('static', 'explainnotes', '&nbsp;', 'Please add/update any notes you wish to make here.<br />');
 
     if (!empty($userrecord)) {
-      $data    = $this->_customdata['data'];
       $options = $this->_customdata['options'];
 
       $mform->addElement('filemanager', 'files_filemanager', get_string('files'), NULL, $options);
@@ -145,7 +145,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
 
     $this->add_action_buttons(TRUE, get_string('savechanges'));
 
-    //$this->set_data($data);
+    $this->set_data($data);
   }
 
 

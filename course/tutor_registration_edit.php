@@ -39,11 +39,11 @@ if (!empty($peoples_tutor_registration->userid)) {
   $context = context_user::instance($peoples_tutor_registration->userid);
 
   //function file_prepare_standard_filemanager($data, $field[in form will expect "{$field}_filemanager"], array $options, $context=null, $component=null, $filearea=null, $itemid=null) {...}
-  file_prepare_standard_filemanager($data, 'files', $options, $context, 'peoples_record_tutor', 'tutor', 0);(**)parms incl $data?? CHECK MOODLE CODE USES FFOM THIS
+  file_prepare_standard_filemanager($data, 'files', $options, $context, 'peoples_record_tutor', 'tutor', 0);
 }
 
 
-$editform = new tutor_registration_edit_form(NULL, array('customdata' => array('id' => $id), 'options' => $options));
+$editform = new tutor_registration_edit_form(NULL, array('data' => $data, 'customdata' => array('id' => $id), 'options' => $options));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
 }
@@ -184,7 +184,7 @@ elseif ($data = $editform->get_data()) {
 
 
   if (!empty($data->files_filemanager) && !empty($context)) {
-    $data = file_postupdate_standard_filemanager($data, 'files', $options, $context, 'peoples_record_tutor', 'tutor', 0);(**)FIELDS?
+    $data = file_postupdate_standard_filemanager($data, 'files', $options, $context, 'peoples_record_tutor', 'tutor', 0);
   }
 
 
