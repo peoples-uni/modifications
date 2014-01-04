@@ -14,20 +14,34 @@ $PAGE->set_url('/course/tutor_registration_edit.php');
 
 
 require_login();
-
-// Access is given by the "Manager" role which has moodle/site:viewparticipants
-// (administrator also has moodle/site:viewparticipants)
-//require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
-require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
-
+if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $id = optional_param('id', 0, PARAM_INT);
-if (empty($id)) {echo '<h1>id not passed, should not happen!</h1>'; die();}
+if ($id) {
+  $passed_id = TRUE;
+}
+else {
+  $passed_id = FALSE;
+  $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('userid' => $USER->id));
+  if (!empty($peoples_tutor_registration)) $id = $peoples_tutor_registration->id;
+}
 
 $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
 if (empty($peoples_tutor_registration)) {
-  echo '<h1>peoples_tutor_registration matching id does not exist!</h1>';
+  if ($passed_id) {
+    echo '<h1>peoples_tutor_registration matching id does not exist!</h1>';
+  }
+  else {
+    echo "<h1>You do not have an entry in the 'peoples_tutor_registration' table!</h1>";
+  }
   die();
+}
+
+if (has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM))) {
+  $is_admin = TRUE;
+}
+else {
+  $is_admin = FALSE;
 }
 
 
