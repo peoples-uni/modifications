@@ -19,6 +19,7 @@ class tutor_registration_edit_form extends moodleform {
     $data = $this->_customdata['data'];
     $customdata = $this->_customdata['customdata'];
     $id = $customdata['id'];
+    $is_admin = $customdata['is_admin'];
 
     $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
     if (empty($peoples_tutor_registration)) {
@@ -107,30 +108,32 @@ If you have a postgraduate qualification, please indicate name of qualification,
 
     $mform->addElement('header', 'databypeoplesuni', 'Data entered by Peoples-uni');
 
-    $volunteertypename['10'] = 'Tutor';
-    $volunteertypename['20'] = 'Local supervisor';
-    $volunteertypename['30'] = 'Academic supervisor';
-    $volunteertypename['40'] = 'Marker';
-    $volunteertypename['50'] = 'SSO';
-    $volunteertypename['60'] = 'IT';
-    $volunteertypename['70'] = 'Admin';
-    $select = $mform->addElement('select', 'volunteertype', 'Type of Volunteer', $volunteertypename);
-    $select->setMultiple(true);
-    if (!empty($peoples_tutor_registration->volunteertype)) {
-      $arrayvalues = explode(',', $peoples_tutor_registration->volunteertype);
-      $mform->setDefault('volunteertype', $arrayvalues);
+    if ($is_admin) {
+      $volunteertypename['10'] = 'Tutor';
+      $volunteertypename['20'] = 'Local supervisor';
+      $volunteertypename['30'] = 'Academic supervisor';
+      $volunteertypename['40'] = 'Marker';
+      $volunteertypename['50'] = 'SSO';
+      $volunteertypename['60'] = 'IT';
+      $volunteertypename['70'] = 'Admin';
+      $select = $mform->addElement('select', 'volunteertype', 'Type of Volunteer', $volunteertypename);
+      $select->setMultiple(true);
+      if (!empty($peoples_tutor_registration->volunteertype)) {
+        $arrayvalues = explode(',', $peoples_tutor_registration->volunteertype);
+        $mform->setDefault('volunteertype', $arrayvalues);
+      }
+      $mform->addElement('static', 'volunteertype', '&nbsp;', 'Select possible types of volunteer <b>(Ctrl Click for multiple options)</b>.<br />');
+
+      $mform->addElement('text', 'modulesofinterest', 'Modules of interest', 'maxlength="100" size="50"');
+      $mform->setType('modulesofinterest', PARAM_MULTILANG);
+      $mform->setDefault('modulesofinterest', $peoples_tutor_registration->modulesofinterest);
+      $mform->addElement('static', 'explainmodulesofinterest', '&nbsp;', 'Please enter the names of modules that are of interest to this volunteer.<br />');
+
+      $mform->addElement('text', 'notes', 'Notes about volunteer', 'maxlength="100" size="50"');
+      $mform->setType('notes', PARAM_MULTILANG);
+      $mform->setDefault('notes', $peoples_tutor_registration->notes);
+      $mform->addElement('static', 'explainnotes', '&nbsp;', 'Please add/update any notes you wish to make here.<br />');
     }
-    $mform->addElement('static', 'volunteertype', '&nbsp;', 'Select possible types of volunteer <b>(Ctrl Click for multiple options)</b>.<br />');
-
-    $mform->addElement('text', 'modulesofinterest', 'Modules of interest', 'maxlength="100" size="50"');
-    $mform->setType('modulesofinterest', PARAM_MULTILANG);
-    $mform->setDefault('modulesofinterest', $peoples_tutor_registration->modulesofinterest);
-    $mform->addElement('static', 'explainmodulesofinterest', '&nbsp;', 'Please enter the names of modules that are of interest to this volunteer.<br />');
-
-    $mform->addElement('text', 'notes', 'Notes about volunteer', 'maxlength="100" size="50"');
-    $mform->setType('notes', PARAM_MULTILANG);
-    $mform->setDefault('notes', $peoples_tutor_registration->notes);
-    $mform->addElement('static', 'explainnotes', '&nbsp;', 'Please add/update any notes you wish to make here.<br />');
 
     if (!empty($userrecord)) {
       $options = $this->_customdata['options'];
@@ -138,7 +141,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
       $mform->addElement('filemanager', 'files_filemanager', get_string('files'), NULL, $options);
     }
 
-    if (empty($userrecord)) {
+    if ($is_admin && empty($userrecord)) {
       $mform->addElement('checkbox', 'register_in_moodle', 'Check to register volunteer in Moodle');
     }
 

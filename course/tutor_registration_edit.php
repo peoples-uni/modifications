@@ -57,7 +57,7 @@ if (!empty($peoples_tutor_registration->userid)) {
 }
 
 
-$editform = new tutor_registration_edit_form(NULL, array('data' => $data, 'customdata' => array('id' => $id), 'options' => $options));
+$editform = new tutor_registration_edit_form(NULL, array('data' => $data, 'customdata' => array('id' => $id, 'is_admin' => $is_admin), 'options' => $options));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
 }
@@ -102,22 +102,24 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = '';
   $peoples_tutor_registration->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-  $dataitem = $data->volunteertype;
-  $arraystring = '';
-  foreach ($dataitem as $datax) {
-    $datax = (int)$datax;
-    $arraystring .= $datax . ',';
+  if ($is_admin) {
+    $dataitem = $data->volunteertype;
+    $arraystring = '';
+    foreach ($dataitem as $datax) {
+      $datax = (int)$datax;
+      $arraystring .= $datax . ',';
+    }
+    if (!empty($arraystring)) $arraystring = substr($arraystring, 0, strlen($arraystring) - 1);
+    $peoples_tutor_registration->volunteertype = $arraystring;
+
+    $dataitem = $data->modulesofinterest;
+    if (empty($dataitem)) $dataitem = '';
+    $peoples_tutor_registration->modulesofinterest = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+
+    $dataitem = $data->notes;
+    if (empty($dataitem)) $dataitem = '';
+    $peoples_tutor_registration->notes = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
   }
-  if (!empty($arraystring)) $arraystring = substr($arraystring, 0, strlen($arraystring) - 1);
-  $peoples_tutor_registration->volunteertype = $arraystring;
-
-  $dataitem = $data->modulesofinterest;
-  if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->modulesofinterest = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
-
-  $dataitem = $data->notes;
-  if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->notes = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
 
   if (!empty($data->register_in_moodle) && !empty($peoples_tutor_registration->username)) {
