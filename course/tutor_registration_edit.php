@@ -193,6 +193,9 @@ elseif ($data = $editform->get_data()) {
     sendunpw($user, $passwordforemail);
 
     $peoples_tutor_registration->state = 1;
+
+    $peoples_tutor_registration->datefirstapproved = time();
+    $peoples_tutor_registration->datelastapproved = $peoples_tutor_registration->datefirstapproved;
   }
 
 
