@@ -16,11 +16,19 @@ $PAGE->set_url('/course/tutor_registration_edit.php');
 require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
+if (has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM))) {
+  $is_admin = TRUE;
+}
+else {
+  $is_admin = FALSE;
+}
+
 $id = optional_param('id', 0, PARAM_INT);
-if ($id) {
+if ($id && $is_admin) {
   $passed_id = TRUE;
 }
 else {
+  $id = 0;
   $passed_id = FALSE;
   $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('userid' => $USER->id));
   if (!empty($peoples_tutor_registration)) $id = $peoples_tutor_registration->id;
@@ -35,13 +43,6 @@ if (empty($peoples_tutor_registration)) {
     echo "<h1>You do not have an entry in the 'peoples_tutor_registration' table!</h1>";
   }
   die();
-}
-
-if (has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM))) {
-  $is_admin = TRUE;
-}
-else {
-  $is_admin = FALSE;
 }
 
 
