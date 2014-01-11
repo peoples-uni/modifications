@@ -16,14 +16,19 @@ $PAGE->set_url('/course/tutor_registration_edit.php');
 require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
+$id = optional_param('id', 0, PARAM_INT);
+
 if (has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM))) {
   $is_admin = TRUE;
+}
+elseif ($md5 = optional_param('md5', '', PARAM_ALPHANUM)) {
+  if (md5("{$USER->id}jaybf6laHU{$id}") === $md5) $is_admin = TRUE;
+  else $is_admin = FALSE;
 }
 else {
   $is_admin = FALSE;
 }
 
-$id = optional_param('id', 0, PARAM_INT);
 if ($id && $is_admin) {
   $passed_id = TRUE;
 }
