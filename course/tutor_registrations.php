@@ -149,9 +149,9 @@ Display entries using the following filters...
     <td>End Month</td>
     <td>End Day</td>
     <td>Semesters Active</td>
-    <td>Show Approved only?/td>
+    <td>Show Approved only?</td>
     <td>Sort by Name</td>
-    <td>Display Copying and Pasting to Excel</td>
+    <td>Display for Copying and Pasting to Excel</td>
   </tr>
   <tr>
     <td><input type="text" size="15" name="chosenmodule" value="<?php echo htmlspecialchars($chosenmodule, ENT_COMPAT, 'UTF-8'); ?>" /></td>
@@ -273,6 +273,7 @@ foreach ($assignments as $assignment) {
 
   $semester = $course_to_semester[$assignment->courseid];
   $coursename = $assignment->coursename;
+echo "userid: $userid, semester: $semester,  assignment->courseid: $assignment->courseid, coursename: $coursename<br />";
   if ($assignment->shortname === 'tutor') {
     $asterisk = '*';
     if ($userid == $USER->id) $users_moduleleader_modules_for_filter[] = $coursename;
@@ -433,6 +434,8 @@ foreach ($semesters_descending as $semester) {
 
 $n = 0;
 $napproved = 0;
+$listofemails = array();
+$country = array();
 foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) {
   $state = $peoples_tutor_registration->state;
 
