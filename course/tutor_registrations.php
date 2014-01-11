@@ -629,7 +629,3 @@ function displaystat($stat, $title) {
   echo '</table>';
   echo '<br/>';
 }
-(**)[11-Jan-2014 19:54:40] Default exception handler: Coding error detected, it must be fixed by a programmer: PHP catchable fatal error Debug: Object of class stdClass could not be converted to string
-Error code: codingerror
-* line 393 of /lib/setuplib.php: coding_exception thrown
-* line 276 of /course/tutor_registrations.php: call to default_error_handler()
