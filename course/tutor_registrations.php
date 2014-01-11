@@ -424,8 +424,8 @@ $table->head = array(
   'Organisation',
   'City',
   'Country',);
-foreach ($semesters_descending) {
-  $table->head[] = $semesters_descending->semester;
+foreach ($semesters_descending as $semester) {
+  $table->head[] = $semester->semester;
 }
 
 //$table->align = array ("left", "left", "left", "left", "left", "center", "center", "center");
