@@ -283,7 +283,6 @@ foreach ($assignments as $assignment) {
   $tutors_course_list_for_filter[$userid] .= "$coursename$asterisk,";
 
   if (!empty($tutors_course_list[$userid])) {
-    $tutors_course_list[$userid]
     if (!empty($tutors_course_list[$userid][$semester])) {
       $tutors_course_list[$userid][$semester][] = "$coursename$asterisk";
     }
@@ -297,7 +296,7 @@ foreach ($assignments as $assignment) {
 }
 
 if (!empty($extratutors)) {
-  $extratutors = substr($extratutors, 0, -1)
+  $extratutors = substr($extratutors, 0, -1);
   $peoples_extra_tutor_registrations = $DB->get_records_sql("
     SELECT
       LOWER(CONCAT(u.lastname, ',', u.firstname, '#####Z', u.id)) AS index,
