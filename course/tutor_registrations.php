@@ -214,7 +214,7 @@ $userids = array();
 foreach ($peoples_tutor_registrations as $peoples_tutor_registration) {
   if (!empty($peoples_tutor_registration->userid)) $userids[] = $peoples_tutor_registration->userid;
 
-  if (!empty($peoples_tutor_registration->ulastname)) $peoples_tutor_registration->lastname= $peoples_tutor_registration->ulastname;
+  if (!empty($peoples_tutor_registration->ulastname)) $peoples_tutor_registration->lastname = $peoples_tutor_registration->ulastname;
   if (!empty($peoples_tutor_registration->ufirstname)) $peoples_tutor_registration->firstname = $peoples_tutor_registration->ufirstname;
   if (!empty($peoples_tutor_registration->uemail)) $peoples_tutor_registration->email = $peoples_tutor_registration->uemail;
   if (!empty($peoples_tutor_registration->ucity)) $peoples_tutor_registration->city = $peoples_tutor_registration->ucity;
@@ -264,7 +264,7 @@ $extratutors = '';
 $tutors_course_list = array();
 $tutors_course_list_for_filter = array();
 $users_moduleleader_modules_for_filter = array();
-foreach ($assignments => $assignment) {
+foreach ($assignments as $assignment) {
   $userid = $assignment->userid;
   if (!in_array($userid, $userids)) {
     $userids[] = $userid;
