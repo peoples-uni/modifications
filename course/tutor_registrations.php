@@ -332,7 +332,7 @@ $emaildups = 0;
 foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) {
   $state = $peoples_tutor_registration->state;
 
-  if (empty($peoples_tutor_registration->timecreated)) $peoples_tutor_registration->timecreated = $peoples_tutor_registration->datesubmitted
+  if (empty($peoples_tutor_registration->timecreated)) $peoples_tutor_registration->timecreated = $peoples_tutor_registration->datesubmitted;
 
   if (
     $peoples_tutor_registration->timecreated < $starttime ||
