@@ -192,7 +192,7 @@ function displayoptions($name, $options, $selectedvalue) {
 }
 
 
-$peoples_tutor_registrations = $DB->get_records_sql('
+$peoples_tutor_registrations = $DB->get_records_sql("
   SELECT
     LOWER(CONCAT(IFNULL(u.lastname, a.lastname), ',', IFNULL(u.firstname, a.firstname), '#####', a.id)) AS index
     a.*,
@@ -205,7 +205,7 @@ $peoples_tutor_registrations = $DB->get_records_sql('
   FROM mdl_peoples_tutor_registration a
   LEFT JOIN mdl_user u ON a.userid=u.id
   WHERE hidden=0
-  ORDER BY a.datesubmitted DESC');
+  ORDER BY a.datesubmitted DESC");
 if (empty($peoples_tutor_registrations)) {
   $peoples_tutor_registrations = array();
 }
