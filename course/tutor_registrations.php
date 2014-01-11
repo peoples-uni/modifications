@@ -229,7 +229,7 @@ foreach ($semesters_ascending as $semester) {
 }
 $nextto_latest_semester = $semesters_ascending[$latest_semester_id - 1]->semester;
 
-$course_to_semester = $DB->get_records_sql('SELECT DISTINCT courseid, semester FROM mdl_enrolment');
+$course_to_semester = $DB->get_records_sql('SELECT courseid, MAX(semester) FROM mdl_enrolment GROUP BY courseid'); // In error, the database seems to run a few courses in multiple semesters
 
 $record = $DB->get_record_sql('SELECT GROUP_CONCAT(DISTINCT courseid) AS enrol_course_list FROM mdl_enrolment');
 $course_ids = $record->enrol_course_list;
@@ -426,7 +426,7 @@ $table->head = array(
   'City',
   'Country',);
 foreach ($semesters_descending as $semester) {
-  $table->head[] = $semester->semester;
+  $table->head[] = str_replace('Starting ', '', $semester->semester);
 }
 
 //$table->align = array ("left", "left", "left", "left", "left", "center", "center", "center");
