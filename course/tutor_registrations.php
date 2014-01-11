@@ -194,7 +194,7 @@ function displayoptions($name, $options, $selectedvalue) {
 
 $peoples_tutor_registrations = $DB->get_records_sql("
   SELECT
-    LOWER(CONCAT(IFNULL(u.lastname, a.lastname), ',', IFNULL(u.firstname, a.firstname), '#####', a.id)) AS index,
+    LOWER(CONCAT(IFNULL(u.lastname, a.lastname), ',', IFNULL(u.firstname, a.firstname), '#####', a.id)) AS indexcolumn,
     a.*,
     u.lastname AS ulastname,
     u.firstname AS ufirstname,
@@ -299,7 +299,7 @@ if (!empty($extratutors)) {
   $extratutors = substr($extratutors, 0, -1);
   $peoples_extra_tutor_registrations = $DB->get_records_sql("
     SELECT
-      LOWER(CONCAT(u.lastname, ',', u.firstname, '#####Z', u.id)) AS index,
+      LOWER(CONCAT(u.lastname, ',', u.firstname, '#####Z', u.id)) AS indexcolumn,
       '' AS id,
       u.id AS userid,
       1 AS state,
