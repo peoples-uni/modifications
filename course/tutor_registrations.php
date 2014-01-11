@@ -440,7 +440,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
   if (!$displayforexcel) {
     $z = gmdate('d/m/Y H:i', $peoples_tutor_registration->timecreated);
     if ($state) $z .= '<br /><span style="color:green">Registered</span>';
-    if (empty($peoples_tutor_registration->id) {
+    if (empty($peoples_tutor_registration->id)) {
       $z .= '<br />(No form)';
     }
     else {
