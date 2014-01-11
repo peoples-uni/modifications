@@ -229,7 +229,7 @@ foreach ($semesters_ascending as $semester) {
 }
 $nextto_latest_semester = $semesters_ascending[$latest_semester_id - 1]->semester;
 
-$course_to_semester = $DB->get_records_sql('SELECT courseid, MAX(semester) FROM mdl_enrolment GROUP BY courseid'); // In error, the database seems to run a few courses in multiple semesters
+$course_to_semester = $DB->get_records_sql('SELECT courseid, MAX(semester) AS semester_value FROM mdl_enrolment GROUP BY courseid'); // In error, the database seems to run a few courses in multiple semesters
 
 $record = $DB->get_record_sql('SELECT GROUP_CONCAT(DISTINCT courseid) AS enrol_course_list FROM mdl_enrolment');
 $course_ids = $record->enrol_course_list;
@@ -240,7 +240,8 @@ if (!empty($record->current_course_list)) {
 
   $current_course_list = explode(',', $record->current_course_list);
   foreach($current_course_list as $course_item) {
-    $course_to_semester[$course_item] = $latest_semester;
+    $course_to_semester[$course_item] = new stdClass();
+    $course_to_semester[$course_item]->semester_value = $latest_semester;
   }
 }
 
@@ -271,7 +272,7 @@ foreach ($assignments as $assignment) {
     $extratutors .= "$userid,";
   }
 
-  $semester = $course_to_semester[$assignment->courseid];
+  $semester = $course_to_semester[$assignment->courseid]->semester_value;
   $coursename = $assignment->coursename;
 error_log("userid: $userid");//(**)
 error_log("semester: $semester");//(**)
