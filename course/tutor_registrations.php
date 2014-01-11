@@ -273,7 +273,10 @@ foreach ($assignments as $assignment) {
 
   $semester = $course_to_semester[$assignment->courseid];
   $coursename = $assignment->coursename;
-error_log("userid: $userid, semester: $semester, assignment->courseid: $assignment->courseid, coursename: $coursename");//(**)
+error_log("userid: $userid");//(**)
+error_log("semester: $semester");//(**)
+error_log("assignment->courseid: $assignment->courseid");//(**)
+error_log("coursename: $coursename");//(**)
   if ($assignment->shortname === 'tutor') {
     $asterisk = '*';
     if ($userid == $USER->id) $users_moduleleader_modules_for_filter[] = $coursename;
@@ -626,3 +629,7 @@ function displaystat($stat, $title) {
   echo '</table>';
   echo '<br/>';
 }
+(**)[11-Jan-2014 19:54:40] Default exception handler: Coding error detected, it must be fixed by a programmer: PHP catchable fatal error Debug: Object of class stdClass could not be converted to string
+Error code: codingerror
+* line 393 of /lib/setuplib.php: coding_exception thrown
+* line 276 of /course/tutor_registrations.php: call to default_error_handler()
