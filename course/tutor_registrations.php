@@ -28,7 +28,7 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/tutor_registrations.php'); // Defined here to avoid notices on errors etc
 
@@ -56,8 +56,8 @@ require_login();
 
 // Access to tutor_registrations.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
-//require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
-$is_admin = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+//require_capability('moodle/site:config', context_system::instance());
+$is_admin = has_capability('moodle/site:viewparticipants', context_system::instance());
 
 $PAGE->set_title('Tutor Registrations');
 $PAGE->set_heading('Tutor Registrations');
@@ -273,7 +273,7 @@ foreach ($assignments as $assignment) {
 
   $semester = $course_to_semester[$assignment->courseid];
   $coursename = $assignment->coursename;
-echo "userid: $userid, semester: $semester,  assignment->courseid: $assignment->courseid, coursename: $coursename<br />";
+//echo "userid: $userid, semester: $semester,  assignment->courseid: $assignment->courseid, coursename: $coursename<br />";//(**)
   if ($assignment->shortname === 'tutor') {
     $asterisk = '*';
     if ($userid == $USER->id) $users_moduleleader_modules_for_filter[] = $coursename;
