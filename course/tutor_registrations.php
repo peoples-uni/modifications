@@ -337,7 +337,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
   if (
     $peoples_tutor_registration->timecreated < $starttime ||
     $peoples_tutor_registration->timecreated > $endtime ||
-    ($approved && ($state == 0)) ||
+    ($approved && ($state == 0))
     ) {
 
     unset($peoples_tutor_registrations[$index]);
