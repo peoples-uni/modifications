@@ -499,8 +499,8 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
     foreach ($semesters_descending as $semester) {
       $z = '';
-      if (!empty(tutors_course_list[$peoples_tutor_registration->userid][$semester->semester])) {
-        $courses = tutors_course_list[$peoples_tutor_registration->userid][$semester->semester];
+      if (!empty($tutors_course_list[$peoples_tutor_registration->userid][$semester->semester])) {
+        $courses = $tutors_course_list[$peoples_tutor_registration->userid][$semester->semester];
         natcasesort($courses);
         $z = implode(', ', $courses);
       }
@@ -568,8 +568,8 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
     foreach ($semesters_descending as $semester) {
       $z = '';
-      if (!empty(tutors_course_list[$peoples_tutor_registration->userid][$semester->semester])) {
-        $courses = tutors_course_list[$peoples_tutor_registration->userid][$semester->semester];
+      if (!empty($tutors_course_list[$peoples_tutor_registration->userid][$semester->semester])) {
+        $courses = $tutors_course_list[$peoples_tutor_registration->userid][$semester->semester];
         natcasesort($courses);
         $z = implode(', ', $courses);
       }
