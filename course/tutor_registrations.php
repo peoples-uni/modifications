@@ -273,7 +273,7 @@ foreach ($assignments as $assignment) {
 
   $semester = $course_to_semester[$assignment->courseid];
   $coursename = $assignment->coursename;
-//echo "userid: $userid, semester: $semester,  assignment->courseid: $assignment->courseid, coursename: $coursename<br />";//(**)
+error_log("userid: $userid, semester: $semester, assignment->courseid: $assignment->courseid, coursename: $coursename");//(**)
   if ($assignment->shortname === 'tutor') {
     $asterisk = '*';
     if ($userid == $USER->id) $users_moduleleader_modules_for_filter[] = $coursename;
