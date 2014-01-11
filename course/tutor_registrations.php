@@ -196,7 +196,7 @@ $peoples_tutor_registrations = $DB->get_records_sql("
   SELECT
     LOWER(CONCAT(IFNULL(u.lastname, a.lastname), ',', IFNULL(u.firstname, a.firstname), '#####', a.id)) AS index
     a.*,
-    u.lastnameAS ulastname,
+    u.lastname AS ulastname,
     u.firstname AS ufirstname,
     u.email AS uemail,
     u.city AS ucity,
