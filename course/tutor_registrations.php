@@ -305,7 +305,7 @@ if (!empty($extratutors)) {
   $peoples_extra_tutor_registrations = $DB->get_records_sql("
     SELECT
       LOWER(CONCAT(u.lastname, ',', u.firstname, '#####Z', u.id)) AS indexcolumn,
-      '' AS id,
+      0 AS id,
       u.id AS userid,
       1 AS state,
       u.lastname,
@@ -326,7 +326,7 @@ if (!empty($extratutors)) {
       '' AS howfoundpeoples,
       '' AS howfoundorganisationname
     FROM mdl_user u
-    WHERE id IN ($extratutors)
+    WHERE u.id IN ($extratutors)
     ORDER BY u.timecreated DESC");
   if (!empty($peoples_extra_tutor_registrations)) $peoples_tutor_registrations = $peoples_tutor_registrations + $peoples_extra_tutor_registrations;
 }
@@ -452,8 +452,12 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     }
     else {
       $md5 = '';
-      if (!$is_admin) $md5 = '&md5=' . md5("{$USER->id}jaybf6laHU{$id}"); // This user ($USER->id) can see/edit this record ($id) (not very secure, but good enough)
-      $z .= '<a href="' . $CFG->wwwroot . '/course/tutor_registration_edit.php?id=' . $peoples_tutor_registration->id . $md5 . '">Edit form</a>';
+      $id = $peoples_tutor_registration->id;
+      $userid = $peoples_tutor_registration->userid;
+      $idoruserid = $id;
+      if (empty($idoruserid)) $idoruserid = $userid;
+      if (!$is_admin) $md5 = '&md5=' . md5("{$USER->id}jaybf6laHU{$idoruserid}"); // This user ($USER->id) can see/edit this record ($id or $userid) (not very secure, but good enough)
+      $z .= '<a href="' . $CFG->wwwroot . '/course/tutor_registration_edit.php?id=' . $id . "&userid=$userid" . $md5 . '">Edit form</a>';
     }
     $rowdata[] = $z;
 

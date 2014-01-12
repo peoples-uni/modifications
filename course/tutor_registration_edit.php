@@ -17,30 +17,40 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $id = optional_param('id', 0, PARAM_INT);
+$userid = optional_param('userid', 0, PARAM_INT);
 
 if (has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM))) {
   $is_admin = TRUE;
 }
 elseif ($md5 = optional_param('md5', '', PARAM_ALPHANUM)) {
-  if (md5("{$USER->id}jaybf6laHU{$id}") === $md5) $is_admin = TRUE;
+  $idoruserid = $id;
+  if (empty($idoruserid)) $idoruserid = $userid;
+  if (md5("{$USER->id}jaybf6laHU{$idoruserid}") === $md5) $is_admin = TRUE;
   else $is_admin = FALSE;
 }
 else {
   $is_admin = FALSE;
 }
 
-if ($id && $is_admin) {
+if (($id || $userid) && $is_admin) {
   $passed_id = TRUE;
 }
 else {
   $id = 0;
+  $userid = 0;
   $passed_id = FALSE;
   $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('userid' => $USER->id));
   if (!empty($peoples_tutor_registration)) $id = $peoples_tutor_registration->id;
 }
 
-$peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
-if (empty($peoples_tutor_registration)) {
+if ($id) {
+  $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
+}
+
+if (($id == 0) && $userid) {
+  // We will be doing an insert not an update if the form is submitted
+}
+elseif (empty($peoples_tutor_registration)) {
   if ($passed_id) {
     echo '<h1>peoples_tutor_registration matching id does not exist!</h1>';
   }
@@ -55,7 +65,7 @@ $data = new stdClass();
 
 $options = array('subdirs' => 1, 'maxbytes' => 0, 'maxfiles' => -1, 'accepted_types' => '*', 'areamaxbytes' => -1);
 
-if (!empty($peoples_tutor_registration->userid)) {
+if (!empty($peoples_tutor_registration) && !empty($peoples_tutor_registration->userid)) {
   $context = context_user::instance($peoples_tutor_registration->userid);
 
   //function file_prepare_standard_filemanager($data, $field[in form will expect "{$field}_filemanager"], array $options, $context=null, $component=null, $filearea=null, $itemid=null) {...}
@@ -63,13 +73,43 @@ if (!empty($peoples_tutor_registration->userid)) {
 }
 
 
-$editform = new tutor_registration_edit_form(NULL, array('data' => $data, 'customdata' => array('id' => $id, 'is_admin' => $is_admin), 'options' => $options));
+$editform = new tutor_registration_edit_form(NULL, array('data' => $data, 'customdata' => array('id' => $id, 'userid' => $userid, 'is_admin' => $is_admin), 'options' => $options));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
 }
 elseif ($data = $editform->get_data()) {
 
-  $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
+  if ($id) {
+    $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
+  }
+  elseif ($userid) {
+    // We are doing an insert not an update
+    $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('userid' => $userid));
+    $userrecord = $DB->get_record('user', array('id' => $userid));
+    if (empty($userrecord) || !empty($peoples_tutor_registration)) {
+      echo '<h1>peoples_tutor_registration for userid already exists but this should be an insert!</h1>';
+      die();
+    }
+
+    $peoples_tutor_registration = new stdClass();
+    $peoples_tutor_registration->datesubmitted = time();
+    $peoples_tutor_registration->state = 1;
+    $peoples_tutor_registration->userid = $userid;
+    $peoples_tutor_registration->username = 'user1';
+    $peoples_tutor_registration->lastname = $userrecord->lastname;
+    $peoples_tutor_registration->firstname = $userrecord->firstname;
+    $peoples_tutor_registration->gender = '';
+    $peoples_tutor_registration->email = $userrecord->email;
+    $peoples_tutor_registration->city = $userrecord->city;
+    $peoples_tutor_registration->country = $userrecord->country;
+    $peoples_tutor_registration->datefirstapproved = $userrecord->timecreated;
+    $peoples_tutor_registration->datelastapproved = $userrecord->timecreated;
+    $peoples_tutor_registration->hidden = 0;
+  }
+  else {
+    echo '<h1>peoples_tutor_registration id and userid are both zero!</h1>';
+    die();
+  }
   if (empty($peoples_tutor_registration)) {
     echo '<h1>peoples_tutor_registration matching id does not exist after form submission!</h1>';
     die();
@@ -205,7 +245,12 @@ elseif ($data = $editform->get_data()) {
   }
 
 
-  $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
+  if (!empty($id)) {
+    $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
+  }
+  else {
+    $DB->insert_record('peoples_tutor_registration', $peoples_tutor_registration);
+  }
 
 
   if (!empty($data->files_filemanager) && !empty($context)) {
