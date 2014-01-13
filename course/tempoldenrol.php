@@ -236,7 +236,7 @@ foreach ($registrations as $sid => $registration) {
 	$registration['21'] = str_replace(">", '', $registration['21']);
 	$registration['21'] = str_replace("/", '', $registration['21']);
 	$registration['21'] = str_replace("#", '', $registration['21']);
-	$registration['21'] = trim(moodle_strtolower($registration['21']));
+	$registration['21'] = trim(core_text::strtolower($registration['21']));
 	// $registration['21'] = eregi_replace("[^(-\.[:alnum:])]", '', $registration['21']);
 	if (empty($registration['21'])) $registration['21'] = 'user1';	// Just in case it becomes empty
 

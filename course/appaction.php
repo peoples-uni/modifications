@@ -186,7 +186,7 @@ elseif (!empty($_POST['username']) && !empty($_POST['markupdateusername'])) {
 	$_POST['username'] = str_replace(">", '', $_POST['username']);
 	$_POST['username'] = str_replace("/", '', $_POST['username']);
 	$_POST['username'] = str_replace("#", '', $_POST['username']);
-	$_POST['username'] = trim(moodle_strtolower($_POST['username']));
+	$_POST['username'] = trim(core_text::strtolower($_POST['username']));
 //	$_POST['username'] = eregi_replace("[^(-\.[:alnum:])]", '', $_POST['username']);
 
 	updateapplication($_POST['sid'], 'username', $_POST['username']);
@@ -212,7 +212,7 @@ elseif (!empty($_POST['username']) && (
 	$_POST['username'] = str_replace(">", '', $_POST['username']);
 	$_POST['username'] = str_replace("/", '', $_POST['username']);
 	$_POST['username'] = str_replace("#", '', $_POST['username']);
-	$_POST['username'] = trim(moodle_strtolower($_POST['username']));
+	$_POST['username'] = trim(core_text::strtolower($_POST['username']));
 //	$_POST['username'] = eregi_replace("[^(-\.[:alnum:])]", '', $_POST['username']);
 
 	$user->username    = $_POST['username'];
