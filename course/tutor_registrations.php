@@ -209,6 +209,7 @@ $peoples_tutor_registrations = $DB->get_records_sql("
 if (empty($peoples_tutor_registrations)) {
   $peoples_tutor_registrations = array();
 }
+error_log('Main table: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 $userids = array();
 foreach ($peoples_tutor_registrations as $peoples_tutor_registration) {
@@ -330,6 +331,33 @@ if (!empty($extratutors)) {
     ORDER BY u.timecreated DESC");
   if (!empty($peoples_extra_tutor_registrations)) $peoples_tutor_registrations = $peoples_tutor_registrations + $peoples_extra_tutor_registrations;
 }
+error_log("
+    SELECT
+      LOWER(CONCAT(u.lastname, ',', u.firstname, '#####Z', u.id)) AS indexcolumn,
+      0 AS id,
+      u.id AS userid,
+      1 AS state,
+      u.lastname,
+      u.firstname,
+      u.email,
+      u.city,
+      u.country,
+      u.timecreated,
+      '' AS volunteertype,
+      '' AS modulesofinterest,
+      '' AS notes,
+      '' AS reasons,
+      '' AS education,
+      '' AS tutoringexperience,
+      '' AS currentjob,
+      '' AS currentrole,
+      '' AS otherinformation,
+      '' AS howfoundpeoples,
+      '' AS howfoundorganisationname
+    FROM mdl_user u
+    WHERE u.id IN ($extratutors)
+    ORDER BY u.timecreated DESC");//(**)
+error_log('Second table: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 if ($sortbyname) ksort($peoples_tutor_registrations);
 
@@ -408,6 +436,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     $emaildups++;
   }
 }
+error_log('After filter: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 
 $table = new html_table();
