@@ -65,8 +65,8 @@ if (empty($userrecord)) {
 
 $fullname = fullname($userrecord);
 if (empty($fullname) || trim($fullname) == 'Guest User') {
-  $SESSION->wantsurl = "$CFG->wwwroot";
-  notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+  $SESSION->wantsurl = "$CFG->wwwroot/course/tutor_registration_existing.php";
+  redirect($CFG->wwwroot . '/login/index.php')
 }
 
 // Access to tutor_registrations.php is given by the "Manager" role which has moodle/site:viewparticipants
