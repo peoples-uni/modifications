@@ -59,7 +59,7 @@ $howuselearningname['30'] = 'I am not sure';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/app.php'); // Defined here to avoid notices on errors etc
 
@@ -69,8 +69,8 @@ $PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recom
 
 require_login();
 
-//require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
-require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+//require_capability('moodle/site:config', context_system::instance());
+require_capability('moodle/site:viewparticipants', context_system::instance());
 
 $PAGE->set_title('Student Details');
 $PAGE->set_heading('Details for '. htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8') . ', ' . htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'));
@@ -2360,7 +2360,7 @@ There is a link to your course at the bottom of the profile or you can click:
 function get_peoples_teacher($course) {
   global $DB;
 
-  $context = get_context_instance(CONTEXT_COURSE, $course->id);
+  $context = context_course::instance($course->id);
 
   $role = $DB->get_record('role', array('name' => 'Module Leader'));
 

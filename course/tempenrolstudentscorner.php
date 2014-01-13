@@ -5,7 +5,7 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 require_login();
 
-require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:viewparticipants', context_system::instance());
 
 print_header('tempenrolstudentscorner.php');
 
@@ -41,7 +41,7 @@ function enrolincoursesimple($course, $user, $enrol) {
 
 	if ($role = get_default_course_role($course)) {
 
-		$context = get_context_instance(CONTEXT_COURSE, $course->id);
+		$context = context_course::instance($course->id);
 
 		if (!role_assign($role->id, $user->id, 0, $context->id, $timestart, $timeend, 0, $enrol)) {
 			return false;

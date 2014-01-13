@@ -8,13 +8,13 @@
 require("../config.php");
 //require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/get_grades_from_marking_ss.php');
 $PAGE->set_pagelayout('standard');
 
 require_login();
 
-require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:config', context_system::instance());
 
 $PAGE->set_title('Retrieve Student Grades from Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');
 $PAGE->set_heading('Retrieve Student Grades from Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');

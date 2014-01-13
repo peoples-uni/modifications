@@ -3,7 +3,7 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/testrecordsubmissions.php'); // Defined here to avoid notices on errors etc
 $PAGE->set_pagelayout('embedded');   // Needs as much space as possible
@@ -16,7 +16,7 @@ if (isguestuser()) {  // In case user has specifically logged in as Guest (or ha
   notice('<br /><br /><b>You must be logged in to do this! Please Click "Continue" below, and then log in with your username and password above!</b><br /><br /><br />', "$CFG->wwwroot/");
 }
 
-require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:config', context_system::instance());
 
 $PAGE->set_title('testrecordsubmissions.php');
 $PAGE->set_heading('testrecordsubmissions.php');

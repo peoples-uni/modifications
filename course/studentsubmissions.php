@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/lib/weblib.php');
 require_once $CFG->libdir . '/gradelib.php';
 require_once($CFG->libdir . '/filelib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/studentsubmissions.php');
 
 $PAGE->set_pagelayout('embedded');
@@ -45,7 +45,7 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die(); }
 
 $isteacher = is_peoples_teacher();
-$islurker = has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_SYSTEM));
+$islurker = has_capability('moodle/grade:viewall', context_system::instance());
 if (!$isteacher && !$islurker)  {echo '<h1>You do not have rights to do this!</h1>'; die(); };
 
 $userid = required_param('id', PARAM_INT);
@@ -341,7 +341,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 ?>

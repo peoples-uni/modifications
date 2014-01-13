@@ -8,7 +8,7 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/admin_documentation.php');
 $PAGE->set_pagelayout('standard');
@@ -18,7 +18,7 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
-$islurker = has_capability('moodle/course:view', get_context_instance(CONTEXT_SYSTEM));
+$islurker = has_capability('moodle/course:view', context_system::instance());
 if (!$isteacher && !$islurker) {
   $SESSION->wantsurl = "$CFG->wwwroot/course/admin_documentation.php";
   notice('<br /><br /><b>You must be a Tutor to do this! Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
@@ -1490,7 +1490,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 ?>

@@ -5,7 +5,7 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 require_login();
 
-require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:viewparticipants', context_system::instance());
 
 ?><html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
@@ -16,7 +16,7 @@ require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_
 
 $courseid = 10; // HE 09
 $courseid = 39; // EBP 09
-$context = get_context_instance(CONTEXT_COURSE, $courseid);
+$context = context_course::instance($courseid);
 
 // Pass $view=true to filter hidden caps if the user cannot see them
 $users = get_users_by_capability($context, 'moodle/course:update', 'u.*', 'u.id ASC', '', '', '', '', false, true);

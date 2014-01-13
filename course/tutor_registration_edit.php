@@ -7,7 +7,7 @@
 require_once('../config.php');
 require_once('tutor_registration_edit_form.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/tutor_registration_edit.php');
@@ -33,7 +33,7 @@ if (empty($fullname) || trim($fullname) == 'Guest User') {
 $id = optional_param('id', 0, PARAM_INT);
 $userid = optional_param('userid', 0, PARAM_INT);
 
-if (has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM))) {
+if (has_capability('moodle/site:viewparticipants', context_system::instance())) {
   $is_admin = TRUE;
 }
 elseif ($md5 = optional_param('md5', '', PARAM_ALPHANUM)) {
@@ -246,7 +246,7 @@ elseif ($data = $editform->get_data()) {
 
     $user = $DB->get_record('user', array('id' => $user->id));
 
-    get_context_instance(CONTEXT_USER, $user->id);
+    context_user::instance($user->id);
 
     events_trigger('user_created', $user);
 

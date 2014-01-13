@@ -281,7 +281,7 @@ $countryname['ZW'] = 'Zimbabwe';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/interest.php'); // Defined here to avoid notices on errors etc
 
@@ -303,8 +303,8 @@ $PAGE->set_pagelayout('embedded');
 
 require_login();
 
-//require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
-require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+//require_capability('moodle/site:config', context_system::instance());
+require_capability('moodle/site:viewparticipants', context_system::instance());
 
 $PAGE->set_title('Expressions of Interest');
 $PAGE->set_heading('Expressions of Interest');

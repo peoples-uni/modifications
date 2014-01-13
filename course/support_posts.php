@@ -8,7 +8,7 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/support_posts.php');
 
 
@@ -360,7 +360,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 

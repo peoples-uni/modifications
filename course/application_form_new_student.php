@@ -261,7 +261,7 @@ $countryname['ZW'] = 'Zimbabwe';
 require_once('../config.php');
 require_once('application_form_new_student_form.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/application_form_new_student.php');

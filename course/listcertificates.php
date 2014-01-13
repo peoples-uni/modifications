@@ -7,14 +7,14 @@
 
 require("../config.php");
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/listcertificates.php');
 $PAGE->set_pagelayout('standard');
 
 require_login();
 
-require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:viewparticipants', context_system::instance());
 
 $PAGE->set_title('List Volunteer Certificates');
 $PAGE->set_heading('List Volunteer Certificates');

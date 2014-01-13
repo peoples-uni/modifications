@@ -21,13 +21,13 @@ CREATE INDEX mdl_peoples_google_ss_course_id_ix ON mdl_peoples_google_ss (course
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/create_marking_ss.php');
 $PAGE->set_pagelayout('standard');
 
 require_login();
 
-require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:config', context_system::instance());
 
 $PAGE->set_title('Create Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');
 $PAGE->set_heading('Create Google Apps Spreadsheet for Collaborative Assignment Marking and Resubmission Tracking');

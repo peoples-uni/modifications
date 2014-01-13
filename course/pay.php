@@ -13,7 +13,7 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/pay.php');
 $PAGE->set_pagelayout('embedded');
 

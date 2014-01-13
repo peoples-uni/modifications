@@ -109,7 +109,7 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/appaction.php'); // Defined here to avoid notices on errors etc
 
@@ -119,8 +119,8 @@ $PAGE->set_url('/course/appaction.php'); // Defined here to avoid notices on err
 
 require_login();
 
-//require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
-require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+//require_capability('moodle/site:config', context_system::instance());
+require_capability('moodle/site:viewparticipants', context_system::instance());
 
 if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
@@ -367,7 +367,7 @@ elseif (!empty($_POST['username']) && (
     }
   }
 
-  get_context_instance(CONTEXT_USER, $user->id);
+  context_user::instance($user->id);
 
 	events_trigger('user_created', $user);
 
@@ -1060,7 +1060,7 @@ function get_balance($userid) {
 function get_peoples_teacher($course) {
   global $DB;
 
-  $context = get_context_instance(CONTEXT_COURSE, $course->id);
+  $context = context_course::instance($course->id);
 
   $role = $DB->get_record('role', array('name' => 'Module Leader'));
 

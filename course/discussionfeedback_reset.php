@@ -6,14 +6,14 @@
 
 require_once('../config.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/discussionfeedback_reset.php');
 
 
 $isteacher = is_peoples_teacher();
-//$islurker = has_capability('moodle/course:view', get_context_instance(CONTEXT_SYSTEM));
+//$islurker = has_capability('moodle/course:view', context_system::instance());
 $islurker = FALSE;
 if (!$isteacher && !$islurker) {
   $SESSION->wantsurl = "$CFG->wwwroot/course/discussionfeedback.php";
@@ -42,7 +42,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 ?>

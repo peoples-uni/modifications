@@ -7,7 +7,7 @@
 require_once('../config.php');
 require_once('tutor_registration_existing_form.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/tutor_registration_existing.php');

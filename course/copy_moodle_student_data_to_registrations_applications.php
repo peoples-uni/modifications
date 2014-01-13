@@ -31,7 +31,7 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/copy_moodle_student_data_to_registrations_applications.php'); // Defined here to avoid notices on errors etc
 
@@ -39,7 +39,7 @@ $PAGE->set_pagelayout('embedded');
 
 require_login();
 
-require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:config', context_system::instance());
 
 $PAGE->set_title('copy_moodle_student_data_to_registrations_applications.php');
 $PAGE->set_heading('copy_moodle_student_data_to_registrations_applications.php');

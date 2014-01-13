@@ -46,7 +46,7 @@ class application_form_returning_student_form extends moodleform {
 
     // Ability to submit form (no matter what) is given by the "Manager" role which has moodle/site:viewparticipants
     // (administrator also has moodle/site:viewparticipants)
-    $ismanager = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+    $ismanager = has_capability('moodle/site:viewparticipants', context_system::instance());
 
     // Allow specified Students who have been given a later than normal deadline to apply late
     $late_application = FALSE;

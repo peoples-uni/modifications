@@ -10,7 +10,7 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/coursegrades.php');
 
 
@@ -46,7 +46,7 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
-$islurker = has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_SYSTEM));
+$islurker = has_capability('moodle/grade:viewall', context_system::instance());
 if (!$isteacher && !$islurker) {
 	echo '<h1>You must be a tutor to do this!</h1>';
 	notice('Please Login Below', "$CFG->wwwroot/");
@@ -708,7 +708,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 

@@ -25,7 +25,7 @@ CREATE INDEX mdl_peoplesstudentnotes_sid_ix ON mdl_peoplesstudentnotes (sid);
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/student.php'); // Defined here to avoid notices on errors etc
 $PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recommended for most pages with general information
@@ -35,7 +35,7 @@ require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
 $isteacher = is_peoples_teacher();
-$islurker = has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_SYSTEM));
+$islurker = has_capability('moodle/grade:viewall', context_system::instance());
 
 $userid = optional_param('id', 0, PARAM_INT);
 if (empty($userid) || (!$isteacher && !$islurker)) $userid = $USER->id;
@@ -423,7 +423,7 @@ if (!empty($enrols)) {
 		require_once $CFG->dirroot.'/grade/lib.php';
 		require_once $CFG->dirroot.'/grade/report/user/lib.php';
 		$courseid = $enrol->courseid;
-		$context = get_context_instance(CONTEXT_COURSE, $courseid);
+		$context = context_course::instance($courseid);
 		$gpr = new grade_plugin_return(array('type'=>'report', 'plugin'=>'user', 'courseid'=>$courseid, 'userid'=>$userid));
 		grade_regrade_final_grades($courseid);
 		$report = new grade_report_user($courseid, $gpr, $context, $userid);
@@ -667,7 +667,7 @@ if (!empty($filerecords)) $text_for_records_present = '(' . count($filerecords) 
 else $text_for_records_present = '(none currently)';
 
 // Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
-$is_manager = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+$is_manager = has_capability('moodle/site:viewparticipants', context_system::instance());
 
 if ($is_manager) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoples_files.php?student_id=' . $userid . '" target="_blank">Manage "Peoples-uni Record Files" for the Student</a> ' . $text_for_records_present . '<br />';
@@ -829,7 +829,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 

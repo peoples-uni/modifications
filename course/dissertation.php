@@ -20,7 +20,7 @@ CREATE INDEX mdl_peoplesdissertation_uid_ix ON mdl_peoplesdissertation (userid);
 require_once('../config.php');
 require_once('dissertation_form.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/dissertation.php');

@@ -56,7 +56,7 @@ ALTER TABLE mdl_peoplesregistration MODIFY city VARCHAR(120) NOT NULL DEFAULT ''
 require_once('../config.php');
 require_once('registration_form.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/registration.php');

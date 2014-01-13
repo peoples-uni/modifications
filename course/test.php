@@ -5,7 +5,7 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 require_login();
 
-require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:config', context_system::instance());
 
 ?><html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>

@@ -3,7 +3,7 @@
 require("../config.php");
 //require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/course_report.php');
 
@@ -14,7 +14,7 @@ require_login();
 if ($USER->id != 337) { // Debs Thompson
   // Access is given by the "Manager" role which has moodle/site:viewparticipants
   // (administrator also has moodle/site:viewparticipants)
-  require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+  require_capability('moodle/site:viewparticipants', context_system::instance());
 }
 
 $PAGE->set_title('Survey Results');

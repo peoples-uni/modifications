@@ -8,7 +8,7 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/specify_instalments.php');
 $PAGE->set_pagelayout('standard');
 
@@ -20,7 +20,7 @@ if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>
 
 // Full access is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
-$ismanager = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+$ismanager = has_capability('moodle/site:viewparticipants', context_system::instance());
 
 $userid = optional_param('userid', 0, PARAM_INT);
 if (empty($userid) || !$ismanager) $userid = $USER->id;

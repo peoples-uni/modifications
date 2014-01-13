@@ -256,7 +256,7 @@ $countryname['ZW'] = 'Zimbabwe';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/once_off_import_interest_to_moodle.php'); // Defined here to avoid notices on errors etc
 
@@ -264,7 +264,7 @@ $PAGE->set_pagelayout('embedded');
 
 require_login();
 
-require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:config', context_system::instance());
 
 $PAGE->set_title('Import Drupal Webform Interest Submisisons to Moodle Database');
 $PAGE->set_heading('Import Drupal Webform Interest Submisisons to Moodle Database');

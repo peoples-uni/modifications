@@ -62,7 +62,7 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/successbyqualifications.php');
 
 
@@ -749,7 +749,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 

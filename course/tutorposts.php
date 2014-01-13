@@ -8,7 +8,7 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/tutorposts.php');
 
 
@@ -143,7 +143,7 @@ foreach($modules as $module) {
   $rowdata[] = '<b>' . htmlspecialchars($module->fullname, ENT_COMPAT, 'UTF-8') . '</b>';
   $table->data[] = $rowdata;
 
-  $context = get_context_instance(CONTEXT_COURSE, $module->courseid);
+  $context = context_course::instance($module->courseid);
 
   $tutors = $DB->get_record_sql("
     SELECT GROUP_CONCAT(ra.userid SEPARATOR ', ') AS tutors
@@ -329,7 +329,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 

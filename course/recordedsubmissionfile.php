@@ -23,7 +23,7 @@ elseif ($relativepath[0] != '/') {
 
 require_login();
 $isteacher = is_peoples_teacher();
-$islurker = has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_SYSTEM));
+$islurker = has_capability('moodle/grade:viewall', context_system::instance());
 if (!$isteacher && !$islurker) {
   send_header_404();
   print_error('invalidargorconf');
@@ -68,7 +68,7 @@ function is_peoples_teacher() {
 
   if (!empty($teachers)) return true;
 
-  if (has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM))) return true;
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
 }
 ?>

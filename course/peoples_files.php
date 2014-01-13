@@ -31,12 +31,12 @@ else {
 
 // Access to applications.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
-//require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
-//require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
-$is_manager = has_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+//require_capability('moodle/site:config', context_system::instance());
+//require_capability('moodle/site:viewparticipants', context_system::instance());
+$is_manager = has_capability('moodle/site:viewparticipants', context_system::instance());
 
 $PAGE->set_url('/course/peoples_files.php', array('student_id' => $student_id));
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 $PAGE->set_title('Peoples-uni Record Files for a Student');
 $PAGE->set_heading('Peoples-uni Record Files for a Student');
 $PAGE->set_pagelayout('mydashboard');

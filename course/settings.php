@@ -40,7 +40,7 @@ CREATE INDEX mdl_peoples_course_code_ix ON mdl_peoples_course_codes (course_code
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/settings.php'); // Defined here to avoid notices on errors etc
 
@@ -48,7 +48,7 @@ $PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recom
 
 require_login();
 
-require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:config', context_system::instance());
 
 $PAGE->set_title('Settings for Student Applications');
 $PAGE->set_heading('Settings for Student Applications');

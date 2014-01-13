@@ -30,13 +30,13 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
-$PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+$PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/regaction.php'); // Defined here to avoid notices on errors etc
 
 require_login();
 
-require_capability('moodle/site:viewparticipants', get_context_instance(CONTEXT_SYSTEM));
+require_capability('moodle/site:viewparticipants', context_system::instance());
 
 if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
@@ -254,7 +254,7 @@ elseif (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'
 
   $user = $DB->get_record('user', array('id' => $user->id));
 
-  get_context_instance(CONTEXT_USER, $user->id);
+  context_user::instance($user->id);
 
   events_trigger('user_created', $user);
 

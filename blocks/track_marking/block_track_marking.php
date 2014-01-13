@@ -31,7 +31,7 @@ class block_track_marking extends block_base {
     $this->content->text = '';
 
     // If this is a site admin or Module Leader/Tutors in that course show the block
-    if (has_capability('moodle/grade:edit', get_context_instance(CONTEXT_COURSE, $COURSE->id)) || $admin) {
+    if (has_capability('moodle/grade:edit', context_course::instance($COURSE->id)) || $admin) {
 
       $google_ss = $DB->get_record('peoples_google_ss', array('course_id' => $COURSE->id));
       if (!empty($google_ss->full_link)) {
