@@ -65,7 +65,7 @@ if (empty($userrecord)) {
 
 $fullname = fullname($userrecord);
 if (empty($fullname) || trim($fullname) == 'Guest User') {
-  $SESSION->wantsurl = "$CFG->wwwroot/course/tutor_registrations.php";
+  $SESSION->wantsurl = "$CFG->wwwroot";
   notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
 }
 
@@ -73,7 +73,7 @@ if (empty($fullname) || trim($fullname) == 'Guest User') {
 // (administrator also has moodle/site:viewparticipants)
 //require_capability('moodle/site:config', context_system::instance());
 $is_admin = has_capability('moodle/site:viewparticipants', context_system::instance());
-if ($is_admin) error_log('is_admin'); else error_log('NOT is_admin');//(**)
+//if ($is_admin) error_log('is_admin'); else error_log('NOT is_admin');//(**)
 
 $PAGE->set_title('Tutor Registrations');
 $PAGE->set_heading('Tutor Registrations');
