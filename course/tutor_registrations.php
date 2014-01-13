@@ -53,11 +53,27 @@ if (!empty($_POST['markfilter'])) {
 $PAGE->set_pagelayout('embedded');   // Needs as much space as possible
 
 require_login();
+// (Might possibly be Guest)
+
+if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
+
+$userrecord = $DB->get_record('user', array('id' => $USER->id));
+if (empty($userrecord)) {
+  echo '<h1>User does not exist!</h1>';
+  die();
+}
+
+$fullname = fullname($userrecord);
+if (empty($fullname) || trim($fullname) == 'Guest User') {
+  $SESSION->wantsurl = "$CFG->wwwroot/course/tutor_registrations.php";
+  notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+}
 
 // Access to tutor_registrations.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
 //require_capability('moodle/site:config', context_system::instance());
 $is_admin = has_capability('moodle/site:viewparticipants', context_system::instance());
+if ($is_admin) error_log('is_admin'); else error_log('NOT is_admin');//(**)
 
 $PAGE->set_title('Tutor Registrations');
 $PAGE->set_heading('Tutor Registrations');
@@ -209,7 +225,7 @@ $peoples_tutor_registrations = $DB->get_records_sql("
 if (empty($peoples_tutor_registrations)) {
   $peoples_tutor_registrations = array();
 }
-error_log('Main table: ' . print_r($peoples_tutor_registrations, true));//(**)
+//error_log('Main table: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 $userids = array();
 foreach ($peoples_tutor_registrations as $peoples_tutor_registration) {
@@ -331,7 +347,7 @@ if (!empty($extratutors)) {
     ORDER BY u.timecreated DESC");
   if (!empty($peoples_extra_tutor_registrations)) $peoples_tutor_registrations = $peoples_tutor_registrations + $peoples_extra_tutor_registrations;
 }
-error_log("
+/*error_log("
     SELECT
       LOWER(CONCAT(u.lastname, ',', u.firstname, '#####Z', u.id)) AS indexcolumn,
       0 AS id,
@@ -357,10 +373,11 @@ error_log("
     FROM mdl_user u
     WHERE u.id IN ($extratutors)
     ORDER BY u.timecreated DESC");//(**)
-error_log('Second table: ' . print_r($peoples_tutor_registrations, true));//(**)
+*/ //error_log('Second table: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 if ($sortbyname) ksort($peoples_tutor_registrations);
 
+$emailcounts = array();
 $emaildups = 0;
 foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) {
   $state = $peoples_tutor_registration->state;
@@ -436,7 +453,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     $emaildups++;
   }
 }
-error_log('After filter: ' . print_r($peoples_tutor_registrations, true));//(**)
+//error_log('After filter: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 
 $table = new html_table();
@@ -525,8 +542,8 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->otherinformation));
 
-    if (empty($howfoundpeoplesname[$registration->howfoundpeoples])) $z = '';
-    else $z = $howfoundpeoplesname[$registration->howfoundpeoples];
+    if (empty($howfoundpeoplesname[$peoples_tutor_registration->howfoundpeoples])) $z = '';
+    else $z = $howfoundpeoplesname[$peoples_tutor_registration->howfoundpeoples];
     $rowdata[] = $z;
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->howfoundorganisationname));
@@ -594,8 +611,8 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->otherinformation));
 
-    if (empty($howfoundpeoplesname[$registration->howfoundpeoples])) $z = '';
-    else $z = $howfoundpeoplesname[$registration->howfoundpeoples];
+    if (empty($howfoundpeoplesname[$peoples_tutor_registration->howfoundpeoples])) $z = '';
+    else $z = $howfoundpeoplesname[$peoples_tutor_registration->howfoundpeoples];
     $rowdata[] = $z;
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->howfoundorganisationname));

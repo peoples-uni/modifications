@@ -14,7 +14,21 @@ $PAGE->set_url('/course/tutor_registration_edit.php');
 
 
 require_login();
+// (Might possibly be Guest)
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
+
+$userrecord = $DB->get_record('user', array('id' => $USER->id));
+if (empty($userrecord)) {
+  echo '<h1>User does not exist!</h1>';
+  die();
+}
+
+$fullname = fullname($userrecord);
+if (empty($fullname) || trim($fullname) == 'Guest User') {
+  $SESSION->wantsurl = "$CFG->wwwroot/course/tutor_registration_edit.php";
+  notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+}
+
 
 $id = optional_param('id', 0, PARAM_INT);
 $userid = optional_param('userid', 0, PARAM_INT);
