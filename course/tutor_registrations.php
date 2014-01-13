@@ -65,15 +65,14 @@ if (empty($userrecord)) {
 
 $fullname = fullname($userrecord);
 if (empty($fullname) || trim($fullname) == 'Guest User') {
-  $SESSION->wantsurl = "$CFG->wwwroot/course/tutor_registration_existing.php";
-  redirect($CFG->wwwroot . '/login/index.php')
+  $SESSION->wantsurl = "$CFG->wwwroot/course/tutor_registrations.php";
+  redirect($CFG->wwwroot . '/login/index.php');
 }
 
 // Access to tutor_registrations.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
 //require_capability('moodle/site:config', context_system::instance());
 $is_admin = has_capability('moodle/site:viewparticipants', context_system::instance());
-//if ($is_admin) error_log('is_admin'); else error_log('NOT is_admin');//(**)
 
 $PAGE->set_title('Tutor Registrations');
 $PAGE->set_heading('Tutor Registrations');
@@ -225,7 +224,6 @@ $peoples_tutor_registrations = $DB->get_records_sql("
 if (empty($peoples_tutor_registrations)) {
   $peoples_tutor_registrations = array();
 }
-//error_log('Main table: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 $userids = array();
 foreach ($peoples_tutor_registrations as $peoples_tutor_registration) {
@@ -291,10 +289,6 @@ foreach ($assignments as $assignment) {
 
   $semester = $course_to_semester[$assignment->courseid]->semester_value;
   $coursename = $assignment->coursename;
-//error_log("userid: $userid");//(**)
-//error_log("semester: $semester");//(**)
-//error_log("assignment->courseid: $assignment->courseid");//(**)
-//error_log("coursename: $coursename");//(**)
   if ($assignment->shortname === 'tutor') {
     $asterisk = '*';
     if ($userid == $USER->id) $users_moduleleader_modules_for_filter[] = $coursename;
@@ -347,33 +341,6 @@ if (!empty($extratutors)) {
     ORDER BY u.timecreated DESC");
   if (!empty($peoples_extra_tutor_registrations)) $peoples_tutor_registrations = $peoples_tutor_registrations + $peoples_extra_tutor_registrations;
 }
-/*error_log("
-    SELECT
-      LOWER(CONCAT(u.lastname, ',', u.firstname, '#####Z', u.id)) AS indexcolumn,
-      0 AS id,
-      u.id AS userid,
-      1 AS state,
-      u.lastname,
-      u.firstname,
-      u.email,
-      u.city,
-      u.country,
-      u.timecreated,
-      '' AS volunteertype,
-      '' AS modulesofinterest,
-      '' AS notes,
-      '' AS reasons,
-      '' AS education,
-      '' AS tutoringexperience,
-      '' AS currentjob,
-      '' AS currentrole,
-      '' AS otherinformation,
-      '' AS howfoundpeoples,
-      '' AS howfoundorganisationname
-    FROM mdl_user u
-    WHERE u.id IN ($extratutors)
-    ORDER BY u.timecreated DESC");//(**)
-*/ //error_log('Second table: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 if ($sortbyname) ksort($peoples_tutor_registrations);
 
@@ -453,7 +420,6 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     $emaildups++;
   }
 }
-//error_log('After filter: ' . print_r($peoples_tutor_registrations, true));//(**)
 
 
 $table = new html_table();
@@ -493,17 +459,18 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
   if (!$displayforexcel) {
     $z = gmdate('d/m/Y H:i', $peoples_tutor_registration->timecreated);
     if ($state) $z .= '<br /><span style="color:green">Registered</span>';
+
+    $md5 = '';
+    $id = $peoples_tutor_registration->id;
+    $userid = $peoples_tutor_registration->userid;
+    $idoruserid = $id;
+    if (empty($idoruserid)) $idoruserid = $userid;
+    if (!$is_admin) $md5 = '&md5=' . md5("{$USER->id}jaybf6laHU{$idoruserid}"); // This user ($USER->id) can see/edit this record ($id or $userid) (not very secure, but good enough)
     if (empty($peoples_tutor_registration->id)) {
-      $z .= '<br />(No form)';
+      $z .= '<a href="' . $CFG->wwwroot . '/course/tutor_registration_edit.php?id=' . $id . "&userid=$userid" . $md5 . '"><br />Create form</a>';
     }
     else {
-      $md5 = '';
-      $id = $peoples_tutor_registration->id;
-      $userid = $peoples_tutor_registration->userid;
-      $idoruserid = $id;
-      if (empty($idoruserid)) $idoruserid = $userid;
-      if (!$is_admin) $md5 = '&md5=' . md5("{$USER->id}jaybf6laHU{$idoruserid}"); // This user ($USER->id) can see/edit this record ($id or $userid) (not very secure, but good enough)
-      $z .= '<a href="' . $CFG->wwwroot . '/course/tutor_registration_edit.php?id=' . $id . "&userid=$userid" . $md5 . '">Edit form</a>';
+      $z .= '<a href="' . $CFG->wwwroot . '/course/tutor_registration_edit.php?id=' . $id . "&userid=$userid" . $md5 . '"><br />Edit form</a>';
     }
     $rowdata[] = $z;
 
