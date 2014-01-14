@@ -133,7 +133,7 @@ $peoples_track_submissions = $DB->get_records_sql("
   LEFT JOIN mdl_grade_grades g ON i.id=g.itemid AND u.id=g.userid
   LEFT JOIN mdl_peoplesmph2 m ON u.id=m.userid
   WHERE
-    e.semester='?' AND
+    e.semester=? AND
     e.enrolled!=0 AND
     e.courseid=c.id AND
     c.id=a.course AND
@@ -156,7 +156,7 @@ $grade_grade_historys = $DB->get_records_sql("
   WHERE
     g.itemid=i.id AND
     g.source='mod/assign' AND
-    i.courseid IN (SELECT DISTINCT courseid FROM mdl_enrolment WHERE semester='?') AND
+    i.courseid IN (SELECT DISTINCT courseid FROM mdl_enrolment WHERE semester=?) AND
     g.finalgrade IS NOT NULL
   ORDER BY g.timemodified DESC",
   array($chosensemester));
