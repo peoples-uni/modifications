@@ -179,12 +179,7 @@ foreach ($grade_grade_historys as $grade_grade_history) {
 
 foreach ($peoples_track_submissions as $index => $peoples_track_submission) {
 
-  if (($chosensemester !== 'All') && ($application->semester !== $chosensemester)) {
-    unset($applications[$sid]);
-    continue;
-  }
-
-  if (!empty($chosenmodule) && ((stripos($peoples_track_submission->userid, $chosenmodule) === false))) {
+  if (!empty($chosenmodule) && ((stripos($peoples_track_submission->course, $chosenmodule) === false))) {
     unset($peoples_track_submissions[$index]);
     continue;
   }
@@ -193,7 +188,7 @@ foreach ($peoples_track_submissions as $index => $peoples_track_submission) {
 
 $table = new html_table();
 $table->head = array(
-  'Course',
+  'Module',
   'Name',
   'ID',
   'e-mail',
@@ -207,7 +202,7 @@ $table->head = array(
   'Submission Status',
   'Grade',
   'MPH',
-  'Previous Grades',);
+  'Grading History',);
 
 //$table->align = array ("left", "left", "left", "left", "left", "center", "center", "center");
 //$table->width = "95%";
