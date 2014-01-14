@@ -45,8 +45,8 @@ if (empty($fullname) || trim($fullname) == 'Guest User') {
 //require_capability('moodle/site:config', context_system::instance());
 $is_admin = has_capability('moodle/site:viewparticipants', context_system::instance());
 
-$PAGE->set_title('Tutor Registrations');
-$PAGE->set_heading('Tutor Registrations');
+$PAGE->set_title('Track Submissions');
+$PAGE->set_heading('Track Submissions');
 echo $OUTPUT->header();
 
 //echo html_writer::start_tag('div', array('class'=>'course-content'));
