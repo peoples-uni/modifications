@@ -127,7 +127,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
         $arrayvalues = explode(',', $peoples_tutor_registration->volunteertype);
         $mform->setDefault('volunteertype', $arrayvalues);
       }
-      $mform->addElement('static', 'volunteertype', '&nbsp;', 'Select possible types of volunteer <b>(Ctrl Click for multiple options)</b>.<br />');
+      $mform->addElement('static', 'explainvolunteertype', '&nbsp;', 'Select possible types of volunteer <b>(Ctrl Click for multiple options)</b>.<br />');
 
       $mform->addElement('text', 'modulesofinterest', 'Modules of interest', 'maxlength="100" size="50"');
       $mform->setType('modulesofinterest', PARAM_MULTILANG);
