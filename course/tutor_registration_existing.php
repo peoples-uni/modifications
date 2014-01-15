@@ -72,6 +72,9 @@ elseif ($data = $editform->get_data()) {
   $application->email = $userrecord->email;
   $application->city = $userrecord->city;
   $application->country = $userrecord->country;
+  $application->datefirstapproved = $userrecord->timecreated;
+  $application->datelastapproved = $userrecord->timecreated;
+  $application->hidden = 0;
 
   $dataitem = $data->reasons;
   if (empty($dataitem)) $dataitem = '';
@@ -172,6 +175,10 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';

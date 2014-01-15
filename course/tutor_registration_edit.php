@@ -354,6 +354,10 @@ TECHSUPPORT_EMAIL_HERE";
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   $subject = format_string($site->fullname) . ': Your Account has been Created';
