@@ -852,7 +852,7 @@ The following page was linked from the Drupal menus to allow donations: <a href=
 <br />Outside Extension!!!
 <br />Outside Cut-off!!!
 <br />Outside Due Date!!!
-<br />(only the "worst" of these, i.e. the first encountered, is shown.)
+<br />(only one of these, starting from the top of the list, is shown.)
 </li>
 <li>
 The most recent grade given to the submission is also displayed as well as whether the student is an MPH student (and of what type).
