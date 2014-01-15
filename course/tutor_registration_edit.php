@@ -87,6 +87,7 @@ if (!empty($peoples_tutor_registration) && !empty($peoples_tutor_registration->u
 }
 
 
+$failure = FALSE;
 $editform = new tutor_registration_edit_form(NULL, array('data' => $data, 'customdata' => array('id' => $id, 'userid' => $userid, 'is_admin' => $is_admin), 'options' => $options));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
@@ -183,7 +184,6 @@ elseif ($data = $editform->get_data()) {
 
 
   if (!empty($data->register_in_moodle) && !empty($peoples_tutor_registration->username)) {
-    $failure = FALSE;
     $username = $peoples_tutor_registration->username;
     $suffix = '';
     while ($userrecord = $DB->get_record('user', array('username' => $username . $suffix))) {
