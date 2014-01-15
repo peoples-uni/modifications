@@ -242,7 +242,7 @@ foreach ($track_submissions as $index => $track_submission) {
   elseif (!empty($track_submission->extension) && ($track_submission->submissiontime <= $track_submission->extension)) $z = 'Within Extension';
   elseif (!empty($track_submission->cutoff   ) && ($track_submission->submissiontime <= $track_submission->cutoff   )) $z = 'Within Cut-off';
   elseif (!empty($track_submission->extension)) $z = 'Outside Extension!!!';
-  elseif (!empty($track_submission->cutoff    ) $z = 'Outside Cut-off!!!';
+  elseif (!empty($track_submission->cutoff   )) $z = 'Outside Cut-off!!!';
   else                                          $z = 'Outside Due Date!!!';
 
   $n++;
