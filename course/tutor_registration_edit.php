@@ -259,6 +259,7 @@ elseif ($data = $editform->get_data()) {
   }
 
 
+error_log("id: $id, userid: $userid, new tut reg: " . print_r($peoples_tutor_registration, TRUE));//(**)
   if (!empty($id)) {
     $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
   }
