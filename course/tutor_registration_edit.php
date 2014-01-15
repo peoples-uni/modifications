@@ -10,7 +10,6 @@ require_once('tutor_registration_edit_form.php');
 $id = optional_param('id', 0, PARAM_INT);
 $userid = optional_param('userid', 0, PARAM_INT);
 $md5 = optional_param('md5', '', PARAM_ALPHANUM);
-error_log("id: $id, userid: $userid, TOP: ");//(**)
 
 $PAGE->set_context(context_system::instance());
 
@@ -60,8 +59,6 @@ else {
   $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('userid' => $USER->id));
   if (!empty($peoples_tutor_registration)) $id = $peoples_tutor_registration->id;
 }
-error_log("id: $id, userid: $userid, is_admin: $is_admin, After id check: ");//(**)
-//error_log("id: $id, userid: $userid, is_admin: $is_admin, After id check: " . print_r($peoples_tutor_registration, TRUE));//(**)
 
 if ($id) {
   $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
@@ -99,8 +96,6 @@ if ($editform->is_cancelled()) {
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
 }
 elseif ($data = $editform->get_data()) {
-//error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: ");//(**)
-error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: " . print_r($data, TRUE));//(**)
 
   if ($id) {
     $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
@@ -128,6 +123,10 @@ error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: " . 
     $peoples_tutor_registration->datefirstapproved = $userrecord->timecreated;
     $peoples_tutor_registration->datelastapproved = $userrecord->timecreated;
     $peoples_tutor_registration->hidden = 0;
+
+    $peoples_tutor_registration->volunteertype = ''; // Ensure set to default...
+    $peoples_tutor_registration->modulesofinterest = '';
+    $peoples_tutor_registration->notes = '';
   }
   else {
     echo '<h1>peoples_tutor_registration id and userid are both zero!</h1>';
@@ -180,9 +179,6 @@ error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: " . 
     }
     if (!empty($arraystring)) $arraystring = substr($arraystring, 0, strlen($arraystring) - 1);
     $peoples_tutor_registration->volunteertype = $arraystring;
-error_log("set from arraystring: " . print_r($peoples_tutor_registration, TRUE));//(**)
-error_log("arraystring: $arraystring");//(**)
-
 
     $dataitem = $data->modulesofinterest;
     if (empty($dataitem)) $dataitem = '';
@@ -270,8 +266,6 @@ error_log("arraystring: $arraystring");//(**)
   }
 
 
-//error_log("id: $id, userid: $userid, is_admin: $is_admin, new tut reg: ");//(**)
-error_log("id: $id, userid: $userid, is_admin: $is_admin, new tut reg: " . print_r($peoples_tutor_registration, TRUE));//(**)
   if (!empty($id)) {
     $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
   }

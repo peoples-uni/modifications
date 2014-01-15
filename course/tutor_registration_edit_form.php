@@ -31,8 +31,6 @@ class tutor_registration_edit_form extends moodleform {
         die();
       }
     }
-error_log("id: $id, is_admin: $is_admin, In form: ");//(**)
-//error_log("id: $id, is_admin: $is_admin, In form: " . print_r($peoples_tutor_registration, TRUE));//(**)
 
     if (!empty($peoples_tutor_registration->userid)) {
       $userrecord = $DB->get_record('user', array('id' => $peoples_tutor_registration->userid));
@@ -48,6 +46,7 @@ error_log("id: $id, is_admin: $is_admin, In form: ");//(**)
 
 
     $mform->addElement('header', 'top', 'Instructions');
+    $mform->setExpanded('top');
 
     $mform->addElement('static', 'instuctions', '',
 "
@@ -56,6 +55,7 @@ error_log("id: $id, is_admin: $is_admin, In form: ");//(**)
 
 
     $mform->addElement('header', 'personaldetails', 'Personal details');
+    $mform->setExpanded('personaldetails');
 
     $mform->addElement('textarea', 'reasons', 'Reasons for wanting to volunteer for Peoples-uni', 'wrap="HARD" rows="10" cols="100"');
     if (!empty($id)) $mform->setDefault('reasons', $peoples_tutor_registration->reasons);
@@ -64,6 +64,7 @@ error_log("id: $id, is_admin: $is_admin, In form: ");//(**)
 
 
     $mform->addElement('header', 'educationdetails', 'Education and Employment details');
+    $mform->setExpanded('educationdetails');
 
     $mform->addElement('textarea', 'education', 'Relevant qualifications (academic and professional)', 'wrap="HARD" rows="10" cols="100"');
     if (!empty($id)) $mform->setDefault('education', $peoples_tutor_registration->education);
@@ -92,6 +93,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
 
 
     $mform->addElement('header', 'howfounddetails', 'How did you hear about Peoples-uni?');
+    $mform->setExpanded('howfounddetails');
 
     $howfoundpeoplesname[  ''] = 'Select...';
     $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student or tutor';
@@ -114,6 +116,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
 
 
     $mform->addElement('header', 'databypeoplesuni', 'Data entered by Peoples-uni');
+    $mform->setExpanded('databypeoplesuni');
 
     if ($is_admin) {
       $volunteertypename['10'] = 'Tutor';

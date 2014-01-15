@@ -68,6 +68,10 @@ elseif ($data = $editform->get_data()) {
 
   $application->userid = 0;
 
+  $application->volunteertype = ''; // Ensure set to default...
+  $application->modulesofinterest = '';
+  $application->notes = '';
+
   $dataitem = $data->username;
   $dataitem = strip_tags($dataitem);
   $dataitem = str_replace("<", '', $dataitem);

@@ -55,6 +55,10 @@ elseif ($data = $editform->get_data()) {
 
   $application->userid = $USER->id;
 
+  $application->volunteertype = ''; // Ensure set to default...
+  $application->modulesofinterest = '';
+  $application->notes = '';
+
   $application->username = $userrecord->username;
   $application->lastname = $userrecord->lastname;
   $application->firstname = $userrecord->firstname;
