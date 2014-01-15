@@ -59,6 +59,9 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</a><br />
 </li>
 <li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracksubmissions">Tracking Student Assignment Submissions</a><br />
+</li>
+<li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a><br />
 </li>
 <li>
@@ -834,6 +837,34 @@ This sitewide role "View Full User Profiles" allows users to see the full profil
 </li>
 <li>
 The following page was linked from the Drupal menus to allow donations: <a href="http://courses.peoples-uni.org/course/donate.php?code=28595" target="_blank">http://courses.peoples-uni.org/course/donate.php?code=28595</a> but now it is not linked (because of usage for fraudulently testing stolen credit cards) but can be given out on request.
+</li>
+</ol>
+
+
+<a name="tracksubmissions"></a>
+<h2>Tracking Student Assignment Submissions</h2>
+<ol>
+<li>
+<a href="http://courses.peoples-uni.org/course/track_submissions.php" target="_blank">http://courses.peoples-uni.org/course/track_submissions.php</a> allows tracking of student assignment submissions against due, cut-off and extension dates. If the cut-off or extension dates have not been entered in the assignment for the student, they are not tested. An indication is also given (in the final column) if there is no submission or if the submission is outside the various dates. Here are the possible indications that can be given...
+<br />No Submission
+<br />Within Extension
+<br />Within Cut-off
+<br />Outside Extension!!!
+<br />Outside Cut-off!!!
+<br />Outside Due Date!!!
+<br />(only the "worst" of these, i.e. the first encountered, is shown.)
+</li>
+<li>
+The most recent grade given to the submission is also displayed as well as whether the student is an MPH student (and of what type).
+</li>
+<li>
+Also a list of all grades given to the assignment (grades and re-grades) and the date each grade was given is displayed
+</li>
+<li>
+The semester is selectable in a filter as well as module name (part of) and whether it is desired to remove all headers and footer info to make it easier to copy the data and paste into a spreadsheet.
+</li>
+<li>
+The Manager role gives access to this page.
 </li>
 </ol>
 
