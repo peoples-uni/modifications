@@ -7,10 +7,16 @@
 require_once('../config.php');
 require_once('tutor_registration_edit_form.php');
 
+$id = optional_param('id', 0, PARAM_INT);
+$userid = optional_param('userid', 0, PARAM_INT);
+$md5 = optional_param('md5', '', PARAM_ALPHANUM);
+
 $PAGE->set_context(context_system::instance());
 
 $PAGE->set_pagelayout('standard');
-$PAGE->set_url('/course/tutor_registration_edit.php');
+$pageparams = array('id' => $id, 'userid' => $userid);
+if (!empty($md5)) $pageparams['md5'] = $md5;
+$PAGE->set_url('/course/tutor_registration_edit.php', $pageparams);
 
 
 require_login();
@@ -30,13 +36,10 @@ if (empty($fullname) || trim($fullname) == 'Guest User') {
 }
 
 
-$id = optional_param('id', 0, PARAM_INT);
-$userid = optional_param('userid', 0, PARAM_INT);
-
 if (has_capability('moodle/site:viewparticipants', context_system::instance())) {
   $is_admin = TRUE;
 }
-elseif ($md5 = optional_param('md5', '', PARAM_ALPHANUM)) {
+elseif ($md5) {
   $idoruserid = $id;
   if (empty($idoruserid)) $idoruserid = $userid;
   if (md5("{$USER->id}jaybf6laHU{$idoruserid}") === $md5) $is_admin = TRUE;
