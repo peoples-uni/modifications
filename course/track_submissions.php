@@ -244,6 +244,7 @@ foreach ($track_submissions as $index => $track_submission) {
   elseif (!empty($track_submission->extension)) $z = 'Outside Extension!!!';
   elseif (!empty($track_submission->cutoff   )) $z = 'Outside Cut-off!!!';
   else                                          $z = 'Outside Due Date!!!';
+  $rowdata[] = '';
 
   $n++;
   $table->data[] = $rowdata;
