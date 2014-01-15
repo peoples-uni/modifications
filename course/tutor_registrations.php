@@ -220,7 +220,7 @@ $peoples_tutor_registrations = $DB->get_records_sql("
   FROM mdl_peoples_tutor_registration a
   LEFT JOIN mdl_user u ON a.userid=u.id
   WHERE hidden=0
-  ORDER BY a.datesubmitted DESC");
+  ORDER BY a.state ASC, a.datesubmitted DESC");
 if (empty($peoples_tutor_registrations)) {
   $peoples_tutor_registrations = array();
 }
@@ -425,7 +425,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
 $table = new html_table();
 $table->head = array(
-  'Registered (or Submitted)',
+  'Non-registered (ordered by submission date) then Registered (with date)',
   'Family name',
   'Given name',
   'Email address',
