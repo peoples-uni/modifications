@@ -51,7 +51,7 @@ elseif ($data = $editform->get_data()) {
 
   $application->datesubmitted = time();
 
-  $application->state = 0;
+  $application->state = 1;
 
   $application->userid = $USER->id;
 
