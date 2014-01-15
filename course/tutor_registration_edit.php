@@ -56,6 +56,7 @@ else {
   $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('userid' => $USER->id));
   if (!empty($peoples_tutor_registration)) $id = $peoples_tutor_registration->id;
 }
+error_log("id: $id, userid: $userid, $is_admin: $is_admin, After id check: " . print_r($peoples_tutor_registration, TRUE));//(**)
 
 if ($id) {
   $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
@@ -259,7 +260,7 @@ elseif ($data = $editform->get_data()) {
   }
 
 
-error_log("id: $id, userid: $userid, new tut reg: " . print_r($peoples_tutor_registration, TRUE));//(**)
+error_log("id: $id, userid: $userid, $is_admin: $is_admin, new tut reg: " . print_r($peoples_tutor_registration, TRUE));//(**)
   if (!empty($id)) {
     $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
   }
