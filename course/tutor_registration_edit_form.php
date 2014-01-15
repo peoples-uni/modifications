@@ -129,13 +129,11 @@ If you have a postgraduate qualification, please indicate name of qualification,
       }
       $mform->addElement('static', 'explainvolunteertype', '&nbsp;', 'Select possible types of volunteer <b>(Ctrl Click for multiple options)</b>.<br />');
 
-      $mform->addElement('text', 'modulesofinterest', 'Modules of interest', 'maxlength="100" size="50"');
-      $mform->setType('modulesofinterest', PARAM_MULTILANG);
+      $mform->addElement('textarea', 'modulesofinterest', 'Modules of interest', 'wrap="HARD" rows="10" cols="100"');
       if (!empty($id)) $mform->setDefault('modulesofinterest', $peoples_tutor_registration->modulesofinterest);
       $mform->addElement('static', 'explainmodulesofinterest', '&nbsp;', 'Please enter the names of modules that are of interest to this volunteer.<br />');
 
-      $mform->addElement('text', 'notes', 'Notes about volunteer', 'maxlength="100" size="50"');
-      $mform->setType('notes', PARAM_MULTILANG);
+      $mform->addElement('textarea', 'notes', 'Notes about volunteer', 'wrap="HARD" rows="10" cols="100"');
       if (!empty($id)) $mform->setDefault('notes', $peoples_tutor_registration->notes);
       $mform->addElement('static', 'explainnotes', '&nbsp;', 'Please add/update any notes you wish to make here.<br />');
     }
