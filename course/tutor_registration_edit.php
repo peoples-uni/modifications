@@ -10,6 +10,7 @@ require_once('tutor_registration_edit_form.php');
 $id = optional_param('id', 0, PARAM_INT);
 $userid = optional_param('userid', 0, PARAM_INT);
 $md5 = optional_param('md5', '', PARAM_ALPHANUM);
+error_log("id: $id, userid: $userid, TOP: ");//(**)
 
 $PAGE->set_context(context_system::instance());
 
@@ -59,7 +60,8 @@ else {
   $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('userid' => $USER->id));
   if (!empty($peoples_tutor_registration)) $id = $peoples_tutor_registration->id;
 }
-error_log("id: $id, userid: $userid, $is_admin: $is_admin, After id check: " . print_r($peoples_tutor_registration, TRUE));//(**)
+error_log("id: $id, userid: $userid, is_admin: $is_admin, After id check: ");//(**)
+//error_log("id: $id, userid: $userid, $is_admin: $is_admin, After id check: " . print_r($peoples_tutor_registration, TRUE));//(**)
 
 if ($id) {
   $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
@@ -97,6 +99,7 @@ if ($editform->is_cancelled()) {
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
 }
 elseif ($data = $editform->get_data()) {
+error_log("id: $id, userid: $userid, $is_admin: $is_admin, After submission: " . print_r($data, TRUE));//(**)
 
   if ($id) {
     $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
@@ -263,7 +266,8 @@ elseif ($data = $editform->get_data()) {
   }
 
 
-error_log("id: $id, userid: $userid, $is_admin: $is_admin, new tut reg: " . print_r($peoples_tutor_registration, TRUE));//(**)
+error_log("id: $id, userid: $userid, is_admin: $is_admin, new tut reg: ");//(**)
+//error_log("id: $id, userid: $userid, $is_admin: $is_admin, new tut reg: " . print_r($peoples_tutor_registration, TRUE));//(**)
   if (!empty($id)) {
     $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
   }

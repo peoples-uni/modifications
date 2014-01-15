@@ -31,7 +31,8 @@ class tutor_registration_edit_form extends moodleform {
         die();
       }
     }
-error_log("id: $id, $is_admin: $is_admin, In form: " . print_r($peoples_tutor_registration, TRUE));//(**)
+error_log("id: $id, $is_admin: $is_admin, In form: ");//(**)
+//error_log("id: $id, $is_admin: $is_admin, In form: " . print_r($peoples_tutor_registration, TRUE));//(**)
 
     if (!empty($peoples_tutor_registration->userid)) {
       $userrecord = $DB->get_record('user', array('id' => $peoples_tutor_registration->userid));
