@@ -99,8 +99,8 @@ if ($editform->is_cancelled()) {
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registrations.php'));
 }
 elseif ($data = $editform->get_data()) {
-error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: ");//(**)
-//error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: " . print_r($data, TRUE));//(**)
+//error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: ");//(**)
+error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: " . print_r($data, TRUE));//(**)
 
   if ($id) {
     $peoples_tutor_registration = $DB->get_record('peoples_tutor_registration', array('id' => $id));
@@ -180,6 +180,9 @@ error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: ");/
     }
     if (!empty($arraystring)) $arraystring = substr($arraystring, 0, strlen($arraystring) - 1);
     $peoples_tutor_registration->volunteertype = $arraystring;
+error_log("set from arraystring: " . print_r($peoples_tutor_registration, TRUE));//(**)
+error_log("arraystring: $arraystring");//(**)
+
 
     $dataitem = $data->modulesofinterest;
     if (empty($dataitem)) $dataitem = '';
@@ -267,8 +270,8 @@ error_log("id: $id, userid: $userid, is_admin: $is_admin, After submission: ");/
   }
 
 
-error_log("id: $id, userid: $userid, is_admin: $is_admin, new tut reg: ");//(**)
-//error_log("id: $id, userid: $userid, is_admin: $is_admin, new tut reg: " . print_r($peoples_tutor_registration, TRUE));//(**)
+//error_log("id: $id, userid: $userid, is_admin: $is_admin, new tut reg: ");//(**)
+error_log("id: $id, userid: $userid, is_admin: $is_admin, new tut reg: " . print_r($peoples_tutor_registration, TRUE));//(**)
   if (!empty($id)) {
     $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
   }
