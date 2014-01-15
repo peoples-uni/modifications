@@ -43,7 +43,7 @@ if (empty($fullname) || trim($fullname) == 'Guest User') {
 // Access to track_submissions.php is given by the "Manager" role which has moodle/site:viewparticipants
 // (administrator also has moodle/site:viewparticipants)
 //require_capability('moodle/site:config', context_system::instance());
-$is_admin = has_capability('moodle/site:viewparticipants', context_system::instance());
+require_capability('moodle/site:viewparticipants', context_system::instance());
 
 $PAGE->set_title('Track Submissions');
 $PAGE->set_heading('Track Submissions');
