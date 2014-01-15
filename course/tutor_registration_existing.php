@@ -63,9 +63,9 @@ elseif ($data = $editform->get_data()) {
   $prof = $DB->get_record('user_info_field', array('shortname' => 'gender'));
   if (!empty($prof->id)) $genderid = $prof->id;
   if ($genderid) {
-    $data = $DB->get_record('user_info_data', array('userid' => $application->userid, 'fieldid' => $genderid));
-    if (!empty($data->data)) {
-      $application->gender = $data->data;
+    $user_info_data = $DB->get_record('user_info_data', array('userid' => $application->userid, 'fieldid' => $genderid));
+    if (!empty($user_info_data->data)) {
+      $application->gender = $user_info_data->data;
     }
   }
 
