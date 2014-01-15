@@ -126,7 +126,7 @@ $track_submissions = $DB->get_records_sql("
     IFNULL(FROM_UNIXTIME(IF(asub.timemodified=0, NULL, asub.timemodified), '%Y-%m-%d'), '') AS submissiontime,
     IFNULL(asub.status, '') AS submissionstatus,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
-    IFNULL(mphstatus, '') AS mph
+    IFNULL(mphstatus, 0) AS mph
   FROM (mdl_enrolment e, mdl_course c, mdl_grade_items i, mdl_assign a, mdl_user u)
   LEFT JOIN mdl_assign_user_flags auf ON u.id=auf.userid AND a.id=auf.assignment
   LEFT JOIN mdl_assign_submission asub ON u.id=asub.userid AND a.id=asub.assignment
