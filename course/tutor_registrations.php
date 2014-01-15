@@ -335,7 +335,8 @@ if (!empty($extratutors)) {
       '' AS currentrole,
       '' AS otherinformation,
       '' AS howfoundpeoples,
-      '' AS howfoundorganisationname
+      '' AS howfoundorganisationname,
+      0 AS hidden
     FROM mdl_user u
     WHERE u.id IN ($extratutors)
     ORDER BY u.timecreated DESC");
