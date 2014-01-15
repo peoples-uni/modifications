@@ -109,7 +109,7 @@ function displayoptions($name, $options, $selectedvalue) {
 }
 
 
-$peoples_track_submissions = $DB->get_records_sql("
+$track_submissions = $DB->get_records_sql("
   SELECT
     CONCAT(e.id, '#', i.id),
     c.fullname AS course,
@@ -141,8 +141,8 @@ $peoples_track_submissions = $DB->get_records_sql("
     i.iteminstance=a.id AND
     e.userid=u.id
   ORDER BY fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC", array($chosensemester));
-if (empty($peoples_track_submissions)) {
-  $peoples_track_submissions = array();
+if (empty($track_submissions)) {
+  $track_submissions = array();
 }
 
 $grade_grade_historys = $DB->get_records_sql("
@@ -177,10 +177,10 @@ foreach ($grade_grade_historys as $grade_grade_history) {
 }
 
 
-foreach ($peoples_track_submissions as $index => $peoples_track_submission) {
+foreach ($track_submissions as $index => $track_submission) {
 
-  if (!empty($chosenmodule) && ((stripos($peoples_track_submission->course, $chosenmodule) === false))) {
-    unset($peoples_track_submissions[$index]);
+  if (!empty($chosenmodule) && ((stripos($track_submission->course, $chosenmodule) === false))) {
+    unset($track_submissions[$index]);
     continue;
   }
 }
@@ -193,42 +193,39 @@ $table->head = array(
   'ID',
   'e-mail',
   'Assignment',
-  'Created',
-  'Modified',
   'Due',
   'Cut-off',
   'Extension',
-  'Submission Time',
+  'Submission Date',
   'Submission Status',
   'Grade',
   'MPH',
-  'Grading History',);
+  'Grading History',
+  '');
 
 //$table->align = array ("left", "left", "left", "left", "left", "center", "center", "center");
 //$table->width = "95%";
 
 $n = 0;
-foreach ($peoples_track_submissions as $index => $peoples_track_submission) {
+foreach ($track_submissions as $index => $track_submission) {
   $rowdata = array();
 
-  $rowdata[] = htmlspecialchars($peoples_track_submission->course, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($peoples_track_submission->name, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = $peoples_track_submission->userid;
-  $rowdata[] = htmlspecialchars($peoples_track_submission->mail, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($peoples_track_submission->assignment, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = $peoples_track_submission->created;
-  $rowdata[] = $peoples_track_submission->modified;
-  $rowdata[] = $peoples_track_submission->due;
-  $rowdata[] = $peoples_track_submission->cutoff;
-  $rowdata[] = $peoples_track_submission->extension;
-  $rowdata[] = $peoples_track_submission->submissiontime;
-  $rowdata[] = $peoples_track_submission->submissionstatus;
-  $rowdata[] = $peoples_track_submission->grade;
+  $rowdata[] = htmlspecialchars($track_submission->course, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($track_submission->name, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = $track_submission->userid;
+  $rowdata[] = htmlspecialchars($track_submission->mail, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($track_submission->assignment, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = $track_submission->due;
+  $rowdata[] = $track_submission->cutoff;
+  $rowdata[] = $track_submission->extension;
+  $rowdata[] = $track_submission->submissiontime;
+  $rowdata[] = $track_submission->submissionstatus;
+  $rowdata[] = $track_submission->grade;
 
   $mphname = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
-  $rowdata[] = $mphname[$peoples_track_submission->mph];
+  $rowdata[] = $mphname[$track_submission->mph];
 
-  $index_element = "{$peoples_track_submission->itemid}#{$peoples_track_submission->userid}";
+  $index_element = "{$track_submission->itemid}#{$track_submission->userid}";
   if (!empty($item_to_grades[$index_element])) {
     $text = '';
     foreach ($item_to_grades[$index_element] as $i => $grade) {
@@ -239,6 +236,14 @@ foreach ($peoples_track_submissions as $index => $peoples_track_submission) {
   else {
     $rowdata[] = '';
   }
+
+  if ($track_submission->submissionstatus !== 'submitted') $z = 'No Submission';
+  elseif (                                         $track_submission->submissiontime <= $track_submission->due       ) $z = '';
+  elseif (!empty($track_submission->extension) && ($track_submission->submissiontime <= $track_submission->extension)) $z = 'Within Extension';
+  elseif (!empty($track_submission->cutoff   ) && ($track_submission->submissiontime <= $track_submission->cutoff   )) $z = 'Within Cut-off';
+  elseif (!empty($track_submission->extension)) $z = 'Outside Extension!!!';
+  elseif (!empty($track_submission->cutoff    ) $z = 'Outside Cut-off!!!';
+  else                                          $z = 'Outside Due Date!!!';
 
   $n++;
   $table->data[] = $rowdata;
