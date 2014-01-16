@@ -182,7 +182,8 @@ elseif ($data = $editform->get_data()) {
 
     $dataitem = $data->modulesofinterest;
     if (empty($dataitem)) $dataitem = '';
-    $peoples_tutor_registration->modulesofinterest = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+    //$peoples_tutor_registration->modulesofinterest = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+    $peoples_tutor_registration->modulesofinterest = $dataitem;
 
     $dataitem = $data->notes;
     if (empty($dataitem)) $dataitem = '';
