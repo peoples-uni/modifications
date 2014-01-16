@@ -30,6 +30,7 @@ class application_form_returning_student_form extends moodleform {
     $mform    = $this->_form;
 
     $mform->addElement('header', 'top', 'Instructions');
+    $mform->setExpanded('top');
 
     $mform->addElement('static', 'instuctions', '',
 '<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/book/essential-information-potential-students">Essential information for potential students (Click Here)</a><strong> before submitting this form, particularly see the information about </strong><a href="http://peoples-uni.org/book/course-fees">Course fees (Click Here)</a></p>
@@ -43,6 +44,7 @@ class application_form_returning_student_form extends moodleform {
 
     $semester_current = $DB->get_record('semester_current', array('id' => 1));
     $mform->addElement('header', 'modules', "Course Module Selection for Semester $semester_current->semester");
+    $mform->setExpanded('modules');
 
     // Ability to submit form (no matter what) is given by the "Manager" role which has moodle/site:viewparticipants
     // (administrator also has moodle/site:viewparticipants)
@@ -132,6 +134,7 @@ Please see the link <a href="http://www.peoples-uni.org/node/232" target="_blank
 //For this certificate you will need to complete the Evidence Based Practice, Patient Safety & Patient Safety in Practice modules.<br />');
 
     $mform->addElement('header', 'personaldetails', 'Your Existing Moodle User Name');
+    $mform->setExpanded('personaldetails');
 
     $mform->addElement('text', 'username', 'Moodle Username', 'maxlength="100" size="50"');
     $mform->addRule('username', 'Moodle Username is required', 'required', null, 'client');
@@ -140,6 +143,7 @@ Please see the link <a href="http://www.peoples-uni.org/node/232" target="_blank
 
 
     $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
+    $mform->setExpanded('scholorshipdetails');
 
     $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to request a reduction or waiver of the fees, please state here:<br />
 1. What is your current income<br />
@@ -150,6 +154,7 @@ Please see the link <a href="http://www.peoples-uni.org/node/232" target="_blank
 
 
     $mform->addElement('header', 'whynotcompletedetails', 'Previous Semester');
+    $mform->setExpanded('whynotcompletedetails');
 
     $mform->addElement('static', 'explainwhynotcomplete', '&nbsp;', 'If you are a returning student and did not complete your previous semester, please explain why this was so.');
     $mform->addElement('textarea', 'whynotcomplete', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
