@@ -292,6 +292,7 @@ foreach ($assignments as $assignment) {
   if ($assignment->shortname === 'tutor') {
     $asterisk = '*';
     if ($userid == $USER->id) $users_moduleleader_modules_for_filter[] = $coursename;
+    if ($userid == $USER->id) error_log("this user can see: $coursename");//(**)debug
   }
   else $asterisk = '';
 
