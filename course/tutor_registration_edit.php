@@ -139,27 +139,27 @@ elseif ($data = $editform->get_data()) {
 
   $dataitem = $data->reasons;
   if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->reasons = $dataitem;
 
   $dataitem = $data->education;
   if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->education = $dataitem;
 
   $dataitem = $data->tutoringexperience;
   if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->tutoringexperience = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->tutoringexperience = $dataitem;
 
   $dataitem = $data->currentjob;
   if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->currentjob = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->currentjob = $dataitem;
 
   $dataitem = $data->currentrole;
   if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->currentrole = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->currentrole = $dataitem;
 
   $dataitem = $data->otherinformation;
   if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->otherinformation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->otherinformation = $dataitem;
 
   $dataitem = $data->howfoundpeoples;
   if (empty($dataitem)) $dataitem = '0';
@@ -168,7 +168,7 @@ elseif ($data = $editform->get_data()) {
 
   $dataitem = $data->howfoundorganisationname;
   if (empty($dataitem)) $dataitem = '';
-  $peoples_tutor_registration->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $peoples_tutor_registration->howfoundorganisationname = $dataitem;
 
   if ($is_admin) {
     $dataitem = $data->volunteertype;
@@ -182,12 +182,11 @@ elseif ($data = $editform->get_data()) {
 
     $dataitem = $data->modulesofinterest;
     if (empty($dataitem)) $dataitem = '';
-    //$peoples_tutor_registration->modulesofinterest = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
     $peoples_tutor_registration->modulesofinterest = $dataitem;
 
     $dataitem = $data->notes;
     if (empty($dataitem)) $dataitem = '';
-    $peoples_tutor_registration->notes = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+    $peoples_tutor_registration->notes = $dataitem;
   }
 
 

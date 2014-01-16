@@ -113,27 +113,27 @@ elseif ($data = $editform->get_data()) {
 
   $dataitem = $data->reasons;
   if (empty($dataitem)) $dataitem = '';
-  $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $application->reasons = $dataitem;
 
   $dataitem = $data->education;
   if (empty($dataitem)) $dataitem = '';
-  $application->education = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $application->education = $dataitem;
 
   $dataitem = $data->tutoringexperience;
   if (empty($dataitem)) $dataitem = '';
-  $application->tutoringexperience = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $application->tutoringexperience = $dataitem;
 
   $dataitem = $data->currentjob;
   if (empty($dataitem)) $dataitem = '';
-  $application->currentjob = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $application->currentjob = $dataitem;
 
   $dataitem = $data->currentrole;
   if (empty($dataitem)) $dataitem = '';
-  $application->currentrole = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $application->currentrole = $dataitem;
 
   $dataitem = $data->otherinformation;
   if (empty($dataitem)) $dataitem = '';
-  $application->otherinformation = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $application->otherinformation = $dataitem;
 
   $dataitem = $data->howfoundpeoples;
   if (empty($dataitem)) $dataitem = '0';
@@ -142,7 +142,7 @@ elseif ($data = $editform->get_data()) {
 
   $dataitem = $data->howfoundorganisationname;
   if (empty($dataitem)) $dataitem = '';
-  $application->howfoundorganisationname = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
+  $application->howfoundorganisationname = $dataitem;
 
   $DB->insert_record('peoples_tutor_registration', $application);
 
@@ -157,12 +157,12 @@ elseif ($data = $editform->get_data()) {
   $message .= "Country: " . $countryname[$application->country] . "\n\n";
   $message .= "Date Submitted: " . gmdate('d/m/Y H:i', $application->datesubmitted) . "\n\n";
   $message .= "Preferred Username: $application->username\n\n";
-  $message .= "Reasons for wanting to volunteer for Peoples-uni:\n" . htmlspecialchars_decode($application->reasons, ENT_COMPAT) . "\n\n";
-  $message .= "Relevant qualifications:\n" . htmlspecialchars_decode($application->education, ENT_COMPAT) . "\n\n";
-  $message .= "Educational/tutoring experience:\n" . htmlspecialchars_decode($application->tutoringexperience, ENT_COMPAT) . "\n\n";
-  $message .= "Current employer:\n" . htmlspecialchars_decode($application->currentjob, ENT_COMPAT) . "\n\n";
-  $message .= "Current role:\n" . htmlspecialchars_decode($application->currentrole, ENT_COMPAT) . "\n\n";
-  $message .= "Other information:\n" . htmlspecialchars_decode($application->otherinformation, ENT_COMPAT) . "\n\n";
+  $message .= "Reasons for wanting to volunteer for Peoples-uni:\n" . $application->reasons . "\n\n";
+  $message .= "Relevant qualifications:\n" . $application->education . "\n\n";
+  $message .= "Educational/tutoring experience:\n" . $application->tutoringexperience . "\n\n";
+  $message .= "Current employer:\n" . $application->currentjob . "\n\n";
+  $message .= "Current role:\n" . $application->currentrole . "\n\n";
+  $message .= "Other information:\n" . $application->otherinformation . "\n\n";
 
     $howfoundpeoplesname[  ''] = 'Select...';
     $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student or tutor';
@@ -175,7 +175,7 @@ elseif ($data = $editform->get_data()) {
     $howfoundpeoplesname['80'] = 'Read or heard about from news article, journal or advertisement';
   $message .= "How heard about Peoples-uni: " . $howfoundpeoplesname[$application->howfoundpeoples] . "\n\n";
 
-  $message .= "Name of the organisation or person:\n" . htmlspecialchars_decode($application->howfoundorganisationname, ENT_COMPAT) . "\n";
+  $message .= "Name of the organisation or person:\n" . $application->howfoundorganisationname . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Tutor Registration request Form Submission From: $application->lastname, $application->firstname", $message);
   sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Tutor Registration request Form Submission From: $application->lastname, $application->firstname", $message);

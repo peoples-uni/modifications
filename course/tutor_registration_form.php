@@ -39,12 +39,12 @@ class tutor_registration_form extends moodleform {
 
     $mform->addElement('text', 'lastname', 'Family name', 'maxlength="100" size="50"');
     $mform->addRule('lastname', 'Family name is required', 'required', null, 'client');
-    $mform->setType('lastname', PARAM_MULTILANG);
+    $mform->setType('lastname', PARAM_NOTAGS);
     $mform->addElement('static', 'explainlastname', '&nbsp;', 'Your Family name or Surname.<br />');
 
     $mform->addElement('text', 'firstname', 'Given name', 'maxlength="100" size="50"');
     $mform->addRule('firstname', 'Given name is required', 'required', null, 'client');
-    $mform->setType('firstname', PARAM_MULTILANG);
+    $mform->setType('firstname', PARAM_NOTAGS);
     $mform->addElement('static', 'explainfirstname', '&nbsp;', 'Your first or given name(s).<br />');
 
     $mform->addElement('select', 'gender', 'Gender', array('' => 'Select...', 'Female' => 'Female', 'Male' => 'Male'));
@@ -54,18 +54,18 @@ class tutor_registration_form extends moodleform {
     $mform->addElement('text', 'email', 'Email address', 'maxlength="100" size="50"');
     $mform->addRule('email', 'Email is required', 'required', null, 'client');
     $mform->addRule('email', 'Email must be a valid e-mail address', 'email');
-    $mform->setType('email', PARAM_NOTAGS);
+    $mform->setType('email', PARAM_EMAIL);
     $mform->addElement('static', 'explainemail', '&nbsp;', 'Your email Address. We will send you a copy of your application to this email address.<br />');
 
     $mform->addElement('text', 'email2', 'Email verification', 'maxlength="100" size="50"');
     $mform->addRule('email2', 'Email verification is required', 'required', null, 'client');
     $mform->addRule('email2', 'Email must be a valid e-mail address', 'email');
-    $mform->setType('email2', PARAM_NOTAGS);
+    $mform->setType('email2', PARAM_EMAIL);
     $mform->addElement('static', 'explainemail2', '&nbsp;', 'Must match first e-mail.<br />');
 
     $mform->addElement('text', 'city', 'City/Town', 'maxlength="120" size="50"');
     $mform->addRule('city', 'City/Town is required', 'required', null, 'client');
-    $mform->setType('city', PARAM_MULTILANG);
+    $mform->setType('city', PARAM_TEXT);
     $mform->addElement('static', 'explaincity', '&nbsp;', 'Your City or Town for display in Moodle.<br />');
 
     $mform->addElement('select', 'country', 'Country', $countryname);
@@ -74,7 +74,7 @@ class tutor_registration_form extends moodleform {
 
     $mform->addElement('text', 'username', 'Preferred Username', 'maxlength="100" size="50"');
     $mform->addRule('username', 'Preferred Username is required', 'required', null, 'client');
-    $mform->setType('username', PARAM_MULTILANG);
+    $mform->setType('username', PARAM_USERNAME);
     $mform->addElement('static', 'explainusername', '&nbsp;', 'Please enter your desired Username for logging in to our education site, for example your first name.<br />');
 
     $mform->addElement('textarea', 'reasons', 'Reasons for wanting to volunteer for Peoples-uni', 'wrap="HARD" rows="10" cols="100"');
@@ -121,7 +121,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('static', 'explainhowfoundpeoples', '&nbsp;', 'Select the option that best describes how you heard about Peoples-uni.<br />');
 
     $mform->addElement('text', 'howfoundorganisationname', 'Name of the organisation or person from whom you heard about Peoples-uni', 'maxlength="100" size="50"');
-    $mform->setType('howfoundorganisationname', PARAM_MULTILANG);
+    $mform->setType('howfoundorganisationname', PARAM_TEXT);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
 
 

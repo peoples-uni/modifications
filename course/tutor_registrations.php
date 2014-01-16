@@ -494,27 +494,27 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     }
     $rowdata[] = $z;
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->modulesofinterest));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->modulesofinterest, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->notes));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->notes, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->reasons));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->reasons, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->education));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->education, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->tutoringexperience));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->tutoringexperience, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->currentjob));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->currentjob, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->currentrole));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->currentrole, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->otherinformation));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->otherinformation, ENT_COMPAT, 'UTF-8')));
 
     if (empty($howfoundpeoplesname[$peoples_tutor_registration->howfoundpeoples])) $z = '';
     else $z = $howfoundpeoplesname[$peoples_tutor_registration->howfoundpeoples];
     $rowdata[] = $z;
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $peoples_tutor_registration->howfoundorganisationname));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars($peoples_tutor_registration->howfoundorganisationname, ENT_COMPAT, 'UTF-8')));
 
     $rowdata[] = htmlspecialchars($peoples_tutor_registration->city, ENT_COMPAT, 'UTF-8');
 
@@ -563,27 +563,27 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     }
     $rowdata[] = $z;
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->modulesofinterest));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->modulesofinterest, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->notes));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->notes, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->reasons));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->reasons, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->education));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->education, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->tutoringexperience));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->tutoringexperience, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->currentjob));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->currentjob, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->currentrole));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->currentrole, ENT_COMPAT, 'UTF-8')));
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->otherinformation));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->otherinformation, ENT_COMPAT, 'UTF-8')));
 
     if (empty($howfoundpeoplesname[$peoples_tutor_registration->howfoundpeoples])) $z = '';
     else $z = $howfoundpeoplesname[$peoples_tutor_registration->howfoundpeoples];
     $rowdata[] = $z;
 
-    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $peoples_tutor_registration->howfoundorganisationname));
+    $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', htmlspecialchars($peoples_tutor_registration->howfoundorganisationname, ENT_COMPAT, 'UTF-8')));
 
     $rowdata[] = htmlspecialchars($peoples_tutor_registration->city, ENT_COMPAT, 'UTF-8');
 

@@ -110,7 +110,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('static', 'explainhowfoundpeoples', '&nbsp;', 'Select the option that best describes how you heard about Peoples-uni.<br />');
 
     $mform->addElement('text', 'howfoundorganisationname', 'Name of the organisation or person from whom you heard about Peoples-uni', 'maxlength="100" size="50"');
-    $mform->setType('howfoundorganisationname', PARAM_MULTILANG);
+    $mform->setType('howfoundorganisationname', PARAM_TEXT);
     if (!empty($id)) $mform->setDefault('howfoundorganisationname', $peoples_tutor_registration->howfoundorganisationname);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
 
