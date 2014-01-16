@@ -90,8 +90,8 @@ class application_form_returning_student_form extends moodleform {
     <br /><strong>Note:</strong> The 'Masters dissertation' is restricted to those who have passed sufficient prior modules.
     <br /><strong>Note:</strong> If you are applying for the 'Masters dissertation' module, you also need to separately submit a provisional topic for your dissertation. Please <strong><a href=\"" . $CFG->wwwroot . "/course/dissertation.php\" target=\"_blank\">Click Here on the Dissertation Topic Form</a></strong> to do this. You will find some helpful information there.
     <br />You MUST submit this Course Application Form, but your application will not be approved if you have not also submitted a provisional topic.
-    <br /><strong>Note:</strong> Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student.
-    <br /><strong>Note:</strong> You should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
+    <br /><strong>Note:</strong> Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student.";
+//<br /><strong>Note:</strong> You should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.
     if ($count > 1) {
       //$text .= ' Note: ' . $listforunavailable . ' are not available for this semester because they are full.';
       $text .= '<br /><strong>Note:</strong> ' . $listforunavailable . ' are not available for this semester because they are full.';
@@ -123,13 +123,13 @@ class application_form_returning_student_form extends moodleform {
 Please see the link <a href="http://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a> for further information about this.<br /><br />');
 
 
-    $listforselect = array();
-    $listforselect[1] = 'No';
-    $listforselect[2] = 'Yes';
-    $listforselect[3] = 'I am already enrolled in the Certificate in Patient Safety';
-    $mform->addElement('select', 'applycertpatientsafety', 'Apply for Certificate in Patient Safety', $listforselect);
-    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Certificate in Patient Safety (see <a href="http://www.peoples-uni.org/node/281" target="_blank">http://www.peoples-uni.org/node/281</a>)?<br />
-For this certificate you will need to complete the Evidence Based Practice, Patient Safety & Patient Safety in Practice modules.<br />');
+//    $listforselect = array();
+//    $listforselect[1] = 'No';
+//    $listforselect[2] = 'Yes';
+//    $listforselect[3] = 'I am already enrolled in the Certificate in Patient Safety';
+//    $mform->addElement('select', 'applycertpatientsafety', 'Apply for Certificate in Patient Safety', $listforselect);
+//    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Certificate in Patient Safety (see <a href="http://www.peoples-uni.org/node/281" target="_blank">http://www.peoples-uni.org/node/281</a>)?<br />
+//For this certificate you will need to complete the Evidence Based Practice, Patient Safety & Patient Safety in Practice modules.<br />');
 
     $mform->addElement('header', 'personaldetails', 'Your Existing Moodle User Name');
 

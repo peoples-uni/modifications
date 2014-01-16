@@ -216,7 +216,6 @@ elseif ($data = $editform->get_data()) {
     $user = new stdClass();
     $user->username     = $peoples_tutor_registration->username;
     $user->password     = (string)rand(100000, 999999);
-error_log("un: {$user->username}, pw: {$user->password}");//(**)
     $user->lastname     = $peoples_tutor_registration->lastname;
     $user->firstname    = $peoples_tutor_registration->firstname;
     $user->email        = $peoples_tutor_registration->email;
