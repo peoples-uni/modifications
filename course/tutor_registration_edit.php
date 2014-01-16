@@ -209,9 +209,9 @@ elseif ($data = $editform->get_data()) {
     }
   }
 
-  if (!empty($data->register_in_moodle) && !$failure) {
+  if (!empty($data->register_in_moodle) && !empty($peoples_tutor_registration->username) && !$failure) {
 
-    $peoples_tutor_registration->username = $username;
+    $peoples_tutor_registration->username = $username . $suffix;
 
     $user = new stdClass();
     $user->username     = $peoples_tutor_registration->username;
