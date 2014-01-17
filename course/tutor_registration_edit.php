@@ -334,6 +334,10 @@ different login): http://peoples-uni.org
 
 Your profile is at:
 http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
+You are welcome to personalize this, so students
+and colleagues can learn more about you.
+
+You will soon receive information about next steps.
 
 If you need help, please contact the site administrator,
 TECHSUPPORT_EMAIL_HERE";
@@ -350,7 +354,7 @@ TECHSUPPORT_EMAIL_HERE";
   //$message = str_replace('STUDENTS_CORNER_ID_HERE', $studentscorner->id, $message);
   $message = str_replace('USER_ID_HERE',            $user->id, $message);
   //$message = str_replace('TECHSUPPORT_EMAIL_HERE',  "\nPeoples-uni Support\ntechsupport@helpdesk.peoples-uni.org\n", $message);
-  $message = str_replace('TECHSUPPORT_EMAIL_HERE',  "\nPeoples-uni Support\napply@peoples-uni.org\n", $message);
+  $message = str_replace('TECHSUPPORT_EMAIL_HERE',  "\nPeoples-uni Support\nvolunteer@peoples-uni.org\n", $message);
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
@@ -358,7 +362,7 @@ TECHSUPPORT_EMAIL_HERE";
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();
   //$supportuser->email = 'techsupport@helpdesk.peoples-uni.org';
-  $supportuser->email = 'apply@peoples-uni.org';
+  $supportuser->email = 'volunteer@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
   $supportuser->firstnamephonetic = NULL;

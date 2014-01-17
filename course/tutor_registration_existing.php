@@ -147,7 +147,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Name of the organisation or person:\n" . $application->howfoundorganisationname . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Tutor Registration request Form Submission From: $application->lastname, $application->firstname", $message);
-  sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Tutor Registration request Form Submission From: $application->lastname, $application->firstname", $message);
+  sendapprovedmail('volunteer@peoples-uni.org', "Peoples-uni Tutor Registration request Form Submission From: $application->lastname, $application->firstname", $message);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success.php'));
 }
@@ -176,7 +176,7 @@ function sendapprovedmail($email, $subject, $message) {
   $user->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
-  $supportuser->email = 'apply@peoples-uni.org';
+  $supportuser->email = 'volunteer@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
   $supportuser->firstnamephonetic = NULL;

@@ -31,7 +31,7 @@ class tutor_registration_form extends moodleform {
 <p><strong>Note:</strong> Only use this from if you are new to Peoples-uni and therefore do not have a Moodle account. If you have a courses.peoples-uni.org account, <a href="' . $CFG->wwwroot . '/course/tutor_registration_existing.php">please Click Here to volunteer.</a></p>
 <p>For inquiries about volunteering please send an email to <a href="mailto:contact@peoples-uni.org?subject=Volunteering query">contact@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
-<p><strong>You should receive an e-mail with a copy of your application soon after you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a>.</strong></p>
+<p><strong>You should receive an e-mail with a copy of your application soon after you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:volunteer@peoples-uni.org">volunteer@peoples-uni.org</a>.</strong></p>
 ');
 
 
