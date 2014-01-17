@@ -123,8 +123,9 @@ $track_submissions = $DB->get_records_sql("
     FROM_UNIXTIME(duedate, '%Y-%m-%d') AS due,
     IFNULL(FROM_UNIXTIME(IF(      cutoffdate=0, NULL,       cutoffdate), '%Y-%m-%d'), '') AS cutoff,
     IFNULL(FROM_UNIXTIME(IF(extensionduedate=0, NULL, extensionduedate), '%Y-%m-%d'), '') AS extension,
-    IFNULL(FROM_UNIXTIME(IF(asub.timemodified=0, NULL, asub.timemodified), '%Y-%m-%d'), '') AS submissiontime,
-    IFNULL(asub.status, '') AS submissionstatus,
+    IFNULL(FROM_UNIXTIME(IF(MAX(IFNULL(asub.timemodified, 0))=0, NULL, MAX(IFNULL(asub.timemodified, 0))), '%Y-%m-%d'), '') AS submissiontime,
+    SUBSTRING(MAX(CONCAT(LPAD(IFNULL(asub.timemodified, 0), 12, '0'), IFNULL(asub.status, ' '))), 13) submissionstatus,
+    GROUP_CONCAT(CONCAT(IFNULL(asub.status, ''), '(', IFNULL(FROM_UNIXTIME(IF(asub.timemodified=0, NULL, asub.timemodified), '%Y-%m-%d'), ''), ')') ORDER BY asub.timemodified SEPARATOR ', ') AS submissionhistory,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
     IFNULL(mphstatus, 0) AS mph
   FROM (mdl_enrolment e, mdl_course c, mdl_grade_items i, mdl_assign a, mdl_user u)
@@ -140,6 +141,7 @@ $track_submissions = $DB->get_records_sql("
     c.id=i.courseid AND
     i.iteminstance=a.id AND
     e.userid=u.id
+  GROUP BY a.id, u.id
   ORDER BY fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC", array($chosensemester));
 if (empty($track_submissions)) {
   $track_submissions = array();
@@ -198,6 +200,7 @@ $table->head = array(
   'Extension Date',
   'Submission Date',
   'Submission Status',
+  'Submission History',
   'Grade',
   'MPH',
   'Grading History',
@@ -220,6 +223,10 @@ foreach ($track_submissions as $index => $track_submission) {
   $rowdata[] = $track_submission->extension;
   $rowdata[] = $track_submission->submissiontime;
   $rowdata[] = $track_submission->submissionstatus;
+
+  if (substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
+  else $rowdata[] = '';
+
   $rowdata[] = $track_submission->grade;
 
   $mphname = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
