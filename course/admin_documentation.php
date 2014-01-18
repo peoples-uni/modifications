@@ -832,27 +832,27 @@ This should be done some time before assignment submission and grading starts.
 <ol>
 <li>
 <a href="http://courses.peoples-uni.org/course/tutor_registration.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration.php</a> is a page the link to which should be given to new volunteers (of any type, but primarily tutor volunteers) to enter data about themselves including their reasons for volunteering and their experience and also data needed to register them in Moodle.
-br />Note: we could use this form to enter data for a volunteer who has never filled in the form or been registered in Moodle.
+<br />Note: we (Peoples-uni) could also use this form to enter data for a volunteer who has never filled in the form or been registered in Moodle, although it is better for the prospective volunteer to do it.
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/tutor_registration_existing.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration_existing.php</a> is similar to the previous page but is designed to gather a subset of the above information, because they have previously been registered in Moodle but we would still like to have a record of their background etc. They must be logged into Moodle for this form.
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a>
-list all forms submitted by volunteers and also all Moodle users who have ever bene tutors in one of the Peoples-uni modules even is they have never submitted a form.
+list all forms submitted by volunteers and also all Moodle users who have ever been tutors in one of the Peoples-uni modules even is they have never submitted a form.
 </li>
 <li>
 As well as data entered by the tutor it also displays other data in columns...
-<br />Date registered in Moodle (or if not yet registered the date or form submission).
-<br />An indication whether they have been register ("Registered").
-<br />And, still in the first column a link to either "Create form" for those tutors who never filled in a from and we wish to do it form them or "Edit form" if we want to update their form (see below).
+<br />Date registered in Moodle (or if not yet registered the date of form submission).
+<br />An indication whether they have been registered ("Registered").
+<br />And, still in the first column a link to either "Create form" for those tutors who never filled in a from and we wish to do it for them or "Edit form" if we want to update their form (see below).
 <br />Names & e-mail.
-<br />"Volunteer type" which is a field that we can enter when we "Edit form" to describe the type of volunteer. (only Managers or Module leaders for that tutor can see or edit this field.)
-<br />"Modules of interest" which is a field that we can enter when we "Edit form" to describe the modules that the volunteer is interested in or possibly suitable for. (only Managers or Module leaders for that tutor can see or edit this field.)
-<br />"Notes" which is a field that we can enter when we "Edit form" to write notes on the volunteer. (only Managers or Module leaders for that tutor can see or edit this field.)
+<br />"Volunteer type" which is a field that we can enter when we "Edit form" to describe the type of volunteer. (Only Managers or Module leaders for that tutor can see or edit this field.)
+<br />"Modules of interest" which is a field that we can enter when we "Edit form" to describe the modules that the volunteer is interested in or possibly suitable for. (Only Managers or Module leaders for that tutor can see or edit this field.)
+<br />"Notes" which is a field that we can enter when we "Edit form" to write notes on the volunteer. (Only Managers or Module leaders for that tutor can see or edit this field.)
 <br />Then there are fields entered by the volunteer (also editable by us).
-<br />Then there is one columns for every semester showing the modules that the volunteer has been a tutor for ("*" indicating Module leader).
-<br />The final column list the names of files that have been uploaded for the volunteer. This is normally expected to contain the volunteers CV (to actually see the files you need to go in to "Edit form").
+<br />Then there is one column for every semester showing the modules that the volunteer has been a tutor for ("*" indicating Module leader).
+<br />The final column list the names of files that have been uploaded for the volunteer. This is normally expected to contain the volunteers CV (to actually see the files you need to go into "Edit form").
 <li>
 Various filters are available.
 </li>
@@ -867,10 +867,10 @@ The Manager role gives access, but additionally, Module leaders can also access 
 </li>
 <li>
 The "Create form" or "Edit form" links bring you to a page where you can edit the data for a volunteer. This includes uploading (or viewing) CVs or any other files that might be kept here.
-<br />Toward the bottom of the page there is a checkbox "Check to register volunteer in Moodle" which allows us (a Manager) to select and when the form is submitted, the prospective volunteer will be given a Moodle account.
+<br />Toward the bottom of the page there is a checkbox "Check to register volunteer in Moodle" which allows us (a Manager) to check and when the form is submitted, the prospective volunteer will be given a Moodle account.
 <br />After submission, if the checkbox was checked, the order of the rows in the table may be changed as unregistered users show on top.
-<br />The new Moodle user will get an e-mail with their new Moodle username and password and instruction of where to login.
-<br />The e-mail also contains the following text about their profile and also indicating that they will get further information, so this should be followed up quickly with guidelines on being a tutor (or whatever other role then may be given in Peoples-uni.
+<br />The new Moodle user will get an e-mail with their new Moodle username and password and instructions on where to login.
+<br />The e-mail also contains the following text about their profile and also indicating that they will get further information, so this should be followed up quickly with guidelines on being a tutor (or whatever other role then may be given in Peoples-uni).
 <pre>
 Your profile is at:
 http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
@@ -884,8 +884,7 @@ You will soon receive information about next steps.
 Registration is only a first step, they will not have access to anything, especially they will not have access to any modules... they need to be manually given the appropriate Moodle roles suitable to their new volunteer position.
 </li>
 <li>
-The Manager role gives access, but additionally, Module leaders can also access to view and the edit a form for any tutor in one of the modules for which they are Module leader.
-<br />Note: the <a href="http://courses.peoples-uni.org/course/tutor_registration_edit.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration_edit.php</a> page URL which is linked from the <a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a> page can be given directly to any tutor to allow them to view and edit/update their own data including CV(s) if the form has already has been created by the volunteer themselves or by us. They cannot edit "Volunteer type", "Modules of interest" or "Notes" unless they happen to be a Module leader.
+Note: the <a href="http://courses.peoples-uni.org/course/tutor_registration_edit.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration_edit.php</a> page URL which is linked from the <a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a> page can be given directly to any tutor to allow them to view and edit/update their own data including CV(s) if the form has already has been created by the volunteer themselves or by us. They cannot edit "Volunteer type", "Modules of interest" or "Notes" unless they happen to be a Module leader.
 </li>
 </ol>
 
