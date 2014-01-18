@@ -56,6 +56,9 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a><br />
 </li>
 <li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tutorregistration">Registering Tutors in Moodle</a><br />
+</li>
+<li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</a><br />
 </li>
 <li>
@@ -824,6 +827,69 @@ This should be done some time before assignment submission and grading starts.
 </ol>
 
 
+<a name="tutorregistration"></a>
+<h2>Registering Tutors in Moodle</h2>
+<ol>
+<li>
+<a href="http://courses.peoples-uni.org/course/tutor_registration.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration.php</a> is a page the link to which should be given to new volunteers (of any type, but primarily tutor volunteers) to enter data about themselves including their reasons for volunteering and their experience and also data needed to register them in Moodle.
+br />Note: we could use this form to enter data for a volunteer who has never filled in the form or been registered in Moodle.
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/tutor_registration_existing.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration_existing.php</a> is similar to the previous page but is designed to gather a subset of the above information, because they have previously been registered in Moodle but we would still like to have a record of their background etc. They must be logged into Moodle for this form.
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a>
+list all forms submitted by volunteers and also all Moodle users who have ever bene tutors in one of the Peoples-uni modules even is they have never submitted a form.
+</li>
+<li>
+As well as data entered by the tutor it also displays other data in columns...
+<br />Date registered in Moodle (or if not yet registered the date or form submission).
+<br />An indication whether they have been register ("Registered").
+<br />And, still in the first column a link to either "Create form" for those tutors who never filled in a from and we wish to do it form them or "Edit form" if we want to update their form (see below).
+<br />Names & e-mail.
+<br />"Volunteer type" which is a field that we can enter when we "Edit form" to describe the type of volunteer. (only Managers or Module leaders for that tutor can see or edit this field.)
+<br />"Modules of interest" which is a field that we can enter when we "Edit form" to describe the modules that the volunteer is interested in or possibly suitable for. (only Managers or Module leaders for that tutor can see or edit this field.)
+<br />"Notes" which is a field that we can enter when we "Edit form" to write notes on the volunteer. (only Managers or Module leaders for that tutor can see or edit this field.)
+<br />Then there are fields entered by the volunteer (also editable by us).
+<br />Then there is one columns for every semester showing the modules that the volunteer has been a tutor for ("*" indicating Module leader).
+<br />The final column list the names of files that have been uploaded for the volunteer. This is normally expected to contain the volunteers CV (to actually see the files you need to go in to "Edit form").
+<li>
+Various filters are available.
+</li>
+<li>
+e-mails of all selected tutors are displayed in a list towards the bottom of the page.
+</li>
+<li>
+Some statistics are displayed at the bottom of the page.
+</li>
+<li>
+The Manager role gives access, but additionally, Module leaders can also access to view and the edit a form for any tutor in one of the modules for which they are Module leader.
+</li>
+<li>
+The "Create form" or "Edit form" links bring you to a page where you can edit the data for a volunteer. This includes uploading (or viewing) CVs or any other files that might be kept here.
+<br />Toward the bottom of the page there is a checkbox "Check to register volunteer in Moodle" which allows us (a Manager) to select and when the form is submitted, the prospective volunteer will be given a Moodle account.
+<br />After submission, if the checkbox was checked, the order of the rows in the table may be changed as unregistered users show on top.
+<br />The new Moodle user will get an e-mail with their new Moodle username and password and instruction of where to login.
+<br />The e-mail also contains the following text about their profile and also indicating that they will get further information, so this should be followed up quickly with guidelines on being a tutor (or whatever other role then may be given in Peoples-uni.
+<pre>
+Your profile is at:
+http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
+You are welcome to personalize this, so students
+and colleagues can learn more about you.
+
+You will soon receive information about next steps.
+</pre>
+</li>
+<li>
+Registration is only a first step, they will not have access to anything, especially they will not have access to any modules... they need to be manually given the appropriate Moodle roles suitable to their new volunteer position.
+</li>
+<li>
+The Manager role gives access, but additionally, Module leaders can also access to view and the edit a form for any tutor in one of the modules for which they are Module leader.
+<br />Note: the <a href="http://courses.peoples-uni.org/course/tutor_registration_edit.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration_edit.php</a> page URL which is linked from the <a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a> page can be given directly to any tutor to allow them to view and edit/update their own data including CV(s) if the form has already has been created by the volunteer themselves or by us. They cannot edit "Volunteer type", "Modules of interest" or "Notes" unless they happen to be a Module leader.
+</li>
+</ol>
+
+
 <a name="misc"></a>
 <h2>Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</h2>
 <ol>
@@ -869,6 +935,9 @@ The semester is selectable in a filter as well as module name (part of) and whet
 <li>
 The Manager role gives access to this page.
 </li>
+<li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> describes a way of looking at all submissions and all grades for an individual student.
+</li>
 </ol>
 
 
@@ -876,7 +945,11 @@ The Manager role gives access to this page.
 <h2>Collaborative Assignment Marking and Resubmission Tracking</h2>
 <ol>
 <li>
+<strong>This process is currently not used!</strong>
+</li>
+<li>
 A process has been designed which allows Tutors for a course module to use a (Google Apps) spreadsheet to collaborate on tracking assignment submissions and their grading (as well as overall module grading).
+</li>
 <li>
 It is driven by a small Block "Track Marking" which should have been added to every relevant Module (on the bottom right hand side). The block is only visible to site administrators or to Module Leader/Tutors (more specifically users who have moodle/grade:edit for the course). It is not visible to students. Also the Block will not be displayed to Module Leader/Tutors if the spreadsheet has not yet been created.
 </li>
@@ -928,9 +1001,6 @@ Assignment grades agreed in the spreadsheet will need to be manually entered in 
 If you go to any of the following links <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>, "Details", <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> or "Student Grades"/student.php, you will see a link called "Student Submissions" for each student which will allow you to view all submissions that students have made for assignments (including re-submissions) and also all the grades received by the Student and all comments by the Tutors.
 </li>
 <li>
-Note: "Student Submissions" may now be somewhat less useful as we are transitioning to a process where grades will only be entered when finally agreed so will not change. Also we are changing to a multiple file upload assignment type which will allow multiple files to be stored.
-</li>
-<li>
 The "Student Submissions" link will display (In the first table) a list of all submissions made by the student. Note that the files can always be downloaded to your machine by clicking on them.
 </li>
 <li>
@@ -941,6 +1011,9 @@ Access to "Student Submissions" is available to any Tutor or Admin. None of this
 </li>
 <li>
 There is a parameter you can add to the end of the "Student Submissions" URL "&hidequiz=1", which hides display of quizzes if it becomes too cluttered for a particular student.
+</li>
+<li>
+....................................................
 </li>
 <li>
 To view posts made by Students to discussion forums go to: <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a>.
@@ -990,6 +1063,9 @@ At the end of the <a href="http://courses.peoples-uni.org/course/posts.php" targ
 Access to posts.php is available to any Tutor, Student coordinator or Admin.<br /><br />
 </li>
 <li>
+....................................................
+</li>
+<li>
 To view posts made by Tutors to discussion forums go to: <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a>.
 </li>
 <li>
@@ -1011,6 +1087,9 @@ After the main body of posts there are tables (one per course) that show, for ea
 </li>
 <li>
 Access to tutorposts.php is available to any Tutor or Admin.<br /><br />
+</li>
+<li>
+....................................................
 </li>
 <li>
 To view posts made in the Student Support Forums module go to: <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a>.
