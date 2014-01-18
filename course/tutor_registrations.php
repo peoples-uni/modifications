@@ -423,6 +423,21 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 }
 
 
+$files_for_users = $DB->get_records_sql("
+  SELECT u.id, GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR ', ') FROM mdl_files f, mdl_context con, mdl_user u
+  WHERE
+    f.component='peoples_record_tutor' AND
+    f.filearea='tutor' AND
+    f.filesize!=0 AND
+    f.contextid=con.id AND
+    con.contextlevel=30 AND
+    con.instanceid=u.id
+  GROUP BY u.id");
+if (empty($files_for_users)) {
+  $files_for_users = array();
+}
+
+
 $table = new html_table();
 $table->head = array(
   'Non-registered (ordered by submission date) then Registered (with date)',
@@ -445,6 +460,7 @@ $table->head = array(
 foreach ($semesters_descending as $semester) {
   $table->head[] = str_replace('Starting ', '', $semester->semester);
 }
+$table->head[] = 'Files';
 
 //$table->align = array ("left", "left", "left", "left", "left", "center", "center", "center");
 //$table->width = "95%";
@@ -546,6 +562,13 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
       $listofemails[]  = htmlspecialchars($peoples_tutor_registration->email, ENT_COMPAT, 'UTF-8');
     }
+
+    if (!empty($files_for_users[$peoples_tutor_registration->userid])) {
+      $rowdata[] = $files_for_users[$peoples_tutor_registration->userid];
+    }
+    else {
+      $rowdata[] = '';
+    }
   }
   else {
     $rowdata[] = gmdate('d/m/Y H:i', $peoples_tutor_registration->timecreated);
@@ -599,6 +622,13 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
         $z = implode(', ', $courses);
       }
       $rowdata[] = $z;
+    }
+
+    if (!empty($files_for_users[$peoples_tutor_registration->userid])) {
+      $rowdata[] = $files_for_users[$peoples_tutor_registration->userid];
+    }
+    else {
+      $rowdata[] = '';
     }
   }
 
