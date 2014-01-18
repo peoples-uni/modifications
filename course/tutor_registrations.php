@@ -424,7 +424,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
 
 $files_for_users = $DB->get_records_sql("
-  SELECT u.id, GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR ', ') FROM mdl_files f, mdl_context con, mdl_user u
+  SELECT u.id, GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR ', ') AS filelist FROM mdl_files f, mdl_context con, mdl_user u
   WHERE
     f.component='peoples_record_tutor' AND
     f.filearea='tutor' AND
@@ -564,7 +564,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     }
 
     if (!empty($files_for_users[$peoples_tutor_registration->userid])) {
-      $rowdata[] = $files_for_users[$peoples_tutor_registration->userid];
+      $rowdata[] = $files_for_users[$peoples_tutor_registration->userid]->filelist;
     }
     else {
       $rowdata[] = '';
