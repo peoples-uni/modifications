@@ -845,7 +845,7 @@ The following page was linked from the Drupal menus to allow donations: <a href=
 <h2>Tracking Student Assignment Submissions</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/track_submissions.php" target="_blank">http://courses.peoples-uni.org/course/track_submissions.php</a> allows tracking of student assignment submissions against due, cut-off and extension dates. If the cut-off or extension dates have not been entered in the assignment for the student, they are not tested. An indication is also given (in the final column) if there is no submission or if the submission is outside the various dates. Here are the possible indications that can be given...
+<a href="http://courses.peoples-uni.org/course/track_submissions.php" target="_blank">http://courses.peoples-uni.org/course/track_submissions.php</a> allows tracking of student assignment submissions (most recent date and status displayed) against due, cut-off and extension dates. If the cut-off or extension dates have not been entered in the assignment for the student, they are not tested. An indication is also given (in the final column) if there is no submission or if the submission is outside the various dates. Here are the possible indications that can be given...
 <br />No Submission
 <br />Within Extension
 <br />Within Cut-off
@@ -855,10 +855,13 @@ The following page was linked from the Drupal menus to allow donations: <a href=
 <br />(only one of these, starting from the top of the list, is shown.)
 </li>
 <li>
+If there has been more than one submission then the "Submission History" column contains a list of all submissions (status & date).
+</li>
+<li>
 The most recent grade given to the submission is also displayed as well as whether the student is an MPH student (and of what type).
 </li>
 <li>
-Also a list of all grades given to the assignment (grades and re-grades) and the date each grade was given is displayed
+Also a list of all grades given to the assignment (grades and re-grades) and the date each grade was given is displayed.
 </li>
 <li>
 The semester is selectable in a filter as well as module name (part of) and whether it is desired to remove all headers and footer info to make it easier to copy the data and paste into a spreadsheet.
