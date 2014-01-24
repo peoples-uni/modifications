@@ -126,6 +126,7 @@ $track_submissions = $DB->get_records_sql("
     IFNULL(FROM_UNIXTIME(IF(MAX(IFNULL(asub.timemodified, 0))=0, NULL, MAX(IFNULL(asub.timemodified, 0))), '%Y-%m-%d'), '') AS submissiontime,
     SUBSTRING(MAX(CONCAT(LPAD(IFNULL(asub.timemodified, 0), 12, '0'), IFNULL(asub.status, ' '))), 13) submissionstatus,
     GROUP_CONCAT(CONCAT(IFNULL(asub.status, ''), '(', IFNULL(FROM_UNIXTIME(IF(asub.timemodified=0, NULL, asub.timemodified), '%Y-%m-%d'), ''), ')') ORDER BY asub.timemodified SEPARATOR ', ') AS submissionhistory,
+    GROUP_CONCAT(CONCAT(IFNULL(FROM_UNIXTIME(IF(r.timemodified=0, NULL, r.timemodified), '%Y-%m-%d'), '')) ORDER BY r.timemodified SEPARATOR ', ') AS submissionhistoryall,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
     IFNULL(mphstatus, 0) AS mph
   FROM (mdl_enrolment e, mdl_course c, mdl_grade_items i, mdl_assign a, mdl_user u)
@@ -133,6 +134,7 @@ $track_submissions = $DB->get_records_sql("
   LEFT JOIN mdl_assign_submission asub ON u.id=asub.userid AND a.id=asub.assignment
   LEFT JOIN mdl_grade_grades g ON i.id=g.itemid AND u.id=g.userid
   LEFT JOIN mdl_peoplesmph2 m ON u.id=m.userid
+  LEFT JOIN mdl_recorded_submissions r ON a.id=r.assign AND u.id=r.userid
   WHERE
     e.semester=? AND
     e.enrolled!=0 AND
@@ -201,6 +203,7 @@ $table->head = array(
   'Submission Date',
   'Submission Status',
   'Submission History',
+  'All Recorded Submissions',
   'Grade',
   'MPH',
   'Grading History',
@@ -226,6 +229,8 @@ foreach ($track_submissions as $index => $track_submission) {
 
   if (substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
   else $rowdata[] = '';
+
+  $rowdata[] = $track_submission->submissionhistoryall;
 
   $rowdata[] = $track_submission->grade;
 
