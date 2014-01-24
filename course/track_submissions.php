@@ -230,7 +230,12 @@ foreach ($track_submissions as $index => $track_submission) {
   if (substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
   else $rowdata[] = '';
 
-  $rowdata[] = $track_submission->submissionhistoryall;
+  if (!$displayforexcel) {
+    $rowdata[] = '<a href="' . "$CFG->wwwroot/course/studentsubmissions.php?id={$track_submission->userid}&hidequiz=1" . '" target="_blank">' . $track_submission->submissionhistoryall . '</a>';
+  }
+  else {
+    $rowdata[] = $track_submission->submissionhistoryall;
+  }
 
   $rowdata[] = $track_submission->grade;
 

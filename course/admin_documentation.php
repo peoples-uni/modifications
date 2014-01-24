@@ -923,7 +923,7 @@ The following page was linked from the Drupal menus to allow donations: <a href=
 If there has been more than one submission then the "Submission History" column contains a list of all submissions (status & date).
 </li>
 <li>
-The "All Recorded Submissions" column has a list of dates of all submissions even those that are "draft" and the dates of which might have been overwritten by Moodle when the status is changed to "submitted" by us or the student.
+The "All Recorded Submissions" column has a list of dates of all submissions even those that are "draft" and the dates of which might have been overwritten by Moodle when the status is changed to "submitted" by us or the student. This is clickable to get to more details.
 </li>
 <li>
 The most recent grade given to the submission is also displayed as well as whether the student is an MPH student (and of what type).
