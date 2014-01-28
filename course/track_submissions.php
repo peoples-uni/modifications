@@ -162,7 +162,7 @@ $grade_grade_historys = $DB->get_records_sql("
     g.source='mod/assign' AND
     i.courseid IN (SELECT DISTINCT courseid FROM mdl_enrolment WHERE semester=?) AND
     g.finalgrade IS NOT NULL
-  ORDER BY g.timemodified DESC",
+  ORDER BY g.timemodified",
   array($chosensemester));
 
 $item_to_grades = array();
