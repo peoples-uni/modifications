@@ -150,8 +150,8 @@ if (empty($track_submissions)) {
 }
 
 $grade_grade_historys = $DB->get_records_sql("
-  SELECT
-    g.id,
+  SELECT DISTINCT
+    CONCAT(g.userid, '#', i.id, '#', FROM_UNIXTIME(g.timemodified, '%Y-%m-%d'), IFNULL(FORMAT(g.finalgrade, 0), '')),
     g.userid,
     i.id AS itemid,
     FROM_UNIXTIME(g.timemodified, '%Y-%m-%d') As modified,
@@ -159,7 +159,6 @@ $grade_grade_historys = $DB->get_records_sql("
   FROM mdl_grade_grades_history g, mdl_grade_items i
   WHERE
     g.itemid=i.id AND
-    g.source='mod/assign' AND
     i.courseid IN (SELECT DISTINCT courseid FROM mdl_enrolment WHERE semester=?) AND
     g.finalgrade IS NOT NULL
   ORDER BY g.timemodified",
