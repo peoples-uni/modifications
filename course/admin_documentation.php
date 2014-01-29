@@ -926,10 +926,16 @@ If there has been more than one submission then the "Submission History" column 
 The "All Recorded Submissions" column has a list of dates of all submissions even those that are "draft" and the dates of which might have been overwritten by Moodle when the status is changed to "submitted" by us or the student. This is clickable to get to more details.
 </li>
 <li>
-The most recent grade given to the submission is also displayed as well as whether the student is an MPH student (and of what type).
+The "All Assignment Grades" column has a list of all assignment grades and the dates.
 </li>
 <li>
-Also a list of all grades given to the assignment (grades and re-grades) and the date each grade was given is displayed.
+The most recent final grade given to the submission is also displayed in the "Final Grade" column (may not be shown if grade is not 'released').
+</li>
+<li>
+And the "MPH" column indicates whether the student is an MPH student (and of what type).
+</li>
+<li>
+Also a list of all grades given to the assignment (grades and re-grades) and the date each grade was given is displayed in the "Grading History" column.
 </li>
 <li>
 The semester is selectable in a filter as well as module name (part of) and whether it is desired to remove all headers and footer info to make it easier to copy the data and paste into a spreadsheet.

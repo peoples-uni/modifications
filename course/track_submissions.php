@@ -127,6 +127,7 @@ $track_submissions = $DB->get_records_sql("
     SUBSTRING(MAX(CONCAT(LPAD(IFNULL(asub.timemodified, 0), 12, '0'), IFNULL(asub.status, ' '))), 13) submissionstatus,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(asub.status, ''), '(', IFNULL(FROM_UNIXTIME(IF(asub.timemodified=0, NULL, asub.timemodified), '%Y-%m-%d'), ''), ')') ORDER BY asub.timemodified SEPARATOR ', ') AS submissionhistory,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FROM_UNIXTIME(IF(r.timemodified=0, NULL, r.timemodified), '%Y-%m-%d'), '')) ORDER BY r.timemodified SEPARATOR ', ') AS submissionhistoryall,
+    GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(ass_g.grade, 0), ''), IF(ass_g.timemodified IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(ass_g.timemodified=0, NULL, ass_g.timemodified), '%Y-%m-%d'), ''), IF(ass_g.timemodified IS NULL, '', ')')) ORDER BY ass_g.timemodified SEPARATOR ', ') AS assignmentgrades,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
     IFNULL(mphstatus, 0) AS mph
   FROM (mdl_enrolment e, mdl_course c, mdl_grade_items i, mdl_assign a, mdl_user u)
@@ -135,6 +136,7 @@ $track_submissions = $DB->get_records_sql("
   LEFT JOIN mdl_grade_grades g ON i.id=g.itemid AND u.id=g.userid
   LEFT JOIN mdl_peoplesmph2 m ON u.id=m.userid
   LEFT JOIN mdl_recorded_submissions r ON a.id=r.assign AND u.id=r.userid
+  LEFT JOIN mdl_assign_grades ass_g ON a.id=ass_g.assignment AND u.id=ass_g.userid
   WHERE
     e.semester=? AND
     e.enrolled!=0 AND
@@ -203,7 +205,8 @@ $table->head = array(
   'Submission Status',
   'Submission History',
   'All Recorded Submissions',
-  'Grade',
+  'All Assignment Grades',
+  'Final Grade',
   'MPH',
   'Grading History',
   '');
@@ -235,6 +238,8 @@ foreach ($track_submissions as $index => $track_submission) {
   else {
     $rowdata[] = $track_submission->submissionhistoryall;
   }
+
+  $rowdata[] = $track_submission->assignmentgrades;
 
   $rowdata[] = $track_submission->grade;
 
