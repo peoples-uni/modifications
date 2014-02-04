@@ -455,6 +455,12 @@ if (!empty($enrols)) {
       $output = preg_replace(array('#<tr>\n<th.*?>.*?/mod/quiz/grade.php.*?</th>\n<td.*?>.*?</td>\n<td.*?>.*?</td>\n</tr>#'),
                              array(''                                                                                      ), $output);
 
+      $output = preg_replace(array('#<tr>\n<th.*?>.*?/mod/forum/view.php.*?</th>\n<td.*?>.*?</td>\n<td.*?>.*?</td>\n</tr>#'),
+                             array(''                                                                                      ), $output);
+
+      $output = preg_replace(array('#<tr>\n<th.*?>.*?/mod/checklist/view.php.*?</th>\n<td.*?>.*?</td>\n<td.*?>.*?</td>\n</tr>#'),
+                             array(''                                                                                      ), $output);
+
 			$output = preg_replace(array('#<th class="header">Range</th>#'),
 			                       array(                               ''), $output);
 
