@@ -230,27 +230,113 @@ $PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/applications.php'); // Defined here to avoid notices on errors etc
 
+
+require_once($CFG->dirroot .'/course/peoples_filters.php');
+
+$peoples_filters = new peoples_filters();
+
+$peoples_filters->set_page_url("$CFG->wwwroot/course/applications.php");
+
+$semesters = $DB->get_records('semesters', NULL, 'id DESC');
+foreach ($semesters as $semester) {
+  $listsemester[] = $semester->semester;
+}
+$listsemester[] = 'All';
+$peoples_chosensemester_filter = new peoples_chosensemester_filter('Semester', 'chosensemester', $listsemester, $semester->semester);
+$peoples_filters->add_filter($peoples_chosensemester_filter);
+
+$liststatus[] = 'All';
+$liststatus[] = 'Not fully Approved';
+$liststatus[] = 'Not fully Enrolled';
+$liststatus[] = 'Part or Fully Approved';
+$liststatus[] = 'Part or Fully Enrolled';
+$peoples_chosenstatus_filter = new peoples_chosenstatus_filter('Status', 'chosenstatus', $liststatus, 'All');
+$peoples_filters->add_filter($peoples_chosenstatus_filter);
+
+$peoples_daterange_filter = new peoples_daterange_filter();
+$peoples_filters->add_filter($peoples_daterange_filter);
+
+$peoples_chosensearch_filter = new peoples_chosensearch_filter('Name or e-mail Contains', 'chosensearch');
+$peoples_filters->add_filter($peoples_chosensearch_filter);
+
+$peoples_chosenmodule_filter = new peoples_chosenmodule_filter('Module Name Contains', 'chosenmodule');
+$peoples_filters->add_filter($peoples_chosenmodule_filter);
+
+$listchosenpay[] = 'Any';
+$listchosenpay[] = 'No Indication Given';
+$listchosenpay[] = 'Not Confirmed (all)';
+$listchosenpay[] = 'Barclays not confirmed';
+$listchosenpay[] = 'Ecobank not confirmed';
+$listchosenpay[] = 'Diamond not confirmed';
+$listchosenpay[] = 'MoneyGram not confirmed';
+$listchosenpay[] = 'Western Union not confirmed';
+$listchosenpay[] = 'Indian Confederation not confirmed';
+$listchosenpay[] = 'Posted Travellers Cheques not confirmed';
+$listchosenpay[] = 'Posted Cash not confirmed';
+$listchosenpay[] = 'Promised End Semester';
+$listchosenpay[] = 'Waiver';
+$listchosenpay[] = 'RBS Confirmed';
+$listchosenpay[] = 'Barclays Confirmed';
+$listchosenpay[] = 'Ecobank Confirmed';
+$listchosenpay[] = 'Diamond Confirmed';
+$listchosenpay[] = 'MoneyGram Confirmed';
+$listchosenpay[] = 'Western Union Confirmed';
+$listchosenpay[] = 'Indian Confederation Confirmed';
+$listchosenpay[] = 'Posted Travellers Cheques Confirmed';
+$listchosenpay[] = 'Posted Cash Confirmed';
+$peoples_chosenpay_filter = new peoples_chosenpay_filter('Payment Method', 'chosenpay', $listchosenpay, 'Any');
+$peoples_filters->add_filter($peoples_chosenpay_filter);
+
+$listchosenreenrol[] = 'Any';
+$listchosenreenrol[] = 'Re-enrolment';
+$listchosenreenrol[] = 'New student';
+$peoples_chosenreenrol_filter = new peoples_chosenreenrol_filter('Re&#8209;enrolment?', 'chosenreenrol', $listchosenreenrol, 'Any');
+$peoples_filters->add_filter($peoples_chosenreenrol_filter);
+
+$listchosenmmu[] = 'Any';
+$listchosenmmu[] = 'Yes';
+$listchosenmmu[] = 'No';
+$peoples_chosenmmu_filter = new peoples_chosenmmu_filter('Applied MPH?', 'chosenmmu', $listchosenmmu, 'Any');
+$peoples_filters->add_filter($peoples_chosenmmu_filter);
+
+$listacceptedmmu[] = 'Any';
+$listacceptedmmu[] = 'Yes';
+$listacceptedmmu[] = 'No';
+for ($year = 11; $year <= 17; $year++) {
+  $listacceptedmmu[] = "Accepted {$year}a";
+  $listacceptedmmu[] = "Accepted {$year}b";
+
+  $stamp_range["Accepted {$year}a"]['start'] = gmmktime( 0, 0, 0,  1,  1, 2000 + $year);
+  $stamp_range["Accepted {$year}a"]['end']   = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
+  $stamp_range["Accepted {$year}b"]['start'] = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
+  $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
+}
+$peoples_acceptedmmu_filter = new peoples_acceptedmmu_filter('Accepted MPH?', 'acceptedmmu', $listacceptedmmu, 'Any');
+$peoples_acceptedmmu_filter->set_stamp_range($stamp_range);
+$peoples_filters->add_filter($peoples_acceptedmmu_filter);
+
+$listchosenscholarship[] = 'Any';
+$listchosenscholarship[] = 'Yes';
+$listchosenscholarship[] = 'No';
+$peoples_chosenscholarship_filter = new peoples_chosenscholarship_filter('Applied Scholarship?', 'chosenscholarship', $listchosenscholarship, 'Any');
+$peoples_filters->add_filter($peoples_chosenscholarship_filter);
+
+$peoples_displayscholarship_filter = new peoples_boolean_filter('Show Scholarship Relevant Columns', 'displayscholarship');
+$peoples_filters->add_filter($peoples_displayscholarship_filter);
+
+$peoples_displayextra_filter = new peoples_boolean_filter('Show Extra Details', 'displayextra');
+$peoples_filters->add_filter($peoples_displayextra_filter);
+
+$peoples_displayforexcel_filter = new peoples_boolean_filter('Display Student History for Copying and Pasting to Excel', 'displayforexcel');
+$peoples_filters->add_filter($peoples_displayforexcel_filter);
+
+$displayscholarship = $peoples_displayscholarship_filter->get_filter_setting();
+$displayextra       = $peoples_displayextra_filter->get_filter_setting();
+$displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
+
+
 if (!empty($_POST['markfilter'])) {
-  redirect($CFG->wwwroot . '/course/applications.php?'
-    . 'chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
-    . '&chosenstatus=' . urlencode($_POST['chosenstatus'])
-    . '&chosenstartyear=' . $_POST['chosenstartyear']
-    . '&chosenstartmonth=' . $_POST['chosenstartmonth']
-    . '&chosenstartday=' . $_POST['chosenstartday']
-    . '&chosenendyear=' . $_POST['chosenendyear']
-    . '&chosenendmonth=' . $_POST['chosenendmonth']
-    . '&chosenendday=' . $_POST['chosenendday']
-    . '&chosensearch=' . urlencode(dontstripslashes($_POST['chosensearch']))
-    . '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
-    . '&chosenpay=' . urlencode($_POST['chosenpay'])
-    . '&chosenreenrol=' . urlencode($_POST['chosenreenrol'])
-    . '&chosenmmu=' . urlencode($_POST['chosenmmu'])
-    . '&acceptedmmu=' . urlencode($_POST['acceptedmmu'])
-    . '&chosenscholarship=' . urlencode($_POST['chosenscholarship'])
-    . (empty($_POST['displayscholarship']) ? '&displayscholarship=0' : '&displayscholarship=1')
-    . (empty($_POST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
-    . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
-    );
+  redirect($CFG->wwwroot . '/course/applications.php?' . $peoples_filters->get_url_parameters());
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -283,211 +369,7 @@ echo $OUTPUT->header();
 //echo html_writer::start_tag('div', array('class'=>'course-content'));
 
 
-if (empty($_REQUEST['displayforexcel'])) echo "<h1>Student Applications</h1>";
-
-if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
-if (!empty($_REQUEST['chosenstatus'])) $chosenstatus = $_REQUEST['chosenstatus'];
-if (!empty($_REQUEST['chosenstartyear']) && !empty($_REQUEST['chosenstartmonth']) && !empty($_REQUEST['chosenstartday'])) {
-  $chosenstartyear = (int)$_REQUEST['chosenstartyear'];
-  $chosenstartmonth = (int)$_REQUEST['chosenstartmonth'];
-  $chosenstartday = (int)$_REQUEST['chosenstartday'];
-  $starttime = gmmktime(0, 0, 0, $chosenstartmonth, $chosenstartday, $chosenstartyear);
-}
-else {
-  $starttime = 0;
-}
-if (!empty($_REQUEST['chosenendyear']) && !empty($_REQUEST['chosenendmonth']) && !empty($_REQUEST['chosenendday'])) {
-  $chosenendyear = (int)$_REQUEST['chosenendyear'];
-  $chosenendmonth = (int)$_REQUEST['chosenendmonth'];
-  $chosenendday = (int)$_REQUEST['chosenendday'];
-  $endtime = gmmktime(24, 0, 0, $chosenendmonth, $chosenendday, $chosenendyear);
-}
-else {
-  $endtime = 1.0E+20;
-}
-if (!empty($_REQUEST['chosensearch'])) $chosensearch = dontstripslashes($_REQUEST['chosensearch']);
-else $chosensearch = '';
-if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
-else $chosenmodule = '';
-if (!empty($_REQUEST['chosenpay'])) $chosenpay = $_REQUEST['chosenpay'];
-if (!empty($_REQUEST['chosenreenrol'])) $chosenreenrol = $_REQUEST['chosenreenrol'];
-if (!empty($_REQUEST['chosenmmu'])) $chosenmmu = $_REQUEST['chosenmmu'];
-if (!empty($_REQUEST['acceptedmmu'])) $acceptedmmu = $_REQUEST['acceptedmmu'];
-if (!empty($_REQUEST['chosenscholarship'])) $chosenscholarship = $_REQUEST['chosenscholarship'];
-if (!empty($_REQUEST['displayscholarship'])) $displayscholarship = true;
-else $displayscholarship = false;
-if (!empty($_REQUEST['displayextra'])) $displayextra = true;
-else $displayextra = false;
-if (!empty($_REQUEST['displayforexcel'])) $displayforexcel = true;
-else $displayforexcel = false;
-
-$semesters = $DB->get_records('semesters', NULL, 'id DESC');
-foreach ($semesters as $semester) {
-  $listsemester[] = $semester->semester;
-  if (!isset($chosensemester)) $chosensemester = $semester->semester;
-}
-$listsemester[] = 'All';
-
-$liststatus[] = 'All';
-if (!isset($chosenstatus)) $chosenstatus = 'All';
-$liststatus[] = 'Not fully Approved';
-$liststatus[] = 'Not fully Enrolled';
-$liststatus[] = 'Part or Fully Approved';
-$liststatus[] = 'Part or Fully Enrolled';
-
-$listchosenpay[] = 'Any';
-if (!isset($chosenpay)) $chosenpay = 'Any';
-$listchosenpay[] = 'No Indication Given';
-$listchosenpay[] = 'Not Confirmed (all)';
-$listchosenpay[] = 'Barclays not confirmed';
-$listchosenpay[] = 'Ecobank not confirmed';
-$listchosenpay[] = 'Diamond not confirmed';
-$listchosenpay[] = 'MoneyGram not confirmed';
-$listchosenpay[] = 'Western Union not confirmed';
-$listchosenpay[] = 'Indian Confederation not confirmed';
-$listchosenpay[] = 'Posted Travellers Cheques not confirmed';
-$listchosenpay[] = 'Posted Cash not confirmed';
-$listchosenpay[] = 'Promised End Semester';
-$listchosenpay[] = 'Waiver';
-$listchosenpay[] = 'RBS Confirmed';
-$listchosenpay[] = 'Barclays Confirmed';
-$listchosenpay[] = 'Ecobank Confirmed';
-$listchosenpay[] = 'Diamond Confirmed';
-$listchosenpay[] = 'MoneyGram Confirmed';
-$listchosenpay[] = 'Western Union Confirmed';
-$listchosenpay[] = 'Indian Confederation Confirmed';
-$listchosenpay[] = 'Posted Travellers Cheques Confirmed';
-$listchosenpay[] = 'Posted Cash Confirmed';
-
-$listchosenreenrol[] = 'Any';
-if (!isset($chosenreenrol)) $chosenreenrol = 'Any';
-$listchosenreenrol[] = 'Re-enrolment';
-$listchosenreenrol[] = 'New student';
-
-$listchosenmmu[] = 'Any';
-if (!isset($chosenmmu)) $chosenmmu = 'Any';
-$listchosenmmu[] = 'Yes';
-$listchosenmmu[] = 'No';
-
-$listacceptedmmu[] = 'Any';
-if (!isset($acceptedmmu)) $acceptedmmu = 'Any';
-$listacceptedmmu[] = 'Yes';
-$listacceptedmmu[] = 'No';
-for ($year = 11; $year <= 16; $year++) {
-  $listacceptedmmu[] = "Accepted {$year}a";
-  $listacceptedmmu[] = "Accepted {$year}b";
-
-  $stamp_range["Accepted {$year}a"]['start'] = gmmktime( 0, 0, 0,  1,  1, 2000 + $year);
-  $stamp_range["Accepted {$year}a"]['end']   = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
-  $stamp_range["Accepted {$year}b"]['start'] = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
-  $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
-}
-
-$listchosenscholarship[] = 'Any';
-if (!isset($chosenscholarship)) $chosenscholarship = 'Any';
-$listchosenscholarship[] = 'Yes';
-$listchosenscholarship[] = 'No';
-
-for ($i = 2008; $i <= (int)gmdate('Y'); $i++) {
-  if (!isset($chosenstartyear)) $chosenstartyear = $i;
-  $liststartyear[] = $i;
-}
-
-for ($i = 1; $i <= 12; $i++) {
-  if (!isset($chosenstartmonth)) $chosenstartmonth = $i;
-  $liststartmonth[] = $i;
-}
-
-for ($i = 1; $i <= 31; $i++) {
-  if (!isset($chosenstartday)) $chosenstartday = $i;
-  $liststartday[] = $i;
-}
-
-for ($i = (int)gmdate('Y'); $i >= 2008; $i--) {
-  if (!isset($chosenendyear)) $chosenendyear = $i;
-  $listendyear[] = $i;
-}
-
-for ($i = 12; $i >= 1; $i--) {
-  if (!isset($chosenendmonth)) $chosenendmonth = $i;
-  $listendmonth[] = $i;
-}
-
-for ($i = 31; $i >= 1; $i--) {
-  if (!isset($chosenendday)) $chosenendday = $i;
-  $listendday[] = $i;
-}
-
-if (!$displayforexcel) {
-?>
-<form method="post" action="<?php echo $CFG->wwwroot . '/course/applications.php'; ?>">
-Display entries using the following filters...
-<table border="2" cellpadding="2">
-  <tr>
-    <td>Semester</td>
-    <td>Status</td>
-    <td>Start Year</td>
-    <td>Start Month</td>
-    <td>Start Day</td>
-    <td>End Year</td>
-    <td>End Month</td>
-    <td>End Day</td>
-    <td>Name or e-mail Contains</td>
-    <td>Module Name Contains</td>
-    <td>Payment Method</td>
-    <td>Re&#8209;enrolment?</td>
-    <td>Applied MPH?</td>
-    <td>Accepted MPH?</td>
-    <td>Applied Scholarship?</td>
-    <td>Show Scholarship Relevant Columns</td>
-    <td>Show Extra Details</td>
-    <td>Display Student History for Copying and Pasting to Excel</td>
-  </tr>
-  <tr>
-    <?php
-    displayoptions('chosensemester', $listsemester, $chosensemester);
-    displayoptions('chosenstatus', $liststatus, $chosenstatus);
-    displayoptions('chosenstartyear', $liststartyear, $chosenstartyear);
-    displayoptions('chosenstartmonth', $liststartmonth, $chosenstartmonth);
-    displayoptions('chosenstartday', $liststartday, $chosenstartday);
-    displayoptions('chosenendyear', $listendyear, $chosenendyear);
-    displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
-    displayoptions('chosenendday', $listendday, $chosenendday);
-    ?>
-    <td><input type="text" size="15" name="chosensearch" value="<?php echo htmlspecialchars($chosensearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
-    <td><input type="text" size="15" name="chosenmodule" value="<?php echo htmlspecialchars($chosenmodule, ENT_COMPAT, 'UTF-8'); ?>" /></td>
-    <?php
-    displayoptions('chosenpay', $listchosenpay, $chosenpay);
-    displayoptions('chosenreenrol', $listchosenreenrol, $chosenreenrol);
-    displayoptions('chosenmmu', $listchosenmmu, $chosenmmu);
-    displayoptions('acceptedmmu', $listacceptedmmu, $acceptedmmu);
-    displayoptions('chosenscholarship', $listchosenscholarship, $chosenscholarship);
-    ?>
-    <td><input type="checkbox" name="displayscholarship" <?php if ($displayscholarship) echo ' CHECKED'; ?>></td>
-    <td><input type="checkbox" name="displayextra" <?php if ($displayextra) echo ' CHECKED'; ?>></td>
-    <td><input type="checkbox" name="displayforexcel" <?php if ($displayforexcel) echo ' CHECKED'; ?>></td>
-  </tr>
-</table>
-<input type="hidden" name="markfilter" value="1" />
-<input type="submit" name="filter" value="Apply Filters" />
-<a href="<?php echo $CFG->wwwroot; ?>/course/applications.php">Reset Filters</a>
-</form>
-<br />
-<?php
-}
-
-
-function displayoptions($name, $options, $selectedvalue) {
-  echo '<td><select name="' . $name . '">';
-  foreach ($options as $option) {
-    if ($option === $selectedvalue) $selected = 'selected="selected"';
-    else $selected = '';
-
-    $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
-    echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
-  }
-  echo '</select></td>';
-}
+if (!$displayforexcel) echo "<h1>Student Applications</h1>";
 
 
 // Retrieve all relevent rows
@@ -515,181 +397,10 @@ if (empty($dissertations)) {
 $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r WHERE r.userid!=0');
 
 
+$applications = $peoples_filters->array filter_entries($applications);
+
 $emaildups = 0;
 foreach ($applications as $sid => $application) {
-  $state = (int)$application->state;
-  if ($state === 1) $state = 011;
-
-  if (
-    $application->datesubmitted < $starttime ||
-    $application->datesubmitted > $endtime ||
-    (($chosensemester !== 'All') && ($application->semester !== $chosensemester)) ||
-    (($chosenstatus  === 'Not fully Approved')       && ($state === 011 || $state === 033)) ||
-    (($chosenstatus  === 'Not fully Enrolled')     && ($state === 033)) ||
-    (($chosenstatus  === 'Part or Fully Approved')   && (!($state === 011 || $state === 012 || $state === 021 || $state === 023 || $state === 032 || $state === 013 || $state === 031 || $state === 033))) ||
-    (($chosenstatus  === 'Part or Fully Enrolled') && (!($state === 023 || $state === 032 || $state === 013 || $state === 031 || $state === 033)))
-    ) {
-
-    unset($applications[$sid]);
-    continue;
-  }
-
-  if (!empty($chosensearch) &&
-    stripos($application->lastname, $chosensearch) === false &&
-    stripos($application->firstname, $chosensearch) === false &&
-    stripos($application->email, $chosensearch) === false) {
-
-    unset($applications[$sid]);
-    continue;
-  }
-
-  if (!empty($chosenmodule) &&
-    stripos($application->coursename1, $chosenmodule) === false &&
-    stripos($application->coursename2, $chosenmodule) === false) {
-
-    unset($applications[$sid]);
-    continue;
-  }
-
-  if (!empty($chosenpay) && $chosenpay !== 'Any') {
-    if ($chosenpay === 'No Indication Given' && $application->paymentmechanism != 0) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Not Confirmed (all)' && ($application->paymentmechanism == 1 || $application->paymentmechanism >= 100)) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Barclays not confirmed' && $application->paymentmechanism != 2) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Diamond not confirmed' && $application->paymentmechanism != 3) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Ecobank not confirmed' && $application->paymentmechanism != 10) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Western Union not confirmed' && $application->paymentmechanism != 4) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Indian Confederation not confirmed' && $application->paymentmechanism != 5) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Posted Travellers Cheques not confirmed' && $application->paymentmechanism != 7) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Posted Cash not confirmed' && $application->paymentmechanism != 8) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'MoneyGram not confirmed' && $application->paymentmechanism != 9) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Promised End Semester' && $application->paymentmechanism != 6) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Waiver' && $application->paymentmechanism != 100) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'RBS Confirmed' && $application->paymentmechanism != 1) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Barclays Confirmed' && $application->paymentmechanism != 102) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Diamond Confirmed' && $application->paymentmechanism != 103) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Ecobank Confirmed' && $application->paymentmechanism != 110) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Western Union Confirmed' && $application->paymentmechanism != 104) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Indian Confederation Confirmed' && $application->paymentmechanism != 105) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Posted Travellers Cheques Confirmed' && $application->paymentmechanism != 107) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'Posted Cash Confirmed' && $application->paymentmechanism != 108) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenpay === 'MoneyGram Confirmed' && $application->paymentmechanism != 109) {
-      unset($applications[$sid]);
-      continue;
-    }
-  }
-
-  if (!empty($chosenreenrol) && $chosenreenrol !== 'Any') {
-    if ($chosenreenrol === 'Re-enrolment' && !$application->reenrolment) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenreenrol === 'New student' && $application->reenrolment) {
-      unset($applications[$sid]);
-      continue;
-    }
-  }
-
-  if (!empty($chosenmmu) && $chosenmmu !== 'Any') {
-    if ($chosenmmu === 'No' && $application->applymmumph >= 2) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenmmu === 'Yes' && $application->applymmumph < 2) {
-      unset($applications[$sid]);
-      continue;
-    }
-  }
-
-  if (!empty($acceptedmmu) && $acceptedmmu !== 'Any') {
-    if ($acceptedmmu === 'No' && $application->mph) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($acceptedmmu === 'Yes' && !$application->mph) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($acceptedmmu !== 'No' && $acceptedmmu !== 'Yes') {
-      if (!$application->mph || $application->mphdatestamp < $stamp_range[$acceptedmmu]['start'] || $application->mphdatestamp >= $stamp_range[$acceptedmmu]['end']) {
-        unset($applications[$sid]);
-        continue;
-      }
-    }
-  }
-
-  $x = strtolower(trim($application->scholarship));
-  $scholarshipempty = empty($x) || ($x ==  'none') || ($x ==  'n/a') || ($x ==  'none.');
-  if (!empty($chosenscholarship) && $chosenscholarship !== 'Any') {
-    if ($chosenscholarship === 'No' && !$scholarshipempty) {
-      unset($applications[$sid]);
-      continue;
-    }
-    if ($chosenscholarship === 'Yes' && $scholarshipempty) {
-      unset($applications[$sid]);
-      continue;
-    }
-  }
-
   if ($application->hidden) {
     unset($applications[$sid]);
     continue;
@@ -1439,26 +1150,7 @@ Payment Method: "No Indication Given"<br />
 Also look at list of e-mails sent to verify they went! (No subject and they will not go!)<br /><br />
 <form id="emailsendform" method="post" action="<?php
   if (!empty($_REQUEST['chosensemester'])) {
-    echo $CFG->wwwroot . '/course/applications.php?'
-      . 'chosensemester=' . urlencode(dontstripslashes($_REQUEST['chosensemester']))
-      . '&chosenstatus=' . urlencode($_REQUEST['chosenstatus'])
-      . '&chosenstartyear=' . $_REQUEST['chosenstartyear']
-      . '&chosenstartmonth=' . $_REQUEST['chosenstartmonth']
-      . '&chosenstartday=' . $_REQUEST['chosenstartday']
-      . '&chosenendyear=' . $_REQUEST['chosenendyear']
-      . '&chosenendmonth=' . $_REQUEST['chosenendmonth']
-      . '&chosenendday=' . $_REQUEST['chosenendday']
-      . '&chosensearch=' . urlencode(dontstripslashes($_REQUEST['chosensearch']))
-      . '&chosenmodule=' . urlencode(dontstripslashes($_REQUEST['chosenmodule']))
-      . '&chosenpay=' . urlencode($_REQUEST['chosenpay'])
-      . '&chosenreenrol=' . urlencode($_REQUEST['chosenreenrol'])
-      . '&chosenmmu=' . urlencode($_REQUEST['chosenmmu'])
-      . '&acceptedmmu=' . urlencode($_REQUEST['acceptedmmu'])
-      . '&chosenscholarship=' . urlencode($_REQUEST['chosenscholarship'])
-      . (empty($_REQUEST['displayscholarship']) ? '&displayscholarship=0' : '&displayscholarship=1')
-      . (empty($_REQUEST['displayextra']) ? '&displayextra=0' : '&displayextra=1')
-      . (empty($_REQUEST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
-      ;
+    echo $CFG->wwwroot . '/course/applications.php?' . $peoples_filters->get_url_parameters();
   }
   else {
     echo $CFG->wwwroot . '/course/applications.php';

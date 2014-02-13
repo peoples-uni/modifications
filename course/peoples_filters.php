@@ -82,6 +82,21 @@ abstract class peoples_filter {
   public function array filter_entries(array $list_to_filter) {
     return $list_to_filter; // Do Nothing
   }
+
+
+  protected function string select_choice_field($name, $options, $selectedvalue) {
+    $field = '<select name="' . $name . '">';
+    foreach ($options as $option) {
+      if ($option === $selectedvalue) $selected = 'selected="selected"';
+      else $selected = '';
+
+      $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
+      $field .= '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+    }
+    $field .= '</select>';
+
+    return $field;
+  }
 }
 
 
@@ -128,18 +143,7 @@ class peoples_select_filter extends peoples_filter {
 
 
   public function string choice_field() {
-
-    $field = '<select name="' . $this->name . '">';
-    foreach ($this->options as $option) {
-      if ($option === $this->selectedvalue) $selected = 'selected="selected"';
-      else $selected = '';
-
-      $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
-      $field .= '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
-    }
-    $field .= '</select>';
-
-    return $field;
+    return $this->select_choice_field($this->name, $this->options, $this->selectedvalue);
   }
 }
 
@@ -198,8 +202,6 @@ class peoples_chosenmodule_filter extends peoples_textfield_filter {
 class peoples_chosensemester_filter extends peoples_select_filter {
   public function array filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
-      $state = (int)$list_entry->state;
-      if ($state === 1) $state = 011;
       if (($this->selectedvalue !== 'All') && ($list_entry->semester !== $this->selectedvalue)) {
         unset($list_to_filter[$index]);
       }
@@ -487,27 +489,12 @@ class peoples_daterange_filter extends peoples_filter {
 
   public function string choice_field() {
     $field = '';
-    $field .= $this->displayoptions('chosenstartyear', $this->liststartyear, $this->chosenstartyear) . '</td><td>';
-    $field .= $this->displayoptions('chosenstartmonth', $this->liststartmonth, $this->chosenstartmonth) . '</td><td>';
-    $field .= $this->displayoptions('chosenstartday', $this->liststartday, $this->chosenstartday) . '</td><td>';
-    $field .= $this->displayoptions('chosenendyear', $this->listendyear, $this->chosenendyear) . '</td><td>';
-    $field .= $this->displayoptions('chosenendmonth', $this->listendmonth, $this->chosenendmonth) . '</td><td>';
-    $field .= $this->displayoptions('chosenendday', $this->listendday, $this->chosenendday);
-
-    return $field;
-  }
-
-
-  private function string daterange_choice_field($name, $options, $selectedvalue) {
-    $field = '<select name="' . $name . '">';
-    foreach ($options as $option) {
-      if ($option === $selectedvalue) $selected = 'selected="selected"';
-      else $selected = '';
-
-      $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
-      $field .= '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
-    }
-    $field .= '</select>';
+    $field .= $this->select_choice_field('chosenstartyear', $this->liststartyear, $this->chosenstartyear) . '</td><td>';
+    $field .= $this->select_choice_field('chosenstartmonth', $this->liststartmonth, $this->chosenstartmonth) . '</td><td>';
+    $field .= $this->select_choice_field('chosenstartday', $this->liststartday, $this->chosenstartday) . '</td><td>';
+    $field .= $this->select_choice_field('chosenendyear', $this->listendyear, $this->chosenendyear) . '</td><td>';
+    $field .= $this->select_choice_field('chosenendmonth', $this->listendmonth, $this->chosenendmonth) . '</td><td>';
+    $field .= $this->select_choice_field('chosenendday', $this->listendday, $this->chosenendday);
 
     return $field;
   }
