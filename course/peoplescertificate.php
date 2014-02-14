@@ -12,7 +12,7 @@ $PAGE->set_pagelayout('embedded');
 
 require_login();
 if (empty($USER->id)) {
-	error('Not properly logged in, should not happen!');
+  print_error('invaliduser');
 }
 
 $cert = required_param('cert', PARAM_ALPHA);
@@ -32,7 +32,7 @@ if ($cert == 'transcript') {
 	FROM mdl_enrolment e, mdl_course c, mdl_grade_grades g, mdl_grade_items i
 	WHERE e.id=$enrolid AND e.courseid=c.id AND e.userid=g.userid AND g.itemid=i.id AND i.itemtype='course' AND e.courseid=i.courseid");
 	if (empty($enrol)) {
-		error('enrolment not found or not graded');
+    print_error('invalidarguments');
 		//Test with no grade: $enrol = get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified FROM mdl_enrolment e, mdl_course c WHERE e.id=$enrolid AND e.courseid=c.id");
 		//$enrol->finalgrade = 1.0;
 		//$enrol->notified = 1;
@@ -40,12 +40,12 @@ if ($cert == 'transcript') {
 
 	$userid = $enrol->userid;
   if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
-		error('user missing');
+    print_error('invaliduser');
 	}
 
 	$courseid = $enrol->courseid;
   if (!$course = $DB->get_record('course', array('id' => $courseid))) {
-		error('course missing');
+    print_error('cannotfindcourse');
 	}
 
 	//$cert = required_param('cert', PARAM_NOTAGS);
@@ -71,11 +71,11 @@ if ($cert == 'transcript') {
 
   $isteacher = is_peoples_teacher();
 	if (!$isteacher && ($userid != $USER->id)) {
-		error('You may only print your own certificate.');
+    print_error('cannotuseadminadminorteacher');
 	}
 
   if (empty($enrol->finalgrade) || !(($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) || ($enrol->notified != 1)) {
-		error('Not finally graded or not Passed');
+    print_error('invalidarguments');
 	}
 
 	$certificatedate = '';
@@ -173,17 +173,17 @@ elseif ($cert == 'participation') {
 	$enrolid = required_param('enrolid', PARAM_INT);
   $enrol = $DB->get_record_sql("SELECT e.semester, e.userid, e.courseid, e.notified, e.datenotified, e.percentgrades FROM mdl_enrolment e WHERE e.id=$enrolid");
 	if (empty($enrol)) {
-		error('enrolment not found');
+    print_error('invalidcourse');
 	}
 
 	$userid = $enrol->userid;
   if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
-		error('user missing');
+    print_error('invaliduser');
 	}
 
 	$courseid = $enrol->courseid;
   if (!$course = $DB->get_record('course', array('id' => $courseid))) {
-		error('course missing');
+    print_error('cannotfindcourse');
 	}
 
 	$certificate = new object();
@@ -205,11 +205,11 @@ elseif ($cert == 'participation') {
 
   $isteacher = is_peoples_teacher();
 	if (!$isteacher && ($userid != $USER->id)) {
-		error('You may only print your own certificate.');
+    print_error('cannotuseadminadminorteacher');
 	}
 
 	if ($enrol->notified != 3) {
-		error('This should only be for a Certificate of Participation');
+    print_error('invalidarguments');
 	}
 
 	$certificatedate = '';
@@ -349,11 +349,11 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 			while (count($modules) < 9)	$modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
 	}
 	else {
-		error('certificate not valid');
+    print_error('invalidarguments');
 	}
 
   if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
-		error('user missing');
+    print_error('invaliduser');
 	}
 
 	$certificate = new object();
@@ -370,7 +370,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 
   $isteacher = is_peoples_teacher();
 	if (!$isteacher && ($userid != $USER->id)) {
-		error('You may only print your own certificate.');
+    print_error('cannotuseadminadminorteacher');
 	}
 
 	$certificatedate = '';

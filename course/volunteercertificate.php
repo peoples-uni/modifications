@@ -15,7 +15,7 @@ $id = required_param('id', PARAM_INT);
 
 $volunteercertificate = $DB->get_record('volunteercertificate', array('id' => $id));
 if (empty($volunteercertificate)) {
-	error('Certificate not found');
+  print_error('invalidarguments');
 }
 
 $certificate = new object();
