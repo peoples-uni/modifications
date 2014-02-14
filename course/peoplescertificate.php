@@ -16,6 +16,7 @@ if (empty($USER->id)) {
 }
 
 $cert = required_param('cert', PARAM_ALPHA);
+$nopercentage = optional_param('nopercentage', 0, PARAM_INT);
 
 $signatureleft = 130;
 $signatureleft = 80;
@@ -127,7 +128,11 @@ if ($cert == 'transcript') {
 
 	cert_printtext(170, 205, 'C', 'Helvetica', '', 30, utf8_decode(fullname($userrecord)));
 	cert_printtext(170, 250, 'C', 'Helvetica', '', 20, utf8_decode('has successfully completed the course module'));
-	cert_printtext(170, 285, 'C', 'Helvetica', '', 20, utf8_decode($course->fullname . ','));
+  $percent = '';
+  if (!$nopercentage && $enrol->percentgrades == 1) {
+    $percent = ' (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+  }
+  cert_printtext(170, 285, 'C', 'Helvetica', '', 20, utf8_decode($course->fullname . $percent . ','));
 	cert_printtext(170, 320, 'C', 'Helvetica', '', 14, utf8_decode("one of the course modules in the People's Open Access Educational Initiative - Peoples-uni."));
 
   if ($certdate > 1291161600) { // December 1st 2010
@@ -321,7 +326,10 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 	$countf = 0;
 	$countp = 0;
 	$lastestdate = 0;
+  $modules = array();
 	$modules[] = 'Modules completed:';
+  $percentages = array();
+  $percentages[] = '';
 	foreach ($enrols as $enrol) {
 		if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
 			$certificate++;
@@ -330,6 +338,13 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 			if ($matched && !empty($problems  [$matches[1]])) $countp++;
 			$semesters[] = $enrol->semester;
 			$modules[] = $enrol->fullname;
+
+      $percent = '';
+      if (!$nopercentage && $enrol->percentgrades == 1) {
+        $percent = ' (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+      }
+      $percentages[] = $percent;
+
 			if ($enrol->datenotified > $lastestdate) $lastestdate = $enrol->datenotified;
 		}
 	}
@@ -432,8 +447,8 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 
 	$h = 295;
 	$firstdelta = 4;
-	foreach ($modules as $module) {
-		cert_printtext(170, $h, 'C', 'Helvetica', '', 14, utf8_decode($module));
+	foreach ($modules as $index => $module) {
+    cert_printtext(170, $h, 'C', 'Helvetica', '', 14, utf8_decode($module . $percentages[$index]));
 		$h += 15 + $firstdelta;
 		$firstdelta = 0;
 	}
