@@ -121,7 +121,7 @@ class peoples_boolean_filter extends peoples_filter {
 
 
 class peoples_select_filter extends peoples_filter {
-  protected array $options;
+  protected $options;
 
 
   function __construct(string $human_name, string $name, array $options, string $defaultvalue) {
