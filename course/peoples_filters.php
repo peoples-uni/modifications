@@ -63,7 +63,7 @@ class peoples_filters {
 
 
 abstract class peoples_filter {
-  public $human_name
+  public $human_name;
   protected $name;
   protected $selectedvalue;
 
@@ -79,7 +79,7 @@ abstract class peoples_filter {
   }
 
 
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     return $list_to_filter; // Do Nothing
   }
 
@@ -171,7 +171,7 @@ class peoples_textfield_filter extends peoples_filter {
 
 
 class peoples_chosensearch_filter extends peoples_textfield_filter {
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) &&
         stripos($list_entry->lastname, $this->selectedvalue) === false &&
@@ -186,7 +186,7 @@ class peoples_chosensearch_filter extends peoples_textfield_filter {
 
 
 class peoples_chosenmodule_filter extends peoples_textfield_filter {
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) &&
         stripos($list_entry->coursename1, $this->selectedvalue) === false &&
@@ -200,7 +200,7 @@ class peoples_chosenmodule_filter extends peoples_textfield_filter {
 
 
 class peoples_chosensemester_filter extends peoples_select_filter {
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (($this->selectedvalue !== 'All') && ($list_entry->semester !== $this->selectedvalue)) {
         unset($list_to_filter[$index]);
@@ -212,7 +212,7 @@ class peoples_chosensemester_filter extends peoples_select_filter {
 
 
 class peoples_chosenstatus_filter extends peoples_select_filter {
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       $state = (int)$list_entry->state;
       if ($state === 1) $state = 011;
@@ -231,7 +231,7 @@ class peoples_chosenstatus_filter extends peoples_select_filter {
 
 
 class peoples_chosenpay_filter extends peoples_select_filter {
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
         if ($this->selectedvalue === 'No Indication Given' && $list_entry->paymentmechanism != 0) {
@@ -326,7 +326,7 @@ class peoples_chosenpay_filter extends peoples_select_filter {
 
 
 class peoples_chosenreenrol_filter extends peoples_select_filter {
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
         if ($this->selectedvalue === 'Re-enrolment' && !$list_entry->reenrolment) {
@@ -345,7 +345,7 @@ class peoples_chosenreenrol_filter extends peoples_select_filter {
 
 
 class peoples_chosenmmu_filter extends peoples_select_filter {
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
         if ($this->selectedvalue === 'No' && $list_entry->applymmumph >= 2) {
@@ -367,7 +367,7 @@ class peoples_acceptedmmu_filter extends peoples_select_filter {
   private $stamp_range = array();
 
 
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
         if ($this->selectedvalue === 'No' && $list_entry->mph) {
@@ -397,7 +397,7 @@ class peoples_acceptedmmu_filter extends peoples_select_filter {
 
 
 class peoples_chosenscholarship_filter extends peoples_select_filter {
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       $x = strtolower(trim($list_entry->scholarship));
       $scholarshipempty = empty($x) || ($x ==  'none') || ($x ==  'n/a') || ($x ==  'none.');
@@ -500,7 +500,7 @@ class peoples_daterange_filter extends peoples_filter {
   }
 
 
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if ($list_entry->datesubmitted < $this->starttime || $list_entry->datesubmitted > $this->endtime) {
         unset($list_to_filter[$index]);
