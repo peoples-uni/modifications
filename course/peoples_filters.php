@@ -51,7 +51,7 @@ class peoples_filters {
   }
 
 
-  public function array filter_entries(array $list_to_filter) {
+  public function filter_entries(array $list_to_filter) {
 
     foreach ($this->filters as $filter) {
       $list_to_filter = $filter->filter_entries($list_to_filter);
@@ -63,14 +63,14 @@ class peoples_filters {
 
 
 abstract class peoples_filter {
-  public string $human_name
-  protected string $name;
+  public $human_name
+  protected $name;
   protected $selectedvalue;
 
-  abstract public function string get_url_parameter() {
+  abstract public function get_url_parameter() {
   }
 
-  abstract public function string choice_field() {
+  abstract public function choice_field() {
   }
 
 
@@ -84,7 +84,7 @@ abstract class peoples_filter {
   }
 
 
-  protected function string select_choice_field($name, $options, $selectedvalue) {
+  protected function select_choice_field($name, $options, $selectedvalue) {
     $field = '<select name="' . $name . '">';
     foreach ($options as $option) {
       if ($option === $selectedvalue) $selected = 'selected="selected"';
@@ -109,12 +109,12 @@ class peoples_boolean_filter extends peoples_filter {
   }
 
 
-  public function string get_url_parameter() {
+  public function get_url_parameter() {
     return "&$this->name=" . empty($_REQUEST[$this->name]) ? '0' : '1';
   }
 
 
-  public function string choice_field() {
+  public function choice_field() {
 
     if (!empty($_REQUEST[$this->name])) $checked = ' CHECKED';
     else $checked = '';
@@ -137,12 +137,12 @@ class peoples_select_filter extends peoples_filter {
   }
 
 
-  public function string get_url_parameter() {
+  public function get_url_parameter() {
     return "&$this->name=" . urlencode($_REQUEST[$this->name]);
   }
 
 
-  public function string choice_field() {
+  public function choice_field() {
     return $this->select_choice_field($this->name, $this->options, $this->selectedvalue);
   }
 }
@@ -159,12 +159,12 @@ class peoples_textfield_filter extends peoples_filter {
   }
 
 
-  public function string get_url_parameter() {
+  public function get_url_parameter() {
     return "&$this->name=" . urlencode($_REQUEST[$this->name]);
   }
 
 
-  public function string choice_field() {
+  public function choice_field() {
     return '<input type="text" size="15" name="' . $this->name . '" value="' . htmlspecialchars($this->selectedvalue, ENT_COMPAT, 'UTF-8') . '" />';
   }
 }
@@ -418,8 +418,8 @@ class peoples_chosenscholarship_filter extends peoples_select_filter {
 
 
 class peoples_daterange_filter extends peoples_filter {
-  protected int $starttime;
-  protected int $endtime;
+  protected $starttime;
+  protected $endtime;
   protected $liststartyear = array();
   protected $liststartmonth = array();
   protected $liststartday = array();
@@ -477,7 +477,7 @@ class peoples_daterange_filter extends peoples_filter {
   }
 
 
-  public function string get_url_parameter() {
+  public function get_url_parameter() {
     return '&chosenstartyear=' . $_REQUEST['chosenstartyear']
          . '&chosenstartmonth=' . $_REQUEST['chosenstartmonth']
          . '&chosenstartday=' . $_REQUEST['chosenstartday']
@@ -487,7 +487,7 @@ class peoples_daterange_filter extends peoples_filter {
   }
 
 
-  public function string choice_field() {
+  public function choice_field() {
     $field = '';
     $field .= $this->select_choice_field('chosenstartyear', $this->liststartyear, $this->chosenstartyear) . '</td><td>';
     $field .= $this->select_choice_field('chosenstartmonth', $this->liststartmonth, $this->chosenstartmonth) . '</td><td>';
