@@ -5,7 +5,7 @@
 class peoples_filters {
 
   private $filters = array();
-  private string $page_url;
+  private $page_url;
 
 
   public function set_page_url(string $url) {
