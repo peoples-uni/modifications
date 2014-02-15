@@ -397,7 +397,7 @@ if (empty($dissertations)) {
 $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r WHERE r.userid!=0');
 
 
-$applications = $peoples_filters->array filter_entries($applications);
+$applications = $peoples_filters->filter_entries($applications);
 
 $emaildups = 0;
 foreach ($applications as $sid => $application) {
@@ -588,6 +588,10 @@ $napproved = 0;
 $nenrolled = 0;
 
 $modules = array();
+$listofemails = array();
+$gender = array();
+$age = array();
+$country = array();
 foreach ($applications as $sid => $application) {
   $state = (int)$application->state;
   // Legacy fixups...
