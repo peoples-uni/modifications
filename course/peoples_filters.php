@@ -8,7 +8,7 @@ class peoples_filters {
   private $page_url;
 
 
-  public function set_page_url(string $url) {
+  public function set_page_url($url) {
     $this->page_url = $url;
   }
 
@@ -99,7 +99,7 @@ abstract class peoples_filter {
 
 class peoples_boolean_filter extends peoples_filter {
 
-  function __construct(string $human_name, string $name) {
+  function __construct($human_name, $name) {
     $this->human_name = $human_name;
     $this->name = $name;
     $this->selectedvalue = !empty($_REQUEST[$this->name]);
@@ -124,7 +124,7 @@ class peoples_select_filter extends peoples_filter {
   protected $options;
 
 
-  function __construct(string $human_name, string $name, array $options, string $defaultvalue) {
+  function __construct($human_name, $name, array $options, $defaultvalue) {
     $this->human_name = $human_name;
     $this->name = $name;
     $this->options = $options;
@@ -147,7 +147,7 @@ class peoples_select_filter extends peoples_filter {
 
 class peoples_textfield_filter extends peoples_filter {
 
-  function __construct(string $human_name, string $name) {
+  function __construct($human_name, $name) {
     $this->human_name = $human_name;
     $this->name = $name;
 
