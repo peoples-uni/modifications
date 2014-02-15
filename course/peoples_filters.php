@@ -45,7 +45,7 @@ class peoples_filters {
     echo    '</table>';
     echo    '<input type="hidden" name="markfilter" value="1" />';
     echo    '<input type="submit" name="filter" value="Apply Filters" />';
-    echo    '<a href="' . $this->page_url . '">Reset Filters</a>';
+    echo    ' <a href="' . $this->page_url . '">Reset Filters</a>';
     echo '</form>';
     echo '<br />';
   }
