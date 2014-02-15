@@ -235,7 +235,7 @@ require_once($CFG->dirroot .'/course/peoples_filters.php');
 
 $peoples_filters = new peoples_filters();
 
-$peoples_filters->set_page_url("$CFG->wwwroot/course/applications.php");
+$peoples_filters->set_page_url("$CFG->wwwroot/course/xapplications.php");
 
 $semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
