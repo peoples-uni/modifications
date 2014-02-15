@@ -67,11 +67,8 @@ abstract class peoples_filter {
   protected $name;
   protected $selectedvalue;
 
-  abstract public function get_url_parameter() {
-  }
-
-  abstract public function choice_field() {
-  }
+  abstract public function get_url_parameter();
+  abstract public function choice_field();
 
 
   function get_filter_setting() {
