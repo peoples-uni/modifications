@@ -130,7 +130,7 @@ if ($cert == 'transcript') {
 	cert_printtext(170, 250, 'C', 'Helvetica', '', 20, utf8_decode('has successfully completed the course module'));
   $percent = '';
   if (!$nopercentage && $enrol->percentgrades == 1) {
-    $percent = ' (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+    $percent = ' (Grade ' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
   }
   cert_printtext(170, 285, 'C', 'Helvetica', '', 20, utf8_decode($course->fullname . $percent . ','));
 	cert_printtext(170, 320, 'C', 'Helvetica', '', 14, utf8_decode("one of the course modules in the People's Open Access Educational Initiative - Peoples-uni."));
@@ -327,7 +327,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 	$countp = 0;
 	$lastestdate = 0;
   $modules = array();
-	$modules[] = 'Modules completed:';
+  $modules[] = 'Modules completed (Grade):';
   $percentages = array();
   $percentages[] = '';
 	foreach ($enrols as $enrol) {

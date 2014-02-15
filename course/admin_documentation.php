@@ -1245,7 +1245,7 @@ There are a number of buttons for each course module in "Student Grades" which c
 Additionally if the student has met the criteria for receiving a Certificate (3 modules passed 45+) or Diploma (6 modules passed 45+, 2 of each type) from Peoples-uni. They will be able to download them here.
 </li>
 <li>
-Note that academic transcripts now contain a percent mark for each module. It is possible to suppress the display of percentages for a transcript by adding "&nopercentage=1" to the end of the URL of the transcript.
+Note that academic transcripts and diploma (& certificate) certificates now contain a percent grade for each module. It is possible to suppress the display of percentages for a transcript by adding "&nopercentage=1" to the end of the URL of the transcript.
 </li>
 <li>
 Additionally if the student has any "Peoples-uni Record Files" there will be a link to a page that lists all of these files and will allow the student to download the files.<br />
