@@ -107,7 +107,7 @@ class peoples_boolean_filter extends peoples_filter {
 
 
   public function get_url_parameter() {
-    return "&$this->name=" . empty($_REQUEST[$this->name]) ? '0' : '1';
+    return "&$this->name=" . (empty($_REQUEST[$this->name]) ? '0' : '1');
   }
 
 
