@@ -337,7 +337,7 @@ $displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
 
 
 if (!empty($_POST['markfilter'])) {
-  redirect($CFG->wwwroot . '/course/applications.php?' . $peoples_filters->get_url_parameters());
+  redirect($CFG->wwwroot . '/course/xapplications.php?' . $peoples_filters->get_url_parameters());
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
