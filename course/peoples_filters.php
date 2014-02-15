@@ -18,7 +18,7 @@ class peoples_filters {
   }
 
 
-  public function string get_url_parameters() {
+  public function get_url_parameters() {
     $parameters = '';
 
     foreach ($this->filters as $filter) {
