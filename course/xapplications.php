@@ -240,9 +240,10 @@ $peoples_filters->set_page_url("$CFG->wwwroot/course/applications.php");
 $semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
   $listsemester[] = $semester->semester;
+  if (!isset($defaultsemester)) $defaultsemester = $semester->semester;
 }
 $listsemester[] = 'All';
-$peoples_chosensemester_filter = new peoples_chosensemester_filter('Semester', 'chosensemester', $listsemester, $semester->semester);
+$peoples_chosensemester_filter = new peoples_chosensemester_filter('Semester', 'chosensemester', $listsemester, $defaultsemester);
 $peoples_filters->add_filter($peoples_chosensemester_filter);
 
 $liststatus[] = 'All';
@@ -370,6 +371,9 @@ echo $OUTPUT->header();
 
 
 if (!$displayforexcel) echo "<h1>Student Applications</h1>";
+
+
+if (!$displayforexcel) $peoples_filters->show_filters();
 
 
 // Retrieve all relevent rows
