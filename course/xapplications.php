@@ -235,7 +235,7 @@ require_once($CFG->dirroot .'/course/peoples_filters.php');
 
 $peoples_filters = new peoples_filters();
 
-$peoples_filters->set_page_url("$CFG->wwwroot/course/xapplications.php");
+$peoples_filters->set_page_url("$CFG->wwwroot/course/applications.php");
 
 $semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
@@ -337,7 +337,7 @@ $displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
 
 
 if (!empty($_POST['markfilter'])) {
-  redirect($CFG->wwwroot . '/course/xapplications.php?' . $peoples_filters->get_url_parameters());
+  redirect($CFG->wwwroot . '/course/applications.php?' . $peoples_filters->get_url_parameters());
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -1158,10 +1158,10 @@ Payment Method: "No Indication Given"<br />
 Also look at list of e-mails sent to verify they went! (No subject and they will not go!)<br /><br />
 <form id="emailsendform" method="post" action="<?php
   if (!empty($_REQUEST['chosensemester'])) {
-    echo $CFG->wwwroot . '/course/xapplications.php?' . $peoples_filters->get_url_parameters();
+    echo $CFG->wwwroot . '/course/applications.php?' . $peoples_filters->get_url_parameters();
   }
   else {
-    echo $CFG->wwwroot . '/course/xapplications.php';
+    echo $CFG->wwwroot . '/course/applications.php';
   }
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
@@ -1257,12 +1257,12 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->lastname = '';
   $supportuser->maildisplay = true;
 
-  $user->email = 'alanabarrett0@gmail.com';//(**)
+  //$user->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($user, $supportuser, $subject, $message);
 
   $user->email = 'applicationresponses@peoples-uni.org';
 
-  $user->email = 'alanabarrett0@gmail.com';//(**)
+  //$user->email = 'alanabarrett0@gmail.com';
   email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
 
   return $ret;
