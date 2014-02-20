@@ -40,9 +40,9 @@ if (!empty($prof->id)) $genderid = $prof->id;
 
 
 $enrols = $DB->get_records_sql("
-SELECT m.id, m.semester_graduated, m.mphstatus, u.id as userid, u.lastname, u.firstname, u.email, u.country
+SELECT m.id, m.semester_graduated, m.mphstatus, m.graduated, u.id as userid, u.lastname, u.firstname, u.email, u.country
 FROM mdl_peoplesmph2 m, mdl_user u
-WHERE m.userid=u.id AND m.graduated=1
+WHERE m.userid=u.id AND m.graduated!=0
 ORDER BY STR_TO_DATE(SUBSTRING(m.semester_graduated, 10), '%M %Y') ASC, u.lastname ASC, u.firstname ASC
 ");
 
@@ -51,7 +51,8 @@ $table->head = array(
   'Semester Graduated',
   'Family name',
   'Given name',
-  'Certifying Institution'
+  'Certifying Institution',
+  'Type of pass',
   );
 
 $n = 0;
@@ -67,6 +68,8 @@ if (!empty($enrols)) {
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
     $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
     $rowdata[] = $certifying[$enrol->mphstatus];
+    $type_of_pass = array(0 => '', 1 => '', 2 => 'Merit', 3 => 'Distinction');
+    $rowdata[] = $type_of_pass[$enrol->graduated];
 
     $listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
 

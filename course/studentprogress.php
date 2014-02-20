@@ -59,6 +59,14 @@ GROUP BY e.userid
 ORDER BY numberpassed DESC, u.lastname, u.firstname
 ");
 
+$peoplesmph2s = $DB->get_records_sql("
+SELECT
+  userid,
+  graduated
+FROM
+  mdl_peoplesmph2
+");
+
 $table = new html_table();
 
 $table->head = array(
@@ -83,7 +91,13 @@ foreach ($enrols as $enrol) {
   $rowdata[] =  htmlspecialchars($enrol->codespassed, ENT_COMPAT, 'UTF-8');
   $rowdata[] =  $enrol->foundationspassed;
   $rowdata[] =  $enrol->problemspassed;
-  $rowdata[] =  $enrol->qualification;
+  $mphtext = '';
+  if (!empty($peoplesmph2s[$enrol->id])) {
+    $peoplesmph2 = $peoplesmph2s[$enrol->id];
+    $type_of_pass = array(0 => '', 1 => ' (MPH)', 2 => ' (MPH Merit)', 3 => ' (MPH Distinction)');
+    $mphtext = $type_of_pass[$peoplesmph2->graduated];
+  }
+  $rowdata[] =  $enrol->qualification . $mphtext;
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->id . '" target="_blank">Student Grades</a>';
   $n++;
   $table->data[] = $rowdata;

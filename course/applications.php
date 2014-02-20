@@ -141,6 +141,11 @@ mphstatus (in both tables)...
 2 => Peoples MPH
 3 => OTHER(to be determined) MPH
 
+graduated...
+0 => not graduated
+1 => pass
+2 => Merit
+3 => Distinction
 
 CREATE TABLE mdl_peoples_cert_ps (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,

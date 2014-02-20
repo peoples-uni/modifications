@@ -121,13 +121,14 @@ if (!empty($application)) {
 $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
 if (!empty($peoplesmph2->note)) echo '<br />' . $peoplesmph2->note;
 
-if (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && $isteacher) {
-  $peoplesmph2->graduated = 1;
+if (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && !empty($_POST['graduated']) && $isteacher) {
+  $peoplesmph2->graduated = $_POST['graduated'];
   $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
 }
 if (!empty($peoplesmph2->graduated)) {
   $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
-  echo '<br />Graduated with MPH in Semester ' . $peoplesmph2->semester_graduated . ' (Certified by ' . $certifying[$peoplesmph2->mphstatus] . ')';
+  $type_of_pass = array(0 => '', 1 => '', 2 => '(Merit) ', 3 => '(Distinction) ');
+  echo '<br />Graduated with MPH ' . $type_of_pass[$peoplesmph2->graduated] . 'in Semester ' . $peoplesmph2->semester_graduated . ' (Certified by ' . $certifying[$peoplesmph2->mphstatus] . ')';
 }
 
 $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $userid));
@@ -385,11 +386,11 @@ elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
 	$newnote->note = dontaddslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
   $DB->insert_record('peoplesstudentnotes', $newnote);
 }
-elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && $isteacher) {
+elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && !empty($_POST['graduated']) && $isteacher) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $newpeoplesmph2 = new object();
   $newpeoplesmph2->id = $peoplesmph2->id;
-  $newpeoplesmph2->graduated = 1;
+  $newpeoplesmph2->graduated = $_POST['graduated'];
   $newpeoplesmph2->semester_graduated = $_POST['semester_graduated'];
   $DB->update_record('peoplesmph2', $newpeoplesmph2);
 }
@@ -729,7 +730,7 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 <br /><br />
 
 <?php if (!empty($peoplesmph2)) { ?>
-<br />To mark this student as graduated with MPH, select semester (defaults to current) below and press "Mark...".<br />
+<br />To mark this student as graduated with MPH, select semester (defaults to current) & type of pass below and press "Mark...".<br />
 <form id="graduatedform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
 <?php
 $semesters = $DB->get_records('semesters', NULL, 'id ASC');
@@ -747,9 +748,14 @@ foreach ($semesters as $semester) {
 }
 ?>
 </select>
+<select name="graduated">
+<option value="1" >Pass</option>
+<option value="2" >Merit</option>
+<option value="3" >Distinction</option>
+</select>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markgraduated" value="1" />
-<input type="submit" name="graduated" value="Mark this Student as Graduated with MPH" />
+<input type="submit" name="submitgraduated" value="Mark this Student as Graduated with MPH" />
 </form>
 <br /><br />
 <?php } ?>
