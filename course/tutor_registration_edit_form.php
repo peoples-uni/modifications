@@ -150,7 +150,14 @@ If you have a postgraduate qualification, please indicate name of qualification,
     }
 
     if ($is_admin && empty($userrecord)) {
+      $mform->addElement('static', 'spacingxxx0', '&nbsp;', '&nbsp;<br />');
       $mform->addElement('checkbox', 'register_in_moodle', 'Check to register volunteer in Moodle');
+    }
+
+    if (has_capability('moodle/site:viewparticipants', context_system::instance()) && !empty($id)) {
+      $mform->addElement('static', 'spacingxxx1', '&nbsp;', '&nbsp;<br />');
+      $mform->addElement('checkbox', 'hide_tutor_form', 'Check to hide this form from all future processing');
+      $mform->addElement('static', 'spacingxxx2', '&nbsp;', '&nbsp;<br />');
     }
 
 

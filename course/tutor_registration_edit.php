@@ -265,6 +265,9 @@ elseif ($data = $editform->get_data()) {
     $peoples_tutor_registration->datelastapproved = $peoples_tutor_registration->datefirstapproved;
   }
 
+  if (!empty($data->hide_tutor_form)) {
+    $peoples_tutor_registration->hidden = 1;
+  }
 
   if (!empty($id)) {
     $DB->update_record('peoples_tutor_registration', $peoples_tutor_registration);
