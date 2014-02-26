@@ -279,10 +279,22 @@ window.opener.location.reload();
 
   updateapplication($_POST['sid'], 'userid', $user->id);
 
-  // Enrol student in Students Corner
+  // Enrol student in Foundations of Public Health
   $fph = $DB->get_record('course', array('id' => get_config(NULL, 'foundations_public_health_id')));
   if (!empty($fph)) {
     enrolincoursesimple($fph, $user);
+  }
+
+  // Enrol student in Students Corner
+  $sc = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
+  if (!empty($sc)) {
+    enrolincoursesimple($sc, $user);
+  }
+
+  // Enrol student in Student Support Forums
+  $ssf = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
+  if (!empty($ssf)) {
+    enrolincoursesimple($ssf, $user);
   }
 
   updateapplication($_POST['sid'], 'state', 1);

@@ -405,7 +405,8 @@ window.opener.location.reload();
 
 	// Enrol student in Students Corner
   $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
-	if (!empty($studentscorner)) {
+    //(**)COMMENT PREVIOUS LINE
+  if (!empty($studentscorner)) {
 		enrolincoursesimple($studentscorner, $user);
 	}
 
@@ -546,6 +547,7 @@ elseif (!empty($_POST['userid']) && (
 
   // Enrol student in Students Corner
   $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
+  //(**)COMMENT PREVIOUS LINE
   if (!empty($studentscorner)) {
     enrolincoursesimple($studentscorner, $user);
     sendstudentscorner($user);
@@ -553,6 +555,7 @@ elseif (!empty($_POST['userid']) && (
 
   // Enrol student in Student Support Forums
   $studentsupportforums = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
+  //(**)COMMENT PREVIOUS LINE
   if (!empty($studentsupportforums)) {
     enrolincoursesimple($studentsupportforums, $user);
     sendstudentsupportforums($user);

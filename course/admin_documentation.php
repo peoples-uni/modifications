@@ -108,6 +108,12 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Foundations of Public Health demonstration module that will be used for student registrations and then click "Make this Module the Foundations of Public Health Module for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 <li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Students Corner module that will be used for student registrations and then click "Make this Module the Students Corner for new Student Registrants:" (no need to do this if it has not changed).
+</li>
+<li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forums module that will be used for student registrations and then click "Make this Module the Student Support Forums Module for new Student Registrants:" (no need to do this if it has not changed).
+</li>
+<li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording and then click "Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
@@ -322,9 +328,6 @@ NOTE: once any module is added (which is not then immediately marked as full... 
 </li>
 <li>
 You can confirm that the application form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed.
-</li>
-<li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the new Students Corner module that will be used for student enrolments in the comming semester and then click "Make this Module the Students Corner for future enrolments:".
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording for dates and banking and then click "Set the above text as the Students Approval e-mail wording (in Application Details/app.php)". Here is a sample of previous wording...
@@ -757,10 +760,6 @@ There is a link to your course at the bottom of the profile or you can click:
 
   $a->courseurl
 </pre>
-<br />
-They will also get a notification of the current semester's Students Corner in another e-mail.
-<br />
-They will also get a notification of the Student Support Forums module in yet another e-mail.
 <br />
 The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
 </li>

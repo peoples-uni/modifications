@@ -479,7 +479,7 @@ foreach ($idnumbers as $idnumber) {
 <form id="setstudentscornerform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetstudentscorner" value="1" />
-<input type="submit" name="setstudentscorner" value="Make this Module the Students Corner for future enrolments:" style="width:50em" />
+<input type="submit" name="setstudentscorner" value="Make this Module the Students Corner for new Student Registrants:" style="width:50em" />
 <select name="studentscorner">
 <?php
 foreach ($courses as $course) {
@@ -515,7 +515,7 @@ foreach ($courses as $course) {
 <form id="setsscform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetssc" value="1" />
-<input type="submit" name="setssc" value="Make this Module the Student Support Forums Module for future enrolments:" style="width:50em" />
+<input type="submit" name="setssc" value="Make this Module the Student Support Forums Module for new Student Registrants:" style="width:50em" />
 <select name="ssc">
 <?php
 foreach ($courses as $course) {
