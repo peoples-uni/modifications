@@ -118,42 +118,78 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
-You have been enrolled in pre-registration system for Peoples-uni
-courses.
+Welcome to Peoples-uni. You have been enrolled in pre-registration
+system for Peoples-uni courses.
 
 We have found in the past that those students who fully understand
-what they are letting themselves in for do much better in the courses.
+what they are letting themselves in for, do much better in the
+courses than some who are new to our e-learning platform.
+
 Since there are more people interested in taking our courses than we
 have places available, we have developed this pre-registration system
-which is a requirement for enrolment in Peoples-uni courses.
+which is a requirement for enrollment in Peoples-uni courses.
+The pre-registration system includes two (2) different modules:
+
+1.The ‘Are you Ready?’ module helps you to prepare yourself for
+studying at masters level, by considering your IT skills, your time
+commitments, and your academic skills (eg searching the internet,
+referencing journals etc)
+
+2.The "Foundations of Public Health" module is designed for new
+students to equip you with key public health knowledge and skills.
+You will have the chance to practice using the e-learning system, and
+take part in on-line discussions with fellow students.
+
+It is best to first complete the ‘Are you Ready?’ module – you will do
+this in your own time.  This will make you familiar with using ‘moodle’,
+which is your on-line space for studying.
+The best place to start is the student
+handbook (http://www.peoples-uni.org/content/student-handbook).
+As you read you will learn how to do the following tasks:
+
+•Upload a picture of yourself
+•Create your own profile - Your profile will give other students and
+tutors a brief summary of your interests, your background and your
+work.
+•Read other student/tutor bios
 
 You will be sent a separate email with your username and password -
-once you have these, please go to the Demonstration module
-"Foundations of Public Health" at
+once you have these, please go to the "Are You Ready?" module at
+http://courses.peoples-uni.org/course/view.php?id=200
+and then the Demonstration module "Foundations of
+Public Health" at
 http://courses.peoples-uni.org/course/view.php?id=FPH_ID_HERE
 
-You will see that you are required to read through the material and
-complete short quizzes.
-Note: you do not have to achieve a particular score in any of the
-quizzes, they are just to show you something about the course
-content and to show us that you are really interested enough to
-participate.
+Note:
+Successfully completing the pre-registration requirements is a
+pre-requisite to course enrollment. The course enrollment window
+opens twice every year - March and August, and this is when you
+select the course(s) you wish to enroll in for the current semester.
+You will be reminded when the course enrollment window is open.
 
-Once you have completed the quizzes, we will keep your name on
-our database and shortly before the start of the next semester will
-send you a link to an application form which you can use to apply for
-entry to the modules you wish to take.
-We will be asking for more information at that stage.
+Additionally, you have been enrolled in two other modules ‘Students
+corner’ and ‘Student Support Forums’.
 
-Unless you complete the quizzes in the demonstration module,
-we will not be able to enrol you in Peoples-uni courses.
-I hope that you find this an interesting exercise and that we will be
-seeing you on the courses soon.
+The Students corner module which is available for student chat is
+here:
+http://courses.peoples-uni.org/course/view.php?
+id=STUDENTS_CORNER_ID_HERE
 
-If you have technical problems please email
-techsupport@peoples-uni.org for assistance.
+The Student Support Forums module is here:
+http://courses.peoples-uni.org/course/view.php?
+id=STUDENT_SUPPORT_ID_HERE
 
-     Peoples Open Access Education Initiative Administrator.
+Each student will be assigned to a specific discussion forum
+in the Student Support Forums module.
+Discussion will be led by a Student Support Officer.
+The Student Support Officer's role is to make contact with students
+as they are registered, continuing throughout the time they are with
+Peoples-uni, to provide support.
+
+If you have technical problems please email apply@peoples-uni.org for
+assistance.
+
+Peoples Open Access Education Initiative Administrator.
 </pre>
 </li>
 <li>
