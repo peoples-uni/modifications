@@ -236,8 +236,8 @@ if ($state === 0) {
 
   $peoples_register_email = str_replace('GIVEN_NAME_HERE', $given_name, $peoples_register_email);
   $peoples_register_email = str_replace('FPH_ID_HERE', get_config(NULL, 'foundations_public_health_id'), $peoples_register_email);
-  $peoples_register_email = str_replace('STUDENTS_CORNER_ID_HERE', get_config(NULL, 'peoples_students_corner_id'), $peoples_register_email);
-  $peoples_register_email = str_replace('STUDENT_SUPPORT_ID_HERE', get_config(NULL, 'peoples_student_support_id'), $peoples_register_email);
+  $peoples_register_email = str_replace('SC_ID_HERE', get_config(NULL, 'peoples_students_corner_id'), $peoples_register_email);
+  $peoples_register_email = str_replace('SSF_ID_HERE', get_config(NULL, 'peoples_student_support_id'), $peoples_register_email);
 
   $peoples_register_email = htmlspecialchars($peoples_register_email, ENT_COMPAT, 'UTF-8');
 

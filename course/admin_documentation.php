@@ -172,12 +172,10 @@ corner’ and ‘Student Support Forums’.
 
 The Students corner module which is available for student chat is
 here:
-http://courses.peoples-uni.org/course/view.php?
-id=STUDENTS_CORNER_ID_HERE
+http://courses.peoples-uni.org/course/view.php?id=SC_ID_HERE
 
 The Student Support Forums module is here:
-http://courses.peoples-uni.org/course/view.php?
-id=STUDENT_SUPPORT_ID_HERE
+http://courses.peoples-uni.org/course/view.php?id=SSF_ID_HERE
 
 Each student will be assigned to a specific discussion forum
 in the Student Support Forums module.
