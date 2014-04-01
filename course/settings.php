@@ -534,7 +534,7 @@ foreach ($courses as $course) {
 <form id="register_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_register_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_register_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_register_email" value="1" />
 <input type="submit" name="set_register_email" value="Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)" style="width:50em" />
@@ -544,7 +544,7 @@ foreach ($courses as $course) {
 <form id="batch_registration_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_batch_registration_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_registration_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_registration_email" value="1" />
 <input type="submit" name="set_batch_registration_email" value="Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)" style="width:50em" />
@@ -555,7 +555,7 @@ foreach ($courses as $course) {
 <form id="approval_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_email" value="1" />
 <input type="submit" name="set_approval_email" value="Set the above text as the New Students Approval e-mail wording (in Application Details/app.php)" style="width:50em" />
@@ -565,7 +565,7 @@ foreach ($courses as $course) {
 <form id="approval_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_bursary_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_bursary_email" value="1" />
 <input type="submit" name="set_approval_bursary_email" value="Set the above text as the New Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:50em" />
@@ -576,7 +576,7 @@ foreach ($courses as $course) {
 <form id="approval_old_students_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_old_students_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_old_students_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_old_students_email" value="1" />
 <input type="submit" name="set_approval_old_students_email" value="Set the above text as the Students Approval e-mail wording (in Application Details/app.php)" style="width:50em" />
@@ -586,7 +586,7 @@ foreach ($courses as $course) {
 <form id="approval_old_students_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_old_students_bursary_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_old_students_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_old_students_bursary_email" value="1" />
 <input type="submit" name="set_approval_old_students_bursary_email" value="Set the above text as the Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:50em" />
@@ -597,7 +597,7 @@ foreach ($courses as $course) {
 <form id="approval_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_email" value="1" />
 <input type="submit" name="set_approval_email" value="Set the above text as the MPH Students Approval e-mail wording (in Application Details/app.php)" style="width:50em" />
@@ -607,7 +607,7 @@ foreach ($courses as $course) {
 <form id="approval_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_approval_bursary_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_approval_bursary_email" value="1" />
 <input type="submit" name="set_approval_bursary_email" value="Set the above text as the MPH Students Approval e-mail wording with BURSARY (in Application Details/app.php)" style="width:50em" />
@@ -618,7 +618,7 @@ foreach ($courses as $course) {
 <form id="batch_reminder_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_batch_reminder_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_reminder_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_reminder_email" value="1" />
 <input type="submit" name="set_batch_reminder_email" value="Set above text as Batch Reminder e-mail wording (in applications.php spreadsheet)" style="width:50em" />
@@ -628,7 +628,7 @@ foreach ($courses as $course) {
 <form id="batch_email_to_enrolled_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_batch_email_to_enrolled" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_email_to_enrolled'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_email_to_enrolled" value="1" />
 <input type="submit" name="set_batch_email_to_enrolled" value="Set above text as wording for the Batch e-mail to enrolled students (in coursegrades.php)" style="width:50em" />
@@ -639,7 +639,7 @@ foreach ($courses as $course) {
 <form id="interest_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_interest_email" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_interest_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_interest_email" value="1" />
 <input type="submit" name="set_interest_email" value="Set above text as Reply e-mail wording for Expressions of Interest (in int.php)" style="width:50em" />
@@ -650,7 +650,7 @@ foreach ($courses as $course) {
 <form id="batch_email_to_enrolled_missing_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_batch_email_to_enrolled_missing" rows="15" cols="75" wrap="hard">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_email_to_enrolled_missing'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_email_to_enrolled_missing" value="1" />
 <input type="submit" name="set_batch_email_to_enrolled_missing" value="Set above text as wording for the Batch e-mail to Not Logged on students (in coursegrades.php)" style="width:50em" />
@@ -660,7 +660,7 @@ foreach ($courses as $course) {
 <form id="discussion_feedback_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <textarea name="value_discussion_feedback_email" rows="15" cols="75" wrap="soft">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_discussion_feedback_email'), ENT_COMPAT, 'UTF-8'); ?>
-</textarea>
+</textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_discussion_feedback_email" value="1" />
 <input type="submit" name="set_discussion_feedback_email" value="Set above text for e-mail sent to students on submission of Discussion Feedback (discussionfeedback.php)" style="width:50em" />
