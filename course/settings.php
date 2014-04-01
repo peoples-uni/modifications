@@ -532,7 +532,7 @@ foreach ($courses as $course) {
 <br /><br />
 
 <form id="register_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_register_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_register_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_register_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -542,7 +542,7 @@ foreach ($courses as $course) {
 <br />
 
 <form id="batch_registration_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_batch_registration_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_batch_registration_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_registration_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -553,7 +553,7 @@ foreach ($courses as $course) {
 
 <?php if (FALSE) { ?>
 <form id="approval_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_approval_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_approval_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -563,7 +563,7 @@ foreach ($courses as $course) {
 <br />
 
 <form id="approval_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_approval_bursary_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_approval_bursary_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -574,7 +574,7 @@ foreach ($courses as $course) {
 <?php } ?>
 
 <form id="approval_old_students_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_approval_old_students_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_approval_old_students_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_old_students_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -584,7 +584,7 @@ foreach ($courses as $course) {
 <br />
 
 <form id="approval_old_students_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_approval_old_students_bursary_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_approval_old_students_bursary_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_old_students_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -595,7 +595,7 @@ foreach ($courses as $course) {
 
 <?php if (FALSE) { ?>
 <form id="approval_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_approval_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_approval_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -605,7 +605,7 @@ foreach ($courses as $course) {
 <br />
 
 <form id="approval_bursary_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_approval_bursary_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_approval_bursary_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_approval_bursary_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -616,7 +616,7 @@ foreach ($courses as $course) {
 <?php } ?>
 
 <form id="batch_reminder_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_batch_reminder_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_batch_reminder_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_reminder_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -626,7 +626,7 @@ foreach ($courses as $course) {
 <br />
 
 <form id="batch_email_to_enrolled_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_batch_email_to_enrolled" rows="15" cols="75" wrap="hard">
+<textarea name="value_batch_email_to_enrolled" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_email_to_enrolled'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -637,7 +637,7 @@ foreach ($courses as $course) {
 
 <?php if (FALSE) { ?>
 <form id="interest_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_interest_email" rows="15" cols="75" wrap="hard">
+<textarea name="value_interest_email" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_interest_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -648,7 +648,7 @@ foreach ($courses as $course) {
 <?php } ?>
 
 <form id="batch_email_to_enrolled_missing_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_batch_email_to_enrolled_missing" rows="15" cols="75" wrap="hard">
+<textarea name="value_batch_email_to_enrolled_missing" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_batch_email_to_enrolled_missing'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
