@@ -658,7 +658,7 @@ foreach ($courses as $course) {
 <br />
 
 <form id="discussion_feedback_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<textarea name="value_discussion_feedback_email" rows="15" cols="75" wrap="soft">
+<textarea name="value_discussion_feedback_email" rows="15" cols="75" wrap="soft" style="width:auto">
 <?php echo htmlspecialchars(get_config(NULL, 'peoples_discussion_feedback_email'), ENT_COMPAT, 'UTF-8'); ?>
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
