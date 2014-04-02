@@ -77,31 +77,31 @@ class tutor_registration_form extends moodleform {
     $mform->setType('username', PARAM_USERNAME);
     $mform->addElement('static', 'explainusername', '&nbsp;', 'Please enter your desired Username for logging in to our education site, for example your first name.<br />');
 
-    $mform->addElement('textarea', 'reasons', 'Reasons for wanting to volunteer for Peoples-uni', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'reasons', 'Reasons for wanting to volunteer for Peoples-uni', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     $mform->addRule('reasons', 'Reasons for wanting to volunteer for Peoples-uni is required', 'required', null, 'client');
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to volunteer for Peoples-uni in up to 150 words.<br />');
 
 
     $mform->addElement('header', 'educationdetails', 'Education and Employment details');
 
-    $mform->addElement('textarea', 'education', 'Relevant qualifications (academic and professional)', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'education', 'Relevant qualifications (academic and professional)', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     $mform->addRule('education', 'Relevant qualifications (academic and professional) is required', 'required', null, 'client');
     $mform->addElement('static', 'explaineducation', '&nbsp;', 'Add details about any of your Relevant qualifications (academic and professional).<br />
 If you have a degree please indicate name of degree, awarding institution and also the language of instruction.<br />
 If you have a postgraduate qualification, please indicate name of qualification, awarding institution and also the language of instruction.<br />');
 
-    $mform->addElement('textarea', 'tutoringexperience', 'Educational/tutoring experience', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'tutoringexperience', 'Educational/tutoring experience', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     $mform->addElement('static', 'explaintutoringexperience', '&nbsp;', 'Please briefly tell us about any educational/tutoring experience you may have.<br />');
 
-    $mform->addElement('textarea', 'currentjob', 'Current employer', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'currentjob', 'Current employer', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     $mform->addRule('currentjob', 'Current employer is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'Add name of your current employer.<br />');
 
-    $mform->addElement('textarea', 'currentrole', 'Current role', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'currentrole', 'Current role', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     $mform->addRule('currentrole', 'Current role is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincurrentrole', '&nbsp;', 'Add details about your current role.<br />');
 
-    $mform->addElement('textarea', 'otherinformation', 'Other information', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'otherinformation', 'Other information', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     $mform->addElement('static', 'explainotherinformation', '&nbsp;', 'Any other information you want us to know about you.<br />');
 
 

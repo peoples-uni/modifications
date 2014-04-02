@@ -45,7 +45,7 @@ To download a file, click on the file and select 'Download'.
 
       $mform->addElement('static', 'spacing-1', '&nbsp;', '&nbsp;<br />');
 
-      $mform->addElement('textarea', 'emailtosend', 'e-mail to send to Student', 'wrap="HARD" rows="10" cols="75"');
+      $mform->addElement('textarea', 'emailtosend', 'e-mail to send to Student', 'wrap="HARD" rows="10" cols="75" style="width:auto"');
       $mform->setDefault('emailtosend', $message);
       $mform->addElement('static', 'explainemailtosend', '&nbsp;', 'Edit the e-mail as required (e-mail will only be sent if you Add/change files & Save changes).<br />(LIST_OF_FILES will be substituted automatically.)<br />');
 

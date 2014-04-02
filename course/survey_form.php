@@ -79,7 +79,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'deliver_other', 'Other', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
     $mform->addElement('static', 'explain_deliver_body_1', '&nbsp;', '<br />1.7a Enter the name of the main organisation indicated above.');
-    $mform->addElement('textarea', 'deliver_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('textarea', 'deliver_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50" style="width:auto"');
 
     $mform->addElement('static', 'explain_country_deliver_body_1', '&nbsp;', '<br />1.8a Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_deliver_body_1', 'Country of this Organisation', $countryname);
@@ -94,7 +94,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'best_way_deliver_body_1', 'Best way of Informing', $inform_method);
 
     $mform->addElement('static', 'explain_deliver_body_2', '&nbsp;', '<br />1.7b Enter the names of the other organisations indicated above.');
-    $mform->addElement('textarea', 'deliver_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('textarea', 'deliver_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50" style="width:auto"');
 
     $mform->addElement('static', 'explain_country_deliver_body_2', '&nbsp;', '<br />1.8b Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_deliver_body_2', 'Country of this Organisation', $countryname);
@@ -139,7 +139,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'fund_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
     $mform->addElement('static', 'explain_fund_body_1', '&nbsp;', '<br />2.6a Enter the name of the main organisation indicated above.');
-    $mform->addElement('textarea', 'fund_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('textarea', 'fund_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50" style="width:auto"');
 
     $mform->addElement('static', 'explain_country_fund_body_1', '&nbsp;', '<br />2.7a Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_fund_body_1', 'Country of this Organisation', $countryname);
@@ -154,7 +154,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'best_way_fund_body_1', 'Best way of Informing', $inform_method);
 
     $mform->addElement('static', 'explain_fund_body_2', '&nbsp;', '<br />2.6b Enter the names of the other organisations indicated above.');
-    $mform->addElement('textarea', 'fund_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('textarea', 'fund_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50" style="width:auto"');
 
     $mform->addElement('static', 'explain_country_fund_body_2', '&nbsp;', '<br />2.7b Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_fund_body_2', 'Country of this Organisation', $countryname);
@@ -187,7 +187,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'care_international_ngo', 'International NGO', array('' => 'None', 'Current Link' => 'Current Link', 'Former Link' => 'Former Link'));
 
     $mform->addElement('static', 'explain_care_body_1', '&nbsp;', '<br />3.6a Enter the name of the main organisation indicated above.');
-    $mform->addElement('textarea', 'care_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('textarea', 'care_body_1', 'Name of Main Organisation Indicated Above', 'wrap="HARD" rows="2" cols="50" style="width:auto"');
 
     $mform->addElement('static', 'explain_country_care_body_1', '&nbsp;', '<br />3.7a Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_care_body_1', 'Country of this Organisation', $countryname);
@@ -202,7 +202,7 @@ $inform_method['Other'] = 'Other';
     $mform->addElement('select', 'best_way_care_body_1', 'Best way of Informing', $inform_method);
 
     $mform->addElement('static', 'explain_care_body_2', '&nbsp;', '<br />3.6b Enter the names of the other organisations indicated above.');
-    $mform->addElement('textarea', 'care_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50"');
+    $mform->addElement('textarea', 'care_body_2', 'Names of Other Organisations Indicated Above', 'wrap="HARD" rows="2" cols="50" style="width:auto"');
 
     $mform->addElement('static', 'explain_country_care_body_2', '&nbsp;', '<br />3.7b Select the Country or Region in which this organisation does its work.');
     $mform->addElement('select', 'country_care_body_2', 'Country of this Organisation', $countryname);

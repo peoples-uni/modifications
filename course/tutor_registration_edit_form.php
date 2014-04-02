@@ -57,7 +57,7 @@ class tutor_registration_edit_form extends moodleform {
     $mform->addElement('header', 'personaldetails', 'Personal details');
     $mform->setExpanded('personaldetails');
 
-    $mform->addElement('textarea', 'reasons', 'Reasons for wanting to volunteer for Peoples-uni', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'reasons', 'Reasons for wanting to volunteer for Peoples-uni', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     if (!empty($id)) $mform->setDefault('reasons', $peoples_tutor_registration->reasons);
     $mform->addRule('reasons', 'Reasons for wanting to volunteer for Peoples-uni is required', 'required', null, 'client');
     $mform->addElement('static', 'explainreasons', '&nbsp;', 'Please tell us your reasons for wanting to volunteer for Peoples-uni in up to 150 words.<br />');
@@ -66,28 +66,28 @@ class tutor_registration_edit_form extends moodleform {
     $mform->addElement('header', 'educationdetails', 'Education and Employment details');
     $mform->setExpanded('educationdetails');
 
-    $mform->addElement('textarea', 'education', 'Relevant qualifications (academic and professional)', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'education', 'Relevant qualifications (academic and professional)', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     if (!empty($id)) $mform->setDefault('education', $peoples_tutor_registration->education);
     $mform->addRule('education', 'Relevant qualifications (academic and professional) is required', 'required', null, 'client');
     $mform->addElement('static', 'explaineducation', '&nbsp;', 'Add details about any of your Relevant qualifications (academic and professional).<br />
 If you have a degree please indicate name of degree, awarding institution and also the language of instruction.<br />
 If you have a postgraduate qualification, please indicate name of qualification, awarding institution and also the language of instruction.<br />');
 
-    $mform->addElement('textarea', 'tutoringexperience', 'Educational/tutoring experience', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'tutoringexperience', 'Educational/tutoring experience', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     if (!empty($id)) $mform->setDefault('tutoringexperience', $peoples_tutor_registration->tutoringexperience);
     $mform->addElement('static', 'explaintutoringexperience', '&nbsp;', 'Please briefly tell us about any educational/tutoring experience you may have.<br />');
 
-    $mform->addElement('textarea', 'currentjob', 'Current employer', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'currentjob', 'Current employer', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     if (!empty($id)) $mform->setDefault('currentjob', $peoples_tutor_registration->currentjob);
     $mform->addRule('currentjob', 'Current employer is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'Add name of your current employer.<br />');
 
-    $mform->addElement('textarea', 'currentrole', 'Current role', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'currentrole', 'Current role', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     if (!empty($id)) $mform->setDefault('currentrole', $peoples_tutor_registration->currentrole);
     $mform->addRule('currentrole', 'Current role is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincurrentrole', '&nbsp;', 'Add details about your current role.<br />');
 
-    $mform->addElement('textarea', 'otherinformation', 'Other information', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'otherinformation', 'Other information', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     if (!empty($id)) $mform->setDefault('otherinformation', $peoples_tutor_registration->otherinformation);
     $mform->addElement('static', 'explainotherinformation', '&nbsp;', 'Any other information you want us to know about you.<br />');
 
@@ -134,11 +134,11 @@ If you have a postgraduate qualification, please indicate name of qualification,
       }
       $mform->addElement('static', 'explainvolunteertype', '&nbsp;', 'Select possible types of volunteer <b>(Ctrl Click for multiple options)</b>.<br />');
 
-      $mform->addElement('textarea', 'modulesofinterest', 'Modules of interest', 'wrap="HARD" rows="10" cols="100"');
+      $mform->addElement('textarea', 'modulesofinterest', 'Modules of interest', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
       if (!empty($id)) $mform->setDefault('modulesofinterest', $peoples_tutor_registration->modulesofinterest);
       $mform->addElement('static', 'explainmodulesofinterest', '&nbsp;', 'Please enter the names of modules that are of interest to this volunteer.<br />');
 
-      $mform->addElement('textarea', 'notes', 'Notes about volunteer', 'wrap="HARD" rows="10" cols="100"');
+      $mform->addElement('textarea', 'notes', 'Notes about volunteer', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
       if (!empty($id)) $mform->setDefault('notes', $peoples_tutor_registration->notes);
       $mform->addElement('static', 'explainnotes', '&nbsp;', 'Please add/update any notes you wish to make here.<br />');
     }
