@@ -127,7 +127,7 @@ class discussionfeedback_form extends moodleform {
 
     //$mform->addElement('static', 'explainassessment_text', '&nbsp;', 'Add any free text you wish to be added to the assessment<br />');
     //$mform->addElement('textarea', 'assessment_text', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
-    $mform->addElement('textarea', 'assessment_text', 'Add any free text you wish to be added to the e-mail after the assessment', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'assessment_text', 'Add any free text you wish to be added to the e-mail after the assessment', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
 
     $this->add_action_buttons(false, 'Submit Form');
   }
