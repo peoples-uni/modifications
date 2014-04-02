@@ -802,7 +802,7 @@ To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?si
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
 <input type="hidden" name="email" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
-<textarea name="approvedtext" rows="15" cols="75" wrap="hard">
+<textarea name="approvedtext" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo $peoples_approval_email; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -816,7 +816,7 @@ To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?si
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
 <input type="hidden" name="email" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
-<textarea name="approvedtext" rows="15" cols="75" wrap="hard">
+<textarea name="approvedtext" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo $peoples_approval_email_bursary; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -862,14 +862,14 @@ if ($state1 === 02) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -913,14 +913,14 @@ if (($state2===020) && !empty($_REQUEST['19'])) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -964,14 +964,14 @@ if ($state1===01 || $state1===03) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1015,14 +1015,14 @@ if (($state2===010 || $state2===030) && !empty($_REQUEST['19'])) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1061,14 +1061,14 @@ if ($state1===02 || $state1===01) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1125,14 +1125,14 @@ if (($state2===020 || $state2===010) && !empty($_REQUEST['19'])) { // Allow modu
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1189,14 +1189,14 @@ elseif ($state2 === 020 && empty($_REQUEST['19'])) { // Allow module 2 to be set
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1253,14 +1253,14 @@ elseif ($state2 === 010 && empty($_REQUEST['19'])) { // Allow module 2 to be set
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1301,7 +1301,7 @@ elseif ($state2 === 030 && empty($_REQUEST['19'])) {
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
 <input type="hidden" name="email" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
-<textarea name="defertext" rows="10" cols="75" wrap="hard">
+<textarea name="defertext" rows="10" cols="75" wrap="hard" style="width:auto">
 Dear <?php echo htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'); ?>,
 
 You have applied to take the Course Module '<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>'
@@ -1455,13 +1455,13 @@ if (!empty($userrecord)) {
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="applicationaddress" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="currentjob" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="education" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="reasons" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="education" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="reasons" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey; ?>" />
 <input type="hidden" name="markenroluser1" value="1" />
@@ -1501,13 +1501,13 @@ if (!empty($userrecord)) {
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="applicationaddress" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="currentjob" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="education" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="reasons" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="education" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="reasons" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey; ?>" />
 <input type="hidden" name="markenroluser2" value="1" />
@@ -1542,13 +1542,13 @@ if (!empty($userrecord)) {
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="applicationaddress" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="currentjob" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="education" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="reasons" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="education" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="reasons" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey; ?>" />
 <input type="hidden" name="markenroluser12" value="1" />
@@ -1594,13 +1594,13 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="applicationaddress" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="currentjob" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="education" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="reasons" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="education" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="reasons" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey; ?>" />
 <input type="hidden" name="markcreateuser1" value="1" />
@@ -1639,13 +1639,13 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="applicationaddress" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="currentjob" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="education" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="reasons" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="education" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="reasons" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey; ?>" />
 <input type="hidden" name="markcreateuser2" value="1" />
@@ -1680,13 +1680,13 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="applicationaddress" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="currentjob" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="education" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="reasons" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="education" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="reasons" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey; ?>" />
 <input type="hidden" name="markcreateuser12" value="1" />
@@ -1722,14 +1722,14 @@ if (!$application->ready && $application->nid != 80) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1767,14 +1767,14 @@ if (empty($mphs)) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1819,14 +1819,14 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1865,14 +1865,14 @@ if (empty($peoples_cert_ps->cert_psstatus)) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1910,14 +1910,14 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -1955,20 +1955,20 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
-<textarea name="note" rows="5" cols="100" wrap="hard"></textarea>
+<textarea name="note" rows="5" cols="100" wrap="hard" style="width:auto"></textarea>
 <input type="hidden" name="markaddnote" value="1" />
 <input type="submit" name="addnote" value="Add This Note to Student Record" />
 </form>
@@ -2001,14 +2001,14 @@ if ($state1 !== 03 && $state2 !== 030 && empty($_REQUEST['29'])) { // Allow appl
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
@@ -2048,14 +2048,14 @@ if ($state1 === 03 && $state2 === 030 && !empty($_REQUEST['19'])) { // Add anoth
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
-<textarea name="3" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="7" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="8" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="10" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="scholarship" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
-<textarea name="32" rows="10" cols="100" wrap="hard"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 </span>
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />

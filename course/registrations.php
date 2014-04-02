@@ -533,7 +533,7 @@ Also look at list of e-mails sent to verify they went! (No subject and they will
   }
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
-<textarea name="emailbody" rows="15" cols="75" wrap="hard">
+<textarea name="emailbody" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo $peoples_batch_registration_email; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />

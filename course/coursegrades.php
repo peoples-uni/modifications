@@ -546,7 +546,7 @@ Look at list of e-mails sent to verify they went!<br />
     ;
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
-<textarea name="emailbody" rows="31" cols="75" wrap="hard">
+<textarea name="emailbody" rows="31" cols="75" wrap="hard" style="width:auto">
 <?php echo $peoples_batch_email_to_enrolled; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -579,7 +579,7 @@ Look at list of e-mails sent to verify they went!<br />
     ;
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
-<textarea name="emailbody" rows="31" cols="75" wrap="hard">
+<textarea name="emailbody" rows="31" cols="75" wrap="hard" style="width:auto">
 <?php echo $peoples_batch_email_to_enrolled_missing; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />

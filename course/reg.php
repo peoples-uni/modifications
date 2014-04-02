@@ -245,7 +245,7 @@ if ($state === 0) {
 <br />To Register this Student and send an e-mail to Student (edit e-mail text if you wish), press "Register Student".
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
-<textarea name="approvedtext" rows="15" cols="75" wrap="hard">
+<textarea name="approvedtext" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo $peoples_register_email; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -264,7 +264,7 @@ else {
 <br />To send an e-mail to this Student (EDIT the e-mail text below!), press "e-mail Student".
 <form id="deferapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
-<textarea name="defertext" rows="10" cols="75" wrap="hard">
+<textarea name="defertext" rows="10" cols="75" wrap="hard" style="width:auto">
 Dear <?php echo htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8'); ?>,
 
 

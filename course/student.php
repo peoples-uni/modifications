@@ -691,7 +691,7 @@ if ($isteacher) {
 ?>
 <br /><br />To send an e-mail to this student (EDIT the e-mail text below!), press "e-mail Student".<br />
 <form id="emailstudentform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
-<textarea name="mailtext" rows="10" cols="75" wrap="hard">
+<textarea name="mailtext" rows="10" cols="75" wrap="hard" style="width:auto">
 Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?>,
 
 <?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>
@@ -722,7 +722,7 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 ?>
 <br />To add a note to this student's record, add text below and press "Add...".<br />
 <form id="addnoteform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
-<textarea name="note" rows="5" cols="100" wrap="hard"></textarea>
+<textarea name="note" rows="5" cols="100" wrap="hard" style="width:auto"></textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markaddnote" value="1" />
 <input type="submit" name="addnote" value="Add This Note to Student Record" />

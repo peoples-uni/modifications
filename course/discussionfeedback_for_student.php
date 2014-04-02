@@ -390,7 +390,7 @@ Write Discussion Feedback for <?php echo htmlspecialchars($all_course->fullname,
 </tr>
 <tr>
   <td>Add any free text you wish to be added to the e-mail after the assessment:</td>
-  <td><textarea name="assessment_text" rows="10" cols="100" wrap="hard"></textarea></td>
+  <td><textarea name="assessment_text" rows="10" cols="100" wrap="hard" style="width:auto"></textarea></td>
 </tr>
 <tr>
   <td colspan="2">

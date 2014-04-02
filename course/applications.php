@@ -756,14 +756,14 @@ foreach ($applications as $sid => $application) {
       $z .= '<input type="hidden" name="31" value="' . htmlspecialchars($application->methodofpayment, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<input type="hidden" name="21" value="' . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<span style="display: none;">';
-      $z .= '<textarea name="3" rows="10" cols="100" wrap="hard">'  . $application->applicationaddress . '</textarea>';
-      $z .= '<textarea name="7" rows="10" cols="100" wrap="hard">'  . $application->currentjob         . '</textarea>';
-      $z .= '<textarea name="8" rows="10" cols="100" wrap="hard">'  . $application->education          . '</textarea>';
-      $z .= '<textarea name="10" rows="10" cols="100" wrap="hard">' . $application->reasons            . '</textarea>';
-      $z .= '<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard">' . $application->sponsoringorganisation . '</textarea>';
-      $z .= '<textarea name="scholarship" rows="10" cols="100" wrap="hard">' . $application->scholarship . '</textarea>';
-      $z .= '<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard">' . $application->whynotcomplete . '</textarea>';
-      $z .= '<textarea name="32" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
+      $z .= '<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto">'  . $application->applicationaddress . '</textarea>';
+      $z .= '<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto">'  . $application->currentjob         . '</textarea>';
+      $z .= '<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto">'  . $application->education          . '</textarea>';
+      $z .= '<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->reasons            . '</textarea>';
+      $z .= '<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->sponsoringorganisation . '</textarea>';
+      $z .= '<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->scholarship . '</textarea>';
+      $z .= '<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->whynotcomplete . '</textarea>';
+      $z .= '<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
       $z .= '</span>';
       $z .= '<input type="hidden" name="applymmumph" value="' . $application->applymmumph . '" />';
       $z .= '<input type="hidden" name="sid" value="' . $sid . '" />';
@@ -1170,7 +1170,7 @@ Also look at list of e-mails sent to verify they went! (No subject and they will
   }
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
-<textarea name="emailbody" rows="15" cols="75" wrap="hard">
+<textarea name="emailbody" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo $peoples_batch_reminder_email; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />

@@ -432,7 +432,7 @@ if (!empty($paymentnotes)) {
 
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
-<textarea name="note" rows="5" cols="100" wrap="hard"></textarea><br />
+<textarea name="note" rows="5" cols="100" wrap="hard" style="width:auto"></textarea><br />
 
 <input type="hidden" name="markpaymentnote" value="1" />
 <input type="submit" name="paymentnote" value="Add this Payment Note to this Student (will be seen on this page in future semesters)" />
