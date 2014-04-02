@@ -150,14 +150,14 @@ Please see the link <a href="http://www.peoples-uni.org/node/232" target="_blank
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />');
-    $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
 
 
     $mform->addElement('header', 'whynotcompletedetails', 'Previous Semester');
     $mform->setExpanded('whynotcompletedetails');
 
     $mform->addElement('static', 'explainwhynotcomplete', '&nbsp;', 'If you are a returning student and did not complete your previous semester, please explain why this was so.');
-    $mform->addElement('textarea', 'whynotcomplete', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
+    $mform->addElement('textarea', 'whynotcomplete', '&nbsp;', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
 
 
     $this->add_action_buttons(false, 'Submit Form');
