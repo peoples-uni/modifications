@@ -404,8 +404,7 @@ window.opener.location.reload();
 	updateapplication($_POST['sid'], 'userid', $user->id);
 
 	// Enrol student in Students Corner
-  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
-    //(**)COMMENT PREVIOUS LINE
+  //$studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
   if (!empty($studentscorner)) {
 		enrolincoursesimple($studentscorner, $user);
 	}
@@ -546,16 +545,14 @@ elseif (!empty($_POST['userid']) && (
 	}
 
   // Enrol student in Students Corner
-  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
-  //(**)COMMENT PREVIOUS LINE
+  //$studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
   if (!empty($studentscorner)) {
     enrolincoursesimple($studentscorner, $user);
     sendstudentscorner($user);
   }
 
   // Enrol student in Student Support Forums
-  $studentsupportforums = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
-  //(**)COMMENT PREVIOUS LINE
+  //$studentsupportforums = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
   if (!empty($studentsupportforums)) {
     enrolincoursesimple($studentsupportforums, $user);
     sendstudentsupportforums($user);
@@ -716,7 +713,7 @@ function sendapprovedmail($email, $subject, $message) {
 
 
 /**
- * Send email to specified user with confirmation text and activation link.
+ * Send email to specified user with confirmation text and activation link. [Not used as account is now given on registration]
  *
  * @uses $CFG
  * @param user $user A {@link $USER} object
@@ -801,7 +798,7 @@ TECHSUPPORT_EMAIL_HERE";
 }
 
 
-function sendstudentscorner($user) {
+function sendstudentscorner($user) { // Not used as this is now done on registration
   global $DB;
   global $CFG;
 
@@ -845,7 +842,7 @@ TECHSUPPORT_EMAIL_HERE";
 }
 
 
-function sendstudentsupportforums($user) {
+function sendstudentsupportforums($user) { // Not used as this is now done on registration
   global $DB;
   global $CFG;
 
