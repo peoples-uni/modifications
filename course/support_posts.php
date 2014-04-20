@@ -186,6 +186,11 @@ if (!empty($enrols)) {
       continue;
     }
 
+    if (
+      stripos($enrol->forumname, 'Student Support Group') !== 0) {
+      continue;
+    }
+
     if (!empty($chosenforumsearch) &&
       stripos($enrol->forumname, $chosenforumsearch) === false) {
       continue;

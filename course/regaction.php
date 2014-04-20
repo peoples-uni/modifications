@@ -281,19 +281,23 @@ window.opener.location.reload();
 
   // Enrol student in Foundations of Public Health
   $fph = $DB->get_record('course', array('id' => get_config(NULL, 'foundations_public_health_id')));
+  $fph_id = 0;
   if (!empty($fph)) {
     enrolincoursesimple($fph, $user);
+    $fph_id = $fph->id;
   }
 
   // Enrol student in Students Corner
   $sc = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
-  if (!empty($sc)) {
+  $sc_id = 0;
+  if (!empty($sc) && ($sc->id != $fph_id)) {
     enrolincoursesimple($sc, $user);
+    $sc_id = $sc->id;
   }
 
   // Enrol student in Student Support Forums
   $ssf = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
-  if (!empty($ssf)) {
+  if (!empty($ssf) && ($ssf->id != $fph_id) && ($ssf->id != $sc_id)) {
     enrolincoursesimple($ssf, $user);
   }
 

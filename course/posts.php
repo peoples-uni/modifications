@@ -153,7 +153,10 @@ $studentsupportforumsnames = $DB->get_records('forum', array('course' => get_con
 if (!isset($chosenssf)) $chosenssf = 'All';
 $listssf[] = 'All';
 foreach ($studentsupportforumsnames as $studentsupportforumsname) {
-  $listssf[] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
+  $pos = stripos($studentsupportforumsname->name, 'Student Support Group');
+  if ($pos === 0) {
+    $listssf[] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
+  }
 }
 natsort($listssf);
 
