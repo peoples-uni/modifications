@@ -322,7 +322,7 @@ if (empty($chosenssf) || ($chosenssf == 'All')) {
   $ssfsql = '';
 }
 else {
-  $chosenforumid = $DB->get_record('forum', array('name' => $chosenssf));
+  $chosenforumid = $DB->get_record('forum', array('name' => $chosenssf, 'course' => get_config(NULL, 'peoples_student_support_id')));
 
   // Look for all User Subscriptions to a Forum in the 'Student Support Forums' Course which are for Students Enrolled in the Course (not Tutors)
   $recordforselecteduserids = $DB->get_record_sql(

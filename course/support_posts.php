@@ -287,7 +287,6 @@ foreach ($courseswithstudentforumstats as $coursekey => $coursewithstudentforums
 
 		foreach ($coursewithstudentforumstats['forums'] as $forumkey => $anything) {
 			if (empty($studententry['forums'][$forumkey])) echo '<td></td>';
-			elseif ($showyesonly) echo '<td>Yes</td>';
 			else echo '<td>' . $studententry['forums'][$forumkey] . '</td>';
 		}
 		echo '</tr>';
