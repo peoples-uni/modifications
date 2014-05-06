@@ -154,20 +154,6 @@ if (!empty($dissertations)) {
       $a .= '  <input type="hidden" class="dissertationsemesterinput" name="sesskey" value="' . $USER->sesskey . '" />';
 
       $a .= '  <select class="select dissertationsemestermenu dissertationsemesterinput" id="menudissertationsemester' . $dissertation->id . '" name="dissertationsemester">';
-
-      $found = preg_match('/^Starting (.{3,3}).* ([0-9]+)/', $dissertation->semester, $matches);
-      if ($found) {
-        if ($matches[1] === 'Jan' || $matches[1] === 'Feb' || $matches[1] === 'Mar' || $matches[1] === 'Apr' || $matches[1] === 'May' || $matches[1] === 'Jun') {
-          $dissertation_semester = $matches[2] . 'a';
-        }
-        else {
-          $dissertation_semester = $matches[2] . 'b';
-        }
-      }
-      else {
-        $dissertation_semester = 'NOT FOUND';
-      }
-
       $year = (int)gmdate('Y');
       $options = array();
       $options[] = ($year + 1) . 'b';
@@ -177,7 +163,7 @@ if (!empty($dissertations)) {
       $options[] = ($year - 1) . 'b';
       $options[] = ($year - 1) . 'a';
       foreach ($options as $option) {
-        if ($option === $dissertation_semester) $selected = 'selected="selected"';
+        if ($option === $dissertation->semester) $selected = 'selected="selected"';
         else $selected = '';
 
         $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');

@@ -63,7 +63,21 @@ elseif ($data = $editform->get_data()) {
     FROM mdl_semesters d
     ORDER BY d.id DESC");
   foreach ($semesters as $semester) {
-    if (empty($dissertation->semester)) $dissertation->semester = $semester->semester;
+    if (empty($dissertation->semester)) {
+      $found = preg_match('/^Starting (.{3,3}).* ([0-9]+)/', $semester->semester, $matches);
+      if ($found) {
+        if ($matches[1] === 'Jan' || $matches[1] === 'Feb' || $matches[1] === 'Mar' || $matches[1] === 'Apr' || $matches[1] === 'May' || $matches[1] === 'Jun') {
+          $dissertation_semester = $matches[2] . 'a';
+        }
+        else {
+          $dissertation_semester = $matches[2] . 'b';
+        }
+      }
+      else {
+        $dissertation_semester = '';
+      }
+      $dissertation->semester = $dissertation_semester;
+    }
   }
 
   $dataitem = $data->dissertation;
