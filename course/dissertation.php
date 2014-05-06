@@ -59,9 +59,9 @@ elseif ($data = $editform->get_data()) {
   $dissertation->datesubmitted  = time();
 
   $semesters = $DB->get_records_sql("
-    SELECT DISTINCT d.semester
-    FROM mdl_peoplesdissertation d
-    ORDER BY d.semester DESC");
+    SELECT d.id, d.semester
+    FROM mdl_semesters d
+    ORDER BY d.id DESC");
   foreach ($semesters as $semester) {
     if (empty($dissertation->semester)) $dissertation->semester = $semester->semester;
   }
