@@ -86,7 +86,7 @@ elseif ($data = $editform->get_data()) {
 
   $DB->insert_record('peoplesdissertation', $dissertation);
 
-  $message  = "Thank you for your dissertation submission\n";
+  $message  = "Thank you for your dissertation submission.\n";
   $message .= "\n";
   $message .= "We strongly advise students who did not previously enrol and pass the\n";
   $message .= "epidemiology module (at Pu or equivalent) to learn about research\n";
