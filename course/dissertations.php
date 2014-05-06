@@ -166,8 +166,8 @@ if (!empty($dissertations)) {
       $options[] = ($year - 1) . 'b';
       $options[] = ($year - 1) . 'a';
       $options = array_merge($semester_options, $options);
-      $options = array_unique($options)
-      rsort($options)
+      $options = array_unique($options);
+      rsort($options);
       foreach ($options as $option) {
         if ($option === $dissertation->semester) $selected = 'selected="selected"';
         else $selected = '';
