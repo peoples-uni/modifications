@@ -64,12 +64,15 @@ else $displayforexcel = false;
 
 $chosensemester = optional_param('chosensemester', '', PARAM_NOTAGS);
 
+$listsemester = array();
+$semester_options = array();
 $semesters = $DB->get_records_sql("
   SELECT DISTINCT d.semester
   FROM mdl_peoplesdissertation d
   ORDER BY d.semester DESC");
 foreach ($semesters as $semester) {
 	$listsemester[] = $semester->semester;
+  $semester_options[] = $semester->semester;
 	if (empty($chosensemester)) $chosensemester = $semester->semester;
 }
 $listsemester[] = 'All';
@@ -162,6 +165,9 @@ if (!empty($dissertations)) {
       $options[] = ($year + 0) . 'a';
       $options[] = ($year - 1) . 'b';
       $options[] = ($year - 1) . 'a';
+      $options = array_merge($semester_options, $options);
+      $options = array_unique($options)
+      rsort($options)
       foreach ($options as $option) {
         if ($option === $dissertation->semester) $selected = 'selected="selected"';
         else $selected = '';
