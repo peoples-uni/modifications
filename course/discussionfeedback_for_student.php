@@ -9,6 +9,7 @@ $assessmentname[  ''] = 'Select...';
 $assessmentname['10'] = 'Yes';
 $assessmentname['20'] = 'No';
 $assessmentname['30'] = 'Could be improved';
+$assessmentname['40'] = 'Not applicable';
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');

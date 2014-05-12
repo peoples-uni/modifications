@@ -103,6 +103,7 @@ class discussionfeedback_form extends moodleform {
     $assessmentname['10'] = 'Yes';
     $assessmentname['20'] = 'No';
     $assessmentname['30'] = 'Could be improved';
+    $assessmentname['40'] = 'Not applicable';
     $mform->addElement('select', 'refered_to_resources', 'Referred to resources in the topics', $assessmentname);
     $mform->addRule('refered_to_resources', 'Referred to resources in the topics is required', 'required', null, 'client');
     $mform->addElement('static', 'explainrefered_to_resources', '&nbsp;', 'Did the student refer to resources in the topics?<br />');
@@ -112,6 +113,7 @@ class discussionfeedback_form extends moodleform {
     $assessmentname['10'] = 'Yes';
     $assessmentname['20'] = 'No';
     $assessmentname['30'] = 'Could be improved';
+    $assessmentname['40'] = 'Not applicable';
     $mform->addElement('select', 'critical_approach', 'Included critical approach to information', $assessmentname);
     $mform->addRule('critical_approach', 'Included critical approach to information is required', 'required', null, 'client');
     $mform->addElement('static', 'explaincritical_approach', '&nbsp;', 'Did the student show a critical approach to information?<br />');
@@ -121,6 +123,7 @@ class discussionfeedback_form extends moodleform {
     $assessmentname['10'] = 'Yes';
     $assessmentname['20'] = 'No';
     $assessmentname['30'] = 'Could be improved';
+    $assessmentname['40'] = 'Not applicable';
     $mform->addElement('select', 'provided_references', 'Provided references in an appropriate format', $assessmentname);
     $mform->addRule('provided_references', 'Provided references in an appropriate format is required', 'required', null, 'client');
     $mform->addElement('static', 'explainprovided_references', '&nbsp;', 'Did the student provide references in an appropriate format?<br />');

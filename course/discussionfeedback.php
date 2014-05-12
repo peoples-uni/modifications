@@ -101,6 +101,7 @@ else { // We already know the module... need Form to to collect criteria for a S
     $assessmentname['10'] = 'Yes';
     $assessmentname['20'] = 'No';
     $assessmentname['30'] = 'Could be improved';
+    $assessmentname['40'] = 'Not applicable';
     $refered_to_resources = $discussionfeedback->refered_to_resources;
     $critical_approach = $discussionfeedback->critical_approach;
     $provided_references = $discussionfeedback->provided_references;
