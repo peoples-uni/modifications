@@ -336,7 +336,9 @@ else {
       fs.userid=u.id AND
       u.id IN
         (
-          SELECT userid from mdl_user_enrolments where enrolid=?
+          SELECT ue.userid
+          FROM mdl_user_enrolments ue
+          JOIN mdl_enrol e ON (e.id=ue.enrolid AND e.courseid=?)
         )",
     array($chosenforumid->id, get_config(NULL, 'peoples_student_support_id'))
   );
