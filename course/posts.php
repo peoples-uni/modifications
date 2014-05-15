@@ -325,6 +325,7 @@ else {
   $chosenforumid = $DB->get_record('forum', array('name' => $chosenssf, 'course' => get_config(NULL, 'peoples_student_support_id')));
 
   // Look for all User Subscriptions to a Forum in the 'Student Support Forums' Course which are for Students Enrolled in the Course (not Tutors)
+  // 20140515: Much of this is redundant, I think. Why not just use mdl_forum_subscriptions? In any case Admins/Tutors are ruled out by next query?
   $recordforselecteduserids = $DB->get_record_sql(
     "SELECT
       GROUP_CONCAT(u.id SEPARATOR ', ') AS userids
