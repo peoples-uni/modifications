@@ -172,6 +172,11 @@ if (!empty($_POST['marksetssc']) && !empty($_POST['ssc'])) {
   $ssc = $_POST['ssc'];
   set_config('peoples_student_support_id', $ssc);
 }
+if (!empty($_POST['marksetssf']) && !empty($_POST['ssf'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $ssf = $_POST['ssf'];
+  set_config('peoples_student_support_forum_id', $ssf);
+}
 if (!empty($_POST['mark_register_email']) && !empty($_POST['value_register_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $value_register_email = $_POST['value_register_email'];
@@ -474,7 +479,8 @@ foreach ($idnumbers as $idnumber) {
 }
 
 ?>
-<br /><br />
+<br /><br /><br />
+As of 2014a the following three settings normally all point to the "Students corner"<br />
 
 <form id="setstudentscornerform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -493,7 +499,7 @@ foreach ($courses as $course) {
 ?>
 </select>
 </form>
-<br /><br />
+<br />
 <form id="setfphform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetfph" value="1" />
@@ -511,7 +517,7 @@ foreach ($courses as $course) {
 ?>
 </select>
 </form>
-<br /><br />
+<br />
 <form id="setsscform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetssc" value="1" />
@@ -524,6 +530,34 @@ foreach ($courses as $course) {
   else $selected = '';
 ?>
 <option <?php echo $selected; ?> value="<?php echo $course->id; ?>" ><?php echo $modulename; ?></option>
+<?php
+}
+?>
+</select>
+</form>
+<?php
+$listssf = array();
+$studentsupportforumsnames = $DB->get_records('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
+foreach ($studentsupportforumsnames as $studentsupportforumsname) {
+  $pos = stripos($studentsupportforumsname->name, 'Student Support Group');
+  if ($pos === 0) {
+    $listssf[$studentsupportforumsname->id] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
+  }
+}
+natsort($listssf);
+?>
+<br />
+<form id="setssfform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="marksetssf" value="1" />
+<input type="submit" name="setssf" value="Make this Forum the Student Support Forum for new Student Registrants:" style="width:50em" />
+<select name="ssf">
+<?php
+foreach ($listssf as $key => $listssfname) {
+  if ($key == get_config(NULL, 'peoples_student_support_forum_id')) $selected = 'selected';
+  else $selected = '';
+?>
+<option <?php echo $selected; ?> value="<?php echo $key; ?>" ><?php echo $listssfname; ?></option>
 <?php
 }
 ?>

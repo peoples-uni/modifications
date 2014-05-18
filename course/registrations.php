@@ -323,6 +323,7 @@ $n = 0;
 $nregistered = 0;
 
 $modules = array();
+$students_unregistered = array();
 foreach ($applications as $sid => $application) {
   $state = (int)$application->state;
 
@@ -331,7 +332,11 @@ foreach ($applications as $sid => $application) {
   $rowdata = array();
   $rowdata[] = gmdate('d/m/Y H:i', $application->datesubmitted);
 
-  if ($state === 0) $z = '<span style="color:red">No</span>';
+  $this_unregistered = FALSE;
+  if ($state === 0) {
+    $z = '<span style="color:red">No</span>';
+    $this_unregistered = TRUE;
+  }
   else $z = '<span style="color:green">Yes</span>';
   $rowdata[] = $z;
 
@@ -352,7 +357,10 @@ foreach ($applications as $sid => $application) {
   $rowdata[] = htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8');
 
   if (!empty($email_already_in_moodle[$sid])) $inmoodle = '<span style="color:red">**</span>';
-  else  $inmoodle = '';
+  else  {
+    $inmoodle = '';
+    if ($this_unregistered) $students_unregistered[] = $application->email;
+  }
   if ($emailcounts[$application->email] === 1) {
     $z = $inmoodle . htmlspecialchars($application->email, ENT_COMPAT, 'UTF-8');
   }
@@ -488,6 +496,8 @@ echo '<br />Total Registered: ' . $nregistered;
 echo '<br /><br />(Duplicated e-mails: ' . $emaildups . ',  see <span style="color:navy">**</span>)';
 echo '<br /><br />(If a Moodle user already has this e-mail then it will be marked with <span style="color:red">**</span>.<br />
 In that case the student is probably already in Moodle and should not be registered.)';
+echo '<br /><br />Total Not Registered (excluding duplicates or those with existing Moodle user): ' . count(array_unique($students_unregistered));
+echo '<br />(This may overestimate the number waiting to be registered because of historical registrations what were bypassed.)';
 echo '<br/><br/>';
 
 

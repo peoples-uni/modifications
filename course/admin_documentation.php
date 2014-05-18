@@ -103,6 +103,7 @@ echo $OUTPUT->header();
 <ol>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on application forms but also as an approximate guideline on registration forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
+<br />This setting needs to be kept up to date. When applications are closed for a semester, it needs to be set to refer to the next semester.
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Foundations of Public Health demonstration module that will be used for student registrations and then click "Make this Module the Foundations of Public Health Module for new Student Registrants:" (no need to do this if it has not changed).
@@ -114,10 +115,16 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forums module that will be used for student registrations and then click "Make this Module the Student Support Forums Module for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 <li>
-The above three settings may point to the same module, this is not a problem.
+The above three settings will form 2014a on normally point to the same module, this is not a problem.
 </li>
 <li>
 Note that the names of forums used for Student Support by the Student Support Officers must all start with text exactly the same as this "Student Support Group" (can be followed by anything else desired). This is because this text is used to limit the forums selectable in various filters.
+</li>
+<li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forum that will be used for student registrations and then click "Make this Forum the Student Support Forum for new Student Registrants:"
+<br />Normally 50 students are assigned to each Student Support Forum. When a forum is full, a new one will need to be manually created and an SSO assigned. This setting then needs to be changed so that newly registered students will be assigned to this new forum as part of the automatic process of registering new students.
+<br />The current practice is wait for 50 students to be waiting to be registered before registering all 50 at once. To help with this, a count of those students not registered (disregarding duplicate e-mails and e-mails already in Moodle) is displayed in <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>.
+<br />This may overestimate the number waiting because of historical registrations what were bypassed.
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording and then click "Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)". Here is a sample of previous wording...
@@ -208,7 +215,7 @@ Note also, that if applications are closed the second of these will indicate thi
 <h2>Dealing with Registrations</h2>
 <ol>
 <li>
-Go to <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>. You can see a list of registrants for this semester.
+Go to <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>. You can see a list of potential and existing registrants.
 </li>
 <li>
 It is possible to filter the registrations by registration status, by date and by name or email. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
@@ -350,6 +357,7 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on application forms but also as an approximate guideline on registration forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
+<br />This setting needs to be kept up to date. When applications are closed for a semester, it needs to be set to refer to the next semester.
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> each new module has to be individually added by selecting the new module from the selection list (making sure it is the correct version of the module for the new semester). This selection is beside the "Add this Module to above Active Module list for Applications:" button. When an individual module is selected then click "Add this Module to above Active Module list for Applications:", repeat this until the full set of modules for the new semester is listed.<br />
