@@ -29,6 +29,7 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/mod/forum/lib.php');
 
 $PAGE->set_context(context_system::instance());
 
@@ -300,6 +301,8 @@ window.opener.location.reload();
   if (!empty($ssf) && ($ssf->id != $fph_id) && ($ssf->id != $sc_id)) {
     enrolincoursesimple($ssf, $user);
   }
+
+  forum_subscribe($user->id, get_config(NULL, 'peoples_student_support_forum_id'));
 
   updateapplication($_POST['sid'], 'state', 1);
 }
