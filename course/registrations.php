@@ -222,7 +222,7 @@ if (empty($applications)) {
 }
 
 $email_already_in_moodle = $DB->get_records_sql('
-  SELECT a.id
+  SELECT DISTINCT a.id
   FROM mdl_peoplesregistration a
   LEFT JOIN mdl_user u ON a.email=u.email
   WHERE a.state=0 AND a.hidden=0 AND u.id IS NOT NULL');
