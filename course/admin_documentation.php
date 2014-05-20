@@ -156,6 +156,9 @@ expect you to read and respond to others forum posts every few days.
 This will help you to prepare yourself for  studying at masters level, by
 considering your IT skills, your time  commitments, and your academic
 skills (eg searching the internet, referencing journals etc)
+Your student support forum, of which the introductory email will
+explain more, is here:
+http://courses.peoples-uni.org/mod/forum/view.php?id=FORUM_HERE
 
 2.*Read the student handbook*:
 http://www.peoples-uni.org/content/student-handbook
