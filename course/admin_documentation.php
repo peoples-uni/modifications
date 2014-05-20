@@ -115,7 +115,7 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forums module that will be used for student registrations and then click "Make this Module the Student Support Forums Module for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 <li>
-The above three settings will form 2014a on normally point to the same module, this is not a problem.
+The above three settings will, from 2014a on, normally point to the same module, this is not a problem.
 </li>
 <li>
 Note that the names of forums used for Student Support by the Student Support Officers must all start with text exactly the same as this "Student Support Group" (can be followed by anything else desired). This is because this text is used to limit the forums selectable in various filters.
