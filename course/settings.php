@@ -486,6 +486,7 @@ As of 2014a the following three settings normally all point to the "Students cor
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetstudentscorner" value="1" />
 <input type="submit" name="setstudentscorner" value="Make this Module the Students Corner for new Student Registrants:" style="width:50em" />
+<br />
 <select name="studentscorner">
 <?php
 foreach ($courses as $course) {
@@ -504,6 +505,7 @@ foreach ($courses as $course) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetfph" value="1" />
 <input type="submit" name="setfph" value="Make this Module the Foundations of Public Health Module for new Student Registrants:" style="width:50em" />
+<br />
 <select name="fph">
 <?php
 foreach ($courses as $course) {
@@ -522,6 +524,7 @@ foreach ($courses as $course) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetssc" value="1" />
 <input type="submit" name="setssc" value="Make this Module the Student Support Forums Module for new Student Registrants:" style="width:50em" />
+<br />
 <select name="ssc">
 <?php
 foreach ($courses as $course) {
@@ -551,6 +554,7 @@ natsort($listssf);
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetssf" value="1" />
 <input type="submit" name="setssf" value="Make this Forum the Student Support Forum for new Student Registrants:" style="width:50em" />
+<br />
 <select name="ssf">
 <?php
 foreach ($listssf as $key => $listssfname) {
