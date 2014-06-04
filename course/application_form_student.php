@@ -239,6 +239,10 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';

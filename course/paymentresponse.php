@@ -272,6 +272,10 @@ Peoples-uni Payments";
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   $payments->email = 'payments@peoples-uni.org';
@@ -393,6 +397,10 @@ Peoples-uni Payments";
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   $payments->email = 'payments@peoples-uni.org';
@@ -425,6 +433,10 @@ function email_error_to_payments($subject, $post) {
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   //$payments->email = 'alanabarrett0@gmail.com';

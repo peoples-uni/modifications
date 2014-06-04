@@ -102,6 +102,10 @@ elseif ($formdata = $mform->get_data()) {
       $supportuser->email = 'techsupport@peoples-uni.org';
       $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
       $supportuser->lastname = '';
+      $supportuser->firstnamephonetic = NULL;
+      $supportuser->lastnamephonetic = NULL;
+      $supportuser->middlename = NULL;
+      $supportuser->alternatename = NULL;
       $supportuser->maildisplay = true;
 
       email_to_user($student, $supportuser, 'Peoples-uni Record Files Updated', $message);

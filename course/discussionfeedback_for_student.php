@@ -479,6 +479,10 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->lastname = '';
   $supportuser->firstname = $USER->firstname;
   $supportuser->lastname  = $USER->lastname;
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';

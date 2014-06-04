@@ -698,6 +698,10 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';
@@ -789,6 +793,10 @@ TECHSUPPORT_EMAIL_HERE";
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   $subject = format_string($site->fullname) . ': Your Account has been Created';
@@ -833,6 +841,10 @@ TECHSUPPORT_EMAIL_HERE";
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   $subject = format_string($site->fullname) . ': Students Corner';
@@ -881,6 +893,10 @@ TECHSUPPORT_EMAIL_HERE";
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   $subject = format_string($site->fullname) . ': Student Support Forums';

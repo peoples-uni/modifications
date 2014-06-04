@@ -537,6 +537,10 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
   $supportuser->maildisplay = true;
 
   //$user->email = 'alanabarrett0@gmail.com';
