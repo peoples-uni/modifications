@@ -197,16 +197,18 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
         $DB->insert_record('peoplesmph2', $peoplesmph2);
       }
 
-      $amount_to_pay_total = get_balance($newmph->userid);
+      if ($peoplesmph2->mphstatus == 1) { // 1 => MMU MPH
+        $amount_to_pay_total = get_balance($newmph->userid);
 
-      $peoples_student_balance = new object();
-      $peoples_student_balance->userid = $newmph->userid;
-      $peoples_student_balance->amount_delta = 1500;
-      $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
-      $peoples_student_balance->currency = 'GBP';
-      $peoples_student_balance->detail = "Initial Full amount for {$mphuniversity}";
-      $peoples_student_balance->date = time();
-      $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+        $peoples_student_balance = new object();
+        $peoples_student_balance->userid = $newmph->userid;
+        $peoples_student_balance->amount_delta = 1500;
+        $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
+        $peoples_student_balance->currency = 'GBP';
+        $peoples_student_balance->detail = "Initial Full amount for {$mphuniversity}";
+        $peoples_student_balance->date = time();
+        $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+      }
     }
 
     $refreshparent = true;

@@ -130,7 +130,7 @@ CREATE TABLE mdl_peoplesmph2 (
   note text default '' NOT NULL,
 CONSTRAINT PRIMARY KEY (id)
 );
-CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph (userid);
+CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph2 (userid);
 
 ALTER TABLE mdl_peoplesmph2 ADD graduated BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER mphstatus;
 ALTER TABLE mdl_peoplesmph2 ADD semester_graduated VARCHAR(255) NOT NULL DEFAULT '' AFTER graduated;
