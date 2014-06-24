@@ -5,8 +5,6 @@
 *
 */
 
-define('MODULE_COST', 30);
-
 $qualificationname[ '1'] = 'None';
 $qualificationname['10'] = 'Degree (not health related)';
 $qualificationname['20'] = 'Health qualification (non-degree)';
@@ -58,6 +56,7 @@ $howuselearningname['30'] = 'I am not sure';
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/course/peoples_lib.php');
 
 $PAGE->set_context(context_system::instance());
 
@@ -154,14 +153,14 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
   else $useridforsearch = 0;
   if (!empty($_REQUEST['sid'])) $sidforsearch = $_REQUEST['sid'];
   else  $sidforsearch = 0;
-  $inmmumph = FALSE;
+  $inmph = FALSE;
   $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sidforsearch AND sid!=0) OR (userid=$useridforsearch AND userid!=0)");
   if (!empty($mphs)) {
     foreach ($mphs as $mph) {
-      $inmmumph = TRUE;
+      $inmph = TRUE;
     }
   }
-  if (!$inmmumph) { // Protect against duplicate submission
+  if (!$inmph) { // Protect against duplicate submission
 
     $newmph = new object();
     if (!empty($_REQUEST['29']))  $newmph->userid = $_REQUEST['29'];
@@ -329,7 +328,7 @@ $inmmumph = FALSE;
 $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($mphs)) {
   foreach ($mphs as $mph) {
-    $inmmumph = TRUE;
+    if ($mph->mphstatus == 1) $inmmumph = TRUE; // 1 => MMU MPH
   }
 }
 
@@ -2118,7 +2117,7 @@ function amount_to_pay($userid) {
   $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
   if (!empty($mphs)) {
     foreach ($mphs as $mph) {
-      $inmmumph = TRUE;
+      if ($mph->mphstatus == 1) $inmmumph = TRUE; // 1 => MMU MPH
     }
   }
 
@@ -2144,12 +2143,13 @@ function amount_to_pay_adjusted($application, $inmmumph, $payment_schedule) {
 
   $amount = get_balance($application->userid);
 
-  if (!$inmmumph) { // NON MPH: Take Outstanding Balance and adjust for new modules
+  if (!$inmmumph) { // NON MMU MPH: Take Outstanding Balance and adjust for new modules
     if (empty($application->coursename2)) $deltamodules = 1;
     else $deltamodules = 2;
-    $amount += $deltamodules * MODULE_COST;
+    $module_cost = get_module_cost($application->userid, $application->coursename1);
+    $amount += $deltamodules * $module_cost;
   }
-  else { // MPH: Take Outstanding Balance and adjust for instalments if necessary
+  else { // MMU MPH: Take Outstanding Balance and adjust for instalments if necessary
     if (!empty($payment_schedule)) {
       $now = time();
       if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
@@ -2241,28 +2241,30 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
 	if ($deltamodules != 0) {
 		if (($deltamodules > 1) && empty($record->coursename2)) $deltamodules = 1;
 
-		$application->costowed = $record->costowed + $deltamodules * MODULE_COST;
+    $module_cost = get_module_cost($record->userid, $record->coursename1);
+    $application->costowed = $record->costowed + $deltamodules * $module_cost;
 		if ($application->costowed < 0) $application->costowed = 0;
 	}
 
   $DB->update_record('peoplesapplication', $application);
 
   if ($deltamodules != 0) {
-    $inmmumph = FALSE;
-    $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$record->userid} AND userid!=0 LIMIT 1");
-    if (!empty($mphs)) {
-      foreach ($mphs as $mph) {
-        $inmmumph = TRUE;
-      }
+    $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $record->userid));
+    if (!empty($peoplesmph2)) {
+      $mphstatus = $peoplesmph2->mphstatus;
     }
-    if (!$inmmumph && !empty($record->userid)) { // $record->userid should NOT be empty, but just in case
-      // Update Balance only if this is not an MPH student as MPH students pay an all inclusive fee which is previously set.
+    else {
+      $mphstatus = 0;
+    }
+
+    if (($mphstatus != 1) && !empty($record->userid)) { // $record->userid should NOT be empty, but just in case
+      // Update Balance only if this is not an MMU MPH student as MMU MPH students pay an all inclusive fee which is previously set.
 
       $amount = get_balance($record->userid);
 
       $peoples_student_balance = new object();
       $peoples_student_balance->userid = $record->userid;
-      $peoples_student_balance->amount_delta = $deltamodules * MODULE_COST;
+      $peoples_student_balance->amount_delta = $deltamodules * $module_cost;
       $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
       $peoples_student_balance->currency = 'GBP';
       if (!empty($record->coursename2)) {
