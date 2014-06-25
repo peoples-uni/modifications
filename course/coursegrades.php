@@ -7,6 +7,7 @@
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/course/peoples_lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
 
@@ -600,26 +601,6 @@ Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
 echo $OUTPUT->footer();
 
 
-function displaystat($stat, $title) {
-	echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
-	echo "<tr>";
-	echo "<td>$title</td>";
-	echo "<td>Number</td>";
-	echo "</tr>";
-
-	ksort($stat);
-
-	foreach ($stat as $key => $number) {
-		echo "<tr>";
-		echo "<td>" . $key . "</td>";
-		echo "<td>" . $number . "</td>";
-	    echo "</tr>";
-	}
-	echo '</table>';
-	echo '<br/>';
-}
-
-
 function sendemails($enrols, $emailsubject, $emailbody, $reg) {
   global $DB;
 
@@ -646,7 +627,7 @@ function sendemails($enrols, $emailsubject, $emailbody, $reg) {
         $emailbodytemp = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $emailbodytemp); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                                            // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
-        if (sendapprovedmail($email, $emailsubject, $emailbodytemp)) {
+        if (sendapprovedmail_from_payments($email, $emailsubject, $emailbodytemp)) {
           echo "($i) $email successfully sent.<br />";
         }
         else {
@@ -656,130 +637,5 @@ function sendemails($enrols, $emailsubject, $emailbody, $reg) {
       }
     }
   }
-}
-
-
-function sendapprovedmail($email, $subject, $message) {
-  global $CFG;
-
-  // Dummy User
-  $user = new stdClass();
-  $user->id = 999999999;
-  $user->email = $email;
-  $user->maildisplay = true;
-  $user->mnethostid = $CFG->mnet_localhost_id;
-
-  $supportuser = new stdClass();
-  $supportuser->email = 'payments@peoples-uni.org';
-  $supportuser->firstname = 'Peoples-uni Payments';
-  $supportuser->lastname = '';
-  $supportuser->firstnamephonetic = NULL;
-  $supportuser->lastnamephonetic = NULL;
-  $supportuser->middlename = NULL;
-  $supportuser->alternatename = NULL;
-  $supportuser->maildisplay = true;
-
-  //$user->email = 'alanabarrett0@gmail.com';
-  $ret = email_to_user($user, $supportuser, $subject, $message);
-
-  $user->email = 'applicationresponses@peoples-uni.org';
-
-  //$user->email = 'alanabarrett0@gmail.com';
-  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
-
-  return $ret;
-}
-
-
-function is_peoples_teacher() {
-  global $USER;
-  global $DB;
-
-  /* All Teacher, Teachers...
-  SELECT u.lastname, r.name, c.fullname
-  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
-  WHERE
-  u.id=ra.userid AND
-  ra.roleid=r.id AND
-  ra.contextid=con.id AND
-  r.name IN ('Teacher', 'Teachers') AND
-  con.contextlevel=50 AND
-  con.instanceid=c.id ORDER BY c.fullname, r.name;
-  */
-
-  $teachers = $DB->get_records_sql("
-    SELECT DISTINCT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
-    WHERE
-      ra.userid=? AND
-      ra.roleid=r.id AND
-      ra.contextid=con.id AND
-      r.shortname IN ('tutor', 'tutors') AND
-      con.contextlevel=50",
-    array($USER->id));
-
-  if (!empty($teachers)) return true;
-
-  if (has_capability('moodle/site:config', context_system::instance())) return true;
-  else return false;
-}
-
-
-function dontstripslashes($x) {
-  return $x;
-}
-
-
-function amount_to_pay($userid) {
-  global $DB;
-
-  $amount = get_balance($userid);
-
-  $inmmumph = FALSE;
-  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
-  if (!empty($mphs)) {
-    foreach ($mphs as $mph) {
-      $inmmumph = TRUE;
-    }
-  }
-
-  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
-
-  if ($inmmumph) {
-    // MPH: Take Outstanding Balance and adjust for instalments if necessary
-    if (!empty($payment_schedule)) {
-      $now = time();
-      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
-      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
-    }
-  }
-
-  if ($amount < 0) $amount = 0;
-  return $amount;
-}
-
-
-function get_balance($userid) {
-  global $DB;
-
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC, id DESC LIMIT 1");
-  $amount = 0;
-  if (!empty($balances)) {
-    foreach ($balances as $balance) {
-      $amount = $balance->balance;
-    }
-  }
-
-  return $amount;
-}
-
-
-function is_not_confirmed($userid) {
-  global $DB;
-
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} AND not_confirmed=1");
-  if (!empty($balances)) return TRUE;
-  return FALSE;
 }
 ?>

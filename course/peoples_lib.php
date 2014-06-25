@@ -19,13 +19,7 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
   $DB->update_record('peoplesapplication', $application);
 
   if ($deltamodules != 0) {
-    $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $record->userid));
-    if (!empty($peoplesmph2)) {
-      $mphstatus = $peoplesmph2->mphstatus;
-    }
-    else {
-      $mphstatus = 0;
-    }
+    $mphstatus = get_mph_status($record->userid);
 
     if (($mphstatus != 1) && !empty($record->userid)) { // $record->userid should NOT be empty, but just in case
       // Update Balance only if this is not an MMU MPH student as MMU MPH students pay an all inclusive fee which is previously set.
@@ -51,7 +45,7 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
 }
 
 
-function get_module_cost($userid, $coursename) {
+function get_income_category($userid) {
   global $DB;
 
   $peoples_income_category = $DB->get_record('peoples_income_category', array('userid' => $userid));
@@ -61,6 +55,14 @@ function get_module_cost($userid, $coursename) {
   else {
     $income_category = $peoples_income_category->income_category;
   }
+  return $income_category;
+}
+
+
+function get_mph_status($userid) {
+  global $DB;
+
+  if (empty($userid)) return 0;
 
   $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
   if (!empty($peoplesmph2)) {
@@ -69,6 +71,25 @@ function get_module_cost($userid, $coursename) {
   else {
     $mphstatus = 0;
   }
+  return $mphstatus;
+}
+
+
+function instalments_allowed($userid) {
+  $mphstatus = get_mph_status($userid);
+  $instalments_allowed = FALSE;
+  if ($mphstatus == 1) $instalments_allowed = TRUE; // 1 => MMU MPH
+
+  return $instalments_allowed;
+}
+
+
+function get_module_cost($userid, $coursename) {
+  global $DB;
+
+  $income_category = get_income_category($userid);
+
+  $mphstatus = get_mph_status($userid);
 
   if (stripos($coursename, 'dissertation') !== FALSE) {
     $dissertation = TRUE;
@@ -121,18 +142,10 @@ function amount_to_pay($userid) {
 
   $amount = get_balance($userid);
 
-  $inmmumph = FALSE;
-  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
-  if (!empty($mphs)) {
-    foreach ($mphs as $mph) {
-      if ($mph->mphstatus == 1) $inmmumph = TRUE; // 1 => MMU MPH
-    }
-  }
+  if (instalments_allowed($userid)) {
+    // MMU MPH: Take Outstanding Balance and adjust for instalments if necessary
 
-  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
-
-  if ($inmmumph) {
-    // MPH: Take Outstanding Balance and adjust for instalments if necessary
+    $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
     if (!empty($payment_schedule)) {
       $now = time();
       if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
@@ -147,11 +160,12 @@ function amount_to_pay($userid) {
 }
 
 
-function amount_to_pay_adjusted($application, $inmmumph, $payment_schedule) {
+function amount_to_pay_adjusted($application, $payment_schedule) {
 
   $amount = get_balance($application->userid);
 
-  if (!$inmmumph) { // NON MMU MPH: Take Outstanding Balance and adjust for new modules
+  $mphstatus = get_mph_status($application->userid);
+  if ($mphstatus != 1) { // NON MMU MPH: Take Outstanding Balance and adjust for new modules
     if (empty($application->coursename2)) $deltamodules = 1;
     else $deltamodules = 2;
     $module_cost = get_module_cost($application->userid, $application->coursename1);
@@ -168,6 +182,39 @@ function amount_to_pay_adjusted($application, $inmmumph, $payment_schedule) {
   }
 
   if ($amount < 0) $amount = 0;
+  return $amount;
+}
+
+
+function get_next_unpaid_instalment($userid) {
+  global $DB;
+
+  $original_amount = get_balance($userid);
+
+  if (!instalments_allowed($userid)) return 0;
+
+  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
+  if (empty($payment_schedule)) return 0;
+
+  $now = time();
+
+  // This assumes that zero is currently owing which implies that (at least) instalment 1 has been paid, see amount_to_pay() which has already been called
+  // So let us see if instalment 2 is owing...
+  $amount = $original_amount;
+  if     ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
+  elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
+  // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+
+  if ($amount < .01) { // So let us see if instalment 3 is owing...
+    $amount = $original_amount;
+    if ($now < $payment_schedule->expect_amount_4_date) $amount -= $payment_schedule->amount_4;
+    // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
+  }
+  if ($amount < .01) { // So let us see if instalment 4 is owing...
+    $amount = $original_amount;
+  }
+
+  if ($amount < .01) $amount = 0;
   return $amount;
 }
 
@@ -317,6 +364,62 @@ function sendapprovedmail($email, $subject, $message) {
 }
 
 
+function sendapprovedmail_from_support($email, $subject, $message) {
+  global $CFG;
+
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
+
+  $supportuser = generate_email_supportuser();
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
+
+  $user->email = 'applicationresponses@peoples-uni.org';
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
+
+  return $ret;
+}
+
+
+function sendapprovedmail_from_payments($email, $subject, $message) {
+  global $CFG;
+
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
+
+  $supportuser = new stdClass();
+  $supportuser->email = 'payments@peoples-uni.org';
+  $supportuser->firstname = 'Peoples-uni Payments';
+  $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
+  $supportuser->maildisplay = true;
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
+
+  $user->email = 'applicationresponses@peoples-uni.org';
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
+
+  return $ret;
+}
+
+
 function unenrolstudent($userid, $modulename) {
   global $DB;
 
@@ -379,6 +482,59 @@ function get_peoples_teacher($course) {
     $teacher = get_admin();
   }
   return $teacher;
+}
+
+
+function is_peoples_teacher() {
+  global $USER;
+  global $DB;
+
+  /* All Teacher, Teachers...
+  SELECT u.lastname, r.name, c.fullname
+  FROM mdl_user u, mdl_role_assignments ra, mdl_role r, mdl_context con, mdl_course c
+  WHERE
+  u.id=ra.userid AND
+  ra.roleid=r.id AND
+  ra.contextid=con.id AND
+  r.name IN ('Teacher', 'Teachers') AND
+  con.contextlevel=50 AND
+  con.instanceid=c.id ORDER BY c.fullname, r.name;
+  */
+
+  $teachers = $DB->get_records_sql("
+    SELECT DISTINCT ra.userid FROM mdl_role_assignments ra, mdl_role r, mdl_context con
+    WHERE
+      ra.userid=? AND
+      ra.roleid=r.id AND
+      ra.contextid=con.id AND
+      r.shortname IN ('tutor', 'tutors') AND
+      con.contextlevel=50",
+    array($USER->id));
+
+  if (!empty($teachers)) return true;
+
+  if (has_capability('moodle/site:config', context_system::instance())) return true;
+  else return false;
+}
+
+
+function displaystat($stat, $title) {
+  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+  echo "<tr>";
+  echo "<td>$title</td>";
+  echo "<td>Number</td>";
+  echo "</tr>";
+
+  ksort($stat);
+
+  foreach ($stat as $key => $number) {
+    echo "<tr>";
+    echo "<td>" . $key . "</td>";
+    echo "<td>" . $number . "</td>";
+      echo "</tr>";
+  }
+  echo '</table>';
+  echo '<br/>';
 }
 
 

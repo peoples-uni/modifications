@@ -10,6 +10,7 @@ $test = false;
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/course/peoples_lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
 
@@ -206,90 +207,4 @@ foreach ($countryname as $key => $countryvalue) {
 
 echo $OUTPUT->box_end();
 echo $OUTPUT->footer();
-
-
-function amount_to_pay($userid) {
-  global $DB;
-
-  $amount = get_balance($userid);
-
-  $inmmumph = FALSE;
-  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
-  if (!empty($mphs)) {
-    foreach ($mphs as $mph) {
-      $inmmumph = TRUE;
-    }
-  }
-
-  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
-
-  if ($inmmumph) {
-    // MPH: Take Outstanding Balance and adjust for instalments if necessary
-    if (!empty($payment_schedule)) {
-      $now = time();
-      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
-      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
-    }
-  }
-
-  if ($amount < 0) $amount = 0;
-  return $amount;
-}
-
-
-function get_balance($userid) {
-  global $DB;
-
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC, id DESC LIMIT 1");
-  $amount = 0;
-  if (!empty($balances)) {
-    foreach ($balances as $balance) {
-      $amount = $balance->balance;
-    }
-  }
-
-  return $amount;
-}
-
-
-function get_next_unpaid_instalment($userid) {
-  global $DB;
-
-  $original_amount = get_balance($userid);
-
-  $inmmumph = FALSE;
-  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
-  if (!empty($mphs)) {
-    foreach ($mphs as $mph) {
-      $inmmumph = TRUE;
-    }
-  }
-  if (!$inmmumph) return 0;
-
-  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
-  if (empty($payment_schedule)) return 0;
-
-  $now = time();
-
-  // This assumes that zero is currently owing which implies that (at least) instalment 1 has been paid, see amount_to_pay() which has already been called
-  // So let us see if instalment 2 is owing...
-  $amount = $original_amount;
-  if     ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
-  elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
-  // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
-
-  if ($amount < .01) { // So let us see if instalment 3 is owing...
-    $amount = $original_amount;
-    if ($now < $payment_schedule->expect_amount_4_date) $amount -= $payment_schedule->amount_4;
-    // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
-  }
-  if ($amount < .01) { // So let us see if instalment 4 is owing...
-    $amount = $original_amount;
-  }
-
-  if ($amount < .01) $amount = 0;
-  return $amount;
-}
 ?>

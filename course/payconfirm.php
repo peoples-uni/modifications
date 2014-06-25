@@ -45,6 +45,7 @@
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/course/peoples_lib.php');
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/payconfirm.php');
@@ -156,7 +157,7 @@ if (!empty($_POST['markpayconfirm'])) {
     $message .= "Semester: $application->semester\n\n";
     $message .= "Peoples Open Access Education Initiative Administrator.\n";
 
-    sendapprovedmail($application->email, "Peoples-uni Payment Confirmed for: $application->lastname, $application->firstname; Application: $sid", $message);
+    sendapprovedmail_from_payments($application->email, "Peoples-uni Payment Confirmed for: $application->lastname, $application->firstname; Application: $sid", $message);
 
     //notice('Success! Data saved (and e-mail sent to Student)!', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
     $sendemail = TRUE;
@@ -266,6 +267,10 @@ if (!empty($mphs)) {
     echo '<br />Student was Enrolled in MPH on ' . gmdate('d/m/Y H:i', $mph->datesubmitted) . '<br />';
   }
 }
+
+$income_category = get_income_category($userid);
+$income_category_text = array(0 => 'Existing Student', 1 => 'LMIC', 2 => 'HIC');
+echo '<br />Income Category: ' . $income_category_text[$income_category] . '<br />';
 
 echo "</b></p>";
 
@@ -521,82 +526,4 @@ if (!empty($applications)) {
 
 echo $OUTPUT->box_end();
 echo $OUTPUT->footer();
-
-
-function sendapprovedmail($email, $subject, $message) {
-  global $CFG;
-
-  // Dummy User
-  $user = new stdClass();
-  $user->id = 999999999;
-  $user->email = $email;
-  $user->maildisplay = true;
-  $user->mnethostid = $CFG->mnet_localhost_id;
-
-  $supportuser = new stdClass();
-  $supportuser->email = 'payments@peoples-uni.org';
-  $supportuser->firstname = 'Peoples-uni Payments';
-  $supportuser->lastname = '';
-  $supportuser->firstnamephonetic = NULL;
-  $supportuser->lastnamephonetic = NULL;
-  $supportuser->middlename = NULL;
-  $supportuser->alternatename = NULL;
-  $supportuser->maildisplay = true;
-
-  //$user->email = 'alanabarrett0@gmail.com';
-  $ret = email_to_user($user, $supportuser, $subject, $message);
-
-  $user->email = 'applicationresponses@peoples-uni.org';
-
-  //$user->email = 'alanabarrett0@gmail.com';
-  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
-
-  return $ret;
-}
-
-
-function get_balance($userid) {
-  global $DB;
-
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC, id DESC LIMIT 1");
-  $amount = 0;
-  if (!empty($balances)) {
-    foreach ($balances as $balance) {
-      $amount = $balance->balance;
-    }
-  }
-
-  return $amount;
-}
-
-
-function amount_to_pay($userid) {
-  global $DB;
-
-  $amount = get_balance($userid);
-
-  $inmmumph = FALSE;
-  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
-  if (!empty($mphs)) {
-    foreach ($mphs as $mph) {
-      $inmmumph = TRUE;
-    }
-  }
-
-  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
-
-  if ($inmmumph) {
-    // MPH: Take Outstanding Balance and adjust for instalments if necessary
-    if (!empty($payment_schedule)) {
-      $now = time();
-      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
-      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
-    }
-  }
-
-  if ($amount < 0) $amount = 0;
-  return $amount;
-}
 ?>

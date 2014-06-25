@@ -1,7 +1,7 @@
 <?php  // $Id: app.php,v 1.1 2008/08/02 17:18:32 alanbarrett Exp $
 /**
 *
-* List a single course application from Drupal
+* List a single course application
 *
 */
 
@@ -271,6 +271,23 @@ if (!empty($_POST['markunenrollcert_ps']) && !empty($_REQUEST['29'])) {
 
   $refreshparent = true;
 }
+if (!empty($_POST['markincomecat'])) {
+  $userid = $_REQUEST['29'];
+
+  $peoples_income_category = $DB->get_record('peoples_income_category', array('userid' => $userid));
+  if (!empty($peoples_income_category)) {
+    $peoples_income_category->datesubmitted = time();
+    $peoples_income_category->income_category = $_POST['income_category'];
+    $DB->update_record('peoples_income_category', $peoples_income_category);
+  }
+  else {
+    $peoples_income_category = new object();
+    $peoples_income_category->userid = $userid;
+    $peoples_income_category->datesubmitted = time();
+    $peoples_income_category->income_category = $_POST['income_category'];
+    $DB->insert_record('peoples_income_category', $peoples_income_category);
+  }
+}
 if (!empty($_POST['note']) && !empty($_POST['markaddnote'])) {
   $newnote = new object();
   if (!empty($_REQUEST['29']))  $newnote->userid = $_REQUEST['29'];
@@ -323,14 +340,6 @@ window.opener.location.reload();
 $sid = $_REQUEST['sid'];
 
 $application = $DB->get_record('peoplesapplication', array('sid' => $_REQUEST['sid']));
-
-$inmmumph = FALSE;
-$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
-if (!empty($mphs)) {
-  foreach ($mphs as $mph) {
-    if ($mph->mphstatus == 1) $inmmumph = TRUE; // 1 => MMU MPH
-  }
-}
 
 $not_confirmed_text = '';
 
@@ -601,6 +610,15 @@ echo '<td>' . $_REQUEST['sid'] . '</td>';
 echo '</tr>';
 
 echo '<tr>';
+echo '<td>Income Category (<span style="color:red">ensure correct before approving applications, can be changed below</span>)</td>';
+if (!empty($_REQUEST['29'])) $userid = $_REQUEST['29'];
+else $userid = 0;
+$income_category = get_income_category($userid);
+$income_category_text = array(0 => 'Existing Student', 1 => 'LMIC', 2 => 'HIC');
+echo '<td>' . $income_category_text[$income_category] . '</td>';
+echo '</tr>';
+
+echo '<tr>';
 echo '<td>Payment up to date? (amount owed includes modules already approved for this semester or any MPH instalments due this semester)</td>';
 echo '<td>';
 if ($amount_to_pay_this_semester >= .01) echo '<span style="color:red">No: &pound;' . $amount_to_pay_this_semester . ' Owed now' . $not_confirmed_text . '</span>';
@@ -746,10 +764,11 @@ if ($state === 022) {
   $course1    = $_REQUEST['18'];
   $course2    = $_REQUEST['19'];
 
-  if (!empty($application->userid)) $amount_to_pay_this_semester_adjusted = amount_to_pay_adjusted($application, $inmmumph, $payment_schedule);
+  if (!empty($application->userid)) $amount_to_pay_this_semester_adjusted = amount_to_pay_adjusted($application, $payment_schedule);
   else $amount_to_pay_this_semester_adjusted = 0;
 
-  if (TRUE || !$inmmumph) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
+  $instalments_allowed = instalments_allowed($application->userid);
+  if (TRUE || !$instalments_allowed) $peoples_approval_email = get_config(NULL, 'peoples_approval_old_students_email');
   else $peoples_approval_email = get_config(NULL, 'peoples_approval_email'); // MPH Students
 
   $peoples_approval_email = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email);
@@ -765,7 +784,7 @@ same time and will involve a heavy workload - please be sure you do have the tim
     $peoples_approval_email = str_replace('COURSE_MODULE_2_TEXT_HERE',         '', $peoples_approval_email);
     $peoples_approval_email = str_replace('COURSE_MODULE_2_WARNING_TEXT_HERE', '', $peoples_approval_email);
   }
-  if ($inmmumph && empty($payment_schedule)) {
+  if ($instalments_allowed && empty($payment_schedule)) {
     $peoples_approval_email = str_replace('NOTE_ON_INSTALMENTS_HERE', "If you wish to pay by instalments, you may select your preferences at http://courses.peoples-uni.org/course/specify_instalments.php (you will need to log in).", $peoples_approval_email);
   }
   else {
@@ -774,7 +793,7 @@ same time and will involve a heavy workload - please be sure you do have the tim
 
   $peoples_approval_email = htmlspecialchars($peoples_approval_email, ENT_COMPAT, 'UTF-8');
 
-  if (TRUE || !$inmmumph) $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_old_students_bursary_email');
+  if (TRUE || !$instalments_allowed) $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_old_students_bursary_email');
   else $peoples_approval_email_bursary = get_config(NULL, 'peoples_approval_bursary_email'); // MPH Students
 
   $peoples_approval_email_bursary = str_replace('GIVEN_NAME_HERE',           $given_name, $peoples_approval_email_bursary);
@@ -1932,7 +1951,67 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 <?php
 }
 
+if (!empty($_REQUEST['29'])) {
 ?>
+<br />To set the Income Category for the student, select category & press "Set...".<br />
+<form id="incomecatform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
+<input type="hidden" name="state" value="<?php echo $state; ?>" />
+<input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="1" value="<?php echo htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="2" value="<?php echo htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="11" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
+<input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
+<input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
+<input type="hidden" name="12" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="14" value="<?php echo htmlspecialchars($_REQUEST['14'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="13" value="<?php echo htmlspecialchars($_REQUEST['13'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="34" value="<?php echo htmlspecialchars($_REQUEST['34'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="35" value="<?php echo htmlspecialchars($_REQUEST['35'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<span style="display: none;">
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+</span>
+<input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
+<input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<input type="hidden" name="markincomecat" value="1" />
+Income&nbsp;Category:&nbsp;
+<select name="income_category">
+<?php
+$selected0 = '';
+$selected1 = '';
+$selected2 = '';
+if ($income_category == 0) $selected0 = 'selected="selected"';
+if ($income_category == 1) $selected1 = 'selected="selected"';
+if ($income_category == 2) $selected2 = 'selected="selected"';
+echo '<option value="0" ' . $selected0 . '>Existing Student</option>';
+echo '<option value="1" ' . $selected1 . '>LMIC</option>';
+echo '<option value="2" ' . $selected2 . '>HIC</option>';
+?>
+</select>
+<br />
+<input type="submit" name="incomecat" value="Set the Income Category for the Student" />
+</form>
+<br />
+<?php
+}
+?>
+
 <br />To add a note to this student's record, add text below and press "Add...".<br />
 <form id="addnoteform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />

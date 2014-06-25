@@ -305,6 +305,15 @@ window.opener.location.reload();
 
   forum_subscribe($user->id, get_config(NULL, 'peoples_student_support_forum_id'));
 
+  $peoples_income_category = $DB->get_record('peoples_income_category', array('userid' => $user->id));
+  if (empty($peoples_income_category)) {
+    $peoples_income_category = new object();
+    $peoples_income_category->userid = $user->id;
+    $peoples_income_category->datesubmitted = time();
+    $peoples_income_category->income_category = 1; // Default LMIC
+    $DB->insert_record('peoples_income_category', $peoples_income_category);
+  }
+
   updateapplication($_POST['sid'], 'state', 1);
 }
 ?>

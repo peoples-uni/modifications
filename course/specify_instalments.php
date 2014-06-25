@@ -7,6 +7,7 @@
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/course/peoples_lib.php');
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/specify_instalments.php');
@@ -117,13 +118,7 @@ if (!empty($fullname) && trim($fullname) != 'Guest User') {
   echo '<br /><br /><b>' . $fullname . '</b>';
 }
 
-$inmmumph = FALSE;
-$mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
-if (!empty($mphs)) {
-  foreach ($mphs as $mph) {
-    $inmmumph = TRUE;
-  }
-}
+$instalments_allowed = instalments_allowed($userid);
 
 $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
 if (!empty($payment_schedule)) {
@@ -159,7 +154,7 @@ if (!empty($payment_schedule)) {
 
 echo '</p>';
 
-if ($inmmumph && (empty($payment_schedule) || $ismanager)) {
+if ($instalments_allowed && (empty($payment_schedule) || $ismanager)) {
 ?>
 <br /><p>Specify the Payment Schedule and then click "Submit the Instalment Payment Schedule".<br />
 You can enter up to four instalments.<br />
@@ -216,13 +211,13 @@ else {
     echo '<b>This Student is not in the MPH!</b><br />';
   }
   else {
-    if (!$inmmumph) {
+    if (!$instalments_allowed) {
       if (empty($fullname) || trim($fullname) == 'Guest User') {
         $SESSION->wantsurl = "$CFG->wwwroot/course/specify_instalments.php";
         notice('<br /><br /><b>You have not logged in. Please log in with your username and password above!</b><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
       }
       else {
-        echo '<b>You are not in the MPH so cannot specify instalments!</b><br />';
+        echo '<b>You are not in the MMU MPH so cannot specify instalments!</b><br />';
       }
     }
     else {
@@ -235,50 +230,4 @@ echo '<br /><br /></div>';
 
 echo $OUTPUT->box_end();
 echo $OUTPUT->footer();
-
-
-function get_balance($userid) {
-  global $DB;
-
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC, id DESC LIMIT 1");
-  $amount = 0;
-  if (!empty($balances)) {
-    foreach ($balances as $balance) {
-      $amount = $balance->balance;
-    }
-  }
-
-  return $amount;
-}
-
-
-function amount_to_pay($userid) {
-  global $DB;
-
-  $amount = get_balance($userid);
-
-  $inmmumph = FALSE;
-  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
-  if (!empty($mphs)) {
-    foreach ($mphs as $mph) {
-      $inmmumph = TRUE;
-    }
-  }
-
-  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
-
-  if ($inmmumph) {
-    // MPH: Take Outstanding Balance and adjust for instalments if necessary
-    if (!empty($payment_schedule)) {
-      $now = time();
-      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
-      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
-    }
-  }
-
-  if ($amount < 0) $amount = 0;
-  return $amount;
-}
 ?>
