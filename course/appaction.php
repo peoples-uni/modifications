@@ -5,9 +5,6 @@
 *
 */
 
-define('MODULE_COST', 30);
-
-
 /*
 CREATE TABLE mdl_enrolment (
 	id BIGINT(10) unsigned NOT NULL auto_increment,
@@ -108,6 +105,7 @@ $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/course/peoples_lib.php');
 
 $PAGE->set_context(context_system::instance());
 
@@ -683,39 +681,6 @@ window.close();
 <?php
 
 
-function sendapprovedmail($email, $subject, $message) {
-  global $CFG;
-
-  // Dummy User
-  $user = new stdClass();
-  $user->id = 999999999;
-  $user->email = $email;
-  $user->maildisplay = true;
-  $user->mnethostid = $CFG->mnet_localhost_id;
-
-  //$supportuser = generate_email_supportuser();
-  $supportuser = new stdClass();
-  $supportuser->email = 'apply@peoples-uni.org';
-  $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
-  $supportuser->lastname = '';
-  $supportuser->firstnamephonetic = NULL;
-  $supportuser->lastnamephonetic = NULL;
-  $supportuser->middlename = NULL;
-  $supportuser->alternatename = NULL;
-  $supportuser->maildisplay = true;
-
-  //$user->email = 'alanabarrett0@gmail.com';
-  $ret = email_to_user($user, $supportuser, $subject, $message);
-
-  $user->email = 'applicationresponses@peoples-uni.org';
-
-  //$user->email = 'alanabarrett0@gmail.com';
-  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
-
-  return $ret;
-}
-
-
 /**
  * Send email to specified user with confirmation text and activation link. [Not used as account is now given on registration]
  *
@@ -806,7 +771,7 @@ TECHSUPPORT_EMAIL_HERE";
 }
 
 
-function sendstudentscorner($user) { // Not used as this is now done on registration
+function sendstudentscorner($user) { // Not used as this is now done on registration... Now not used at all (call is not reached)
   global $DB;
   global $CFG;
 
@@ -854,7 +819,7 @@ TECHSUPPORT_EMAIL_HERE";
 }
 
 
-function sendstudentsupportforums($user) { // Not used as this is now done on registration
+function sendstudentsupportforums($user) { // Not used as this is now done on registration... Now not used at all (call is not reached)
   global $DB;
   global $CFG;
 
@@ -903,205 +868,5 @@ TECHSUPPORT_EMAIL_HERE";
 
   //$user->email = 'alanabarrett0@gmail.com';
   return email_to_user($user, $supportuser, $subject, $message);
-}
-
-
-function enrolincourse($course, $user, $semester) {
-  global $DB;
-
-  $timestart = time();
-  // remove time part from the timestamp and keep only the date part
-  $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
-
-  $roles = get_archetype_roles('student');
-  $role = reset($roles);
-
-  if (enrol_try_internal_enrol($course->id, $user->id, $role->id, $timestart, 0)) {
-
-    $enrolment = $DB->get_record('enrolment', array('userid' => $user->id, 'courseid' => $course->id));
-    if (!empty($enrolment)) {
-      $enrolment->semester = dontaddslashes($enrolment->semester);
-      $enrolment->enrolled = 1;
-      $DB->update_record('enrolment', $enrolment);
-    }
-    else {
-      $enrolment->userid = $user->id;
-      $enrolment->courseid = $course->id;
-      $enrolment->semester = $semester;
-      $enrolment->datefirstenrolled = time();
-      $enrolment->enrolled = 1;
-      $enrolment->percentgrades = 1;
-
-      $DB->insert_record('enrolment', $enrolment);
-    }
-
-    emailwelcome($course, $user);
-
-    $message = '';
-    if (!empty($user->firstname))  $message .= $user->firstname;
-    if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
-    if (!empty($role->name)) $message .= ' as ' . $role->name;
-    if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-    add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
-
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
-
-function enrolincoursesimple($course, $user) {
-  global $DB;
-
-  $timestart = time();
-  // remove time part from the timestamp and keep only the date part
-  $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
-
-  $roles = get_archetype_roles('student');
-  $role = reset($roles);
-
-  enrol_try_internal_enrol($course->id, $user->id, $role->id, $timestart, 0);
-
-  // emailwelcome($course, $user);
-
-  $message = '';
-  if (!empty($user->firstname))  $message .= $user->firstname;
-  if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
-  if (!empty($role->name)) $message .= ' as ' . $role->name;
-  if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-  add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
-}
-
-
-function emailwelcome($course, $user) {
-  global $CFG;
-
-  $subject = "New enrolment in $course->fullname";
-  $message = "Welcome to $course->fullname!
-
-If you have not done so already, you should edit your profile page
-so that we can learn more about you:
-
-  $CFG->wwwroot/user/view.php?id=$user->id&amp;course=$course->id
-
-There is a link to your course at the bottom of the profile or you can click:
-
-  $CFG->wwwroot/course/view.php?id=$course->id";
-
-  $teacher = get_peoples_teacher($course);
-  //$user->email = 'alanabarrett0@gmail.com';
-  email_to_user($user, $teacher, $subject, $message);
-
-//  $eventdata = new stdClass();
-//  $eventdata->modulename        = 'moodle';
-//  $eventdata->component         = 'course';
-//  $eventdata->name              = 'flatfile_enrolment';
-//  $eventdata->userfrom          = $teacher;
-//  $eventdata->userto            = $user;
-//  $eventdata->subject           = $subject;
-//  $eventdata->fullmessage       = $message;
-//  $eventdata->fullmessageformat = FORMAT_PLAIN;
-//  $eventdata->fullmessagehtml   = '';
-//  $eventdata->smallmessage      = '';
-//  message_send($eventdata);
-}
-
-
-function updateapplication($sid, $field, $value, $deltamodules = 0) {
-  global $DB;
-
-  $record = $DB->get_record('peoplesapplication', array('sid' => $sid));
-  $application = new object();
-  $application->id = $record->id;
-  $application->{$field} = $value;
-
-  if ($deltamodules != 0) {
-    if (($deltamodules > 1) && empty($record->coursename2)) $deltamodules = 1;
-
-    $application->costowed = $record->costowed + $deltamodules * MODULE_COST;
-    if ($application->costowed < 0) $application->costowed = 0;
-  }
-
-  $DB->update_record('peoplesapplication', $application);
-
-  if ($deltamodules != 0) {
-    $inmmumph = FALSE;
-    $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$record->userid} AND userid!=0 LIMIT 1");
-    if (!empty($mphs)) {
-      foreach ($mphs as $mph) {
-        $inmmumph = TRUE;
-      }
-    }
-    if (!$inmmumph && !empty($record->userid)) { // $record->userid should NOT be empty, but just in case
-      // Update Balance only if this is not an MPH student as MPH students pay an all inclusive fee which is previously set.
-
-      $amount = get_balance($record->userid);
-
-      $peoples_student_balance = new object();
-      $peoples_student_balance->userid = $record->userid;
-      $peoples_student_balance->amount_delta = $deltamodules * MODULE_COST;
-      $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
-      $peoples_student_balance->currency = 'GBP';
-      if (!empty($record->coursename2)) {
-        $course2 = " & '{$record->coursename2}'";
-      }
-      else {
-        $course2 = '';
-      }
-      $peoples_student_balance->detail = "Adjustment for modules '$record->coursename1'{$course2} for Semester $record->semester";
-      $peoples_student_balance->date = time();
-      $DB->insert_record('peoples_student_balance', $peoples_student_balance);
-    }
-  }
-}
-
-
-function get_balance($userid) {
-  global $DB;
-
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC, id DESC LIMIT 1");
-  $amount = 0;
-  if (!empty($balances)) {
-    foreach ($balances as $balance) {
-      $amount = $balance->balance;
-    }
-  }
-
-  return $amount;
-}
-
-
-function get_peoples_teacher($course) {
-  global $DB;
-
-  $context = context_course::instance($course->id);
-
-  $role = $DB->get_record('role', array('name' => 'Module Leader'));
-
-  if ($teachers = get_role_users($role->id, $context)) {
-    foreach ($teachers as $teacher) {
-      $teacheruserid = $teacher->id;
-    }
-  }
-
-  if (isset($teacheruserid)) {
-    $teacher = $DB->get_record('user', array('id' => $teacheruserid));
-  }
-  else {
-    $teacher = get_admin();
-  }
-  return $teacher;
-}
-
-
-function dontaddslashes($x) {
-  return $x;
-}
-
-
-function dontstripslashes($x) {
-  return $x;
 }
 ?>
