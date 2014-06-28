@@ -164,14 +164,9 @@ function amount_to_pay_adjusted($application, $payment_schedule) {
 
   $amount = get_balance($application->userid);
 
-  $mphstatus = get_mph_status($application->userid);
-  if ($mphstatus != 1) { // NON MMU MPH: Take Outstanding Balance and adjust for new modules
-    if (empty($application->coursename2)) $deltamodules = 1;
-    else $deltamodules = 2;
-    $module_cost = get_module_cost($application->userid, $application->coursename1);
-    $amount += $deltamodules * $module_cost;
-  }
-  else { // MMU MPH: Take Outstanding Balance and adjust for instalments if necessary
+  if (instalments_allowed($application->userid)) {
+    // MMU MPH: Take Outstanding Balance and adjust for instalments if necessary
+
     if (!empty($payment_schedule)) {
       $now = time();
       if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
@@ -179,6 +174,14 @@ function amount_to_pay_adjusted($application, $payment_schedule) {
       elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
       // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
     }
+  }
+  else {
+    // NON MMU MPH: Take Outstanding Balance and adjust for new modules
+
+    if (empty($application->coursename2)) $deltamodules = 1;
+    else $deltamodules = 2;
+    $module_cost = get_module_cost($application->userid, $application->coursename1);
+    $amount += $deltamodules * $module_cost;
   }
 
   if ($amount < 0) $amount = 0;
