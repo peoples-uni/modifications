@@ -717,7 +717,7 @@ The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram'
 "Update Payment Amounts, Method or Confirmed Status" are links (to payconfirm.php with the applicant SID as a parameter) that bring up a page that allows us to update the data in the previous bullet points by:-
 <ol>
 <li>
-Updating the student payment account by adding a new transaction which decreases (or increases) the balance owed. This might be to record that a payment has been made (although WorldPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;40 per module or other amounts depending on LMIC/HIC status and whether it is an ordinary module or dissertation) are automatically added to the account when a student is approved for modules.<br />
+Updating the student payment account by adding a new transaction which decreases (or increases) the balance owed. This might be to record that a payment has been made (although WorldPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;40 per module or other amounts depending on LMIC/HIC status and whether it is an ordinary module or dissertation) are automatically added to the account when a student is approved for modules (see below for in "Set the Income Category for the Student" details).<br />
 Any transaction that is added can be marked as "(not confirmed)". All non-credit card transaction added by a student (in paydetails.php) will automatically be "(not confirmed)".
 </li>
 <li>
@@ -817,6 +817,29 @@ The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applica
 </li>
 <li>
 "Unenroll a student from the Certificate in Patient Safety" button does what it says.
+</li>
+<li>
+"Set the Income Category for the Student" button does what it says. It is necessary to specify whether teh student is LMIC (Low/Middle Income country) or HIC (High Income country).<br />
+It is also possible to specify that a studnet is an "Existing Student", but it shoudl not be necessary to use that as all studnets before teh chnageover to the new module costings will automaticlly have this status.<br />
+The default is LMIC (assigned automatically when new studnets are registered), so there will not normally be a reason to set this.<br />
+The categores are used to allocate costs for modules according to the the following scheme (as of 28th June 2014)...<br />
+<ol>
+<li>
+Existing MMU MPH Students: £0 per module, £1500 for MPH
+</li>
+<li>
+Existing Peoples MPH Students: £40 per module, £100 for the dissertation
+</li>
+<li>
+Existing (non MPH) Students: £40 per module, £100 for the dissertation
+</li>
+<li>
+New LMIC students: £40 per module, £260 for the dissertation
+</li>
+<li>
+New HIC students: £300 per module, £1200 for the dissertation
+</li>
+</ol>
 </li>
 <li>
 The "Add This Note to Student Record" button adds a note entered above that button to the student record. When there are any notes for a student it will be indicated in the applications.php spreadsheet in the "Enrolled?" column by the words "(Note Present)".<br />
