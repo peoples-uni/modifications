@@ -169,6 +169,8 @@ Any individual (non zero) instalment must be at least 25% of what is owed (UK Po
 
   $year = (int)gmdate('Y');
   $month = (int)gmdate('n');
+
+  $peoples_payment_schedule = new stdClass();
   if ($month <= 6) {
     $peoples_payment_schedule->expect_amount_1_date = gmmktime(0, 0, 0,  1, 1, $year);
     $peoples_payment_schedule->due_date_1           = gmmktime(0, 0, 0,  4, 1, $year);
