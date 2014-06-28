@@ -825,19 +825,19 @@ The default is LMIC (assigned automatically when new studnets are registered), s
 The categores are used to allocate costs for modules according to the the following scheme (as of 28th June 2014)...<br />
 <ol>
 <li>
-Existing MMU MPH Students: £0 per module, £1500 for MPH
+Existing MMU MPH Students: &pound;0 per module, &pound;1500 for MPH
 </li>
 <li>
-Existing Peoples MPH Students: £40 per module, £100 for the dissertation
+Existing Peoples MPH Students: &pound;40 per module, &pound;100 for the dissertation
 </li>
 <li>
-Existing (non MPH) Students: £40 per module, £100 for the dissertation
+Existing (non MPH) Students: &pound;40 per module, &pound;100 for the dissertation
 </li>
 <li>
-New LMIC students: £40 per module, £260 for the dissertation
+New LMIC students: &pound;40 per module, &pound;260 for the dissertation
 </li>
 <li>
-New HIC students: £300 per module, £1200 for the dissertation
+New HIC students: &pound;300 per module, &pound;1200 for the dissertation
 </li>
 </ol>
 </li>
