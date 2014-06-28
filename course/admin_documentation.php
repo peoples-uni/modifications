@@ -819,10 +819,10 @@ The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applica
 "Unenroll a student from the Certificate in Patient Safety" button does what it says.
 </li>
 <li>
-"Set the Income Category for the Student" button does what it says. It is necessary to specify whether teh student is LMIC (Low/Middle Income country) or HIC (High Income country).<br />
-It is also possible to specify that a studnet is an "Existing Student", but it shoudl not be necessary to use that as all studnets before teh chnageover to the new module costings will automaticlly have this status.<br />
-The default is LMIC (assigned automatically when new studnets are registered), so there will not normally be a reason to set this.<br />
-The categores are used to allocate costs for modules according to the the following scheme (as of 28th June 2014)...<br />
+"Set the Income Category for the Student" button does what it says. It is necessary to specify whether the student is LMIC (Low/Middle Income country) or HIC (High Income country).<br />
+It is also possible to specify that a student is an "Existing Student", but it should not be necessary to use that as all students before the changeover to the new module costings will automatically have this status.<br />
+The default is LMIC (assigned automatically when new students are registered), so there will not normally be a reason to set this.<br />
+The categories are used to allocate costs for modules according to the following scheme (as of 28th June 2014)...<br />
 <ol>
 <li>
 Existing MMU MPH Students: &pound;0 per module, &pound;1500 for MPH
