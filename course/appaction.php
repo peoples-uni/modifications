@@ -456,6 +456,7 @@ window.opener.location.reload();
 
     $teacher = get_peoples_teacher($course);
 
+    $a = new stdClass();
     $a->course = $course->fullname;
     $a->user = fullname($user);
     //$teacher->email = 'alanabarrett0@gmail.com';
@@ -513,6 +514,7 @@ window.opener.location.reload();
 
     $teacher = get_peoples_teacher($course);
 
+    $a = new stdClass();
     $a->course = $course->fullname;
     $a->user = fullname($user);
     //$teacher->email = 'alanabarrett0@gmail.com';
@@ -605,6 +607,7 @@ window.opener.location.reload();
 
     $teacher = get_peoples_teacher($course);
 
+    $a = new stdClass();
     $a->course = $course->fullname;
     $a->user = fullname($user);
     //$teacher->email = 'alanabarrett0@gmail.com';
@@ -662,6 +665,7 @@ window.opener.location.reload();
 
     $teacher = get_peoples_teacher($course);
 
+    $a = new stdClass();
     $a->course = $course->fullname;
     $a->user = fullname($user);
     //$teacher->email = 'alanabarrett0@gmail.com';

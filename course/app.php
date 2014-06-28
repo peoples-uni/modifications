@@ -318,6 +318,7 @@ if (!empty($_POST['markaddnewmodule']) && !empty($_POST['newmodulename']) && !em
 
   $teacher = get_peoples_teacher($course);
 
+  $a = new stdClass();
   $a->course = $course->fullname;
   $a->user = fullname($user);
   //$teacher->email = 'alanabarrett0@gmail.com';

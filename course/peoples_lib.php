@@ -250,6 +250,7 @@ function enrolincourse($course, $user, $semester) {
       $DB->update_record('enrolment', $enrolment);
     }
     else {
+      $enrolment = new stdClass();
       $enrolment->userid = $user->id;
       $enrolment->courseid = $course->id;
       $enrolment->semester = $semester;
