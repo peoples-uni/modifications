@@ -718,7 +718,8 @@ $applymmumphtext = $applymmumphtext[$_REQUEST['applymmumph']];
 if (!empty($application->userid)) $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $application->userid));
 else $peoplesmph2 = NULL;
 
-if (!empty($mphs) || !empty($applymmumphtext) || !empty($peoplesmph2->note)) {
+$mphstatus = get_mph_status($application->userid);
+if (!empty($mphstatus) || !empty($applymmumphtext) || !empty($peoplesmph2->note)) {
   echo '<tr><td colspan="2">MPH Status...</td></tr>';
 
   if (!empty($applymmumphtext)) echo '<tr><td></td><td>' . $applymmumphtext . '</td></tr>';
@@ -1762,7 +1763,7 @@ if (!$application->ready && $application->nid != 80) {
 <?php
 }
 
-if (empty($mphs)) {
+if (empty($mphstatus)) {
 ?>
 <br />To record that the student has been enrolled in the Masters in Public Health (MPH), select programme & press "Record...".<br />
 <form id="mphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
