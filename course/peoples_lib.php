@@ -9,10 +9,8 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
   $application->{$field} = $value;
 
   if ($deltamodules != 0) {
-    if (($deltamodules > 1) && empty($record->coursename2)) $deltamodules = 1;
-
-    $module_cost = get_module_cost($record->userid, $record->coursename1);
-    $application->costowed = $record->costowed + $deltamodules * $module_cost;
+    $module_cost = get_module_cost($record->userid, $record->coursename1, $record->coursename2);
+    $application->costowed = $record->costowed + $module_cost;
     if ($application->costowed < 0) $application->costowed = 0;
   }
 
@@ -28,7 +26,7 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
 
       $peoples_student_balance = new object();
       $peoples_student_balance->userid = $record->userid;
-      $peoples_student_balance->amount_delta = $deltamodules * $module_cost;
+      $peoples_student_balance->amount_delta = $module_cost;
       $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
       $peoples_student_balance->currency = 'GBP';
       if (!empty($record->coursename2)) {
@@ -84,38 +82,40 @@ function instalments_allowed($userid) {
 }
 
 
-function get_module_cost($userid, $coursename) {
+function get_module_cost($userid, $coursename1, $coursename2) {
   global $DB;
+
+  if (empty($coursename2)) $deltamodules = 1;
+  else $deltamodules = 2;
 
   $income_category = get_income_category($userid);
 
   $mphstatus = get_mph_status($userid);
 
-  if (stripos($coursename, 'dissertation') !== FALSE) {
-    $dissertation = TRUE;
+  $dissertation = 0;
+  if (stripos($coursename1, 'dissertation') !== FALSE) {
+    $dissertation++;
+    $deltamodules--;
   }
-  else {
-    $dissertation = FALSE;
+  if (stripos($coursename2, 'dissertation') !== FALSE) {
+    $dissertation++;
+    $deltamodules--;
   }
 
   if ($mphstatus == 1) { // MMU MPH
     $module_cost = 0;
   }
   elseif ($income_category == 0) { // Existing Students
-    if ($dissertation) $module_cost = 100;
-    else $module_cost = 40;
+    $module_cost = $dissertation*100 + $deltamodules*40;
   }
   elseif ($income_category == 1) { // LMIC Students
-    if ($dissertation) $module_cost = 260;
-    else $module_cost = 40;
+    $module_cost = $dissertation*260 + $deltamodules*40;
   }
   elseif ($income_category == 2) { // HIC Students
-    if ($dissertation) $module_cost = 1200;
-    else $module_cost = 300;
+    $module_cost = $dissertation*1200 + $deltamodules*300;
   }
   else { // Should not get here!
-    if ($dissertation) $module_cost = 260;
-    else $module_cost = 40;
+    $module_cost = $dissertation*260 + $deltamodules*40;
   }
 
   return $module_cost;
@@ -178,10 +178,8 @@ function amount_to_pay_adjusted($application, $payment_schedule) {
   else {
     // NON MMU MPH: Take Outstanding Balance and adjust for new modules
 
-    if (empty($application->coursename2)) $deltamodules = 1;
-    else $deltamodules = 2;
-    $module_cost = get_module_cost($application->userid, $application->coursename1);
-    $amount += $deltamodules * $module_cost;
+    $module_cost = get_module_cost($application->userid, $application->coursename1, $application->coursename2);
+    $amount += $module_cost;
   }
 
   if ($amount < 0) $amount = 0;
