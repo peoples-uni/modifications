@@ -94,30 +94,30 @@ foreach ($activemodules as $activemodule) {
 
 
 $refreshparent = false;
-if (!empty($_POST['markapp1'])) {
+if (!empty($_POST['markapp1']) && !empty($_POST['18'])) {
 
-	updateapplication($_POST['sid'], 'state', $_POST['state'], 1);
-
-	$refreshparent = true;
-}
-if (!empty($_POST['markapp2'])) {
-
-	updateapplication($_POST['sid'], 'state', $_POST['state'], 1);
+  updateapplication($_POST['sid'], 'state', $_POST['state'], 1, $_POST['18']);
 
 	$refreshparent = true;
 }
-if (!empty($_POST['markunapp1'])) {
+if (!empty($_POST['markapp2']) && !empty($_POST['19'])) {
 
-	updateapplication($_POST['sid'], 'state', $_POST['state'], -1);
+  updateapplication($_POST['sid'], 'state', $_POST['state'], 1, $_POST['19']);
+
+	$refreshparent = true;
+}
+if (!empty($_POST['markunapp1']) && !empty($_POST['18'])) {
+
+  updateapplication($_POST['sid'], 'state', $_POST['state'], -1, $_POST['18']);
 
 	$refreshparent = true;
 	if (!empty($_POST['29']) && !empty($_POST['18'])) {
 		unenrolstudent($_POST['29'], $_POST['18']);
 	}
 }
-if (!empty($_POST['markunapp2'])) {
+if (!empty($_POST['markunapp2']) && !empty($_POST['19'])) {
 
-	updateapplication($_POST['sid'], 'state', $_POST['state'], -1);
+  updateapplication($_POST['sid'], 'state', $_POST['state'], -1, $_POST['19']);
 
 	$refreshparent = true;
 	if (!empty($_POST['29']) && !empty($_POST['19'])) {
@@ -138,7 +138,7 @@ if (!empty($_POST['change2']) && !empty($_POST['19'])) {
 }
 if (!empty($_POST['add2newapproved']) && !empty($_POST['19'])) {
 
-  updateapplication($_POST['sid'], 'coursename2', $_REQUEST['19'], 1); // 1 => Need to increase payment for new approved module
+  updateapplication($_POST['sid'], 'coursename2', $_REQUEST['19'], 1, $_POST['19']); // 1 => Need to increase payment for new approved module
 
   $refreshparent = true;
 }
@@ -324,7 +324,7 @@ if (!empty($_POST['markaddnewmodule']) && !empty($_POST['newmodulename']) && !em
   //$teacher->email = 'alanabarrett0@gmail.com';
   email_to_user($teacher, $user, get_string('enrolmentnew', 'enrol', $course->shortname), get_string('enrolmentnewuser', 'enrol', $a));
 
-  updateapplication($_POST['sid'], 'dummyfieldname', 'dummyfieldvalue', 1);
+  updateapplication($_POST['sid'], 'dummyfieldname', 'dummyfieldvalue', 1, $_POST['newmodulename']);
 }
 
 if ($refreshparent) {

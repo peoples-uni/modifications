@@ -1,6 +1,6 @@
 <?php
 
-function updateapplication($sid, $field, $value, $deltamodules = 0) {
+function updateapplication($sid, $field, $value, $deltamodules = 0, $coursename) {
   global $DB;
 
   $record = $DB->get_record('peoplesapplication', array('sid' => $sid));
@@ -9,7 +9,20 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
   $application->{$field} = $value;
 
   if ($deltamodules != 0) {
-    $module_cost = get_module_cost($record->userid, $record->coursename1, $record->coursename2);
+    if ($deltamodules == 1) {
+      $module_cost = get_module_cost($record->userid, $coursename, '');
+      $coursename2 = '';
+    }
+    elseif ($deltamodules == -1) {
+      $module_cost = - get_module_cost($record->userid, $coursename, '');
+      $coursename2 = '';
+    }
+    else { // ($deltamodules == 2)
+      $module_cost = get_module_cost($record->userid, $record->coursename1, $record->coursename2);
+      $coursename  = $record->coursename1;
+      $coursename2 = $record->coursename2;
+    }
+
     $application->costowed = $record->costowed + $module_cost;
     if ($application->costowed < 0) $application->costowed = 0;
   }
@@ -29,13 +42,13 @@ function updateapplication($sid, $field, $value, $deltamodules = 0) {
       $peoples_student_balance->amount_delta = $module_cost;
       $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
       $peoples_student_balance->currency = 'GBP';
-      if (!empty($record->coursename2)) {
-        $course2 = " & '{$record->coursename2}'";
+      if (!empty($coursename2)) {
+        $course2 = " & '{$coursename2}'";
       }
       else {
         $course2 = '';
       }
-      $peoples_student_balance->detail = "Adjustment for modules '$record->coursename1'{$course2} for Semester $record->semester";
+      $peoples_student_balance->detail = "Adjustment for modules '$coursename'{$course2} for Semester $record->semester";
       $peoples_student_balance->date = time();
       $DB->insert_record('peoples_student_balance', $peoples_student_balance);
     }
