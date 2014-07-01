@@ -507,4 +507,44 @@ class peoples_daterange_filter extends peoples_filter {
     return $list_to_filter;
   }
 }
+
+
+// Initially used by track_submisisons.php
+class peoples_mph_filter extends peoples_select_filter {
+  public function filter_entries(array $list_to_filter) {
+    foreach ($list_to_filter as $index => $list_entry) {
+      if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
+        if ($this->selectedvalue === 'No' && $list_entry->mph != 0) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Yes' && $list_entry->mph == 0) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
+
+
+// Initially used by track_submisisons.php
+class peoples_submission_filter extends peoples_select_filter {
+  public function filter_entries(array $list_to_filter) {
+    foreach ($list_to_filter as $index => $list_entry) {
+      if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
+        if ($this->selectedvalue === 'No' && $list_entry->submissionstatus === 'submitted') {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Yes' && $list_entry->submissionstatus !== 'submitted') {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
 ?>
