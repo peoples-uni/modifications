@@ -7,19 +7,67 @@
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/course/peoples_lib.php');
 
 $PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/course/track_submissions.php'); // Defined here to avoid notices on errors etc
 
-if (!empty($_POST['markfilter'])) {
-  redirect($CFG->wwwroot . '/course/track_submissions.php?'
-    . '&chosensemester=' . urlencode($_POST['chosensemester'])
-    . '&chosenmodule=' . urlencode($_POST['chosenmodule'])
-    . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
-    );
-}
+require_once($CFG->dirroot .'/course/peoples_filters.php');
 
+$peoples_filters = new peoples_filters();
+
+$peoples_filters->set_page_url("$CFG->wwwroot/course/track_submissions.php");
+
+$semesters = $DB->get_records('semesters', NULL, 'id DESC');
+$listsemester = array();
+foreach ($semesters as $semester) {
+  $listsemester[] = $semester->semester;
+  if (!isset($defaultsemester)) $defaultsemester = $semester->semester;
+}
+$peoples_chosensemester_filter = new peoples_select_filter('Semester', 'chosensemester', $listsemester, $defaultsemester);
+$peoples_filters->add_filter($peoples_chosensemester_filter);
+
+$semesters = $DB->get_records('semesters', NULL, 'id DESC');
+$listsemester = array();
+$listsemester[] = 'None';
+$defaultsemester = 'None';
+foreach ($semesters as $semester) {
+  $listsemester[] = $semester->semester;
+}
+$peoples_chosensemester2_filter = new peoples_select_filter('Additional Semester to Include', 'chosensemester2', $listsemester, $defaultsemester);
+$peoples_filters->add_filter($peoples_chosensemester2_filter);
+
+$peoples_chosenmodule_filter = new peoples_chosenmodule_filter('Module Name Contains', 'chosenmodule');
+$peoples_filters->add_filter($peoples_chosenmodule_filter);
+
+$listmph[] = 'Any';
+$listmph[] = 'Yes';
+$listmph[] = 'No';
+$peoples_mmu_filter = new peoples_mph_filter('MPH?', 'mph', $listmph, 'Any');
+$peoples_filters->add_filter($peoples_mmu_filter);
+
+$listsubmission[] = 'Any';
+$listsubmission[] = 'Yes';
+$listsubmission[] = 'No';
+$peoples_submission_filter = new peoples_submission_filter('Submission?', 'submission', $listsubmission, 'Any');
+$peoples_filters->add_filter($peoples_submission_filter);
+
+$peoples_displayforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displayforexcel');
+$peoples_filters->add_filter($peoples_displayforexcel_filter);
+
+//$peoples_displayextra_filter = new peoples_boolean_filter('Show Extra Details', 'displayextra');
+//$peoples_filters->add_filter($peoples_displayextra_filter);
+
+$chosensemester     = $peoples_chosensemester_filter->get_filter_setting();
+$chosensemester2    = $peoples_chosensemester2_filter->get_filter_setting();
+$displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
+//$displayextra       = $peoples_displayextra_filter->get_filter_setting();
+
+
+if (!empty($_POST['markfilter'])) {
+  redirect($CFG->wwwroot . '/course/track_submissions.php?' . $peoples_filters->get_url_parameters());
+}
 
 $PAGE->set_pagelayout('embedded');   // Needs as much space as possible
 
@@ -52,67 +100,18 @@ echo $OUTPUT->header();
 //echo html_writer::start_tag('div', array('class'=>'course-content'));
 
 
-if (empty($_REQUEST['displayforexcel'])) echo "<h1>Track Submissions</h1>";
+if (!$displayforexcel) echo "<h1>Track Submissions</h1>";
 
 
-if (!empty($_REQUEST['chosensemester'])) $chosensemester = $_REQUEST['chosensemester'];
-if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = $_REQUEST['chosenmodule'];
-else $chosenmodule = '';
-if (!empty($_REQUEST['displayforexcel'])) $displayforexcel = true;
-else $displayforexcel = false;
-
-
-$semesters = $DB->get_records('semesters', NULL, 'id DESC');
-foreach ($semesters as $semester) {
-  $listsemester[] = $semester->semester;
-  if (!isset($chosensemester)) $chosensemester = $semester->semester;
-}
-
-
-if (!$displayforexcel) {
-?>
-<form method="post" action="<?php echo $CFG->wwwroot . '/course/track_submissions.php'; ?>">
-Display entries using the following filters...
-<table border="2" cellpadding="2">
-  <tr>
-    <td>Semester</td>
-    <td>Module Name Contains</td>
-    <td>Display for Copying and Pasting to Excel</td>
-  </tr>
-  <tr>
-    <?php
-    displayoptions('chosensemester', $listsemester, $chosensemester);
-    ?>
-    <td><input type="text" size="15" name="chosenmodule" value="<?php echo htmlspecialchars($chosenmodule, ENT_COMPAT, 'UTF-8'); ?>" /></td>
-    <td><input type="checkbox" name="displayforexcel" <?php if ($displayforexcel) echo ' CHECKED'; ?>></td>
-  </tr>
-</table>
-<input type="hidden" name="markfilter" value="1" />
-<input type="submit" name="filter" value="Apply Filters" />
-<a href="<?php echo $CFG->wwwroot; ?>/course/track_submissions.php">Reset Filters</a>
-</form>
-<br />
-<?php
-}
-
-
-function displayoptions($name, $options, $selectedvalue) {
-  echo '<td><select name="' . $name . '">';
-  foreach ($options as $option) {
-    if ($option === $selectedvalue) $selected = 'selected="selected"';
-    else $selected = '';
-
-    $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
-    echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
-  }
-  echo '</select></td>';
-}
+if (!$displayforexcel) $peoples_filters->show_filters();
 
 
 $track_submissions = $DB->get_records_sql("
   SELECT
     CONCAT(e.id, '#', i.id),
     c.fullname AS course,
+    c.fullname AS coursename1,
+    c.fullname AS coursename2,
     u.id AS userid,
     CONCAT(u.lastname, ', ', u.firstname) AS name,
     u.email AS mail,
@@ -138,7 +137,7 @@ $track_submissions = $DB->get_records_sql("
   LEFT JOIN mdl_recorded_submissions r ON a.id=r.assign AND u.id=r.userid
   LEFT JOIN mdl_assign_grades ass_g ON a.id=ass_g.assignment AND u.id=ass_g.userid
   WHERE
-    e.semester=? AND
+    e.semester IN (?, ?) AND
     e.enrolled!=0 AND
     e.courseid=c.id AND
     c.id=a.course AND
@@ -146,7 +145,7 @@ $track_submissions = $DB->get_records_sql("
     i.iteminstance=a.id AND
     e.userid=u.id
   GROUP BY a.id, u.id
-  ORDER BY fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC", array($chosensemester));
+  ORDER BY fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC", array($chosensemester, $chosensemester2));
 if (empty($track_submissions)) {
   $track_submissions = array();
 }
@@ -161,10 +160,10 @@ $grade_grade_historys = $DB->get_records_sql("
   FROM mdl_grade_grades_history g, mdl_grade_items i
   WHERE
     g.itemid=i.id AND
-    i.courseid IN (SELECT DISTINCT courseid FROM mdl_enrolment WHERE semester=?) AND
+    i.courseid IN (SELECT DISTINCT courseid FROM mdl_enrolment WHERE semester IN (?, ?)) AND
     g.finalgrade IS NOT NULL
   ORDER BY g.timemodified",
-  array($chosensemester));
+  array($chosensemester, $chosensemester2));
 
 $item_to_grades = array();
 $item_to_grade_times = array();
@@ -182,14 +181,7 @@ foreach ($grade_grade_historys as $grade_grade_history) {
 }
 
 
-foreach ($track_submissions as $index => $track_submission) {
-
-  if (!empty($chosenmodule) && ((stripos($track_submission->course, $chosenmodule) === false))) {
-    unset($track_submissions[$index]);
-    continue;
-  }
-}
-
+$track_submissions = $peoples_filters->filter_entries($track_submissions);
 
 $table = new html_table();
 $table->head = array(
@@ -283,23 +275,3 @@ echo '<br /><br /><br /><br />';
 //echo html_writer::end_tag('div');
 
 echo $OUTPUT->footer();
-
-
-function displaystat($stat, $title) {
-  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
-  echo "<tr>";
-  echo "<td>$title</td>";
-  echo "<td>Number</td>";
-  echo "</tr>";
-
-  ksort($stat);
-
-  foreach ($stat as $key => $number) {
-    echo "<tr>";
-    echo "<td>" . $key . "</td>";
-    echo "<td>" . $number . "</td>";
-      echo "</tr>";
-  }
-  echo '</table>';
-  echo '<br/>';
-}
