@@ -86,6 +86,22 @@ function get_mph_status($userid) {
 }
 
 
+function get_mph_suspended($userid) {
+  global $DB;
+
+  if (empty($userid)) return 0;
+
+  $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
+  if (!empty($peoplesmph2)) {
+    $mphsuspended = $peoplesmph2->suspended;
+  }
+  else {
+    $mphsuspended = 0;
+  }
+  return $mphsuspended;
+}
+
+
 function instalments_allowed($userid) {
   $mphstatus = get_mph_status($userid);
   $instalments_allowed = FALSE;

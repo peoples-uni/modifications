@@ -234,6 +234,42 @@ if (!empty($_POST['markunenrollmph'])) {
     $refreshparent = true;
   }
 }
+if (!empty($_POST['markunsuspendmph'])) {
+  if (!empty($_REQUEST['29'])) {
+    $peoplesmph2userid = $_REQUEST['29'];
+
+    $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $peoplesmph2userid));
+    if (!empty($peoplesmph2)) {
+      $peoplesmph2->suspended = 0;
+
+      if (!empty($_REQUEST['note'])) $usernote = ' (' . htmlspecialchars($_REQUEST['note'], ENT_COMPAT, 'UTF-8') . ')';
+      else  $usernote = '';
+      $peoplesmph2->note = $peoplesmph2->note . '<br />Unsuspended from MPH: ' . gmdate('d/m/Y H:i', time()) . $usernote;
+
+      $DB->update_record('peoplesmph2', $peoplesmph2);
+    }
+
+    //$refreshparent = true;
+  }
+}
+if (!empty($_POST['marksuspendmph'])) {
+  if (!empty($_REQUEST['29'])) {
+    $peoplesmph2userid = $_REQUEST['29'];
+
+    $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $peoplesmph2userid));
+    if (!empty($peoplesmph2)) {
+      $peoplesmph2->suspended = 1;
+
+      if (!empty($_REQUEST['note'])) $usernote = ' (' . htmlspecialchars($_REQUEST['note'], ENT_COMPAT, 'UTF-8') . ')';
+      else  $usernote = '';
+      $peoplesmph2->note = $peoplesmph2->note . '<br />Suspended from MPH: ' . gmdate('d/m/Y H:i', time()) . $usernote;
+
+      $DB->update_record('peoplesmph2', $peoplesmph2);
+    }
+
+    //$refreshparent = true;
+  }
+}
 if (!empty($_POST['markcert_ps']) && !empty($_REQUEST['29'])) {
 
   $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $_REQUEST['29']));
@@ -1860,6 +1896,99 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 </form>
 <br />
 <?php
+  $mphsuspended = get_mph_suspended($application->userid);
+  if ($mphsuspended) {
+?>
+<br />To Unsuspend a student from the Masters in Public Health (MPH), press "Unsuspend...".<br />
+(This does not affect any course modules or payments.)<br />
+<form id="unsuspendmphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
+<input type="hidden" name="state" value="<?php echo $state; ?>" />
+<input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="1" value="<?php echo htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="2" value="<?php echo htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="11" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
+<input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
+<input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
+<input type="hidden" name="12" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="14" value="<?php echo htmlspecialchars($_REQUEST['14'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="13" value="<?php echo htmlspecialchars($_REQUEST['13'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="34" value="<?php echo htmlspecialchars($_REQUEST['34'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="35" value="<?php echo htmlspecialchars($_REQUEST['35'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<span style="display: none;">
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+</span>
+<input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
+<input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<input type="hidden" name="markunsuspendmph" value="1" />
+Reason for Unsuspension (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
+<input type="submit" name="unsuspendmph" value="Unsuspend a student from the Masters in Public Health (MPH)" />
+</form>
+<br />
+<?php
+  }
+  else {
+?>
+<br />To Suspend a student from the Masters in Public Health (MPH), press "Suspend...".<br />
+(This does not affect any course modules or payments.)<br />
+<form id="suspendmphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
+<input type="hidden" name="state" value="<?php echo $state; ?>" />
+<input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="1" value="<?php echo htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="2" value="<?php echo htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="11" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
+<input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
+<input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
+<input type="hidden" name="12" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="14" value="<?php echo htmlspecialchars($_REQUEST['14'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="13" value="<?php echo htmlspecialchars($_REQUEST['13'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="34" value="<?php echo htmlspecialchars($_REQUEST['34'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="35" value="<?php echo htmlspecialchars($_REQUEST['35'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<span style="display: none;">
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+</span>
+<input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
+<input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<input type="hidden" name="marksuspendmph" value="1" />
+Reason for Suspension (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
+<input type="submit" name="suspendmph" value="Suspend a student from the Masters in Public Health (MPH)" />
+</form>
+<br />
+<?php
+  }
 }
 
 if (empty($peoples_cert_ps->cert_psstatus)) {
