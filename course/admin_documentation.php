@@ -814,7 +814,7 @@ The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applica
 "Unenroll a student from the Masters in Public Health (MPH)" button does what it says.
 </li>
 <li>
-"Suspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added which are displayed further up the page. This leaves the student as an MPH student but indicates they are not currently active).
+"Suspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added which are displayed further up the page. This leaves the student as an MPH student but indicates they are not currently active). They are not listed on track_submissions.php when filtering for MPH students.
 </li>
 <li>
 "Unsuspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added. This makes the student active again).
