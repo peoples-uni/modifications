@@ -743,7 +743,8 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 "Notes" lists any notes that have been added to the student record in "Details" or student.php. If any note is present they the "(Note Present)" indicator will be displayed under the "Enrolled?" column in applications.php.
 </li>
 <li>
-"MPH Status" indicates whether the student "Wants to Apply for ... MPH" or "Says Already in ... MPH" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(... MPH)"). If a Student was "Enrolled in MPH" and then "Unenrolled from MPH" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
+"MPH Status" indicates whether the student "Wants to Apply for ... MPH" or "Says Already in ... MPH" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(... MPH)"). If a Student was "Enrolled in MPH" and then "Unenrolled from MPH" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).<br />
+If a Student was "Suspended from MPH" and then "Unsuspended from MPH" (both of which can be set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
 </li>
 <li>
 "Certificate in Patient Safety Status" indicates whether the student "Wants to Apply for Certificate in Patient Safety" or "Says Already in Certificate in Patient Safety" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in Certificate in Patient Safety" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(Cert PS)"). If a Student was "Enrolled in Certificate in Patient Safety" and then "Unenrolled from Certificate in Patient Safety" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
@@ -811,6 +812,12 @@ The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applica
 </li>
 <li>
 "Unenroll a student from the Masters in Public Health (MPH)" button does what it says.
+</li>
+<li>
+"Suspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added which are displayed further up the page. This leaves the student as an MPH student but indicates they are not currently active).
+</li>
+<li>
+"Unsuspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added. This makes the student active again).
 </li>
 <li>
 "Record that the Student has been enrolled in the Certificate in Patient Safety" button does what it says.
