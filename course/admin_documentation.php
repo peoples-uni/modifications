@@ -1003,7 +1003,7 @@ Also a list of all grades given to the assignment (grades and re-grades) and the
 The semester is selectable in a filter as well as an optional second semester, module name (part of), MPH status, whether there has been any submission and whether it is desired to remove all headers and footer info to make it easier to copy the data and paste into a spreadsheet.
 </li>
 <li>
-Also in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> it is possible to indicate that certain assignments (normally the first assignment in a course) from inclusion in the table. The setting "Set above comma separated list of assignment IDs to be excluded from track_submissions.php" should contain a comma separated list of all assignment from all semesters that shoudl be excluded. The IDs can be found in the "Assignment (id)" column of track_submissions.php.
+Also in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> it is possible to indicate that certain assignments (normally the first assignment in a course) from inclusion in the table. The setting "Set above comma separated list of assignment IDs to be excluded from track_submissions.php" should contain a comma separated list of all assignments from all semesters that should be excluded. The IDs can be found in the "Assignment (id)" column of track_submissions.php.
 </li>
 <li>
 The Manager role gives access to this page.
