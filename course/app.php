@@ -1899,7 +1899,7 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
   $mphsuspended = get_mph_suspended($application->userid);
   if ($mphsuspended) {
 ?>
-<br />To Unsuspend a student from the Masters in Public Health (MPH), press "Unsuspend...".<br />
+<br />To Unsuspend the student from the Masters in Public Health (MPH), press "Unsuspend...".<br />
 (This does not affect any course modules or payments.)<br />
 <form id="unsuspendmphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
@@ -1945,7 +1945,7 @@ Reason for Unsuspension (visible to Staff & Students):&nbsp;<input type="text" s
   }
   else {
 ?>
-<br />To Suspend a student from the Masters in Public Health (MPH), press "Suspend...".<br />
+<br />To Suspend the student from the Masters in Public Health (MPH), press "Suspend...".<br />
 (This does not affect any course modules or payments.)<br />
 <form id="suspendmphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
