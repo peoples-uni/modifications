@@ -711,7 +711,7 @@ foreach ($listssf as $key => $listssfname) {
 <br />
 
 <form id="track_submissions_exclusions_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
-<input type="text" size="80" name="value_track_submissions_exclusions" value="<?php echo htmlspecialchars(get_config(NULL, 'peoples_track_submissions_exclusions'), ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="text" size="80" name="value_track_submissions_exclusions" value="<?php echo htmlspecialchars(get_config(NULL, 'peoples_track_submissions_exclusions'), ENT_COMPAT, 'UTF-8'); ?>"  style="width:50em" />
 <br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_track_submissions_exclusions" value="1" />
