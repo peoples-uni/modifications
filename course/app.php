@@ -1938,7 +1938,7 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 
 <input type="hidden" name="markunsuspendmph" value="1" />
 Reason for Unsuspension (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
-<input type="submit" name="unsuspendmph" value="Unsuspend a student from the Masters in Public Health (MPH)" />
+<input type="submit" name="unsuspendmph" value="Unsuspend student from the Masters in Public Health (MPH)" />
 </form>
 <br />
 <?php
@@ -1984,7 +1984,7 @@ Reason for Unsuspension (visible to Staff & Students):&nbsp;<input type="text" s
 
 <input type="hidden" name="marksuspendmph" value="1" />
 Reason for Suspension (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
-<input type="submit" name="suspendmph" value="Suspend a student from the Masters in Public Health (MPH)" />
+<input type="submit" name="suspendmph" value="Suspend student from the Masters in Public Health (MPH)" />
 </form>
 <br />
 <?php
