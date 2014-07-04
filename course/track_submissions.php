@@ -106,6 +106,8 @@ if (!$displayforexcel) echo "<h1>Track Submissions</h1>";
 if (!$displayforexcel) $peoples_filters->show_filters();
 
 
+$peoples_track_submissions_exclusions = get_config(NULL, 'peoples_track_submissions_exclusions');
+
 $track_submissions = $DB->get_records_sql("
   SELECT
     CONCAT(e.id, '#', i.id),
@@ -116,6 +118,7 @@ $track_submissions = $DB->get_records_sql("
     CONCAT(u.lastname, ', ', u.firstname) AS name,
     u.email AS mail,
     a.name AS assignment,
+    a.id AS assign_id,
     i.id AS itemid,
     FROM_UNIXTIME(g.timecreated, '%Y-%m-%d') AS created,
     FROM_UNIXTIME(g.timemodified, '%Y-%m-%d') AS modified,
@@ -143,7 +146,8 @@ $track_submissions = $DB->get_records_sql("
     c.id=a.course AND
     c.id=i.courseid AND
     i.iteminstance=a.id AND
-    e.userid=u.id
+    e.userid=u.id AND
+    a.id NOT IN ($peoples_track_submissions_exclusions)
   GROUP BY a.id, u.id
   ORDER BY fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC", array($chosensemester, $chosensemester2));
 if (empty($track_submissions)) {
@@ -189,7 +193,7 @@ $table->head = array(
   'Name',
   'ID',
   'e-mail',
-  'Assignment',
+  'Assignment (id)',
   'Due Date',
   'Cut-off Date',
   'Extension Date',
@@ -214,7 +218,7 @@ foreach ($track_submissions as $index => $track_submission) {
   $rowdata[] = htmlspecialchars($track_submission->name, ENT_COMPAT, 'UTF-8');
   $rowdata[] = $track_submission->userid;
   $rowdata[] = htmlspecialchars($track_submission->mail, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($track_submission->assignment, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($track_submission->assignment, ENT_COMPAT, 'UTF-8') . " ($track_submission->assign_id)";
   $rowdata[] = $track_submission->due;
   $rowdata[] = $track_submission->cutoff;
   $rowdata[] = $track_submission->extension;

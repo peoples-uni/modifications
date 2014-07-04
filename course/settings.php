@@ -232,6 +232,11 @@ if (!empty($_POST['mark_discussion_feedback_email']) && !empty($_POST['value_dis
   $value_discussion_feedback_email = $_POST['value_discussion_feedback_email'];
   set_config('peoples_discussion_feedback_email', $value_discussion_feedback_email);
 }
+if (!empty($_POST['mark_track_submissions_exclusions']) && !empty($_POST['value_track_submissions_exclusions'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $value_track_submissions_exclusions = $_POST['value_track_submissions_exclusions'];
+  set_config('peoples_track_submissions_exclusions', $value_track_submissions_exclusions);
+}
 
 
 $semesters = $DB->get_records('semesters', NULL, 'id ASC');
@@ -702,6 +707,15 @@ foreach ($listssf as $key => $listssfname) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_discussion_feedback_email" value="1" />
 <input type="submit" name="set_discussion_feedback_email" value="Set above text for e-mail sent to students on submission of Discussion Feedback (discussionfeedback.php)" style="width:50em" />
+</form>
+<br />
+
+<form id="track_submissions_exclusions_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<input type="text" size="40" name="value_track_submissions_exclusions" value="<?php echo htmlspecialchars(get_config(NULL, 'peoples_track_submissions_exclusions'), ENT_COMPAT, 'UTF-8'); ?>" />
+<br />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_track_submissions_exclusions" value="1" />
+<input type="submit" name="set_track_submissions_exclusions" value="Set above comma separated list of assignment IDs to be excluded from track_submissions.php" style="width:50em" />
 </form>
 <br />
 
