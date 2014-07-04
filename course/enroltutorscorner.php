@@ -42,7 +42,7 @@ $missingfromtutors = $DB->get_records_sql("
 		) AS tutors
 	ON module.userid=tutors.userid
 	WHERE ISNULL(tutors.userid)");
-	// contextid=1641 comes from hovering over Assign roles in the course
+  // contextid=1641 comes from hovering over Assign roles in the course; Now hover over Filters
 if (empty($missingfromtutors)) {
 	$missingfromtutors = array();
   echo 'No new Module Leader/Tutors/Student coordinator found to add to "Tutors Corner"<br />';
@@ -83,7 +83,7 @@ $missingfromtutors = $DB->get_records_sql("
 	WHERE ISNULL(tutors.userid)");
 	// roleid=4 is used because the default role is (for some reason) Non-editing teacher
   // 20101001 Changed back to 5 (Student) as default role has been changed
-	// contextid=765 comes from hovering over Assign roles in the course 765
+  // contextid=765 comes from hovering over Assign roles in the course; Now hover over Filters
 if (empty($missingfromtutors)) {
 	$missingfromtutors = array();
   echo 'No new Module Leader/Tutors/Student coordinator found to add to "Guide for online facilitators"<br />';
