@@ -131,7 +131,8 @@ $track_submissions = $DB->get_records_sql("
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FROM_UNIXTIME(IF(r.timemodified=0, NULL, r.timemodified), '%Y-%m-%d'), '')) ORDER BY r.timemodified SEPARATOR ', ') AS submissionhistoryall,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(ass_g.grade, 0), ''), IF(ass_g.timemodified IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(ass_g.timemodified=0, NULL, ass_g.timemodified), '%Y-%m-%d'), ''), IF(ass_g.timemodified IS NULL, '', ')')) ORDER BY ass_g.timemodified SEPARATOR ', ') AS assignmentgrades,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
-    IFNULL(mphstatus, 0) AS mph
+    IFNULL(mphstatus, 0) AS mph,
+    IFNULL(suspended, 0) AS suspended
   FROM (mdl_enrolment e, mdl_course c, mdl_grade_items i, mdl_assign a, mdl_user u)
   LEFT JOIN mdl_assign_user_flags auf ON u.id=auf.userid AND a.id=auf.assignment
   LEFT JOIN mdl_assign_submission asub ON u.id=asub.userid AND a.id=asub.assignment

@@ -518,7 +518,7 @@ class peoples_mph_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Yes' && $list_entry->mph == 0) {
+        if ($this->selectedvalue === 'Yes' && ($list_entry->mph == 0 || $list_entry->suspended != 0)) {
           unset($list_to_filter[$index]);
           continue;
         }
