@@ -339,6 +339,8 @@ if (!empty($enrols)) {
         if ($mph2->mphstatus == 2) $inmph = '<br />(Peoples-uni MPH)';
         if ($mph2->mphstatus == 3) $inmph = '<br />(OTHER MPH)';
 
+        if ($mph2->suspended) $inmph .= '(Suspended)';
+
         if     ($mph2->graduated == 1) $graduated_text = '<br />(graduated MPH)';
         elseif ($mph2->graduated == 2) $graduated_text = '<br />(graduated MPH Merit)';
         elseif ($mph2->graduated == 3) $graduated_text = '<br />(graduated MPH Distinction)';
