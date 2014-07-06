@@ -542,7 +542,7 @@ class peoples_submission_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Submitted, No Final Grade' && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade !== '') {
+        if ($this->selectedvalue === 'Submitted, No Final Grade' && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade !== '')) {
           unset($list_to_filter[$index]);
           continue;
         }
