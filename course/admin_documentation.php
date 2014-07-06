@@ -1007,7 +1007,16 @@ And the "MPH" column indicates whether the student is an MPH student (and of wha
 Also a list of all grades given to the assignment (grades and re-grades) and the date each grade was given is displayed in the "Grading History" column.
 </li>
 <li>
-The semester is selectable in a filter as well as an optional second semester, module name (part of), MPH status, whether there has been any submission and whether it is desired to remove all headers and footer info to make it easier to copy the data and paste into a spreadsheet.
+The semester is selectable in a filter as well as an optional second semester, module name (part of), MPH status, Status (see next bullet point for explanation), whether it is desired to sort the table with the most recent Grading/Submission activity at the top and whether it is desired to remove all headers and footer info to make it easier to copy the data and paste into a spreadsheet.
+</li>
+<li>
+The Status Filter has the following options...<br />
+Any<br />
+Not submitted (the assignment has not been submitted)<br />
+Submitted<br />
+Submitted, [but] No Final Grade [assigned]<br />
+Submitted, Final Grade <50<br />
+Submitted, Final Grade =0<br />
 </li>
 <li>
 Also in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> it is possible to indicate that certain assignments (normally the first assignment in a course) from inclusion in the table. The setting "Set above comma separated list of assignment IDs to be excluded from track_submissions.php" should contain a comma separated list of all assignments from all semesters that should be excluded. The IDs can be found in the "Assignment (id)" column of track_submissions.php.

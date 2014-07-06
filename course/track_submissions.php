@@ -48,10 +48,16 @@ $peoples_mmu_filter = new peoples_mph_filter('MPH?', 'mph', $listmph, 'Any');
 $peoples_filters->add_filter($peoples_mmu_filter);
 
 $listsubmission[] = 'Any';
-$listsubmission[] = 'Yes';
-$listsubmission[] = 'No';
-$peoples_submission_filter = new peoples_submission_filter('Submission?', 'submission', $listsubmission, 'Any');
+$listsubmission[] = 'Not submitted';
+$listsubmission[] = 'Submitted';
+$listsubmission[] = 'Submitted, No Final Grade';
+$listsubmission[] = 'Submitted, Final Grade <50';
+$listsubmission[] = 'Submitted, Final Grade =0';
+$peoples_submission_filter = new peoples_submission_filter('Status', 'submission', $listsubmission, 'Any');
 $peoples_filters->add_filter($peoples_submission_filter);
+
+$peoples_mostrecentontop_filter = new peoples_boolean_filter('Sort Most Recent on Top', 'mostrecentontop');
+$peoples_filters->add_filter($peoples_mostrecentontop_filter);
 
 $peoples_displayforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displayforexcel');
 $peoples_filters->add_filter($peoples_displayforexcel_filter);
@@ -61,6 +67,7 @@ $peoples_filters->add_filter($peoples_displayforexcel_filter);
 
 $chosensemester     = $peoples_chosensemester_filter->get_filter_setting();
 $chosensemester2    = $peoples_chosensemester2_filter->get_filter_setting();
+$mostrecentontop    = $peoples_mostrecentontop_filter->get_filter_setting();
 $displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
 //$displayextra       = $peoples_displayextra_filter->get_filter_setting();
 
@@ -108,6 +115,12 @@ if (!$displayforexcel) $peoples_filters->show_filters();
 
 $peoples_track_submissions_exclusions = get_config(NULL, 'peoples_track_submissions_exclusions');
 
+if ($mostrecentontop) {
+  $order_string = 'mostrecent DESC, fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC';
+}
+else {
+  $order_string = 'fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC';
+}
 $track_submissions = $DB->get_records_sql("
   SELECT
     CONCAT(e.id, '#', i.id),
@@ -132,7 +145,8 @@ $track_submissions = $DB->get_records_sql("
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(ass_g.grade, 0), ''), IF(ass_g.timemodified IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(ass_g.timemodified=0, NULL, ass_g.timemodified), '%Y-%m-%d'), ''), IF(ass_g.timemodified IS NULL, '', ')')) ORDER BY ass_g.timemodified SEPARATOR ', ') AS assignmentgrades,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
     IFNULL(mphstatus, 0) AS mph,
-    IFNULL(m.suspended, 0) AS mphsuspended
+    IFNULL(m.suspended, 0) AS mphsuspended,
+    IFNULL(GREATEST(IF(MAX(IFNULL(asub.timemodified, 0))=0, NULL, MAX(IFNULL(asub.timemodified, 0))), GREATEST(IFNULL(g.timecreated, 0), IFNULL(g.timemodified, 0))), duedate) AS mostrecent
   FROM (mdl_enrolment e, mdl_course c, mdl_grade_items i, mdl_assign a, mdl_user u)
   LEFT JOIN mdl_assign_user_flags auf ON u.id=auf.userid AND a.id=auf.assignment
   LEFT JOIN mdl_assign_submission asub ON u.id=asub.userid AND a.id=asub.assignment
@@ -150,7 +164,7 @@ $track_submissions = $DB->get_records_sql("
     e.userid=u.id AND
     a.id NOT IN ($peoples_track_submissions_exclusions)
   GROUP BY a.id, u.id
-  ORDER BY fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC", array($chosensemester, $chosensemester2));
+  ORDER BY $order_string", array($chosensemester, $chosensemester2));
 if (empty($track_submissions)) {
   $track_submissions = array();
 }
