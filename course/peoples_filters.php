@@ -534,23 +534,23 @@ class peoples_submission_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
-        if ($this->selectedvalue === 'Not submitted' && $list_entry->submissionstatus === 'submitted') {
+        if ($this->selectedvalue === 'Not submitted'              &&  $list_entry->submissionstatus === 'submitted') {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Submitted' && $list_entry->submissionstatus !== 'submitted') {
+        if ($this->selectedvalue === 'Submitted'                  &&  $list_entry->submissionstatus !== 'submitted') {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Submitted, No Final Grade' && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade !== '')) {
+        if ($this->selectedvalue === 'Submitted, No Final Grade'  && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade !== '')) {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Submitted, Final Grade <50' && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade >= 50)) {
+        if ($this->selectedvalue === 'Submitted, Final Grade <50' && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade === '' || $list_entry->grade >= 50)) {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Submitted, Final Grade =0' && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade === 0 || $list_entry->grade === '0')) {
+        if ($this->selectedvalue === 'Submitted, Final Grade =0'  && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade === '' || ($list_entry->grade !== 0 && $list_entry->grade !== '0'))) {
           unset($list_to_filter[$index]);
           continue;
         }
