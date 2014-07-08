@@ -29,9 +29,15 @@ CONSTRAINT  PRIMARY KEY (id)
 
 require("../config.php");
 
-print_header('Peoples-uni Donation');
+$PAGE->set_context(context_system::instance());
+$PAGE->set_url('/course/donate.php');
+$PAGE->set_pagelayout('standard');
 
-print_simple_box_start("center");
+$PAGE->set_title('Peoples-uni Donation');
+$PAGE->set_heading('Peoples-uni Donation');
+echo $OUTPUT->header();
+
+echo $OUTPUT->box_start('generalbox boxaligncenter');
 
 if ($test) {
 	$payurl = 'https://select-test.worldpay.com/wcc/purchase';
@@ -50,8 +56,8 @@ if ($code != 28595 && $code != 69315 && $code != 48223) {
   echo '<p>You have not entered a correct code. Please contact <a href="mailto:payments@peoples-uni.org?subject=Donation Code">payments@peoples-uni.org</a>.</p>';
 
   echo '</div>';
-  print_simple_box_end();
-  print_footer();
+  echo $OUTPUT->box_end();
+  echo $OUTPUT->footer();
   die();
 }
 
@@ -150,6 +156,6 @@ Allow Peoples-uni to display your name (but no other details) on our website as 
 
 <?php
 
-print_simple_box_end();
-print_footer();
+echo $OUTPUT->box_end();
+echo $OUTPUT->footer();
 ?>

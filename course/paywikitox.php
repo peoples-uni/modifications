@@ -11,9 +11,15 @@ $test = false;
 
 require("../config.php");
 
-print_header('Payment for WikiTox');
+$PAGE->set_context(context_system::instance());
+$PAGE->set_url('/course/paywikitox.php');
+$PAGE->set_pagelayout('standard');
 
-print_simple_box_start("center");
+$PAGE->set_title('Payment for WikiTox');
+$PAGE->set_heading('Payment for WikiTox');
+echo $OUTPUT->header();
+
+echo $OUTPUT->box_start('generalbox boxaligncenter');
 
 if ($test) {
 	$payurl = 'https://select-test.worldpay.com/wcc/purchase';
@@ -143,6 +149,6 @@ if ($test) {
 
 <?php
 
-print_simple_box_end();
-print_footer();
+echo $OUTPUT->box_end();
+echo $OUTPUT->footer();
 ?>
