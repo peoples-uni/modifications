@@ -33,7 +33,7 @@ class application_form_returning_student_form extends moodleform {
     $mform->setExpanded('top');
 
     $mform->addElement('static', 'instuctions', '',
-'<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/book/essential-information-potential-students">Essential information for potential students (Click Here)</a><strong> before submitting this form, particularly see the information about </strong><a href="http://peoples-uni.org/book/course-fees">Course fees (Click Here)</a></p>
+'<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/content/who-should-apply">Who should apply (Click Here)</a><strong> before submitting this form, particularly see the information about </strong><a href="http://peoples-uni.org/content/course-fees">Course fees (Click Here)</a></p>
 <p><strong>Use this form to apply to do course modules. You must have already been registered in Moodle. You need to enter the user name that you use when logging into Moodle in the form below.</strong></p>
 <p><strong>If you have not been registered in Moodle you must apply by </strong><a href="http://courses.peoples-uni.org/course/registration.php">Clicking Here</a><strong> first.</strong></p>
 <p>For inquires about course enrolment or payment please send an e-mail to <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a></p>
