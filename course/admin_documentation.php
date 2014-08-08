@@ -972,6 +972,15 @@ This sitewide role "View Full User Profiles" allows users to see the full profil
 <li>
 The following page was linked from the Drupal menus to allow donations: <a href="http://courses.peoples-uni.org/course/donate.php?code=28595" target="_blank">http://courses.peoples-uni.org/course/donate.php?code=28595</a> but now it is not linked (because of usage for fraudulently testing stolen credit cards) but can be given out on request.
 </li>
+<li>
+This page also allows donations, but has a cleaner layout (without Moodle menus): <a href="http://courses.peoples-uni.org/course/donate_occ.php?code=28595" target="_blank">http://courses.peoples-uni.org/course/donate_occ.php?code=28595</a>. It can be used within a course where misuse is less likely.
+</li>
+<li>
+Both pages send an e-mail to payments@peoples-uni.org with the sum donated. If the donator has allowed us "to keep a record of your details and possibly contact you" (there is a checkbox) we include their details in that e-mail (as well as saving in the database). In this case, if they have provided an e-mail address, we also send a thank you e-mail back to them.
+</li>
+<li>
+Note there is also a checkbox to "Allow Peoples-uni to display your name (but no other details) on our website as a supporter".
+</li>
 </ol>
 
 

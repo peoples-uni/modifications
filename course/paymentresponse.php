@@ -168,6 +168,8 @@ elseif (!empty($_POST['M_donate'])) {
 	$peoplesdonation->datafromworldpay = $_POST['transId'];
 
   $DB->insert_record('peoplesdonation', $peoplesdonation);
+
+  email_donation($peoplesdonation);
 }
 elseif (!empty($_POST['M_wikitox'])) {
   /*
@@ -441,6 +443,64 @@ function email_error_to_payments($subject, $post) {
 
   //$payments->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($payments, $supportuser, $subject, $message);
+}
+
+
+function email_donation($peoplesdonation) {
+  global $CFG;
+
+  $message = "Donation Received via WorldPay: $peoplesdonation->amount $peoplesdonation->currency\n\n";
+
+  if ($peoplesdonation->M_keep == 0) {
+    $message .= "Donator has not allowed us to keep a record of their details";
+  }
+  else {
+    $message .= "Name: $peoplesdonation->name\n";
+    $message .= "e-mail: $peoplesdonation->email\n";
+    $message .= "Address: $peoplesdonation->address\n";
+    $message .= "Country: $peoplesdonation->country\n\n";
+
+    if ($peoplesdonation->type == 2) {
+      $message .= "Allow Peoples-uni to display your name (but no other details) on our website as a supporter: Yes\n\n";
+    }
+    else {
+      $message .= "Allow Peoples-uni to display your name (but no other details) on our website as a supporter: No!\n\n";
+    }
+
+    $message .= "A thank you has been sent.";
+  }
+
+  // Dummy User
+  $payments = new stdClass();
+  $payments->id = 999999999;
+  $payments->email = 'payments@peoples-uni.org';
+  $payments->maildisplay = true;
+  $payments->mnethostid = $CFG->mnet_localhost_id;
+
+  $supportuser = new stdClass();
+  $supportuser->email = 'payments@peoples-uni.org';
+  $supportuser->firstname = 'Peoples-uni Payments';
+  $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
+  $supportuser->maildisplay = true;
+
+  //$payments->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($payments, $supportuser, 'Donation Received', $message);
+
+
+  if (($peoplesdonation->M_keep == 1) && !empty($peoplesdonation->email)) {
+    // Send thank you to donator
+    $payments->email = $peoplesdonation->email;
+
+    $message  = "Dear $peoplesdonation->name,\n\n";
+    $message .= "Many thanks for your donation to Peoples-uni.\n\n";
+    $message .= "Peoples-uni Payments";
+
+    $ret = email_to_user($payments, $supportuser, 'Donation Received', $message);
+  }
 }
 
 
