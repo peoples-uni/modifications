@@ -902,13 +902,13 @@ if ($maximumposts >= 99999) { // Will be wrong if some posts should not be count
   echo '<br /><br />';
 }
 
-displaystat($user_actual_averagereferredtoresources, "Average 'Referred to resources' for Student");
+displaystat_split_name($user_actual_averagereferredtoresources, "Average 'Referred to resources' for Student");
 echo '<br /><br />';
 
-displaystat($user_actual_averagecriticalapproach, "Average 'Critical approach' for Student");
+displaystat_split_name($user_actual_averagecriticalapproach, "Average 'Critical approach' for Student");
 echo '<br /><br />';
 
-displaystat($user_actual_averagereferencing, "Average 'Referencing' for Student");
+displaystat_split_name($user_actual_averagereferencing, "Average 'Referencing' for Student");
 echo '<br /><br />';
 
 natcasesort($listofemails);
@@ -949,6 +949,33 @@ function displaystat($stat, $title) {
 	}
 	echo '</table>';
 	echo '<br/>';
+}
+
+
+function displaystat_split_name($stat, $title) {
+  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+  echo "<tr>";
+  echo "<td>$title</td>";
+  echo "<td>(Given name)</td>";
+  echo "<td>Number</td>";
+  echo "</tr>";
+
+  ksort($stat);
+
+  foreach ($stat as $key => $number) {
+
+    $pos = strpos($key, ', ');
+    $key_family = substr($key, 0, $pos);
+    $key_given  = substr($key, $pos + 2);
+
+    echo "<tr>";
+    echo "<td>" . $key_family . "</td>";
+    echo "<td>" . $key_given . "</td>";
+    echo "<td>" . $number . "</td>";
+    echo "</tr>";
+  }
+  echo '</table>';
+  echo '<br/>';
 }
 
 
