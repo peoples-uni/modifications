@@ -1047,7 +1047,7 @@ function displaystat_split_name_and_course_with_cumulated($stat, $title, $cumula
     $pos = strpos($key, ', ');
     $pos_xxx = strpos($key, 'XXX8167YYY');
     $key_family = substr($key, 0, $pos);
-    $key_given  = substr($key, $pos + 2, $pos_xxx);
+    $key_given  = substr($key, $pos + 2, $pos_xxx - $pos -2);
     $key_module = substr($key, $pos_xxx + 10);
 
     echo "<tr>";
