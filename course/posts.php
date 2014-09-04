@@ -373,7 +373,8 @@ LEFT JOIN mdl_rating r ON fp.id=r.itemid
 WHERE
   e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql AND
   r.component='mod_forum' AND r.ratingarea='post' AND
-  r.scaleid IN({$CFG->scale_to_use_for_triple_rating}, {$CFG->scale_to_use_for_triple_rating_2}, {$CFG->scale_to_use_for_triple_rating_3})",
+  r.scaleid IN({$CFG->scale_to_use_for_triple_rating}, {$CFG->scale_to_use_for_triple_rating_2}, {$CFG->scale_to_use_for_triple_rating_3})
+ORDER BY fp.created",
 array($chosensemester, $chosenmodule)
 );
 
@@ -397,6 +398,8 @@ if (empty($discussionfeedbacks)) {
 $actual_referredtoresources = array();
 $actual_count_referredtoresources = array();
 $actual_user_referredtoresources = array();
+$actual_user_name_referredtoresources = array();//(**)
+$actual_course_name_referredtoresources = array();//(**)
 if (!empty($ratings)) {
   foreach ($ratings as $rating) {
     if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating) {
@@ -404,6 +407,8 @@ if (!empty($ratings)) {
         $actual_referredtoresources[$rating->postid] = 0.0 + $rating->rating;
         $actual_count_referredtoresources[$rating->postid] = 1.0;
         $actual_user_referredtoresources[$rating->postid] = $rating->userid;
+        $actual_user_name_referredtoresources[$rating->postid] = htmlspecialchars(strtolower(trim($rating->lastname . ', ' . $rating->firstname)), ENT_COMPAT, 'UTF-8');//(**)
+        $actual_course_name_referredtoresources[$rating->postid] = htmlspecialchars(strtolower(trim($rating->fullname)), ENT_COMPAT, 'UTF-8');//(**)
       }
       else {
         $actual_referredtoresources[$rating->postid] =
@@ -434,6 +439,40 @@ if (!empty($actual_referredtoresources)) {
     }
   }
 }
+//(**)
+// Average referredtoresources for Student per Course//(**)
+$actual_averagereferredtoresources_percourse = array();//(**)
+$actual_count_averagereferredtoresources_percourse = array();//(**)
+$actual_cumulatedreferredtoresources_percourse = array();//(**)
+if (!empty($actual_referredtoresources)) {//(**)
+  foreach ($actual_referredtoresources as $postid => $item) {//(**)
+//(**)
+    $users_name = $actual_user_name_referredtoresources[$postid];//(**)
+    $course_name = $actual_course_name_referredtoresources[$postid];//(**)
+    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;//(**)
+//(**)
+    if (empty($actual_averagereferredtoresources_percourse[$users_name_course_name])) {//(**)
+      $actual_averagereferredtoresources_percourse[$users_name_course_name] = 0.0 + $item;//(**)
+      $actual_count_averagereferredtoresources_percourse[$users_name_course_name] = 1.0;//(**)
+    }//(**)
+    else {//(**)
+      $actual_averagereferredtoresources_percourse[$users_name_course_name] =
+        (($actual_averagereferredtoresources_percourse[$users_name_course_name] * $actual_count_averagereferredtoresources_percourse[$users_name_course_name]) + $item) /
+        ($actual_count_averagereferredtoresources_percourse[$users_name_course_name] + 1.0);//(**)
+      $actual_count_averagereferredtoresources_percourse[$users_name_course_name] += 1.0;//(**)
+    }//(**)
+//(**)
+    if     ($item < 1.01) $item_word = 'No';//(**)
+    elseif ($item <=2.99) $item_word = 'Mixed';//(**)
+    else                  $item_word = 'Yes';//(**)
+    if (empty($actual_cumulatedreferredtoresources_percourse[$users_name_course_name])) {//(**)
+      $actual_cumulatedreferredtoresources_percourse[$users_name_course_name] = "$item_word";//(**)
+    }//(**)
+    else {//(**)
+      $actual_cumulatedreferredtoresources_percourse[$users_name_course_name] .= ", $item_word";//(**)
+    }//(**)
+  }//(**)
+}//(**)
 
 // criticalapproach for Post
 $actual_criticalapproach = array();
@@ -546,6 +585,7 @@ $user_actual_averagecriticalapproach = array();
 $user_actual_averagereferencing = array();
 $listofemails = array();
 $post_matching_main_sql_filters_found = array();
+$user_actual_averagereferredtoresources_percourse = array();//(**)
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
@@ -753,6 +793,14 @@ if (!empty($enrols)) {
 		else {
 			$topiccount[$name]++;
 		}
+//(**)
+    $users_name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname)), ENT_COMPAT, 'UTF-8');//(**)
+    $course_name = htmlspecialchars(strtolower(trim($enrol->fullname)), ENT_COMPAT, 'UTF-8');//(**)
+    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;//(**)
+    if (empty($actual_averagereferredtoresources_percourse[$users_name_course_name])) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] =  'Not rated';//(**)
+    elseif ($actual_averagereferredtoresources_percourse[$users_name_course_name] < 1.01) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'No';//(**)
+    elseif ($actual_averagereferredtoresources_percourse[$users_name_course_name] <=2.99) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'Mixed';//(**)
+    else $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'Yes';//(**)
 
 		$n++;
     $rowdata[] = $enrol->userid; // Will be removed below
@@ -902,14 +950,17 @@ if ($maximumposts >= 99999) { // Will be wrong if some posts should not be count
   echo '<br /><br />';
 }
 
-displaystat_split_name($user_actual_averagereferredtoresources, "Average 'Referred to resources' for Student");
+displaystat_split_name($user_actual_averagereferredtoresources, "Summary 'Referred to resources' for Student");
 echo '<br /><br />';
 
-displaystat_split_name($user_actual_averagecriticalapproach, "Average 'Critical approach' for Student");
+displaystat_split_name($user_actual_averagecriticalapproach, "Summary 'Critical approach' for Student");
 echo '<br /><br />';
 
-displaystat_split_name($user_actual_averagereferencing, "Average 'Referencing' for Student");
+displaystat_split_name($user_actual_averagereferencing, "Summary 'Referencing' for Student");
 echo '<br /><br />';
+//(**)
+displaystat_split_name_and_course_with_cumulated($user_actual_averagereferredtoresources_percourse, "Summary 'Referred to resources' for Student per Module", $actual_cumulatedreferredtoresources_percourse);//(**)
+echo '<br /><br />';//(**)
 
 natcasesort($listofemails);
 echo 'e-mails of Selected Students...<br />' . implode(', ', array_unique($listofemails));
@@ -957,7 +1008,7 @@ function displaystat_split_name($stat, $title) {
   echo "<tr>";
   echo "<td>$title</td>";
   echo "<td>(Given name)</td>";
-  echo "<td>Number</td>";
+  echo "<td>Rating summary for posts</td>";
   echo "</tr>";
 
   ksort($stat);
@@ -971,6 +1022,39 @@ function displaystat_split_name($stat, $title) {
     echo "<tr>";
     echo "<td>" . $key_family . "</td>";
     echo "<td>" . $key_given . "</td>";
+    echo "<td>" . $number . "</td>";
+    echo "</tr>";
+  }
+  echo '</table>';
+  echo '<br/>';
+}
+
+
+function displaystat_split_name_and_course_with_cumulated($stat, $title, $cumulated) {//(**)
+  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+  echo "<tr>";
+  echo "<td>$title</td>";
+  echo "<td>(Given name)</td>";
+  echo "<td>Module</td>";
+  echo "<td>Rating sequence for posts in module</td>";
+  echo "<td>Rating summary for posts in module</td>";
+  echo "</tr>";
+
+  ksort($stat);
+
+  foreach ($stat as $key => $number) {
+
+    $pos = strpos($key, ', ');
+    $pos_xxx = strpos($key, 'XXX8167YYY');
+    $key_family = substr($key, 0, $pos);
+    $key_given  = substr($key, $pos + 2, $pos_xxx);
+    $key_module = substr($key, $pos_xxx + 10);
+
+    echo "<tr>";
+    echo "<td>" . $key_family . "</td>";
+    echo "<td>" . $key_given . "</td>";
+    echo "<td>" . $key_module . "</td>";
+    echo "<td>" . $cumulated[$key] . "</td>";
     echo "<td>" . $number . "</td>";
     echo "</tr>";
   }
