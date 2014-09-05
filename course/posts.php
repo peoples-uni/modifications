@@ -398,8 +398,8 @@ if (empty($discussionfeedbacks)) {
 $actual_referredtoresources = array();
 $actual_count_referredtoresources = array();
 $actual_user_referredtoresources = array();
-$actual_user_name_referredtoresources = array();//(**)
-$actual_course_name_referredtoresources = array();//(**)
+$actual_user_name_referredtoresources = array();
+$actual_course_name_referredtoresources = array();
 if (!empty($ratings)) {
   foreach ($ratings as $rating) {
     if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating) {
@@ -407,8 +407,8 @@ if (!empty($ratings)) {
         $actual_referredtoresources[$rating->postid] = 0.0 + $rating->rating;
         $actual_count_referredtoresources[$rating->postid] = 1.0;
         $actual_user_referredtoresources[$rating->postid] = $rating->userid;
-        $actual_user_name_referredtoresources[$rating->postid] = htmlspecialchars(strtolower(trim($rating->lastname . ', ' . $rating->firstname)), ENT_COMPAT, 'UTF-8');//(**)
-        $actual_course_name_referredtoresources[$rating->postid] = htmlspecialchars(strtolower(trim($rating->fullname)), ENT_COMPAT, 'UTF-8');//(**)
+        $actual_user_name_referredtoresources[$rating->postid] = htmlspecialchars(strtolower(trim($rating->lastname . ', ' . $rating->firstname)), ENT_COMPAT, 'UTF-8');
+        $actual_course_name_referredtoresources[$rating->postid] = htmlspecialchars(strtolower(trim($rating->fullname)), ENT_COMPAT, 'UTF-8');
       }
       else {
         $actual_referredtoresources[$rating->postid] =
@@ -439,47 +439,47 @@ if (!empty($actual_referredtoresources)) {
     }
   }
 }
-//(**)
-// Average referredtoresources for Student per Course//(**)
-$actual_averagereferredtoresources_percourse = array();//(**)
-$actual_count_averagereferredtoresources_percourse = array();//(**)
-$actual_cumulatedreferredtoresources_percourse = array();//(**)
-if (!empty($actual_referredtoresources)) {//(**)
-  foreach ($actual_referredtoresources as $postid => $item) {//(**)
-//(**)
-    $users_name = $actual_user_name_referredtoresources[$postid];//(**)
-    $course_name = $actual_course_name_referredtoresources[$postid];//(**)
-    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;//(**)
-//(**)
-    if (empty($actual_averagereferredtoresources_percourse[$users_name_course_name])) {//(**)
-      $actual_averagereferredtoresources_percourse[$users_name_course_name] = 0.0 + $item;//(**)
-      $actual_count_averagereferredtoresources_percourse[$users_name_course_name] = 1.0;//(**)
-    }//(**)
-    else {//(**)
+
+// Average referredtoresources for Student per Course
+$actual_averagereferredtoresources_percourse = array();
+$actual_count_averagereferredtoresources_percourse = array();
+$actual_cumulatedreferredtoresources_percourse = array();
+if (!empty($actual_referredtoresources)) {
+  foreach ($actual_referredtoresources as $postid => $item) {
+
+    $users_name = $actual_user_name_referredtoresources[$postid];
+    $course_name = $actual_course_name_referredtoresources[$postid];
+    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;
+
+    if (empty($actual_averagereferredtoresources_percourse[$users_name_course_name])) {
+      $actual_averagereferredtoresources_percourse[$users_name_course_name] = 0.0 + $item;
+      $actual_count_averagereferredtoresources_percourse[$users_name_course_name] = 1.0;
+    }
+    else {
       $actual_averagereferredtoresources_percourse[$users_name_course_name] =
         (($actual_averagereferredtoresources_percourse[$users_name_course_name] * $actual_count_averagereferredtoresources_percourse[$users_name_course_name]) + $item) /
-        ($actual_count_averagereferredtoresources_percourse[$users_name_course_name] + 1.0);//(**)
-      $actual_count_averagereferredtoresources_percourse[$users_name_course_name] += 1.0;//(**)
-    }//(**)
-//(**)
-    if     ($item < 1.01) $item_word = 'No';//(**)
-    elseif ($item <=2.99) $item_word = 'Mixed';//(**)
-    else                  $item_word = 'Yes';//(**)
-    if (empty($actual_cumulatedreferredtoresources_percourse[$users_name_course_name])) {//(**)
-      $actual_cumulatedreferredtoresources_percourse[$users_name_course_name] = "$item_word";//(**)
-    }//(**)
-    else {//(**)
-      $actual_cumulatedreferredtoresources_percourse[$users_name_course_name] .= ", $item_word";//(**)
-    }//(**)
-  }//(**)
-}//(**)
+        ($actual_count_averagereferredtoresources_percourse[$users_name_course_name] + 1.0);
+      $actual_count_averagereferredtoresources_percourse[$users_name_course_name] += 1.0;
+    }
+
+    if     ($item < 1.01) $item_word = 'No';
+    elseif ($item <=2.99) $item_word = 'Mixed';
+    else                  $item_word = 'Yes';
+    if (empty($actual_cumulatedreferredtoresources_percourse[$users_name_course_name])) {
+      $actual_cumulatedreferredtoresources_percourse[$users_name_course_name] = "$item_word";
+    }
+    else {
+      $actual_cumulatedreferredtoresources_percourse[$users_name_course_name] .= ", $item_word";
+    }
+  }
+}
 
 // criticalapproach for Post
 $actual_criticalapproach = array();
 $actual_count_criticalapproach = array();
 $actual_user_criticalapproach = array();
-$actual_user_name_criticalapproach = array();//(**)
-$actual_course_name_criticalapproach = array();//(**)
+$actual_user_name_criticalapproach = array();
+$actual_course_name_criticalapproach = array();
 if (!empty($ratings)) {
   foreach ($ratings as $rating) {
     if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating_2) {
@@ -487,8 +487,8 @@ if (!empty($ratings)) {
         $actual_criticalapproach[$rating->postid] = 0.0 + $rating->rating;
         $actual_count_criticalapproach[$rating->postid] = 1.0;
         $actual_user_criticalapproach[$rating->postid] = $rating->userid;
-        $actual_user_name_criticalapproach[$rating->postid] = htmlspecialchars(strtolower(trim($rating->lastname . ', ' . $rating->firstname)), ENT_COMPAT, 'UTF-8');//(**)
-        $actual_course_name_criticalapproach[$rating->postid] = htmlspecialchars(strtolower(trim($rating->fullname)), ENT_COMPAT, 'UTF-8');//(**)
+        $actual_user_name_criticalapproach[$rating->postid] = htmlspecialchars(strtolower(trim($rating->lastname . ', ' . $rating->firstname)), ENT_COMPAT, 'UTF-8');
+        $actual_course_name_criticalapproach[$rating->postid] = htmlspecialchars(strtolower(trim($rating->fullname)), ENT_COMPAT, 'UTF-8');
       }
       else {
         $actual_criticalapproach[$rating->postid] =
@@ -519,47 +519,47 @@ if (!empty($actual_criticalapproach)) {
     }
   }
 }
-//(**)
-// Average criticalapproach for Student per Course//(**)
-$actual_averagecriticalapproach_percourse = array();//(**)
-$actual_count_averagecriticalapproach_percourse = array();//(**)
-$actual_cumulatedcriticalapproach_percourse = array();//(**)
-if (!empty($actual_criticalapproach)) {//(**)
-  foreach ($actual_criticalapproach as $postid => $item) {//(**)
-//(**)
-    $users_name = $actual_user_name_criticalapproach[$postid];//(**)
-    $course_name = $actual_course_name_criticalapproach[$postid];//(**)
-    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;//(**)
-//(**)
-    if (empty($actual_averagecriticalapproach_percourse[$users_name_course_name])) {//(**)
-      $actual_averagecriticalapproach_percourse[$users_name_course_name] = 0.0 + $item;//(**)
-      $actual_count_averagecriticalapproach_percourse[$users_name_course_name] = 1.0;//(**)
-    }//(**)
-    else {//(**)
+
+// Average criticalapproach for Student per Course
+$actual_averagecriticalapproach_percourse = array();
+$actual_count_averagecriticalapproach_percourse = array();
+$actual_cumulatedcriticalapproach_percourse = array();
+if (!empty($actual_criticalapproach)) {
+  foreach ($actual_criticalapproach as $postid => $item) {
+
+    $users_name = $actual_user_name_criticalapproach[$postid];
+    $course_name = $actual_course_name_criticalapproach[$postid];
+    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;
+
+    if (empty($actual_averagecriticalapproach_percourse[$users_name_course_name])) {
+      $actual_averagecriticalapproach_percourse[$users_name_course_name] = 0.0 + $item;
+      $actual_count_averagecriticalapproach_percourse[$users_name_course_name] = 1.0;
+    }
+    else {
       $actual_averagecriticalapproach_percourse[$users_name_course_name] =
         (($actual_averagecriticalapproach_percourse[$users_name_course_name] * $actual_count_averagecriticalapproach_percourse[$users_name_course_name]) + $item) /
-        ($actual_count_averagecriticalapproach_percourse[$users_name_course_name] + 1.0);//(**)
-      $actual_count_averagecriticalapproach_percourse[$users_name_course_name] += 1.0;//(**)
-    }//(**)
-//(**)
-    if     ($item < 1.01) $item_word = 'No';//(**)
-    elseif ($item <=2.99) $item_word = 'Mixed';//(**)
-    else                  $item_word = 'Yes';//(**)
-    if (empty($actual_cumulatedcriticalapproach_percourse[$users_name_course_name])) {//(**)
-      $actual_cumulatedcriticalapproach_percourse[$users_name_course_name] = "$item_word";//(**)
-    }//(**)
-    else {//(**)
-      $actual_cumulatedcriticalapproach_percourse[$users_name_course_name] .= ", $item_word";//(**)
-    }//(**)
-  }//(**)
-}//(**)
+        ($actual_count_averagecriticalapproach_percourse[$users_name_course_name] + 1.0);
+      $actual_count_averagecriticalapproach_percourse[$users_name_course_name] += 1.0;
+    }
+
+    if     ($item < 1.01) $item_word = 'No';
+    elseif ($item <=2.99) $item_word = 'Mixed';
+    else                  $item_word = 'Yes';
+    if (empty($actual_cumulatedcriticalapproach_percourse[$users_name_course_name])) {
+      $actual_cumulatedcriticalapproach_percourse[$users_name_course_name] = "$item_word";
+    }
+    else {
+      $actual_cumulatedcriticalapproach_percourse[$users_name_course_name] .= ", $item_word";
+    }
+  }
+}
 
 // referencing for Post
 $actual_referencing = array();
 $actual_count_referencing = array();
 $actual_user_referencing = array();
-$actual_user_name_referencing = array();//(**)
-$actual_course_name_referencing = array();//(**)
+$actual_user_name_referencing = array();
+$actual_course_name_referencing = array();
 if (!empty($ratings)) {
   foreach ($ratings as $rating) {
     if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating_3) {
@@ -567,8 +567,8 @@ if (!empty($ratings)) {
         $actual_referencing[$rating->postid] = 0.0 + $rating->rating;
         $actual_count_referencing[$rating->postid] = 1.0;
         $actual_user_referencing[$rating->postid] = $rating->userid;
-        $actual_user_name_referencing[$rating->postid] = htmlspecialchars(strtolower(trim($rating->lastname . ', ' . $rating->firstname)), ENT_COMPAT, 'UTF-8');//(**)
-        $actual_course_name_referencing[$rating->postid] = htmlspecialchars(strtolower(trim($rating->fullname)), ENT_COMPAT, 'UTF-8');//(**)
+        $actual_user_name_referencing[$rating->postid] = htmlspecialchars(strtolower(trim($rating->lastname . ', ' . $rating->firstname)), ENT_COMPAT, 'UTF-8');
+        $actual_course_name_referencing[$rating->postid] = htmlspecialchars(strtolower(trim($rating->fullname)), ENT_COMPAT, 'UTF-8');
       }
       else {
         $actual_referencing[$rating->postid] =
@@ -599,40 +599,40 @@ if (!empty($actual_referencing)) {
     }
   }
 }
-//(**)
-// Average referencing for Student per Course//(**)
-$actual_averagereferencing_percourse = array();//(**)
-$actual_count_averagereferencing_percourse = array();//(**)
-$actual_cumulatedreferencing_percourse = array();//(**)
-if (!empty($actual_referencing)) {//(**)
-  foreach ($actual_referencing as $postid => $item) {//(**)
-//(**)
-    $users_name = $actual_user_name_referencing[$postid];//(**)
-    $course_name = $actual_course_name_referencing[$postid];//(**)
-    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;//(**)
-//(**)
-    if (empty($actual_averagereferencing_percourse[$users_name_course_name])) {//(**)
-      $actual_averagereferencing_percourse[$users_name_course_name] = 0.0 + $item;//(**)
-      $actual_count_averagereferencing_percourse[$users_name_course_name] = 1.0;//(**)
-    }//(**)
-    else {//(**)
+
+// Average referencing for Student per Course
+$actual_averagereferencing_percourse = array();
+$actual_count_averagereferencing_percourse = array();
+$actual_cumulatedreferencing_percourse = array();
+if (!empty($actual_referencing)) {
+  foreach ($actual_referencing as $postid => $item) {
+
+    $users_name = $actual_user_name_referencing[$postid];
+    $course_name = $actual_course_name_referencing[$postid];
+    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;
+
+    if (empty($actual_averagereferencing_percourse[$users_name_course_name])) {
+      $actual_averagereferencing_percourse[$users_name_course_name] = 0.0 + $item;
+      $actual_count_averagereferencing_percourse[$users_name_course_name] = 1.0;
+    }
+    else {
       $actual_averagereferencing_percourse[$users_name_course_name] =
         (($actual_averagereferencing_percourse[$users_name_course_name] * $actual_count_averagereferencing_percourse[$users_name_course_name]) + $item) /
-        ($actual_count_averagereferencing_percourse[$users_name_course_name] + 1.0);//(**)
-      $actual_count_averagereferencing_percourse[$users_name_course_name] += 1.0;//(**)
-    }//(**)
-//(**)
-    if     ($item < 1.01) $item_word = 'No';//(**)
-    elseif ($item <=2.99) $item_word = 'Mixed';//(**)
-    else                  $item_word = 'Yes';//(**)
-    if (empty($actual_cumulatedreferencing_percourse[$users_name_course_name])) {//(**)
-      $actual_cumulatedreferencing_percourse[$users_name_course_name] = "$item_word";//(**)
-    }//(**)
-    else {//(**)
-      $actual_cumulatedreferencing_percourse[$users_name_course_name] .= ", $item_word";//(**)
-    }//(**)
-  }//(**)
-}//(**)
+        ($actual_count_averagereferencing_percourse[$users_name_course_name] + 1.0);
+      $actual_count_averagereferencing_percourse[$users_name_course_name] += 1.0;
+    }
+
+    if     ($item < 1.01) $item_word = 'No';
+    elseif ($item <=2.99) $item_word = 'Mixed';
+    else                  $item_word = 'Yes';
+    if (empty($actual_cumulatedreferencing_percourse[$users_name_course_name])) {
+      $actual_cumulatedreferencing_percourse[$users_name_course_name] = "$item_word";
+    }
+    else {
+      $actual_cumulatedreferencing_percourse[$users_name_course_name] .= ", $item_word";
+    }
+  }
+}
 
 
 $sidsbyuseridsemester = $DB->get_records_sql('SELECT CONCAT(userid, semester) AS i, sid FROM mdl_peoplesapplication WHERE (((state & 0x38)>>3)=3 OR (state & 0x7)=3)');
@@ -661,9 +661,9 @@ $user_actual_averagecriticalapproach = array();
 $user_actual_averagereferencing = array();
 $listofemails = array();
 $post_matching_main_sql_filters_found = array();
-$user_actual_averagereferredtoresources_percourse = array();//(**)
-$user_actual_averagecriticalapproach_percourse = array();//(**)
-$user_actual_averagereferencing_percourse = array();//(**)
+$user_actual_averagereferredtoresources_percourse = array();
+$user_actual_averagecriticalapproach_percourse = array();
+$user_actual_averagereferencing_percourse = array();
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
@@ -871,25 +871,25 @@ if (!empty($enrols)) {
 		else {
 			$topiccount[$name]++;
 		}
-//(**)
-    $users_name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname)), ENT_COMPAT, 'UTF-8');//(**)
-    $course_name = htmlspecialchars(strtolower(trim($enrol->fullname)), ENT_COMPAT, 'UTF-8');//(**)
-    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;//(**)
-//(**)
-    if (empty($actual_averagereferredtoresources_percourse[$users_name_course_name])) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] =  'Not rated';//(**)
-    elseif ($actual_averagereferredtoresources_percourse[$users_name_course_name] < 1.01) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'No';//(**)
-    elseif ($actual_averagereferredtoresources_percourse[$users_name_course_name] <=2.99) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'Mixed';//(**)
-    else $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'Yes';//(**)
-//(**)
-    if (empty($actual_averagecriticalapproach_percourse[$users_name_course_name])) $user_actual_averagecriticalapproach_percourse[$users_name_course_name] =  'Not rated';//(**)
-    elseif ($actual_averagecriticalapproach_percourse[$users_name_course_name] < 1.01) $user_actual_averagecriticalapproach_percourse[$users_name_course_name] = 'No';//(**)
-    elseif ($actual_averagecriticalapproach_percourse[$users_name_course_name] <=2.99) $user_actual_averagecriticalapproach_percourse[$users_name_course_name] = 'Mixed';//(**)
-    else $user_actual_averagecriticalapproach_percourse[$users_name_course_name] = 'Yes';//(**)
-//(**)
-    if (empty($actual_averagereferencing_percourse[$users_name_course_name])) $user_actual_averagereferencing_percourse[$users_name_course_name] =  'Not rated';//(**)
-    elseif ($actual_averagereferencing_percourse[$users_name_course_name] < 1.01) $user_actual_averagereferencing_percourse[$users_name_course_name] = 'None';//(**)
-    elseif ($actual_averagereferencing_percourse[$users_name_course_name] <=2.99) $user_actual_averagereferencing_percourse[$users_name_course_name] = 'Mixed';//(**)
-    else $user_actual_averagereferencing_percourse[$users_name_course_name] = 'Good';//(**)
+
+    $users_name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname)), ENT_COMPAT, 'UTF-8');
+    $course_name = htmlspecialchars(strtolower(trim($enrol->fullname)), ENT_COMPAT, 'UTF-8');
+    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;
+
+    if (empty($actual_averagereferredtoresources_percourse[$users_name_course_name])) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] =  'Not rated';
+    elseif ($actual_averagereferredtoresources_percourse[$users_name_course_name] < 1.01) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'No';
+    elseif ($actual_averagereferredtoresources_percourse[$users_name_course_name] <=2.99) $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'Mixed';
+    else $user_actual_averagereferredtoresources_percourse[$users_name_course_name] = 'Yes';
+
+    if (empty($actual_averagecriticalapproach_percourse[$users_name_course_name])) $user_actual_averagecriticalapproach_percourse[$users_name_course_name] =  'Not rated';
+    elseif ($actual_averagecriticalapproach_percourse[$users_name_course_name] < 1.01) $user_actual_averagecriticalapproach_percourse[$users_name_course_name] = 'No';
+    elseif ($actual_averagecriticalapproach_percourse[$users_name_course_name] <=2.99) $user_actual_averagecriticalapproach_percourse[$users_name_course_name] = 'Mixed';
+    else $user_actual_averagecriticalapproach_percourse[$users_name_course_name] = 'Yes';
+
+    if (empty($actual_averagereferencing_percourse[$users_name_course_name])) $user_actual_averagereferencing_percourse[$users_name_course_name] =  'Not rated';
+    elseif ($actual_averagereferencing_percourse[$users_name_course_name] < 1.01) $user_actual_averagereferencing_percourse[$users_name_course_name] = 'None';
+    elseif ($actual_averagereferencing_percourse[$users_name_course_name] <=2.99) $user_actual_averagereferencing_percourse[$users_name_course_name] = 'Mixed';
+    else $user_actual_averagereferencing_percourse[$users_name_course_name] = 'Good';
 
 		$n++;
     $rowdata[] = $enrol->userid; // Will be removed below
@@ -1001,10 +1001,10 @@ if (!empty($enrols)) {
         $user_actual_averagereferredtoresources[$name] =  'No posts';
         $user_actual_averagecriticalapproach[$name] =  'No posts';
         $user_actual_averagereferencing[$name] =  'No posts';
-//(**)
-        $user_actual_averagereferredtoresources_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)//(**)
-        $user_actual_averagecriticalapproach_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)//(**)
-        $user_actual_averagereferencing_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)//(**)
+
+        $user_actual_averagereferredtoresources_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
+        $user_actual_averagecriticalapproach_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
+        $user_actual_averagereferencing_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
       }
 
       if (in_array($all_user->userid, $students_to_ignore)) {
@@ -1012,10 +1012,10 @@ if (!empty($enrols)) {
         unset($user_actual_averagereferredtoresources[$name]);
         unset($user_actual_averagecriticalapproach[$name]);
         unset($user_actual_averagereferencing[$name]);
-//(**)
-        unset($user_actual_averagereferredtoresources_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones//(**)
-        unset($user_actual_averagecriticalapproach_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones//(**)
-        unset($user_actual_averagereferencing_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones//(**)
+
+        unset($user_actual_averagereferredtoresources_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
+        unset($user_actual_averagecriticalapproach_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
+        unset($user_actual_averagereferencing_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
       }
       elseif ($usercount[$name] != 0) $usercountnonzero++;
 
@@ -1055,15 +1055,15 @@ echo '<br /><br />';
 
 displaystat_split_name($user_actual_averagereferencing, "Summary 'Referencing' for Student");
 echo '<br /><br />';
-//(**)
-displaystat_split_name_and_course_with_cumulated($user_actual_averagereferredtoresources_percourse, "Summary 'Referred to resources' for Student per Module", $actual_cumulatedreferredtoresources_percourse);//(**)
-echo '<br /><br />';//(**)
-//(**)
-displaystat_split_name_and_course_with_cumulated($user_actual_averagecriticalapproach_percourse, "Summary 'Critical approach' for Student per Module", $actual_cumulatedcriticalapproach_percourse);//(**)
-echo '<br /><br />';//(**)
-//(**)
-displaystat_split_name_and_course_with_cumulated($user_actual_averagereferencing_percourse, "Summary 'Referencing' for Student per Module", $actual_cumulatedreferencing_percourse);//(**)
-echo '<br /><br />';//(**)
+
+displaystat_split_name_and_course_with_cumulated($user_actual_averagereferredtoresources_percourse, "Summary 'Referred to resources' for Student per Module", $actual_cumulatedreferredtoresources_percourse);
+echo '<br /><br />';
+
+displaystat_split_name_and_course_with_cumulated($user_actual_averagecriticalapproach_percourse, "Summary 'Critical approach' for Student per Module", $actual_cumulatedcriticalapproach_percourse);
+echo '<br /><br />';
+
+displaystat_split_name_and_course_with_cumulated($user_actual_averagereferencing_percourse, "Summary 'Referencing' for Student per Module", $actual_cumulatedreferencing_percourse);
+echo '<br /><br />';
 
 natcasesort($listofemails);
 echo 'e-mails of Selected Students...<br />' . implode(', ', array_unique($listofemails));
@@ -1133,7 +1133,7 @@ function displaystat_split_name($stat, $title) {
 }
 
 
-function displaystat_split_name_and_course_with_cumulated($stat, $title, $cumulated) {//(**)
+function displaystat_split_name_and_course_with_cumulated($stat, $title, $cumulated) {
   echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
   echo "<tr>";
   echo "<td>$title</td>";
