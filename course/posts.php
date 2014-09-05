@@ -912,6 +912,8 @@ if (!empty($enrols)) {
         $user_actual_averagereferredtoresources[$name] =  'No posts';
         $user_actual_averagecriticalapproach[$name] =  'No posts';
         $user_actual_averagereferencing[$name] =  'No posts';
+//(**)
+        $user_actual_averagereferredtoresources_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)//(**)
       }
 
       if (in_array($all_user->userid, $students_to_ignore)) {
@@ -919,6 +921,8 @@ if (!empty($enrols)) {
         unset($user_actual_averagereferredtoresources[$name]);
         unset($user_actual_averagecriticalapproach[$name]);
         unset($user_actual_averagereferencing[$name]);
+//(**)
+        unset($user_actual_averagereferredtoresources_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones//(**)
       }
       elseif ($usercount[$name] != 0) $usercountnonzero++;
 
