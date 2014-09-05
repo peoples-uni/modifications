@@ -1058,7 +1058,13 @@ function displaystat_split_name_and_course_with_cumulated($stat, $title, $cumula
     echo "<td>" . $key_family . "</td>";
     echo "<td>" . $key_given . "</td>";
     echo "<td>" . $key_module . "</td>";
-    echo "<td>" . $cumulated[$key] . "</td>";
+    if (!empty($cumulated[$key])) {
+      $cumulated_value = $cumulated[$key];
+    }
+    else {
+      $cumulated_value = '';
+    }
+    echo "<td>" . $cumulated_value . "</td>";
     echo "<td>" . $number . "</td>";
     echo "</tr>";
   }
