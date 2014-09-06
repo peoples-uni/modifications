@@ -1624,9 +1624,12 @@ Average Rating of Rated Posts, Referencing: ("Any", "None", "Mixed", "Good")<br 
 </li>
 <li>
 There are new summary tables in posts.php...<br />
-Average 'Referred to resources' for Student<br />
-Average 'Critical approach' for Student<br />
-Average 'Referencing' for Student<br />
+Summary 'Referred to resources' for Student<br />
+Summary 'Critical approach' for Student<br />
+Summary 'Referencing' for Student<br />
+Summary 'Referred to resources' for Student per Module<br />
+Summary 'Critical approach' for Student per Module<br />
+Summary 'Referencing' for Student per Module<br />
 <br />
 </li>
 <li>
