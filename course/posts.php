@@ -622,9 +622,9 @@ if (!empty($actual_referencing)) {
       $actual_count_averagereferencing_percourse[$users_name_course_name] += 1.0;
     }
 
-    if     ($item < 1.01) $item_word = 'No';
+    if     ($item < 1.01) $item_word = 'None';
     elseif ($item <=2.99) $item_word = 'Mixed';
-    else                  $item_word = 'Yes';
+    else                  $item_word = 'Good';
     if (empty($actual_cumulatedreferencing_percourse[$users_name_course_name])) {
       $actual_cumulatedreferencing_percourse[$users_name_course_name] = "$item_word";
     }
