@@ -207,7 +207,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Why Not Completed Previous Semester:\n" . htmlspecialchars_decode($application->whynotcomplete, ENT_COMPAT) . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni $returning_in_title Application Form Submission From: $application->lastname, $application->firstname", $message);
-  sendapprovedmail('apply@peoples-uni.org', "Peoples-uni $returning_in_title Application Form Submission From: $application->lastname, $application->firstname", $message);
+  //sendapprovedmail('apply@peoples-uni.org', "Peoples-uni $returning_in_title Application Form Submission From: $application->lastname, $application->firstname", $message);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/application_form_success.php'));
 }

@@ -178,7 +178,8 @@ elseif ($data = $editform->get_data()) {
   $message .= "Name of the organisation or person:\n" . $application->howfoundorganisationname . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Tutor Registration request Form Submission From: $application->lastname, $application->firstname", $message);
-  sendapprovedmail('volunteer@peoples-uni.org', "Peoples-uni Tutor Registration request Form Submission From: $application->lastname, $application->firstname", $message);
+  // This makes it easier for the Help Desk to work with the volunteer because the e-mail comes from them...
+  sendapprovedmail_from_applicant('volunteer@peoples-uni.org', $application, "Peoples-uni Tutor Registration request Form Submission From: $application->lastname, $application->firstname", $message);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/tutor_registration_form_success.php'));
 }
@@ -210,6 +211,37 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->email = 'volunteer@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
+  $supportuser->maildisplay = true;
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
+
+  //$user->email = 'applicationresponses@peoples-uni.org';
+  //$user->email = 'alanabarrett0@gmail.com';
+  //email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
+
+  return $ret;
+}
+
+
+function sendapprovedmail_from_applicant($email, $application, $subject, $message) {
+  global $CFG;
+
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999;
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
+
+  $supportuser = new stdClass();
+  $supportuser->email = $application->email;
+  $supportuser->firstname = $application->firstname;
+  $supportuser->lastname = $application->lastname;
   $supportuser->firstnamephonetic = NULL;
   $supportuser->lastnamephonetic = NULL;
   $supportuser->middlename = NULL;
