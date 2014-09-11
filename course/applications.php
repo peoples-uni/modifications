@@ -428,6 +428,29 @@ $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index,
 
 $applications = $peoples_filters->filter_entries($applications);
 
+
+// Look for all User Subscriptions to a 'Student Support Group' Forum in the 'Student Support Forums' Course which are for Students Enrolled in the Course (not Tutors)
+$ssoforums = $DB->get_record_sql(
+  "SELECT
+    fs.userid,
+    GROUP_CONCAT(SUBSTRING(f.name, 23) SEPARATOR ', ') AS names
+  FROM
+    mdl_forum f,
+    mdl_forum_subscriptions fs
+  WHERE
+    f.id=fs.forum AND
+    SUBSTRING(f.name, 1, 21)='Student Support Group' AND
+    fs.userid IN
+      (
+        SELECT ue.userid
+        FROM mdl_user_enrolments ue
+        JOIN mdl_enrol e ON (e.id=ue.enrolid AND e.courseid=?)
+      )
+   GROUP BY fs.userid",
+  array(get_config(NULL, 'peoples_student_support_id'))
+);
+
+
 $emaildups = 0;
 foreach ($applications as $sid => $application) {
   if ($application->hidden) {
@@ -470,7 +493,8 @@ if (!$displayextra && !$displayscholarship && !$displayforexcel) {
     'City/Town',
     'Country',
     '',
-    ''
+    '',
+    'SSO forum',
   );
 }
 elseif ($displayscholarship) {
@@ -510,6 +534,7 @@ elseif ($displayforexcel) {
     'Sponsoring organisation',
     'Scholarship',
     'Why Not Completed Previous Semester',
+    'SSO forum',
   );
 }
 else {
@@ -548,7 +573,8 @@ else {
     'Desired Moodle Username',
     'Moodle UserID',
     '',
-    ''
+    '',
+    'SSO forum',
   );
 }
 
@@ -946,6 +972,13 @@ foreach ($applications as $sid => $application) {
     else $z = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a>';
     if (!$displayscholarship) $rowdata[] = $z;
 
+    if (!empty($ssoforums[$application->userid])) {
+      $z = $ssoforums[$application->userid];
+    }
+    else {
+      $z = '';
+    }
+    if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($modules[$application->coursename1])) {
       $modules[$application->coursename1] = 1;
@@ -1116,6 +1149,14 @@ foreach ($applications as $sid => $application) {
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->scholarship));
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->whynotcomplete));
+
+    if (!empty($ssoforums[$application->userid])) {
+      $z = $ssoforums[$application->userid];
+    }
+    else {
+      $z = '';
+    }
+    $rowdata[] = $z;
 
     $table->data[] = $rowdata;
   }
