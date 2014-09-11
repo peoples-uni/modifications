@@ -438,6 +438,7 @@ $ssoforums = $DB->get_records_sql(
     mdl_forum f,
     mdl_forum_subscriptions fs
   WHERE
+    f.course=? AND
     f.id=fs.forum AND
     SUBSTRING(f.name, 1, 21)='Student Support Group' AND
     fs.userid IN
@@ -447,7 +448,7 @@ $ssoforums = $DB->get_records_sql(
         JOIN mdl_enrol e ON (e.id=ue.enrolid AND e.courseid=?)
       )
    GROUP BY fs.userid",
-  array(get_config(NULL, 'peoples_student_support_id'))
+  array(get_config(NULL, 'peoples_student_support_id'), get_config(NULL, 'peoples_student_support_id'))
 );
 
 
