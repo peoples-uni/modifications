@@ -430,7 +430,7 @@ $applications = $peoples_filters->filter_entries($applications);
 
 
 // Look for all User Subscriptions to a 'Student Support Group' Forum in the 'Student Support Forums' Course which are for Students Enrolled in the Course (not Tutors)
-$ssoforums = $DB->get_record_sql(
+$ssoforums = $DB->get_records_sql(
   "SELECT
     fs.userid,
     GROUP_CONCAT(SUBSTRING(f.name, 23) SEPARATOR ', ') AS names
@@ -973,7 +973,7 @@ foreach ($applications as $sid => $application) {
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (!empty($ssoforums[$application->userid])) {
-      $z = $ssoforums[$application->userid];
+      $z = $ssoforums[$application->userid]->names;
     }
     else {
       $z = '';
@@ -1151,7 +1151,7 @@ foreach ($applications as $sid => $application) {
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->whynotcomplete));
 
     if (!empty($ssoforums[$application->userid])) {
-      $z = $ssoforums[$application->userid];
+      $z = $ssoforums[$application->userid]->names;
     }
     else {
       $z = '';
