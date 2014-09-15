@@ -126,6 +126,7 @@ else {
 $discussionfeedbacks = $DB->get_records_sql("
   SELECT DISTINCT
     d.*,
+    c.fullname,
     e.semester,
     r.id IS NOT NULL AS rating_submitted,
     r.what_skills_need_to_improve,
@@ -161,6 +162,11 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
   $rowdata[] = htmlspecialchars($discussionfeedback->semester, ENT_COMPAT, 'UTF-8');
 
   $rowdata[] = htmlspecialchars($discussionfeedback->fullname, ENT_COMPAT, 'UTF-8');
+
+  $assessmentname['10'] = 'Yes';
+  $assessmentname['20'] = 'No';
+  $assessmentname['30'] = 'Could be improved';
+  $assessmentname['40'] = 'Not applicable';
 
   $rowdata[] =  $assessmentname[$discussionfeedback->refered_to_resources];
   $rowdata[] =  $assessmentname[$discussionfeedback->critical_approach];
