@@ -101,7 +101,7 @@ if (!empty($discussionfeedback_present)) {
       $DB->update_record('student_ratingresponse', $student_ratingresponse);
     }
 
-    redirect(new moodle_url($CFG->wwwroot . '/course/ratingresponse.php'));
+    redirect(new moodle_url("$CFG->wwwroot/course/ratingresponse.php?course_id=$course_id"));
   }
 }
 

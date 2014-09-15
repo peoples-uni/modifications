@@ -24,11 +24,13 @@ class ratingresponse_form extends moodleform {
 
     $student_ratingresponse = $DB->get_record('student_ratingresponse', array('userid' => $USER->id, 'course_id' => $_SESSION['peoples_course_id_for_student_ratingresponse']));
 
-    if (!empty($student_ratingresponse)) $already_submitted = '<br />(You have already submitted this form, but you may submit again if you wish.)';
+    if (!empty($student_ratingresponse)) $already_submitted = '<p><strong>You have just now (or previously) submitted this form, but you may submit again if you wish.</strong><br />
+    <a href="http://courses.peoples-uni.org/">Click here to return to Moodle</a></p><br /><br />';
     else  $already_submitted = '';
 
     $mform->addElement('static', 'instuctions', '',
-      '<p><strong>Module: ' . htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8')  . $already_submitted. '</strong></p><br />
+      $already_submitted .
+      '<p><strong>Module: ' . htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8') . '</strong></p><br />
       <p>This form is used to allow you to reflect on what you need to do to improve your discussion forum contributions in this module and how you will do that.</p>
       <p>Below this form you can see past ratings on your discussion contributions by Student Support Officers for all modules along with any reflections on these ratings that you have previously submitted.</p>
       <p>Guidelines for discussion forum contributions are in <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a></p>
