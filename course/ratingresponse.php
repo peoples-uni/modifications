@@ -25,7 +25,9 @@ require_once('ratingresponse_form.php');
 
 $PAGE->set_context(context_system::instance());
 
-$PAGE->set_pagelayout('standard');
+//$PAGE->set_pagelayout('standard');
+$PAGE->set_pagelayout('embedded');   // Needs as much space as possible
+
 $PAGE->set_url('/course/ratingresponse.php');
 
 
