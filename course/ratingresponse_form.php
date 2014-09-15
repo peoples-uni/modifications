@@ -38,7 +38,7 @@ class ratingresponse_form extends moodleform {
 
     $mform->addElement('header', 'assessment_header', 'Reflections');
 
-    $mform->addElement('textarea', 'what_skills_need_to_improve',           'What skills do I need to improve? (think about feedback I received on my contributions and from tutor/other student posts)', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
+    $mform->addElement('textarea', 'what_skills_need_to_improve',           'What skills do I need to improve? (think about feedback I received in the e-mail on my contributions and from tutor/other student posts)', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     $mform->addRule('what_skills_need_to_improve',                          'What skills do I need to improve is required', 'required', null, 'client');
 
     $mform->addElement('textarea', 'what_do_to_improve_academic_skills',    'What will I do to improve my academic skills? (and when?)', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
