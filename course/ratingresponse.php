@@ -70,17 +70,15 @@ if (!empty($discussionfeedback_present)) {
     redirect(new moodle_url('http://courses.peoples-uni.org'));
   }
   elseif ($data = $editform->get_data()) {
-error_log('1');//blank line
+
     $student_ratingresponse = $DB->get_record('student_ratingresponse', array('course_id' => $course_id, 'userid' => $USER->id));
 
     if (empty($student_ratingresponse)) {
       $student_ratingresponse = new object();
 
       $doinsert = TRUE;
-error_log('2 insert');
     }
     else {
-error_log('2 update');
       $doinsert = FALSE;
     }
 
@@ -111,7 +109,6 @@ error_log('2 update');
     }
 
     redirect(new moodle_url($CFG->wwwroot . '/course/ratingresponse.php', array('course_id' => $course_id)));
-error_log('3');
   }
 }
 
