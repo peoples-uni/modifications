@@ -31,7 +31,14 @@ $PAGE->set_pagelayout('embedded');   // Needs as much space as possible
 $PAGE->set_url('/course/ratingresponse.php');
 
 
-$course_id = required_param('course_id', PARAM_INT);
+$course_id = optional_param('course_id', 0, PARAM_INT);
+
+if (empty($course_id) && empty($_SESSION['peoples_course_id_for_student_ratingresponse'])) {
+  $course_id = required_param('course_id', PARAM_INT);
+}
+elseif (empty($course_id)) {
+  $course_id = $_SESSION['peoples_course_id_for_student_ratingresponse'];
+}
 
 
 require_login();
