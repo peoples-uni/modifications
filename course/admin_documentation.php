@@ -1521,9 +1521,18 @@ There are 3 criteria (that match the 3 ratings) that must be selected as "Yes", 
 As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria feedback.<br />
 Note: It is possible to re-submit and e-mail again and overwrite the recorded submission.<br />
 <br />
-The data (criteria and free form text) are stored for later analysis and can be accessed again from posts.php (and are also displayed in the old Discussion Feedback page at <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>   where a list of e-mails of Students sent feedback can also be seen).<br />
+The data (criteria and free form text along with Student reflection on this feedback if provided) are stored for later analysis and can be accessed again from posts.php (and are also displayed in the old Discussion Feedback page at <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>   where a list of e-mails of Students sent feedback can also be seen).<br />
 <br />
 The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a><br />
+The e-mail text should give a link to a form which will allow Students to submit reflections on their discussion contributions. This link is
+http://courses.peoples-uni.org/course/ratingresponse.php?course_id=IDHERE<br />
+There should be appropriate instructions about filling out the form.<br />
+The form contains the following fields...<br />
+What skills do I need to improve? (think about feedback I received in the e-mail on my contributions and from tutor/other student posts)<br />
+What will I do to improve my academic skills? (and when?)<br />
+What will I do differently when I prepare a discussion post?<br />
+(Actually the sample e-mail below does not have this text.)
+<br />
 Here is an example of an e-mail that is sent out (including wording from settings.php, the criteria feedback, free form text placed after the criteria feedback and the rest of the settings.php text):-
 <pre>
 Dear Dick,
@@ -1596,7 +1605,7 @@ Best wishes.
     Education Coordinator.
 </pre>
 <br />
-At the top of the Feedback page all existing Postings with Ratings and existing Feedback is displayed in tables to assist in determining the Student's progress.<br />
+At the top of the Feedback page all existing Postings with Ratings and existing Feedback (with Student reflection on this feedback if provided) is displayed in tables to assist in determining the Student's progress.<br />
 <br />
 </li>
 <li>
