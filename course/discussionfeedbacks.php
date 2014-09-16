@@ -154,10 +154,16 @@ function displayoptions($name, $options, $selectedvalue) {
 
 $discussionfeedbacks = $DB->get_records_sql("
   SELECT DISTINCT d.*, u.lastname, u.firstname, u.email, c.fullname, e.semester
+    ,
+    r.id IS NOT NULL AS rating_submitted,
+    r.what_skills_need_to_improve,
+    r.what_do_to_improve_academic_skills,
+    r.what_do_differently_when_prepare_post
   FROM mdl_discussionfeedback d
   INNER JOIN mdl_user u ON d.userid=u.id
   INNER JOIN mdl_course c ON d.course_id=c.id
   INNER JOIN mdl_enrolment e ON d.userid=e.userid AND d.course_id=e.courseid $ssfsql
+  LEFT JOIN mdl_student_ratingresponse r ON d.userid=r.userid AND d.course_id=r.course_id
   ORDER BY e.semester, c.fullname, u.lastname, u.firstname");
 if (empty($discussionfeedbacks)) {
   $discussionfeedbacks = array();
@@ -187,6 +193,9 @@ $table->head = array(
   'Included critical approach to information',
   'Provided references in an appropriate format',
   'Free text',
+  'Student reflection: What skills do I need to improve?',
+  'Student reflection: What will I do to improve my academic skills? (and when?)',
+  'Student reflection: What will I do differently when I prepare a discussion post?',
   );
 
 $n = 0;
@@ -210,6 +219,24 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
   }
   else {
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $discussionfeedback->assessment_text));
+  }
+
+  if ($discussionfeedback->rating_submitted) {
+    if ($displayforexcel) {
+      $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $discussionfeedback->what_skills_need_to_improve));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $discussionfeedback->what_do_to_improve_academic_skills));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $discussionfeedback->what_do_differently_when_prepare_post));
+    }
+    else {
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $discussionfeedback->what_skills_need_to_improve));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $discussionfeedback->what_do_to_improve_academic_skills));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $discussionfeedback->what_do_differently_when_prepare_post));
+    }
+  }
+  else {
+    $rowdata[] = '';
+    $rowdata[] = '';
+    $rowdata[] = '';
   }
 
   $table->data[] = $rowdata;
