@@ -1531,7 +1531,7 @@ The form contains the following fields...<br />
 What skills do I need to improve? (think about feedback I received in the e-mail on my contributions and from tutor/other student posts)<br />
 What will I do to improve my academic skills? (and when?)<br />
 What will I do differently when I prepare a discussion post?<br />
-(Actually the sample e-mail below does not have this text.)
+(Actually the sample e-mail below does not currently have the link to the form and related text.)
 <br />
 Here is an example of an e-mail that is sent out (including wording from settings.php, the criteria feedback, free form text placed after the criteria feedback and the rest of the settings.php text):-
 <pre>
