@@ -98,6 +98,8 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $senders_name_here = fullname($USER);
   $peoples_discussion_feedback_email = str_replace('SENDERS_NAME_HERE', $senders_name_here, $peoples_discussion_feedback_email);
 
+  $peoples_discussion_feedback_email = str_replace('IDHERE', "$course->id", $peoples_discussion_feedback_email);
+
   $peoples_discussion_feedback_email = strip_tags($peoples_discussion_feedback_email);
 
   $peoples_discussion_feedback_email = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $peoples_discussion_feedback_email); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
