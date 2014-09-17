@@ -1533,7 +1533,7 @@ What will I do to improve my academic skills? (and when?)<br />
 What will I do differently when I prepare a discussion post?<br />
 Here is an example of an e-mail that is sent out (including wording from settings.php, the criteria feedback, free form text placed after the criteria feedback and the rest of the settings.php text):-
 <pre>
-Dear Dick,
+Dear Alan,
 
 This is to provide feedback to you about your contributions to the
 discussion forums in each of the Topics in the module.
@@ -1561,15 +1561,16 @@ comments on whether you meet the following Criteria...
 
 Referred to resources in the topics: Yes
 
-Included critical approach to information: Yes
+Included critical approach to information: No
 
-Provided references in an appropriate format: Yes
+Provided references in an appropriate format: Could be improved
 
-FREE FORM TEXT HERE
+anything
+
 
 Please reflect on this feedback and then fill in this form
 with your reflections (you will need to login to Moodle):
-http://courses.peoples-uni.org/course/ratingresponse.php?course_id=IDHERE
+http://courses.peoples-uni.org/course/ratingresponse.php?course_id=326
 
 There are some helpful resources on how to carry out referencing in
 the Student Handbook and also in the Student Corner - such as the
@@ -1585,7 +1586,7 @@ http://equella.nottingham.ac.uk/uon/items/9ba73656-1729-2453-d9eb-6fd932a12753/1
 However, the Vancouver style is also frequently used in the medical
 scientific literature. There is information on critical thinking in
 the Student Corner "How can I develop my Critical Thinking skills?":
-http://courses.peoples-uni.org/mod/page/view.php?id=6919&inpopup=1
+http://courses.peoples-uni.org/mod/page/view.php?id=11321
 
 We will be sending information on the number of posts you have made
 to the discussions in comparison with others on your module at a
@@ -1604,7 +1605,7 @@ Peoples-uni in the need for evidence rather than just opinion!).
 
 Best wishes.
 
-    Education Coordinator.
+    Alan Barrett
 </pre>
 <br />
 At the top of the Feedback page all existing Postings with Ratings and existing Feedback (with Student reflection on this feedback if provided) is displayed in tables to assist in determining the Student's progress.<br />
