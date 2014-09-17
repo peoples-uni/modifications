@@ -1531,8 +1531,6 @@ The form contains the following fields...<br />
 What skills do I need to improve? (think about feedback I received in the e-mail on my contributions and from tutor/other student posts)<br />
 What will I do to improve my academic skills? (and when?)<br />
 What will I do differently when I prepare a discussion post?<br />
-(Actually the sample e-mail below does not currently have the link to the form and related text.)
-<br />
 Here is an example of an e-mail that is sent out (including wording from settings.php, the criteria feedback, free form text placed after the criteria feedback and the rest of the settings.php text):-
 <pre>
 Dear Dick,
@@ -1568,6 +1566,10 @@ Included critical approach to information: Yes
 Provided references in an appropriate format: Yes
 
 FREE FORM TEXT HERE
+
+Please reflect on this feedback and then fill in this form
+with your reflections (you will need to login to Moodle):
+http://courses.peoples-uni.org/course/ratingresponse.php?course_id=IDHERE
 
 There are some helpful resources on how to carry out referencing in
 the Student Handbook and also in the Student Corner - such as the
