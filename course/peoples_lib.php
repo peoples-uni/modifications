@@ -1,6 +1,6 @@
 <?php
 
-function updateapplication($sid, $field, $value, $deltamodules = 0, $coursename) {
+function updateapplication($sid, $field, $value, $deltamodules = 0, $coursename = '') {
   global $DB;
 
   $record = $DB->get_record('peoplesapplication', array('sid' => $sid));
@@ -405,7 +405,7 @@ function sendapprovedmail_from_support($email, $subject, $message) {
   $user->maildisplay = true;
   $user->mnethostid = $CFG->mnet_localhost_id;
 
-  $supportuser = generate_email_supportuser();
+  $supportuser = core_user::get_support_user();
 
   //$user->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($user, $supportuser, $subject, $message);

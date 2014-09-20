@@ -133,7 +133,7 @@ if (!empty($_POST['markpaydetails'])) {
   $user->maildisplay = true;
   $user->mnethostid = $CFG->mnet_localhost_id;
 
-  $supportuser = generate_email_supportuser();
+  $supportuser = core_user::get_support_user();
 
   //$user->email = 'alanabarrett0@gmail.com';
   email_to_user($user, $supportuser, $name . " Indicates that payment has been made ($mechanism)", $message);
