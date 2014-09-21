@@ -33,11 +33,6 @@ $original_amount = $amount;
 $currency = 'cur';
 
 
-if (!sendapprovedmail_from_support('alanabarrett0@gmail.com', 'test sendapprovedmail_from_support()', 'this is the body')) {
-  echo '<br /><br /><br /><strong>For some reason the E-MAIL COULD NOT BE SENT!</strong>';
-}
-
-
 if (!empty($_POST['markpaydetails'])) {
 
   $message  = "$name indicates that payment has been made using AB.\n";
@@ -68,7 +63,7 @@ echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt
 
 ?>
 <br /><br />
-<form id="paydetailsform" method="post" action="<?php echo $CFG->wwwroot . '/course/paydetails.php'; ?>">
+<form id="paydetailsform" method="post" action="<?php echo $CFG->wwwroot . '/course/xpaydetails.php'; ?>">
 
 <input type="hidden" name="sid" value="<?php echo 999; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
