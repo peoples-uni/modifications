@@ -509,6 +509,118 @@ class peoples_daterange_filter extends peoples_filter {
 }
 
 
+// 20140921 New filter for applications.php
+class peoples_suspendedmmu_filter extends peoples_select_filter {
+
+  public function filter_entries(array $list_to_filter) {
+
+    if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
+      $peoplesmph2s = $DB->get_records_sql('SELECT userid, suspended, graduated FROM mdl_peoplesmph2');
+      if (empty($peoplesmph2s)) {
+        $peoplesmph2s = array();
+      }
+
+      foreach ($list_to_filter as $index => $list_entry) {
+
+        if (!empty($list_entry->userid) && !empty($peoplesmph2s[$list_entry->userid])) {
+          $peoplesmph2 = $peoplesmph2s[$list_entry->userid];
+          $suspended = $peoplesmph2->suspended;
+          $graduated = $peoplesmph2->graduated;
+        }
+        else {
+          $suspended = FALSE;
+          $graduated = FALSE;
+        }
+
+        if ($this->selectedvalue === 'Not Suspended' && $suspended) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Suspended'     && !$suspended) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Not Graduated' && $graduated) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Graduated'     && !$graduated) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Not Graduated or Suspended' && ($suspended || $graduated)) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
+
+
+// 20140921 New filter for applications.php
+class peoples_notcurrentsemester_filter extends peoples_boolean_filter {
+
+  public function filter_entries(array $list_to_filter) {
+
+    if ($this->selectedvalue) {
+
+      $semester_current = $DB->get_record('semester_current', array('id' => 1));
+      $semester_to_match = $semester_current->semester;
+
+      $peoplesapplications = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_peoplesapplication WHERE semester=$semester_to_match");
+      if (empty($peoplesapplications)) {
+        $peoplesapplications = array();
+      }
+
+      foreach ($list_to_filter as $index => $list_entry) {
+
+        if (!empty($list_entry->userid) && !empty($peoplesapplications[$list_entry->userid])) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
+
+
+// 20140921 New filter for applications.php
+class peoples_notprevioussemester_filter extends peoples_boolean_filter {
+
+  public function filter_entries(array $list_to_filter) {
+
+    if ($this->selectedvalue) {
+
+      $semester_current = $DB->get_record('semester_current', array('id' => 1));
+      $semester_to_match = $semester_current->semester;
+
+      $current = $semester_current->semester;
+      $semesters = $DB->get_records('semesters', NULL, 'id ASC');
+      foreach ($semesters as $semester) {
+        if ($semester->semester !== $current) $semester_to_match = $semester->semester; // Find next to last (previous) semester
+      }
+
+      $peoplesapplications = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_peoplesapplication WHERE semester=$semester_to_match");
+      if (empty($peoplesapplications)) {
+        $peoplesapplications = array();
+      }
+
+      foreach ($list_to_filter as $index => $list_entry) {
+
+        if (!empty($list_entry->userid) && !empty($peoplesapplications[$list_entry->userid])) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
+
+
 // Initially used by track_submisisons.php
 class peoples_mph_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {

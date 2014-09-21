@@ -341,6 +341,21 @@ $peoples_acceptedmmu_filter = new peoples_acceptedmmu_filter('Accepted MPH?', 'a
 $peoples_acceptedmmu_filter->set_stamp_range($stamp_range);
 $peoples_filters->add_filter($peoples_acceptedmmu_filter);
 
+$listsuspendedmmu[] = 'Any';
+$listsuspendedmmu[] = 'Suspended';
+$listsuspendedmmu[] = 'Not Suspended';
+$listsuspendedmmu[] = 'Graduated';
+$listsuspendedmmu[] = 'Not Graduated';
+$listsuspendedmmu[] = 'Not Graduated or Suspended';
+$peoples_suspendedmmu_filter = new peoples_suspendedmmu_filter('Suspended MPH?', 'suspendedmmu', $listsuspendedmmu, 'Any');
+$peoples_filters->add_filter($peoples_suspendedmmu_filter);
+
+$peoples_notcurrentsemester_filter = new peoples_notcurrentsemester_filter('Not Applied Current Semester', 'notcurrentsemester');
+$peoples_filters->add_filter($peoples_notcurrentsemester_filter);
+
+$peoples_notprevioussemester_filter = new peoples_notprevioussemester_filter('Not Applied Previous Semester', 'notprevioussemester');
+$peoples_filters->add_filter($peoples_notprevioussemester_filter);
+
 $listchosenscholarship[] = 'Any';
 $listchosenscholarship[] = 'Yes';
 $listchosenscholarship[] = 'No';
