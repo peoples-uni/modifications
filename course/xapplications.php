@@ -1,4 +1,4 @@
-<?php  // $Id: applications.php,v 1.1 2008/08/02 17:18:32 alanbarrett Exp $
+<?php  // $Id: xapplications.php,v 1.1 2008/08/02 17:18:32 alanbarrett Exp $
 /**
 *
 * List all course applications from Drupal
@@ -126,14 +126,16 @@ CREATE TABLE mdl_peoplesmph2 (
   datelastunentolled BIGINT(10) UNSIGNED NOT NULL,
   mphstatus BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   graduated BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  suspended BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   semester_graduated VARCHAR(255) NOT NULL DEFAULT '',
   note text default '' NOT NULL,
 CONSTRAINT PRIMARY KEY (id)
 );
-CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph (userid);
+CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph2 (userid);
 
 ALTER TABLE mdl_peoplesmph2 ADD graduated BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER mphstatus;
 ALTER TABLE mdl_peoplesmph2 ADD semester_graduated VARCHAR(255) NOT NULL DEFAULT '' AFTER graduated;
+ALTER TABLE mdl_peoplesmph2 ADD suspended BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER graduated;
 
 mphstatus (in both tables)...
 0 => Un-enrolled (in peoplesmph2, not used in peoplesmph)
@@ -141,6 +143,11 @@ mphstatus (in both tables)...
 2 => Peoples MPH
 3 => OTHER(to be determined) MPH
 
+graduated...
+0 => not graduated
+1 => pass
+2 => Merit
+3 => Distinction
 
 CREATE TABLE mdl_peoples_cert_ps (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,
@@ -152,6 +159,23 @@ CREATE TABLE mdl_peoples_cert_ps (
 CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoples_cert_ps_uid_ix ON mdl_peoples_cert_ps (userid);
+
+
+CREATE TABLE mdl_peoples_income_category (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  income_category BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+CONSTRAINT PRIMARY KEY (id)
+);
+
+income_category...
+0 => Existing (all existing, pre swapover, students will be set as this); Also if record does not exist!
+1 => LMIC (the default, set when they are registered)
+2 => HIC (manually set in "Details" from applications.php)
+
+CREATE INDEX mdl_peoples_income_category_uid_ix ON mdl_peoples_income_category (userid);
+
 
 CREATE TABLE mdl_peoplespaymentnote (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,
@@ -223,19 +247,20 @@ $howuselearningname['30'] = 'I am not sure';
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
+require_once($CFG->dirroot .'/course/peoples_lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
 
 $PAGE->set_context(context_system::instance());
 
-$PAGE->set_url('/course/applications.php'); // Defined here to avoid notices on errors etc
+$PAGE->set_url('/course/xapplications.php'); // Defined here to avoid notices on errors etc
 
 
 require_once($CFG->dirroot .'/course/peoples_filters.php');
 
 $peoples_filters = new peoples_filters();
 
-$peoples_filters->set_page_url("$CFG->wwwroot/course/applications.php");
+$peoples_filters->set_page_url("$CFG->wwwroot/course/xapplications.php");
 
 $semesters = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semesters as $semester) {
@@ -316,6 +341,21 @@ $peoples_acceptedmmu_filter = new peoples_acceptedmmu_filter('Accepted MPH?', 'a
 $peoples_acceptedmmu_filter->set_stamp_range($stamp_range);
 $peoples_filters->add_filter($peoples_acceptedmmu_filter);
 
+$listsuspendedmmu[] = 'Any';
+$listsuspendedmmu[] = 'Suspended';
+$listsuspendedmmu[] = 'Not Suspended';
+$listsuspendedmmu[] = 'Graduated';
+$listsuspendedmmu[] = 'Not Graduated';
+$listsuspendedmmu[] = 'Not Graduated or Suspended';
+$peoples_suspendedmmu_filter = new peoples_suspendedmmu_filter('Suspended MPH?', 'suspendedmmu', $listsuspendedmmu, 'Any');
+$peoples_filters->add_filter($peoples_suspendedmmu_filter);
+
+$peoples_notcurrentsemester_filter = new peoples_notcurrentsemester_filter('Not Applied Current Semester', 'notcurrentsemester');
+$peoples_filters->add_filter($peoples_notcurrentsemester_filter);
+
+$peoples_notprevioussemester_filter = new peoples_notprevioussemester_filter('Not Applied Previous Semester', 'notprevioussemester');
+$peoples_filters->add_filter($peoples_notprevioussemester_filter);
+
 $listchosenscholarship[] = 'Any';
 $listchosenscholarship[] = 'Yes';
 $listchosenscholarship[] = 'No';
@@ -337,7 +377,7 @@ $displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
 
 
 if (!empty($_POST['markfilter'])) {
-  redirect($CFG->wwwroot . '/course/applications.php?' . $peoples_filters->get_url_parameters());
+  redirect($CFG->wwwroot . '/course/xapplications.php?' . $peoples_filters->get_url_parameters());
 }
 elseif (!empty($_POST['markemailsend']) && !empty($_POST['emailsubject']) && !empty($_POST['emailbody'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -403,6 +443,30 @@ $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index,
 
 $applications = $peoples_filters->filter_entries($applications);
 
+
+// Look for all User Subscriptions to a 'Student Support Group' Forum in the 'Student Support Forums' Course which are for Students Enrolled in the Course (not Tutors)
+$ssoforums = $DB->get_records_sql(
+  "SELECT
+    fs.userid,
+    GROUP_CONCAT(SUBSTRING(f.name, 23) SEPARATOR ', ') AS names
+  FROM
+    mdl_forum f,
+    mdl_forum_subscriptions fs
+  WHERE
+    f.course=? AND
+    f.id=fs.forum AND
+    SUBSTRING(f.name, 1, 21)='Student Support Group' AND
+    fs.userid IN
+      (
+        SELECT ue.userid
+        FROM mdl_user_enrolments ue
+        JOIN mdl_enrol e ON (e.id=ue.enrolid AND e.courseid=?)
+      )
+   GROUP BY fs.userid",
+  array(get_config(NULL, 'peoples_student_support_id'), get_config(NULL, 'peoples_student_support_id'))
+);
+
+
 $emaildups = 0;
 foreach ($applications as $sid => $application) {
   if ($application->hidden) {
@@ -445,7 +509,8 @@ if (!$displayextra && !$displayscholarship && !$displayforexcel) {
     'City/Town',
     'Country',
     '',
-    ''
+    '',
+    'SSO forum',
   );
 }
 elseif ($displayscholarship) {
@@ -485,6 +550,7 @@ elseif ($displayforexcel) {
     'Sponsoring organisation',
     'Scholarship',
     'Why Not Completed Previous Semester',
+    'SSO forum',
   );
 }
 else {
@@ -523,7 +589,8 @@ else {
     'Desired Moodle Username',
     'Moodle UserID',
     '',
-    ''
+    '',
+    'SSO forum',
   );
 }
 
@@ -751,14 +818,14 @@ foreach ($applications as $sid => $application) {
       $z .= '<input type="hidden" name="31" value="' . htmlspecialchars($application->methodofpayment, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<input type="hidden" name="21" value="' . htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<span style="display: none;">';
-      $z .= '<textarea name="3" rows="10" cols="100" wrap="hard">'  . $application->applicationaddress . '</textarea>';
-      $z .= '<textarea name="7" rows="10" cols="100" wrap="hard">'  . $application->currentjob         . '</textarea>';
-      $z .= '<textarea name="8" rows="10" cols="100" wrap="hard">'  . $application->education          . '</textarea>';
-      $z .= '<textarea name="10" rows="10" cols="100" wrap="hard">' . $application->reasons            . '</textarea>';
-      $z .= '<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard">' . $application->sponsoringorganisation . '</textarea>';
-      $z .= '<textarea name="scholarship" rows="10" cols="100" wrap="hard">' . $application->scholarship . '</textarea>';
-      $z .= '<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard">' . $application->whynotcomplete . '</textarea>';
-      $z .= '<textarea name="32" rows="10" cols="100" wrap="hard">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
+      $z .= '<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto">'  . $application->applicationaddress . '</textarea>';
+      $z .= '<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto">'  . $application->currentjob         . '</textarea>';
+      $z .= '<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto">'  . $application->education          . '</textarea>';
+      $z .= '<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->reasons            . '</textarea>';
+      $z .= '<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->sponsoringorganisation . '</textarea>';
+      $z .= '<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->scholarship . '</textarea>';
+      $z .= '<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->whynotcomplete . '</textarea>';
+      $z .= '<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
       $z .= '</span>';
       $z .= '<input type="hidden" name="applymmumph" value="' . $application->applymmumph . '" />';
       $z .= '<input type="hidden" name="sid" value="' . $sid . '" />';
@@ -921,6 +988,13 @@ foreach ($applications as $sid => $application) {
     else $z = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a>';
     if (!$displayscholarship) $rowdata[] = $z;
 
+    if (!empty($ssoforums[$application->userid])) {
+      $z = $ssoforums[$application->userid]->names;
+    }
+    else {
+      $z = '';
+    }
+    if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($modules[$application->coursename1])) {
       $modules[$application->coursename1] = 1;
@@ -1092,6 +1166,14 @@ foreach ($applications as $sid => $application) {
 
     $rowdata[] = str_replace("\r", '', str_replace("\n", ' ', $application->whynotcomplete));
 
+    if (!empty($ssoforums[$application->userid])) {
+      $z = $ssoforums[$application->userid]->names;
+    }
+    else {
+      $z = '';
+    }
+    $rowdata[] = $z;
+
     $table->data[] = $rowdata;
   }
 }
@@ -1158,14 +1240,14 @@ Payment Method: "No Indication Given"<br />
 Also look at list of e-mails sent to verify they went! (No subject and they will not go!)<br /><br />
 <form id="emailsendform" method="post" action="<?php
   if (!empty($_REQUEST['chosensemester'])) {
-    echo $CFG->wwwroot . '/course/applications.php?' . $peoples_filters->get_url_parameters();
+    echo $CFG->wwwroot . '/course/xapplications.php?' . $peoples_filters->get_url_parameters();
   }
   else {
-    echo $CFG->wwwroot . '/course/applications.php';
+    echo $CFG->wwwroot . '/course/xapplications.php';
   }
 ?>">
 Subject:&nbsp;<input type="text" size="75" name="emailsubject" /><br />
-<textarea name="emailbody" rows="15" cols="75" wrap="hard">
+<textarea name="emailbody" rows="15" cols="75" wrap="hard" style="width:auto">
 <?php echo $peoples_batch_reminder_email; ?>
 </textarea>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -1183,26 +1265,6 @@ echo '<br /><br />';
 //echo html_writer::end_tag('div');
 
 echo $OUTPUT->footer();
-
-
-function displaystat($stat, $title) {
-  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
-  echo "<tr>";
-  echo "<td>$title</td>";
-  echo "<td>Number</td>";
-  echo "</tr>";
-
-  ksort($stat);
-
-  foreach ($stat as $key => $number) {
-    echo "<tr>";
-    echo "<td>" . $key . "</td>";
-    echo "<td>" . $number . "</td>";
-      echo "</tr>";
-  }
-  echo '</table>';
-  echo '<br/>';
-}
 
 
 function sendemails($applications, $emailsubject, $emailbody, $reg, $notforuptodatepayments) {
@@ -1229,7 +1291,7 @@ function sendemails($applications, $emailsubject, $emailbody, $reg, $notforuptod
                                                                                        // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
 
     if (empty($notforuptodatepayments) || $amount >= .01) {
-      if (sendapprovedmail($email, $emailsubject, $emailbodytemp)) {
+      if (sendapprovedmail_from_payments($email, $emailsubject, $emailbodytemp)) {
         echo "($i) $email successfully sent.<br />";
       }
       else {
@@ -1238,98 +1300,5 @@ function sendemails($applications, $emailsubject, $emailbody, $reg, $notforuptod
       $i++;
     }
   }
-}
-
-
-function sendapprovedmail($email, $subject, $message) {
-  global $CFG;
-
-  // Dummy User
-  $user = new stdClass();
-  $user->id = 999999999;
-  $user->email = $email;
-  $user->maildisplay = true;
-  $user->mnethostid = $CFG->mnet_localhost_id;
-
-  $supportuser = new stdClass();
-  $supportuser->email = 'payments@peoples-uni.org';
-  $supportuser->firstname = 'Peoples-uni Payments';
-  $supportuser->lastname = '';
-  $supportuser->maildisplay = true;
-
-  //$user->email = 'alanabarrett0@gmail.com';
-  $ret = email_to_user($user, $supportuser, $subject, $message);
-
-  $user->email = 'applicationresponses@peoples-uni.org';
-
-  //$user->email = 'alanabarrett0@gmail.com';
-  email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
-
-  return $ret;
-}
-
-
-function dontaddslashes($x) {
-  return $x;
-}
-
-
-function dontstripslashes($x) {
-  return $x;
-}
-
-
-function amount_to_pay($userid) {
-  global $DB;
-
-  $amount = get_balance($userid);
-
-  $inmmumph = FALSE;
-  $mphs = $DB->get_records_sql("SELECT * FROM mdl_peoplesmph WHERE userid={$userid} AND userid!=0 LIMIT 1");
-  if (!empty($mphs)) {
-    foreach ($mphs as $mph) {
-      $inmmumph = TRUE;
-    }
-  }
-
-  $payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
-
-  if ($inmmumph) {
-    // MPH: Take Outstanding Balance and adjust for instalments if necessary
-    if (!empty($payment_schedule)) {
-      $now = time();
-      if     ($now < $payment_schedule->expect_amount_2_date) $amount -= ($payment_schedule->amount_2 + $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_3_date) $amount -= (                              $payment_schedule->amount_3 + $payment_schedule->amount_4);
-      elseif ($now < $payment_schedule->expect_amount_4_date) $amount -= (                                                            $payment_schedule->amount_4);
-      // else the full balance should be paid (which is normally equal to amount_4, but the balance might have been adjusted or the student still might not be up to date with payments)
-    }
-  }
-
-  if ($amount < 0) $amount = 0;
-  return $amount;
-}
-
-
-function get_balance($userid) {
-  global $DB;
-
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC, id DESC LIMIT 1");
-  $amount = 0;
-  if (!empty($balances)) {
-    foreach ($balances as $balance) {
-      $amount = $balance->balance;
-    }
-  }
-
-  return $amount;
-}
-
-
-function is_not_confirmed($userid) {
-  global $DB;
-
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} AND not_confirmed=1");
-  if (!empty($balances)) return TRUE;
-  return FALSE;
 }
 ?>
