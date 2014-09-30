@@ -362,6 +362,13 @@ $listchosenscholarship[] = 'No';
 $peoples_chosenscholarship_filter = new peoples_chosenscholarship_filter('Applied Scholarship?', 'chosenscholarship', $listchosenscholarship, 'Any');
 $peoples_filters->add_filter($peoples_chosenscholarship_filter);
 
+$listincome_category[] = 'Any';
+$listincome_category[] = 'LMIC';
+$listincome_category[] = 'HIC';
+$listincome_category[] = 'Existing Student';
+$peoples_income_category_filter = new peoples_income_category_filter('Income Category', 'income_category', $listincome_category, 'Any');
+$peoples_filters->add_filter($peoples_income_category_filter);
+
 $peoples_displayscholarship_filter = new peoples_boolean_filter('Show Scholarship Relevant Columns', 'displayscholarship');
 $peoples_filters->add_filter($peoples_displayscholarship_filter);
 

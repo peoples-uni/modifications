@@ -621,6 +621,30 @@ class peoples_notprevioussemester_filter extends peoples_boolean_filter {
 }
 
 
+// 20140930 New filter for applications.php
+class peoples_income_category_filter extends peoples_select_filter {
+  public function filter_entries(array $list_to_filter) {
+    foreach ($list_to_filter as $index => $list_entry) {
+      if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
+        if ($this->selectedvalue === 'Existing Student' && $list_entry->applymmumph != 0) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'LMIC' && $list_entry->applymmumph != 1) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'HIC' && $list_entry->applymmumph != 2) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
+
+
 // Initially used by track_submisisons.php
 class peoples_mph_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {
