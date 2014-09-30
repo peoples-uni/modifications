@@ -649,10 +649,15 @@ class peoples_income_category_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
-        if (empty($peoples_income_category[$list_entry->userid])) {
+        if ($this->selectedvalue === 'LMIC' && empty($peoples_income_category[$list_entry->userid])) {
+          unset($list_to_filter[$index]);
           continue;
         }
         if ($this->selectedvalue === 'LMIC' && $peoples_income_category[$list_entry->userid]->income_category != 1) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'HIC' && empty($peoples_income_category[$list_entry->userid])) {
           unset($list_to_filter[$index]);
           continue;
         }
