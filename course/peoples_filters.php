@@ -513,6 +513,7 @@ class peoples_daterange_filter extends peoples_filter {
 class peoples_suspendedmmu_filter extends peoples_select_filter {
 
   public function filter_entries(array $list_to_filter) {
+    global $DB;
 
     if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
       $peoplesmph2s = $DB->get_records_sql('SELECT userid, suspended, graduated FROM mdl_peoplesmph2');
@@ -563,6 +564,7 @@ class peoples_suspendedmmu_filter extends peoples_select_filter {
 class peoples_notcurrentsemester_filter extends peoples_boolean_filter {
 
   public function filter_entries(array $list_to_filter) {
+    global $DB;
 
     if ($this->selectedvalue) {
 
@@ -591,6 +593,7 @@ class peoples_notcurrentsemester_filter extends peoples_boolean_filter {
 class peoples_notprevioussemester_filter extends peoples_boolean_filter {
 
   public function filter_entries(array $list_to_filter) {
+    global $DB;
 
     if ($this->selectedvalue) {
 
@@ -624,6 +627,8 @@ class peoples_notprevioussemester_filter extends peoples_boolean_filter {
 // 20140930 New filter for applications.php
 class peoples_income_category_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {
+    global $DB;
+
     if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
       $peoples_income_category = $DB->get_records_sql("SELECT userid, income_category FROM mdl_peoples_income_category");
       if (empty($peoples_income_category)) {
