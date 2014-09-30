@@ -571,7 +571,7 @@ class peoples_notcurrentsemester_filter extends peoples_boolean_filter {
       $semester_current = $DB->get_record('semester_current', array('id' => 1));
       $semester_to_match = $semester_current->semester;
 
-      $peoplesapplications = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_peoplesapplication WHERE semester=$semester_to_match");
+      $peoplesapplications = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_peoplesapplication WHERE semester='$semester_to_match'");
       if (empty($peoplesapplications)) {
         $peoplesapplications = array();
       }
@@ -606,7 +606,7 @@ class peoples_notprevioussemester_filter extends peoples_boolean_filter {
         if ($semester->semester !== $current) $semester_to_match = $semester->semester; // Find next to last (previous) semester
       }
 
-      $peoplesapplications = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_peoplesapplication WHERE semester=$semester_to_match");
+      $peoplesapplications = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_peoplesapplication WHERE semester='$semester_to_match'");
       if (empty($peoplesapplications)) {
         $peoplesapplications = array();
       }
