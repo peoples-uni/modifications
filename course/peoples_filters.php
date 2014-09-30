@@ -645,18 +645,18 @@ class peoples_income_category_filter extends peoples_select_filter {
         if (empty($list_entry->userid)) {
           continue;
         }
-        if ($this->selectedvalue === 'Existing Student' && !empty($peoples_income_category[$list_entry->userid])) {
+        if ($this->selectedvalue === 'Existing Student' && !empty($peoples_income_category[$list_entry->userid]) && !empty($peoples_income_category[$list_entry->userid]->income_category)) {
           unset($list_to_filter[$index]);
           continue;
         }
         if (empty($peoples_income_category[$list_entry->userid])) {
           continue;
         }
-        if ($this->selectedvalue === 'LMIC' && $peoples_income_category[$list_entry->userid] != 1) {
+        if ($this->selectedvalue === 'LMIC' && $peoples_income_category[$list_entry->userid]->income_category != 1) {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'HIC' && $peoples_income_category[$list_entry->userid] != 2) {
+        if ($this->selectedvalue === 'HIC' && $peoples_income_category[$list_entry->userid]->income_category != 2) {
           unset($list_to_filter[$index]);
           continue;
         }
