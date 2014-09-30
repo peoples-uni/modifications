@@ -624,17 +624,34 @@ class peoples_notprevioussemester_filter extends peoples_boolean_filter {
 // 20140930 New filter for applications.php
 class peoples_income_category_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {
+    if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
+      $peoples_income_category = $DB->get_records_sql("SELECT userid, income_category FROM mdl_peoples_income_category");
+      if (empty($peoples_income_category)) {
+        $peoples_income_category = array();
+      }
+    }
+
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
-        if ($this->selectedvalue === 'Existing Student' && $list_entry->applymmumph != 0) {
+        if ($this->selectedvalue !== 'Existing Student' && empty($list_entry->userid)) {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'LMIC' && $list_entry->applymmumph != 1) {
+        if (empty($list_entry->userid)) {
+          continue;
+        }
+        if ($this->selectedvalue === 'Existing Student' && !empty($peoples_income_category[$list_entry->userid])) {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'HIC' && $list_entry->applymmumph != 2) {
+        if (empty($peoples_income_category[$list_entry->userid])) {
+          continue;
+        }
+        if ($this->selectedvalue === 'LMIC' && $peoples_income_category[$list_entry->userid] != 1) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'HIC' && $peoples_income_category[$list_entry->userid] != 2) {
           unset($list_to_filter[$index]);
           continue;
         }
