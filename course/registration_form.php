@@ -28,7 +28,7 @@ class registration_form extends moodleform {
 "<p><strong>
 There are three steps for enrolment in Peoples-uni courses.<br />
 <br />
-1. You need to complete the registration by filling in your details (see boxes below) and you will receive an automatic reply<br />
+1. You need to complete the registration by filling in your details (see boxes below) and you will receive an automatic reply.<br />
 <br />
 2. You will be invited to take part in our 'Preparing to Study' course - these take place online in January/Febrary and July/August. You will receive detailed information about the course a month before it begins. There is no payment for the Preparing to Study course.<br />
 <br />
