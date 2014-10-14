@@ -585,7 +585,7 @@ foreach ($listssf as $key => $listssfname) {
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_register_ack_email" value="1" />
-<input type="submit" name="set_register_ack_email" value="Set the above text as the Auto Acknowledgement e-mail wording for the Registration Form (form data also echoed)" style="width:50em" />
+<input type="submit" name="set_register_ack_email" value="Set the above text as the Auto Acknowledgement e-mail wording for the Registration Form (form also echoed)" style="width:50em" />
 </form>
 <br />
 
