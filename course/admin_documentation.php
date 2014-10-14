@@ -127,6 +127,14 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <br />This may overestimate the number waiting because of historical registrations what were bypassed.
 </li>
 <li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the Automatic Acknowledgement e-mail wording for the Registration Form and then click "Set the above text as the Automatic Acknowledgement e-mail wording for the Registration Form (form data also echoed)". Here is a sample of previous wording...
+<br /><pre>
+Dear GIVEN_NAME_HERE,
+
+THIS HAS YET TO BE SPECIFIED!
+</pre>
+</li>
+<li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording and then click "Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
