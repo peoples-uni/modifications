@@ -131,7 +131,56 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
-THIS HAS YET TO BE SPECIFIED!
+Welcome to Peoples-uni. At a later date you will be invited to take
+part in our 'Preparing to Study' course.
+
+We have found in the past that those students who fully understand
+what they are letting themselves in for, do much better in the
+courses than some who are new to our e-learning platform.
+
+'Preparing to Study' involves refreshing your academic skills
+by taking part in online discussions with your student support group.
+Student support groups begin in July/August and January/February.
+You will be sent an email with the exact starting date 2 weeks in
+advance, and a separate email with your username and password.
+
+In preparation for this you can do the following:
+
+1. Read the Are you Ready materials on the website and check that
+you are prepared to study:
+http://www.peoples-uni.org/content/are-you-ready-peoples-uni
+
+2. Think about your study plan and when you will study -
+You will need to make sure you can log on and read the discussions a
+minimum of once per week, but to get the best out of the forums we
+expect you to read and respond to others forum posts every few days.
+
+3. *Read the student handbook*:
+http://www.peoples-uni.org/content/student-handbook
+
+4. You may want to complete our open access Foundations in Public
+Health module (not obligatory) - you can access this online at:
+http://courses.peoples-uni.org/course/view.php?id=308
+
+There are lots of resources for you to read, which will help you
+learn key public health terms. This module is self directed learning
+and there are no tutor led discussions.
+
+The course enrolment window opens twice every year -
+March and August, and this is when you select the module(s) you
+wish to enrol in for the current semester.
+You will be reminded when the course enrolment window is open.
+
+If you have technical problems please email apply@peoples-uni.org
+for assistance.
+
+Peoples Open Access Education Initiative Administrator.
+
+Check out our Peoples-uni Facebook
+www.facebook.com/peoples-uni
+, twitter (@Peoplesuni) and LinkedIn pages
+https://www.linkedin.com/company/people%27s-open-access-initiative
+to follow our students and tutors learning journeys.
 </pre>
 </li>
 <li>
