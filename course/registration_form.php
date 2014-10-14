@@ -25,7 +25,7 @@ class registration_form extends moodleform {
     $mform->addElement('header', 'top', 'Instructions');
 
     $mform->addElement('static', 'instuctions', '',
-'<p><strong>
+"<p><strong>
 There are three steps for enrolment in Peoples-uni courses.<br />
 <br />
 1. You need to complete the registration by filling in your details (see boxes below) and you will receive an automatic reply<br />
@@ -34,7 +34,7 @@ There are three steps for enrolment in Peoples-uni courses.<br />
 <br />
 3. In February/August we will send you an application form so you can choose specific modules - you will receive confirmation that you are enrolled in the course in early April/September, when you will need to pay your course fees. The modules then begin in mid April/September.<br />
 </strong></p>
-<p><strong>Note:</strong> The closing date for applications for enrolment in modules for the upcoming semester is ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . ' approximately. When enrolments are open you will be informed (this is normally about 2 weeks before that date).</p>
+<p><strong>Note:</strong> The closing date for applications for enrolment in modules for the upcoming semester is " . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . ' approximately. When enrolments are open you will be informed (this is normally about 2 weeks before that date).</p>
 <p><strong>Please read the information on </strong><a href="http://peoples-uni.org/content/course-fees">Course Fees (Click Here)</a><strong> to make sure that you are prepared.</strong></p>
 <p>For inquires about registration please send an email to <a href="mailto:apply@peoples-uni.org?subject=Registration query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
