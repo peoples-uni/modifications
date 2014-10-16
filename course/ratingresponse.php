@@ -132,7 +132,7 @@ else {
 }
 
 echo '<br />';
-echo '<p><strong>Discussion Feedback you have received (and your responses)...</strong></p>';
+echo '<p><strong>Discussion Feedback you have received (and any reflections you made in response)...</strong></p>';
 
 $discussionfeedbacks = $DB->get_records_sql("
   SELECT DISTINCT
