@@ -131,6 +131,7 @@ else {
   echo '</strong></p><br />';
 }
 
+echo '<br />';
 echo '<p><strong>Discussion Feedback you have received (and your responses)...</strong></p>';
 
 $discussionfeedbacks = $DB->get_records_sql("
