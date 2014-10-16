@@ -130,7 +130,6 @@ else {
   echo 'Below you can see past ratings on your discussion contributions by Student Support Officers for all modules along with any reflections on these ratings that you have previously submitted.';
   echo '</strong></p><br />';
 }
-  echo '<br /><br /><br />';
 
 $discussionfeedbacks = $DB->get_records_sql("
   SELECT DISTINCT
