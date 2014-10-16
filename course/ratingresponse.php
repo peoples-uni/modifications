@@ -131,6 +131,8 @@ else {
   echo '</strong></p><br />';
 }
 
+echo '<p><strong>Discussion Feedback you have received (and your responses)...</strong></p>';
+
 $discussionfeedbacks = $DB->get_records_sql("
   SELECT DISTINCT
     d.*,
