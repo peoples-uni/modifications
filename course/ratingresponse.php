@@ -191,9 +191,10 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $discussionfeedback->what_do_differently_when_prepare_post));
   }
   else {
-    $rowdata[] = '';
-    $rowdata[] = '';
-    $rowdata[] = '';
+    $linktoform = '<a href="http://courses.peoples-uni.org/course/ratingresponse.php?course_id=' . $discussionfeedback->course_id . '">Click here to add your reflections</a>';
+    $rowdata[] = $linktoform;
+    $rowdata[] = $linktoform;
+    $rowdata[] = $linktoform;
   }
 
   $table->data[] = $rowdata;
