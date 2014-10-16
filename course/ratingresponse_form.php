@@ -24,7 +24,7 @@ class ratingresponse_form extends moodleform {
 
     $student_ratingresponse = $DB->get_record('student_ratingresponse', array('userid' => $USER->id, 'course_id' => $_SESSION['peoples_course_id_for_student_ratingresponse']));
 
-    if (!empty($student_ratingresponse)) $already_submitted = '<p><strong>You have just now (or previously) submitted this form (see your comments below), but you may submit again if you wish.</strong><br />
+    if (!empty($student_ratingresponse)) $already_submitted = '<p><strong>You have just now (or previously) submitted this form (see your reflections below), but you may submit again if you wish.</strong><br />
     <a href="http://courses.peoples-uni.org/">Click here to return to Moodle</a></p><br />';
     else  $already_submitted = '';
 
