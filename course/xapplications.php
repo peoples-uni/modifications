@@ -418,7 +418,9 @@ echo $OUTPUT->header();
 
 
 if (!$displayforexcel) echo "<h1>Student Applications</h1>";
-echo "$PAGE->theme->name<br />";
+echo "<br />";
+echo print_r($PAGE->theme, TRUE) . "<br />###<br />";
+echo print_r($PAGE->theme->name, TRUE) . "<br />";
 
 
 if (!$displayforexcel) $peoples_filters->show_filters();
