@@ -31,14 +31,18 @@ $PAGE->set_pagelayout('embedded');   // Needs as much space as possible
 $PAGE->set_url('/course/ratingresponse.php');
 
 
-$course_id = optional_param('course_id', 0, PARAM_INT);
-
-if (empty($course_id) && empty($_SESSION['peoples_course_id_for_student_ratingresponse'])) {
-  $course_id = required_param('course_id', PARAM_INT);
+if (!empty($_SESSION['peoples_submitted_student_ratingresponse']) && empty($_SESSION['peoples_course_id_for_student_ratingresponse'])) {
+  $_SESSION['peoples_submitted_student_ratingresponse'] = FALSE;
+  $course_id = required_param('course_id', PARAM_INT); // Should only get here, if ever, after a session timeout
+  die(); // In case, for some reason?, code got through previous line!
 }
-elseif (empty($course_id)) {
+
+$course_id = optional_param('course_id', 0, PARAM_INT);
+if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) { // Form submitted
   $course_id = $_SESSION['peoples_course_id_for_student_ratingresponse'];
 }
+
+$_SESSION['peoples_submitted_student_ratingresponse'] = FALSE;
 
 
 require_login();
@@ -54,7 +58,12 @@ if (empty($userrecord)) {
 
 $fullname = fullname($userrecord);
 if (empty($fullname) || trim($fullname) == 'Guest User') {
-  $SESSION->wantsurl = "$CFG->wwwroot/course/ratingresponse.php?course_id=$course_id";
+  if ($course_id) {
+    $SESSION->wantsurl = "$CFG->wwwroot/course/ratingresponse.php?course_id=$course_id";
+  }
+  else {
+    $SESSION->wantsurl = "$CFG->wwwroot/course/ratingresponse.php";
+  }
   redirect($CFG->wwwroot . '/login/index.php');
 }
 
@@ -62,9 +71,9 @@ if (empty($fullname) || trim($fullname) == 'Guest User') {
 $_SESSION['peoples_course_id_for_student_ratingresponse'] = $course_id;
 
 
-$discussionfeedback_present = $DB->get_record('discussionfeedback', array('course_id' => $course_id, 'userid' => $USER->id));
+if ($course_id) $discussionfeedback_present = $DB->get_record('discussionfeedback', array('course_id' => $course_id, 'userid' => $USER->id));
 
-if (!empty($discussionfeedback_present)) {
+if ($course_id && !empty($discussionfeedback_present)) {
   $editform = new ratingresponse_form(NULL, array('customdata' => array()));
   if ($editform->is_cancelled()) {
     redirect(new moodle_url('http://courses.peoples-uni.org'));
@@ -120,18 +129,19 @@ $PAGE->set_heading('Peoples-uni Discussion Forum Contributions');
 
 echo $OUTPUT->header();
 
-
-if (!empty($discussionfeedback_present)) {
-  $editform->display();
+if ($course_id) {
+  if (!empty($discussionfeedback_present)) {
+    $editform->display();
+  }
+  else {
+    echo '<p><strong>';
+    echo 'You have not been given discussion feedback for this module yet, so cannot respond to the feedback yet.<br />';
+    echo 'Below you can see past ratings on your discussion contributions by Student Support Officers for all modules along with any reflections on these ratings that you have previously submitted.';
+    echo '</strong></p><br />';
+  }
+  echo '<br />';
 }
-else {
-  echo '<p><strong>';
-  echo 'You have not been given discussion feedback for this module yet, so cannot respond to the feedback yet.<br />';
-  echo 'Below you can see past ratings on your discussion contributions by Student Support Officers for all modules along with any reflections on these ratings that you have previously submitted.';
-  echo '</strong></p><br />';
-}
 
-echo '<br />';
 echo '<p><strong>Discussion Feedback you have received (and any reflections you made in response)...</strong></p>';
 
 $discussionfeedbacks = $DB->get_records_sql("

@@ -58,6 +58,8 @@ class ratingresponse_form extends moodleform {
 
     $errors = parent::validation($data, $files);
 
+    if (empty($errors)) $_SESSION['peoples_submitted_student_ratingresponse'] = TRUE;
+
     return $errors;
   }
 }
