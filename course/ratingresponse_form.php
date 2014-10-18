@@ -56,8 +56,8 @@ class ratingresponse_form extends moodleform {
   function validation($data, $files) {
     global $DB;
 //(**)DEL
-if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) echo '<br />BEFORE VALIDATION peoples_submitted_student_ratingresponse TRUE<br />';
-else echo '<br />BEFORE VALIDATION peoples_submitted_student_ratingresponse FALSE<br />';
+if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) error_log('BEFORE VALIDATION peoples_submitted_student_ratingresponse TRUE');
+else error_log('BEFORE VALIDATION peoples_submitted_student_ratingresponse FALSE');
 //(**)DEL
 
     $errors = parent::validation($data, $files);
@@ -65,8 +65,8 @@ else echo '<br />BEFORE VALIDATION peoples_submitted_student_ratingresponse FALS
     if (empty($errors)) $_SESSION['peoples_submitted_student_ratingresponse'] = TRUE;
 
 //(**)DEL
-if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) echo '<br />VALIDATION peoples_submitted_student_ratingresponse TRUE<br />';
-else echo '<br />VALIDATION peoples_submitted_student_ratingresponse FALSE<br />';
+if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) error_log('VALIDATION peoples_submitted_student_ratingresponse TRUE');
+else error_log('VALIDATION peoples_submitted_student_ratingresponse FALSE');
 //(**)DEL
     return $errors;
   }
