@@ -211,6 +211,8 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
 }
 echo html_writer::table($table);
 
+echo '<br /><a href="http://courses.peoples-uni.org/">Click here to return to Moodle</a>';
+
 
 echo $OUTPUT->footer();
 ?>
