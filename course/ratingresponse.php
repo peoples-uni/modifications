@@ -31,6 +31,13 @@ $PAGE->set_pagelayout('embedded');   // Needs as much space as possible
 $PAGE->set_url('/course/ratingresponse.php');
 
 
+//(**)DEL
+if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) echo '<br />peoples_submitted_student_ratingresponse TRUE<br />';
+else '<br />peoples_submitted_student_ratingresponse FALSE<br />';
+
+if (!empty($_SESSION['peoples_course_id_for_student_ratingresponse'])) echo '<br />peoples_course_id_for_student_ratingresponse TRUE<br />';
+else '<br />peoples_course_id_for_student_ratingresponse FALSE<br />';
+//(**)DEL
 if (!empty($_SESSION['peoples_submitted_student_ratingresponse']) && empty($_SESSION['peoples_course_id_for_student_ratingresponse'])) {
   $_SESSION['peoples_submitted_student_ratingresponse'] = FALSE;
   $course_id = required_param('course_id', PARAM_INT); // Should only get here, if ever, after a session timeout
@@ -86,9 +93,11 @@ if ($course_id && !empty($discussionfeedback_present)) {
       $student_ratingresponse = new object();
 
       $doinsert = TRUE;
+      echo '<br />doinsert TRUE<br />';//(**)
     }
     else {
       $doinsert = FALSE;
+      echo '<br />doinsert FALSE<br />';//(**)
     }
 
     $student_ratingresponse->userid = $USER->id;
