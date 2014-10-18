@@ -35,8 +35,8 @@ $PAGE->set_url('/course/ratingresponse.php');
 if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) echo '<br />peoples_submitted_student_ratingresponse TRUE<br />';
 else echo '<br />peoples_submitted_student_ratingresponse FALSE<br />';
 
-if (!empty($_SESSION['peoples_course_id_for_student_ratingresponse'])) echo '<br />peoples_course_id_for_student_ratingresponse TRUE<br />';
-else echo '<br />peoples_course_id_for_student_ratingresponse FALSE<br />';
+if (!empty($_SESSION['peoples_course_id_for_student_ratingresponse'])) echo '<br />peoples_course_id_for_student_ratingresponse:' . $_SESSION['peoples_course_id_for_student_ratingresponse'] . '<br />';
+else echo '<br />peoples_course_id_for_student_ratingresponse Empty<br />';
 //(**)DEL
 if (!empty($_SESSION['peoples_submitted_student_ratingresponse']) && empty($_SESSION['peoples_course_id_for_student_ratingresponse'])) {
   $_SESSION['peoples_submitted_student_ratingresponse'] = FALSE;
