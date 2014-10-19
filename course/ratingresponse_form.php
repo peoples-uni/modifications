@@ -53,7 +53,7 @@ class ratingresponse_form extends moodleform {
     $mform->addRule('what_do_differently_when_prepare_post',                'What will I do differently is required', 'required', null, 'client');
 
     $mform->addElement('hidden', 'course_id', $course_id);
-    $mform->setType('returnurl', PARAM_INT);
+    $mform->setType('course_id', PARAM_INT);
 
     $this->add_action_buttons(false, 'Submit Form');
   }
