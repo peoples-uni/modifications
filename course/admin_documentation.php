@@ -1669,6 +1669,11 @@ At the top of the Feedback page all existing Postings with Ratings and existing 
 <br />
 </li>
 <li>
+As indicated in the same e-mail above, there is a link http://courses.peoples-uni.org/course/ratingresponse.php?course_id=326 which is sent out to students to allow them to submit reflections on the discussion feedback that they have been given. At the bottom of this page the student will be able to see all discussion feedback they have been given (one per Module) along with their reflections on this feedback (if any). This link can be sent out without a course_id parameter i.e.<br />
+<a href="http://courses.peoples-uni.org/course/ratingresponse.php">http://courses.peoples-uni.org/course/ratingresponse.php</a><br />
+This page will not have the form, but it will have all the discussion feedback with reflection (if any). Any missing reflections will have a link "Click here to add your reflections", which if clicked will bring the student to the form to add their reflections.
+</li>
+<li>
 There are a number of filters in posts.php added to allow searching for Students with issues or otherwise. This can obviously be combined with the existing filters such as by Student Support Group. Students can also be looked at over multiple Semesters. Filters are...<br />
 <br />
 Student has less that a number of posts matching the filter<br />
