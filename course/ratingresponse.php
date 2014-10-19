@@ -76,11 +76,9 @@ if ($course_id) {
       $student_ratingresponse = new object();
 
       $doinsert = TRUE;
-      echo '<br />doinsert TRUE<br />';//(**)
     }
     else {
       $doinsert = FALSE;
-      echo '<br />doinsert FALSE<br />';//(**)
     }
 
     $student_ratingresponse->userid = $USER->id;
