@@ -16,13 +16,16 @@ class ratingresponse_form extends moodleform {
   function definition() {
     global $DB, $CFG, $USER;
 
-    $mform = $this->_form;
+    $mform      = $this->_form;
+    $data       = $this->_customdata['data'];
+    $customdata = $this->_customdata['customdata'];
+    $course_id  = $customdata['course_id'];
 
     $mform->addElement('header', 'top', 'Instructions');
 
-    $course = $DB->get_record('course', array('id' => $_SESSION['peoples_course_id_for_student_ratingresponse']));
+    $course = $DB->get_record('course', array('id' => $course_id));
 
-    $student_ratingresponse = $DB->get_record('student_ratingresponse', array('userid' => $USER->id, 'course_id' => $_SESSION['peoples_course_id_for_student_ratingresponse']));
+    $student_ratingresponse = $DB->get_record('student_ratingresponse', array('userid' => $USER->id, 'course_id' => $course_id));
 
     if (!empty($student_ratingresponse)) $already_submitted = '<p><strong>You have just now (or previously) submitted this form (see your reflections below the form), but you may submit again if you wish.</strong><br />
     <a href="http://courses.peoples-uni.org/">Click here to return to Moodle</a></p><br />';
@@ -49,25 +52,18 @@ class ratingresponse_form extends moodleform {
     $mform->addElement('textarea', 'what_do_differently_when_prepare_post', 'What will I do differently when I prepare a discussion post?', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
     $mform->addRule('what_do_differently_when_prepare_post',                'What will I do differently is required', 'required', null, 'client');
 
+    $mform->addElement('hidden', 'course_id', $course_id);
+    $mform->setType('returnurl', PARAM_INT);
+
     $this->add_action_buttons(false, 'Submit Form');
   }
 
 
   function validation($data, $files) {
     global $DB;
-//(**)DEL
-if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) error_log('BEFORE VALIDATION peoples_submitted_student_ratingresponse TRUE');
-else error_log('BEFORE VALIDATION peoples_submitted_student_ratingresponse FALSE');
-//(**)DEL
 
     $errors = parent::validation($data, $files);
 
-    if (empty($errors)) $_SESSION['peoples_submitted_student_ratingresponse'] = TRUE;
-
-//(**)DEL
-if (!empty($_SESSION['peoples_submitted_student_ratingresponse'])) error_log('VALIDATION peoples_submitted_student_ratingresponse TRUE');
-else error_log('VALIDATION peoples_submitted_student_ratingresponse FALSE');
-//(**)DEL
     return $errors;
   }
 }
