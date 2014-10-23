@@ -166,6 +166,9 @@ $track_submissions = $DB->get_records_sql("
 if (empty($track_submissions)) {
   $track_submissions = array();
 }
+foreach ($track_submissions as $index => $track_submission) {
+  if ($track_submissions[$index]->submissionstatus === 'finished') $track_submissions[$index]->submissionstatus = 'submitted';
+}
 
 $grade_grade_historys = $DB->get_records_sql("
   SELECT DISTINCT
@@ -236,8 +239,6 @@ foreach ($track_submissions as $index => $track_submission) {
   $rowdata[] = $track_submission->cutoff;
   $rowdata[] = $track_submission->extension;
   $rowdata[] = $track_submission->submissiontime;
-
-  if ($track_submission->submissionstatus === 'finished') $track_submission->submissionstatus = 'submitted';
   $rowdata[] = $track_submission->submissionstatus;
 
   if (FALSE && substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
