@@ -243,7 +243,7 @@ foreach ($track_submissions as $index => $track_submission) {
   if (FALSE && substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
   else $rowdata[] = '';
 
-  if (!$displayforexcel) {
+  if (FALSE && !$displayforexcel) {
     $rowdata[] = '<a href="' . "$CFG->wwwroot/course/studentsubmissions.php?id={$track_submission->userid}&hidequiz=1" . '" target="_blank">' . $track_submission->submissionhistoryall . '</a>';
   }
   else {
