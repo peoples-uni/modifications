@@ -744,7 +744,7 @@ foreach ($listssf as $key => $listssfname) {
 <br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_track_quizzes_exclusions" value="1" />
-<input type="submit" name="set_track_quizzes_exclusions" value="Set above comma separated list of assignment IDs to be excluded from track_quizzes.php" style="width:50em" />
+<input type="submit" name="set_track_quizzes_exclusions" value="Set above comma separated list of quiz IDs to be excluded from track_quizzes.php" style="width:50em" />
 </form>
 <br />
 
