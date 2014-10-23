@@ -1093,6 +1093,9 @@ The Manager role gives access to this page.
 <li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> describes a way of looking at all submissions and all grades for an individual student.
 </li>
+<li>
+<strong>Additionally</strong>... <a href="http://courses.peoples-uni.org/course/track_quizzes.php" target="_blank">http://courses.peoples-uni.org/course/track_quizzes.php</a> allows tracking of student quiz submissions (most important in Biostatistics) in a similar way to track_submissions.php
+</li>
 </ol>
 
 
