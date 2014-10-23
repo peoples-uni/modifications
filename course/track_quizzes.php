@@ -137,11 +137,11 @@ $track_submissions = $DB->get_records_sql("
     FROM_UNIXTIME(g.timemodified, '%Y-%m-%d') AS modified,
     FROM_UNIXTIME(a.timeclose, '%Y-%m-%d') AS due,
     '' AS cutoff,
-    '' AS extension,
+    IFNULL(FROM_UNIXTIME(IF(MAX(IFNULL(qo.timeclose, 0))=0, NULL, MAX(IFNULL(qo.timeclose, 0))), '%Y-%m-%d'), '') AS extension,
     IFNULL(FROM_UNIXTIME(IF(MAX(IFNULL(asub.timefinish, 0))=0, NULL, MAX(IFNULL(asub.timefinish, 0))), '%Y-%m-%d'), '') AS submissiontime,
     SUBSTRING(MAX(CONCAT(LPAD(IFNULL(asub.timefinish, 0), 12, '0'), IFNULL(asub.state, ' '))), 13) submissionstatus,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(asub.state, ''), '(', IFNULL(FROM_UNIXTIME(IF(asub.timefinish=0, NULL, asub.timefinish), '%Y-%m-%d'), ''), ')') ORDER BY asub.timefinish SEPARATOR ', ') AS submissionhistory,
-    '' AS submissionhistoryall,
+GROUP_CONCAT(qg.grade ORDER BY qg.timemodified SEPARATOR ', ') AS submissionhistoryall,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(asub.sumgrades, 0), ''), IF(asub.timefinish IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(asub.timefinish=0, NULL, asub.timefinish), '%Y-%m-%d'), ''), IF(asub.timefinish IS NULL, '', ')')) ORDER BY asub.timefinish SEPARATOR ', ') AS assignmentgrades,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
     IFNULL(mphstatus, 0) AS mph,
@@ -149,6 +149,8 @@ $track_submissions = $DB->get_records_sql("
     IFNULL(GREATEST(IF(MAX(IFNULL(asub.timefinish, 0))=0, NULL, MAX(IFNULL(asub.timefinish, 0))), GREATEST(IFNULL(g.timecreated, 0), IFNULL(g.timemodified, 0))), a.timeclose) AS mostrecent
   FROM (mdl_enrolment e, mdl_course c, mdl_grade_items i, mdl_quiz a, mdl_user u)
   LEFT JOIN mdl_quiz_attempts asub ON u.id=asub.userid AND a.id=asub.quiz
+  LEFT JOIN mdl_quiz_overrides qo ON u.id=qo.userid AND a.id=qo.quiz
+LEFT JOIN mdl_quiz_grades qg ON u.id=qg.userid AND a.id=qg.quiz
   LEFT JOIN mdl_grade_grades g ON i.id=g.itemid AND u.id=g.userid
   LEFT JOIN mdl_peoplesmph2 m ON u.id=m.userid
   WHERE
