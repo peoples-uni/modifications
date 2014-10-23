@@ -242,6 +242,11 @@ if (!empty($_POST['mark_track_submissions_exclusions']) && !empty($_POST['value_
   $value_track_submissions_exclusions = $_POST['value_track_submissions_exclusions'];
   set_config('peoples_track_submissions_exclusions', $value_track_submissions_exclusions);
 }
+if (!empty($_POST['mark_track_quizzes_exclusions']) && !empty($_POST['value_track_quizzes_exclusions'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $value_track_quizzes_exclusions = $_POST['value_track_quizzes_exclusions'];
+  set_config('peoples_track_quizzes_exclusions', $value_track_quizzes_exclusions);
+}
 
 
 $semesters = $DB->get_records('semesters', NULL, 'id ASC');
@@ -731,6 +736,15 @@ foreach ($listssf as $key => $listssfname) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_track_submissions_exclusions" value="1" />
 <input type="submit" name="set_track_submissions_exclusions" value="Set above comma separated list of assignment IDs to be excluded from track_submissions.php" style="width:50em" />
+</form>
+<br />
+
+<form id="track_quizzes_exclusions_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<input type="text" size="80" name="value_track_quizzes_exclusions" value="<?php echo htmlspecialchars(get_config(NULL, 'peoples_track_quizzes_exclusions'), ENT_COMPAT, 'UTF-8'); ?>"  style="width:50em" />
+<br />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_track_quizzes_exclusions" value="1" />
+<input type="submit" name="set_track_quizzes_exclusions" value="Set above comma separated list of assignment IDs to be excluded from track_quizzes.php" style="width:50em" />
 </form>
 <br />
 

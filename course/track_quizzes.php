@@ -113,7 +113,7 @@ if (!$displayforexcel) echo "<h1>Track Quizzes</h1>";
 if (!$displayforexcel) $peoples_filters->show_filters();
 
 
-$peoples_track_submissions_exclusions = get_config(NULL, 'peoples_track_submissions_exclusions');
+$peoples_track_quizzes_exclusions = get_config(NULL, 'peoples_track_quizzes_exclusions');
 
 if ($mostrecentontop) {
   $order_string = 'mostrecent DESC, fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC';
@@ -160,7 +160,8 @@ $track_submissions = $DB->get_records_sql("
     c.id=a.course AND
     c.id=i.courseid AND
     i.iteminstance=a.id AND
-    e.userid=u.id
+    e.userid=u.id AND
+    a.id NOT IN ($peoples_track_quizzes_exclusions)
   GROUP BY a.id, u.id
   ORDER BY $order_string", array($chosensemester, $chosensemester2));
 if (empty($track_submissions)) {
