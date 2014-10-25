@@ -243,7 +243,6 @@ foreach ($track_submissions as $index => $track_submission) {
   $rowdata[] = $track_submission->submissiontime;
   $rowdata[] = $track_submission->submissionstatus;
 
-  //if (FALSE && substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
   if (substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
   else $rowdata[] = '';
 
@@ -255,7 +254,6 @@ foreach ($track_submissions as $index => $track_submission) {
   }
 
   $rowdata[] = $track_submission->assignmentgrades;
-  //$rowdata[] = ''; //$track_submission->assignmentgrades;
 
   $rowdata[] = $track_submission->grade;
 
