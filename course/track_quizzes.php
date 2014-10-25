@@ -247,10 +247,12 @@ foreach ($track_submissions as $index => $track_submission) {
   else $rowdata[] = '';
 
   if (!$displayforexcel) {
-    $rowdata[] = '<a href="' . "$CFG->wwwroot/course/studentsubmissions.php?id={$track_submission->userid}" . '" target="_blank">' . $track_submission->submissionhistoryall . '</a>';
+    //$rowdata[] = '<a href="' . "$CFG->wwwroot/course/studentsubmissions.php?id={$track_submission->userid}" . '" target="_blank">submissions' . $track_submission->submissionhistoryall . '</a>';
+    $rowdata[] = '<a href="' . "$CFG->wwwroot/course/studentsubmissions.php?id={$track_submission->userid}" . '" target="_blank">submissions</a>';
   }
   else {
-    $rowdata[] = $track_submission->submissionhistoryall;
+    //$rowdata[] = $track_submission->submissionhistoryall;
+    $rowdata[] = '';
   }
 
   $rowdata[] = $track_submission->assignmentgrades;
