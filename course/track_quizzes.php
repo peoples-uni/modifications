@@ -142,7 +142,8 @@ $track_submissions = $DB->get_records_sql("
     SUBSTRING(MAX(CONCAT(LPAD(IFNULL(asub.timefinish, 0), 12, '0'), IFNULL(asub.state, ' '))), 13) submissionstatus,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(asub.state, ''), '(', IFNULL(FROM_UNIXTIME(IF(asub.timefinish=0, NULL, asub.timefinish), '%Y-%m-%d'), ''), ')') ORDER BY asub.timefinish SEPARATOR ', ') AS submissionhistory,
     GROUP_CONCAT(FORMAT(qg.grade, 0) ORDER BY qg.timemodified SEPARATOR ', ') AS submissionhistoryall,
-    GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(asub.sumgrades, 0), ''), IF(asub.timefinish IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(asub.timefinish=0, NULL, asub.timefinish), '%Y-%m-%d'), ''), IF(asub.timefinish IS NULL, '', ')')) ORDER BY asub.timefinish SEPARATOR ', ') AS assignmentgrades,
+    GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(qg.grade, 0), ''), IF(qg.timemodified IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(qg.timemodified=0, NULL, qg.timemodified), '%Y-%m-%d'), ''), IF(qg.timemodified IS NULL, '', ')')) ORDER BY qg.timemodified SEPARATOR ', ') AS assignmentgrades,
+    GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(asub.sumgrades, 0), ''), IF(asub.timefinish IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(asub.timefinish=0, NULL, asub.timefinish), '%Y-%m-%d'), ''), IF(asub.timefinish IS NULL, '', ')')) ORDER BY asub.timefinish SEPARATOR ', ') AS rawassignmentgrades,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
     IFNULL(mphstatus, 0) AS mph,
     IFNULL(m.suspended, 0) AS mphsuspended,
@@ -242,7 +243,8 @@ foreach ($track_submissions as $index => $track_submission) {
   $rowdata[] = $track_submission->submissiontime;
   $rowdata[] = $track_submission->submissionstatus;
 
-  if (FALSE && substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
+  //if (FALSE && substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
+  if (substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
   else $rowdata[] = '';
 
   if (!$displayforexcel) {
