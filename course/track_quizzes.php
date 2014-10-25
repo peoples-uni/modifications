@@ -254,7 +254,7 @@ foreach ($track_submissions as $index => $track_submission) {
     $rowdata[] = $track_submission->submissionhistoryall;
   }
 
-  $track_submission->assignmentgrades;
+  $rowdata[] = $track_submission->assignmentgrades;
   //$rowdata[] = ''; //$track_submission->assignmentgrades;
 
   $rowdata[] = $track_submission->grade;
