@@ -281,7 +281,7 @@ foreach ($track_submissions as $index => $track_submission) {
   elseif (!empty($track_submission->cutoff   )) $z = 'Outside Cut-off!!!';
   else                                          $z = 'Outside Due Date!!!';
   if (($track_submission->submissionstatus === 'submitted') && ($track_submission->grade !== '') && ($track_submission->time_of_submissiontime >= $track_submission->time_of_last_assignmentgrade)) {
-    $warningtext = 'WARNING: Assignment Grade earlier than Submission ($track_submission->date_of_last_assignmentgrade)!!!';
+    $warningtext = "WARNING: Assignment Grade earlier than Submission ($track_submission->date_of_last_assignmentgrade)!!!";
     if (empty($z)) {
       $z = $warningtext;
     }
