@@ -139,10 +139,13 @@ $track_submissions = $DB->get_records_sql("
     '' AS cutoff,
     IFNULL(FROM_UNIXTIME(IF(MAX(IFNULL(qo.timeclose, 0))=0, NULL, MAX(IFNULL(qo.timeclose, 0))), '%Y-%m-%d'), '') AS extension,
     IFNULL(FROM_UNIXTIME(IF(MAX(IFNULL(asub.timefinish, 0))=0, NULL, MAX(IFNULL(asub.timefinish, 0))), '%Y-%m-%d'), '') AS submissiontime,
+    IFNULL(IF(MAX(IFNULL(asub.timefinish, 0))=0, NULL, MAX(IFNULL(asub.timefinish, 0))), '') AS time_of_submissiontime,
     SUBSTRING(MAX(CONCAT(LPAD(IFNULL(asub.timefinish, 0), 12, '0'), IFNULL(asub.state, ' '))), 13) submissionstatus,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(asub.state, ''), '(', IFNULL(FROM_UNIXTIME(IF(asub.timefinish=0, NULL, asub.timefinish), '%Y-%m-%d'), ''), ')') ORDER BY asub.timefinish SEPARATOR ', ') AS submissionhistory,
     GROUP_CONCAT(FORMAT(qg.grade, 0) ORDER BY qg.timemodified SEPARATOR ', ') AS submissionhistoryall,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(qg.grade, 0), ''), IF(qg.timemodified IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(qg.timemodified=0, NULL, qg.timemodified), '%Y-%m-%d'), ''), IF(qg.timemodified IS NULL, '', ')')) ORDER BY qg.timemodified SEPARATOR ', ') AS assignmentgrades,
+    MAX(qg.timemodified) AS time_of_last_assignmentgrade,
+    FROM_UNIXTIME(MAX(qg.timemodified), '%Y-%m-%d') AS date_of_last_assignmentgrade,
     GROUP_CONCAT(DISTINCT CONCAT(IFNULL(FORMAT(asub.sumgrades, 0), ''), IF(asub.timefinish IS NULL, '', '('), IFNULL(FROM_UNIXTIME(IF(asub.timefinish=0, NULL, asub.timefinish), '%Y-%m-%d'), ''), IF(asub.timefinish IS NULL, '', ')')) ORDER BY asub.timefinish SEPARATOR ', ') AS rawassignmentgrades,
     IFNULL(FORMAT(g.finalgrade, 0), '') AS grade,
     IFNULL(mphstatus, 0) AS mph,
@@ -183,7 +186,8 @@ $grade_grade_historys = $DB->get_records_sql("
   WHERE
     g.itemid=i.id AND
     i.courseid IN (SELECT DISTINCT courseid FROM mdl_enrolment WHERE semester IN (?, ?)) AND
-    g.finalgrade IS NOT NULL
+    g.finalgrade IS NOT NULL AND
+    g.userid!=g.usermodified
   ORDER BY g.timemodified",
   array($chosensemester, $chosensemester2));
 
@@ -282,6 +286,15 @@ foreach ($track_submissions as $index => $track_submission) {
   elseif (!empty($track_submission->cutoff   )) $z = 'Outside Cut-off!!!';
   elseif (!empty($track_submission->due      )) $z = 'Outside Due Date!!!';
   else                                          $z = '';
+  if (($track_submission->submissionstatus === 'submitted') && ($track_submission->grade !== '') && ($track_submission->time_of_submissiontime >= $track_submission->time_of_last_assignmentgrade)) {
+    $warningtext = "WARNING: Assignment Grade ($track_submission->date_of_last_assignmentgrade) earlier than Submission!!!";
+    if (empty($z)) {
+      $z = $warningtext;
+    }
+    else {
+      $z .= "; $warningtext";
+    }
+  }
   $rowdata[] = $z;
 
   $n++;

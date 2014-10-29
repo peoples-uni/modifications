@@ -1053,6 +1053,8 @@ Note there is also a checkbox to "Allow Peoples-uni to display your name (but no
 <br />Outside Cut-off!!!
 <br />Outside Due Date!!!
 <br />(only one of these, starting from the top of the list, is shown.)
+<br />Also if the Assignment Grade date is earlier than the Submission date, a warning is given.
+<br />(All of the above are in the rightmost column.)
 </li>
 <li>
 If there has been more than one submission then the "Submission History" column contains a list of all submissions (status & date).
@@ -1080,7 +1082,7 @@ The Status Filter has the following options...<br />
 Any<br />
 Not submitted (the assignment has not been submitted)<br />
 Submitted<br />
-Submitted, [but] No Final Grade [assigned]<br />
+Submitted, [but] No Final Grade [assigned][or Assignment Grade date is earlier than the Submission date]<br />
 Submitted, Final Grade <50<br />
 Submitted, Final Grade =0<br />
 </li>
@@ -1094,7 +1096,7 @@ The Manager role gives access to this page.
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> describes a way of looking at all submissions and all grades for an individual student.
 </li>
 <li>
-<strong>Additionally</strong>... <a href="http://courses.peoples-uni.org/course/track_quizzes.php" target="_blank">http://courses.peoples-uni.org/course/track_quizzes.php</a> allows tracking of student quiz submissions (most important in Biostatistics) in a similar way to track_submissions.php
+<strong>Additionally</strong>... <a href="http://courses.peoples-uni.org/course/track_quizzes.php" target="_blank">http://courses.peoples-uni.org/course/track_quizzes.php</a> allows tracking of student quiz submissions (most important in Biostatistics) in a similar way to track_submissions.php with the same column names.
 </li>
 </ol>
 

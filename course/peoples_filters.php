@@ -705,7 +705,7 @@ class peoples_submission_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Submitted, No Final Grade'  && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade !== '')) {
+        if ($this->selectedvalue === 'Submitted, No Final Grade'  && ($list_entry->submissionstatus !== 'submitted' || (($list_entry->grade !== '') && ($list_entry->time_of_submissiontime < $list_entry->time_of_last_assignmentgrade)))) {
           unset($list_to_filter[$index]);
           continue;
         }
