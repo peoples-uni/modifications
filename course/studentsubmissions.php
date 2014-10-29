@@ -213,10 +213,10 @@ $grade_grades_historys = $DB->get_records_sql("
     mdl_course c
   WHERE
     g.userid=$userid AND
-    g.userid!=g.usermodified AND
     g.itemid=i.id AND
     i.courseid=c.id
   ORDER BY fullname ASC, itemname ASC, g.timemodified ASC");
+//    g.userid!=g.usermodified AND Removed as it suppresses course grades and autograded test modules (e.g. FPH)
 
 $table = new html_table();
 $table->head = array(
