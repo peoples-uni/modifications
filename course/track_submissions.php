@@ -135,6 +135,7 @@ $track_submissions = $DB->get_records_sql("
     i.id AS itemid,
     FROM_UNIXTIME(g.timecreated, '%Y-%m-%d') AS created,
     FROM_UNIXTIME(g.timemodified, '%Y-%m-%d') AS modified,
+    g.timemodified AS time_modified_grade,
     FROM_UNIXTIME(duedate, '%Y-%m-%d') AS due,
     IFNULL(FROM_UNIXTIME(IF(      cutoffdate=0, NULL,       cutoffdate), '%Y-%m-%d'), '') AS cutoff,
     IFNULL(FROM_UNIXTIME(IF(extensionduedate=0, NULL, extensionduedate), '%Y-%m-%d'), '') AS extension,
@@ -282,6 +283,15 @@ foreach ($track_submissions as $index => $track_submission) {
   else                                          $z = 'Outside Due Date!!!';
   if (($track_submission->submissionstatus === 'submitted') && ($track_submission->grade !== '') && ($track_submission->time_of_submissiontime >= $track_submission->time_of_last_assignmentgrade)) {
     $warningtext = "WARNING: Assignment Grade ($track_submission->date_of_last_assignmentgrade) earlier than Submission!!!";
+    if (empty($z)) {
+      $z = $warningtext;
+    }
+    else {
+      $z .= "; $warningtext";
+    }
+  }
+  elseif (($track_submission->submissionstatus === 'submitted') && ($track_submission->grade !== '') && ($track_submission->time_of_submissiontime >= $track_submission->time_modified_grade)) {
+    $warningtext = "WARNING: Final Grade ($track_submission->modified) earlier than Submission!!!";
     if (empty($z)) {
       $z = $warningtext;
     }
