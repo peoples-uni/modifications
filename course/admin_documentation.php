@@ -1053,7 +1053,7 @@ Note there is also a checkbox to "Allow Peoples-uni to display your name (but no
 <br />Outside Cut-off!!!
 <br />Outside Due Date!!!
 <br />(only one of these, starting from the top of the list, is shown.)
-<br />Also if the Assignment Grade date is earlier than the Submission date, a warning is given.
+<br />Also if the Assignment Grade or Final Grade date is earlier than the Submission date, a warning is given.
 <br />(All of the above are in the rightmost column.)
 </li>
 <li>
@@ -1082,7 +1082,7 @@ The Status Filter has the following options...<br />
 Any<br />
 Not submitted (the assignment has not been submitted)<br />
 Submitted<br />
-Submitted, [but] No Final Grade [assigned][or Assignment Grade date is earlier than the Submission date]<br />
+Submitted, [but] No Final Grade [assigned][or Assignment/Final Grade date is earlier than the Submission date]<br />
 Submitted, Final Grade <50<br />
 Submitted, Final Grade =0<br />
 </li>
