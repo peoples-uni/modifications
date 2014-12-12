@@ -634,9 +634,13 @@ foreach ($problems_records as $record) {
 
 
 $first = true;
-$certificate = 0;
+$diploma_passes = 0;
+$masters_passes = 0;
+$grandfathered_passes = 0;
 $countf = 0;
+$countf_grandfathered = 0;
 $countp = 0;
+$countp_grandfathered = 0;
 foreach ($enrols as $enrol) {
 	//Test: $enrol->finalgrade = 1.0; (old grading system)
 	//Test: $enrol->notified = 1;
@@ -647,10 +651,31 @@ foreach ($enrols as $enrol) {
 			echo '(When your certificate appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br />';
 		}
 		echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=transcript" target="_blank">Academic Transcript for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
-		$certificate++;
+		$diploma_passes++;
+
+    if ($enrol->finalgrade > 49.99999) {
+      $masters = TRUE;
+      $masters_passes++;
+    }
+    else {
+      $masters = FALSE;
+    }
+
+    // $grandfathered = $masters || ($enrol->datefirstenrolled < 1422662400); // 31 Jan 2015
+    $grandfathered = $masters || ($enrol->percentgrades == 0); // Masters level Pass OR Pre Percentage Pass
+    if ($grandfathered) {
+      $grandfathered_passes++;
+    }
+
 		$matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches);	// Take out course code without Year/Semester part
-		if ($matched && !empty($foundation[$matches[1]])) $countf++;
-		if ($matched && !empty($problems  [$matches[1]])) $countp++;
+		if ($matched && !empty($foundation[$matches[1]])) {
+      $countf++;
+      if ($grandfathered) $countf_grandfathered++;
+    }
+		if ($matched && !empty($problems  [$matches[1]])) {
+      $countp++;
+      if ($grandfathered) $countp_grandfathered++;
+    }
 	}
 	elseif ($enrol->notified == 3) {
 		if ($first) {
@@ -662,10 +687,22 @@ foreach ($enrols as $enrol) {
 	}
 }
 
-if ($certificate >= 3) {
+$meets_foundation_criterion        =  $countf_grandfathered >= 2;
+$meets_problems_criterion          =  $countp_grandfathered >= 2;
+$almost_meets_foundation_criterion = ($countf_grandfathered == 1) && ($countf >= 2);
+$almost_meets_problems_criterion   = ($countp_grandfathered == 1) && ($countp >= 2);
+
+$meets_overall_criteria =
+  ($meets_foundation_criterion && $meets_problems_criterion)
+    ||
+  ($meets_foundation_criterion && $almost_meets_problems_criterion)
+    ||
+  ($meets_problems_criterion && $almost_meets_foundation_criterion);
+
+if (($grandfathered_passes >= 3) || (($grandfathered_passes == 2) && ($diploma_passes >= 3))) {
 	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate" target="_blank">Your Peoples Open Access Educational Initiative Certificate</a><br />';
 }
-if (($certificate >= 6) && ($countf >= 2) && ($countp >= 2)) {
+if ((($grandfathered_passes >= 6) || (($grandfathered_passes == 5) && ($diploma_passes >= 6))) && $meets_overall_criteria) {
 	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma" target="_blank">Your Peoples Open Access Educational Initiative Diploma</a><br />';
 }
 

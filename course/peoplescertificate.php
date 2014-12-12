@@ -322,9 +322,13 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   }
 
 
-	$certificate = 0;
-	$countf = 0;
-	$countp = 0;
+  $diploma_passes = 0;
+  $masters_passes = 0;
+  $grandfathered_passes = 0;
+  $countf = 0;
+  $countf_grandfathered = 0;
+  $countp = 0;
+  $countp_grandfathered = 0;
 	$lastestdate = 0;
   $modules = array();
   $modules[] = 'Modules completed (Grade):';
@@ -332,10 +336,32 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   $percentages[] = '';
 	foreach ($enrols as $enrol) {
 		if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
-			$certificate++;
-			$matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches);	// Take out course code without Year/Semester part
-			if ($matched && !empty($foundation[$matches[1]])) $countf++;
-			if ($matched && !empty($problems  [$matches[1]])) $countp++;
+      $diploma_passes++;
+
+      if ($enrol->finalgrade > 49.99999) {
+        $masters = TRUE;
+        $masters_passes++;
+      }
+      else {
+        $masters = FALSE;
+      }
+
+      // $grandfathered = $masters || ($enrol->datefirstenrolled < 1422662400); // 31 Jan 2015
+      $grandfathered = $masters || ($enrol->percentgrades == 0); // Masters level Pass OR Pre Percentage Pass
+      if ($grandfathered) {
+        $grandfathered_passes++;
+      }
+
+      $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
+      if ($matched && !empty($foundation[$matches[1]])) {
+        $countf++;
+        if ($grandfathered) $countf_grandfathered++;
+      }
+      if ($matched && !empty($problems  [$matches[1]])) {
+        $countp++;
+        if ($grandfathered) $countp_grandfathered++;
+      }
+
 			$semesters[] = $enrol->semester;
 			$modules[] = $enrol->fullname;
 
@@ -349,12 +375,24 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 		}
 	}
 
-	if (($cert == 'certificate') && ($certificate >= 3)) {
-		$award = 'Certificate in Public Health';
-	}
-	elseif (($cert == 'diploma') && ($certificate >= 6) && ($countf >= 2) && ($countp >= 2)) {
-			$award = 'Diploma in Public Health';
-	}
+  $meets_foundation_criterion        =  $countf_grandfathered >= 2;
+  $meets_problems_criterion          =  $countp_grandfathered >= 2;
+  $almost_meets_foundation_criterion = ($countf_grandfathered == 1) && ($countf >= 2);
+  $almost_meets_problems_criterion   = ($countp_grandfathered == 1) && ($countp >= 2);
+
+  $meets_overall_criteria =
+    ($meets_foundation_criterion && $meets_problems_criterion)
+      ||
+    ($meets_foundation_criterion && $almost_meets_problems_criterion)
+      ||
+    ($meets_problems_criterion && $almost_meets_foundation_criterion);
+
+  if (($cert == 'certificate') && (($grandfathered_passes >= 3) || (($grandfathered_passes == 2) && ($diploma_passes >= 3)))) {
+    $award = 'Certificate in Public Health';
+  }
+  elseif (($cert == 'diploma') && ((($grandfathered_passes >= 6) || (($grandfathered_passes == 5) && ($diploma_passes >= 6))) && $meets_overall_criteria)) {
+    $award = 'Diploma in Public Health';
+  }
 	elseif ($cert == 'testcertificate') {
 			$award = 'Certificate in Public Health';
 			while (count($modules) < 5)	$modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
