@@ -37,7 +37,7 @@ SELECT
   u.lastaccess,
   COUNT(*) AS diploma_passes,
   SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) AS grandfathered_passes,
-  COUNT(*) - SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) AS diploma_only
+  COUNT(*) - SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) AS diploma_only,
   SUM(e.percentgrades=0) AS pre_percentage_passes,
   GROUP_CONCAT(c.idnumber ORDER BY c.idnumber ASC SEPARATOR ', ') AS codespassed,
   SUM(IF(codes.type='foundation', 1, 0)) AS foundationspassed,
@@ -62,7 +62,7 @@ SELECT
       (
         ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) >= 6)                      /* 6 Masters passes for Diploma */
           OR
-        ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) == 5) AND (COUNT(*) >= 6)) /* 5 Masters passes for Diploma & 1 condonement*/
+        ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))  = 5) AND (COUNT(*) >= 6)) /* 5 Masters passes for Diploma & 1 condonement*/
       )
         AND
       (
@@ -75,13 +75,13 @@ SELECT
         (
           ( SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation') >= 2) /* meets_foundation_criterion */
             AND
-          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  ) == 1) AND (SUM(IF(codes.type='problems'  , 1, 0)) >= 2)) /* almost_meets_problems_criterion */
+          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  )  = 1) AND (SUM(IF(codes.type='problems'  , 1, 0)) >= 2)) /* almost_meets_problems_criterion */
         )
           OR
         (
           ( SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  ) >= 2) /* meets_problems_criterion */
             AND
-          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation') == 1) AND (SUM(IF(codes.type='foundation', 1, 0)) >= 2)) /* $almost_meets_foundation_criterion */
+          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation')  = 1) AND (SUM(IF(codes.type='foundation', 1, 0)) >= 2)) /* $almost_meets_foundation_criterion */
         )
       )
     THEN 'Diploma'
@@ -89,7 +89,7 @@ SELECT
     WHEN
       ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) >= 3)                    /* 3 Masters passes for Certificate */
         OR
-      ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) == 2) && (COUNT(*)>= 3)) /* 2 Masters passes for Certificate & 1 condonement*/
+      ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))  = 2) && (COUNT(*)>= 3)) /* 2 Masters passes for Certificate & 1 condonement*/
     THEN 'Certificate'
 
     ELSE ''
