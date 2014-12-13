@@ -50,6 +50,7 @@ WHERE
   e.courseid=c.id AND
   e.userid=u.id AND
   e.userid=g.userid AND
+  e.notified=1 AND
   ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999)) AND
   c.id=i.courseid AND
   g.itemid=i.id AND
