@@ -18,7 +18,8 @@ if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>
 $isteacher = is_peoples_teacher();
 if (!$isteacher) {
   echo '<h1>You must be a tutor to do this!</h1>';
-  notice('Please Login Below', "$CFG->wwwroot/");
+  $SESSION->wantsurl = "$CFG->wwwroot/course/studentprogress.php";
+  notice('<br /><br /><b>Click Continue and Login</b><br /><br />');
 }
 
 echo '<h1>Student Progress</h1>';
@@ -34,11 +35,65 @@ SELECT
   u.lastname,
   u.firstname,
   u.lastaccess,
-  COUNT(*) AS numberpassed,
+  COUNT(*) AS diploma_passes,
+  SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) AS grandfathered_passes,
+  SUM(e.percentgrades=0) AS pre_percentage_passes,
   GROUP_CONCAT(c.idnumber ORDER BY c.idnumber ASC SEPARATOR ', ') AS codespassed,
   SUM(IF(codes.type='foundation', 1, 0)) AS foundationspassed,
   SUM(IF(codes.type='problems', 1, 0)) AS problemspassed,
-  IF(COUNT(*)>=6 AND SUM(IF(codes.type='foundation', 1, 0))>=2 AND SUM(IF(codes.type='problems', 1, 0))>=2, 'Diploma', IF(COUNT(*)>=3, 'Certificate', '')) AS qualification
+  SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation') AS countf_grandfathered,
+  SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems') AS countp_grandfathered,
+
+  CASE
+    WHEN
+      COUNT(*)>=6 AND
+      SUM(IF(codes.type='foundation', 1, 0))>=2 AND
+      SUM(IF(codes.type='problems', 1, 0))>=2
+    THEN 'Diploma'
+    WHEN
+      COUNT(*)>=3
+    THEN 'Certificate'
+    ELSE ''
+  END AS qualificationold,
+
+  CASE
+    WHEN
+      (
+        (SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) >= 6)
+          OR
+        (
+          (SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) == 5) AND
+          (COUNT(*) >= 6)
+        )
+      )
+        AND
+      (
+        (
+          (SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation') >= 2)
+            AND
+          (SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems') >= 2)
+        )
+          OR
+        (
+          (SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation') >= 2)
+            AND
+          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems') == 1) AND (SUM(IF(codes.type='problems', 1, 0)) >= 2))
+        )
+          OR
+        (
+          (SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems') >= 2)
+            AND
+          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation') == 1) AND (SUM(IF(codes.type='foundation', 1, 0)) >= 2))
+        )
+      )
+    THEN 'Diploma'
+
+    WHEN
+      (SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) >= 3) || ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) == 2) && (COUNT(*)>= 3))
+    THEN 'Certificate'
+
+    ELSE ''
+  END AS qualification
 FROM
   mdl_enrolment e,
   mdl_course c,
@@ -57,7 +112,7 @@ WHERE
   i.itemtype='course' AND
   c.idnumber LIKE BINARY CONCAT(codes.course_code, '%')
 GROUP BY e.userid
-ORDER BY numberpassed DESC, u.lastname, u.firstname
+ORDER BY diploma_passes DESC, u.lastname, u.firstname
 ");
 
 $peoplesmph2s = $DB->get_records_sql("
@@ -74,7 +129,7 @@ $table->head = array(
   'Family name',
   'Given name',
   'Last access',
-  '# Passed',
+  '# Passed @Masters (@Diploma)',
   'Passed',
   '# Foundation',
   '# Problems',
@@ -88,7 +143,13 @@ foreach ($enrols as $enrol) {
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
   $rowdata[] =  ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
-  $rowdata[] =  $enrol->numberpassed;
+
+  $text = "$enrol->grandfathered_passes";
+  $diploma_only = $enrol->diploma_passes - $enrol->grandfathered_passes;
+  if (!empty($diploma_only)) $text .= " ($diploma_only)";
+  if (!empty($enrol->pre_percentage_passes)) $text .= " Note: $enrol->pre_percentage_passes of the passes are pre-percentage";
+  $rowdata[] =  $text;
+
   $rowdata[] =  htmlspecialchars($enrol->codespassed, ENT_COMPAT, 'UTF-8');
   $rowdata[] =  $enrol->foundationspassed;
   $rowdata[] =  $enrol->problemspassed;
