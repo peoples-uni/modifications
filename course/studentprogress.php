@@ -123,12 +123,34 @@ FROM
   mdl_peoplesmph2
 ");
 
+$semester_durations = $DB->get_records_sql("
+SELECT
+  u.id,
+  MAX(s.id) - IF(MIN(s.id)=1, 7, MIN(s.id)) + 1 AS semester_duration
+FROM
+  mdl_enrolment e,
+  mdl_course c,
+  mdl_user u,
+  mdl_grade_grades g,
+  mdl_grade_items i,
+  mdl_semesters s
+WHERE
+  e.courseid=c.id AND
+  e.userid=u.id AND
+  e.userid=g.userid AND
+  c.id=i.courseid AND
+  g.itemid=i.id AND
+  i.itemtype='course' AND
+  e.semester=s.semester
+GROUP BY e.userid
+");
+
 $table = new html_table();
 
 $table->head = array(
   'Family name',
   'Given name',
-  'Last access',
+  'Last access (elapsed time for all modules)',
   '# Passed @Masters (@Diploma)',
   'Passed',
   '# Foundation',
@@ -142,7 +164,13 @@ foreach ($enrols as $enrol) {
   $rowdata = array();
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
-  $rowdata[] =  ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
+
+  $text = '';
+  if (!empty($semester_durations[$enrol->id])) {
+    $semester_duration = $semester_durations[$enrol->id];
+    $text = " ($semester_duration->semester_duration semesters)";
+  }
+  $rowdata[] =  ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never')) . $text;
 
   $text = "$enrol->grandfathered_passes";
   if (!empty($enrol->diploma_only)) $text .= " ($enrol->diploma_only)";
