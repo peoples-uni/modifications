@@ -138,6 +138,7 @@ WHERE
   e.courseid=c.id AND
   e.userid=u.id AND
   e.userid=g.userid AND
+  e.enrolled!=0 AND
   c.id=i.courseid AND
   g.itemid=i.id AND
   i.itemtype='course' AND
