@@ -641,6 +641,7 @@ $countf = 0;
 $countf_grandfathered = 0;
 $countp = 0;
 $countp_grandfathered = 0;
+$fails = 0;
 foreach ($enrols as $enrol) {
 	//Test: $enrol->finalgrade = 1.0; (old grading system)
 	//Test: $enrol->notified = 1;
@@ -651,11 +652,11 @@ foreach ($enrols as $enrol) {
 			echo '(When your certificate appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br />';
 		}
 		echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=transcript" target="_blank">Academic Transcript for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
-		$diploma_passes++;
+    if ($fails < 1) $diploma_passes++; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
 
     if ($enrol->finalgrade > 49.99999) {
       $masters = TRUE;
-      $masters_passes++;
+      if ($fails < 1) $masters_passes++;
     }
     else {
       $masters = FALSE;
@@ -664,17 +665,21 @@ foreach ($enrols as $enrol) {
     // $grandfathered = $masters || ($enrol->datefirstenrolled < 1422662400); // 31 Jan 2015
     $grandfathered = $masters || ($enrol->percentgrades == 0); // Masters level Pass OR Pre Percentage Pass
     if ($grandfathered) {
-      $grandfathered_passes++;
+      if ($fails < 1) $grandfathered_passes++; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
     }
 
 		$matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches);	// Take out course code without Year/Semester part
 		if ($matched && !empty($foundation[$matches[1]])) {
-      $countf++;
-      if ($grandfathered) $countf_grandfathered++;
+      if ($fails < 1) {
+        $countf++;
+        if ($grandfathered) $countf_grandfathered++;
+      }
     }
 		if ($matched && !empty($problems  [$matches[1]])) {
-      $countp++;
-      if ($grandfathered) $countp_grandfathered++;
+      if ($fails < 1) {
+        $countp++;
+        if ($grandfathered) $countp_grandfathered++;
+      }
     }
 	}
 	elseif ($enrol->notified == 3) {
@@ -685,6 +690,9 @@ foreach ($enrols as $enrol) {
 		}
 		echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=participation" target="_blank">Certificate of Participation for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
 	}
+  elseif (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade > 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade <= 44.99999)) && ($enrol->notified == 1)) {
+    $fails++;
+  }
 }
 
 $meets_foundation_criterion        =  $countf_grandfathered >= 2;

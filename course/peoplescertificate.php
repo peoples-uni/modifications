@@ -329,6 +329,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   $countf_grandfathered = 0;
   $countp = 0;
   $countp_grandfathered = 0;
+  $fails = 0;
 	$lastestdate = 0;
   $modules = array();
   $modules[] = 'Modules completed (Grade):';
@@ -336,11 +337,11 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   $percentages[] = '';
 	foreach ($enrols as $enrol) {
 		if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
-      $diploma_passes++;
+      if ($fails < 1) $diploma_passes++; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
 
       if ($enrol->finalgrade > 49.99999) {
         $masters = TRUE;
-        $masters_passes++;
+        if ($fails < 1) $masters_passes++;
       }
       else {
         $masters = FALSE;
@@ -349,17 +350,21 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
       // $grandfathered = $masters || ($enrol->datefirstenrolled < 1422662400); // 31 Jan 2015
       $grandfathered = $masters || ($enrol->percentgrades == 0); // Masters level Pass OR Pre Percentage Pass
       if ($grandfathered) {
-        $grandfathered_passes++;
+        if ($fails < 1) $grandfathered_passes++; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
       }
 
       $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
       if ($matched && !empty($foundation[$matches[1]])) {
-        $countf++;
-        if ($grandfathered) $countf_grandfathered++;
+        if ($fails < 1) {
+          $countf++;
+          if ($grandfathered) $countf_grandfathered++;
+        }
       }
       if ($matched && !empty($problems  [$matches[1]])) {
-        $countp++;
-        if ($grandfathered) $countp_grandfathered++;
+        if ($fails < 1) {
+          $countp++;
+          if ($grandfathered) $countp_grandfathered++;
+        }
       }
 
 			$semesters[] = $enrol->semester;
@@ -373,7 +378,10 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
 
 			if ($enrol->datenotified > $lastestdate) $lastestdate = $enrol->datenotified;
 		}
-	}
+    elseif (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade > 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade <= 44.99999)) && ($enrol->notified == 1)) {
+      $fails++;
+    }
+  }
 
   $meets_foundation_criterion        =  $countf_grandfathered >= 2;
   $meets_problems_criterion          =  $countp_grandfathered >= 2;
