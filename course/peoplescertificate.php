@@ -330,6 +330,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   $countp = 0;
   $countp_grandfathered = 0;
   $fails = 0;
+  $more_modules_allowed = TRUE;
 	$lastestdate = 0;
   $modules = array();
   $modules[] = 'Modules completed (Grade):';
@@ -337,11 +338,14 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   $percentages[] = '';
 	foreach ($enrols as $enrol) {
 		if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
-      if ($fails < 1) $diploma_passes++; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
+
+      $more_modules_allowed = $more_modules_allowed && $fails <= 1; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
+
+      if ($more_modules_allowed) $diploma_passes++;
 
       if ($enrol->finalgrade > 49.99999) {
         $masters = TRUE;
-        if ($fails < 1) $masters_passes++;
+        if ($more_modules_allowed) $masters_passes++;
       }
       else {
         $masters = FALSE;
@@ -350,18 +354,18 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
       // $grandfathered = $masters || ($enrol->datefirstenrolled < 1422662400); // 31 Jan 2015
       $grandfathered = $masters || ($enrol->percentgrades == 0); // Masters level Pass OR Pre Percentage Pass
       if ($grandfathered) {
-        if ($fails < 1) $grandfathered_passes++; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
+        if ($more_modules_allowed) $grandfathered_passes++;
       }
 
       $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
       if ($matched && !empty($foundation[$matches[1]])) {
-        if ($fails < 1) {
+        if ($more_modules_allowed) {
           $countf++;
           if ($grandfathered) $countf_grandfathered++;
         }
       }
       if ($matched && !empty($problems  [$matches[1]])) {
-        if ($fails < 1) {
+        if ($more_modules_allowed) {
           $countp++;
           if ($grandfathered) $countp_grandfathered++;
         }
