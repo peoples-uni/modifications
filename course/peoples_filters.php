@@ -692,7 +692,7 @@ class peoples_mph_filter extends peoples_select_filter {
 }
 
 
-// Initially used by track_submisisons.php
+// Initially used by track_submissions.php
 class peoples_submission_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
@@ -714,6 +714,10 @@ class peoples_submission_filter extends peoples_select_filter {
           continue;
         }
         if ($this->selectedvalue === 'Submitted, Final Grade =0'  && ($list_entry->submissionstatus !== 'submitted' || $list_entry->grade === '' || ($list_entry->grade !== 0 && $list_entry->grade !== '0'))) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Submitted, Outside Due/Extension' && ($list_entry->submissionstatus !== 'submitted' || ($list_entry->submissiontime <= $list_entry->due) || (!empty($list_entry->extension) && ($list_entry->submissiontime <= $list_entry->extension)))) {
           unset($list_to_filter[$index]);
           continue;
         }

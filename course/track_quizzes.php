@@ -53,6 +53,7 @@ $listsubmission[] = 'Submitted';
 $listsubmission[] = 'Submitted, No Final Grade';
 $listsubmission[] = 'Submitted, Final Grade <50';
 $listsubmission[] = 'Submitted, Final Grade =0';
+$listsubmission[] = 'Submitted, Outside Due/Extension';
 $peoples_submission_filter = new peoples_submission_filter('Status', 'submission', $listsubmission, 'Any');
 $peoples_filters->add_filter($peoples_submission_filter);
 
