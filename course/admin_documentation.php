@@ -1085,7 +1085,7 @@ Submitted<br />
 Submitted, [but] No Final Grade [assigned][or Assignment/Final Grade date is earlier than the Submission date]<br />
 Submitted, Final Grade <50<br />
 Submitted, Final Grade =0<br />
-Submitted, Outside Due/Extension<br />
+Submitted, Outside Due/Extension [Submitted after Due date (and also after Extension date, if there is one)]<br />
 </li>
 <li>
 Also in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> it is possible to indicate that certain assignments (normally the first assignment in a course) from inclusion in the table. The setting "Set above comma separated list of assignment IDs to be excluded from track_submissions.php" should contain a comma separated list of all assignments from all semesters that should be excluded. The IDs can be found in the "Assignment (id)" column of track_submissions.php.
