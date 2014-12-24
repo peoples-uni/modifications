@@ -11,6 +11,7 @@ CREATE TABLE mdl_semesters (
   semester VARCHAR(255) NOT NULL,
   CONSTRAINT PRIMARY KEY (id)
 );
+CREATE INDEX mdl_semesters_sem_ix ON mdl_semesters (semester);
 
 CREATE TABLE mdl_semester_current (
   id BIGINT(10) unsigned NOT NULL auto_increment,
