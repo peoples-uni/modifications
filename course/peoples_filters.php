@@ -717,7 +717,7 @@ class peoples_submission_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Submitted, Outside Due/Extension' && ($list_entry->submissionstatus !== 'submitted' || empty($list_entry->due) || ($list_entry->submissiontime <= $list_entry->due) || (!empty($list_entry->extension) && ($list_entry->submissiontime <= $list_entry->extension)))) {
+        if ($this->selectedvalue === 'Submitted, Outside Due/Extension' && ($list_entry->submissionstatus !== 'submitted' || empty($list_entry->due) || ($list_entry->due === '1970-01-01') || ($list_entry->submissiontime <= $list_entry->due) || (!empty($list_entry->extension) && ($list_entry->submissiontime <= $list_entry->extension)))) {
           unset($list_to_filter[$index]);
           continue;
         }
