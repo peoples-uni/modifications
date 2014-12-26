@@ -4,6 +4,7 @@ require_once('../config.php');
 include 'fpdf/fpdf.php';
 include 'fpdf/fpdfprotection.php';
 include_once('html2pdf.php');
+require_once($CFG->dirroot .'/course/peoples_awards_lib.php');
 
 $PAGE->set_context(context_system::instance());
 
@@ -322,100 +323,32 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   }
 
 
-  $diploma_passes = 0;
-  $masters_passes = 0;
-  $grandfathered_passes = 0;
-  $countf = 0;
-  $countf_grandfathered = 0;
-  $countp = 0;
-  $countp_grandfathered = 0;
-  $fails = 0;
-  $more_modules_allowed = TRUE;
-	$lastestdate = 0;
+  $passed_or_cpd_enrol_ids = array();
   $modules = array();
   $modules[] = 'Modules completed (Grade):';
   $percentages = array();
   $percentages[] = '';
-	foreach ($enrols as $enrol) {
-		if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
+  //$nopercentage is passed as parameter
+  $lastestdate = 0;
+  $qualification = get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate);
 
-      $more_modules_allowed = $more_modules_allowed && $fails <= 1; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
-
-      if ($more_modules_allowed) $diploma_passes++;
-
-      if ($enrol->finalgrade > 49.99999) {
-        $masters = TRUE;
-        if ($more_modules_allowed) $masters_passes++;
-      }
-      else {
-        $masters = FALSE;
-      }
-
-      // $grandfathered = $masters || ($enrol->datefirstenrolled < 1422662400); // 31 Jan 2015
-      $grandfathered = $masters || ($enrol->percentgrades == 0); // Masters level Pass OR Pre Percentage Pass
-      if ($grandfathered) {
-        if ($more_modules_allowed) $grandfathered_passes++;
-      }
-
-      $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
-      if ($matched && !empty($foundation[$matches[1]])) {
-        if ($more_modules_allowed) {
-          $countf++;
-          if ($grandfathered) $countf_grandfathered++;
-        }
-      }
-      if ($matched && !empty($problems  [$matches[1]])) {
-        if ($more_modules_allowed) {
-          $countp++;
-          if ($grandfathered) $countp_grandfathered++;
-        }
-      }
-
-			$semesters[] = $enrol->semester;
-			$modules[] = $enrol->fullname;
-
-      $percent = '';
-      if (!$nopercentage && $enrol->percentgrades == 1) {
-        $percent = ' (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
-      }
-      $percentages[] = $percent;
-
-			if ($enrol->datenotified > $lastestdate) $lastestdate = $enrol->datenotified;
-		}
-    elseif (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade > 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade <= 44.99999)) && ($enrol->notified == 1)) {
-      $fails++;
-    }
-  }
-
-  $meets_foundation_criterion        =  $countf_grandfathered >= 2;
-  $meets_problems_criterion          =  $countp_grandfathered >= 2;
-  $almost_meets_foundation_criterion = ($countf_grandfathered == 1) && ($countf >= 2);
-  $almost_meets_problems_criterion   = ($countp_grandfathered == 1) && ($countp >= 2);
-
-  $meets_overall_criteria =
-    ($meets_foundation_criterion && $meets_problems_criterion)
-      ||
-    ($meets_foundation_criterion && $almost_meets_problems_criterion)
-      ||
-    ($meets_problems_criterion && $almost_meets_foundation_criterion);
-
-  if (($cert == 'certificate') && (($grandfathered_passes >= 3) || (($grandfathered_passes == 2) && ($diploma_passes >= 3)))) {
+  if (($cert == 'certificate') && ($qualification & 1)) {
     $award = 'Certificate in Public Health';
   }
-  elseif (($cert == 'diploma') && ((($grandfathered_passes >= 6) || (($grandfathered_passes == 5) && ($diploma_passes >= 6))) && $meets_overall_criteria)) {
+  elseif (($cert == 'diploma') && ($qualification & 2)) {
     $award = 'Diploma in Public Health';
   }
-	elseif ($cert == 'testcertificate') {
-			$award = 'Certificate in Public Health';
-			while (count($modules) < 5)	$modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
-	}
-	elseif ($cert == 'testdiploma') {
-			$award = 'Diploma in Public Health';
-			while (count($modules) < 9)	$modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
-	}
-	else {
+  elseif ($cert == 'testcertificate') {
+    $award = 'Certificate in Public Health';
+    while (count($modules) < 5) $modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
+  }
+  elseif ($cert == 'testdiploma') {
+    $award = 'Diploma in Public Health';
+    while (count($modules) < 9) $modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
+  }
+  else {
     print_error('invalidarguments');
-	}
+  }
 
   if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
     print_error('invaliduser');

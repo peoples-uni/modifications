@@ -25,6 +25,7 @@ CREATE INDEX mdl_peoplesstudentnotes_sid_ix ON mdl_peoplesstudentnotes (sid);
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 require_once($CFG->dirroot .'/course/peoples_lib.php');
+require_once($CFG->dirroot .'/course/peoples_awards_lib.php');
 
 $PAGE->set_context(context_system::instance());
 
@@ -633,90 +634,45 @@ foreach ($problems_records as $record) {
 }
 
 
-$first = true;
-$diploma_passes = 0;
-$masters_passes = 0;
-$grandfathered_passes = 0;
-$countf = 0;
-$countf_grandfathered = 0;
-$countp = 0;
-$countp_grandfathered = 0;
-$fails = 0;
-$more_modules_allowed = TRUE;
-foreach ($enrols as $enrol) {
-	//Test: $enrol->finalgrade = 1.0; (old grading system)
-	//Test: $enrol->notified = 1;
-  if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
-		if ($first) {
-			$first = false;
-			echo '<b>Download your Academic Transcript by clicking on the links below...</b><br />';
-			echo '(When your certificate appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br />';
-		}
-		echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=transcript" target="_blank">Academic Transcript for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
+$passed_or_cpd_enrol_ids = array();
+$modules = array();
+$modules[] = 'Modules completed (Grade):';
+$percentages = array();
+$percentages[] = '';
+$nopercentage = 0;
+$lastestdate = 0;
+$qualification = get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate);
 
-    $more_modules_allowed = $more_modules_allowed && $fails <= 1; // Only allowed one fail before achieving a qualification (passes after 2 fails do not count towards qualifications)
-
-    if ($more_modules_allowed) $diploma_passes++;
-
-    if ($enrol->finalgrade > 49.99999) {
-      $masters = TRUE;
-      if ($more_modules_allowed) $masters_passes++;
+$first = TRUE;
+foreach ($passed_or_cpd_enrol_ids as $passed_or_cpd_enrol_id) {
+  $enrol = $enrols[$passed_or_cpd_enrol_id];
+  if ($enrol->notified == 3) {
+    if ($first) {
+      $first = FALSE;
+      echo '<b>Download your Certificate by clicking on the links below...</b><br />';
+      echo '(When your certificate appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br />';
     }
-    else {
-      $masters = FALSE;
+    echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=participation" target="_blank">Certificate of Participation for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
+  }
+  else {
+    if ($first) {
+      $first = FALSE;
+      echo '<b>Download your Academic Transcript by clicking on the links below...</b><br />';
+      echo '(When your certificate appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br />';
     }
-
-    // $grandfathered = $masters || ($enrol->datefirstenrolled < 1422662400); // 31 Jan 2015
-    $grandfathered = $masters || ($enrol->percentgrades == 0); // Masters level Pass OR Pre Percentage Pass
-    if ($grandfathered) {
-      if ($more_modules_allowed) $grandfathered_passes++;
-    }
-
-		$matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches);	// Take out course code without Year/Semester part
-		if ($matched && !empty($foundation[$matches[1]])) {
-      if ($more_modules_allowed) {
-        $countf++;
-        if ($grandfathered) $countf_grandfathered++;
-      }
-    }
-		if ($matched && !empty($problems  [$matches[1]])) {
-      if ($more_modules_allowed) {
-        $countp++;
-        if ($grandfathered) $countp_grandfathered++;
-      }
-    }
-	}
-	elseif ($enrol->notified == 3) {
-		if ($first) {
-			$first = false;
-			echo '<b>Download your Certificate by clicking on the links below...</b><br />';
-			echo '(When your certificate appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br />';
-		}
-		echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=participation" target="_blank">Certificate of Participation for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
-	}
-  elseif (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade > 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade <= 44.99999)) && ($enrol->notified == 1)) {
-    $fails++;
+    echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?enrolid=' . $enrol->id . '&cert=transcript" target="_blank">Academic Transcript for: ' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</a><br />';
   }
 }
 
-$meets_foundation_criterion        =  $countf_grandfathered >= 2;
-$meets_problems_criterion          =  $countp_grandfathered >= 2;
-$almost_meets_foundation_criterion = ($countf_grandfathered == 1) && ($countf >= 2);
-$almost_meets_problems_criterion   = ($countp_grandfathered == 1) && ($countp >= 2);
-
-$meets_overall_criteria =
-  ($meets_foundation_criterion && $meets_problems_criterion)
-    ||
-  ($meets_foundation_criterion && $almost_meets_problems_criterion)
-    ||
-  ($meets_problems_criterion && $almost_meets_foundation_criterion);
-
-if (($grandfathered_passes >= 3) || (($grandfathered_passes == 2) && ($diploma_passes >= 3))) {
-	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate" target="_blank">Your Peoples Open Access Educational Initiative Certificate</a><br />';
+if ($qualification & 1) {
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate" target="_blank">Your Peoples Open Access Educational Initiative Certificate</a><br />';
 }
-if ((($grandfathered_passes >= 6) || (($grandfathered_passes == 5) && ($diploma_passes >= 6))) && $meets_overall_criteria) {
-	echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma" target="_blank">Your Peoples Open Access Educational Initiative Diploma</a><br />';
+if ($qualification & 2) {
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma" target="_blank">Your Peoples Open Access Educational Initiative Diploma</a><br />';
 }
+
+if ($isteacher) echo '<a href="' . $CFG->wwwroot . '/course/allow_modules.php?userid=' . $userid . '" target="_blank">Review modules contributing to awards and override disallowed modules</a><br />';
+
 
 $sql = 'SELECT * FROM {files} f WHERE f.contextid=:contextid AND f.component=:component AND f.filearea=:filearea AND f.filesize!=0';
 $context = context_user::instance($userid);
