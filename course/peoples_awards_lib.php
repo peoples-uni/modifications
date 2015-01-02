@@ -14,7 +14,7 @@ CREATE INDEX mdl_peoples_accept_module_uid_ix ON mdl_peoples_accept_module (user
 */
 
 
-function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate) {
+function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount) {
   global $DB;
 
   // First work out what modules should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date)
@@ -24,15 +24,15 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
       e.userid,
       s.id,
       COUNT(*) AS num_enrolments,
-      SUM((e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0) >1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0)<=44.99999)))) AS num_fails,
-      SUM((e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999)))) AS num_passes,
+      SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0) >1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0)<=44.99999))) AS num_fails,
+      SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999))) AS num_passes,
       GROUP_CONCAT(IF(e.id=a.enrolid, 9999999, e.id) SEPARATOR ',') AS enrolled_ids_to_discount
     FROM mdl_enrolment    e
     JOIN mdl_grade_items  i ON e.courseid=i.courseid AND i.itemtype='course'
-    JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
     JOIN mdl_semesters    s ON e.semester=s.semester
+    LEFT JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
     LEFT JOIN mdl_peoples_accept_module a ON e.id=a.enrolid /* If there is a match, then this module should not be discounted, no matter what */
-    WHERE e.userid=$userid
+    WHERE e.userid=$userid /* We include even if they were enrolled and then unenrolled, could change this. */
     GROUP BY e.userid, s.id
     ORDER BY e.userid ASC, s.id ASC");
 
@@ -40,7 +40,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   $first_semester_enrolled = 9999999;
   $total_fails = 0;
   $i = 0;
-  $cumulative_enrolled_ids_to_discount = '9999999';
+  $cumulative_enrolled_ids_to_discount_string = '9999999';
   foreach ($semester_list as $semester) {
     if (!empty($all_enrols["$userid#$semester->id"])) {
       if ($first_semester_enrolled == 9999999) $first_semester_enrolled = $i;
@@ -49,13 +49,13 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
       $total_fails += $semester_enrolls->num_fails;
       $elapsed_semesters = $i + 1 - $first_semester_enrolled;
       if (($total_fails > 1) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
-        $cumulative_enrolled_ids_to_discount .= ",$semester_enrolls->enrolled_ids_to_discount";
+        $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";
       }
     }
     $i++;
   }
 
-  $cumulative_enrolled_ids_to_discount = explode(',', $cumulative_enrolled_ids_to_discount)
+  $cumulative_enrolled_ids_to_discount = explode(',', $cumulative_enrolled_ids_to_discount_string)
 
 
   // This has now (20110728) changed Diploma: 6, Certificate: 3 (also foundation/problems are no longer hard coded)
