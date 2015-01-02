@@ -68,20 +68,98 @@ if (!empty($_POST['markupdatemodules'])) {
 }
 
 
-(**)===================================================================
-$activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
+$foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
+$foundation = array();
+foreach ($foundation_records as $record) {
+  $foundation[$record->course_code] = 1;
+}
+$problems_records = $DB->get_records('peoples_course_codes', array('type' => 'problems'), 'course_code ASC');
+$problems = array();
+foreach ($problems_records as $record) {
+  $problems[$record->course_code] = 1;
+}
+
+$enrols = $DB->get_records_sql("SELECT * FROM
+(SELECT e.*, c.fullname, c.idnumber, c.id AS cid FROM mdl_enrolment e, mdl_course c WHERE e.courseid=c.id AND e.userid=$userid) AS x
+LEFT JOIN
+(SELECT g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' AND g.userid=$userid) AS y
+ON cid=icourseid
+ORDER BY datefirstenrolled ASC, fullname ASC");
+
+$peoples_accept_modules = $DB->get_records('peoples_accept_module', array('userid' => $userid));
+$accept_modules = array();
+  foreach ($peoples_accept_modules as $record) {
+    $accept_modules[$record->enrolid] = 1;
+  }
+
+$passed_or_cpd_enrol_ids = array();
+$modules = array();
+$modules[] = 'Modules completed (Grade):';
+$percentages = array();
+$percentages[] = '';
+$nopercentage = 0;
+$lastestdate = 0;
+$cumulative_enrolled_ids_to_discount = array();
+$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount);
+
+if ($qualification & 1) {
+  echo '<br /><strong>Qualification Achieved: Certificate</strong><br />';
+}
+if ($qualification & 2) {
+  echo '<br /><strong>Qualification Achieved: Diploma</strong><br />';
+}
+
+
 ?>
+<table border="1" BORDERCOLOR="RED">
+<tr>
+<td>Semester</td>
+<td>Module</td>
+<td>Pass type</td>
+<td>Problem/Foundation</td>
+<td>Check if this module should not be discounted (even if academic rules on elapsed time or cummulative number of fails indicate it should be)</td>
+</tr>
 
 <form id="updatemodulesform" method="post" action="<?php echo $CFG->wwwroot . '/course/allow_modules.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <?php
 
-echo '<table border="1" BORDERCOLOR="RED">';
-echo '<tr>';
-echo '<td><b>Modules on Application Forms...</b></td>';
-echo '<td>Check to mark Module as Full</td>';
-echo '<td>Check to completely Remove from Forms</td>';
-echo '</tr>';
+
+foreach ($enrols as $enrol) {
+
+  echo '<tr>';
+  echo '<td>' . htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8') . '</td>';
+  echo '<td>' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
+
+Pass tyep (Not Complete, CPD, Fail, Diploma, MAsters %)[PASS FROM ROUTINE]
+
+????WRONG
+if ($problems[$enrol->cid]) echo '<td>P</td>';
+elseif ($foundation[$enrol->cid])echo '<td>F</td>';
+else echo '<td>P</td>';
+I
+foundation type
+
+USE...
+  $foundation[$record->course_code] = 1;
+  $problems[$record->course_code] = 1;
+  $accept_modules[$record->enrolid] = 1;
+  $cumulative_enrolled_ids_to_discount
+
+, , SOMETIME CHECKBOX...
+IF A ROW BLOCKS $cumulative_enrolled_ids_to_discount OR mdl_peoples_accept_module add a checkbox
+  echo '</tr>';
+}
+
+
+
+
+
+
+
+(**)===================================================================
+$activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
+
 
 foreach ($activemodules as $activemodule) {
   echo '<tr>';
@@ -100,6 +178,8 @@ foreach ($activemodules as $activemodule) {
   echo '<td><input type="checkbox" name="removemodule[' . $fullname_escaped . ']"></td>';
   echo '</tr>';
 }
+
+
 echo '</table>';
 ?>
 <input type="hidden" name="markupdatemodules" value="1" />
