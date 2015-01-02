@@ -14,7 +14,7 @@ CREATE INDEX mdl_peoples_accept_module_uid_ix ON mdl_peoples_accept_module (user
 */
 
 
-function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount, &$foundation_problems) {
+function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount, &$pass_type, &$foundation_problems) {
   global $DB;
 
   // First work out what modules should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date)
@@ -100,6 +100,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   $countp = 0;
   $countp_grandfathered = 0;
   foreach ($enrols as $enrol) {
+    $pass_type[$enrol->id] = '';
     //Test: $enrol->finalgrade = 1.0; (old grading system)
     //Test: $enrol->notified = 1;
     if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
@@ -110,10 +111,15 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         $diploma_passes++;
 
         if ($enrol->finalgrade > 49.99999) {
+          $pass_type[$enrol->id] = 'Masters Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
           $masters = TRUE;
           $masters_passes++;
         }
+        elseif ($enrol->percentgrades == 1) {
+          $pass_type[$enrol->id] = 'Diploma Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+          $masters = FALSE;
         else {
+          $pass_type[$enrol->id] = 'Pass';
           $masters = FALSE;
         }
 
@@ -147,8 +153,27 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         if ($enrol->datenotified > $lastestdate) $lastestdate = $enrol->datenotified;
       }
     }
+    elseif (($enrol->notified == 1) && ($enrol->percentgrades == 0)) {
+      $pass_type[$enrol->id] = 'Fail';
+    }
+    elseif (($enrol->notified == 1) && empty($enrol->finalgrade)) {
+      $pass_type[$enrol->id] = 'Fail (0%)';
+    }
+    elseif ($enrol->notified == 1) {
+      $pass_type[$enrol->id] = 'Fail (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+    }
     elseif ($enrol->notified == 3) {
+      $pass_type[$enrol->id] = 'Participation/CPD';
       $passed_or_cpd_enrol_ids[] = $enrol->id;
+    }
+    elseif ($enrol->notified == 2) {
+      $pass_type[$enrol->id] = 'Not Graded, Not Complete"';
+    }
+    elseif ($enrol->notified == 5) {
+      $pass_type[$enrol->id] = 'Not Graded, Exceptional Factors';
+    }
+    elseif ($enrol->notified == 4) {
+      $pass_type[$enrol->id] = 'Not Graded, Did Not Pay';
     }
   }
 

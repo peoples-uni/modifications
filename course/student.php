@@ -607,8 +607,9 @@ $percentages[] = '';
 $nopercentage = 0;
 $lastestdate = 0;
 $cumulative_enrolled_ids_to_discount = array();
+$pass_type = array();
 $foundation_problems = array();
-$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $foundation_problems);
+$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems);
 
 $first = TRUE;
 foreach ($passed_or_cpd_enrol_ids as $passed_or_cpd_enrol_id) {

@@ -297,8 +297,9 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   //$nopercentage is passed as parameter
   $lastestdate = 0;
   $cumulative_enrolled_ids_to_discount = array();
+  $pass_type = array();
   $foundation_problems = array();
-  $qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $foundation_problems);
+  $qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems);
 
   if (($cert == 'certificate') && ($qualification & 1)) {
     $award = 'Certificate in Public Health';

@@ -100,8 +100,9 @@ $percentages[] = '';
 $nopercentage = 0;
 $lastestdate = 0;
 $cumulative_enrolled_ids_to_discount = array();
+$pass_type = array();
 $foundation_problems = array();
-$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $foundation_problems);
+$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems);
 
 if ($qualification & 1) {
   echo '<br /><strong>Qualification Achieved: Certificate</strong><br />';
@@ -117,7 +118,7 @@ if ($qualification & 2) {
 <td>Semester</td>
 <td>Module</td>
 <td>Pass type</td>
-<td>Problem/Foundation</td>
+<td>Foundation/Problems</td>
 <td>Check if this module should not be discounted (even if academic rules on elapsed time or cummulative number of fails indicate it should be)</td>
 </tr>
 
@@ -131,9 +132,7 @@ foreach ($enrols as $enrol) {
   echo '<tr>';
   echo '<td>' . htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8') . '</td>';
   echo '<td>' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
-
-Pass tyep (Not Complete, CPD, Fail, Diploma, MAsters %)[PASS FROM ROUTINE]
-
+  echo "<td>$pass_type[$enrol->id]</td>";
 
   if (!empty($foundation_problems[$enrol->id])) echo "<td>$foundation_problems[$enrol->id]</td>";
   else echo '<td></td>';
