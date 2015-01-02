@@ -41,28 +41,24 @@ echo $OUTPUT->header();
 if (!empty($_POST['markupdatemodules'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-  $activemodules = $DB->get_records('activemodules');
-
-  foreach ($activemodules as $activemodule) {
-
-    $fullname_escaped = $activemodule->fullname;
-    $fullname_escaped = str_replace('[', 'XLBRACKETX', $fullname_escaped);
-    $fullname_escaped = str_replace(']', 'XRBRACKETX', $fullname_escaped);
-
-    if (!empty($_POST[modulefull][$fullname_escaped])) {
-      if (!$activemodule->modulefull) {
-        $activemodule->modulefull = 1;
-        $DB->update_record('activemodules', $activemodule);
+  if (!empty($_POST['moduleaccepted'])) {
+    foreach ($_POST['moduleaccepted'] as $enrolid => $value) {
+      $peoples_accept_module = $DB->get_record('peoples_accept_module', array('userid' => $userid, 'enrolid' => $enrolid));
+      if (empty($peoples_accept_module) {
+        $peoples_accept_module = new object();
+        $peoples_accept_module->enrolid = $enrolid;
+        $peoples_accept_module->userid = $userid;
+        $peoples_accept_module->whosubmitted = $USER->id;
+        $peoples_accept_module->datesubmitted = time();
+        $DB->insert_record('peoples_accept_module', $peoples_accept_module);
       }
     }
-    else {
-      if ($activemodule->modulefull) {
-        $activemodule->modulefull = 0;
-        $DB->update_record('activemodules', $activemodule);
-      }
-    }
-    if (!empty($_POST[removemodule][$fullname_escaped])) {
-      $DB->delete_records('activemodules', array('id' => $activemodule->id));
+  }
+
+  $peoples_accept_modules = $DB->get_records('peoples_accept_module', array('userid' => $userid));
+  foreach ($peoples_accept_modules => $peoples_accept_module) {
+    if (empty($_POST['moduleaccepted'][$peoples_accept_module->enrolid])) {
+      $DB->delete_records('peoples_accept_module', array('userid' => $userid, 'enrolid' => $peoples_accept_module->enrolid));
     }
   }
 }
@@ -88,9 +84,9 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
 $peoples_accept_modules = $DB->get_records('peoples_accept_module', array('userid' => $userid));
 $accept_modules = array();
-  foreach ($peoples_accept_modules as $record) {
-    $accept_modules[$record->enrolid] = 1;
-  }
+foreach ($peoples_accept_modules as $record) {
+  $accept_modules[$record->enrolid] = 1;
+}
 
 $passed_or_cpd_enrol_ids = array();
 $modules = array();
@@ -113,6 +109,9 @@ if ($qualification & 2) {
 
 
 ?>
+<form id="updatemodulesform" method="post" action="<?php echo $CFG->wwwroot . '/course/allow_modules.php'; ?>">
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
 <table border="1" BORDERCOLOR="RED">
 <tr>
 <td>Semester</td>
@@ -121,14 +120,10 @@ if ($qualification & 2) {
 <td>Foundation/Problems</td>
 <td>Check if this module should not be discounted (even if academic rules on elapsed time or cummulative number of fails indicate it should be)</td>
 </tr>
-
-<form id="updatemodulesform" method="post" action="<?php echo $CFG->wwwroot . '/course/allow_modules.php'; ?>">
-<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <?php
 
 
 foreach ($enrols as $enrol) {
-
   echo '<tr>';
   echo '<td>' . htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8') . '</td>';
   echo '<td>' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
@@ -137,48 +132,34 @@ foreach ($enrols as $enrol) {
   if (!empty($foundation_problems[$enrol->id])) echo "<td>$foundation_problems[$enrol->id]</td>";
   else echo '<td></td>';
 
-USE...
-  $accept_modules[$record->enrolid] = 1;
-  $cumulative_enrolled_ids_to_discount
+  echo '<td>';
+  $show_checkbox = FALSE;
+  if (in_array($enrol->id, $cumulative_enrolled_ids_to_discount)) {
+    echo 'Discounted because of academic rules ';
+    $show_checkbox = TRUE;
+    $value_checkbox = FALSE;
+  }
+  if (!empty($accept_modules[$enrol->id])) {
+    $show_checkbox = TRUE;
+    $value_checkbox = TRUE;
+  }
+  if ($show_checkbox) {
+    if ($value_checkbox) {
+      echo '<td><input type="checkbox" name="moduleaccepted[' . $enrol->id . ']" CHECKED></td>';
+    }
+    else {
+      echo '<td><input type="checkbox" name="moduleaccepted[' . $enrol->id . ']"></td>';
+    }
+  }
+  echo '</td>';
 
-, , SOMETIME CHECKBOX...
-IF A ROW BLOCKS $cumulative_enrolled_ids_to_discount OR mdl_peoples_accept_module add a checkbox
   echo '</tr>';
 }
-
-
-
-
-
-
-
-(**)===================================================================
-$activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
-
-
-foreach ($activemodules as $activemodule) {
-  echo '<tr>';
-  echo '<td>' . htmlspecialchars($activemodule->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
-
-  $fullname_escaped = htmlspecialchars($activemodule->fullname, ENT_COMPAT, 'UTF-8');
-  $fullname_escaped = str_replace('[', 'XLBRACKETX', $fullname_escaped);
-  $fullname_escaped = str_replace(']', 'XRBRACKETX', $fullname_escaped);
-
-  if (empty($activemodule->modulefull)) {
-    echo '<td><input type="checkbox" name="modulefull[' . $fullname_escaped . ']"></td>';
-  }
-  else {
-    echo '<td><input type="checkbox" name="modulefull[' . $fullname_escaped . ']" CHECKED></td>';
-  }
-  echo '<td><input type="checkbox" name="removemodule[' . $fullname_escaped . ']"></td>';
-  echo '</tr>';
-}
-
-
-echo '</table>';
 ?>
+echo '</table>';
+
 <input type="hidden" name="markupdatemodules" value="1" />
-<input type="submit" name="updatemodules" value="Mark Modules as Full or to be Removed based on Check Boxes Above" style="width:50em" />
+<input type="submit" name="updatemodules" value="Mark Modules that Should be Discounted (or not)" style="width:50em" />
 </form>
 <br />
 
