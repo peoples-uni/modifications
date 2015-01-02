@@ -14,7 +14,7 @@ CREATE INDEX mdl_peoples_accept_module_uid_ix ON mdl_peoples_accept_module (user
 */
 
 
-function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount) {
+function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount, &$foundation_problems) {
   global $DB;
 
   // First work out what modules should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date)
@@ -127,10 +127,12 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         if ($matched && !empty($foundation[$matches[1]])) {
           $countf++;
           if ($grandfathered) $countf_grandfathered++;
+          $foundation_problems[$enrol->id] = 'F';
         }
         if ($matched && !empty($problems  [$matches[1]])) {
           $countp++;
           if ($grandfathered) $countp_grandfathered++;
+          $foundation_problems[$enrol->id] = 'P';
         }
 
         $semesters[] = $enrol->semester; // Not used

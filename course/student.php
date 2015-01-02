@@ -599,41 +599,6 @@ if (!empty($enrols)) {
 echo '<br /><br />';
 
 
-// This has now (20110728) changed Diploma: 6, Certificate: 3 (also foundation/problems are no longer hard coded)
-// A Diploma when 8 modules have been passed,
-// Provided at least two are from each of the Foundation Sciences and Public Health problems groupings.
-//// THESE LISTS MUST BE KEEPT UP TO DATE HERE AND ALSO IN peoplescertificate.php WHERE THIS IS RECHECKED
-//
-//// Intro to Epi, Biostatistics, Evidence Based Practice etc. are 'foundation'
-//$foundation['PUBIOS'] = 1;  // Biostatistics
-//$foundation['PUEBP']  = 1;  // Evidence Based Practice
-//$foundation['PUEPI']  = 1;  // Introduction to Epidemiology
-//$foundation['PUETH']  = 1;  // Public Health Ethics
-//$foundation['PUEVAL'] = 1;  // Evaluation of Interventions
-//$foundation['PUHECO'] = 1;  // Health Economics
-//$foundation['PUISDH'] = 1;  // Inequalities and the social determinants of health
-//$foundation['PUPHC']  = 1;  // Public Health Concepts for Policy Makers
-//
-//// Maternal Mortality, Preventing Child Mortality and Disasters etc. are 'problems'.
-//$problems['PUCOMDIS']  = 1; // Communicable Disease
-//$problems['PUDMEP']    = 1; // Disaster Management and Emergency Planning
-//$problems['PUEH']      = 1; // Environmental Health: Investigating a problem
-//$problems['PUHIVAIDS'] = 1; // HIV/AIDS
-//$problems['PUMM']      = 1; // Maternal Mortality
-//$problems['PUNCD']     = 1; // Non-Communicable Diseases 1: Diabetes and Cardiovascular Diseases
-//$problems['PUPCM']     = 1; // Preventing Child Mortality
-//$problems['PUPHNUT']   = 1; // Public Health Nutrition
-//$problems['PUPSAFE']   = 1; // Patient Safety
-$foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
-foreach ($foundation_records as $record) {
-  $foundation[$record->course_code] = 1;
-}
-$problems_records = $DB->get_records('peoples_course_codes', array('type' => 'problems'), 'course_code ASC');
-foreach ($problems_records as $record) {
-  $problems[$record->course_code] = 1;
-}
-
-
 $passed_or_cpd_enrol_ids = array();
 $modules = array();
 $modules[] = 'Modules completed (Grade):';
@@ -642,7 +607,8 @@ $percentages[] = '';
 $nopercentage = 0;
 $lastestdate = 0;
 $cumulative_enrolled_ids_to_discount = array();
-$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount);
+$foundation_problems = array();
+$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $foundation_problems);
 
 $first = TRUE;
 foreach ($passed_or_cpd_enrol_ids as $passed_or_cpd_enrol_id) {

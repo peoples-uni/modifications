@@ -100,7 +100,8 @@ $percentages[] = '';
 $nopercentage = 0;
 $lastestdate = 0;
 $cumulative_enrolled_ids_to_discount = array();
-$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount);
+$foundation_problems = array();
+$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $foundation_problems);
 
 if ($qualification & 1) {
   echo '<br /><strong>Qualification Achieved: Certificate</strong><br />';
@@ -133,16 +134,11 @@ foreach ($enrols as $enrol) {
 
 Pass tyep (Not Complete, CPD, Fail, Diploma, MAsters %)[PASS FROM ROUTINE]
 
-????WRONG
-if ($problems[$enrol->cid]) echo '<td>P</td>';
-elseif ($foundation[$enrol->cid])echo '<td>F</td>';
-else echo '<td>P</td>';
-I
-foundation type
+
+  if (!empty($foundation_problems[$enrol->id])) echo "<td>$foundation_problems[$enrol->id]</td>";
+  else echo '<td></td>';
 
 USE...
-  $foundation[$record->course_code] = 1;
-  $problems[$record->course_code] = 1;
   $accept_modules[$record->enrolid] = 1;
   $cumulative_enrolled_ids_to_discount
 
