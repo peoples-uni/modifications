@@ -39,7 +39,7 @@ echo $OUTPUT->header();
 
 
 if (!empty($_POST['markupdatemodules'])) {
-	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
   if (!empty($_POST['moduleaccepted'])) {
     foreach ($_POST['moduleaccepted'] as $enrolid => $value) {
