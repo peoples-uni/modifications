@@ -118,6 +118,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         elseif ($enrol->percentgrades == 1) {
           $pass_type[$enrol->id] = 'Diploma Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
           $masters = FALSE;
+        }
         else {
           $pass_type[$enrol->id] = 'Pass';
           $masters = FALSE;
