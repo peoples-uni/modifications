@@ -29,6 +29,52 @@ $PAGE->set_heading('Student Progress');
 echo $OUTPUT->header();
 
 
+// First work out what modules should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date)
+// We include enrollments even if they were enrolled and then unenrolled, could change this.
+$all_enrols = $DB->get_records_sql("
+  SELECT
+    CONCAT(e.userid, '#', s.id),
+    e.userid,
+    s.id,
+    COUNT(*) AS num_enrolments,
+    SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0) >1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0)<=44.99999))) AS num_fails,
+    SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999))) AS num_passes,
+    GROUP_CONCAT(IF(e.id=a.enrolid, 9999999, e.id) SEPARATOR ',') AS enrolled_ids_to_discount
+  FROM mdl_enrolment    e
+  JOIN mdl_grade_items  i ON e.courseid=i.courseid AND i.itemtype='course'
+  JOIN mdl_semesters    s ON e.semester=s.semester
+  LEFT JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
+  LEFT JOIN mdl_peoples_accept_module a ON e.id=a.enrolid /* If there is a match, then this module should not be discounted, no matter what */
+  GROUP BY e.userid, s.id
+  ORDER BY e.userid ASC, s.id ASC");
+
+
+$user_list = $DB->get_records_sql("SELECT DISTINCT e.userid FROM mdl_enrolment e ORDER BY e.userid ASC");
+$semester_list = $DB->get_records('semesters', NULL, 'id ASC');
+
+$cumulative_enrolled_ids_to_discount_string = '9999999';
+$some_enrolls_discounted = array();
+foreach ($user_list as $userid) {
+  $first_semester_enrolled = 9999999;
+  $total_fails = 0;
+  $i = 0;
+  foreach ($semester_list as $semester) {
+    if (!empty($all_enrols["$userid#$semester->id"])) {
+      if ($first_semester_enrolled == 9999999) $first_semester_enrolled = $i;
+
+      $semester_enrolls = $all_enrols["$userid#$semester->id"];
+      $total_fails += $semester_enrolls->num_fails;
+      $elapsed_semesters = $i + 1 - $first_semester_enrolled;
+      if (($total_fails > 1) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
+        $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";
+        $some_enrolls_discounted[$userid] = $userid;
+      }
+    }
+    $i++;
+  }
+}
+
+
 $enrols = $DB->get_records_sql("
 SELECT
   u.id,
@@ -110,7 +156,8 @@ WHERE
   c.id=i.courseid AND
   g.itemid=i.id AND
   i.itemtype='course' AND
-  c.idnumber LIKE BINARY CONCAT(codes.course_code, '%')
+  c.idnumber LIKE BINARY CONCAT(codes.course_code, '%') AND
+  e.id NOT IN ($cumulative_enrolled_ids_to_discount_string)
 GROUP BY e.userid
 ORDER BY diploma_passes DESC, u.lastname, u.firstname
 ");
@@ -157,6 +204,7 @@ $table->head = array(
   '# Foundation',
   '# Problems',
   'Qualification',
+  '',
   ''
   );
 
@@ -189,6 +237,11 @@ foreach ($enrols as $enrol) {
   }
   $rowdata[] =  $enrol->qualification . $mphtext;
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->id . '" target="_blank">Student Grades</a>';
+
+  $text = 'Mark Discounted Modules';
+  if (!empty($some_enrolls_discounted[$enrol->id])) $text .= " (<strong>Some Discounted!</strong>)";
+  $rowdata[] =  '<a href="' . $CFG->wwwroot . '/course/allow_modules.php?userid=' . $enrol->id . '" target="_blank">' . $text . '</a>';
+
   $n++;
   $table->data[] = $rowdata;
 }
