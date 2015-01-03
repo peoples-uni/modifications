@@ -123,32 +123,32 @@ if ($qualification & 2) {
 <?php
 
 
-foreach ($enrols as $enrol) {
+foreach ($enrols as $enrolid => $enrol) {
   echo '<tr>';
   echo '<td>' . htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8') . '</td>';
   echo '<td>' . htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8') . '</td>';
-  echo "<td>$pass_type[$enrol->id]</td>";
+  echo "<td>$pass_type[$enrolid]</td>";
 
-  if (!empty($foundation_problems[$enrol->id])) echo "<td>$foundation_problems[$enrol->id]</td>";
+  if (!empty($foundation_problems[$enrolid])) echo "<td>$foundation_problems[$enrolid]</td>";
   else echo '<td></td>';
 
   echo '<td>';
   $show_checkbox = FALSE;
-  if (in_array($enrol->id, $cumulative_enrolled_ids_to_discount)) {
+  if (in_array($enrolid, $cumulative_enrolled_ids_to_discount)) {
     echo 'Discounted because of academic rules ';
     $show_checkbox = TRUE;
     $value_checkbox = FALSE;
   }
-  if (!empty($accept_modules[$enrol->id])) {
+  if (!empty($accept_modules[$enrolid])) {
     $show_checkbox = TRUE;
     $value_checkbox = TRUE;
   }
   if ($show_checkbox) {
     if ($value_checkbox) {
-      echo '<td><input type="checkbox" name="moduleaccepted[' . $enrol->id . ']" CHECKED></td>';
+      echo '<td><input type="checkbox" name="moduleaccepted[' . $enrolid . ']" CHECKED></td>';
     }
     else {
-      echo '<td><input type="checkbox" name="moduleaccepted[' . $enrol->id . ']"></td>';
+      echo '<td><input type="checkbox" name="moduleaccepted[' . $enrolid . ']"></td>';
     }
   }
   echo '</td>';
