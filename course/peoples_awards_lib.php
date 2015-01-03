@@ -55,7 +55,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     $i++;
   }
 
-  $cumulative_enrolled_ids_to_discount = explode(',', $cumulative_enrolled_ids_to_discount_string)
+  $cumulative_enrolled_ids_to_discount = explode(',', $cumulative_enrolled_ids_to_discount_string);
 
 
   // This has now (20110728) changed Diploma: 6, Certificate: 3 (also foundation/problems are no longer hard coded)
