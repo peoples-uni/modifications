@@ -56,7 +56,7 @@ if (!empty($_POST['markupdatemodules'])) {
   }
 
   $peoples_accept_modules = $DB->get_records('peoples_accept_module', array('userid' => $userid));
-  foreach ($peoples_accept_modules => $peoples_accept_module) {
+  foreach ($peoples_accept_modules as $peoples_accept_module) {
     if (empty($_POST['moduleaccepted'][$peoples_accept_module->enrolid])) {
       $DB->delete_records('peoples_accept_module', array('userid' => $userid, 'enrolid' => $peoples_accept_module->enrolid));
     }
