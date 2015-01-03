@@ -44,7 +44,7 @@ if (!empty($_POST['markupdatemodules'])) {
   if (!empty($_POST['moduleaccepted'])) {
     foreach ($_POST['moduleaccepted'] as $enrolid => $value) {
       $peoples_accept_module = $DB->get_record('peoples_accept_module', array('userid' => $userid, 'enrolid' => $enrolid));
-      if (empty($peoples_accept_module) {
+      if (empty($peoples_accept_module)) {
         $peoples_accept_module = new object();
         $peoples_accept_module->enrolid = $enrolid;
         $peoples_accept_module->userid = $userid;
