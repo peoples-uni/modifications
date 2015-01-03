@@ -7,6 +7,7 @@
 
 require("../config.php");
 require_once($CFG->dirroot .'/course/peoples_lib.php');
+require_once($CFG->dirroot .'/course/peoples_awards_lib.php');
 
 $PAGE->set_context(context_system::instance());
 
