@@ -127,7 +127,7 @@ SELECT
         (
           ( SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  ) >= 2) /* meets_problems_criterion */
             AND
-          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation')  = 1) AND (SUM(IF(codes.type='foundation', 1, 0)) >= 2)) /* $almost_meets_foundation_criterion */
+          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation')  = 1) AND (SUM(IF(codes.type='foundation', 1, 0)) >= 2)) /* almost_meets_foundation_criterion */
         )
       )
     THEN 'Diploma'
