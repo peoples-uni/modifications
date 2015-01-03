@@ -54,7 +54,7 @@ $semester_list = $DB->get_records('semesters', NULL, 'id ASC');
 
 $cumulative_enrolled_ids_to_discount_string = '9999999';
 $some_enrolls_discounted = array();
-foreach ($user_list as $userid) {
+foreach ($user_list as $userid => $record) {
   $first_semester_enrolled = 9999999;
   $total_fails = 0;
   $i = 0;
