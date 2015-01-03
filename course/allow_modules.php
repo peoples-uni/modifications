@@ -146,10 +146,10 @@ foreach ($enrols as $enrolid => $enrol) {
   }
   if ($show_checkbox) {
     if ($value_checkbox) {
-      echo '<td><input type="checkbox" name="moduleaccepted[' . $enrolid . ']" CHECKED></td>';
+      echo '<input type="checkbox" name="moduleaccepted[' . $enrolid . ']" CHECKED>';
     }
     else {
-      echo '<td><input type="checkbox" name="moduleaccepted[' . $enrolid . ']"></td>';
+      echo '<input type="checkbox" name="moduleaccepted[' . $enrolid . ']">';
     }
   }
   echo '</td>';
@@ -157,7 +157,7 @@ foreach ($enrols as $enrolid => $enrol) {
   echo '</tr>';
 }
 ?>
-echo '</table>';
+</table><br />
 
 <input type="hidden" name="markupdatemodules" value="1" />
 <input type="submit" name="updatemodules" value="Mark Modules that Should be Discounted (or not)" style="width:50em" />
