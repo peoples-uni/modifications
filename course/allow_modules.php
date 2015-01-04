@@ -65,17 +65,6 @@ if (!empty($_POST['markupdatemodules'])) {
 }
 
 
-$foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
-$foundation = array();
-foreach ($foundation_records as $record) {
-  $foundation[$record->course_code] = 1;
-}
-$problems_records = $DB->get_records('peoples_course_codes', array('type' => 'problems'), 'course_code ASC');
-$problems = array();
-foreach ($problems_records as $record) {
-  $problems[$record->course_code] = 1;
-}
-
 $enrols = $DB->get_records_sql("SELECT * FROM
 (SELECT e.*, c.fullname, c.idnumber, c.id AS cid FROM mdl_enrolment e, mdl_course c WHERE e.courseid=c.id AND e.userid=$userid) AS x
 LEFT JOIN
