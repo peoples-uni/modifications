@@ -1396,20 +1396,10 @@ There are a number of buttons for each course module in "Student Grades" which c
 </li>
 <li>
 Additionally if the student has met the criteria for receiving a Certificate (3 modules passed 50%+) or Diploma (6 modules passed 50%+, 2 of each type) from Peoples-uni. They will be able to download them here.<br />
-Note: one Diploma pass (45+) will be automatically allowed ("condoned") in place of one Masters pass (50%+).
-(**)New Rules incl semesters and also fails
-+  if (($grandfathered_passes >= 3) || (($grandfathered_passes == 2) && ($diploma_passes >= 3))) {
-+    $qualification = $qualification | 1;
-
-+  if ((($grandfathered_passes >= 6) || (($grandfathered_passes == 5) && ($diploma_passes >= 6))) && $meets_overall_criteria) {
-+    $qualification = $qualification | 2;
-
-</li>
-<li>
-Note that academic transcripts and diploma (& certificate) certificates now contain a percent grade for each module. It is possible to suppress the display of percentages for a transcript by adding "&nopercentage=1" to the end of the URL of the transcript.
-</li>
-<li>
-(**)+if ($isteacher) echo '<a href="' . $CFG->wwwroot . '/course/allow_modules.php?userid=' . $userid . '" target="_blank">Review modules contributing to awards and override disallowed modules</a><br />';
+Note: one Diploma pass (45+) will be automatically allowed ("condoned") in place of one Masters pass (50%+).<br />
+Note: After 10 elapsed semesters, module passes for subsequent semesters are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
+Note: After 2 module failures (i.e. a maximum of 1 failure is allowed), module passes are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
+Note: that academic transcripts and Diploma (& Certificate) certificates now contain a percent grade for each module. It is possible to suppress the display of percentages for a transcript by adding "&nopercentage=1" to the end of the URL of the transcript.
 </li>
 <li>
 Additionally if the student has any "Peoples-uni Record Files" there will be a link to a page that lists all of these files and will allow the student to download the files.<br />
@@ -1433,75 +1423,27 @@ To "Mark this Student as Graduated with MPH", set the Semester in which the Stud
 <h2>Student Progress towards Qualifications</h2>
 <ol>
 <li>
-To see how our students are progressing towards Certificates and Diplomas go to <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a>.
+To see how our students are progressing towards Certificates and Diplomas go to <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a>.<br />
+It is ordered with the the student who has passed the most modules at top.
 </li>
 <li>
-It is ordered with the the student who has passed the most exams at top and shows whether they have qualified for a Diploma, a Certificate or nothing so far.
+It has the following columns...<br />
+Family name<br />
+Given name<br />
+Last access (elapsed time for all modules)[elapsed time is the total number of elapsed semesters that the student studied (or is still studying) with Peoples-uni]<br />
+# Passed @Masters (@Diploma) [number of modules passes at Masters (or Diploma) level, but excluding those that should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date); a note of any Masters level passes that are actually pre-percentage is made]<br />
+Passed [includes the list of modules they have passed (Course Codes)]<br />
+# Foundation [the number of "Foundation Sciences" modules passed]<br />
+# Problems [the number of "Public Health Problems" modules passed]<br />
+Qualification [shows whether they have qualified for a Diploma, a Certificate or nothing so far]<br />
+"Student Grades"<br />
+"Mark Discounted Modules" [see next bullet point for the link, if there are any that have been discounted, this is noted here]<br />
 </li>
 <li>
-It includes the list of modules they have passed (Course Codes) and the number of "Foundation Sciences" and "Public Health Problems".
+The link "Mark Discounted Modules" or "Review modules contributing to awards and override disallowed modules" (from "Student Grades") brings up a page (allow_modules.php) which contains details of all Modules attempted by the student.<br />
+It contains the type of pass or fail or various types of non-grading.<br />
+For each module that has been discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date), there is a checkbox that can be checked (or unchecked if desired) to indicate that the module should not be discounted (i.e. will count towards a Diploma etc.). There is a submission button "Mark Modules that Should be Discounted (or not)" that should be clicked when the checkboxes have been set appropriately to update discounted modules.
 </li>
-(**).... ABOVE
-+  'Last access (elapsed time for all modules)',
-+  '# Passed @Masters (@Diploma)',
-+  if (!empty($enrol->pre_percentage_passes)) $text .= " Note: $enrol->pre_percentage_passes of the passes are pre-percentage";
-
-+  $text = 'Mark Discounted Modules';
-+  if (!empty($some_enrolls_discounted[$enrol->id])) $text .= " (<strong>Some Discounted!</strong>)";
-+  $rowdata[] =  '<a href="' . $CFG->wwwroot . '/course/allow_modules.php?userid=' . $enrol->id . '" target="_blank">' . $text . '</a>';
-...
-(**)diff --git a/course/peoples_awards_lib.php b/course/peoples_awards_lib.php
-+function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount, &$pass_type, &$foundation_problems) {
-+  // First work out what modules should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date)
-+  $all_enrols = $DB->get_records_sql("
-
-+    LEFT JOIN mdl_peoples_accept_module a ON e.id=a.enrolid /* If there is a match, then this module should not be discounted, no matter what */
-
-+  $text = 'Mark Discounted Modules';
-+  if (!empty($some_enrolls_discounted[$enrol->id])) $text .= " (<strong>Some Discounted!</strong>)";
-(**)diff --git a/course/allow_modules.php b/course/allow_modules.php
-
-+$PAGE->set_title('Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
-
-+<td>Semester</td>
-+<td>Module</td>
-+<td>Pass type</td>
-  +          $pass_type[$enrol->id] = 'Masters Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
-  +          $pass_type[$enrol->id] = 'Diploma Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
-  +          $pass_type[$enrol->id] = 'Pass';
-  +          $foundation_problems[$enrol->id] = 'F';
-  +          $foundation_problems[$enrol->id] = 'P';
-
-  +      $pass_type[$enrol->id] = 'Fail';
-  +      $pass_type[$enrol->id] = 'Fail (0%)';
-  +      $pass_type[$enrol->id] = 'Fail (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
-
-  +      $pass_type[$enrol->id] = 'Participation/CPD';
-  +      $pass_type[$enrol->id] = 'Not Graded, Not Complete"';
-  +      $pass_type[$enrol->id] = 'Not Graded, Exceptional Factors';
-  +      $pass_type[$enrol->id] = 'Not Graded, Did Not Pay';
-
-+<td>Foundation/Problems</td>
-+<td>Check if this module should not be discounted (even if academic rules on elapsed time or cummulative number of fails indicate it should be)</td>
-
-+    echo 'Discounted because of academic rules ';
-+    $show_checkbox = TRUE;
-+    $value_checkbox = FALSE;
-
-+  if (!empty($accept_modules[$enrolid])) {
-+    $show_checkbox = TRUE;
-+    $value_checkbox = TRUE;
-+  }
-
-+  if ($show_checkbox) {
-+    if ($value_checkbox) {
-+      echo '<input type="checkbox" name="moduleaccepted[' . $enrolid . ']" CHECKED>';
-+    }
-+    else {
-+      echo '<input type="checkbox" name="moduleaccepted[' . $enrolid . ']">';
-+    }
-+  }
-+<input type="submit" name="updatemodules" value="Mark Modules that Should be Discounted (or not)" style="width:50em" />
 </ol>
 
 
