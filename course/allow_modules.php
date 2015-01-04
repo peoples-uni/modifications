@@ -34,11 +34,10 @@ if (empty($fullname) || trim($fullname) == 'Guest User' || !$isteacher) {
   notice('<br /><br /><b>Click Continue and Login</b><br /><br />', "$CFG->wwwroot/");
 }
 
-echo '<h1>Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8') . '</h1>';
 $PAGE->set_title('Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
 $PAGE->set_heading('Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
 echo $OUTPUT->header();
-
+echo '<strong>Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8') . '</strong><br /><br />';
 
 if (!empty($_POST['markupdatemodules'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
