@@ -102,11 +102,11 @@ $pass_type = array();
 $foundation_problems = array();
 $qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems);
 
-if ($qualification & 1) {
-  echo '<strong>Qualification Achieved: Certificate</strong><br /><br />';
-}
 if ($qualification & 2) {
-  echo '<strong>Qualification Achieved: Diploma</strong><br /><br />';
+  echo '<strong>Award Achieved: Diploma</strong><br /><br />';
+}
+elseif ($qualification & 1) {
+  echo '<strong>Award Achieved: Certificate</strong><br /><br />';
 }
 
 
