@@ -19,7 +19,7 @@ $isteacher = is_peoples_teacher();
 if (!$isteacher) {
   echo '<h1>You must be a tutor to do this!</h1>';
   $SESSION->wantsurl = "$CFG->wwwroot/course/studentprogress.php";
-  notice('<br /><br /><b>Click Continue and Login</b><br /><br />');
+  notice('<br /><br /><b>Click Continue and Login</b><br /><br />', "$CFG->wwwroot/");
 }
 
 echo '<h1>Student Progress</h1>';
