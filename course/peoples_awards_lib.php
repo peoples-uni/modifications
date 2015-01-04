@@ -134,12 +134,12 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         if ($matched && !empty($foundation[$matches[1]])) {
           $countf++;
           if ($grandfathered) $countf_grandfathered++;
-          $foundation_problems[$enrol->id] = 'F';
+          $foundation_problems[$enrol->id] = 'Foundation';
         }
         if ($matched && !empty($problems  [$matches[1]])) {
           $countp++;
           if ($grandfathered) $countp_grandfathered++;
-          $foundation_problems[$enrol->id] = 'P';
+          $foundation_problems[$enrol->id] = 'Problems';
         }
 
         $semesters[] = $enrol->semester; // Not used
@@ -166,10 +166,10 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
 
         $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
         if ($matched && !empty($foundation[$matches[1]])) {
-          $foundation_problems[$enrol->id] = 'F';
+          $foundation_problems[$enrol->id] = 'Foundation';
         }
         if ($matched && !empty($problems  [$matches[1]])) {
-          $foundation_problems[$enrol->id] = 'P';
+          $foundation_problems[$enrol->id] = 'Problems';
         }
       }
     }
