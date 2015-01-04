@@ -31,7 +31,7 @@ $fullname = fullname($userrecord);
 if (empty($fullname) || trim($fullname) == 'Guest User' || !$isteacher) {
   echo '<h1>You must be a tutor to do this!</h1>';
   $SESSION->wantsurl = "$CFG->wwwroot/course/allow_modules.php?userid=$userid";
-  notice('<br /><br /><b>Click Continue and Login</b><br /><br />');
+  notice('<br /><br /><b>Click Continue and Login</b><br /><br />', "$CFG->wwwroot/");
 }
 
 $PAGE->set_title('Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
