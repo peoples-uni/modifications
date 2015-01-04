@@ -34,6 +34,7 @@ if (empty($fullname) || trim($fullname) == 'Guest User' || !$isteacher) {
   notice('<br /><br /><b>Click Continue and Login</b><br /><br />', "$CFG->wwwroot/");
 }
 
+echo '<h1>Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8') . '</h1>';
 $PAGE->set_title('Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
 $PAGE->set_heading('Review Award and Mark modules that should not be discounted for ' . htmlspecialchars($userrecord->firstname . ' ' . $userrecord->lastname, ENT_COMPAT, 'UTF-8'));
 echo $OUTPUT->header();
@@ -102,10 +103,10 @@ $foundation_problems = array();
 $qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems);
 
 if ($qualification & 1) {
-  echo '<br /><strong>Qualification Achieved: Certificate</strong><br />';
+  echo '<strong>Qualification Achieved: Certificate</strong><br /><br />';
 }
 if ($qualification & 2) {
-  echo '<br /><strong>Qualification Achieved: Diploma</strong><br />';
+  echo '<strong>Qualification Achieved: Diploma</strong><br /><br />';
 }
 
 
