@@ -1396,7 +1396,7 @@ There are a number of buttons for each course module in "Student Grades" which c
 </li>
 <li>
 Additionally if the student has met the criteria for receiving a Certificate (3 modules passed 50%+) or Diploma (6 modules passed 50%+, 2 of each type) from Peoples-uni. They will be able to download them here.<br />
-Note: one Diploma pass (45+) will be automatically allowed ("condoned") in place of one Masters pass (50%+).<br />
+Note: one Diploma pass (45%+) will be automatically allowed ("condoned") in place of one Masters pass (50%+).<br />
 Note: After 10 elapsed semesters, module passes for subsequent semesters are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
 Note: After 2 module failures (i.e. a maximum of 1 failure is allowed), module passes are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
 Note: that academic transcripts and Diploma (& Certificate) certificates now contain a percent grade for each module. It is possible to suppress the display of percentages for a transcript by adding "&nopercentage=1" to the end of the URL of the transcript.
