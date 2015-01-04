@@ -1430,7 +1430,7 @@ It is ordered with the the student who has passed the most modules at top.
 It has the following columns...<br />
 Family name<br />
 Given name<br />
-Last access (elapsed time for all modules)[elapsed time is the total number of elapsed semesters that the student studied (or is still studying) with Peoples-uni]<br />
+Last access (elapsed time for all modules) [elapsed time is the total number of elapsed semesters that the student studied (or is still studying) with Peoples-uni]<br />
 # Passed @Masters (@Diploma) [number of modules passes at Masters (or Diploma) level, but excluding those that should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date); a note of any Masters level passes that are actually pre-percentage is made]<br />
 Passed [includes the list of modules they have passed (Course Codes)]<br />
 # Foundation [the number of "Foundation Sciences" modules passed]<br />
