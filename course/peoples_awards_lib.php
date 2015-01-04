@@ -153,6 +153,25 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
 
         if ($enrol->datenotified > $lastestdate) $lastestdate = $enrol->datenotified;
       }
+      else { // Discounted but note marks in any case
+        if ($enrol->finalgrade > 49.99999) {
+          $pass_type[$enrol->id] = 'Discounted: Masters Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+        }
+        elseif ($enrol->percentgrades == 1) {
+          $pass_type[$enrol->id] = 'Discounted: Diploma Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+        }
+        else {
+          $pass_type[$enrol->id] = 'Discounted: Pass';
+        }
+
+        $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
+        if ($matched && !empty($foundation[$matches[1]])) {
+          $foundation_problems[$enrol->id] = 'F';
+        }
+        if ($matched && !empty($problems  [$matches[1]])) {
+          $foundation_problems[$enrol->id] = 'P';
+        }
+      }
     }
     elseif (($enrol->notified == 1) && ($enrol->percentgrades == 0)) {
       $pass_type[$enrol->id] = 'Fail';
