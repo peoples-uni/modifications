@@ -99,7 +99,7 @@ elseif ($qualification & 1) {
 
 
 ?>
-<form id="updatemodulesform" method="post" action="<?php echo $CFG->wwwroot . '/course/allow_modules.php'; ?>">
+<form id="updatemodulesform" method="post" action="<?php echo $CFG->wwwroot . '/course/allow_modules.php?userid=' . $userid; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <table border="1" BORDERCOLOR="RED">
