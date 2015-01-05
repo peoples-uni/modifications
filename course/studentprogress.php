@@ -67,7 +67,7 @@ foreach ($user_list as $userid => $record) {
       $elapsed_semesters = $i + 1 - $first_semester_enrolled;
       if (($total_fails > 1) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
         $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";
-        $some_enrolls_discounted[$userid] = $userid;
+        if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '') $some_enrolls_discounted[$userid] = $userid;
       }
     }
     $i++;
