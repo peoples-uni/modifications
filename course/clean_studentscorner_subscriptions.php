@@ -87,16 +87,17 @@ $table->head = array(
   'Family name',
   'Given name',
   );
+$n = 0;
 foreach ($forum_subscriptions as $forum_subscription) {
   $rowdata = array();
   $rowdata[] = htmlspecialchars($forum_subscription->forum, ENT_COMPAT, 'UTF-8');
   $rowdata[] = htmlspecialchars($forum_subscription->lastname, ENT_COMPAT, 'UTF-8');
   $rowdata[] = htmlspecialchars($forum_subscription->firstname, ENT_COMPAT, 'UTF-8');
   $table->data[] = $rowdata;
+  $n++;
 }
 echo html_writer::table($table);
-
-
+echo "<br />Number: $n<br />";
 
 
 // Do Removal
