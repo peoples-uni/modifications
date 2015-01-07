@@ -16,6 +16,12 @@ $PAGE->set_pagelayout('standard'); // Standard layout with blocks, this is recom
 require_login();
 if (empty($USER->id)) {echo '<h1>Not properly logged in, should not happen!</h1>'; die();}
 
+$userrecord = $DB->get_record('user', array('id' => $USER->id));
+if (empty($userrecord)) {
+  echo '<h1>User does not exist!</h1>';
+  die();
+}
+
 $is_admin = has_capability('moodle/site:viewparticipants', context_system::instance());
 $fullname = fullname($userrecord);
 if (empty($fullname) || trim($fullname) == 'Guest User' || !$is_admin) {
