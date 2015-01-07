@@ -90,8 +90,8 @@ $table->head = array(
 foreach ($forum_subscriptions as $forum_subscription) {
   $rowdata = array();
   $rowdata[] = htmlspecialchars($forum_subscription->forum, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($forum_subscription->u.lastname, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($forum_subscription->u.firstname, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($forum_subscription->lastname, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($forum_subscription->firstname, ENT_COMPAT, 'UTF-8');
   $table->data[] = $rowdata;
 }
 echo html_writer::table($table);
@@ -141,8 +141,8 @@ $table->head = array(
 foreach ($forum_digests as $forum_digest) {
   $rowdata = array();
   $rowdata[] = htmlspecialchars($forum_digest->forum, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($forum_digest->u.lastname, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($forum_digest->u.firstname, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($forum_digest->lastname, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($forum_digest->firstname, ENT_COMPAT, 'UTF-8');
   $table->data[] = $rowdata;
 }
 echo html_writer::table($table);
@@ -189,7 +189,7 @@ The most obvious thing I can do is keep a record of everyone I unsubscribe and a
 
 
 ?>
-<form id="cleanoutform" method="post" action="<?php echo $CFG->wwwroot . '/course/clean_studentscorner_subscriptions.php?userid=' . $userid; ?>">
+<form id="cleanoutform" method="post" action="<?php echo $CFG->wwwroot . '/course/clean_studentscorner_subscriptions.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="checkbox" name="doforreal">
