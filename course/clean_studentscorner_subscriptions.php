@@ -97,55 +97,7 @@ foreach ($forum_subscriptions as $forum_subscription) {
 echo html_writer::table($table);
 
 
-$forum_digests = $DB->get_records_sql("
-SELECT
-  fs.id,
-  fs.userid,
-  fs.forum,
-  fs.maildigest,
-  f.name,
-  u.lastname,
-  u.firstname
-FROM mdl_forum f
-JOIN mdl_forum_digests fs ON f.id=fs.forum
-JOIN mdl_user u ON fs.userid=u.id
-WHERE
-  f.course=$sc_id AND
-  f.forcesubscribe!=1 AND
-  fs.userid NOT IN ( /* The subscriber does not have any role other than Student (we do not want to remove Tutors or Viewer etc. */
-    SELECT ra.userid
-    FROM
-      mdl_role_assignments ra,
-      mdl_role r
-    WHERE
-      ra.roleid=r.id AND
-      r.shortname!='student'
-    ) AND
-  fs.userid NOT IN ( /* The subscriber is not enrolled in current Semester */
-    SELECT userid
-    FROM mdl_enrolment e
-    JOIN mdl_semester_current curr ON BINARY e.semester=curr.semester AND curr.id=1
-    WHERE
-      e.enrolled=1
-    ) AND
-  u.lastaccess<$cutoff_time
-ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
 
-echo '<strong>Student Digest Subscriptions that will be Removed (and remembered for later)...</strong>';
-$table = new html_table();
-$table->head = array(
-  'Forum',
-  'Family name',
-  'Given name',
-  );
-foreach ($forum_digests as $forum_digest) {
-  $rowdata = array();
-  $rowdata[] = htmlspecialchars($forum_digest->forum, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($forum_digest->lastname, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($forum_digest->firstname, ENT_COMPAT, 'UTF-8');
-  $table->data[] = $rowdata;
-}
-echo html_writer::table($table);
 
 // Do Removal
 foreach ($forum_subscriptions as $forum_subscription) {
@@ -157,14 +109,6 @@ foreach ($forum_subscriptions as $forum_subscription) {
 }
 
 
-foreach ($forum_digests as $forum_digest) {
-/*
-  fs.id,
-  fs.userid,
-  fs.forum,
-  fs.maildigest,
-*/
-}
 
 
 if (!empty($_POST['markcleanout'])) {
@@ -204,4 +148,64 @@ The most obvious thing I can do is keep a record of everyone I unsubscribe and a
 echo '<br /><br /><br />';
 
 echo $OUTPUT->footer();
+
+
+/*
+$forum_digests = $DB->get_records_sql("
+SELECT
+  fs.id,
+  fs.userid,
+  fs.forum,
+  fs.maildigest,
+  f.name,
+  u.lastname,
+  u.firstname
+FROM mdl_forum f
+JOIN mdl_forum_digests fs ON f.id=fs.forum
+JOIN mdl_user u ON fs.userid=u.id
+WHERE
+  f.course=$sc_id AND
+  f.forcesubscribe!=1 AND
+  fs.userid NOT IN (
+    SELECT ra.userid
+    FROM
+      mdl_role_assignments ra,
+      mdl_role r
+    WHERE
+      ra.roleid=r.id AND
+      r.shortname!='student'
+    ) AND
+  fs.userid NOT IN (
+    SELECT userid
+    FROM mdl_enrolment e
+    JOIN mdl_semester_current curr ON BINARY e.semester=curr.semester AND curr.id=1
+    WHERE
+      e.enrolled=1
+    ) AND
+  u.lastaccess<$cutoff_time
+ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
+
+echo '<strong>Student Digest Subscriptions that will be Removed (and remembered for later)...</strong>';
+$table = new html_table();
+$table->head = array(
+  'Forum',
+  'Family name',
+  'Given name',
+  );
+foreach ($forum_digests as $forum_digest) {
+  $rowdata = array();
+  $rowdata[] = htmlspecialchars($forum_digest->forum, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($forum_digest->lastname, ENT_COMPAT, 'UTF-8');
+  $rowdata[] = htmlspecialchars($forum_digest->firstname, ENT_COMPAT, 'UTF-8');
+  $table->data[] = $rowdata;
+}
+echo html_writer::table($table);
+
+foreach ($forum_digests as $forum_digest) {
+  fs.id,
+  fs.userid,
+  fs.forum,
+  fs.maildigest,
+}
+*/
 ?>
