@@ -46,7 +46,7 @@ else {
 }
 
 
-$cutoff_time = $time() - 2*30*24*60*60; /* 2 months ago */
+$cutoff_time = time() - 2*30*24*60*60; /* 2 months ago */
 $forum_subscriptions = $DB->get_records_sql("
 SELECT
   fs.id,
