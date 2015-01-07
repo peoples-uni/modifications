@@ -80,7 +80,7 @@ WHERE
   u.lastaccess<$cutoff_time
 ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
 
-echo '<h2>Student Subscriptions that will be Removed (and remembered for later)</h2>';
+echo '<strong>Student Subscriptions that will be Removed (and remembered for later)...</strong>';
 $table = new html_table();
 $table->head = array(
   'Forum',
@@ -131,7 +131,7 @@ WHERE
   u.lastaccess<$cutoff_time
 ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
 
-echo '<h2>Student Digest Subscriptions that will be Removed (and remembered for later)</h2>';
+echo '<strong>Student Digest Subscriptions that will be Removed (and remembered for later)...</strong>';
 $table = new html_table();
 $table->head = array(
   'Forum',
