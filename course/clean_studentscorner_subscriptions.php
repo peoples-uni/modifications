@@ -33,7 +33,7 @@ if (empty($fullname) || trim($fullname) == 'Guest User' || !$is_admin) {
 $PAGE->set_title('Clean out old Discussion Forum Subscriptions in Students Corner');
 $PAGE->set_heading('Clean out old Discussion Forum Subscriptions in Students Corner');
 echo $OUTPUT->header();
-echo '<strong>Clean out old Discussion Forum Subscriptions in Students Corner</strong><br /><br />';
+echo '<h2>Clean out old Discussion Forum Subscriptions in Students Corner</h2>';
 
 
 $sc = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
