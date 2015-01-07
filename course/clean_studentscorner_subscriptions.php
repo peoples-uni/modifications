@@ -97,7 +97,7 @@ foreach ($forum_subscriptions as $forum_subscription) {
   $n++;
 }
 echo html_writer::table($table);
-echo "<br />Number: $n<br />";
+echo "Number: $n<br /><br />";
 
 
 // Do Removal
