@@ -5,6 +5,17 @@
 *
 */
 
+/*
+CREATE TABLE `mdl_forum_subscriptions_recorded` (
+  `id` bigint(10) NOT NULL AUTO_INCREMENT,
+  `userid` bigint(10) NOT NULL DEFAULT '0',
+  `forum` bigint(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `mdl_forusubs_use_ix` (`userid`),
+  KEY `mdl_forusubs_for_ix` (`forum`)
+) ENGINE=InnoDB AUTO_INCREMENT=25178 DEFAULT CHARSET=utf8;
+*/
+
 require("../config.php");
 
 $PAGE->set_context(context_system::instance());
@@ -80,71 +91,71 @@ WHERE
   u.lastaccess<$cutoff_time
 ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
 
-echo '<strong>Student Subscriptions that will be Removed (and remembered for later)...</strong>';
-$table = new html_table();
-$table->head = array(
-  'Family name',
-  'Given name',
-  'Forum',
-  );
-$forum_n = array();
-$user_n = array();
-$n = 0;
-foreach ($forum_subscriptions as $forum_subscription) {
-  $rowdata = array();
-  $rowdata[] = htmlspecialchars($forum_subscription->lastname, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($forum_subscription->firstname, ENT_COMPAT, 'UTF-8');
-  $rowdata[] = htmlspecialchars($forum_subscription->name, ENT_COMPAT, 'UTF-8');
-  $table->data[] = $rowdata;
-
-  $forum_n[$forum_subscription->forum] = 1;
-  $user_n[$forum_subscription->userid] = 1;
-  $n++;
-}
-echo html_writer::table($table);
-echo 'Number of Forums: ' . count($forum_n) . '<br />';
-echo 'Number of Students: ' . count($user_n) . '<br />';
-echo "Number of Subscriptions: $n<br /><br />";
-
-
-// Do Removal
-foreach ($forum_subscriptions as $forum_subscription) {
-/*
-  fs.id,
-  fs.userid,
-  fs.forum,
-*/
-}
-
-
-
 
 if (!empty($_POST['markcleanout'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
+  //if (!empty($_POST['doforreal'])) {}
 
-  if (!empty($_POST['doforreal'])) {
+  echo '<strong>Starting Removing Student Subscriptions...</strong><br />';
+  $forum_n = array();
+  $user_n = array();
+  $n = 0;
+  foreach ($forum_subscriptions as $forum_subscription) {
+    $forum_subscriptions_recorded = new object();
+    $forum_subscriptions_recorded->userid = $forum_subscription->userid;
+    $forum_subscriptions_recorded->forum  = $forum_subscription->forum;
+    $DB->insert_record('forum_subscriptions_recorded', $forum_subscriptions_recorded);
 
-/*
-(**)COPY TO HOLDING PLACE
-DELETE THOSE
+    $DB->delete_records('forum_subscriptions', array('id' => $forum_subscription->id));
 
-ON ENROL IF IN HOLDING PLACE (ALL) RESUBSCRIBE AND DELETE THOSE ONES FROM HOLDING & digest
-Make sure forum exists
-MAKE SURE NOT ALREADY EXIST FIRST
+    echo htmlspecialchars($forum_subscription->lastname, ENT_COMPAT, 'UTF-8')  . ', ' .
+         htmlspecialchars($forum_subscription->firstname, ENT_COMPAT, 'UTF-8') . ', ' .
+         htmlspecialchars($forum_subscription->name, ENT_COMPAT, 'UTF-8')      . '<br />';
 
-The most obvious thing I can do is keep a record of everyone I unsubscribe and automatically re-subscribe them to the same forums if/when they are subsequently enrolled in a module.
-*/
-
+    $forum_n[$forum_subscription->forum] = 1;
+    $user_n[$forum_subscription->userid] = 1;
+    $n++;
   }
+  echo 'Number of Forums: ' . count($forum_n) . '<br />';
+  echo 'Number of Students: ' . count($user_n) . '<br />';
+  echo "Number of Subscriptions: $n<br /><br />";
 }
+else {
+  echo '<strong>Student Subscriptions that will be Removed (and remembered for later)...</strong>';
+  $table = new html_table();
+  $table->head = array(
+    'Family name',
+    'Given name',
+    'Forum',
+    );
+  $forum_n = array();
+  $user_n = array();
+  $n = 0;
+  foreach ($forum_subscriptions as $forum_subscription) {
+    $rowdata = array();
+    $rowdata[] = htmlspecialchars($forum_subscription->lastname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($forum_subscription->firstname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($forum_subscription->name, ENT_COMPAT, 'UTF-8');
+    $table->data[] = $rowdata;
 
+    $forum_n[$forum_subscription->forum] = 1;
+    $user_n[$forum_subscription->userid] = 1;
+    $n++;
+  }
+  echo html_writer::table($table);
+  echo 'Number of Forums: ' . count($forum_n) . '<br />';
+  echo 'Number of Students: ' . count($user_n) . '<br />';
+  echo "Number of Subscriptions: $n<br /><br />";
+}
 
 ?>
 <form id="cleanoutform" method="post" action="<?php echo $CFG->wwwroot . '/course/clean_studentscorner_subscriptions.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
-<input type="checkbox" name="doforreal">
+<?php
+//<input type="checkbox" name="doforreal">
+?>
 
 <input type="hidden" name="markcleanout" value="1" />
 <input type="submit" name="cleanout" value="Remove old Discussion Forum Subscriptions in Students Corner" style="width:50em" />
