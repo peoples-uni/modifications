@@ -11,9 +11,9 @@ CREATE TABLE `mdl_forum_subscriptions_recorded` (
   `userid` bigint(10) NOT NULL DEFAULT '0',
   `forum` bigint(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `mdl_forusubs_use_ix` (`userid`),
-  KEY `mdl_forusubs_for_ix` (`forum`)
-) ENGINE=InnoDB AUTO_INCREMENT=25178 DEFAULT CHARSET=utf8;
+  KEY `mdl_forusrec_use_ix` (`userid`),
+  KEY `mdl_forusrec_for_ix` (`forum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 */
 
 require("../config.php");
