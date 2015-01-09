@@ -91,6 +91,39 @@ WHERE
     ) AND
   u.lastaccess<$cutoff_time
 ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
+//(**)DEL...
+$forum_subscriptions = $DB->get_records_sql("
+SELECT
+  fs.id,
+  fs.userid,
+  fs.forum,
+  f.name,
+  u.lastname,
+  u.firstname
+FROM mdl_forum f
+JOIN mdl_xxforum_subscriptions fs ON f.id=fs.forum
+JOIN mdl_user u ON fs.userid=u.id
+WHERE
+  f.course=$sc_id AND
+  f.forcesubscribe!=1 AND
+  fs.userid NOT IN ( /* The subscriber does not have any role other than Student (we do not want to remove Tutors or Viewer etc. */
+    SELECT ra.userid
+    FROM
+      mdl_role_assignments ra,
+      mdl_role r
+    WHERE
+      ra.roleid=r.id AND
+      r.shortname!='student'
+    ) AND
+  fs.userid NOT IN ( /* The subscriber is not enrolled in current Semester */
+    SELECT userid
+    FROM mdl_enrolment e
+    JOIN mdl_semester_current curr ON BINARY e.semester=curr.semester AND curr.id=1
+    WHERE
+      e.enrolled=1
+    )
+ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
+//(**)...DEL
 
 
 if (!empty($_POST['markcleanout'])) {
@@ -162,12 +195,12 @@ else {
 <input type="submit" name="cleanout" value="Remove old Discussion Forum Subscriptions in Students Corner" style="width:50em" />
 </form>
 <br />
-//DEL(**)AND ABOVE
-xxenrolincourse($sc, $USER, 'XXXXX');
-//DEL(**)
 
 
 <?php
+//DEL(**)AND ABOVE
+xxenrolincourse($sc, $USER, 'XXXXX');
+//DEL(**)
 echo '<br /><br /><br />';
 
 echo $OUTPUT->footer();
