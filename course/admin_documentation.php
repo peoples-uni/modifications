@@ -1791,12 +1791,12 @@ When the page is brought up a table will be displayed "Student Subscriptions tha
 <li>
 The table shows all those subscriptions to forums in Students Corner which<br />
 a) are not "forced subscription" and<br />
-b) the subscriber does not have any role other than Student (we do not want to remove Tutors or Viewer etc.) and
+b) the subscriber does not have any role other than Student (we do not want to remove Tutors or Viewer etc.) and<br />
 c) the subscriber is not enrolled in current Semester and<br />
 d) the subscriber has not accessed Moodle within the last two months.<br />
 </li>
 <li>
-When the button "Remove old Discussion Forum Subscriptions in Students Corner" is clicked these subscripts are removed (in order to cut down on unwanted e-mail that annoys currently inactive students.
+When the button "Remove old Discussion Forum Subscriptions in Students Corner" is clicked these subscripts are removed (in order to cut down on unwanted e-mail that annoys currently inactive students).
 </li>
 <li>
 However a record is kept of the subscriptions and if the student is enrolled in any module in the future, the subscriptions are reinstated.
