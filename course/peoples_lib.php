@@ -288,6 +288,23 @@ function enrolincourse($course, $user, $semester) {
       $DB->insert_record('enrolment', $enrolment);
     }
 
+    $forum_subscriptions_recordeds = $DB->get_records('forum_subscriptions_recorded', array('userid' => $user->id));
+    if (!empty($forum_subscriptions_recordeds)) {
+      foreach ($forum_subscriptions_recordeds as $forum_subscriptions_recorded) {
+        $forum_subscriptions = new object();
+        $forum_subscriptions->userid = $forum_subscriptions_recorded->userid;
+        $forum_subscriptions->forum  = $forum_subscriptions_recorded->forum;
+
+        if ($DB->record_exists('forum', array('id' => $forum_subscriptions->forum))) {
+          if (!$DB->record_exists('xxforum_subscriptions', array('userid' => $forum_subscriptions->userid, 'forum' => $forum_subscriptions->forum))) {
+            $DB->insert_record('xxforum_subscriptions', $forum_subscriptions);
+          }
+        }
+
+        $DB->delete_records('forum_subscriptions_recorded', array('id' => $forum_subscriptions_recorded->id));
+      }
+    }
+
     emailwelcome($course, $user);
 
     $message = '';
