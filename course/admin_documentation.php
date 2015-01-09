@@ -92,7 +92,10 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a><br /><br />
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a><br />
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a><br /><br />
 </li>
 </b>
 </ul>
@@ -860,6 +863,8 @@ There is a link to your course at the bottom of the profile or you can click:
 </pre>
 <br />
 The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
+<br />
+Note: This button (and the button in that next bullet point) will restore any Forum Subscriptions in Students Corner what were removed by <a href="http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a>. See <a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a>.
 </li>
 <li>
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
@@ -1766,6 +1771,38 @@ The wording for the e-mail is specified in <a href="http://courses.peoples-uni.o
 </li>
 <li>
 The part about Student Posts in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> will be useful to see what students have posted.
+</li>
+</ol>
+
+
+<a name="cleanstudentcornersubscriptions"></a>
+<h2>Cleaning out old Discussion Forum Subscriptions in Students Corner</h2>
+<ol>
+<li>
+<a href="http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a> is a page used to Clean out old Discussion Forum Subscriptions in Students Corner.
+<br />It is possible to visit the page without causing any changes as long as the form is not submitted.
+</li>
+<li>
+Access to <a href="http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+</li>
+<li>
+When the page is brought up a table will be displayed "Student Subscriptions that will be Removed (and remembered for later)..." showing those forum subscriptions in Students Corner that will be removed if the form is submitted.
+</li>
+<li>
+The table shows all those subscriptions to forums in Students Corner which<br />
+a) are not "forced subscription" and<br />
+b) the subscriber does not have any role other than Student (we do not want to remove Tutors or Viewer etc.) and
+c) the subscriber is not enrolled in current Semester and<br />
+d) the subscriber has not accessed Moodle within the last two months.<br />
+</li>
+<li>
+When the button "Remove old Discussion Forum Subscriptions in Students Corner" is clicked these subscripts are removed (in order to cut down on unwanted e-mail that annoys currently inactive students.
+</li>
+<li>
+However a record is kept of the subscriptions and if the student is enrolled in any module in the future, the subscriptions are reinstated.
+</li>
+<li>
+Digest subscriptions are not removed by this page as there seems to be little or no use except by tutors (and as of testing time one student who's digest subscriptions would not be removed because he was currently active).
 </li>
 </ol>
 
