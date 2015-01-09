@@ -296,8 +296,8 @@ function enrolincourse($course, $user, $semester) {
         $forum_subscriptions->forum  = $forum_subscriptions_recorded->forum;
 
         if ($DB->record_exists('forum', array('id' => $forum_subscriptions->forum))) {
-          if (!$DB->record_exists('xxforum_subscriptions', array('userid' => $forum_subscriptions->userid, 'forum' => $forum_subscriptions->forum))) {
-            $DB->insert_record('xxforum_subscriptions', $forum_subscriptions);
+          if (!$DB->record_exists('forum_subscriptions', array('userid' => $forum_subscriptions->userid, 'forum' => $forum_subscriptions->forum))) {
+            $DB->insert_record('forum_subscriptions', $forum_subscriptions);
           }
         }
 
@@ -593,4 +593,41 @@ function dontaddslashes($x) {
 
 function dontstripslashes($x) {
   return $x;
+}
+//DEL LEAVE LINE=================================================(**)
+function xxenrolincourse($course, $user, $semester) {
+  global $DB;
+
+  $timestart = time();
+  // remove time part from the timestamp and keep only the date part
+  $timestart = make_timestamp(date('Y', $timestart), date('m', $timestart), date('d', $timestart), 0, 0, 0);
+
+  $roles = get_archetype_roles('student');
+  $role = reset($roles);
+
+  if (TRUE) {
+    $forum_subscriptions_recordeds = $DB->get_records('forum_subscriptions_recorded', array('userid' => $user->id));
+    if (!empty($forum_subscriptions_recordeds)) {
+      foreach ($forum_subscriptions_recordeds as $forum_subscriptions_recorded) {
+        $forum_subscriptions = new object();
+        $forum_subscriptions->userid = $forum_subscriptions_recorded->userid;
+        $forum_subscriptions->forum  = $forum_subscriptions_recorded->forum;
+
+        if ($DB->record_exists('forum', array('id' => $forum_subscriptions->forum))) {
+          if (!$DB->record_exists('xxforum_subscriptions', array('userid' => $forum_subscriptions->userid, 'forum' => $forum_subscriptions->forum))) {
+            $DB->insert_record('xxforum_subscriptions', $forum_subscriptions);
+          }
+        }
+
+        $DB->delete_records('forum_subscriptions_recorded', array('id' => $forum_subscriptions_recorded->id));
+      }
+    }
+
+    emailwelcome($course, $user);
+
+    return true;
+  }
+  else {
+    return false;
+  }
 }

@@ -17,6 +17,7 @@ CREATE TABLE `mdl_forum_subscriptions_recorded` (
 */
 
 require("../config.php");
+require_once($CFG->dirroot .'/course/peoples_lib.php');//(**)DEL
 
 $PAGE->set_context(context_system::instance());
 
@@ -161,6 +162,9 @@ else {
 <input type="submit" name="cleanout" value="Remove old Discussion Forum Subscriptions in Students Corner" style="width:50em" />
 </form>
 <br />
+//DEL(**)AND ABOVE
+xxenrolincourse($sc, $USER, 'XXXXX');
+//DEL(**)
 
 
 <?php
