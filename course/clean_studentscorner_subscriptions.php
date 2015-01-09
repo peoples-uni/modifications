@@ -17,7 +17,6 @@ CREATE TABLE `mdl_forum_subscriptions_recorded` (
 */
 
 require("../config.php");
-require_once($CFG->dirroot .'/course/peoples_lib.php');//(**)DEL
 
 $PAGE->set_context(context_system::instance());
 
@@ -68,7 +67,7 @@ SELECT
   u.lastname,
   u.firstname
 FROM mdl_forum f
-JOIN mdl_xxforum_subscriptions fs ON f.id=fs.forum
+JOIN mdl_forum_subscriptions fs ON f.id=fs.forum
 JOIN mdl_user u ON fs.userid=u.id
 WHERE
   f.course=$sc_id AND
@@ -91,39 +90,6 @@ WHERE
     ) AND
   u.lastaccess<$cutoff_time
 ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
-//(**)DEL...
-$forum_subscriptions = $DB->get_records_sql("
-SELECT
-  fs.id,
-  fs.userid,
-  fs.forum,
-  f.name,
-  u.lastname,
-  u.firstname
-FROM mdl_forum f
-JOIN mdl_xxforum_subscriptions fs ON f.id=fs.forum
-JOIN mdl_user u ON fs.userid=u.id
-WHERE
-  f.course=$sc_id AND
-  f.forcesubscribe!=1 AND
-  fs.userid NOT IN ( /* The subscriber does not have any role other than Student (we do not want to remove Tutors or Viewer etc. */
-    SELECT ra.userid
-    FROM
-      mdl_role_assignments ra,
-      mdl_role r
-    WHERE
-      ra.roleid=r.id AND
-      r.shortname!='student'
-    ) AND
-  fs.userid NOT IN ( /* The subscriber is not enrolled in current Semester */
-    SELECT userid
-    FROM mdl_enrolment e
-    JOIN mdl_semester_current curr ON BINARY e.semester=curr.semester AND curr.id=1
-    WHERE
-      e.enrolled=1
-    )
-ORDER BY f.name ASC, u.lastname ASC, u.firstname ASC");
-//(**)...DEL
 
 
 if (!empty($_POST['markcleanout'])) {
@@ -141,7 +107,7 @@ if (!empty($_POST['markcleanout'])) {
     $forum_subscriptions_recorded->forum  = $forum_subscription->forum;
     $DB->insert_record('forum_subscriptions_recorded', $forum_subscriptions_recorded);
 
-    $DB->delete_records('xxforum_subscriptions', array('id' => $forum_subscription->id));
+    $DB->delete_records('forum_subscriptions', array('id' => $forum_subscription->id));
 
     echo htmlspecialchars($forum_subscription->lastname, ENT_COMPAT, 'UTF-8')  . ', ' .
          htmlspecialchars($forum_subscription->firstname, ENT_COMPAT, 'UTF-8') . ', ' .
@@ -198,9 +164,6 @@ else {
 
 
 <?php
-//DEL(**)AND ABOVE
-xxenrolincourse($sc, $USER, 'XXXXX');
-//DEL(**)
 echo '<br /><br /><br />';
 
 echo $OUTPUT->footer();
