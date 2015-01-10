@@ -147,14 +147,22 @@ elseif ($data = $editform->get_data()) {
   $DB->insert_record('peoplesapplication', $application);
 
 
+  $body = get_config(NULL, 'peoples_top_application_ack_email');
+  $body = strip_tags($body);
+
+  $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
+                                                                   // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $message = "$body\n\n";
+
   if ($application->reenrolment == 0) {
-    $message = "First Application for...\n\n";
+    $message .= "First Application for...\n\n";
     $returning_in_title = 'First';
   }
   else {
-    $message = "Returning Student Application for...\n\n";
+    $message .= "Returning Student Application for...\n\n";
     $returning_in_title = 'Returning';
   }
+
   $message .= "Family Name: $application->lastname\n\n";
   $message .= "First Name: $application->firstname\n\n";
   $message .= "e-mail: $application->email\n\n";

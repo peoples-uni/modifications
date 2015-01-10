@@ -430,6 +430,18 @@ NOTE: once any module is added (which is not then immediately marked as full... 
 You can confirm that the application form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed.
 </li>
 <li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the wording to be included at the top of the Acknowledgement e-mail sent upon Course Application form Submission by the student. This should have the correct dates. Then click "Set the text to be included at top of Acknowledgement e-mail sent upon Course Application form Submission". Here is a sample of previous wording...
+<br /><pre>
+Thank you for your application.
+
+If you are a returning student, then please make sure you have paid your course fees for the previous semester.
+There is no guarantee that you will be enrolled if you have outstanding payments, or if you do not have an agreed payment plan.
+
+We will confirm your enrolment in the module(s) by March 7th.
+Orientation week begins on March 16th.
+</pre>
+</li>
+<li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording for dates and banking and then click "Set the above text as the Students Approval e-mail wording (in Application Details/app.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
