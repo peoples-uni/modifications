@@ -378,9 +378,13 @@ $peoples_filters->add_filter($peoples_displayextra_filter);
 $peoples_displayforexcel_filter = new peoples_boolean_filter('Display Student History for Copying and Pasting to Excel', 'displayforexcel');
 $peoples_filters->add_filter($peoples_displayforexcel_filter);
 
+$peoples_displaystandardforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displaystandardforexcel');
+$peoples_filters->add_filter($peoples_displaystandardforexcel_filter);
+
 $displayscholarship = $peoples_displayscholarship_filter->get_filter_setting();
 $displayextra       = $peoples_displayextra_filter->get_filter_setting();
 $displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
+$displaystandardforexcel = $peoples_displaystandardforexcel_filter->get_filter_setting();
 
 
 if (!empty($_POST['markfilter'])) {
@@ -417,10 +421,10 @@ echo $OUTPUT->header();
 //echo html_writer::start_tag('div', array('class'=>'course-content'));
 
 
-if (!$displayforexcel) echo "<h1>Student Applications</h1>";
+if (!$displayforexcel && !$displaystandardforexcel) echo "<h1>Student Applications</h1>";
 
 
-if (!$displayforexcel) $peoples_filters->show_filters();
+if (!$displayforexcel && !$displaystandardforexcel) $peoples_filters->show_filters();
 
 
 // Retrieve all relevent rows
@@ -746,9 +750,10 @@ foreach ($applications as $sid => $application) {
     if (!empty($dissertations[$application->userid])) {
       $ids = explode(',', $dissertations[$application->userid]->ids);
       foreach ($ids as $id) {
-        $z .= '<br />(<a href="' . $CFG->wwwroot . '/course/dissertations.php?chosensemester=All&displayforexcel=0#' . $id . '" target="_blank">Dissertation</a>)';
+        if (!$displaystandardforexcel) $z .= '<br />(<a href="' . $CFG->wwwroot . '/course/dissertations.php?chosensemester=All&displayforexcel=0#' . $id . '" target="_blank">Dissertation</a>)';
       }
     }
+    if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($application->paymentmechanism)) $mechanism = '';
@@ -788,6 +793,7 @@ foreach ($applications as $sid => $application) {
       $z = $mechanism;
     }
     if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
+    if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';
@@ -800,6 +806,7 @@ foreach ($applications as $sid => $application) {
     if ($application->mph && ($application->mphstatus == 2)) $z .= '<br />(Peoples MPH)';
     if ($application->mph && ($application->mphstatus == 3)) $z .= '<br />(OTHER MPH)';
     if ($application->cert_ps) $z .= '<br />(Cert PS)';
+    if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (!$displayextra || $displayscholarship) {
@@ -842,6 +849,7 @@ foreach ($applications as $sid => $application) {
       $z .= '<input type="submit" name="approveapplication" value="Details" />';
 
       $z .= '</form>';
+      if ($displaystandardforexcel) $z = '';
       if ($application->reenrolment) $z .= 'Re&#8209;enrolment';
       $rowdata[] = $z;
     }
@@ -989,10 +997,12 @@ foreach ($applications as $sid => $application) {
 
     if (empty($application->userid)) $z = '';
     else $z = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $application->userid . '" target="_blank">Student Grades</a>';
+    if ($displaystandardforexcel) $z = '';
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($application->userid)) $z = '';
     else $z = '<a href="' . $CFG->wwwroot . '/course/studentsubmissions.php?id=' . $application->userid . '" target="_blank">Student Submissions</a>';
+    if ($displaystandardforexcel) $z = '';
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (!empty($ssoforums[$application->userid])) {
@@ -1001,6 +1011,7 @@ foreach ($applications as $sid => $application) {
     else {
       $z = '';
     }
+    if ($displaystandardforexcel) $z = '';
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($modules[$application->coursename1])) {
@@ -1186,7 +1197,7 @@ foreach ($applications as $sid => $application) {
 }
 echo html_writer::table($table);
 
-if ($displayforexcel) {
+if ($displayforexcel || $displaystandardforexcel) {
   echo $OUTPUT->footer();
   die();
 }

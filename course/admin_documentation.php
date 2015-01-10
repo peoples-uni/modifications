@@ -698,6 +698,9 @@ It is also possible to display all the application data for each student in extr
 It is also possible to display columns with student history relevant to Tutors in a clean format suitable for Excel by clicking "Display Student History for Copying and Pasting to Excel" and then "Apply Filters".
 </li>
 <li>
+It is also possible to display the standard colums in a clean format suitable for Excel by clicking "Display for Copying and Pasting to Excel" and then "Apply Filters".
+</li>
+<li>
 The "sid" value against each student is a unique identifier which is used to track the application including payments by the student.
 </li>
 <li>
