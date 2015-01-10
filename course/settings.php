@@ -626,7 +626,7 @@ foreach ($listssf as $key => $listssfname) {
 </textarea><br />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_top_application_ack_email" value="1" />
-<input type="submit" name="set_top_application_ack_email" value="Set the above text as the text to be included at top of in the Acknowledgement e-mail sent upon Course Application form Submission by the Student" style="width:50em" />
+<input type="submit" name="set_top_application_ack_email" value="Set the text to be included at top of Acknowledgement e-mail sent upon Course Application form Submission by the Student" style="width:50em" />
 </form>
 <br />
 
