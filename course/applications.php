@@ -36,6 +36,7 @@ CREATE TABLE mdl_peoplesapplication (
   coursename2 VARCHAR(255) NOT NULL DEFAULT '',
   coursename3 VARCHAR(255) NOT NULL DEFAULT '',
   coursename4 VARCHAR(255) NOT NULL DEFAULT '',
+  alternatecoursename VARCHAR(255) NOT NULL DEFAULT '',
   applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   applycertpatientsafety BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   semester VARCHAR(255) NOT NULL DEFAULT '',
@@ -88,6 +89,8 @@ ALTER TABLE mdl_peoplesapplication ADD course_id_4 BIGINT(10) UNSIGNED NOT NULL 
 For possible future use only...
 ALTER TABLE mdl_peoplesapplication ADD coursename3 VARCHAR(255) NOT NULL DEFAULT '' AFTER coursename2;
 ALTER TABLE mdl_peoplesapplication ADD coursename4 VARCHAR(255) NOT NULL DEFAULT '' AFTER coursename3;
+
+ALTER TABLE mdl_peoplesapplication ADD alternatecoursename VARCHAR(255) NOT NULL DEFAULT ''  AFTER coursename4;
 
 Will be used to support new Webform...
 ALTER TABLE mdl_peoplesapplication ADD dob VARCHAR(20) NOT NULL DEFAULT '' AFTER semester;
