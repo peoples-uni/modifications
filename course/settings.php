@@ -193,6 +193,11 @@ if (!empty($_POST['mark_batch_registration_email']) && !empty($_POST['value_batc
   $value_batch_registration_email = $_POST['value_batch_registration_email'];
   set_config('peoples_batch_registration_email', $value_batch_registration_email);
 }
+if (!empty($_POST['mark_top_application_ack_email']) && !empty($_POST['value_top_application_ack_email'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $value_top_application_ack_email = $_POST['value_top_application_ack_email'];
+  set_config('peoples_top_application_ack_email', $value_top_application_ack_email);
+}
 if (!empty($_POST['mark_approval_email']) && !empty($_POST['value_approval_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $value_approval_email = $_POST['value_approval_email'];
@@ -612,6 +617,16 @@ foreach ($listssf as $key => $listssfname) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_batch_registration_email" value="1" />
 <input type="submit" name="set_batch_registration_email" value="Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)" style="width:50em" />
+</form>
+<br />
+
+<form id="top_application_ack_email_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<textarea name="value_top_application_ack_email" rows="15" cols="75" wrap="hard" style="width:auto">
+<?php echo htmlspecialchars(get_config(NULL, 'peoples_top_application_ack_email'), ENT_COMPAT, 'UTF-8'); ?>
+</textarea><br />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_top_application_ack_email" value="1" />
+<input type="submit" name="set_top_application_ack_email" value="Set the above text as the text to be included at top of in the Acknowledgement e-mail sent upon Course Application form Submission by the Student" style="width:50em" />
 </form>
 <br />
 
