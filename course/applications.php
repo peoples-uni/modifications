@@ -1011,7 +1011,6 @@ foreach ($applications as $sid => $application) {
     else {
       $z = '';
     }
-    if ($displaystandardforexcel) $z = '';
     if (!$displayscholarship) $rowdata[] = $z;
 
     if (empty($modules[$application->coursename1])) {
