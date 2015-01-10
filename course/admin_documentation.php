@@ -434,8 +434,10 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <br /><pre>
 Thank you for your application.
 
-If you are a returning student, then please make sure you have paid your course fees for the previous semester.
-There is no guarantee that you will be enrolled if you have outstanding payments, or if you do not have an agreed payment plan.
+If you are a returning student, then please make sure you have paid your course
+fees for the previous semester.
+There is no guarantee that you will be enrolled if you have outstanding
+payments, or if you do not have an agreed payment plan.
 
 We will confirm your enrolment in the module(s) by March 7th.
 Orientation week begins on March 16th.
