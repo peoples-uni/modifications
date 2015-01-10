@@ -580,6 +580,7 @@ else {
     'Semester',
     'First module',
     'Second module',
+    'Alternate module',
     'DOB dd/mm/yyyy',
     'Gender',
     'City/Town',
@@ -823,6 +824,7 @@ foreach ($applications as $sid => $application) {
       $z .= '<input type="hidden" name="16" value="' . htmlspecialchars($application->semester, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<input type="hidden" name="18" value="' . htmlspecialchars($application->coursename1, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<input type="hidden" name="19" value="' . htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '" />';
+      $z .= '<input type="hidden" name="alternatecoursename" value="' . htmlspecialchars($application->alternatecoursename, ENT_COMPAT, 'UTF-8') . '" />';
       $z .= '<input type="hidden" name="dobday" value="' . $application->dobday . '" />';
       $z .= '<input type="hidden" name="dobmonth" value="' . $application->dobmonth . '" />';
       $z .= '<input type="hidden" name="dobyear" value="' . $application->dobyear . '" />';
@@ -898,6 +900,8 @@ foreach ($applications as $sid => $application) {
       $z = '<span>';
     }
     if (!$displayscholarship) $rowdata[] = $z . htmlspecialchars($application->coursename2, ENT_COMPAT, 'UTF-8') . '</span>';
+
+    if (!$displayscholarship && $displayextra) $rowdata[] = htmlspecialchars($application->alternatecoursename, ENT_COMPAT, 'UTF-8');
 
     if (!$displayscholarship) $rowdata[] = $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
 

@@ -492,6 +492,13 @@ echo "</td>";
 echo "</tr>";
 
 echo "<tr>";
+echo "<td>Alternate module</td>";
+echo '<td>';
+echo htmlspecialchars($_REQUEST['alternatecoursename'], ENT_COMPAT, 'UTF-8') . '</td>';
+echo "</td>";
+echo "</tr>";
+
+echo "<tr>";
 echo "<td>DOB</td>";
 echo "<td>" . $_REQUEST['dobday'] . "/" . $_REQUEST['dobmonth'] . "/" . $_REQUEST['dobyear'] . "</td>";
 echo "</tr>";
@@ -907,6 +914,7 @@ if ($state1 === 02) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -958,6 +966,7 @@ if (($state2===020) && !empty($_REQUEST['19'])) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1009,6 +1018,7 @@ if ($state1===01 || $state1===03) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1060,6 +1070,7 @@ if (($state2===010 || $state2===030) && !empty($_REQUEST['19'])) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1106,6 +1117,7 @@ if ($state1===02 || $state1===01) {
 
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
 
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1170,6 +1182,7 @@ if (($state2===020 || $state2===010) && !empty($_REQUEST['19'])) { // Allow modu
 
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1234,6 +1247,7 @@ elseif ($state2 === 020 && empty($_REQUEST['19'])) { // Allow module 2 to be set
 
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1298,6 +1312,7 @@ elseif ($state2 === 010 && empty($_REQUEST['19'])) { // Allow module 2 to be set
 
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1506,6 +1521,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="employment" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename1" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename2" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo htmlspecialchars($_REQUEST['alternatecoursename'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="semester" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
@@ -1552,6 +1568,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="employment" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename1" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename2" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo htmlspecialchars($_REQUEST['alternatecoursename'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="semester" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
@@ -1593,6 +1610,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="employment" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename1" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename2" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo htmlspecialchars($_REQUEST['alternatecoursename'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="semester" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
@@ -1645,6 +1663,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="employment" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename1" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename2" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo htmlspecialchars($_REQUEST['alternatecoursename'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="semester" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
@@ -1690,6 +1709,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="employment" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename1" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename2" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo htmlspecialchars($_REQUEST['alternatecoursename'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="semester" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
@@ -1731,6 +1751,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="employment" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename1" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="coursename2" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo htmlspecialchars($_REQUEST['alternatecoursename'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="semester" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
@@ -1767,6 +1788,7 @@ if (!$application->ready && $application->nid != 80) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1812,6 +1834,7 @@ if (empty($mphstatus)) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1864,6 +1887,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1910,6 +1934,7 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -1956,6 +1981,7 @@ Reason for Unsuspension (visible to Staff & Students):&nbsp;<input type="text" s
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -2003,6 +2029,7 @@ if (empty($peoples_cert_ps->cert_psstatus)) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -2048,6 +2075,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -2094,6 +2122,7 @@ if (!empty($_REQUEST['29'])) {
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -2153,6 +2182,7 @@ echo '<option value="2" ' . $selected2 . '>HIC</option>';
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -2199,6 +2229,7 @@ if ($state1 !== 03 && $state2 !== 030 && empty($_REQUEST['29'])) { // Allow appl
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
@@ -2246,6 +2277,7 @@ if ($state1 === 03 && $state2 === 030 && !empty($_REQUEST['19'])) { // Add anoth
 <input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
 <input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />

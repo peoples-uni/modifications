@@ -751,10 +751,13 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student was enrolled in a previous semester.
 </li>
 <li>
-Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, Application for MPH (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
+Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, a possible alternate module (if their desired module is full), Application for MPH (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
 </li>
 <li>
 When the "Details" button is pressed for an application, additional applicant data is displayed beyond what is in the "spreadsheet" row.
+</li>
+<li>
+"Alternate module" Indicates a possible alternate module set by the Student (if their desired module is full).
 </li>
 <li>
 "Student Grades" Launches the Peoples-uni transcript of the grades achieved by this student in all the modules they have done. See "Course Grades" (<a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a>) which is described below in "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>".
