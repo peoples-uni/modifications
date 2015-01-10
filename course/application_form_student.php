@@ -52,6 +52,16 @@ elseif ($data = $editform->get_data()) {
     $application->coursename2 = $course->fullname;
   }
 
+  $dataitem = $data->course_id_alternate;
+  if ($dataitem === '' || (is_numeric($dataitem) && $dataitem == 0)) {
+    $application->course_id_alternate = 0;
+    $application->alternatecoursename = '';
+  }
+  else {
+    $course = $DB->get_record('course', array('id' => $dataitem));
+    $application->alternatecoursename = $course->fullname;
+  }
+
   $dataitem = $data->applymmumph;
   if (empty($dataitem)) $dataitem = 0;
   $application->applymmumph = $dataitem;
@@ -171,6 +181,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Semester: $application->semester\n\n";
   $message .= "Module 1: $application->coursename1\n\n";
   $message .= "Module 2: $application->coursename2\n\n";
+  $message .= "Alternate module: $application->alternatecoursename\n\n";
   $message .= "Apply for MPH: $applymmumphtext\n\n";
   $message .= "Apply for Certificate in Patient Safety: $applycertpatientsafetytext\n\n";
   $message .= "City: $application->city\n\n";

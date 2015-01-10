@@ -110,6 +110,9 @@ class application_form_returning_student_form extends moodleform {
     $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
     $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br /><br />');
 
+    $mform->addElement('select', 'course_id_alternate', 'Alternate module', $listforselect);
+    $mform->addElement('static', 'explain3', '&nbsp;', 'If a module you want to take is full then please indicate which module is your preferred alternate choice.<br /><br />');
+
     $listforselect = array();
     $listforselect[1] = 'No, continue with Peoples-uni';
     //$listforselect[2] = 'Yes, apply for MMU MPH';
