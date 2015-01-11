@@ -316,6 +316,12 @@ $listchosenpay[] = 'Posted Cash Confirmed';
 $peoples_chosenpay_filter = new peoples_chosenpay_filter('Payment Method', 'chosenpay', $listchosenpay, 'Any');
 $peoples_filters->add_filter($peoples_chosenpay_filter);
 
+$listchosenpaidornot[] = 'Any';
+$listchosenpaidornot[] = 'Yes';
+$listchosenpaidornot[] = 'No';
+$peoples_chosenpaidornot_filter = new peoples_chosenpaidornot_filter('Payment up to date?', 'chosenpaidornot', $listchosenpaidornot, 'Any');
+$peoples_filters->add_filter($peoples_chosenpaidornot_filter);
+
 $listchosenreenrol[] = 'Any';
 $listchosenreenrol[] = 'Re-enrolment';
 $listchosenreenrol[] = 'New student';

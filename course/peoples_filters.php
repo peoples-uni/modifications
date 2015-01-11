@@ -322,6 +322,30 @@ class peoples_chosenpay_filter extends peoples_select_filter {
 }
 
 
+class peoples_chosenpaidornot_filter extends peoples_select_filter {
+  public function filter_entries(array $list_to_filter) {
+    foreach ($list_to_filter as $index => $list_entry) {
+      if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
+        $paidup = TRUE;
+        if (!empty($list_entry->userid)) {
+          $amount = amount_to_pay($list_entry->userid);
+          if ($amount >= .01) $paidup = FALSE;
+        }
+        if ($this->selectedvalue === 'Yes' && !$paidup) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'No' && $paidup) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
+
+
 class peoples_chosenreenrol_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
