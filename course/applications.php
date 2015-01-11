@@ -291,6 +291,12 @@ $peoples_filters->add_filter($peoples_chosensearch_filter);
 $peoples_chosenmodule_filter = new peoples_chosenmodule_filter('Module Name Contains', 'chosenmodule');
 $peoples_filters->add_filter($peoples_chosenmodule_filter);
 
+$listchosenpaidornot[] = 'Any';
+$listchosenpaidornot[] = 'Yes';
+$listchosenpaidornot[] = 'No';
+$peoples_chosenpaidornot_filter = new peoples_chosenpaidornot_filter('Payment up to date?', 'chosenpaidornot', $listchosenpaidornot, 'Any');
+$peoples_filters->add_filter($peoples_chosenpaidornot_filter);
+
 $listchosenpay[] = 'Any';
 $listchosenpay[] = 'No Indication Given';
 $listchosenpay[] = 'Not Confirmed (all)';
@@ -315,12 +321,6 @@ $listchosenpay[] = 'Posted Travellers Cheques Confirmed';
 $listchosenpay[] = 'Posted Cash Confirmed';
 $peoples_chosenpay_filter = new peoples_chosenpay_filter('Payment Method', 'chosenpay', $listchosenpay, 'Any');
 $peoples_filters->add_filter($peoples_chosenpay_filter);
-
-$listchosenpaidornot[] = 'Any';
-$listchosenpaidornot[] = 'Yes';
-$listchosenpaidornot[] = 'No';
-$peoples_chosenpaidornot_filter = new peoples_chosenpaidornot_filter('Payment up to date?', 'chosenpaidornot', $listchosenpaidornot, 'Any');
-$peoples_filters->add_filter($peoples_chosenpaidornot_filter);
 
 $listchosenreenrol[] = 'Any';
 $listchosenreenrol[] = 'Re-enrolment';
