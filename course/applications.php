@@ -684,6 +684,7 @@ $listofemails = array();
 $gender = array();
 $age = array();
 $country = array();
+$modulepaidup = array();
 foreach ($applications as $sid => $application) {
   $state = (int)$application->state;
   // Legacy fixups...
@@ -791,10 +792,12 @@ foreach ($applications as $sid => $application) {
     //if ($application->costpaid < .01) $z = '<span style="color:red">No' . $mechanism . '</span>';
     //elseif (abs($application->costowed - $application->costpaid) < .01) $z = '<span style="color:green">Yes' . $mechanism . '</span>';
     //else $z = '<span style="color:blue">' . "Paid $application->costpaid out of $application->costowed" . $mechanism . '</span>';
+    $amount_owed = 0;
     if (!empty($application->userid)) {
       $not_confirmed_text = '';
       if (is_not_confirmed($application->userid)) $not_confirmed_text = ' (not confirmed)';
       $amount = amount_to_pay($application->userid);
+      $amount_owed = $amount;
       if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed now' . $not_confirmed_text . $mechanism . '</span>';
       elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $not_confirmed_text . $mechanism . '</span>';
       else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $not_confirmed_text . $mechanism . '</span>'; // Will never be Overpaid here because of function used
@@ -1123,6 +1126,27 @@ foreach ($applications as $sid => $application) {
         }
       }
     }
+
+    if ($amount_owed < .01) {
+      // Count Module 1 Paid up
+      if (empty($modulepaidup[$application->coursename1])) {
+        $modulepaidup[$application->coursename1] = 1;
+      }
+      else {
+        $modulepaidup[$application->coursename1]++;
+      }
+
+      // Count Module 2 Paid up
+      if (!empty($application->coursename2)) {
+        if (empty($modulepaidup[$application->coursename2])) {
+          $modulepaidup[$application->coursename2] = 1;
+        }
+        else {
+          $modulepaidup[$application->coursename2]++;
+        }
+      }
+    }
+
     $table->data[] = $rowdata;
   }
   else {
@@ -1226,6 +1250,7 @@ echo "<td>Module</td>";
 echo "<td>Number of Applications</td>";
 echo "<td>Number Approved</td>";
 echo "<td>Number Enrolled</td>";
+echo "<td>Number Fully Paid (or New Student)</td>";
 echo "</tr>";
 
 ksort($modules);
@@ -1238,7 +1263,8 @@ foreach ($modules as $product => $number) {
   echo "<td>" . $number . "</td>";
   if (empty($moduleapprovals[$product])) { echo "<td>0</td>";} else {   echo "<td>" . $moduleapprovals[$product] . "</td>";}
   if (empty($moduleregistrations[$product])) { echo "<td>0</td>";} else { echo "<td>" . $moduleregistrations[$product] . "</td>";}
-    echo "</tr>";
+  if (empty($modulepaidup[$product])) { echo "<td>0</td>";} else { echo "<td>" . $modulepaidup[$product] . "</td>";}
+  echo "</tr>";
 
   $n++;
 }
