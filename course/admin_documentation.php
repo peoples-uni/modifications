@@ -727,7 +727,9 @@ In particular the one or two modules that the student has applied for are displa
 "Approved?", "Payment up to date?", "Enrolled?", "Details", "Student Grades" and "Student Submissions" will be described later.
 </li>
 <li>
-Statistics are displayed at the end of the page.
+Statistics are displayed at the end of the page.<br />
+Note that the first table of statistics has "Module", "Number of Applications", "Number Approved", "Number Enrolled" and "Number Fully Paid (or New Student)" and can be used to track how modules are filling up.<br />
+A "New Student" will obviously owe nothing until they are approved so will be included in "Number Fully Paid (or New Student)". After they are approved (assuming they have not paid yet), they will not be included in "Number Fully Paid (or New Student)".
 </li>
 <li>
 E-mails of all the students in the spreadsheet (i.e. after any filters have been applied) are listed at the end of the page so that e-mails can be manually sent to a large group of applicants.
