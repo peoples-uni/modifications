@@ -65,7 +65,7 @@ if (!empty($_POST['markresetsubscriptions'])) {
     foreach ($_POST['resetoriginal'] as $userid => $value) {
       if (empty($_POST['acceptchanged'][$userid])) { // Make sure both checkboxes not set
         remove_subscriptions($userid, $sc_id, 'forum_subscriptions');
-        remove_subscriptions_recorded($userid, $sc_id, 'forum_subscriptions_recorded');
+        remove_subscriptions($userid, $sc_id, 'forum_subscriptions_recorded');
         copy_subscriptions($userid, $sc_id, 'forum_subscriptions_specified', '', 'forum_subscriptions'); // Copy subscriptions_specified into subscriptions
       }
     }
@@ -74,7 +74,7 @@ if (!empty($_POST['markresetsubscriptions'])) {
   if (!empty($_POST['acceptchanged'])) {
     foreach ($_POST['acceptchanged'] as $userid => $value) {
       if (empty($_POST['resetoriginal'][$userid])) { // Make sure both checkboxes not set
-        remove_subscriptions_specified($userid, $sc_id, 'forum_subscriptions_specified');
+        remove_subscriptions($userid, $sc_id, 'forum_subscriptions_specified');
         copy_subscriptions($userid, $sc_id, 'forum_subscriptions', 'forum_subscriptions_recorded', 'forum_subscriptions_specified'); // Copy subscriptions & subscriptions_recorded to subscriptions_specified
       }
     }
