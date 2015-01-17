@@ -124,30 +124,33 @@ foreach ($users_list as $userid => $user_record) {
   else {
 echo '<br />Loop: ' . $userid . '<br />count: ' . count($forum_subscriptions_specified) . '<br />';
 echo $forum_subscriptions_specified[$userid]->fs_names;
-    $forum_specified = explode(',', $forum_subscriptions_specified[$userid]->fs_names);
+    $forum_specified = explode('XQ,YQ', $forum_subscriptions_specified[$userid]->fs_names);
 echo '<br />count: ' . count($forum_specified) . '<br />';
   }
 $xx = array_unique($forum_specified);
 echo '<br />count: ' . count($xx) . '<br />';
-$yy = natcasesort($xx);
-echo '<br />count: ' . count($yy) . '<br />';
-echo '<br />count: ' . $yy[0] . '<br />';
+natcasesort($xx);
+echo '<br />count: ' . count($xx) . '<br />';
 
-  $original = implode(', ', natcasesort(array_unique($forum_specified)));
-
+  $original = array_unique($forum_specified);
+  natcasesort($original);
+  $original = implode(', ', $original);
+echo '<br />original: ' . $original . '<br />';
   if (empty($forum_subscriptions[$userid]) || empty($forum_subscriptions[$userid]->fs_names)) {
     $forum_subscription = array();
   }
   else {
-    $forum_subscription = explode(',', $forum_subscriptions[$userid]->fs_names);
+    $forum_subscription = explode('XQ,YQ', $forum_subscriptions[$userid]->fs_names);
   }
   if (empty($forum_subscriptions_recorded[$userid]) || empty($forum_subscriptions_recorded[$userid]->fs_names)) {
     $forum_recorded = array();
   }
   else {
-    $forum_recorded = explode(',', $forum_subscriptions_recorded[$userid]->fs_names);
+    $forum_recorded = explode('XQ,YQ', $forum_subscriptions_recorded[$userid]->fs_names);
   }
-  $changed = implode(', ', natcasesort(array_unique(array_merge($forum_subscription, $forum_recorded))));
+  $changed = array_unique(array_merge($forum_subscription, $forum_recorded));
+  natcasesort($changed);
+  $changed = implode(', ', $changed);
 
 
   if ($original != $changed) {
@@ -181,7 +184,7 @@ function get_forum_subscriptions($sc_id, $table) {
 SELECT
   fs.userid,
   GROUP_CONCAT(fs.id) AS fs_ids,
-  GROUP_CONCAT(REPLACE(f.name, 'Student Support Group ', '') ORDER BY f.name SEPARATOR ',') AS fs_names,
+  GROUP_CONCAT(REPLACE(f.name, 'Student Support Group ', '') ORDER BY f.name SEPARATOR 'XQ,YQ') AS fs_names,
   u.lastname,
   u.firstname
 FROM mdl_forum f
