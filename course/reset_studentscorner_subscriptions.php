@@ -125,7 +125,14 @@ foreach ($users_list as $userid => $user_record) {
 echo '<br />Loop: ' . $userid . '<br />count: ' . count($forum_subscriptions_specified) . '<br />';
 echo $forum_subscriptions_specified[$userid]->fs_names;
     $forum_specified = explode(',', $forum_subscriptions_specified[$userid]->fs_names);
+echo '<br />count: ' . count($forum_specified) . '<br />';
   }
+$xx = array_unique($forum_specified);
+echo '<br />count: ' . count($xx) . '<br />';
+$yy = natcasesort($xx);
+echo '<br />count: ' . count($yy) . '<br />';
+echo '<br />count: ' . $yy[0] . '<br />';
+
   $original = implode(', ', natcasesort(array_unique($forum_specified)));
 
   if (empty($forum_subscriptions[$userid]) || empty($forum_subscriptions[$userid]->fs_names)) {
