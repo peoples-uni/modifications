@@ -164,7 +164,7 @@ echo '<br /><br /><br />';
 echo $OUTPUT->footer();
 
 
-get_forum_subscriptions($sc_id, $table) {
+function get_forum_subscriptions($sc_id, $table) {
   global $DB;
 
   return $DB->get_records_sql("
@@ -202,7 +202,7 @@ ORDER BY u.lastname ASC, u.firstname ASC, u.id");
 }
 
 
-remove_subscriptions($userid, $sc_id, $table) {
+function remove_subscriptions($userid, $sc_id, $table) {
   global $DB;
 
   $records = $DB->get_records_sql("
@@ -221,7 +221,7 @@ remove_subscriptions($userid, $sc_id, $table) {
 }
 
 
-copy_subscriptions($userid, $sc_id, $table_from1, $table_from2, $table_to) {
+function copy_subscriptions($userid, $sc_id, $table_from1, $table_from2, $table_to) {
   global $DB;
 
   $records = $DB->get_records_sql("
