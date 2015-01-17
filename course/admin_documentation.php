@@ -95,7 +95,10 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a><br /><br />
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a><br />
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#resetstudentcornersubscriptions">Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back</a><br /><br />
 </li>
 </b>
 </ul>
@@ -1818,13 +1821,44 @@ c) the subscriber is not enrolled in current Semester and<br />
 d) the subscriber has not accessed Moodle within the last two months.<br />
 </li>
 <li>
-When the button "Remove old Discussion Forum Subscriptions in Students Corner" is clicked these subscripts are removed (in order to cut down on unwanted e-mail that annoys currently inactive students).
+When the button "Remove old Discussion Forum Subscriptions in Students Corner" is clicked these subscriptions are removed (in order to cut down on unwanted e-mail that annoys currently inactive students).
 </li>
 <li>
 However a record is kept of the subscriptions and if the student is enrolled in any module in the future, the subscriptions are reinstated.
 </li>
 <li>
 Digest subscriptions are not removed by this page as there seems to be little or no use except by tutors (and as of testing time one student who's digest subscriptions would not be removed because he was currently active).
+</li>
+</ol>
+
+
+<a name="resetstudentcornersubscriptions"></a>
+<h2>Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back</h2>
+<ol>
+<li>
+<a href="http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php</a> is a page used to Determine if Student Support Forum Subscriptions in Students Corner have changed and change back those that need to be.
+<br />It is possible to visit the page without causing any changes as long as the form is not submitted.
+</li>
+<li>
+Access to <a href="http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php</a> is given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+</li>
+<li>
+A table is displayed. For each Student (not Tutor or Viewer etc.) who has Student Support Forum Subscriptions (or should have) and the actual subscriptions do not match the expected subscription, a line in the table is displayed.
+</li>
+<li>
+Each line contains...<br />
+The Student's name<br />
+A column with a list of "Original Forum Subscriptions" and a checkbox which should be checked if these are still valid and the actual subscriptions should be Changed back to these original subscriptions.<br />
+Another column with "Changed Forum Subscriptions" and a checkbox which should be checked if these new changed subscriptions are now valid (the Student needed to change Support Group) and the "Original Forum Subscriptions" should be changed to match these new changed subscriptions.
+</li>
+<li>
+Note that the "Original Forum Subscriptions" and recorded when a student is initially registered (there will only be one initially).
+</li>
+<li>
+Note there can be multiple subscriptions in each column and some of the subscriptions in the second column could be recorded subscriptions as described in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a>.
+</li>
+<li>
+When the button "Change Back Subscriptions (or keep them) based on checkboxes above" the desired changes are made based on the checkboxes (if any) selected.
 </li>
 </ol>
 
