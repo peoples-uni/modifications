@@ -90,6 +90,7 @@ $forum_subscriptions_userids           = array_keys($forum_subscriptions);
 $forum_subscriptions_recorded_userids  = array_keys($forum_subscriptions_recorded);
 $forum_subscriptions_specified_userids = array_keys($forum_subscriptions_specified);
 $userids = implode(',', array_unique(array_merge($forum_subscriptions_userids, $forum_subscriptions_recorded_userids, $forum_subscriptions_specified_userids)));
+echo $userids;//(**)
 if (empty($userids)) $userids = '-1';
 
 $users_list = $DB->get_records_sql("
