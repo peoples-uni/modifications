@@ -198,6 +198,7 @@ WHERE
     WHERE
       ra.roleid=ro.id AND
       ro.shortname!='student')
+AND u.id=2895 /* (**) */
 GROUP BY fs.userid
 ORDER BY u.lastname ASC, u.firstname ASC, u.id");
 }
