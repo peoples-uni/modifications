@@ -90,7 +90,6 @@ $forum_subscriptions_userids           = array_keys($forum_subscriptions);
 $forum_subscriptions_recorded_userids  = array_keys($forum_subscriptions_recorded);
 $forum_subscriptions_specified_userids = array_keys($forum_subscriptions_specified);
 $userids = implode(',', array_unique(array_merge($forum_subscriptions_userids, $forum_subscriptions_recorded_userids, $forum_subscriptions_specified_userids)));
-echo $userids;//(**)
 if (empty($userids)) $userids = '-1';
 
 $users_list = $DB->get_records_sql("
@@ -145,7 +144,7 @@ foreach ($users_list as $userid => $user_record) {
   $changed = implode(', ', $changed);
 
 
-  if (TRUE || $original != $changed) {
+  if ($original != $changed) {
     echo '<tr>';
     echo '<td>' . htmlspecialchars($user_record->lastname, ENT_COMPAT, 'UTF-8') . '</td>';
     echo '<td>' . htmlspecialchars($user_record->firstname, ENT_COMPAT, 'UTF-8') . '</td>';
@@ -202,7 +201,6 @@ WHERE
     WHERE
       ra.roleid=ro.id AND
       ro.shortname!='student')
-/*AND u.id=2895*/ /* (**) */
 GROUP BY fs.userid
 ORDER BY u.lastname ASC, u.firstname ASC, u.id");
 }
