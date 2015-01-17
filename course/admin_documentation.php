@@ -1858,7 +1858,7 @@ Note that the "Original Forum Subscriptions" are recorded when a student is init
 Note there can be multiple subscriptions in each column and some of the subscriptions in the second column could be recorded subscriptions as described in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a>.
 </li>
 <li>
-When the button "Change Back Subscriptions (or keep them) based on checkboxes above" the desired changes are made based on the checkboxes (if any) selected.
+When the button "Change Back Subscriptions (or keep them) based on checkboxes above" is clicked the desired changes are made based on the checkboxes (if any) selected.
 </li>
 </ol>
 
