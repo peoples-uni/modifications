@@ -162,7 +162,6 @@ foreach ($users_list as $userid => $user_record) {
 echo '<br /><br /><br />';
 
 echo $OUTPUT->footer();
-?>
 
 
 get_forum_subscriptions($sc_id, $table) {
@@ -260,3 +259,4 @@ copy_subscriptions($userid, $sc_id, $table_from1, $table_from2, $table_to) {
     }
   }
 }
+?>
