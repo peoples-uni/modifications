@@ -117,7 +117,6 @@ ORDER BY u.lastname ASC, u.firstname ASC, u.id");
 
 
 foreach ($users_list as $userid => $user_record) {
-  $forum_subscriptions_specified[$userid]->fs_names
   if (empty($forum_subscriptions_specified[$userid]) || empty($forum_subscriptions_specified[$userid]->fs_names)) {
     $forum_specified = array();
   }
