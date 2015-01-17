@@ -122,20 +122,12 @@ foreach ($users_list as $userid => $user_record) {
     $forum_specified = array();
   }
   else {
-echo '<br />Loop: ' . $userid . '<br />count: ' . count($forum_subscriptions_specified) . '<br />';
-echo $forum_subscriptions_specified[$userid]->fs_names;
     $forum_specified = explode('XQ,YQ', $forum_subscriptions_specified[$userid]->fs_names);
-echo '<br />count: ' . count($forum_specified) . '<br />';
   }
-$xx = array_unique($forum_specified);
-echo '<br />count: ' . count($xx) . '<br />';
-natcasesort($xx);
-echo '<br />count: ' . count($xx) . '<br />';
-
   $original = array_unique($forum_specified);
   natcasesort($original);
   $original = implode(', ', $original);
-echo '<br />original: ' . $original . '<br />';
+
   if (empty($forum_subscriptions[$userid]) || empty($forum_subscriptions[$userid]->fs_names)) {
     $forum_subscription = array();
   }
@@ -153,7 +145,7 @@ echo '<br />original: ' . $original . '<br />';
   $changed = implode(', ', $changed);
 
 
-  if ($original != $changed) {
+  if (TRUE || $original != $changed) {
     echo '<tr>';
     echo '<td>' . htmlspecialchars($user_record->lastname, ENT_COMPAT, 'UTF-8') . '</td>';
     echo '<td>' . htmlspecialchars($user_record->firstname, ENT_COMPAT, 'UTF-8') . '</td>';
@@ -210,7 +202,7 @@ WHERE
     WHERE
       ra.roleid=ro.id AND
       ro.shortname!='student')
-AND u.id=2895 /* (**) */
+/*AND u.id=2895*/ /* (**) */
 GROUP BY fs.userid
 ORDER BY u.lastname ASC, u.firstname ASC, u.id");
 }
