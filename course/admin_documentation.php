@@ -1852,7 +1852,7 @@ A column with a list of "Original Forum Subscriptions" and a checkbox which shou
 Another column with "Changed Forum Subscriptions" and a checkbox which should be checked if these new changed subscriptions are now valid (the Student needed to change Support Group) and the "Original Forum Subscriptions" should be changed to match these new changed subscriptions.
 </li>
 <li>
-Note that the "Original Forum Subscriptions" and recorded when a student is initially registered (there will only be one initially).
+Note that the "Original Forum Subscriptions" are recorded when a student is initially registered (there will only be one initially).
 </li>
 <li>
 Note there can be multiple subscriptions in each column and some of the subscriptions in the second column could be recorded subscriptions as described in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a>.
