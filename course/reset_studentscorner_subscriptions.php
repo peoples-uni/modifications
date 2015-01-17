@@ -122,6 +122,8 @@ foreach ($users_list as $userid => $user_record) {
     $forum_specified = array();
   }
   else {
+echo '<br />Loop: ' . $userid . '<br />count: ' . count($forum_subscriptions_specified) . '<br />';
+echo $forum_subscriptions_specified[$userid]->fs_names;
     $forum_specified = explode(',', $forum_subscriptions_specified[$userid]->fs_names);
   }
   $original = implode(', ', natcasesort(array_unique($forum_specified)));
