@@ -34,7 +34,7 @@ else {
 
 echo '<p><strong>Applications for the Semester ' . $semester_current->semester . ' Course Modules have now closed.</strong></p>';
 
-echo '<p><strong>If you are already registered in Moodle you will have to wait untill you are informed that Course Applications are open.<br />';
+echo '<p><strong>If you are already registered in Moodle you will have to wait until you are informed that Course Applications are open.<br />';
 
 echo 'Note:</strong> The closing date for applications for enrolment in courses for the upcoming semester is ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . ' approximately. When enrolments are open you will be informed (this is normally about 2 weeks before that date).</p>';
 
