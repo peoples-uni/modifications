@@ -786,6 +786,7 @@ class peoples_date_filter extends peoples_filter {
       if (!isset($this->chosenstartday)) $this->chosenstartday = $i;
       $this->liststartday[] = $i;
     }
+  }
 
 
   public function get_url_parameter() {
