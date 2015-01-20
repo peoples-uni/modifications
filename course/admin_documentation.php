@@ -80,6 +80,9 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a><br />
 </li>
 <li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#education_committee_report">Education Committee Report</a><br />
+</li>
+<li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#statistics">Statistics on Success of Students by Qualifications on Entry</a><br />
 </li>
 <li>
@@ -1473,6 +1476,40 @@ Qualification [shows whether they have qualified for a Diploma, a Certificate or
 The link "Mark Discounted Modules" or "Review modules contributing to awards and override disallowed modules" (from "Student Grades") brings up a page (allow_modules.php) which contains details of all Modules attempted by the student.<br />
 It contains the type of pass or fail or various types of non-grading.<br />
 For each module that has been discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date), there is a checkbox that can be checked (or unchecked if desired) to indicate that the module should not be discounted (i.e. will count towards a Diploma etc.). There is a submission button "Mark Modules that Should be Discounted (or not)" that should be clicked when the checkboxes have been set appropriately to update discounted modules.
+</li>
+</ol>
+
+
+<a name="education_committee_report"></a>
+<h2>Education Committee Report</h2>
+<ol>
+<li>
+A report for the use of the Education Committee is at <a href="http://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">http://courses.peoples-uni.org/course/education_committee_report.php</a>.
+</li>
+<li>
+Access to <a href="http://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">http://courses.peoples-uni.org/course/education_committee_report.php</a> is given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+</li>
+<li>
+There are filters at the top of the report which...<br />
+Set the Semester for the Report. The report will include students registered in that Semester but includes all the enrolments up to and including that Semester for those students.<br />
+Set the Last Exam Board date. This ensures students with resubmissions since that date are included even is the student is not enrolled in the current semester.<br />
+There is a filter by the student's MPH status, if it is desired to include/exclude those students.
+</li>
+<li>
+It is also possible to display the standard colums in a clean format suitable for Excel by clicking "Display for Copying and Pasting to Excel" and then "Apply Filters".
+</li>
+<li>
+The report has the following columns...<br />
+"Student Number" (Moodle user ID)<br />
+"Family name"<br />
+"Given name"<br />
+One column for each module. In this column, the semester that the student took the module is indicated (possibly more that one) along with the mark. Additionally, the following notes may be included: "Unenrolled", "Not Notified"(not confirmed), "Not Graded, Not Complete", "Participation/CPD", "Not Graded, Did Not Pay" or "Not Graded, Exceptional Factors". If there is no garde and no other indication is given, then just the semester is indicated.<br />
+APEL agreed column is for use by the committee.<br />
+The "Comments" column contains: Semester in which the student started, MPH status and changes of status along with dates and all student notes with dates.
+"Board Recommendation" column is for use by the committee.
+</li>
+<li>
+Note when exported to Excel, the notes will not be explicitly on separate lines as Excel Cut and Paste does not like line breaks.
 </li>
 </ol>
 
