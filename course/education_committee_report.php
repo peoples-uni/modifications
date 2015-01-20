@@ -194,8 +194,8 @@ foreach ($enrols as $enrol) {
   if (empty($first_semester[$enrol->userid])) $first_semester[$enrol->userid] = $enrol->semester;
 
   $text = '';
-  if (preg_match('/^(.{4,}?)([012]+[0-9]+)/', $enrol->idnumber, $matches)) $text = $matches[2];
-  $text .= "($enrol->grade)";
+  if (preg_match('/^(.{4,}?)([012]+[0-9]+[ab]?)/', $enrol->idnumber, $matches)) $text = $matches[2];
+  if (!empty($enrol->grade)) $text .= "($enrol->grade)";
 
   if     ($enrol->enrolled == 0) $text .= ' Unenrolled';
   elseif ($enrol->notified == 0) $text .= ' <b>Not Notified</b>';
@@ -243,14 +243,16 @@ foreach ($userdatas as $index => $userdata) {
 
     $rowdata[] = '';
 
-    $text = $first_semester[$userdata->id] . '<br />';
-    if (!empty($userdata->note)) $text .= $userdata->note . '<br />';
+    $text = htmlspecialchars($first_semester[$userdata->id], ENT_COMPAT, 'UTF-8') . '<br />';
+    if (!empty($userdata->note)) $text .= htmlspecialchars($userdata->note, ENT_COMPAT, 'UTF-8') . '<br />';
     $notes = $DB->get_records('peoplesstudentnotes', array('userid' => $userdata->id), 'datesubmitted ASC');
     foreach ($notes as $note) {
-      $text .= gmdate('d/m/Y', $note->datesubmitted) . ': ' .  $note->note . '<br />';
+      $text .= gmdate('d/m/Y', $note->datesubmitted) . ': ' .  htmlspecialchars($note->note, ENT_COMPAT, 'UTF-8') . '<br />';
     }
-    if ($displayforexcel) $text = str_replace('<br />', '; ', $text);
-    $text = htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+    if ($displayforexcel) {
+      $text = str_replace('<br />', '; ', $text);
+      $text = substr($text, 0, -2);
+    }
     $rowdata[] = $text;
 
     $rowdata[] = '';
