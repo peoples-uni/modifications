@@ -1503,7 +1503,7 @@ The report has the following columns...<br />
 "Student Number" (Moodle user ID)<br />
 "Family name"<br />
 "Given name"<br />
-One column for each module. In this column, the semester that the student took the module is indicated (possibly more that one) along with the mark. Additionally, the following notes may be included: "Unenrolled", "Not Notified"(not confirmed), "Not Graded, Not Complete", "Participation/CPD", "Not Graded, Did Not Pay" or "Not Graded, Exceptional Factors". If there is no garde and no other indication is given, then just the semester is indicated.<br />
+One column for each module. In this column, the semester that the student took the module is indicated (possibly more that one) along with the mark. Additionally, the following notes may be included: "Unenrolled", "Not Notified"(not confirmed), "Not Graded, Not Complete", "Participation/CPD", "Not Graded, Did Not Pay" or "Not Graded, Exceptional Factors". If there is no grade and no other indication is given, then just the semester is indicated.<br />
 APEL agreed column is for use by the committee.<br />
 The "Comments" column contains: Semester in which the student started, MPH status and changes of status along with dates and all student notes with dates.
 "Board Recommendation" column is for use by the committee.
