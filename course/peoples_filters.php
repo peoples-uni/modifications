@@ -750,4 +750,58 @@ class peoples_submission_filter extends peoples_select_filter {
     return $list_to_filter;
   }
 }
+
+
+// Initially used by education_committee_report.php
+class peoples_date_filter extends peoples_filter {
+  protected $starttime;
+  protected $liststartyear = array();
+  protected $liststartmonth = array();
+  protected $liststartday = array();
+
+
+  function __construct($human_name) {
+    $this->human_name = $human_name; // Needs </td><td> between the 3 columns
+
+    if (!empty($_REQUEST['chosenstartyear']) && !empty($_REQUEST['chosenstartmonth']) && !empty($_REQUEST['chosenstartday'])) {
+      $this->chosenstartyear = (int)$_REQUEST['chosenstartyear'];
+      $this->chosenstartmonth = (int)$_REQUEST['chosenstartmonth'];
+      $this->chosenstartday = (int)$_REQUEST['chosenstartday'];
+      $this->starttime = gmmktime(0, 0, 0, $this->chosenstartmonth, $this->chosenstartday, $this->chosenstartyear);
+    }
+    else {
+      $this->starttime = 0;
+    }
+    $this->selectedvalue = $this->starttime;
+
+    for ($i = 2008; $i <= (int)gmdate('Y'); $i++) {
+      if (!isset($this->chosenstartyear)) $this->chosenstartyear = $i;
+      $this->liststartyear[] = $i;
+    }
+    for ($i = 1; $i <= 12; $i++) {
+      if (!isset($this->chosenstartmonth)) $this->chosenstartmonth = $i;
+      $this->liststartmonth[] = $i;
+    }
+    for ($i = 1; $i <= 31; $i++) {
+      if (!isset($this->chosenstartday)) $this->chosenstartday = $i;
+      $this->liststartday[] = $i;
+    }
+
+
+  public function get_url_parameter() {
+    return '&chosenstartyear=' . $_REQUEST['chosenstartyear']
+         . '&chosenstartmonth=' . $_REQUEST['chosenstartmonth']
+         . '&chosenstartday=' . $_REQUEST['chosenstartday'];
+  }
+
+
+  public function choice_field() {
+    $field = '';
+    $field .= $this->select_choice_field('chosenstartyear', $this->liststartyear, $this->chosenstartyear) . '</td><td>';
+    $field .= $this->select_choice_field('chosenstartmonth', $this->liststartmonth, $this->chosenstartmonth) . '</td><td>';
+    $field .= $this->select_choice_field('chosenstartday', $this->liststartday, $this->chosenstartday);
+
+    return $field;
+  }
+}
 ?>
