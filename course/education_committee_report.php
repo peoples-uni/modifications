@@ -143,7 +143,7 @@ $enrols = $DB->get_records_sql("
       WHEN g.finalgrade IS NULL THEN ''
       WHEN e.percentgrades=0 AND g.finalgrade<=1.99999 THEN 'Pass'
       WHEN e.percentgrades=0 AND g.finalgrade> 1.99999 THEN 'Fail'
-      ELSE FORMAT(g.finalgrade, 0)
+      ELSE CONCAT(FORMAT(g.finalgrade, 0), '%')
     END AS grade,
     ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999)) AS diploma_pass,
     ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >49.99999)) AS masters_pass,
@@ -195,7 +195,7 @@ foreach ($enrols as $enrol) {
 
   $text = '';
   if (preg_match('/^(.{4,}?)([012]+[0-9]+)/', $enrol->idnumber, $matches)) $text = $matches[2];
-  $text .= "($enrol->grade)"
+  $text .= "($enrol->grade)";
 
   if     ($enrol->enrolled == 0) $text .= ' Unenrolled';
   elseif ($enrol->notified == 0) $text .= ' <b>Not Notified</b>';
