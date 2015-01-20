@@ -1509,7 +1509,7 @@ The "Comments" column contains: Semester in which the student started, MPH statu
 "Board Recommendation" column is for use by the committee.
 </li>
 <li>
-Note when exported to Excel, the notes will not be explicitly on separate lines as Excel Cut and Paste does not like line breaks.
+Note when exported to Excel, the notes will not be explicitly on separate lines as Excel Cut and Paste does not like line breaks. A semicolon indicates each line.
 </li>
 </ol>
 
