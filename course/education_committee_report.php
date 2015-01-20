@@ -115,7 +115,7 @@ $userdatas = $DB->get_records_sql("
   LEFT JOIN mdl_peoplesmph2 m ON u.id=m.userid
   WHERE
     u.id IN (SELECT DISTINCT e.userid FROM mdl_enrolment e)
-  ORDER BY u.lastname, u.firstname,");
+  ORDER BY u.lastname, u.firstname, u.id");
 
 
 $peoplesmph2s = $DB->get_records_sql("
