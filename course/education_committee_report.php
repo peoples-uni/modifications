@@ -221,8 +221,8 @@ $table->head = array();
 $table->head[] = 'Student Number';
 $table->head[] = 'Family name';
 $table->head[] = 'Given name';
-foreach ($idnumbers as $code) {
-  $table->head[] = $code;
+foreach ($idnumbers as $idnumber) {
+  $table->head[] = $idnumber->course_code;
 }
 $table->head[] = 'APEL agreed';
 $table->head[] = 'Comments';
@@ -236,8 +236,9 @@ foreach ($userdatas as $index => $userdata) {
     $rowdata[] = htmlspecialchars($userdata->lastname, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($userdata->firstname, ENT_COMPAT, 'UTF-8');
 
-    foreach ($idnumbers as $code) {
-      $rowdata[] = $user_rows[$userdata->id][$code];
+    foreach ($idnumbers as $idnumber) {
+      if (!empty($user_rows[$userdata->id][$idnumber->course_code])) $rowdata[] = $user_rows[$userdata->id][$idnumber->course_code];
+      else $rowdata[] = '';
     }
 
     $rowdata[] = '';
@@ -259,6 +260,7 @@ foreach ($userdatas as $index => $userdata) {
   }
 }
 echo html_writer::table($table);
+
 
 if ($displayforexcel) {
   echo $OUTPUT->footer();
