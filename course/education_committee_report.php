@@ -251,10 +251,10 @@ foreach ($userdatas as $index => $userdata) {
     $rowdata[] = '';
 
     $text = htmlspecialchars($first_semester[$userdata->id], ENT_COMPAT, 'UTF-8') . '<br />';
-    if (!empty($userdata->note)) $text .= htmlspecialchars($userdata->note, ENT_COMPAT, 'UTF-8') . '<br />';
+    if (!empty($userdata->note)) $text .= $userdata->note . '<br />';
     $notes = $DB->get_records('peoplesstudentnotes', array('userid' => $userdata->id), 'datesubmitted ASC');
     foreach ($notes as $note) {
-      $text .= gmdate('d/m/Y', $note->datesubmitted) . ': ' .  htmlspecialchars($note->note, ENT_COMPAT, 'UTF-8') . '<br />';
+      $text .= gmdate('d/m/Y', $note->datesubmitted) . ': ' .  $note->note . '<br />';
     }
     if ($displayforexcel) {
       $text = str_replace('<br />', '; ', $text);
