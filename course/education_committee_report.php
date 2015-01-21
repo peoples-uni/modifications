@@ -171,7 +171,7 @@ $enrols = $DB->get_records_sql("
     ) AND
     s.id<=$semester_id
   ORDER BY s.id ASC", array($chosensemester));
-error_log($enrols = $DB->get_records_sql("
+error_log("
   SELECT
     e.id,
     e.userid,
