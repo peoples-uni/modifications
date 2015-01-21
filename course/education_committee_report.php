@@ -239,7 +239,7 @@ $n = 0;
 foreach ($userdatas as $index => $userdata) {
   if (!empty($user_rows[$userdata->id])) {
     $rowdata = array();
-    $rowdata[] = $userdata->id
+    $rowdata[] = $userdata->id;
     $rowdata[] = htmlspecialchars($userdata->lastname, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($userdata->firstname, ENT_COMPAT, 'UTF-8');
 
