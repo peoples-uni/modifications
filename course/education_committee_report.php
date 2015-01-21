@@ -158,15 +158,22 @@ $enrols = $DB->get_records_sql("
     (
       e.userid IN (SELECT DISTINCT e2.userid FROM mdl_enrolment e2 WHERE e2.semester=?) OR
       e.userid IN (
-        SELECT
-          e3.userid
-        FROM mdl_enrolment e3
-        JOIN mdl_grade_items i3 ON i3.itemtype='course' AND e3.courseid=i3.courseid
-        JOIN mdl_grade_grades g3 ON i3.id=g3.itemid AND e3.userid=g3.userid
-        WHERE
-          GREATEST(IFNULL(g3.timecreated, 0), IFNULL(g3.timemodified, 0)) >= $last_education_committee AND
-          e3.enrolled!=0 AND
-          g3.finalgrade IS NOT NULL
+        SELECT x.userid FROM (
+          SELECT
+            e3.userid,
+            IFNULL(g3.timecreated, 0) AS created,
+            IFNULL(g3.timemodified, 0) AS modified
+          FROM mdl_enrolment e3
+          JOIN mdl_grade_items i3 ON i3.itemtype='course' AND e3.courseid=i3.courseid
+          JOIN mdl_grade_grades g3 ON i3.id=g3.itemid AND e3.userid=g3.userid
+          LEFT JOIN mdl_grade_grades_history gh ON g3.id=gh.oldid
+          WHERE
+            e3.enrolled!=0 AND
+            g3.finalgrade IS NOT NULL
+          GROUP BY gh.oldid
+          HAVING
+            GREATEST(created, modified, IFNULL(MAX(gh.timemodified), 0)) >= $last_education_committee
+        ) AS x
       )
     ) AND
     s.id<=$semester_id
@@ -202,15 +209,22 @@ error_log("
     (
       e.userid IN (SELECT DISTINCT e2.userid FROM mdl_enrolment e2 WHERE e2.semester=?) OR
       e.userid IN (
-        SELECT
-          e3.userid
-        FROM mdl_enrolment e3
-        JOIN mdl_grade_items i3 ON i3.itemtype='course' AND e3.courseid=i3.courseid
-        JOIN mdl_grade_grades g3 ON i3.id=g3.itemid AND e3.userid=g3.userid
-        WHERE
-          GREATEST(IFNULL(g3.timecreated, 0), IFNULL(g3.timemodified, 0)) >= $last_education_committee AND
-          e3.enrolled!=0 AND
-          g3.finalgrade IS NOT NULL
+        SELECT x.userid FROM (
+          SELECT
+            e3.userid,
+            IFNULL(g3.timecreated, 0) AS created,
+            IFNULL(g3.timemodified, 0) AS modified
+          FROM mdl_enrolment e3
+          JOIN mdl_grade_items i3 ON i3.itemtype='course' AND e3.courseid=i3.courseid
+          JOIN mdl_grade_grades g3 ON i3.id=g3.itemid AND e3.userid=g3.userid
+          LEFT JOIN mdl_grade_grades_history gh ON g3.id=gh.oldid
+          WHERE
+            e3.enrolled!=0 AND
+            g3.finalgrade IS NOT NULL
+          GROUP BY gh.oldid
+          HAVING
+            GREATEST(created, modified, IFNULL(MAX(gh.timemodified), 0)) >= $last_education_committee
+        ) AS x
       )
     ) AND
     s.id<=$semester_id
