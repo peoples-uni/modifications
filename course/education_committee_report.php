@@ -171,6 +171,52 @@ $enrols = $DB->get_records_sql("
     ) AND
     s.id<=$semester_id
   ORDER BY s.id ASC", array($chosensemester));
+error_log($enrols = $DB->get_records_sql("
+  SELECT
+    e.id,
+    e.userid,
+    e.courseid,
+    e.notified,
+    e.semester,
+    e.datefirstenrolled,
+    e.dateunenrolled,
+    e.enrolled,
+    c.idnumber,
+    g.finalgrade,
+    CASE
+      WHEN g.finalgrade IS NULL THEN ''
+      WHEN e.percentgrades=0 AND g.finalgrade<=1.99999 THEN 'Pass'
+      WHEN e.percentgrades=0 AND g.finalgrade> 1.99999 THEN 'Fail'
+      ELSE CONCAT(FORMAT(g.finalgrade, 0), '%')
+    END AS grade,
+    ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999)) AS diploma_pass,
+    ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >49.99999)) AS masters_pass,
+    codes.course_code
+  FROM mdl_enrolment e
+  JOIN mdl_course c ON e.courseid=c.id
+  JOIN mdl_grade_items i ON c.id=i.courseid AND i.itemtype='course'
+  JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
+  JOIN mdl_peoples_course_codes codes ON c.idnumber LIKE BINARY CONCAT(codes.course_code, '%')
+  JOIN mdl_semesters s ON e.semester=s.semester
+  WHERE
+    (
+      e.userid IN (SELECT DISTINCT e2.userid FROM mdl_enrolment e2 WHERE e2.semester=?) OR
+      e.userid IN (
+        SELECT
+          e3.userid
+        FROM mdl_enrolment e3
+        JOIN mdl_grade_items i3 ON i3.itemtype='course' AND e3.courseid=i3.courseid
+        JOIN mdl_grade_grades g3 ON i3.id=g3.itemid AND e3.userid=g3.userid
+        WHERE
+          GREATEST(IFNULL(g3.timecreated, 0), IFNULL(g3.timemodified, 0)) >= $last_education_committee AND
+          e3.enrolled!=0 AND
+          g3.finalgrade IS NOT NULL
+      )
+    ) AND
+    s.id<=$semester_id
+  ORDER BY s.id ASC");
+error_log($chosensemester);
+
 
 
 $idnumbers = $DB->get_records_sql("
