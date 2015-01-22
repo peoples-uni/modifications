@@ -229,7 +229,7 @@ $table->head[] = 'Student Number';
 $table->head[] = 'Family name';
 $table->head[] = 'Given name';
 foreach ($idnumbers as $idnumber) {
-  $table->head[] = $idnumber->course_code;
+  $table->head[] = preg_replace('/^PU/', '', $idnumber->course_code);
 }
 $table->head[] = 'APEL agreed';
 $table->head[] = 'Comments';
