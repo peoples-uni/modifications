@@ -97,7 +97,6 @@ foreach ($all_enrols as $all_enrol) { // Note we are starting with most recent f
   else {
     // Discount the older module (because there is a more recent pass (maybe at a higher level?))
     $cumulative_enrolled_ids_to_discount_string .= ",$all_enrol->id";
-echo ",$all_enrol->id";//(**)
   }
 }
 
