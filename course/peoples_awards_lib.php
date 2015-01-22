@@ -54,8 +54,37 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     }
     $i++;
   }
-
   $cumulative_enrolled_ids_to_discount = explode(',', $cumulative_enrolled_ids_to_discount_string);
+
+
+  // If an identical module has already been passed, then do not count the first pass and count the second
+  $all_enrols = $DB->get_records_sql("
+    SELECT
+      e.id,
+      e.userid,
+      codes.course_code
+    FROM mdl_enrolment    e
+    JOIN mdl_course       c ON e.courseid=c.id
+    JOIN mdl_peoples_course_codes codes ON c.idnumber LIKE BINARY CONCAT(codes.course_code, '%')
+    JOIN mdl_grade_items  i ON e.courseid=i.courseid AND i.itemtype='course'
+    JOIN mdl_semesters    s ON e.semester=s.semester
+    LEFT JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
+    WHERE
+      e.userid=$userid AND
+      e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999))
+    ORDER BY s.id DESC, e.id DESC");
+  $module_already_encountered = array();
+  $cumulative_enrolled_ids_not_to_be_double_counted_string = '9999999';
+  foreach ($all_enrols as $all_enrol) { // Note we are starting with most recent first
+    if (empty($module_already_encountered[$all_enrol->userid]) || empty($module_already_encountered[$all_enrol->userid][$all_enrol->course_code])) {
+      $module_already_encountered[$all_enrol->userid][$all_enrol->course_code] = $all_enrol->course_code;
+    }
+    else {
+      // Do not count the older module (because there is a more recent pass (maybe at a higher level?))
+      $cumulative_enrolled_ids_not_to_be_double_counted_string .= ",$all_enrol->id";
+    }
+  }
+  $cumulative_enrolled_ids_not_to_be_double_counted = explode(',', $cumulative_enrolled_ids_not_to_be_double_counted_string);
 
 
   // This has now (20110728) changed Diploma: 6, Certificate: 3 (also foundation/problems are no longer hard coded)
@@ -106,7 +135,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999)) && ($enrol->notified == 1)) {
       $passed_or_cpd_enrol_ids[] = $enrol->id;
 
-      if (!in_array($enrol->id, $cumulative_enrolled_ids_to_discount)) { // Make sure this module is not to be discounted
+      if (!in_array($enrol->id, $cumulative_enrolled_ids_to_discount) && !in_array($enrol->id, $cumulative_enrolled_ids_not_to_be_double_counted)) { // Make sure this module is not to be discounted or double counted
 
         $diploma_passes++;
 
@@ -153,7 +182,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
 
         if ($enrol->datenotified > $lastestdate) $lastestdate = $enrol->datenotified;
       }
-      else { // Discounted but note marks in any case
+      elseif (in_array($enrol->id, $cumulative_enrolled_ids_to_discount)) { // Discounted but note marks in any case
         if ($enrol->finalgrade > 49.99999) {
           $pass_type[$enrol->id] = 'Discounted: Masters Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
         }
@@ -162,6 +191,25 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         }
         else {
           $pass_type[$enrol->id] = 'Discounted: Pass';
+        }
+
+        $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
+        if ($matched && !empty($foundation[$matches[1]])) {
+          $foundation_problems[$enrol->id] = 'Foundation';
+        }
+        if ($matched && !empty($problems  [$matches[1]])) {
+          $foundation_problems[$enrol->id] = 'Problems';
+        }
+      }
+      else { // Not to be double counted but note marks in any case
+        if ($enrol->finalgrade > 49.99999) {
+          $pass_type[$enrol->id] = 'Not to be Double Counted: Masters Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+        }
+        elseif ($enrol->percentgrades == 1) {
+          $pass_type[$enrol->id] = 'Not to be Double Counted: Diploma Pass (' . ((int)($enrol->finalgrade + 0.00001)) . '%)';
+        }
+        else {
+          $pass_type[$enrol->id] = 'Not to be Double Counted: Pass';
         }
 
         $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
