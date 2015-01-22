@@ -231,9 +231,10 @@ $table->head[] = 'Given name';
 foreach ($idnumbers as $idnumber) {
   $table->head[] = preg_replace('/^PU/', '', $idnumber->course_code);
 }
-$table->head[] = 'APEL agreed';
-$table->head[] = 'Comments';
-$table->head[] = 'Board Recommendation';
+$table->head[] = '';
+$table->head[] = 'MPH Status changes';
+$table->head[] = 'Notes';
+$table->head[] = 'Recommendations';
 
 $n = 0;
 foreach ($userdatas as $index => $userdata) {
@@ -250,8 +251,15 @@ foreach ($userdatas as $index => $userdata) {
 
     $rowdata[] = '';
 
-    $text = htmlspecialchars($first_semester[$userdata->id], ENT_COMPAT, 'UTF-8') . '<br />';
+    $text = '';
     if (!empty($userdata->note)) $text .= $userdata->note . '<br />';
+    if ($displayforexcel) {
+      $text = str_replace('<br />', '; ', $text);
+      $text = substr($text, 0, -2);
+    }
+    $rowdata[] = $text;
+
+    $text = htmlspecialchars($first_semester[$userdata->id], ENT_COMPAT, 'UTF-8') . '<br />';
     $notes = $DB->get_records('peoplesstudentnotes', array('userid' => $userdata->id), 'datesubmitted ASC');
     foreach ($notes as $note) {
       $text .= gmdate('d/m/Y', $note->datesubmitted) . ': ' .  $note->note . '<br />';
