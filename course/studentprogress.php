@@ -75,6 +75,33 @@ foreach ($user_list as $userid => $record) {
 }
 
 
+// If an identical module has already been passed, then discount the first pass and count the second
+$all_enrols = $DB->get_records_sql("
+  SELECT
+    e.id,
+    e.userid,
+    codes.course_code
+  FROM mdl_enrolment    e
+  JOIN mdl_course       c ON e.courseid=c.id
+  JOIN mdl_peoples_course_codes codes ON c.idnumber LIKE BINARY CONCAT(codes.course_code, '%')
+  JOIN mdl_grade_items  i ON e.courseid=i.courseid AND i.itemtype='course'
+  JOIN mdl_semesters    s ON e.semester=s.semester
+  LEFT JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
+  WHERE e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999))
+  ORDER BY s.id DESC, e.id DESC");
+$module_already_encountered = array();
+foreach ($all_enrols as $all_enrol) { // Note we are starting with most recent first
+  if (empty($module_already_encountered[$all_enrol->userid]) || empty($module_already_encountered[$all_enrol->userid][$all_enrol->course_code])) {
+    $module_already_encountered[$all_enrol->userid][$all_enrol->course_code] = $all_enrol->course_code;
+  }
+  else {
+    // Discount the older module (because there is a more recent pass (maybe at a higher level?))
+    $cumulative_enrolled_ids_to_discount_string .= ",$all_enrol->id";
+echo ",$all_enrol->id";//(**)
+  }
+}
+
+
 $enrols = $DB->get_records_sql("
 SELECT
   u.id,
