@@ -709,6 +709,18 @@ class peoples_mph_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
+        if ($this->selectedvalue === 'MMU MPH' && ($list_entry->mph != 1 || $list_entry->mphsuspended != 0)) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Peoples MPH' && ($list_entry->mph != 2 || $list_entry->mphsuspended != 0)) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'OTHER MPH' && ($list_entry->mph != 3 || $list_entry->mphsuspended != 0)) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
       }
     }
     return $list_to_filter;
