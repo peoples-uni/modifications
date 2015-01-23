@@ -337,9 +337,9 @@ $peoples_filters->add_filter($peoples_chosenmmu_filter);
 $listacceptedmmu[] = 'Any';
 $listacceptedmmu[] = 'Yes';
 $listacceptedmmu[] = 'No';
-$listacceptedmph[] = 'MMU MPH';
-$listacceptedmph[] = 'Peoples MPH';
-$listacceptedmph[] = 'OTHER MPH';
+$listacceptedmmu[] = 'MMU MPH';
+$listacceptedmmu[] = 'Peoples MPH';
+$listacceptedmmu[] = 'OTHER MPH';
 for ($year = 11; $year <= 17; $year++) {
   $listacceptedmmu[] = "Accepted {$year}a";
   $listacceptedmmu[] = "Accepted {$year}b";
