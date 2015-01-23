@@ -399,7 +399,19 @@ class peoples_acceptedmmu_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue !== 'No' && $this->selectedvalue !== 'Yes') {
+        if ($this->selectedvalue === 'MMU MPH'     && (!$list_entry->mph || ($list_entry->mphstatus != 1))) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Peoples MPH' && (!$list_entry->mph || ($list_entry->mphstatus != 2))) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'OTHER MPH'   && (!$list_entry->mph || ($list_entry->mphstatus != 3))) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue !== 'No' && $this->selectedvalue !== 'Yes' && $this->selectedvalue !== 'MMU MPH' && $this->selectedvalue !== 'Peoples MPH' && $this->selectedvalue !== 'OTHER MPH') {
           if (!$list_entry->mph || $list_entry->mphdatestamp < $this->stamp_range[$this->selectedvalue]['start'] || $list_entry->mphdatestamp >= $this->stamp_range[$this->selectedvalue]['end']) {
             unset($list_to_filter[$index]);
             continue;
@@ -696,7 +708,7 @@ class peoples_income_category_filter extends peoples_select_filter {
 }
 
 
-// Initially used by track_submisisons.php
+// Initially used by track_submissions.php
 class peoples_mph_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
@@ -705,19 +717,19 @@ class peoples_mph_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Yes' && ($list_entry->mph == 0 || $list_entry->mphsuspended != 0)) {
+        if ($this->selectedvalue === 'Yes' && ($list_entry->mph == 0)) { // removed " || $list_entry->mphsuspended != 0"
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'MMU MPH' && ($list_entry->mph != 1 || $list_entry->mphsuspended != 0)) {
+        if ($this->selectedvalue === 'MMU MPH' && ($list_entry->mph != 1)) { // removed " || $list_entry->mphsuspended != 0"
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'Peoples MPH' && ($list_entry->mph != 2 || $list_entry->mphsuspended != 0)) {
+        if ($this->selectedvalue === 'Peoples MPH' && ($list_entry->mph != 2)) { // removed " || $list_entry->mphsuspended != 0"
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue === 'OTHER MPH' && ($list_entry->mph != 3 || $list_entry->mphsuspended != 0)) {
+        if ($this->selectedvalue === 'OTHER MPH' && ($list_entry->mph != 3)) { // removed " || $list_entry->mphsuspended != 0"
           unset($list_to_filter[$index]);
           continue;
         }
