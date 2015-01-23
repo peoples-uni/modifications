@@ -253,7 +253,7 @@ foreach ($enrols as $enrol) {
   if (!empty($enrol->pre_percentage_passes)) $text .= " Note: $enrol->pre_percentage_passes of the passes are pre-percentage";
   $rowdata[] =  $text;
 
-  $rowdata[] =  htmlspecialchars($enrol->codespassed, ENT_COMPAT, 'UTF-8');
+  $rowdata[] =  preg_replace(array('/^PU/', '/, PU/'), array('', ', '), htmlspecialchars($enrol->codespassed, ENT_COMPAT, 'UTF-8'));
   $rowdata[] =  $enrol->foundationspassed;
   $rowdata[] =  $enrol->problemspassed;
   $mphtext = '';
