@@ -1506,9 +1506,10 @@ The report has the following columns...<br />
 "Family name"<br />
 "Given name"<br />
 One column for each module. In this column, the semester that the student took the module is indicated (possibly more that one) along with the grade. Additionally, the following notes may be included: "Unenrolled", "Not Notified"(not confirmed), "Not Graded, Not Complete", "Participation/CPD", "Not Graded, Did Not Pay" or "Not Graded, Exceptional Factors". If there is no grade and no other indication is given, then just the semester is indicated.<br />
-APEL agreed column is for use by the committee.<br />
-The "Comments" column contains: Semester in which the student started, MPH status and changes of status along with dates and all student notes with dates.<br />
-"Board Recommendation" column is for use by the committee.
+A spare column<br />
+The "MPH Status changes" column contains MPH status and changes of status along with dates.<br />
+The "Notes" column contains Semester in which the student started and all student notes with dates. It also contains, if the "Has Diploma?" filter is used, an indication that the student has a Diploma<br />
+"Recommendations" column is empty for use by the committee.
 </li>
 <li>
 Note when exported to Excel, the notes will not be explicitly on separate lines as Excel Cut and Paste does not like line breaks. A semicolon indicates each line.
