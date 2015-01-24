@@ -1493,7 +1493,9 @@ Access to <a href="http://courses.peoples-uni.org/course/education_committee_rep
 There are filters at the top of the report which...<br />
 Set the Semester for the Report. The report will include students registered in that Semester but includes all the enrolments up to and including that Semester for those students.<br />
 Set the Last Exam Board date. This ensures students with resubmissions since that date are included even is the student is not enrolled in the current semester.<br />
-There is a filter by the student's MPH status, if it is desired to include/exclude those students.
+There is a filter by the student's MPH status, if it is desired to include/exclude those students.<br />
+There is a "Has Diploma?" filter which allows excluding students without six passes of some sort whether notified or not ("Has 6 Passes") or separately without a Diploma ("Has Diploma").<br />
+There is a "Dissertation Grade available?" filter which allows excluding students who do not yet have a grade for their dissertation (whether notified or not).
 </li>
 <li>
 It is also possible to display the standard colums in a clean format suitable for Excel by clicking "Display for Copying and Pasting to Excel" and then "Apply Filters".
