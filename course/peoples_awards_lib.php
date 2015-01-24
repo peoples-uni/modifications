@@ -128,6 +128,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   $countf_grandfathered = 0;
   $countp = 0;
   $countp_grandfathered = 0;
+  $already_passed = array();
   foreach ($enrols as $enrol) {
     $pass_type[$enrol->id] = '';
     //Test: $enrol->finalgrade = 1.0; (old grading system)
@@ -247,9 +248,16 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     // Count Passes, Notified or Not (excluding, for notified ones, any discounted/double counted)
     if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999))) {
       if (!in_array($enrol->id, $cumulative_enrolled_ids_to_discount) && !in_array($enrol->id, $cumulative_enrolled_ids_not_to_be_double_counted)) {
-        $passes_notified_or_not++;
+        $matched = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matches); // Take out course code without Year/Semester part
+        if ($matched) {
+          if (empty($already_passed[$matches[1]])) $passes_notified_or_not++; // If module not already counted then count it (test above will not catch unnotified modules)
+          $already_passed[$matches[1]] = TRUE;
+        }
+        else { // For some reason did not match...
+          $passes_notified_or_not++;
+        }
 if ($userid == 1533) {
- error_log("$passes_notified_or_not enrolid: $enrol->id, finalgrade: $enrol->finalgrade");
+ error_log("$passes_notified_or_not enrolid: $enrol->id, finalgrade: $enrol->finalgrade, idnumber: $enrol->idnumber, matches1: $matches[1]");
 }
       }
     }
