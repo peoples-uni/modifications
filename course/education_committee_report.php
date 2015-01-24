@@ -299,20 +299,6 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
       if ($qualification & 2) $qualification = 'Diploma';
       else                    $qualification = '';
     }
-else { //debug(**)
-      $rowdata = array();
-      $rowdata[] = $diploma_setting;
-      $rowdata[] = $userdatas[$userdata->id]->diploma_passes;
-      $rowdata[] = '';
-      foreach ($idnumbers as $idnumber) {
-        $rowdata[] = '';
-      }
-      $rowdata[] = '';
-      $rowdata[] = '';
-      $rowdata[] = '';
-      $rowdata[] = '';
-      $table->data[] = $rowdata;
-} //debug(**)
 
     if ($diploma_setting === 'Any' || ($diploma_setting === 'Has 6 Passes' && $passes_notified_or_not >= 6) || ($diploma_setting === 'Has Diploma' && $qualification === 'Diploma')) {
       $rowdata = array();
@@ -353,20 +339,6 @@ else { //debug(**)
       $n++;
       $table->data[] = $rowdata;
     }
-else { //debug(**)
-      $rowdata = array();
-      $rowdata[] = $diploma_setting;
-      $rowdata[] = $userdatas[$userdata->id]->diploma_passes;
-      $rowdata[] = $passes_notified_or_not;
-      foreach ($idnumbers as $idnumber) {
-        $rowdata[] = $qualification;
-      }
-      $rowdata[] = '';
-      $rowdata[] = '';
-      $rowdata[] = '';
-      $rowdata[] = '';
-      $table->data[] = $rowdata;
-} //debug(**)
   }
 }
 echo html_writer::table($table);
