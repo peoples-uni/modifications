@@ -286,7 +286,7 @@ else {
 LEFT JOIN
 (SELECT g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' AND g.userid=$userid) AS y
 ON cid=icourseid
-ORDER BY datefirstenrolled ASC, fullname ASC;");
+ORDER BY datefirstenrolled ASC, fullname ASC");
 
 
   $passed_or_cpd_enrol_ids = array();
@@ -299,7 +299,8 @@ ORDER BY datefirstenrolled ASC, fullname ASC;");
   $cumulative_enrolled_ids_to_discount = array();
   $pass_type = array();
   $foundation_problems = array();
-  $qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems);
+  $passes_notified_or_not = 0;
+  $qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems, $passes_notified_or_not);
 
   if (($cert == 'certificate') && ($qualification & 1)) {
     $award = 'Certificate in Public Health';

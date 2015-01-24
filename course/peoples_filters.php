@@ -829,4 +829,24 @@ class peoples_date_filter extends peoples_filter {
     return $field;
   }
 }
+
+
+// Initially used by education_committee_report.php
+class peoples_mph_dissertation_filter extends peoples_select_filter {
+  public function filter_entries(array $list_to_filter) {
+    foreach ($list_to_filter as $index => $list_entry) {
+      if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
+        if ($this->selectedvalue === 'Yes' && empty($list_entry->dissertation_grade_available)) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'No' && !empty($list_entry->dissertation_grade_available)) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
 ?>

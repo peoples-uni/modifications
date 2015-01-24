@@ -88,7 +88,8 @@ $lastestdate = 0;
 $cumulative_enrolled_ids_to_discount = array();
 $pass_type = array();
 $foundation_problems = array();
-$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems);
+$passes_notified_or_not = 0;
+$qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems, $passes_notified_or_not);
 
 if ($qualification & 2) {
   echo '<strong>Award Achieved: Diploma</strong><br /><br />';

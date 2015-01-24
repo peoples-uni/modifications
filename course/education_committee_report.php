@@ -8,6 +8,7 @@
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 require_once($CFG->dirroot .'/course/peoples_lib.php');
+require_once($CFG->dirroot .'/course/peoples_awards_lib.php');
 
 $PAGE->set_context(context_system::instance());
 
@@ -40,11 +41,24 @@ $listmph[] = 'OTHER MPH';
 $peoples_mmu_filter = new peoples_mph_filter('MPH?', 'mph', $listmph, 'Any');
 $peoples_filters->add_filter($peoples_mmu_filter);
 
+$listdiploma[] = 'Any';
+$listdiploma[] = 'Has 6 Passes';
+$listdiploma[] = 'Has Diploma';
+$peoples_diploma_filter = new peoples_select_filter('Has Diploma?', 'diploma', $listdiploma, 'Any');
+$peoples_filters->add_filter($peoples_diploma_filter);
+
+$listmphdissertation[] = 'Any';
+$listmphdissertation[] = 'Yes';
+$listmphdissertation[] = 'No';
+$peoples_mph_dissertation_filter = new peoples_mph_dissertation_filter('Dissertation Grade available?', 'mphdissertation', $listmphdissertation, 'Any');
+$peoples_filters->add_filter($peoples_mph_dissertation_filter);
+
 $peoples_displayforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displayforexcel');
 $peoples_filters->add_filter($peoples_displayforexcel_filter);
 
 $chosensemester = $peoples_chosensemester_filter->get_filter_setting();
 $last_education_committee = $peoples_date_filter->get_filter_setting();
+$diploma_setting = $peoples_diploma_filter->get_filter_setting();
 $displayforexcel = $peoples_displayforexcel_filter->get_filter_setting();
 
 
@@ -140,6 +154,9 @@ $enrols = $DB->get_records_sql("
     e.datefirstenrolled,
     e.dateunenrolled,
     e.enrolled,
+    e.datenotified,
+    e.percentgrades,
+    c.fullname,
     c.idnumber,
     g.finalgrade,
     CASE
@@ -220,6 +237,17 @@ foreach ($enrols as $enrol) {
   else {
     $user_rows[$enrol->userid][$enrol->course_code] .= " $text";
   }
+
+  if ($enrol->diploma_pass) { // Approx count of passes (approx because there could be discounted/duplicates etc.)
+    if (empty($userdatas[$enrol->userid]->diploma_passes)) {
+      $userdatas[$enrol->userid]->diploma_passes = 1;
+    }
+    else {
+      $userdatas[$enrol->userid]->diploma_passes++;
+    }
+  }
+
+  if (!empty($enrol->grade) && $enrol->course_code == 'PUDISS') $userdatas[$enrol->userid]->dissertation_grade_available = TRUE;
 }
 
 
@@ -241,42 +269,76 @@ $table->head[] = 'Recommendations';
 
 $n = 0;
 foreach ($userdatas as $index => $userdata) {
+  $qualification = '';
+  $passes_notified_or_not = 0;
+
   if (!empty($user_rows[$userdata->id])) {
-    $rowdata = array();
-    $rowdata[] = $userdata->id;
-    $rowdata[] = htmlspecialchars($userdata->lastname, ENT_COMPAT, 'UTF-8');
-    $rowdata[] = htmlspecialchars($userdata->firstname, ENT_COMPAT, 'UTF-8');
+    if ($diploma_setting !== 'Any' && !empty($userdatas[$enrol->userid]->diploma_passes) && $userdatas[$enrol->userid]->diploma_passes >= 6) {
+      // Call get_student_award() to get precise Diploma/count status (we think there are 6 Diploma Passes)
+      $userid = $userdata->id;
+      $enrols2 = $DB->get_records_sql("SELECT * FROM
+(SELECT e.*, c.fullname, c.idnumber, c.id AS cid FROM mdl_enrolment e, mdl_course c WHERE e.courseid=c.id AND e.userid=$userid) AS x
+LEFT JOIN
+(SELECT g.finalgrade, i.courseid AS icourseid FROM mdl_grade_grades g, mdl_grade_items i WHERE g.itemid=i.id AND i.itemtype='course' AND g.userid=$userid) AS y
+ON cid=icourseid
+ORDER BY datefirstenrolled ASC, fullname ASC");
 
-    foreach ($idnumbers as $idnumber) {
-      if (!empty($user_rows[$userdata->id][$idnumber->course_code])) $rowdata[] = $user_rows[$userdata->id][$idnumber->course_code];
-      else $rowdata[] = '';
+      $passed_or_cpd_enrol_ids = array();
+      $modules = array();
+      $modules[] = 'Modules completed (Grade):';
+      $percentages = array();
+      $percentages[] = '';
+      $nopercentage = 0;
+      $lastestdate = 0;
+      $cumulative_enrolled_ids_to_discount = array();
+      $pass_type = array();
+      $foundation_problems = array();
+      $passes_notified_or_not = 0;
+      $qualification = get_student_award($userid, $enrols2, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems, $passes_notified_or_not);
+
+      if ($qualification & 2) $qualification = 'Diploma';
+      else                    $qualification = '';
     }
 
-    $rowdata[] = '';
+    if ($diploma_setting === 'Any' || ($diploma_setting === 'Has 6 Passes' && $passes_notified_or_not >= 6) || ($diploma_setting === 'Has Diploma' && $qualification === 'Diploma')) {
+      $rowdata = array();
+      $rowdata[] = $userdata->id;
+      $rowdata[] = htmlspecialchars($userdata->lastname, ENT_COMPAT, 'UTF-8');
+      $rowdata[] = htmlspecialchars($userdata->firstname, ENT_COMPAT, 'UTF-8');
 
-    $text = '';
-    if (!empty($userdata->note)) $text .= $userdata->note . '<br />';
-    if ($displayforexcel) {
-      $text = str_replace('<br />', '; ', $text);
-      $text = substr($text, 0, -2);
+      foreach ($idnumbers as $idnumber) {
+        if (!empty($user_rows[$userdata->id][$idnumber->course_code])) $rowdata[] = $user_rows[$userdata->id][$idnumber->course_code];
+        else $rowdata[] = '';
+      }
+
+      $rowdata[] = '';
+
+      $text = '';
+      if (!empty($userdata->note)) $text .= $userdata->note . '<br />';
+      if ($displayforexcel) {
+        $text = str_replace('<br />', '; ', $text);
+        $text = substr($text, 0, -2);
+      }
+      $rowdata[] = $text;
+
+      if (!empty($qualification)) $text = $qualification . '<br />';
+      else                        $text = '';
+      $text .= htmlspecialchars($first_semester[$userdata->id], ENT_COMPAT, 'UTF-8') . '<br />';
+      $notes = $DB->get_records('peoplesstudentnotes', array('userid' => $userdata->id), 'datesubmitted ASC');
+      foreach ($notes as $note) {
+        $text .= gmdate('d/m/Y', $note->datesubmitted) . ': ' .  $note->note . '<br />';
+      }
+      if ($displayforexcel) {
+        $text = str_replace('<br />', '; ', $text);
+        $text = substr($text, 0, -2);
+      }
+      $rowdata[] = $text;
+
+      $rowdata[] = '';
+
+      $n++;
+      $table->data[] = $rowdata;
     }
-    $rowdata[] = $text;
-
-    $text = htmlspecialchars($first_semester[$userdata->id], ENT_COMPAT, 'UTF-8') . '<br />';
-    $notes = $DB->get_records('peoplesstudentnotes', array('userid' => $userdata->id), 'datesubmitted ASC');
-    foreach ($notes as $note) {
-      $text .= gmdate('d/m/Y', $note->datesubmitted) . ': ' .  $note->note . '<br />';
-    }
-    if ($displayforexcel) {
-      $text = str_replace('<br />', '; ', $text);
-      $text = substr($text, 0, -2);
-    }
-    $rowdata[] = $text;
-
-    $rowdata[] = '';
-
-    $n++;
-    $table->data[] = $rowdata;
   }
 }
 echo html_writer::table($table);

@@ -14,7 +14,7 @@ CREATE INDEX mdl_peoples_accept_module_uid_ix ON mdl_peoples_accept_module (user
 */
 
 
-function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount, &$pass_type, &$foundation_problems) {
+function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount, &$pass_type, &$foundation_problems, &$passes_notified_or_not) {
   global $DB;
 
   // First work out what modules should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date)
@@ -90,7 +90,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   // This has now (20110728) changed Diploma: 6, Certificate: 3 (also foundation/problems are no longer hard coded)
   // A Diploma when 8 modules have been passed,
   // Provided at least two are from each of the Foundation Sciences and Public Health problems groupings.
-  //// THESE LISTS MUST BE KEEPT UP TO DATE HERE AND ALSO IN peoplescertificate.php WHERE THIS IS RECHECKED
+  //// THESE LISTS MUST BE KEPT UP TO DATE HERE AND ALSO IN peoplescertificate.php WHERE THIS IS RECHECKED
   //
   //// Intro to Epi, Biostatistics, Evidence Based Practice etc. are 'foundation'
   //$foundation['PUBIOS'] = 1;  // Biostatistics
@@ -242,6 +242,13 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     }
     elseif ($enrol->notified == 4) {
       $pass_type[$enrol->id] = 'Not Graded, Did Not Pay';
+    }
+
+    // Count Passes, Notified or Not (excluding, for notified ones, any discounted/double counted)
+    if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999))) {
+      if (!in_array($enrol->id, $cumulative_enrolled_ids_to_discount) && !in_array($enrol->id, $cumulative_enrolled_ids_not_to_be_double_counted)) {
+        $passes_notified_or_not++;
+      }
     }
   }
 
