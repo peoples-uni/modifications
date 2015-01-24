@@ -248,6 +248,9 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     if (!empty($enrol->finalgrade) && (($enrol->percentgrades == 0 && $enrol->finalgrade <= 1.99999) || ($enrol->percentgrades == 1 && $enrol->finalgrade > 44.99999))) {
       if (!in_array($enrol->id, $cumulative_enrolled_ids_to_discount) && !in_array($enrol->id, $cumulative_enrolled_ids_not_to_be_double_counted)) {
         $passes_notified_or_not++;
+if ($userid == 1533) {
+ error_log("$passes_notified_or_not enrolid: $enrol->id, finalgrade: $enrol->finalgrade");
+}
       }
     }
   }
