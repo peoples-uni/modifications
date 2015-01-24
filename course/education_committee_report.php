@@ -273,7 +273,7 @@ foreach ($userdatas as $index => $userdata) {
   $passes_notified_or_not = 0;
 
   if (!empty($user_rows[$userdata->id])) {
-    if ($diploma_setting !== 'Any' && !empty($userdatas[$enrol->userid]->diploma_passes) && $userdatas[$enrol->userid]->diploma_passes >= 6) {
+    if ($diploma_setting !== 'Any' && !empty($userdatas[$userdata->id]->diploma_passes) && $userdatas[$userdata->id]->diploma_passes >= 6) {
       // Call get_student_award() to get precise Diploma/count status (we think there are 6 Diploma Passes)
       $userid = $userdata->id;
       $enrols2 = $DB->get_records_sql("SELECT * FROM
@@ -302,7 +302,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 else { //debug(**)
       $rowdata = array();
       $rowdata[] = $diploma_setting;
-      $rowdata[] = $userdatas[$enrol->userid]->diploma_passes;
+      $rowdata[] = $userdatas[$userdata->id]->diploma_passes;
       $rowdata[] = '';
       foreach ($idnumbers as $idnumber) {
         $rowdata[] = '';
@@ -356,7 +356,7 @@ else { //debug(**)
 else { //debug(**)
       $rowdata = array();
       $rowdata[] = $diploma_setting;
-      $rowdata[] = $userdatas[$enrol->userid]->diploma_passes;
+      $rowdata[] = $userdatas[$userdata->id]->diploma_passes;
       $rowdata[] = $passes_notified_or_not;
       foreach ($idnumbers as $idnumber) {
         $rowdata[] = $qualification;
