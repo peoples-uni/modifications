@@ -256,9 +256,6 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         else { // For some reason did not match...
           $passes_notified_or_not++;
         }
-if ($userid == 1533) {
- error_log("$passes_notified_or_not enrolid: $enrol->id, finalgrade: $enrol->finalgrade, idnumber: $enrol->idnumber, matches1: $matches[1]");
-}
       }
     }
   }
