@@ -171,9 +171,9 @@ $enrols = $DB->get_records_sql("
   FROM mdl_enrolment e
   JOIN mdl_course c ON e.courseid=c.id
   JOIN mdl_grade_items i ON c.id=i.courseid AND i.itemtype='course'
-  JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
   JOIN mdl_peoples_course_codes codes ON c.idnumber LIKE BINARY CONCAT(codes.course_code, '%')
   JOIN mdl_semesters s ON e.semester=s.semester
+  LEFT JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
   WHERE
     (
       e.userid IN (SELECT DISTINCT e2.userid FROM mdl_enrolment e2 WHERE e2.semester=?) OR
