@@ -1464,7 +1464,7 @@ It has the following columns...<br />
 Family name<br />
 Given name<br />
 Last access (elapsed time for all modules) [elapsed time is the total number of elapsed semesters that the student studied (or is still studying) with Peoples-uni]<br />
-# Passed @Masters (@Diploma) [number of modules passes at Masters (or Diploma) level, but excluding those that should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date); a note of any Masters level passes that are actually pre-percentage is made]<br />
+# Passed @Masters (@Diploma) [number of modules passes at Masters (or Diploma) level, but excluding those that should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date, maximum of 3 unfinished modules); a note of any Masters level passes that are actually pre-percentage is made]<br />
 Passed [includes the list of modules they have passed (Course Codes)]<br />
 # Foundation [the number of "Foundation Sciences" modules passed]<br />
 # Problems [the number of "Public Health Problems" modules passed]<br />
@@ -1475,7 +1475,7 @@ Qualification [shows whether they have qualified for a Diploma, a Certificate or
 <li>
 The link "Mark Discounted Modules" or "Review modules contributing to awards and override disallowed modules" (from "Student Grades") brings up a page (allow_modules.php) which contains details of all Modules attempted by the student.<br />
 It contains the type of pass or fail or various types of non-grading.<br />
-For each module that has been discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date), there is a checkbox that can be checked (or unchecked if desired) to indicate that the module should not be discounted (i.e. will count towards a Diploma etc.). There is a submission button "Mark Modules that Should be Discounted (or not)" that should be clicked when the checkboxes have been set appropriately to update discounted modules.
+For each module that has been discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date, maximum of 3 unfinished modules), there is a checkbox that can be checked (or unchecked if desired) to indicate that the module should not be discounted (i.e. will count towards a Diploma etc.). There is a submission button "Mark Modules that Should be Discounted (or not)" that should be clicked when the checkboxes have been set appropriately to update discounted modules.
 </li>
 </ol>
 

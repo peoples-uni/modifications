@@ -17,7 +17,7 @@ CREATE INDEX mdl_peoples_accept_module_uid_ix ON mdl_peoples_accept_module (user
 function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$modules, &$percentages, $nopercentage, &$lastestdate, &$cumulative_enrolled_ids_to_discount, &$pass_type, &$foundation_problems, &$passes_notified_or_not) {
   global $DB;
 
-  // First work out what modules should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date)
+  // First work out what modules should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date, maximum of 3 unfinished modules)
   $all_enrols = $DB->get_records_sql("
     SELECT
       CONCAT(e.userid, '#', s.id),
@@ -26,6 +26,14 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
       COUNT(*) AS num_enrolments,
       SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0) >1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0)<=44.99999))) AS num_fails,
       SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999))) AS num_passes,
+      SUM(
+        (
+          ((e.enrolled=0 OR e.enrolled!=0) AND g.finalgrade IS NULL)
+            OR
+          ((e.enrolled=0 OR e.enrolled!=0) AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0) >1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0)<=44.99999)))
+        )
+        AND NOT (e.notified IN (3,5))
+      ) AS num_unfinished,
       GROUP_CONCAT(IF(e.id=a.enrolid, 9999999, e.id) SEPARATOR ',') AS enrolled_ids_to_discount
     FROM mdl_enrolment    e
     JOIN mdl_grade_items  i ON e.courseid=i.courseid AND i.itemtype='course'
@@ -39,6 +47,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   $semester_list = $DB->get_records('semesters', NULL, 'id ASC');
   $first_semester_enrolled = 9999999;
   $total_fails = 0;
+  $total_unfinished = 0;
   $i = 0;
   $cumulative_enrolled_ids_to_discount_string = '9999999';
   foreach ($semester_list as $semester) {
@@ -47,8 +56,10 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
 
       $semester_enrolls = $all_enrols["$userid#$semester->id"];
       $total_fails += $semester_enrolls->num_fails;
+      $total_unfinished += $semester_enrolls->num_unfinished;
+
       $elapsed_semesters = $i + 1 - $first_semester_enrolled;
-      if (($total_fails > 1) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
+      if (($total_fails > 1) || ($total_unfinished > 3) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
         $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";
       }
     }
@@ -236,7 +247,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
       $passed_or_cpd_enrol_ids[] = $enrol->id;
     }
     elseif ($enrol->notified == 2) {
-      $pass_type[$enrol->id] = 'Not Graded, Not Complete"';
+      $pass_type[$enrol->id] = 'Not Graded, Not Complete';
     }
     elseif ($enrol->notified == 5) {
       $pass_type[$enrol->id] = 'Not Graded, Exceptional Factors';
