@@ -76,6 +76,11 @@ foreach ($user_list as $userid => $record) {
       $total_unfinished += $semester_enrolls->num_unfinished;
       $elapsed_semesters = $i + 1 - $first_semester_enrolled;
       if (($total_fails > 1) || ($total_unfinished > 3) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
+//(**)TEST CODE
+if ($total_unfinished > 3) {
+  echo "user: $userid, total_unfinished: $total_unfinished, discount: $semester_enrolls->enrolled_ids_to_discount<br />";
+}
+//(**)
         $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";
         if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '') $some_enrolls_discounted[$userid] = $userid;
       }
