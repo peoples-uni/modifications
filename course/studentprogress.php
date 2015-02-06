@@ -47,15 +47,10 @@ $all_enrols = $DB->get_records_sql("
       )
       AND NOT (e.notified IN (3,5))
     ) AS num_unfinished,
-
-
     SUM(e.enrolled=0
     ) AS num_unenrolled,
-
     SUM(g.finalgrade IS NULL
     ) AS num_gradenull,
-
-
     GROUP_CONCAT(IF(e.id=a.enrolid, 9999999, e.id) SEPARATOR ',') AS enrolled_ids_to_discount
   FROM mdl_enrolment    e
   JOIN mdl_grade_items  i ON e.courseid=i.courseid AND i.itemtype='course'
@@ -85,11 +80,6 @@ foreach ($user_list as $userid => $record) {
       $total_unfinished += $semester_enrolls->num_unfinished;
       $elapsed_semesters = $i + 1 - $first_semester_enrolled;
       if (($total_fails > 1) || ($total_unfinished > 3) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
-//(**)TEST CODE
-if ($total_unfinished > 3) {
-  echo "user: $userid, total_unfinished: $total_unfinished, discount: $semester_enrolls->enrolled_ids_to_discount, unenrolled: $semester_enrolls->num_unenrolled, null: $semester_enrolls->num_gradenull<br />";
-}
-//(**)
         $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";
         if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '') $some_enrolls_discounted[$userid] = $userid;
       }
@@ -262,8 +252,7 @@ $table->head = array(
 $n = 0;
 foreach ($enrols as $enrol) {
   $rowdata = array();
-  $rowdata[] =  $enrol->id . '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
-//(**)  $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
+  $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->id . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
 
   $text = '';
