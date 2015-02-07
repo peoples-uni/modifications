@@ -40,12 +40,8 @@ $all_enrols = $DB->get_records_sql("
     SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0) >1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0)<=44.99999))) AS num_fails,
     SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999))) AS num_passes,
     SUM(
-      (
-        ((e.enrolled=0 OR e.enrolled!=0) AND g.finalgrade IS NULL)
-          OR
-        ((e.enrolled=0 OR e.enrolled!=0) AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0) >1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0)<=44.99999)))
-      )
-      AND NOT (e.notified IN (3,5))
+      ((e.enrolled!=0) AND g.finalgrade IS NULL)
+      AND NOT (e.notified IN (3,5)) /* Not Certificate of Participation/Exceptional Factors */
     ) AS num_unfinished,
     SUM(e.enrolled=0
     ) AS num_unenrolled,
