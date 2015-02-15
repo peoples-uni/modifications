@@ -47,6 +47,9 @@ $listmph[] = 'No';
 $listmph[] = 'MMU MPH';
 $listmph[] = 'Peoples MPH';
 $listmph[] = 'OTHER MPH';
+$listmph[] = 'Not MMU MPH';
+$listmph[] = 'Not Peoples MPH';
+$listmph[] = 'Not OTHER MPH';
 $peoples_mmu_filter = new peoples_mph_filter('MPH?', 'mph', $listmph, 'Any');
 $peoples_filters->add_filter($peoples_mmu_filter);
 

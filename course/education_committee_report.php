@@ -38,12 +38,17 @@ $listmph[] = 'No';
 $listmph[] = 'MMU MPH';
 $listmph[] = 'Peoples MPH';
 $listmph[] = 'OTHER MPH';
+$listmph[] = 'Not MMU MPH';
+$listmph[] = 'Not Peoples MPH';
+$listmph[] = 'Not OTHER MPH';
 $peoples_mmu_filter = new peoples_mph_filter('MPH?', 'mph', $listmph, 'Any');
 $peoples_filters->add_filter($peoples_mmu_filter);
 
 $listdiploma[] = 'Any';
 $listdiploma[] = 'Has 6 Passes';
 $listdiploma[] = 'Has Diploma';
+$listdiploma[] = 'Has less than 6 Passes';
+$listdiploma[] = 'Does not have Diploma';
 $peoples_diploma_filter = new peoples_select_filter('Has Diploma?', 'diploma', $listdiploma, 'Any');
 $peoples_filters->add_filter($peoples_diploma_filter);
 
@@ -273,8 +278,12 @@ foreach ($userdatas as $index => $userdata) {
   $passes_notified_or_not = 0;
 
   if (!empty($user_rows[$userdata->id])) {
-    if ($diploma_setting !== 'Any' && !empty($userdatas[$userdata->id]->diploma_passes) && $userdatas[$userdata->id]->diploma_passes >= 6) {
-      // Call get_student_award() to get precise Diploma/count status (we think there are 6 Diploma Passes)
+    if (
+        (($diploma_setting === 'Has 6 Passes' || $diploma_setting === 'Has Diploma') && !empty($userdatas[$userdata->id]->diploma_passes) && $userdatas[$userdata->id]->diploma_passes >= 6) ||
+        $diploma_setting === 'Has less than 6 Passes' ||
+        $diploma_setting === 'Does not have Diploma'
+      ) {
+      // Call get_student_award() to get precise Diploma/count status (we only get here if we need to do an exact calculation based on above "if ()")
       $userid = $userdata->id;
       $enrols2 = $DB->get_records_sql("SELECT * FROM
 (SELECT e.*, c.fullname, c.idnumber, c.id AS cid FROM mdl_enrolment e, mdl_course c WHERE e.courseid=c.id AND e.userid=$userid) AS x
@@ -300,7 +309,13 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
       else                    $qualification = '';
     }
 
-    if ($diploma_setting === 'Any' || ($diploma_setting === 'Has 6 Passes' && $passes_notified_or_not >= 6) || ($diploma_setting === 'Has Diploma' && $qualification === 'Diploma')) {
+    if (
+        $diploma_setting === 'Any' ||
+        ($diploma_setting === 'Has 6 Passes' && $passes_notified_or_not >= 6) ||
+        ($diploma_setting === 'Has Diploma' && $qualification === 'Diploma') ||
+        ($diploma_setting === 'Has less than 6 Passes' && $passes_notified_or_not < 6) ||
+        ($diploma_setting === 'Does not have Diploma' && $qualification !== 'Diploma')
+      ) {
       $rowdata = array();
       $rowdata[] = $userdata->id;
       $rowdata[] = htmlspecialchars($userdata->lastname, ENT_COMPAT, 'UTF-8');
