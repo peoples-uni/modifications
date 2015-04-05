@@ -29,6 +29,7 @@ $employmentname['40'] = 'Public health';
 $employmentname['50'] = 'Other health related';
 $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 
+$howfoundpeoplesname['']   = '';
 $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
 $howfoundpeoplesname['20'] = 'Informed by someone else';
 $howfoundpeoplesname['30'] = 'Facebook';
@@ -416,6 +417,7 @@ $table->head = array(
   'Qualification',
   'Higherqualification',
   'Employment',
+  'How heard about Peoples-uni',
   'Number of Student Posts in this Module',
   'I want to improve my knowledge of public health',
   'I want to improve my academic skills',
@@ -514,6 +516,20 @@ if (!empty($enrols)) {
     $rowdata[] = $higherqualificationname[$enrol->higherqualification];
     $rowdata[] = $employmentname[$enrol->employment];
 
+    $registration = $registrations[$enrol->userid];
+    if (empty($enrol->userid) || empty($registration)) {
+      $registration->whatlearn = '';
+      $registration->whylearn = '';
+      $registration->whyelearning = '';
+      $registration->howuselearning = '';
+      $registration->howfoundpeoples = '';
+      $registration->howfoundorganisationname = '';
+    }
+
+    $z = '';
+    if (!empty($registration->howfoundpeoples)) $z = $howfoundpeoplesname[$registration->howfoundpeoples];
+    $rowdata[] = $z;
+
     if (!empty($usermodulecountbuseridbymodule[$enrol->userid][$enrol->fullname])) {
       $rowdata[] = $usermodulecountbuseridbymodule[$enrol->userid][$enrol->fullname];
     }
@@ -521,15 +537,6 @@ if (!empty($enrols)) {
       $rowdata[] = 0;
     }
 
-
-    $registration = $registrations[$enrol->userid];
-    if (empty($enrol->userid) || empty($registration)) {
-      $registration->whatlearn = '';
-      $registration->whylearn = '';
-      $registration->whyelearning = '';
-      $registration->howuselearning = '';
-      $registration->howfoundorganisationname = '';
-    }
 
     $arrayvalues = explode(',', $registration->whatlearn);
     $z = '';
@@ -665,6 +672,13 @@ if (!empty($enrols)) {
 				$employment[$employmentname[$enrol->employment]]++;
 			}
 
+      if (empty($howfoundpeoples[$howfoundpeoplesname[$registration->howfoundpeoples]])) {
+        $howfoundpeoples[$howfoundpeoplesname[$registration->howfoundpeoples]] = 1;
+      }
+      else {
+        $howfoundpeoples[$howfoundpeoplesname[$registration->howfoundpeoples]]++;
+      }
+
 			$countnondup++;
 		}
 		$lastname = $enrol->username;
@@ -692,6 +706,7 @@ displaystat($country, 'Country');
 displaystat($qualification, 'Qualification');
 displaystat($higherqualification, 'Higher Qualification');
 displaystat($employment, 'Employment');
+displaystat($howfoundpeoples, 'How heard about Peoples-uni');
 
 echo '<br /><br />';
 echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
