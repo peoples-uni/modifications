@@ -179,10 +179,10 @@ else {
 ?>
 <br />Enter something in at least the Title & Name fields and then click "Create New Certificate"...<br />
 <form id="updatecertificateform" method="post" action="<?php echo $CFG->wwwroot . '/course/createcertificate.php'; ?>">
-Title&nbsp;of&nbsp;Certificate:&nbsp;<input type="text" size="100" name="title" value="<?php echo $title; ?>" style="width:35em" /><br />
-Second&nbsp;Title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="100" name="second_title" value="<?php echo $second_title; ?>" style="width:35em" /><br />
+Title&nbsp;of&nbsp;Certificate:&nbsp;<input type="text" size="100" name="title" value="<?php echo $title; ?>" style="width:30em" /><br />
+Second&nbsp;Title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="100" name="second_title" value="<?php echo $second_title; ?>" style="width:30em" /><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is to certify that<br />
-Person's&nbsp;Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="100" name="name" value="<?php echo $name; ?>" style="width:35em" /><br />
+Person's&nbsp;Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="100" name="name" value="<?php echo $name; ?>" style="width:30em" /><br />
 Body:&nbsp;<input type="text" size="200" name="body1" value="<?php echo $body1; ?>" style="width:50em" /><br />
 Use WikiTox signatures and images:&nbsp;<input type="checkbox" name="wikitox_certificate" <?php if ($wikitox_certificate) echo ' CHECKED'; ?> /><br />
 <input type="hidden" name="id" value="<?php echo $id ?>" />
