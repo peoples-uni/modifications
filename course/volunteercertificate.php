@@ -98,9 +98,11 @@ $pdf->SetTextColor(0, 0, 0);
 if (!empty($volunteercertificate->second_title)) {
   cert_printtext(170, 160, 'C', 'Helvetica', '', 20, utf8_decode($volunteercertificate->second_title));
   $delta = 45;
+  $delta2 = -5;
 }
 else {
   $delta = 0;
+  $delta2 = 0;
 }
 cert_printtext(170, 160 + $delta, 'C', 'Helvetica',    '', 20, utf8_decode('This is to certify that'));
 
@@ -111,7 +113,7 @@ cert_printtext(170, 205 + $delta, 'C', 'Helvetica', '', 30, utf8_decode($volunte
 //cert_printtext(170, 350, 'C', 'Helvetica', '', 14, utf8_decode($volunteercertificate->body4));
 //cert_printtext(170, 380, 'C', 'Helvetica', '', 14, utf8_decode($volunteercertificate->body5));
 
-$pdf->SetXY( 120, 250 + $delta);
+$pdf->SetXY( 120, 250 + $delta + $delta2);
 $pdf->setFont('Helvetica', '', 20);
 $pdf->MultiCell(600, 35, $volunteercertificate->body1, 0, 'C', 0);
 
