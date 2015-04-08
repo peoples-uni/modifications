@@ -96,7 +96,7 @@ $pdf->SetTextColor(0, 0, 0);
 //cert_printtext(170, 160, 'C', 'Times',    'B', 20, utf8_decode('This is to certify that'));
 
 if (!empty($volunteercertificate->second_title)) {
-  cert_printtext(170, 160, 'C', 'Helvetica','B', 30, utf8_decode($volunteercertificate->second_title));
+  cert_printtext(170, 160, 'C', 'Helvetica', '', 20, utf8_decode($volunteercertificate->second_title));
   $delta = 45;
 }
 else {
