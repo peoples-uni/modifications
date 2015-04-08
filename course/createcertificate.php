@@ -17,8 +17,11 @@ CREATE TABLE mdl_volunteercertificate (
 	body4 VARCHAR(255),
 	body5 VARCHAR(255),
   wikitox_certificate BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  second_title VARCHAR(255) NOT NULL default '',
 CONSTRAINT  PRIMARY KEY (id)
 );
+
+ALTER TABLE mdl_volunteercertificate ADD second_title VARCHAR(255) NOT NULL DEFAULT '' AFTER wikitox_certificate;
 */
 
 
@@ -41,6 +44,7 @@ echo $OUTPUT->header();
 $name = '';
 $title = 'Certificate of Academic Input to the Peoples Open Access Education Initiative - Peoples-uni';
 $title = "People's Open Access Education Initiative";
+$second_title = "Masters level online courses for Public Health capacity building";
 $body1 = 'has contributed to the academic activities of the Peoples-uni.';
 $body2 = 'We gratefully acknowledge this.';
 $body3 = '';
@@ -59,11 +63,13 @@ if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) &&
 	$volunteercertificate->datecreated = time();
 	$volunteercertificate->name = $_POST['name'];
 	$volunteercertificate->title = $_POST['title'];
+  if (empty($_POST['second_title'])) $_POST['second_title'] = '';
 	if (empty($_POST['body1'])) $_POST['body1'] = '';
 	if (empty($_POST['body2'])) $_POST['body2'] = '';
 	if (empty($_POST['body3'])) $_POST['body3'] = '';
 	if (empty($_POST['body4'])) $_POST['body4'] = '';
 	if (empty($_POST['body5'])) $_POST['body5'] = '';
+  $volunteercertificate->second_title = $_POST['second_title'];
 	$volunteercertificate->body1 = $_POST['body1'];
 	$volunteercertificate->body2 = $_POST['body2'];
 	$volunteercertificate->body3 = $_POST['body3'];
@@ -84,7 +90,13 @@ if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) &&
 	$id = $_POST['id'];
 
 	$name = $_POST['name'];
-	$title = $_POST['title'];
+  $title = $_POST['title'];
+  if (!empty($_POST['second_title'])) {
+    $second_title = $_POST['second_title'];
+  }
+  else {
+    $second_title = '';
+  }
 	$body1 = $_POST['body1'];
 	$body2 = $_POST['body2'];
 	$body3 = $_POST['body3'];
@@ -92,7 +104,8 @@ if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) &&
 	$body5 = $_POST['body5'];
 
 	$name = htmlspecialchars(dontstripslashes($name), ENT_COMPAT, 'UTF-8');
-	$title = htmlspecialchars(dontstripslashes($title), ENT_COMPAT, 'UTF-8');
+  $title = htmlspecialchars(dontstripslashes($title), ENT_COMPAT, 'UTF-8');
+  $second_title = htmlspecialchars($second_title, ENT_COMPAT, 'UTF-8');
 	$body1 = htmlspecialchars(dontstripslashes($body1), ENT_COMPAT, 'UTF-8');
 	$body2 = htmlspecialchars(dontstripslashes($body2), ENT_COMPAT, 'UTF-8');
 	$body3 = htmlspecialchars(dontstripslashes($body3), ENT_COMPAT, 'UTF-8');
@@ -104,12 +117,14 @@ elseif (!empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['mark
 	$volunteercertificate = new object();
 	$volunteercertificate->datecreated = time();
 	$volunteercertificate->name = $_POST['name'];
-	$volunteercertificate->title = $_POST['title'];
-	if (empty($_POST['body1'])) $_POST['body1'] = '';
+  $volunteercertificate->title = $_POST['title'];
+  if (empty($_POST['second_title'])) $_POST['second_title'] = '';
+  if (empty($_POST['body1'])) $_POST['body1'] = '';
 	if (empty($_POST['body2'])) $_POST['body2'] = '';
 	if (empty($_POST['body3'])) $_POST['body3'] = '';
 	if (empty($_POST['body4'])) $_POST['body4'] = '';
 	if (empty($_POST['body5'])) $_POST['body5'] = '';
+  $volunteercertificate->second_title = $_POST['second_title'];
 	$volunteercertificate->body1 = $_POST['body1'];
 	$volunteercertificate->body2 = $_POST['body2'];
 	$volunteercertificate->body3 = $_POST['body3'];
@@ -129,6 +144,12 @@ elseif (!empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['mark
 
 	$name = $_POST['name'];
 	$title = $_POST['title'];
+  if (!empty($_POST['second_title'])) {
+    $second_title = $_POST['second_title'];
+  }
+  else {
+    $second_title = '';
+  }
 	$body1 = $_POST['body1'];
 	$body2 = $_POST['body2'];
 	$body3 = $_POST['body3'];
@@ -137,6 +158,7 @@ elseif (!empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['mark
 
 	$name = htmlspecialchars(dontstripslashes($name), ENT_COMPAT, 'UTF-8');
 	$title = htmlspecialchars(dontstripslashes($title), ENT_COMPAT, 'UTF-8');
+  $second_title = htmlspecialchars($second_title, ENT_COMPAT, 'UTF-8');
 	$body1 = htmlspecialchars(dontstripslashes($body1), ENT_COMPAT, 'UTF-8');
 	$body2 = htmlspecialchars(dontstripslashes($body2), ENT_COMPAT, 'UTF-8');
 	$body3 = htmlspecialchars(dontstripslashes($body3), ENT_COMPAT, 'UTF-8');
@@ -157,10 +179,11 @@ else {
 ?>
 <br />Enter something in at least the Title & Name fields and then click "Create New Certificate"...<br />
 <form id="updatecertificateform" method="post" action="<?php echo $CFG->wwwroot . '/course/createcertificate.php'; ?>">
-Title&nbsp;of&nbsp;Certificate:&nbsp;<input type="text" size="100" name="title" value="<?php echo $title; ?>" /><br />
+Title&nbsp;of&nbsp;Certificate:&nbsp;<input type="text" size="100" name="title" value="<?php echo $title; ?>" style="width:50em" /><br />
+Second Title&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="100" name="second_title" value="<?php echo $second_title; ?>" style="width:50em" /><br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is to certify that<br />
-Person's&nbsp;Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="100" name="name" value="<?php echo $name; ?>" /><br />
-Body:&nbsp;<input type="text" size="200" name="body1" value="<?php echo $body1; ?>" /><br />
+Person's&nbsp;Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="100" name="name" value="<?php echo $name; ?>" style="width:50em" /><br />
+Body:&nbsp;<input type="text" size="200" name="body1" value="<?php echo $body1; ?>" style="width:100em" /><br />
 Use WikiTox signatures and images:&nbsp;<input type="checkbox" name="wikitox_certificate" <?php if ($wikitox_certificate) echo ' CHECKED'; ?> /><br />
 <input type="hidden" name="id" value="<?php echo $id ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />

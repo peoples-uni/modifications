@@ -94,16 +94,24 @@ $pdf->SetTextColor(0, 0, 120);
 cert_printtext(170, 120, 'C', 'Helvetica','B', 30, utf8_decode($volunteercertificate->title));
 $pdf->SetTextColor(0, 0, 0);
 //cert_printtext(170, 160, 'C', 'Times',    'B', 20, utf8_decode('This is to certify that'));
-cert_printtext(170, 160, 'C', 'Helvetica',    '', 20, utf8_decode('This is to certify that'));
 
-cert_printtext(170, 205, 'C', 'Helvetica', '', 30, utf8_decode($volunteercertificate->name));
+if (!empty($volunteercertificate->second_title)) {
+  cert_printtext(170, 160, 'C', 'Helvetica','B', 30, utf8_decode($volunteercertificate->second_title));
+  $delta = 45;
+}
+else {
+  $delta = 0;
+}
+cert_printtext(170, 160 + $delta, 'C', 'Helvetica',    '', 20, utf8_decode('This is to certify that'));
+
+cert_printtext(170, 205 + $delta, 'C', 'Helvetica', '', 30, utf8_decode($volunteercertificate->name));
 //cert_printtext(170, 250, 'C', 'Helvetica', '', 20, utf8_decode($volunteercertificate->body1));
 //cert_printtext(170, 285, 'C', 'Helvetica', '', 20, utf8_decode($volunteercertificate->body2));
 //cert_printtext(170, 320, 'C', 'Helvetica', '', 14, utf8_decode($volunteercertificate->body3));
 //cert_printtext(170, 350, 'C', 'Helvetica', '', 14, utf8_decode($volunteercertificate->body4));
 //cert_printtext(170, 380, 'C', 'Helvetica', '', 14, utf8_decode($volunteercertificate->body5));
 
-$pdf->SetXY( 120, 250);
+$pdf->SetXY( 120, 250 + $delta);
 $pdf->setFont('Helvetica', '', 20);
 $pdf->MultiCell(600, 35, $volunteercertificate->body1, 0, 'C', 0);
 
