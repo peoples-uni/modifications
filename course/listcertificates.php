@@ -35,7 +35,7 @@ foreach ($volunteercertificates as $volunteercertificate) {
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/createcertificate.php'; ?>" target="_blank">
 <input type="hidden" name="id" value="<?php echo $volunteercertificate->id; ?>" /><br />
 <input type="hidden" name="title" value="<?php echo htmlspecialchars($volunteercertificate->title, ENT_COMPAT, 'UTF-8'); ?>" />
-<input type="hidden" name="title" value="<?php echo htmlspecialchars($volunteercertificate->second_title, ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="second_title" value="<?php echo htmlspecialchars($volunteercertificate->second_title, ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="name" value="<?php echo htmlspecialchars($volunteercertificate->name, ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="body1" value="<?php echo htmlspecialchars($volunteercertificate->body1, ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="wikitox_certificate" value="<?php echo $volunteercertificate->wikitox_certificate; ?>" />
