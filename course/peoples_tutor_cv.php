@@ -36,6 +36,7 @@ $fs = get_file_storage();
 
 $filename = array_pop($args);
 $filepath = $args ? '/'.implode('/', $args).'/' : '/';
+error_log("filepath:$filepath, filename:$filename");
 if (!$file = $fs->get_file($contextid, 'peoples_record_tutor', 'tutor', 0, $filepath, $filename) or $file->is_directory()) {
   send_file_not_found();
 }
