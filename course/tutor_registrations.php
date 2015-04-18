@@ -424,7 +424,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
 
 $files_for_users = $DB->get_records_sql("
-  SELECT u.id, GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR ', ') AS filelist FROM mdl_files f, mdl_context con, mdl_user u
+  SELECT u.id, GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR ', ') AS filelist, GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR '##albrje##') AS safefilelist FROM mdl_files f, mdl_context con, mdl_user u
   WHERE
     f.component='peoples_record_tutor' AND
     f.filearea='tutor' AND
@@ -564,7 +564,22 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     }
 
     if (!empty($files_for_users[$peoples_tutor_registration->userid])) {
-      $rowdata[] = $files_for_users[$peoples_tutor_registration->userid]->filelist;
+      if (!$is_admin) {
+        $rowdata[] = $files_for_users[$peoples_tutor_registration->userid]->filelist;
+      }
+      else {
+        $files = explode('##albrje##', $files_for_users[$peoples_tutor_registration->userid]->safefilelist);
+        $rowstring = '';
+        $first = '';
+        foreach ($files as $file) {
+          $context = context_user::instance($peoples_tutor_registration->userid);
+          $url = file_encode_url("$CFG->wwwroot/peoples_tutor_cv.php", '/' . $context->id . '/peoples_record_tutor/tutor/0' . $file->get_filepath() . $file->get_filename(), true);
+          $filename = $file->get_filename();
+          $rowstring .= $first . '<a href="' . $url . '">' . htmlspecialchars($filename, ENT_COMPAT, 'UTF-8') . '</a>';
+          $first = ', ';
+        }
+        $rowdata[] = $rowstring;
+      }
     }
     else {
       $rowdata[] = '';
