@@ -1011,7 +1011,7 @@ As well as data entered by the tutor it also displays other data in columns...
 <br />"Notes" which is a field that we can enter when we "Edit form" to write notes on the volunteer. (Only Managers or Module leaders for that tutor can see or edit this field.)
 <br />Then there are fields entered by the volunteer (also editable by us).
 <br />Then there is one column for every semester showing the modules that the volunteer has been a tutor for ("*" indicating Module leader).
-<br />The final column list the names of files that have been uploaded for the volunteer. This is normally expected to contain the volunteers CV (to actually see the files you need to go into "Edit form").
+<br />The final column list the names of files that have been uploaded for the volunteer. This is normally expected to contain the volunteers CV. The files can be downloaded directly by Managers (also from "Edit form").
 <li>
 Various filters are available.
 </li>
