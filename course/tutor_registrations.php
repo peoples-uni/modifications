@@ -427,7 +427,7 @@ $files_for_users = $DB->get_records_sql("
   SELECT
     u.id,
     GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR ', ') AS filelist,
-    GROUP_CONCAT(f.filename ORDER BY f.filename, f.filepath SEPARATOR '##albrje##') AS safefilelist
+    GROUP_CONCAT(f.filename ORDER BY f.filename, f.filepath SEPARATOR '##albrje##') AS safefilelist,
     GROUP_CONCAT(f.filename ORDER BY f.filename, f.filepath SEPARATOR '##albrje##') AS safefilepath
   FROM
     mdl_files f,
