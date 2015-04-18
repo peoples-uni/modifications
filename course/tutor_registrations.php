@@ -424,7 +424,15 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
 
 
 $files_for_users = $DB->get_records_sql("
-  SELECT u.id, GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR ', ') AS filelist, GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR '##albrje##') AS safefilelist FROM mdl_files f, mdl_context con, mdl_user u
+  SELECT
+    u.id,
+    GROUP_CONCAT(f.filename ORDER BY f.filename SEPARATOR ', ') AS filelist,
+    GROUP_CONCAT(f.filename ORDER BY f.filename, f.filepath SEPARATOR '##albrje##') AS safefilelist
+    GROUP_CONCAT(f.filename ORDER BY f.filename, f.filepath SEPARATOR '##albrje##') AS safefilepath
+  FROM
+    mdl_files f,
+    mdl_context con,
+    mdl_user u
   WHERE
     f.component='peoples_record_tutor' AND
     f.filearea='tutor' AND
@@ -568,14 +576,16 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
         $rowdata[] = $files_for_users[$peoples_tutor_registration->userid]->filelist;
       }
       else {
-        $files = explode('##albrje##', $files_for_users[$peoples_tutor_registration->userid]->safefilelist);
+        $files     = explode('##albrje##', $files_for_users[$peoples_tutor_registration->userid]->safefilelist);
+        $filepaths = explode('##albrje##', $files_for_users[$peoples_tutor_registration->userid]->safefilepath);
         $rowstring = '';
         $first = '';
+        $i = 0;
         foreach ($files as $file) {
           $context = context_user::instance($peoples_tutor_registration->userid);
-          $url = file_encode_url("$CFG->wwwroot/peoples_tutor_cv.php", '/' . $context->id . '/peoples_record_tutor/tutor/0' . $file->get_filepath() . $file->get_filename(), true);
-          $filename = $file->get_filename();
-          $rowstring .= $first . '<a href="' . $url . '">' . htmlspecialchars($filename, ENT_COMPAT, 'UTF-8') . '</a>';
+          $url = file_encode_url("$CFG->wwwroot/peoples_tutor_cv.php", '/' . $context->id . '/peoples_record_tutor/tutor/0' . $filepaths[$i] . $file, true);
+          $i++;
+          $rowstring .= $first . '<a href="' . $url . '">' . htmlspecialchars($file, ENT_COMPAT, 'UTF-8') . '</a>';
           $first = ', ';
         }
         $rowdata[] = $rowstring;
