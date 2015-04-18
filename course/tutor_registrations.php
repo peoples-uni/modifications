@@ -583,7 +583,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
         $i = 0;
         foreach ($files as $file) {
           $context = context_user::instance($peoples_tutor_registration->userid);
-          $url = file_encode_url("$CFG->wwwroot/peoples_tutor_cv.php", '/' . $context->id . '/peoples_record_tutor/tutor/0' . $filepaths[$i] . $file, true);
+          $url = file_encode_url("$CFG->wwwroot/course/peoples_tutor_cv.php", '/' . $context->id . '/peoples_record_tutor/tutor/0' . $filepaths[$i] . $file, true);
           $i++;
           $rowstring .= $first . '<a href="' . $url . '">' . htmlspecialchars($file, ENT_COMPAT, 'UTF-8') . '</a>';
           $first = ', ';
