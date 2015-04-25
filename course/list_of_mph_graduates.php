@@ -71,7 +71,7 @@ if (!empty($enrols)) {
     $rowdata[] = $certifying[$enrol->mphstatus];
     $type_of_pass = array(0 => '', 1 => '', 2 => 'Merit', 3 => 'Distinction');
     $rowdata[] = $type_of_pass[$enrol->graduated];
-    $rowdata[] = htmlspecialchars($enrol->country, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($countryname[$enrol->country], ENT_COMPAT, 'UTF-8');
 
     $listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
 
