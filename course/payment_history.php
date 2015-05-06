@@ -192,7 +192,7 @@ foreach ($applications as $application) {
   $rowdata[] = $balance_array[1];
   $rowdata[] = $balance_array[2];
 
-  $i = 4
+  $i = 4;
   while (!empty($balance_array[$i])) {
     $balance_array[3] .= ', ' . $balance_array[$i];
     $i++;
