@@ -162,6 +162,18 @@ foreach ($applications as $application) {
   $rowdata[] = htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8');
   $rowdata[] = $application->email;
 
+  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC, id DESC");
+  $balance_array = array();
+  $date_array = array();
+  if (!empty($balances)) {
+    foreach ($balances as $balance) {
+      $balance_array[] = $balance->balance . gmdate('(d/m/Y)', $balance->date);
+      $date_array[] = gmdate('(d/m/Y)', $balance->date);
+    }
+  }
+  if (!empty($date_array[0])) $last_date = $date_array[0];
+  else $last_date = '';
+
   $amount_owed = 0;
   $not_confirmed_text = '';
   if (is_not_confirmed($userid)) $not_confirmed_text = ' (not confirmed)';
@@ -177,15 +189,9 @@ foreach ($applications as $application) {
     elseif (abs($amount) < .01) $z = 'Yes' . $not_confirmed_text;
     else $z = "Overpaid: &pound;$amount" . $not_confirmed_text; // Will never be Overpaid here because of function used
   }
+  $z .= $last_date;
   $rowdata[] = $z;
 
-  $balances = $DB->get_records_sql("SELECT * FROM mdl_peoples_student_balance WHERE userid={$userid} ORDER BY date DESC, id DESC");
-  $balance_array = array();
-  if (!empty($balances)) {
-    foreach ($balances as $balance) {
-      $balance_array[] = $balance->balance . gmdate('(d/m/Y)', $balance->date);
-    }
-  }
   if (empty($balance_array[1])) $balance_array[1] = '';
   if (empty($balance_array[2])) $balance_array[2] = '';
   if (empty($balance_array[3])) $balance_array[3] = '';
