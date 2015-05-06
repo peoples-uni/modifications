@@ -109,7 +109,7 @@ SELECT
 FROM      mdl_user u
 LEFT JOIN mdl_peoplesmph2 m ON u.id=m.userid
 LEFT JOIN mdl_peoples_income_category ic ON u.id=ic.userid
-WHERE u.id IN (SELECT e.userid FROM mdl_enrolment e WHERE AND e.semester=?)
+WHERE u.id IN (SELECT e.userid FROM mdl_enrolment e WHERE e.semester=?)
 ORDER BY u.lastname, u.firstname",
 array($chosensemester));
 
