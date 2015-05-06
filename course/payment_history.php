@@ -111,7 +111,7 @@ FROM      mdl_user u
 LEFT JOIN mdl_peoplesmph2 m ON u.id=m.userid
 LEFT JOIN mdl_peoples_income_category ic ON u.id=ic.userid
 WHERE u.id IN (SELECT e.userid FROM mdl_enrolment e WHERE e.semester=?)
-ORDER BY u.lastname, u.firstname",
+ORDER BY TRIM(u.lastname), TRIM(u.firstname)",
 array($chosensemester, $chosensemester));
 
 if (empty($applications)) {
@@ -138,7 +138,7 @@ if (!$displayforexcel) {
     '',
   );
 }
-elseif ($displayforexcel) {
+else {
   $table->head = array(
     'Family name',
     'Given name',
@@ -207,13 +207,13 @@ foreach ($applications as $application) {
   $rowdata[] = $z;
 
   if (empty($application->mphstatus)) $application->mphstatus = 0;
-  $z = $mphstatus_texts[$application->mphstatus];
+  $rowdata[] = $mphstatus_texts[$application->mphstatus];
 
   $applications_for_sid = $DB->get_records_sql("SELECT sid FROM mdl_peoplesapplication WHERE userid=$userid ORDER BY sid DESC");
   foreach ($applications_for_sid as $sid => $app) {
     break;
   }
-  if (!$displayforexcel)$rowdata[] = '<a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $sid . '" target="_blank">Payment Amounts</a>';
+  if (!$displayforexcel) $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $sid . '" target="_blank">Payment Amounts</a>';
 
   $n++;
   $table->data[] = $rowdata;
