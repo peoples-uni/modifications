@@ -806,7 +806,8 @@ The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram'
 <ol>
 <li>
 Updating the student payment account by adding a new transaction which decreases (or increases) the balance owed. This might be to record that a payment has been made (although WorldPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;40 per module or other amounts depending on LMIC/HIC status and whether it is an ordinary module or dissertation) are automatically added to the account when a student is approved for modules (see below for in "Set the Income Category for the Student" details).<br />
-Any transaction that is added can be marked as "(not confirmed)". All non-credit card transaction added by a student (in paydetails.php) will automatically be "(not confirmed)".
+Any transaction that is added can be marked as "(not confirmed)". All non-credit card transaction added by a student (in paydetails.php) will automatically be "(not confirmed)".<br />
+Note: <a href="http://courses.peoples-uni.org/course/payment_history.php">http://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester. There are links to "Update Payment Amounts, Method or Confirmed Status" and some filters.
 </li>
 <li>
 Setting the "Payment Method". Note that a confirmatory e-mail is sent to the student with all their payment account transactions when a "Confirmed" status is set.<br />
@@ -1586,6 +1587,9 @@ It shows:-
 <br />Whether they are enrolled in MPH.
 <br />All their payment account transactions.
 <br />Their instalment payment schedule, if any.
+</li>
+<li>
+<a href="http://courses.peoples-uni.org/course/payment_history.php">http://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester.
 </li>
 </ol>
 
