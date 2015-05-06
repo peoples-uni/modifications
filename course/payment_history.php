@@ -105,9 +105,8 @@ SELECT
   IFNULL(m.mphstatus, 0) AS mphstatus,
   IFNULL(m.mphstatus, 0) AS mph,
   m.datesubmitted AS mphdatestamp,
-  IFNULL(ic.income_category, 0) AS income_category,
-FROM
-  mdl_user u
+  IFNULL(ic.income_category, 0) AS income_category
+FROM      mdl_user u
 LEFT JOIN mdl_peoplesmph2 m ON u.id=m.userid
 LEFT JOIN mdl_peoples_income_category ic ON u.id=ic.userid
 WHERE u.id IN (SELECT e.userid FROM mdl_enrolment e WHERE AND e.semester=?)
