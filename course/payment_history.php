@@ -129,7 +129,7 @@ if (!$displayforexcel) {
     'Given name',
     'Email address',
     'Payment up to date?',
-    'Previous balance'
+    'Previous balance',
     'Balance before that',
     'Other balances',
     'Income category',
@@ -144,7 +144,7 @@ elseif ($displayforexcel) {
     'Given name',
     'Email address',
     'Payment up to date?',
-    'Previous balance'
+    'Previous balance',
     'Balance before that',
     'Other balances',
     'Income category',
