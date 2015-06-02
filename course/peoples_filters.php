@@ -450,6 +450,51 @@ class peoples_chosenscholarship_filter extends peoples_select_filter {
 }
 
 
+// 20150602 New filter for education_committee_report.php
+class peoples_applied_scholarship_in_semester_filter extends peoples_boolean_filter {
+
+  protected $selected_semester;
+
+  function __construct($human_name, $name, $selected_semester) {
+    $this->human_name = $human_name;
+    $this->name = $name;
+    $this->selectedvalue = !empty($_REQUEST[$this->name]);
+    $this->selected_semester = $selected_semester;
+  }
+
+  public function filter_entries(array $list_to_filter) {
+    global $DB;
+
+    if ($this->selectedvalue) {
+
+      $semester_to_match = $this->selected_semester;
+
+      $peoplesapplications = $DB->get_records_sql("SELECT * FROM mdl_peoplesapplication WHERE semester='$semester_to_match' AND hidden=0");
+      if (empty($peoplesapplications)) {
+        $peoplesapplications = array();
+      }
+
+      $scholarships = array();
+      foreach ($peoplesapplications as $index => $peoplesapplication) {
+        $x = strtolower(trim($peoplesapplication->scholarship));
+        $scholarshipempty = empty($x) || ($x ==  'none') || ($x ==  'n/a') || ($x ==  'none.');
+        if (!$scholarshipempty) {
+          $scholarships[] = $peoplesapplications->userid;
+        }
+      }
+
+      foreach ($list_to_filter as $index => $list_entry) {
+        if (!empty($list_entry->userid) && empty($scholarships[$list_entry->userid])) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+      }
+    }
+    return $list_to_filter;
+  }
+}
+
+
 class peoples_daterange_filter extends peoples_filter {
   protected $starttime;
   protected $endtime;

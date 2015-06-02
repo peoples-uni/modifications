@@ -58,6 +58,9 @@ $listmphdissertation[] = 'No';
 $peoples_mph_dissertation_filter = new peoples_mph_dissertation_filter('Dissertation Grade available?', 'mphdissertation', $listmphdissertation, 'Any');
 $peoples_filters->add_filter($peoples_mph_dissertation_filter);
 
+$peoples_applied_scholarship_in_semester_filter = new peoples_applied_scholarship_in_semester_filter('Only Show those who applied for Scholarship in Semester', 'onlyscholarship', $peoples_chosensemester_filter->get_filter_setting());
+$peoples_filters->add_filter($peoples_applied_scholarship_in_semester_filter);
+
 $peoples_displayforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displayforexcel');
 $peoples_filters->add_filter($peoples_displayforexcel_filter);
 
