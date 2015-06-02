@@ -26,6 +26,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
       COUNT(*) AS num_enrolments,
       SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0) >1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0)<=44.99999))) AS num_fails,
       SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >44.99999))) AS num_passes,
+      SUM(e.notified=1 AND ((e.percentgrades=0 AND IFNULL(g.finalgrade, 2.0)<=1.99999) OR (e.percentgrades=1 AND IFNULL(g.finalgrade, 0.0) >49.99999))) AS num_passes_masters,
       SUM(
         ((e.enrolled!=0) AND g.finalgrade IS NULL)
         AND NOT (e.notified IN (3,5)) /* Not Certificate of Participation/Exceptional Factors */
@@ -44,6 +45,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   $first_semester_enrolled = 9999999;
   $total_fails = 0;
   $total_unfinished = 0;
+  $discount_all = false;
   $i = 0;
   $cumulative_enrolled_ids_to_discount_string = '9999999';
   foreach ($semester_list as $semester) {
@@ -54,8 +56,12 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
       $total_fails += $semester_enrolls->num_fails;
       $total_unfinished += $semester_enrolls->num_unfinished;
       $elapsed_semesters = $i + 1 - $first_semester_enrolled;
-      if (($total_fails > 1) || ($total_unfinished > 3) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
-        $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";
+      if ($semester->id >= 20) { // New rules for semester Starting March 2015
+        if ($total_fails > 0) $discount_all = true;
+        if ($semester_enrolls->num_passes_masters != $semester_enrolls->num_passes) $discount_all = true; // No Diploma level passes
+      }
+      if ($discount_all || ($total_fails > 1) || ($total_unfinished > 3) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
+        $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";   // But note comment above: "If there is a match, then this module should not be discounted, no matter what"
       }
     }
     $i++;
