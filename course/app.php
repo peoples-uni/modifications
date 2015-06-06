@@ -208,6 +208,21 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
         $peoples_student_balance->date = time();
         $DB->insert_record('peoples_student_balance', $peoples_student_balance);
       }
+
+      $user = $DB->get_record('user', array('id' => $peoplesmph2->userid));
+
+      $subject = 'Peoples-uni MPH Programme Application Approved';
+      $body = "Dear $user->firstname,
+
+Your application to the MPH Programme with Peoples-uni has been approved.
+Please ensure you are familiar with the academic award criteria and regulations at this link:
+http://www.peoples-uni.org/node/232
+
+We hope you enjoy studying with us and wish you every success.
+
+     Peoples Open Access Education Initiative Administrator.
+"
+      sendapprovedmail($user->email, $subject, $body)
     }
 
     $refreshparent = true;
