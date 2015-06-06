@@ -381,6 +381,9 @@ $listincome_category[] = 'Existing Student';
 $peoples_income_category_filter = new peoples_income_category_filter('Income Category', 'income_category', $listincome_category, 'Any');
 $peoples_filters->add_filter($peoples_income_category_filter);
 
+$peoples_sortbyname_filter = new peoples_boolean_filter('Sort by Student Name', 'sortbyname');
+$peoples_filters->add_filter($peoples_sortbyname_filter);
+
 $peoples_displayscholarship_filter = new peoples_boolean_filter('Show Scholarship Relevant Columns', 'displayscholarship');
 $peoples_filters->add_filter($peoples_displayscholarship_filter);
 
@@ -393,6 +396,7 @@ $peoples_filters->add_filter($peoples_displayforexcel_filter);
 $peoples_displaystandardforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displaystandardforexcel');
 $peoples_filters->add_filter($peoples_displaystandardforexcel_filter);
 
+$sortbyname         = $peoples_sortbyname_filter->get_filter_setting();
 $displayscholarship = $peoples_displayscholarship_filter->get_filter_setting();
 $displayextra       = $peoples_displayextra_filter->get_filter_setting();
 $displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
@@ -439,6 +443,13 @@ if (!$displayforexcel && !$displaystandardforexcel) echo "<h1>Student Applicatio
 if (!$displayforexcel && !$displaystandardforexcel) $peoples_filters->show_filters();
 
 
+if ($sortbyname) {
+  $sortorder = 'u.lastname, u.firstname';
+}
+else {
+  $sortorder = 'a.datesubmitted DESC';
+}
+
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
 $applications = $DB->get_records_sql('
@@ -448,7 +459,7 @@ $applications = $DB->get_records_sql('
   LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
   LEFT JOIN mdl_peoples_cert_ps    ps ON                                a.userid=ps.userid
   LEFT JOIN mdl_peoplespaymentnote  p ON (a.sid=p.sid AND p.sid!=0) OR (a.userid=p.userid AND p.userid!=0)
-  WHERE hidden=0 ORDER BY a.datesubmitted DESC');
+  WHERE hidden=0 ORDER BY ' . $sortorder);
 if (empty($applications)) {
   $applications = array();
 }
