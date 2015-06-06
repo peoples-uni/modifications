@@ -114,18 +114,25 @@ class application_form_returning_student_form extends moodleform {
     $mform->addElement('static', 'explain3', '&nbsp;', 'If a module you want to take is full then please indicate which module is your preferred alternate choice.<br /><br />');
 
     $listforselect = array();
+    //$listforselect[1] = 'No, continue with Peoples-uni';
+    //$listforselect[3] = 'I am already enrolled in MMU MPH';
+    //$listforselect[4] = 'Yes, apply for Peoples-uni MPH';
+    //$listforselect[5] = 'I am already enrolled in Peoples-uni MPH';
+// Judith suggested...
+//    $listforselect[4] = 'Yes, apply for Peoples-uni MPH';
+//    $listforselect[1] = 'No, continue with Peoples-uni';
+// I changed to...
     $listforselect[1] = 'No, continue with Peoples-uni';
-    //$listforselect[2] = 'Yes, apply for MMU MPH';
-    $listforselect[3] = 'I am already enrolled in MMU MPH';
     $listforselect[4] = 'Yes, apply for Peoples-uni MPH';
     $listforselect[5] = 'I am already enrolled in Peoples-uni MPH';
+    $listforselect[3] = 'I am already enrolled in MMU MPH';
+    //$listforselect[2] = 'Yes, apply for MMU MPH';
     //$listforselect[6] = 'Yes, apply for OTHER MPH';
     //$listforselect[7] = 'I am already enrolled in OTHER MPH';
-    $mform->addElement('select', 'applymmumph', 'Apply for Master of Public Health programme', $listforselect);
+    $mform->addElement('select', 'applymmumph', 'Apply for Peoples-uni Master of Public Health programme', $listforselect);
     //$mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
 //Please do not apply if this is your first semester.<br /><br />');
-    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Applications for enrolment in the Manchester Metropolitan University Master of Public Health programme are not available this semester.<br />
-Please see the link <a href="http://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a> for further information about this.<br /><br />');
+    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%), and would like to study for a Master of Public Health (MPH) or Diploma with Peoples-uni, please indicate that you want to apply for the MPH programme. For more information on the criteria and rules applying to the MPH programme, please follow this link <a href="http://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a>.<br /><br />');
 
 
 //    $listforselect = array();
@@ -148,8 +155,8 @@ Please see the link <a href="http://www.peoples-uni.org/node/232" target="_blank
     $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
     $mform->setExpanded('scholorshipdetails');
 
-    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to request a reduction or waiver of the fees, please state here:<br />
-1. What is your current income<br />
+    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the fees, please provide details on:<br />
+1. What is your current monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />');
