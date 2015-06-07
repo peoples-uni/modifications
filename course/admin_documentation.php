@@ -709,6 +709,9 @@ Go to <a href="http://courses.peoples-uni.org/course/applications.php" target="_
 It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by module name, by payment up to date?, by payment method, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or says they are already in) MPH, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted), by whether the student has been suspended or graduated from MPH, by whether the student has made any application in the current semester, by whether the student has made any application in the previous semester, by whether the student has applied for a Scholarship and by the Income Category of the Student. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
 </li>
 <li>
+It is possible to sort applications by student name in order to be able to compare them with other pages such as <a href="http://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">http://courses.peoples-uni.org/course/education_committee_report.php</a> by clicking "Sort by Student Name" and then "Apply Filters".
+</li>
+<li>
 It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
 </li>
 <li>
@@ -899,7 +902,20 @@ Note: This button (and the button in that next bullet point) will restore any Fo
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
 </li>
 <li>
-"Record that the Student has been enrolled in the MPH" button does what it says (it is necessary to say whether it is a Peoples-uni or OTHER (university) MPH).
+"Record that the Student has been enrolled in the MPH" button does what it says (it is necessary to say whether it is a Peoples-uni or OTHER (university) MPH).<br />
+An e-mail with the following text is sent to the student...
+<pre>
+Dear firstname,
+
+Your application to the MPH Programme with Peoples-uni has been approved.
+Please ensure you are familiar with the academic award criteria
+and regulations at this link:
+http://www.peoples-uni.org/node/232
+
+We hope you enjoy studying with us and wish you every success.
+
+     Peoples Open Access Education Initiative Administrator.
+</pre>
 </li>
 <li>
 "Unenroll a student from the Masters in Public Health (MPH)" button does what it says.
@@ -1496,7 +1512,8 @@ Set the Semester for the Report. The report will include students registered in 
 Set the Last Exam Board date. This ensures students with resubmissions since that date are included even is the student is not enrolled in the current semester.<br />
 There is a filter by the student's MPH status, if it is desired to include/exclude those students.<br />
 There is a "Has Diploma?" filter which allows excluding students without six passes of some sort whether notified or not ("Has 6 Passes") or separately without a Diploma ("Has Diploma").<br />
-There is a "Dissertation Grade available?" filter which allows excluding students who do not yet have a grade for their dissertation (whether notified or not).
+There is a "Dissertation Grade available?" filter which allows excluding students who do not yet have a grade for their dissertation (whether notified or not).<br />
+There is an "Only Show those who applied for Scholarship in Semester" filter to show only those who have applied for a scholarship this semester.
 </li>
 <li>
 It is also possible to display the standard colums in a clean format suitable for Excel by clicking "Display for Copying and Pasting to Excel" and then "Apply Filters".
@@ -1654,7 +1671,7 @@ Referencing: Wrong format<br />
 Referencing: Good<br />
 <br />
 Students will only see ratings for their own posts, not the ratings for other Student's Posts.<br />
-Ratings will appear in a Student's Grade Book.<br />
+Not all ratings will appear in a Student's Grade Book.<br />
 There is also a link "Notes" on the right hand side of the ratings which gives Tutors a quick link to the Moodle Notes for a Student.<br />
 <br />
 </li>
