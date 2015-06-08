@@ -470,7 +470,6 @@ class peoples_applied_scholarship_in_semester_filter extends peoples_boolean_fil
       $semester_to_match = $this->selected_semester;
 
       $peoplesapplications = $DB->get_records_sql("SELECT * FROM mdl_peoplesapplication WHERE semester='$semester_to_match' AND hidden=0");
-error_log("SELECT * FROM mdl_peoplesapplication WHERE semester='$semester_to_match' AND hidden=0");
       if (empty($peoplesapplications)) {
         $peoplesapplications = array();
       }
@@ -479,17 +478,13 @@ error_log("SELECT * FROM mdl_peoplesapplication WHERE semester='$semester_to_mat
       foreach ($peoplesapplications as $index => $peoplesapplication) {
         $x = strtolower(trim($peoplesapplication->scholarship));
         $scholarshipempty = empty($x) || ($x ==  'none') || ($x ==  'n/a') || ($x ==  'none.');
-if ((($peoplesapplication->userid == 226) || ($peoplesapplication->userid == 2300))) error_log("$peoplesapplication->userid");
         if (!$scholarshipempty) {
-if ((($peoplesapplication->userid == 226) || ($peoplesapplication->userid == 2300))) error_log("Is a Scholarship");
           $scholarships[$peoplesapplication->userid] = $peoplesapplication->userid;
         }
       }
 
       foreach ($list_to_filter as $index => $list_entry) {
-if ((($list_entry->id == 226) || ($list_entry->id == 2300))) error_log("Checking $list_entry->id");
         if (!empty($list_entry->id) && empty($scholarships[$list_entry->id])) {
-if ((($list_entry->id == 226) || ($list_entry->id == 2300))) error_log("Not a Scholarship so removing");
           unset($list_to_filter[$index]);
           continue;
         }
