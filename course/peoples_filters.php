@@ -479,10 +479,10 @@ error_log("SELECT * FROM mdl_peoplesapplication WHERE semester='$semester_to_mat
       foreach ($peoplesapplications as $index => $peoplesapplication) {
         $x = strtolower(trim($peoplesapplication->scholarship));
         $scholarshipempty = empty($x) || ($x ==  'none') || ($x ==  'n/a') || ($x ==  'none.');
-if ((($peoplesapplications->userid == 226) || ($peoplesapplications->userid == 2300))) error_log("$peoplesapplications->userid");
+if ((($peoplesapplication->userid == 226) || ($peoplesapplication->userid == 2300))) error_log("$peoplesapplication->userid");
         if (!$scholarshipempty) {
-if ((($peoplesapplications->userid == 226) || ($peoplesapplications->userid == 2300))) error_log("Is a Scholarship");
-          $scholarships[$peoplesapplications->userid] = $peoplesapplications->userid;
+if ((($peoplesapplication->userid == 226) || ($peoplesapplication->userid == 2300))) error_log("Is a Scholarship");
+          $scholarships[$peoplesapplication->userid] = $peoplesapplication->userid;
         }
       }
 
