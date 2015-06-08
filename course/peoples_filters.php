@@ -479,17 +479,17 @@ error_log("SELECT * FROM mdl_peoplesapplication WHERE semester='$semester_to_mat
       foreach ($peoplesapplications as $index => $peoplesapplication) {
         $x = strtolower(trim($peoplesapplication->scholarship));
         $scholarshipempty = empty($x) || ($x ==  'none') || ($x ==  'n/a') || ($x ==  'none.');
-if ($peoplesapplications->userid == 226) error_log("226");
+if ((($peoplesapplications->userid == 226) || ($peoplesapplications->userid == 2300))) error_log("$peoplesapplications->userid");
         if (!$scholarshipempty) {
-if ($peoplesapplications->userid == 226) error_log("Is a Scholarship");
+if ((($peoplesapplications->userid == 226) || ($peoplesapplications->userid == 2300))) error_log("Is a Scholarship");
           $scholarships[$peoplesapplications->userid] = $peoplesapplications->userid;
         }
       }
 
       foreach ($list_to_filter as $index => $list_entry) {
-if ($list_entry->id == 226) error_log("Checking 226");
+if ((($list_entry->id == 226) || ($list_entry->id == 2300))) error_log("Checking $list_entry->id");
         if (!empty($list_entry->id) && empty($scholarships[$list_entry->id])) {
-if ($list_entry->id == 226) error_log("Not a Scholarship so removing");
+if ((($list_entry->id == 226) || ($list_entry->id == 2300))) error_log("Not a Scholarship so removing");
           unset($list_to_filter[$index]);
           continue;
         }
