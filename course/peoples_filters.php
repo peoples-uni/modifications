@@ -487,9 +487,9 @@ if ($peoplesapplications->userid == 226) error_log("Is a Scholarship");
       }
 
       foreach ($list_to_filter as $index => $list_entry) {
-if ($list_entry->userid == 226) error_log("Checking 226");
-        if (!empty($list_entry->userid) && empty($scholarships[$list_entry->userid])) {
-if ($list_entry->userid == 226) error_log("Not a Scholarship so removing");
+if ($list_entry->id == 226) error_log("Checking 226");
+        if (!empty($list_entry->id) && empty($scholarships[$list_entry->id])) {
+if ($list_entry->id == 226) error_log("Not a Scholarship so removing");
           unset($list_to_filter[$index]);
           continue;
         }
