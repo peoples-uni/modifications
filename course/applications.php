@@ -444,7 +444,7 @@ if (!$displayforexcel && !$displaystandardforexcel) $peoples_filters->show_filte
 
 
 if ($sortbyname) {
-  $sortorder = 'u.lastname, u.firstname';
+  $sortorder = 'a.lastname, a.firstname';
 }
 else {
   $sortorder = 'a.datesubmitted DESC';
