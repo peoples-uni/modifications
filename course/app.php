@@ -222,7 +222,7 @@ We hope you enjoy studying with us and wish you every success.
 
      Peoples Open Access Education Initiative Administrator.
 ";
-      sendapprovedmail($user->email, $subject, $body)
+      sendapprovedmail($user->email, $subject, $body);
     }
 
     $refreshparent = true;
