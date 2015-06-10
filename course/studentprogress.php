@@ -325,7 +325,7 @@ foreach ($enrolls_discounted_by_semester as $semester => $users_discounted) {
   }
 }
 
-echo '<br /><br /><br /><br /><br />';
+echo '<br /><br /><br /><br />';
 echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
 echo '<br /><br />';
 
