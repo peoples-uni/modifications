@@ -92,7 +92,7 @@ foreach ($user_list as $userid => $record) {
         if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '') $some_enrolls_discounted[$userid] = $userid;
 
         if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '' && $semester_enrolls->num_passes > 0) {
-          enrolls_discounted_by_semester[$semester->semester][] = $userid; // Some actual passes are discounted for this semester/student
+          $enrolls_discounted_by_semester[$semester->semester][] = $userid; // Some actual passes are discounted for this semester/student
         }
       }
     }
