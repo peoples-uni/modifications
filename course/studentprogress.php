@@ -64,7 +64,7 @@ $semester_list = $DB->get_records('semesters', NULL, 'id ASC');
 $enrolls_discounted_by_semester = array();
 $semester_list_descending = $DB->get_records('semesters', NULL, 'id DESC');
 foreach ($semester_list_descending as $semester) {
-  $enrolls_discounted_by_semester[$semester->semester] = array():
+  $enrolls_discounted_by_semester[$semester->semester] = array();
 }
 
 $cumulative_enrolled_ids_to_discount_string = '9999999';
