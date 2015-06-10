@@ -61,6 +61,12 @@ $all_enrols = $DB->get_records_sql("
 $user_list = $DB->get_records_sql("SELECT DISTINCT e.userid FROM mdl_enrolment e ORDER BY e.userid ASC");
 $semester_list = $DB->get_records('semesters', NULL, 'id ASC');
 
+$enrolls_discounted_by_semester = array();
+$semester_list_descending = $DB->get_records('semesters', NULL, 'id DESC');
+foreach ($semester_list_descending as $semester) {
+  $enrolls_discounted_by_semester[$semester->semester] = array():
+}
+
 $cumulative_enrolled_ids_to_discount_string = '9999999';
 $some_enrolls_discounted = array();
 foreach ($user_list as $userid => $record) {
@@ -84,6 +90,10 @@ foreach ($user_list as $userid => $record) {
       if ($discount_all || ($total_fails > 1) || ($total_unfinished > 3) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
         $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";   // But note comment above: "If there is a match, then this module should not be discounted, no matter what"
         if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '') $some_enrolls_discounted[$userid] = $userid;
+
+        if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '' && $semester_enrolls->num_passes > 0) {
+          enrolls_discounted_by_semester[$semester->semester][] = $userid; // Some actual passes are discounted for this semester/student
+        }
       }
     }
     $i++;
@@ -291,6 +301,25 @@ foreach ($enrols as $enrol) {
 echo html_writer::table($table);
 
 echo '<br/>Number of Students: ' . $n;
+
+echo '<br /><br />';
+echo 'Here are (listed by Semester) Students who have had modules discounted by academic rules in that Semester.<br />';
+echo 'Click on the Student name to be brought to "Mark Discounted Modules" page for that Student<br />';
+echo '(so you can stop a module being discounted).<br />';
+foreach ($enrolls_discounted_by_semester as $semester => $users_discounted) {
+  echo "<strong>Semester $semester...</strong><br />";
+
+  $users_discounted_keyed = array();
+  foreach ($users_discounted as $userid) {
+    $key = htmlspecialchars(strtolower($enrols[$userid]->lastname), ENT_COMPAT, 'UTF-8') . ', ' . htmlspecialchars(strtolower($enrols[$userid]->firstname), ENT_COMPAT, 'UTF-8');
+    $users_discounted_keyed[$key] = $userid;
+  }
+  ksort($users_discounted_keyed);
+
+  foreach ($users_discounted_keyed as $key => $userid) {
+    echo '&nbsp;&nbsp;&nbsp;<a href="' . $CFG->wwwroot . '/course/allow_modules.php?userid=' . $userid . '" target="_blank">' . $key . '</a><br />';
+  }
+}
 
 echo '<br /><br /><br /><br /><br />';
 echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
