@@ -311,6 +311,10 @@ foreach ($enrolls_discounted_by_semester as $semester => $users_discounted) {
 
   $users_discounted_keyed = array();
   foreach ($users_discounted as $userid) {
+    if (empty($enrols[$userid])) {
+      $userrecord = $DB->get_record('user', array('id' => $userid));
+      $enrols[$userid] = $userrecord;
+    }
     $key = htmlspecialchars(strtolower($enrols[$userid]->lastname), ENT_COMPAT, 'UTF-8') . ', ' . htmlspecialchars(strtolower($enrols[$userid]->firstname), ENT_COMPAT, 'UTF-8');
     $users_discounted_keyed[$key] = $userid;
   }
