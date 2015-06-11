@@ -1451,8 +1451,10 @@ Note: After 1 module failures (i.e. a maximum of 0 failures is allowed), module 
 Note: After 1 "Diploma level" pass (between 45% and 50%) (i.e. a maximum of 0 "Diploma level" passes are allowed), module passes are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
 Note: for a Diploma or a Certificate, one Diploma pass (between 45% and 50%) will be automatically allowed ("condoned") in place of one Masters pass (50%+) ONLY if that module's "Masters level" failure has been overridden with the "Review modules contributing to awards and override disallowed modules" link.<br />
 Note: In <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a> "Some Discounted!" is displayed in the last column on the right to indicate that modules have been discounted for any of the academic reasons indicated above.<br />
+Note: To find students listed by semester that have had modules discounted, go to the bottom of <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a>.<br />
+Once a student has broken a limit such as 10 semesters or a maximum number of fails, if it is desired that extra modules that are passed over time should be counted, each new module to be counted will continue to need to be overridden individually.<br />
 Note: Once a student has broken a limit such as 10 semesters or a maximum number of fails, if it is desired that extra modules that are passed over time should be counted, each new module to be counted will continue to need to be overridden individually.<br />
-Note: Currently "Some Discounted!" (or "Discounted because of academic rules") will be displayed in conditions where an exam has not been passed but would be discounted if it had been passed. This is slightly unfortunate, but can be ignored.<br />
+Note: Currently "Some Discounted!" (or "Discounted because of academic rules") will be displayed in some conditions where an exam has not been passed but would be discounted if it had been passed. This is slightly unfortunate, but can be ignored.<br />
 The above describes the new rules that came into place in the semester "Starting March 2015", and the older rules that applied before that will not be retrospectively changed.<br />
 Note: that academic transcripts and Diploma (& Certificate) certificates now contain a percent grade for each module. It is possible to suppress the display of percentages for a transcript by adding "&nopercentage=1" to the end of the URL of the transcript.
 </li>
@@ -1498,6 +1500,9 @@ Qualification [shows whether they have qualified for a Diploma, a Certificate or
 The link "Mark Discounted Modules" or "Review modules contributing to awards and override disallowed modules" (from "Student Grades") brings up a page (allow_modules.php) which contains details of all Modules attempted by the student.<br />
 It contains the type of pass or fail or various types of non-grading.<br />
 For each module that has been discounted because of academic rules (maximum of 10 semesters to date, maximum of 0 failed modules to date, maximum of 0 "Diploma level" passes (between 45% and 50%), maximum of 3 unfinished modules), there is a checkbox that can be checked (or unchecked if desired) to indicate that the module should not be discounted (i.e. will count towards a Diploma or Certificate). There is a submission button "Mark Modules that Should be Discounted (or not)" that should be clicked when the checkboxes have been set appropriately to update discounted modules.
+</li>
+<li>
+To find students listed by semester that have had modules discounted, go to the bottom of <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a>. You can click on a name to "Mark Discounted Modules".
 </li>
 </ol>
 
