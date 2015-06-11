@@ -89,10 +89,10 @@ foreach ($user_list as $userid => $record) {
       }
       if ($discount_all || ($total_fails > 1) || ($total_unfinished > 3) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
         $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";   // But note comment above: "If there is a match, then this module should not be discounted, no matter what"
-        if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '') $some_enrolls_discounted[$userid] = $userid;
-
         if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '' && $semester_enrolls->num_passes > 0) {
-          $enrolls_discounted_by_semester[$semester->semester][] = $userid; // Some actual passes are discounted for this semester/student
+          // Some actual passes are discounted for this semester/student
+          $some_enrolls_discounted[$userid] = $userid;
+          $enrolls_discounted_by_semester[$semester->semester][] = $userid;
         }
       }
     }
