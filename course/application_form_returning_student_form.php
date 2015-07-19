@@ -92,7 +92,8 @@ class application_form_returning_student_form extends moodleform {
     <br /><strong>Note:</strong> The 'Masters dissertation' is restricted to those who have passed sufficient prior modules.
     <br /><strong>Note:</strong> If you are applying for the 'Masters dissertation' module, you also need to separately submit a provisional topic for your dissertation. Please <strong><a href=\"" . $CFG->wwwroot . "/course/dissertation.php\" target=\"_blank\">Click Here on the Dissertation Topic Form</a></strong> to do this. You will find some helpful information there.
     <br />You MUST submit this Course Application Form, but your application will not be approved if you have not also submitted a provisional topic.
-    <br /><strong>Note:</strong> Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student.";
+    <br /><strong>Note:</strong> The 'Global Mental Health' module is new and not available to students enrolled on the MMU programme.";
+    //<br /><strong>Note:</strong> Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student.";
 //<br /><strong>Note:</strong> You should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.
     if ($count > 1) {
       //$text .= ' Note: ' . $listforunavailable . ' are not available for this semester because they are full.';
@@ -155,7 +156,7 @@ class application_form_returning_student_form extends moodleform {
     $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
     $mform->setExpanded('scholorshipdetails');
 
-    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the fees, please provide details on:<br />
+    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the (<a href="http://peoples-uni.org/content/course-fees">fees (click here)</a>), please provide details on:<br />
 1. What is your current monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
