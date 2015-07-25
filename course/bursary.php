@@ -63,13 +63,13 @@ $listincome_category[] = 'Existing Student';
 $peoples_income_category_filter = new peoples_income_category_filter('Income Category', 'income_category', $listincome_category, 'Any');
 $peoples_filters->add_filter($peoples_income_category_filter);
 
-$peoples_sortbyname_filter = new peoples_boolean_filter('Sort by Student Name', 'sortbyname');
-$peoples_filters->add_filter($peoples_sortbyname_filter);
+$peoples_sortbydate_filter = new peoples_boolean_filter('Sort by Date', 'sortbydate');
+$peoples_filters->add_filter($peoples_sortbydate_filter);
 
 $peoples_displaystandardforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displaystandardforexcel');
 $peoples_filters->add_filter($peoples_displaystandardforexcel_filter);
 
-$sortbyname              = $peoples_sortbyname_filter->get_filter_setting();
+$sortbydate              = $peoples_sortbydate_filter->get_filter_setting();
 $displaystandardforexcel = $peoples_displaystandardforexcel_filter->get_filter_setting();
 
 
@@ -106,11 +106,11 @@ if (!$displaystandardforexcel) echo "<h1>Bursary Entries in Student Account</h1>
 if (!$displaystandardforexcel) $peoples_filters->show_filters();
 
 
-if ($sortbyname) {
-  $sortorder = 'u.lastname, u.firstname, u.id';
+if (!$sortbydate) {
+  $sortorder = 'u.lastname, u.firstname, u.id, b.date ASC';
 }
 else {
-  $sortorder = 'b.date DESC';
+  $sortorder = 'b.date ASC';
 }
 
 $applications = $DB->get_records_sql("
