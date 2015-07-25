@@ -115,6 +115,7 @@ else {
 
 $applications = $DB->get_records_sql("
 SELECT
+  b.id,
   u.lastname,
   u.firstname,
   u.email,
