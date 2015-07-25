@@ -130,7 +130,7 @@ SELECT
   m.datesubmitted AS mphdatestamp
 FROM      mdl_peoples_student_balance b
 JOIN      mdl_user        u ON b.userid=u.id
-LEFT JOIN mdl_peoplesmph2 m ON b.userid=m.userid AND m.userid!=0
+LEFT JOIN mdl_peoplesmph m ON b.userid=m.userid AND m.userid!=0
 WHERE
   detail LIKE '%scholarship%' OR
   detail LIKE '%bursa%' OR
