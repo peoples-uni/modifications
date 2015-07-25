@@ -182,6 +182,7 @@ foreach ($applications as $application) {
   $rowdata[] = htmlspecialchars($application->detail, ENT_COMPAT, 'UTF-8');
 
   $table->data[] = $rowdata;
+  $n++;
 }
 
 echo html_writer::table($table);
@@ -191,7 +192,7 @@ if ($displaystandardforexcel) {
   die();
 }
 
-echo '<br />Total Entries: ' . $n;
+echo 'Total Entries: ' . $n;
 echo '<br /><br />';
 
 echo $OUTPUT->footer();
