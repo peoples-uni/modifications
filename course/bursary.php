@@ -43,7 +43,7 @@ for ($year = 11; $year <= 17; $year++) {
   $stamp_range["Accepted {$year}b"]['start'] = gmmktime(24, 0, 0,  6, 30, 2000 + $year);
   $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
 }
-$peoples_acceptedmmu_filter = new peoples_acceptedmmu_filter('Accepted MPH?', 'acceptedmmu', $listacceptedmmu, 'Any');
+$peoples_acceptedmmu_filter = new peoples_acceptedmmu_filter('MPH?', 'acceptedmmu', $listacceptedmmu, 'Any');
 $peoples_acceptedmmu_filter->set_stamp_range($stamp_range);
 $peoples_filters->add_filter($peoples_acceptedmmu_filter);
 
