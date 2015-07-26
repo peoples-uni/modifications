@@ -87,7 +87,8 @@ foreach ($user_list as $userid => $record) {
         if ($total_fails > 0) $discount_all = true;
         if ($semester_enrolls->num_passes_masters != $semester_enrolls->num_passes) $discount_all = true; // No Diploma level passes
       }
-      if ($discount_all || ($total_fails > 1) || ($total_unfinished > 3) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
+      // 20150726 removed: || ($total_unfinished > 3)...
+      if ($discount_all || ($total_fails > 1) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
         $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";   // But note comment above: "If there is a match, then this module should not be discounted, no matter what"
         if (str_replace(',9999999', '', ",$semester_enrolls->enrolled_ids_to_discount") != '' && $semester_enrolls->num_passes > 0) {
           // Some actual passes are discounted for this semester/student
