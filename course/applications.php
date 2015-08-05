@@ -548,9 +548,13 @@ if (!$displayextra && !$displayscholarship && !$displaystudenthistory) {
   );
 }
 elseif ($displayscholarship) {
+  $displaystudenthistory = false;
+  $displayextra = false;
   $table->head = array(
     'sid',
+    'Approved?',
     'Payment up to date?',
+    'Enrolled?',
     '',
     'Family name',
     'Given name',
@@ -570,6 +574,7 @@ elseif ($displayscholarship) {
   $table->align = array('left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left');
 }
 elseif ($displaystudenthistory) {
+  $displayextra = false;
   $table->head = array(
     'Family name',
     'Given name',
@@ -784,7 +789,7 @@ foreach ($applications as $sid => $application) {
       }
     }
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
-    if (!$displayscholarship) $rowdata[] = $z;
+    $rowdata[] = $z;
 
     if (empty($application->paymentmechanism)) $mechanism = '';
     elseif ($application->paymentmechanism == 1) $mechanism = ' RBS Confirmed';
@@ -839,7 +844,7 @@ foreach ($applications as $sid => $application) {
     if ($application->mph && ($application->mphstatus == 3)) $z .= '<br />(OTHER MPH)';
     if ($application->cert_ps) $z .= '<br />(Cert PS)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
-    if (!$displayscholarship) $rowdata[] = $z;
+    $rowdata[] = $z;
 
     if (!$displayextra || $displayscholarship) {
       $z  = '<form method="post" action="' .  $CFG->wwwroot . '/course/app.php" target="_blank">';
