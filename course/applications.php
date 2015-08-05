@@ -390,8 +390,8 @@ $peoples_filters->add_filter($peoples_displayscholarship_filter);
 $peoples_displayextra_filter = new peoples_boolean_filter('Show Extra Details', 'displayextra');
 $peoples_filters->add_filter($peoples_displayextra_filter);
 
-$peoples_displayforexcel_filter = new peoples_boolean_filter('Display Student History for Copying and Pasting to Excel', 'displayforexcel');
-$peoples_filters->add_filter($peoples_displayforexcel_filter);
+$peoples_displaystudenthistory_filter = new peoples_boolean_filter('Display Student History', 'displaystudenthistory');
+$peoples_filters->add_filter($peoples_displaystudenthistory_filter);
 
 $peoples_displaystandardforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displaystandardforexcel');
 $peoples_filters->add_filter($peoples_displaystandardforexcel_filter);
@@ -399,7 +399,7 @@ $peoples_filters->add_filter($peoples_displaystandardforexcel_filter);
 $sortbyname         = $peoples_sortbyname_filter->get_filter_setting();
 $displayscholarship = $peoples_displayscholarship_filter->get_filter_setting();
 $displayextra       = $peoples_displayextra_filter->get_filter_setting();
-$displayforexcel    = $peoples_displayforexcel_filter->get_filter_setting();
+$displaystudenthistory    = $peoples_displaystudenthistory_filter->get_filter_setting();
 $displaystandardforexcel = $peoples_displaystandardforexcel_filter->get_filter_setting();
 
 
@@ -437,10 +437,10 @@ echo $OUTPUT->header();
 //echo html_writer::start_tag('div', array('class'=>'course-content'));
 
 
-if (!$displayforexcel && !$displaystandardforexcel) echo "<h1>Student Applications</h1>";
+if (!$displaystandardforexcel) echo "<h1>Student Applications</h1>";
 
 
-if (!$displayforexcel && !$displaystandardforexcel) $peoples_filters->show_filters();
+if (!$displaystandardforexcel) $peoples_filters->show_filters();
 
 
 if ($sortbyname) {
@@ -524,7 +524,7 @@ if ($sendemails) {
 
 $table = new html_table();
 
-if (!$displayextra && !$displayscholarship && !$displayforexcel) {
+if (!$displayextra && !$displayscholarship && !$displaystudenthistory) {
   $table->head = array(
     'Submitted',
     'sid',
@@ -564,7 +564,7 @@ elseif ($displayscholarship) {
   );
   $table->align = array('left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left');
 }
-elseif ($displayforexcel) {
+elseif ($displaystudenthistory) {
   $table->head = array(
     'Family name',
     'Given name',
@@ -750,7 +750,7 @@ foreach ($applications as $sid => $application) {
     $registration->howfoundpeoples = '';
   }
 
-  if (!$displayforexcel) {
+  if (!$displaystudenthistory) {
     $rowdata = array();
     //echo '<tr>';
     //echo '<td>' . gmdate('d/m/Y H:i', $application->datesubmitted) . '</td>';
@@ -775,7 +775,7 @@ foreach ($applications as $sid => $application) {
     if (!empty($dissertations[$application->userid])) {
       $ids = explode(',', $dissertations[$application->userid]->ids);
       foreach ($ids as $id) {
-        if (!$displaystandardforexcel) $z .= '<br />(<a href="' . $CFG->wwwroot . '/course/dissertations.php?chosensemester=All&displayforexcel=0#' . $id . '" target="_blank">Dissertation</a>)';
+        if (!$displaystandardforexcel) $z .= '<br />(<a href="' . $CFG->wwwroot . '/course/dissertations.php?chosensemester=All&displaystudenthistory=0#' . $id . '" target="_blank">Dissertation</a>)';
       }
     }
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
@@ -1247,7 +1247,7 @@ foreach ($applications as $sid => $application) {
 }
 echo html_writer::table($table);
 
-if ($displayforexcel || $displaystandardforexcel) {
+if ($displaystandardforexcel) {
   echo $OUTPUT->footer();
   die();
 }

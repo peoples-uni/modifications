@@ -715,13 +715,13 @@ It is possible to sort applications by student name in order to be able to compa
 It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
 </li>
 <li>
-It is also possible to display all the application data for each student in extra columns by clicking "Show Extra Details" and then "Apply Filters".
+Or it is possible to display all the application data for each student in extra columns by clicking "Show Extra Details" and then "Apply Filters".
 </li>
 <li>
-It is also possible to display columns with student history relevant to Tutors in a clean format suitable for Excel by clicking "Display Student History for Copying and Pasting to Excel" and then "Apply Filters".
+Or it is possible to display columns with student history relevant to Tutors by clicking "Display Student History" and then "Apply Filters".
 </li>
 <li>
-It is also possible to display the standard colums in a clean format suitable for Excel by clicking "Display for Copying and Pasting to Excel" and then "Apply Filters".
+Along with any of the above, it is possible to display the columns in a clean format suitable for Excel by clicking "Display for Copying and Pasting to Excel" and then "Apply Filters".
 </li>
 <li>
 The "sid" value against each student is a unique identifier which is used to track the application including payments by the student.
