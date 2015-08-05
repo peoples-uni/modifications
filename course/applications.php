@@ -550,10 +550,10 @@ if (!$displayextra && !$displayscholarship && !$displaystudenthistory) {
 elseif ($displayscholarship) {
   $table->head = array(
     'sid',
+    'Payment up to date?',
     '',
     'Family name',
     'Given name',
-    'Payment up to date?',
     'Country',
     'Scholarship',
     'Reasons for wanting to enrol (1st Application)',
