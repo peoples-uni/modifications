@@ -399,7 +399,7 @@ $peoples_filters->add_filter($peoples_displaystandardforexcel_filter);
 $sortbyname         = $peoples_sortbyname_filter->get_filter_setting();
 $displayscholarship = $peoples_displayscholarship_filter->get_filter_setting();
 $displayextra       = $peoples_displayextra_filter->get_filter_setting();
-$displaystudenthistory    = $peoples_displaystudenthistory_filter->get_filter_setting();
+$displaystudenthistory   = $peoples_displaystudenthistory_filter->get_filter_setting();
 $displaystandardforexcel = $peoples_displaystandardforexcel_filter->get_filter_setting();
 
 
@@ -1280,7 +1280,7 @@ foreach ($applications as $sid => $application) {
 }
 echo html_writer::table($table);
 
-if ($displaystandardforexcel) {
+if ($displaystudenthistory || $displaystandardforexcel) {
   echo $OUTPUT->footer();
   die();
 }
