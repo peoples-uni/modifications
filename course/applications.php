@@ -553,6 +553,7 @@ elseif ($displayscholarship) {
     '',
     'Family name',
     'Given name',
+    'Payment up to date?',
     'Country',
     'Scholarship',
     'Reasons for wanting to enrol (1st Application)',
@@ -561,8 +562,12 @@ elseif ($displayscholarship) {
     'Qualification (1st Application)',
     'Postgraduate Qualification (1st Application)',
     'Education Details (1st Application)',
+    'What do you want to learn? (1st Application)',
+    'Why do you want to learn? (1st Application)',
+    'What are the reasons you want to do an e-learning course? (1st Application)',
+    'How will you use your new knowledge and skills to improve population health? (1st Application)',
   );
-  $table->align = array('left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left');
+  $table->align = array('left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left');
 }
 elseif ($displaystudenthistory) {
   $table->head = array(
@@ -821,7 +826,7 @@ foreach ($applications as $sid => $application) {
     }
     if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
-    if (!$displayscholarship) $rowdata[] = $z;
+    $rowdata[] = $z;
 
     if (!($state1===03 || $state2===030)) $z = '<span style="color:red">No</span>';
     elseif ($state === 033) $z = '<span style="color:green">Yes</span>';
@@ -956,6 +961,34 @@ foreach ($applications as $sid => $application) {
       $rowdata[] = $z;
 
       $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->education));
+
+      $z = '';
+      $arrayvalues = explode(',', $registration->whatlearn);
+      foreach ($arrayvalues as $v) {
+       if (!empty($v)) $z .= $whatlearnname[$v] . break_or_space_if_excel($displaystandardforexcel);
+      }
+      $rowdata[] = $z;
+
+      $z = '';
+      $arrayvalues = explode(',', $registration->whylearn);
+      foreach ($arrayvalues as $v) {
+       if (!empty($v)) $z .= $whylearnname[$v] . break_or_space_if_excel($displaystandardforexcel);
+      }
+      $rowdata[] = $z;
+
+      $z = '';
+      $arrayvalues = explode(',', $registration->whyelearning);
+      foreach ($arrayvalues as $v) {
+       if (!empty($v)) $z .= $whyelearningname[$v] . break_or_space_if_excel($displaystandardforexcel);
+      }
+      $rowdata[] = $z;
+
+      $z = '';
+      $arrayvalues = explode(',', $registration->howuselearning);
+      foreach ($arrayvalues as $v) {
+       if (!empty($v)) $z .= $howuselearningname[$v] . break_or_space_if_excel($displaystandardforexcel);
+      }
+      $rowdata[] = $z;
     }
     elseif ($displayextra) {
       $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->applicationaddress));
