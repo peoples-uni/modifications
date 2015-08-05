@@ -587,7 +587,7 @@ elseif ($displaystudenthistory) {
     'SSO forum',
   );
 }
-else {
+else { // $displayextra
   $table->head = array(
     'Submitted',
     'sid',
@@ -937,15 +937,15 @@ foreach ($applications as $sid => $application) {
     $rowdata[] = $z;
 
     if ($displayscholarship) {
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->scholarship));
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->reasons));
 
       if (empty($employmentname[$application->employment])) $z = '';
       else $z = $employmentname[$application->employment];
       $rowdata[] = $z;
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->currentjob));
 
       if (empty($qualificationname[$application->qualification])) $z = '';
       else $z = $qualificationname[$application->qualification];
@@ -955,16 +955,16 @@ foreach ($applications as $sid => $application) {
       else $z = $higherqualificationname[$application->higherqualification];
       $rowdata[] = $z;
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->education));
     }
     elseif ($displayextra) {
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->applicationaddress));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->applicationaddress));
 
       if (empty($employmentname[$application->employment])) $z = '';
       else $z = $employmentname[$application->employment];
       $rowdata[] = $z;
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->currentjob));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->currentjob));
 
       if (empty($qualificationname[$application->qualification])) $z = '';
       else $z = $qualificationname[$application->qualification];
@@ -974,39 +974,39 @@ foreach ($applications as $sid => $application) {
       else $z = $higherqualificationname[$application->higherqualification];
       $rowdata[] = $z;
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->education));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->education));
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->reasons));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->reasons));
 
       $z = '';
       $arrayvalues = explode(',', $registration->whatlearn);
       foreach ($arrayvalues as $v) {
-       if (!empty($v)) $z .= $whatlearnname[$v] . '<br />';
+       if (!empty($v)) $z .= $whatlearnname[$v] . break_or_space_if_excel($displaystandardforexcel);
       }
       $rowdata[] = $z;
 
       $z = '';
       $arrayvalues = explode(',', $registration->whylearn);
       foreach ($arrayvalues as $v) {
-       if (!empty($v)) $z .= $whylearnname[$v] . '<br />';
+       if (!empty($v)) $z .= $whylearnname[$v] . break_or_space_if_excel($displaystandardforexcel);
       }
       $rowdata[] = $z;
 
       $z = '';
       $arrayvalues = explode(',', $registration->whyelearning);
       foreach ($arrayvalues as $v) {
-       if (!empty($v)) $z .= $whyelearningname[$v] . '<br />';
+       if (!empty($v)) $z .= $whyelearningname[$v] . break_or_space_if_excel($displaystandardforexcel);
       }
       $rowdata[] = $z;
 
       $z = '';
       $arrayvalues = explode(',', $registration->howuselearning);
       foreach ($arrayvalues as $v) {
-       if (!empty($v)) $z .= $howuselearningname[$v] . '<br />';
+       if (!empty($v)) $z .= $howuselearningname[$v] . break_or_space_if_excel($displaystandardforexcel);
       }
       $rowdata[] = $z;
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->sponsoringorganisation));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->sponsoringorganisation));
 
       if (empty($howfoundpeoplesname[$registration->howfoundpeoples])) $z = '';
       else $z = $howfoundpeoplesname[$registration->howfoundpeoples];
@@ -1014,9 +1014,9 @@ foreach ($applications as $sid => $application) {
 
       $rowdata[] = $registration->howfoundorganisationname;
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->scholarship));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->scholarship));
 
-      $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $application->whynotcomplete));
+      $rowdata[] = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $application->whynotcomplete));
 
       $rowdata[] = htmlspecialchars($application->username, ENT_COMPAT, 'UTF-8');
 
@@ -1163,7 +1163,7 @@ foreach ($applications as $sid => $application) {
 
     $table->data[] = $rowdata;
   }
-  else {
+  else { // $displaystudenthistory
     $rowdata = array();
 
     $rowdata[] = htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8');
@@ -1370,5 +1370,11 @@ function sendemails($applications, $emailsubject, $emailbody, $reg, $notforuptod
       $i++;
     }
   }
+}
+
+
+function break_or_space_if_excel($displaystandardforexcel) {
+  if ($displaystandardforexcel) return ' ';
+  else return '<br />';
 }
 ?>
