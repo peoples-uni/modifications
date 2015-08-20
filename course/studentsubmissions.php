@@ -14,10 +14,17 @@ CREATE TABLE mdl_recorded_submissions (
   timemodified BIGINT(10) unsigned NOT NULL DEFAULT 0,
   data1 TEXT,
   data2 TEXT,
+  course BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  assign BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  turnitintooltwo_submission_part BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  name VARCHAR(255) NOT NULL DEFAULT '',
+  assignmenttype VARCHAR(50) NOT NULL DEFAULT '',
   CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_recorded_submissions_sid_ix ON mdl_recorded_submissions (submission);
 CREATE INDEX mdl_recorded_submissions_aid_ix ON mdl_recorded_submissions (assignment);
+CREATE INDEX mdl_recorded_submissions_a1id_ix ON mdl_recorded_submissions (assign);
+CREATE INDEX mdl_recorded_submissions_a2id_ix ON mdl_recorded_submissions (turnitintooltwo_submission_part);
 CREATE INDEX mdl_recorded_submissions_uid_ix ON mdl_recorded_submissions (userid);
 CREATE INDEX mdl_recorded_submissions_tim_ix ON mdl_recorded_submissions (timemodified);
 
@@ -25,6 +32,7 @@ mdl_assignment table entries will be deleted as it is upgraded to mdl_assign (Mo
 ALTER TABLE mdl_recorded_submissions ADD course BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER data2;
 ALTER TABLE mdl_recorded_submissions ADD assign BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER course;
 ALTER TABLE mdl_recorded_submissions ADD name VARCHAR(255) NOT NULL DEFAULT '' AFTER assign;
+ALTER TABLE mdl_recorded_submissions ADD turnitintooltwo_submission_part BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER assign;
 ALTER TABLE mdl_recorded_submissions ADD assignmenttype VARCHAR(50) NOT NULL DEFAULT '' AFTER name;
 */
 
