@@ -110,7 +110,7 @@ function record_file_for_turnitintooltwo_submission($cm, $submission_id, $course
       $newrecord->userid        = $turnitintooltwo_submission->userid;
       //$recorded_submission_fs->create_file_from_string($newrecord, $filedata);
 
-      $return_string .= "$newfilepath/$newfilename";
+      $return_string .= "$newfilepath$newfilename; userid: $newrecord->userid, contextid: $newrecord->contextid, itemid: $newrecord->itemid";
     }
   }
 
