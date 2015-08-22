@@ -17,6 +17,7 @@ CREATE TABLE mdl_recorded_submissions (
   course BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   assign BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   turnitintooltwo_submission_part BIGINT(10) unsigned NOT NULL DEFAULT 0,
+  turnitintooltwoid BIGINT(10) unsigned NOT NULL DEFAULT 0,
   name VARCHAR(255) NOT NULL DEFAULT '',
   assignmenttype VARCHAR(50) NOT NULL DEFAULT '',
   CONSTRAINT PRIMARY KEY (id)
@@ -33,6 +34,7 @@ ALTER TABLE mdl_recorded_submissions ADD course BIGINT(10) UNSIGNED NOT NULL DEF
 ALTER TABLE mdl_recorded_submissions ADD assign BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER course;
 ALTER TABLE mdl_recorded_submissions ADD name VARCHAR(255) NOT NULL DEFAULT '' AFTER assign;
 ALTER TABLE mdl_recorded_submissions ADD turnitintooltwo_submission_part BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER assign;
+ALTER TABLE mdl_recorded_submissions ADD turnitintooltwoid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER turnitintooltwo_submission_part;
 ALTER TABLE mdl_recorded_submissions ADD assignmenttype VARCHAR(50) NOT NULL DEFAULT '' AFTER name;
 */
 
@@ -82,7 +84,6 @@ $table = new html_table();
 $table->head = array(
   'Module',
   'Assignment',
-  //'Assignment Type',
   'Submission Date',
   'Text Submitted',
   'Files Submitted'
@@ -104,24 +105,29 @@ if (!empty($recorded_submissions)) {
     $lastmodule = $recorded_submission->fullname;
 
     if ($lastname !== $recorded_submission->name) {
-      if ($recorded_submission->assign == 0) {
+      if ($recorded_submission->assignment != 0) {
         $rowdata[] = '<a href="' . "$CFG->wwwroot/mod/assignment/view.php?a=$recorded_submission->assignment" . '" target="_blank">' . htmlspecialchars($recorded_submission->name, ENT_COMPAT, 'UTF-8') . '</a>';
       }
-      else {
+      elseif ($recorded_submission->assign != 0) {
         $course_module = $DB->get_record_sql("SELECT cm.id FROM mdl_course_modules cm, mdl_modules m WHERE cm.instance=:instance AND cm.module=m.id AND m.name='assign'", array('instance' => $recorded_submission->assign));
         $rowdata[] = '<a href="' . "$CFG->wwwroot/mod/assign/view.php?id=$course_module->id" . '" target="_blank">' . htmlspecialchars($recorded_submission->name, ENT_COMPAT, 'UTF-8') . '</a>';
       }
-      //$rowdata[] = $recorded_submission->assignmenttype;
+      elseif ($recorded_submission->turnitintooltwo_submission_part != 0) {
+        $course_module = $DB->get_record_sql("SELECT cm.id FROM mdl_course_modules cm, mdl_modules m WHERE cm.instance=:instance AND cm.module=m.id AND m.name='turnitintooltwo'", array('instance' => $recorded_submission->turnitintooltwoid));
+        $rowdata[] = '<a href="' . "$CFG->wwwroot/mod/turnitintooltwo/view.php?id=$course_module->id" . '" target="_blank">' . htmlspecialchars($recorded_submission->name, ENT_COMPAT, 'UTF-8') . '</a>';
+      }
+      else {
+        $rowdata[] = '';
+      }
     }
     else {
       $rowdata[] = '';
-      //$rowdata[] = '';
     }
     $lastname = $recorded_submission->name;
 
     $rowdata[] = gmdate('d/M/Y H:i', $recorded_submission->timemodified);
 
-    if ($recorded_submission->assign == 0) {
+    if ($recorded_submission->assignment != 0) {
       if ($recorded_submission->assignmenttype === 'online') {
         $rowdata[] = format_text($recorded_submission->data1, $recorded_submission->data2);
       }
@@ -136,7 +142,7 @@ if (!empty($recorded_submissions)) {
       $rowdata[] = $recorded_submission->data1; // format_text() already applied
     }
 
-    if ($recorded_submission->assign == 0) {
+    if ($recorded_submission->assignment != 0) {
       if ($recorded_submission->assignmenttype === 'upload' || $recorded_submission->assignmenttype === 'uploadsingle') {
         // echo '<td><a href="' . "$CFG->dataroot/$recorded_submission->course/moddata/assignmentsubmissionrecord/$recorded_submission->assignment/$recorded_submission->userid/$recorded_submission->timemodified" . '" target="_blank">Sumbitted Files</a></td>';
 
@@ -165,7 +171,7 @@ if (!empty($recorded_submissions)) {
         $rowdata[] = '';
       }
     }
-    else {
+    elseif ($recorded_submission->assign != 0) {
       $output = '';
       $fs = get_file_storage();
       $stored_files = $fs->get_area_files($context->id, 'peoples_recordedsubmissions', 'student', $recorded_submission->id, 'filepath, filename', false);
@@ -193,6 +199,37 @@ if (!empty($recorded_submissions)) {
         }
       }
       $rowdata[] = '<div class="files">' . $output . '</div>';
+    }
+    elseif ($recorded_submission->turnitintooltwo_submission_part != 0) {
+      $output = '';
+      $fs = get_file_storage();
+      $stored_files = $fs->get_area_files($context->id, 'peoples_recordedsubmissions', 'student', $recorded_submission->id, 'filepath, filename', false);
+      if (!empty($stored_files)) {
+        foreach ($stored_files as $pathnamehash => $stored_file) {
+          $filepath = $stored_file->get_filepath();
+          $filename = $stored_file->get_filename();
+
+          $fullpath = '/' . $context->id . '/peoples_recordedsubmissions/student/' . $recorded_submission->id . $filepath . $filename;
+          $ffurl = moodle_url::make_file_url($CFG->wwwroot . '/course/recordedsubmissionfile.php', $fullpath);
+          $output .= '<a href="' . $ffurl . '" >';
+
+          $icon = mimeinfo('icon', $filename);
+          $mimetype = mimeinfo('type', $filename);
+          $output .= '<img src="' . $OUTPUT->pix_url(file_mimetype_icon($mimetype)) . '" class="icon" alt="' . $mimetype . '" />';
+
+          $output .= s($filepath . $filename);
+          $output .= '</a>';
+
+          $contenthash = $stored_file->get_contenthash();
+          if (!in_array($contenthash, $contenthash_all_files)) $output .= '(*)';
+          $contenthash_all_files[] = $contenthash;
+          $output .= '<br />';
+        }
+      }
+      $rowdata[] = '<div class="files">' . $output . '</div>';
+    }
+    else {
+      $rowdata[] = '';
     }
 
     $table->data[] = $rowdata;
