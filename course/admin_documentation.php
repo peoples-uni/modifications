@@ -922,7 +922,7 @@ We hope you enjoy studying with us and wish you every success.
 "Unenroll a student from the Masters in Public Health (MPH)" button does what it says.
 </li>
 <li>
-"Suspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added which are displayed further up the page. This leaves the student as an MPH student but indicates they are not currently active). They are not listed on track_submissions.php when filtering for MPH students.
+"Suspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added which are displayed further up the page. This leaves the student as an MPH student but indicates they are not currently active). They are not listed on track_submissions.php or track_submissions_turnitin.php when filtering for MPH students.
 </li>
 <li>
 "Unsuspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added. This makes the student active again).
@@ -1096,7 +1096,7 @@ Note there is also a checkbox to "Allow Peoples-uni to display your name (but no
 <h2>Tracking Student Assignment Submissions</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/track_submissions.php" target="_blank">http://courses.peoples-uni.org/course/track_submissions.php</a> allows tracking of student assignment submissions (most recent date and status displayed) against due, cut-off and extension dates. If the cut-off or extension dates have not been entered in the assignment for the student, they are not tested. An indication is also given (in the final column) if there is no submission or if the submission is outside the various dates. Here are the possible indications that can be given...
+<a href="http://courses.peoples-uni.org/course/track_submissions.php" target="_blank">http://courses.peoples-uni.org/course/track_submissions.php</a> or <a href="http://courses.peoples-uni.org/course/track_submissions.php_turnitin" target="_blank">http://courses.peoples-uni.org/course/track_submissions_turnitin.php</a> allow tracking of student assignment submissions (most recent date and status displayed) against due, cut-off and extension dates (turnitin does not support cut-off or extension). If the cut-off or extension dates have not been entered in the assignment for the student, they are not tested. An indication is also given (in the final column) if there is no submission or if the submission is outside the various dates. Here are the possible indications that can be given...
 <br />No Submission
 <br />Within Extension
 <br />Within Cut-off
