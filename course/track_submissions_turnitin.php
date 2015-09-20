@@ -123,10 +123,10 @@ if (!$displayforexcel) $peoples_filters->show_filters();
 $peoples_track_submissions_exclusions = get_config(NULL, 'peoples_track_submissions_exclusions');
 
 if ($mostrecentontop) {
-  $order_string = 'mostrecent DESC, fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC';
+  $order_string = 'mostrecent DESC, course ASC, lastname ASC, firstname ASC, assignment ASC';
 }
 else {
-  $order_string = 'fullname ASC, u.lastname ASC, u.firstname ASC, itemname ASC';
+  $order_string = 'course ASC, lastname ASC, firstname ASC, assignment ASC';
 }
 $track_submissions = $DB->get_records_sql("
   SELECT
@@ -152,6 +152,8 @@ $track_submissions = $DB->get_records_sql("
       c.fullname AS coursename1,
       c.fullname AS coursename2,
       u.id AS userid,
+      u.lastname,
+      u.firstname,
       CONCAT(u.lastname, ', ', u.firstname) AS name,
       u.email AS mail,
       a.id AS t2id,
