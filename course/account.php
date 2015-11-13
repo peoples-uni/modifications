@@ -125,6 +125,96 @@ if (!empty($payment_schedule)) {
   echo '<br />(last modified by ' . fullname($user_who_modified) . ' on ' . gmdate('d/m/Y H:i', $payment_schedule->date_modified) . ')';
 }
 
+
+$worldpay_receipts = $DB->get_records_sql("
+  SELECT
+    b.id,
+    b.userid,
+    a.sid,
+    b.amount_delta,
+    b.currency,
+    b.date,
+    a.state,
+    a.coursename1,
+    a.coursename2,
+    a.semester
+  FROM       mdl_peoples_student_balance b
+  INNER JOIN mdl_peoplesapplication a ON b.userid=a.userid AND a.datepaid<=b.date AND b.date<a.datepaid+10
+  WHERE
+    b.userid=? AND
+    b.detail LIKE 'WorldPay %'",
+  array($userid));
+
+$peoples_fee_receipts = $DB->get_records('peoples_fee_receipt', array('userid' => $userid), 'date ASC');
+
+foreach ($worldpay_receipts as $worldpay_receipt) {
+  $found = FALSE;
+  foreach ($peoples_fee_receipts as $peoples_fee_receipt) {
+    if ($worldpay_receipt->date == $peoples_fee_receipt->date) {
+      $found = TRUE;
+    }
+  }
+  if (!$found) {
+
+    if (empty($worldpay_receipt->coursename2)) {
+      $modulespurchasedlong = "Peoples-uni module '$worldpay_receipt->coursename1' for semester '$worldpay_receipt->semester'";
+    }
+    else {
+      $state = (int)$worldpay_receipt->state;
+      // Legacy fixups...
+      if ($state === 2) {
+        $state = 022;
+      }
+      if ($state === 1) {
+        $state = 011;
+      }
+
+      $state1 = $state & 07;
+      $state2 = $state & 070;
+
+      $module_1_approved = ($state1 ===  01) || ($state1 ===  03);
+      $module_2_approved = ($state2 === 010) || ($state2 === 030);
+
+      if     ($module_1_approved && !$module_2_approved) {
+        $modulespurchasedlong = "Peoples-uni module '$worldpay_receipt->coursename1' for semester '$worldpay_receipt->semester'";
+      }
+      elseif ($module_2_approved && !$module_1_approved) {
+        $modulespurchasedlong = "Peoples-uni module '$worldpay_receipt->coursename2' for semester '$worldpay_receipt->semester'";
+      }
+      else {
+        $modulespurchasedlong = "Peoples-uni modules '$worldpay_receipt->coursename1' and '$worldpay_receipt->coursename2' for semester '$worldpay_receipt->semester'";
+      }
+    }
+
+    $peoples_fee_receipt = new object();
+    $peoples_fee_receipt->userid       = $worldpay_receipt->userid;
+    $peoples_fee_receipt->sid          = $worldpay_receipt->sid;
+    $peoples_fee_receipt->date         = $worldpay_receipt->date;
+    $peoples_fee_receipt->amount       = -$worldpay_receipt->amount_delta;
+    $peoples_fee_receipt->currency     = $worldpay_receipt->currency;
+    $peoples_fee_receipt->firstname    = $userrecord->firstname;
+    $peoples_fee_receipt->lastname     = $userrecord->lastname;
+    $peoples_fee_receipt->name_payee   = '';
+    $peoples_fee_receipt->modules      = $modulespurchasedlong;
+    $peoples_fee_receipt->receipt_flag = 0;
+    $DB->insert_record('peoples_fee_receipt', $peoples_fee_receipt);
+  }
+}
+
+$peoples_fee_receipts = $DB->get_records('peoples_fee_receipt', array('userid' => $userid), 'date ASC');
+
+if (!empty($peoples_fee_receipts)) {
+  echo '<br /><br />';
+  echo '<b>Download a Receipt by right clicking on one of the links below...</b><br />';
+  echo '(When your Receipt appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br /><br />';
+
+  foreach ($peoples_fee_receipts as $peoples_fee_receipt) {
+    $cur = ($peoples_fee_receipt->currency == 'GBP') ? 'UK Pounds' : $peoples_fee_receipt->currency;
+    $wording = gmdate('d/m/Y', $peoples_fee_receipt->date) . ":&nbsp;&nbsp;{$peoples_fee_receipt->amount} $cur for " . htmlspecialchars($peoples_fee_receipt->modules, ENT_COMPAT, 'UTF-8');
+    echo '<a href="' . $CFG->wwwroot . '/course/fee_receipt.php?id=' . $peoples_fee_receipt->id . '" target="_blank">' . $wording . '</a><br />';
+  }
+}
+
 echo '<br /><br />';
 echo '</div>';
 
