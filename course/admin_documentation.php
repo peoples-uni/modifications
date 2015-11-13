@@ -1653,9 +1653,9 @@ It will be possible to see on the page who has specified the instalment schedule
 <h2>List and Create Receipts for Student Payments</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/list_receipts.php">http://courses.peoples-uni.org/course/list_receipts.php</a> shows a list of all Receipts for Student Payments. These are generated automatically for all WorldPay payments, but must be manually generated for other payments. It is possible to click on a receipt to see it and it is also possible to edit an existing receipt.<br />
+<a href="http://courses.peoples-uni.org/course/list_receipts.php">http://courses.peoples-uni.org/course/list_receipts.php</a> shows a list of all Receipts for Student Payments. These are generated automatically for all WorldPay payments, but must be manually generated for other payments. It is possible to click on a receipt to see it and it is also possible to Edit an existing receipt.<br />
 At the bottom of the page there is a link to <a href="http://courses.peoples-uni.org/course/create_receipt.php">http://courses.peoples-uni.org/course/create_receipt.php</a> to allow a new Receipt to be created.<br />
-That page also has a link to <a href="http://courses.peoples-uni.org/course/student_receipts.php">http://courses.peoples-uni.org/course/student_receipts.php</a> where a Student can see a list of their Receipts and also download them.
+That page and the Receipt Edit page (which is actually the same page) also have a link to <a href="http://courses.peoples-uni.org/course/student_receipts.php">http://courses.peoples-uni.org/course/student_receipts.php</a> where a Student can see a list of their Receipts and also download them.
 </li>
 <li>
 Students will also be able to see and download receipts in account.php (see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a>).
