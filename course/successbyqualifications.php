@@ -306,6 +306,28 @@ $sidsbyuseridsemester = $DB->get_records_sql('SELECT CONCAT(userid, semester) AS
 
 $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r');
 
+$tutors_by_id = $DB->get_records_sql("
+SELECT
+  ra.userid,
+  GROUP_CONCAT(
+    CASE
+      WHEN r.shortname='tutor'  THEN CONCAT('Module Leader in ', c.fullname)
+      WHEN r.shortname='tutors' THEN CONCAT('Tutor in ', c.fullname)
+      WHEN r.shortname='sso'    THEN 'SSO'
+    END
+    ORDER BY c.fullname, r.shortname
+    SEPARATOR ', '
+  ) AS new_roles
+FROM mdl_role_assignments ra
+INNER JOIN mdl_role    r   ON ra.roleid=r.id
+INNER JOIN mdl_context con ON ra.contextid=con.id
+LEFT  JOIN mdl_course  c   ON con.instanceid=c.id
+WHERE
+  (r.shortname IN ('tutor', 'tutors') AND con.contextlevel=50) OR
+  r.shortname IN ('sso')
+GROUP by ra.userid;
+");
+
 
 $usercount = array();
 $usercountbyuserid = array();
@@ -435,6 +457,7 @@ $table->head = array(
   'Start a new project',
   'I am not sure(How will you use your new knowledge and skills to improve population health?)',
   'ID',
+  'Became Tutor or SSO?',
   );
 
 $n = 0;
@@ -603,6 +626,13 @@ if (!empty($enrols)) {
     $rowdata[] = $z;
 
     $rowdata[] = $enrol->userid;
+
+    if (empty($tutors_by_id[$enrol->userid])) {
+      $rowdata[] = '';
+    }
+    else {
+      $rowdata[] = htmlspecialchars($tutors_by_id[$enrol->userid], ENT_COMPAT, 'UTF-8');
+    }
 
 		if ($enrol->username !== $lastname) {
 

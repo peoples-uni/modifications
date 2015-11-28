@@ -1032,7 +1032,9 @@ As well as data entered by the tutor it also displays other data in columns...
 <br />"Notes" which is a field that we can enter when we "Edit form" to write notes on the volunteer. (Only Managers or Module leaders for that tutor can see or edit this field.)
 <br />Then there are fields entered by the volunteer (also editable by us).
 <br />Then there is one column for every semester showing the modules that the volunteer has been a tutor for ("*" indicating Module leader).
-<br />The final column list the names of files that have been uploaded for the volunteer. This is normally expected to contain the volunteers CV. The files can be downloaded directly by Managers (also from "Edit form").
+<br />The next column lists the names of files that have been uploaded for the volunteer. This is normally expected to contain the volunteers CV. The files can be downloaded directly by Managers (also from "Edit form").
+<br />The next column gives a list of Modules Tutored or whether they were an SSO, obviously this will be empty when first registered on the system.
+<br />The final column indicates whether they were previously a Student.
 <li>
 Various filters are available.
 </li>
@@ -1562,6 +1564,10 @@ To actually see this data for those that either Passed 50+, Passed 45+, Failed o
 </li>
 <li>
 There are also filters that limit scope to e.g. one module, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted) etc.
+</li>
+<li>
+The rightmost column also contains information on whether the student became a Tutor or SSO which may allow analysis of the characteristics of those students who go on to become contributors to Peoples-uni.<br />
+Note that <a href="http://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">List of MPH Graduates</a> and <a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a> also contain this Tutor/SSO information.
 </li>
 </ol>
 

@@ -46,6 +46,29 @@ WHERE m.userid=u.id AND m.graduated!=0
 ORDER BY STR_TO_DATE(SUBSTRING(m.semester_graduated, 10), '%M %Y') ASC, u.lastname ASC, u.firstname ASC
 ");
 
+$tutors_by_id = $DB->get_records_sql("
+SELECT
+  ra.userid,
+  GROUP_CONCAT(
+    CASE
+      WHEN r.shortname='tutor'  THEN CONCAT('Module Leader in ', c.fullname)
+      WHEN r.shortname='tutors' THEN CONCAT('Tutor in ', c.fullname)
+      WHEN r.shortname='sso'    THEN 'SSO'
+    END
+    ORDER BY c.fullname, r.shortname
+    SEPARATOR ', '
+  ) AS new_roles
+FROM mdl_role_assignments ra
+INNER JOIN mdl_role    r   ON ra.roleid=r.id
+INNER JOIN mdl_context con ON ra.contextid=con.id
+LEFT  JOIN mdl_course  c   ON con.instanceid=c.id
+WHERE
+  (r.shortname IN ('tutor', 'tutors') AND con.contextlevel=50) OR
+  r.shortname IN ('sso')
+GROUP by ra.userid;
+");
+
+
 $table = new html_table();
 $table->head = array(
   'Semester Graduated',
@@ -54,6 +77,7 @@ $table->head = array(
   'Certifying Institution',
   'Type of pass',
   'Country',
+  'Became Tutor or SSO?',
   );
 
 $n = 0;
@@ -72,6 +96,12 @@ if (!empty($enrols)) {
     $type_of_pass = array(0 => '', 1 => '', 2 => 'Merit', 3 => 'Distinction');
     $rowdata[] = $type_of_pass[$enrol->graduated];
     $rowdata[] = htmlspecialchars($countryname[$enrol->country], ENT_COMPAT, 'UTF-8');
+    if (empty($tutors_by_id[$enrol->userid])) {
+      $rowdata[] = '';
+    }
+    else {
+      $rowdata[] = htmlspecialchars($tutors_by_id[$enrol->userid], ENT_COMPAT, 'UTF-8');
+    }
 
     $listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
 
