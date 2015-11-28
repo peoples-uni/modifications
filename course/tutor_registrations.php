@@ -588,6 +588,8 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     if ($state) {
       $napproved++;
 
+error_log($peoples_tutor_registration->country);
+error_log($countryname[$peoples_tutor_registration->country]);
       if (empty($country[$countryname[$peoples_tutor_registration->country]])) {
         $country[$countryname[$peoples_tutor_registration->country]] = 1;
       }
