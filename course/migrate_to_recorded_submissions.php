@@ -24,7 +24,7 @@ echo '<h1>Migrate to Recorded Submissions</h1>';
 echo '<br /><br /><br />';
 
 
-$recorded_submissions = $DB->get_records_sql("SELECT * FROM mdl_recorded_submissions WHERE turnitintooltwo_submission_part!=0 ORDER BY id ASC");
+$recorded_submissions = $DB->get_records_sql("SELECT * FROM mdl_recorded_submissions WHERE turnitintooltwo_submission_part!=0 AND id>=7452 ORDER BY id ASC");
 
 
 $table = new html_table();
