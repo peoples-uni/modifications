@@ -539,8 +539,9 @@ if (!empty($enrols)) {
     $rowdata[] = $higherqualificationname[$enrol->higherqualification];
     $rowdata[] = $employmentname[$enrol->employment];
 
-    $registration = $registrations[$enrol->userid];
-    if (empty($enrol->userid) || empty($registration)) {
+    if (!empty($registrations[$enrol->userid])) $registration = $registrations[$enrol->userid];
+    if (empty($enrol->userid) || empty($registrations[$enrol->userid]) || empty($registration)) {
+      $registration = new stdClass();
       $registration->whatlearn = '';
       $registration->whylearn = '';
       $registration->whyelearning = '';
@@ -631,7 +632,7 @@ if (!empty($enrols)) {
       $rowdata[] = '';
     }
     else {
-      $rowdata[] = htmlspecialchars($tutors_by_id[$enrol->userid], ENT_COMPAT, 'UTF-8');
+      $rowdata[] = htmlspecialchars($tutors_by_id[$enrol->userid]->new_roles, ENT_COMPAT, 'UTF-8');
     }
 
 		if ($enrol->username !== $lastname) {

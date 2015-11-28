@@ -100,7 +100,7 @@ if (!empty($enrols)) {
       $rowdata[] = '';
     }
     else {
-      $rowdata[] = htmlspecialchars($tutors_by_id[$enrol->userid], ENT_COMPAT, 'UTF-8');
+      $rowdata[] = htmlspecialchars($tutors_by_id[$enrol->userid]->new_roles, ENT_COMPAT, 'UTF-8');
     }
 
     $listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
