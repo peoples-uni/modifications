@@ -684,14 +684,14 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     }
   }
 
-  if (empty($tutors_by_id[$enrol->userid])) {
+  if (empty($tutors_by_id[$peoples_tutor_registration->userid])) {
     $rowdata[] = '';
   }
   else {
-    $rowdata[] = htmlspecialchars($tutors_by_id[$enrol->userid]->new_roles, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($tutors_by_id[$peoples_tutor_registration->userid]->new_roles, ENT_COMPAT, 'UTF-8');
   }
 
-  if (empty($was_student[$enrol->userid])) {
+  if (empty($was_student[$peoples_tutor_registration->userid])) {
     $rowdata[] = '';
   }
   else {
