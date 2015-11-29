@@ -27,6 +27,7 @@ require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
+$countryname[''] = ''; // There seem to be some '' countries
 
 $PAGE->set_context(context_system::instance());
 
@@ -588,8 +589,6 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     if ($state) {
       $napproved++;
 
-error_log($peoples_tutor_registration->country);
-error_log($countryname[$peoples_tutor_registration->country]);
       if (empty($country[$countryname[$peoples_tutor_registration->country]])) {
         $country[$countryname[$peoples_tutor_registration->country]] = 1;
       }
