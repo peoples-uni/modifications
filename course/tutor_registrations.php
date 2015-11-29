@@ -490,13 +490,13 @@ $table->head = array(
   'Organisation',
   'City',
   'Country',
-  'List of Modules Tutored (or SSO)',
-  'Previously a Student?',
   );
 foreach ($semesters_descending as $semester) {
   $table->head[] = str_replace('Starting ', '', $semester->semester);
 }
 $table->head[] = 'Files';
+$table->head[] = 'List of Modules Tutored (or SSO)';
+$table->head[] = 'Previously a Student?';
 
 //$table->align = array ("left", "left", "left", "left", "left", "center", "center", "center");
 //$table->width = "95%";
