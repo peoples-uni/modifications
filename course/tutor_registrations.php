@@ -468,7 +468,7 @@ WHERE
 GROUP by ra.userid;
 ");
 
-$was_student = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_enrolment");
+$was_student = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_enrolment WHERE enrolled!=0");
 
 
 $table = new html_table();
