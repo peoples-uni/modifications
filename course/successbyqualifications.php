@@ -73,6 +73,7 @@ if (!empty($_POST['markfilter'])) {
 		. '&chosenstatus=' . urlencode(dontstripslashes($_POST['chosenstatus']))
 		. '&chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
     . '&acceptedmmu=' . urlencode(dontstripslashes($_POST['acceptedmmu']))
+    . '&becametutor=' . urlencode(dontstripslashes($_POST['becametutor']))
 		. (empty($_POST['sortbyaccess']) ? '&sortbyaccess=0' : '&sortbyaccess=1')
     . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
 		);
@@ -180,6 +181,13 @@ for ($year = 11; $year <= 16; $year++) {
   $stamp_range["Accepted {$year}b"]['end']   = gmmktime(24, 0, 0, 12, 31, 2000 + $year);
 }
 
+$becametutor = dontstripslashes(optional_param('becametutor', '', PARAM_NOTAGS));
+
+$listbecametutor[] = 'Any';
+if (empty($becametutor)) $becametutor = 'Any';
+$listbecametutor[] = 'Yes';
+$listbecametutor[] = 'No';
+
 if (!empty($_REQUEST['sortbyaccess'])) {
 	$sortbyaccess = true;
 	$orderby ='x.lastaccess DESC, x.firstname ASC, username ASC, fullname ASC';
@@ -215,6 +223,7 @@ Display entries using the following filters...
 		<td>Grading Status</td>
 		<td>Semester</td>
     <td>Accepted MPH?</td>
+    <td>Became Tutor or SSO?</td>
 		<td>Sort by Last Access</td>
     <td>Display main table only for Copying and Pasting to Excel</td>
 	</tr>
@@ -236,6 +245,7 @@ Display entries using the following filters...
 		displayoptions('chosenstatus', $liststatus, $chosenstatus);
 		displayoptions('chosensemester', $listsemester, $chosensemester);
     displayoptions('acceptedmmu', $listacceptedmmu, $acceptedmmu);
+    displayoptions('becametutor', $listbecametutor, $becametutor);
 		?>
 		<td><input type="checkbox" name="sortbyaccess" <?php if ($sortbyaccess) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="displayforexcel" <?php if ($displayforexcel) echo ' CHECKED'; ?>></td>
@@ -349,6 +359,15 @@ if (!empty($enrolposts)) {
         if (!$enrolpost->mph || $enrolpost->mphdatestamp < $stamp_range[$acceptedmmu]['start'] || $enrolpost->mphdatestamp >= $stamp_range[$acceptedmmu]['end']) {
           continue;
         }
+      }
+    }
+
+    if (!empty($becametutor) && $becametutor !== 'Any') {
+      if ($becametutor === 'No' && !empty($tutors_by_id[$enrolpost->userid])) {
+        continue;
+      }
+      if ($becametutor === 'Yes' && empty($tutors_by_id[$enrolpost->userid])) {
+        continue;
       }
     }
 
@@ -477,6 +496,15 @@ if (!empty($enrols)) {
         if (!$enrol->mph || $enrol->mphdatestamp < $stamp_range[$acceptedmmu]['start'] || $enrol->mphdatestamp >= $stamp_range[$acceptedmmu]['end']) {
           continue;
         }
+      }
+    }
+
+    if (!empty($becametutor) && $becametutor !== 'Any') {
+      if ($becametutor === 'No' && !empty($tutors_by_id[$enrol->userid])) {
+        continue;
+      }
+      if ($becametutor === 'Yes' && empty($tutors_by_id[$enrol->userid])) {
+        continue;
       }
     }
 
