@@ -108,17 +108,17 @@ foreach ($all_users as $a_user) {
 
       if ($profile_item->fieldid == 7) {
         $key = array_search($profile_item->data, $qualificationname);
-        if (!empty($key)) $record->qualification = $key;
+        if (!empty($key) && $key != 1) $record->qualification = $key;       // Don't overwrite if Profile has "None" (Profile fields might have be cleared for privacy for a Tutor)
       }
 
       if ($profile_item->fieldid == 8) {
         $key = array_search($profile_item->data, $higherqualificationname);
-        if (!empty($key)) $record->higherqualification = $key;
+        if (!empty($key) && $key != 1) $record->higherqualification = $key; // Don't overwrite if Profile has "None" (Profile fields might have be cleared for privacy for a Tutor)
       }
 
       if ($profile_item->fieldid == 9) {
         $key = array_search($profile_item->data, $employmentname);
-        if (!empty($key)) $record->employment = $key;
+        if (!empty($key) && $key != 1) $record->employment = $key;          // Don't overwrite if Profile has "None" (Profile fields might have be cleared for privacy for a Tutor)
       }
     }
   }
