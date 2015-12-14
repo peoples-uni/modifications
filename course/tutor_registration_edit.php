@@ -265,6 +265,17 @@ elseif ($data = $editform->get_data()) {
     $peoples_tutor_registration->datelastapproved = $peoples_tutor_registration->datefirstapproved;
   }
 
+  if (!empty($data->clear_sensitive_profile_items) && !empty($peoples_tutor_registration->userid)) {
+    error_log('Clearing Sensitive Profile Items for User: ' . $peoples_tutor_registration->userid);
+    $user_info_datas = $DB->get_records_sql("SELECT * FROM mdl_user_info_data WHERE fieldid IN (3,4,5,6,7,8,9,10) AND userid=" . $peoples_tutor_registration->userid);
+    if (!empty($user_info_datas)) {
+      foreach ($user_info_datas as $user_info_data) {
+        $user_info_data->data = '';
+        $DB->update_record('user_info_data', $user_info_data);
+      }
+    }
+  }
+
   if (!empty($data->hide_tutor_form)) {
     $peoples_tutor_registration->hidden = 1;
   }
