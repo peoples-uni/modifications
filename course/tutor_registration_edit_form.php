@@ -155,7 +155,13 @@ If you have a postgraduate qualification, please indicate name of qualification,
     }
 
     if (has_capability('moodle/site:viewparticipants', context_system::instance()) && !empty($id) && !empty($peoples_tutor_registration->userid)) {
-      $user_info_datas = $DB->get_records_sql("SELECT * FROM mdl_user_info_data WHERE fieldid IN (3,4,5,6,7,8,9,10) AND userid=" . $peoples_tutor_registration->userid);
+      $user_info_datas = $DB->get_records_sql("
+        SELECT *
+        FROM mdl_user_info_data
+        WHERE
+          fieldid IN (3,4,5,6,7,8,9,10) AND
+          userid IN (SELECT userid FROM mdl_enrolment WHERE enrolled!=0) AND
+          userid=" . $peoples_tutor_registration->userid);
       $found = FALSE;
       if (!empty($user_info_datas)) {
         foreach ($user_info_datas as $user_info_data) {
@@ -166,7 +172,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
       }
       if ($found) {
         $mform->addElement('static', 'spacingxxx1a', '&nbsp;', '&nbsp;<br />');
-        $mform->addElement('checkbox', 'clear_sensitive_profile_items', 'Check to clear sensitive profile items (this volunteer was probably previously a student)');
+        $mform->addElement('checkbox', 'clear_sensitive_profile_items', 'Check to clear sensitive profile items (this volunteer was previously a student)');
         $mform->setDefault('clear_sensitive_profile_items', 1);
         $mform->addElement('static', 'spacingxxx2a', '&nbsp;', '&nbsp;<br />');
       }
