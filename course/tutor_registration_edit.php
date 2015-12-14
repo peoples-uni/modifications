@@ -274,6 +274,16 @@ elseif ($data = $editform->get_data()) {
         $DB->update_record('user_info_data', $user_info_data);
       }
     }
+    /* Only allow profile to be cleared once because a Tutor might want to enter data for cleared fields
+    CREATE TABLE mdl_profile_cleared (
+      id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+      userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+    CONSTRAINT PRIMARY KEY (id)
+    );
+    */
+    $profile_cleared = new stdClass();
+    $profile_cleared->userid = $peoples_tutor_registration->userid;
+    $DB->insert_record('profile_cleared', $profile_cleared);
   }
 
   if (!empty($data->hide_tutor_form)) {

@@ -161,6 +161,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
         WHERE
           fieldid IN (3,4,5,6,7,8,9,10) AND
           userid IN (SELECT userid FROM mdl_enrolment WHERE enrolled!=0) AND
+          userid NOT IN (SELECT userid FROM mdl_profile_cleared) AND
           userid=" . $peoples_tutor_registration->userid);
       $found = FALSE;
       if (!empty($user_info_datas)) {
