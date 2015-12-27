@@ -1019,7 +1019,7 @@ This should be done some time before assignment submission and grading starts.
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a>
-list all forms submitted by volunteers and also all Moodle users who have ever been tutors in one of the Peoples-uni modules even is they have never submitted a form.
+list all forms submitted by volunteers and also all Moodle users who have ever been tutors in one of the Peoples-uni modules even is they have never submitted a form (also includes all SSOs).
 </li>
 <li>
 As well as data entered by the tutor it also displays other data in columns...

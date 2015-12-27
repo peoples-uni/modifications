@@ -312,6 +312,24 @@ foreach ($assignments as $assignment) {
   }
 }
 
+$assignments = $DB->get_records_sql("
+  SELECT ra.id, ra.userid, r.shortname
+    FROM
+      mdl_role_assignments ra,
+      mdl_role r
+    WHERE
+      ra.roleid=r.id AND
+      r.shortname IN ('sso')
+    ORDER BY ra.userid");
+
+foreach ($assignments as $assignment) {
+  $userid = $assignment->userid;
+  if (!in_array($userid, $userids)) {
+    $userids[] = $userid;
+    $extratutors .= "$userid,";
+  }
+}
+
 if (!empty($extratutors)) {
   $extratutors = substr($extratutors, 0, -1);
   $peoples_extra_tutor_registrations = $DB->get_records_sql("
