@@ -215,38 +215,39 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
-Welcome to Peoples-uni. You have been enrolled in pre-registration
-system for Peoples-uni courses.
+Welcome to Peoples-uni. You have been enrolled in our ‘Academic skills’
+course which will start on 25th January 2016. 
 
-We have found in the past that those students who fully understand
-what they are letting themselves in for, do much better in the
-courses than some who are new to our e-learning platform.
+The aim of the Academic skills course is to give you the opportunity to
+1.  Learn how to use our e-learning system called moodle
+2.  To get used to on-line learning and to understand your own study needs
+and how to manage your time effectively
+3.  To practice your academic skills required for studying at masters level
+(eg searching the internet, taking a critical approach, referencing
+journals etc)
 
-Since there are more people interested in taking our courses than we
-have places available, we have developed this pre-registration system
-which is a requirement for enrollment in Peoples-uni courses.
-To take part in the pre-registration process you will be sent a separate
-email with your username and password -
-once you have these, you need to do these 4 things:
+To take part in the Academic skills course we have sent you a
+separate email with your username and password.  Please check your spam box
+if you cannot detect this email.  When you have successfully logged in, you
+would be directed to your dashboard which contains the courses you have
+been enrolled in. Click on the Academic skills course to access the course
+page.
 
-1. Show your commitment to studying, help develop a learning plan and
-practice your academic skills *by taking part in discussions in your
-student support group.*  You will be sent an introductory email to the
-student support forum within 2 weeks of receiving this email.  The
-discussions will take place on-line, for approximately 4-6 weeks.
-You will need to make sure you can log on and read the discussions at
-a minimum once per week, but to get the best out of the forums we
-expect you to read and respond to others forum posts every few days.
-This will help you to prepare yourself for  studying at masters level, by
-considering your IT skills, your time  commitments, and your academic
-skills (eg searching the internet, referencing journals etc)
+The course takes 6 weeks and you are expected to dedicate a minimum of 10
+hours a week to studying during this time. This will help prepare you for
+studying your Peoples-uni modules. 
+
 Your student support forum, of which the introductory email will
 explain more, is here:
 http://courses.peoples-uni.org/mod/forum/view.php?f=FORUM_HERE
 
-2.*Read the student handbook*:
+To help you prepare for the Academic skills module, please
+
+1.*Read the student handbook*:
 http://www.peoples-uni.org/content/student-handbook
-As you read you will learn how to do the following tasks:
+
+You now have access to moodle and so you can learn how to do the following
+tasks by reading the handbook:
 
 *Upload a picture of yourself
 *Create your own profile - Your profile will give other students and
@@ -254,29 +255,42 @@ tutors a brief summary of your interests, your background and your
 work.
 *Read other student/tutor bios
 
-3. Look at the study resources on Students corner. You may also want
-to look at the student2student discussion forums where students can
+2. Look at the study resources on Students corner. You may also want 
+to look at the student2student discussion forums where students can 
 chat and share experiences:
 http://courses.peoples-uni.org/course/view.php?id=SC_ID_HERE
+You can look around at the different resources we have:
+• News forum on main page - this is for sending messages between all
+students in Peoples-uni (there are over 400 students).  So, please use this
+forum if you want to ask questions to all students.  
+• Student support forum - this is a smaller group of students and you will
+get to know each other better during the pre-registration period.  So its
+good to use this forum to share information about yourself.  This SSO forum
+is the forum where we can support each other to study eg discussing
+challenges with time management/practicing academic skills eg referencing
+and critical appraisal.
+• Student corner resources - information on referencing and critical
+appraisal and more study resources
 
-4. You may want to complete our open access Foundations in Public
-Health module (not obligatory) - you can access this online at
-http://courses.peoples-uni.org/course/view.php?id=308
-There are lots of resources for you to read, which will help you learn
-key public health terms. This module is self directed learning and there
-are no tutor led discussions.
+3. Complete the Are you ready Quiz :
+http://www.peoples-uni.org/content/are-you-ready-peoples-uni
+
 
 Note:
-Successfully completing the pre-registration requirements is a
-pre-requisite to course enrollment. The course enrollment window
-opens twice every year - March and August, and this is when you
-select the course(s) you wish to enroll in for the current semester.
+Successfully completing the Academic Skills course is a pre-requisite to
+course enrollment. The course enrollment window opens twice every year -
+January and July, and this is when you select the course(s) you wish to
+enroll in for the current semester.
 You will be reminded when the course enrollment window is open.
 
 If you have technical problems please email apply@peoples-uni.org for
 assistance.
 
 Peoples Open Access Education Initiative Administrator.
+
+Check out our Peoples-uni facebook (www.facebook.com/peoples-uni) ,twitter
+(@Peoplesuni) and linkedIn pages to follow our students and tutors learning
+journeys. ( https://www.linkedin.com/company/people%27s-open-access-initiative)
 </pre>
 </li>
 <li>
