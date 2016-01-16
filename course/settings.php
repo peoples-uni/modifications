@@ -166,17 +166,17 @@ if (!empty($_POST['marksetstudentscorner']) && !empty($_POST['studentscorner']))
 if (!empty($_POST['marksetfph']) && !empty($_POST['fph'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $fph = $_POST['fph'];
-  set_config('foundations_public_health_id', $fph);
+  set_config('foundations_public_health_id', $fph); // This id is now used for "Academic skills course for new students"
 }
 if (!empty($_POST['marksetssc']) && !empty($_POST['ssc'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $ssc = $_POST['ssc'];
-  set_config('peoples_student_support_id', $ssc);
+  set_config('peoples_student_support_id', $ssc); // No longer used
 }
 if (!empty($_POST['marksetssf']) && !empty($_POST['ssf'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $ssf = $_POST['ssf'];
-  set_config('peoples_student_support_forum_id', $ssf);
+  set_config('peoples_student_support_forum_id', $ssf); // This ID is now used for "Student support forum" in "Academic skills course for new students"
 }
 if (!empty($_POST['mark_register_ack_email']) && !empty($_POST['value_register_ack_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
@@ -501,7 +501,7 @@ foreach ($idnumbers as $idnumber) {
 
 ?>
 <br /><br /><br />
-As of 2014a the following three settings normally all point to the "Students corner"<br />
+<!-- As of 2014a the following three settings normally all point to the "Students corner"<br /> -->
 
 <form id="setstudentscornerform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -525,7 +525,8 @@ foreach ($courses as $course) {
 <form id="setfphform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetfph" value="1" />
-<input type="submit" name="setfph" value="Make this Module the Foundations of Public Health Module for new Student Registrants:" style="width:50em" />
+<!-- <input type="submit" name="setfph" value="Make this Module the Foundations of Public Health Module for new Student Registrants:" style="width:50em" /> -->
+<input type="submit" name="setfph" value="Make this Module the Academic skills course for new Student Registrants:" style="width:50em" />
 <br />
 <select name="fph">
 <?php
@@ -540,6 +541,7 @@ foreach ($courses as $course) {
 ?>
 </select>
 </form>
+    <?php if (FALSE) { ?>
 <br />
 <form id="setsscform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -559,11 +561,14 @@ foreach ($courses as $course) {
 ?>
 </select>
 </form>
+    <?php } ?>
 <?php
 $listssf = array();
-$studentsupportforumsnames = $DB->get_records('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
+//$studentsupportforumsnames = $DB->get_records('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
+$studentsupportforumsnames = $DB->get_records('forum', array('course' => get_config(NULL, 'foundations_public_health_id')));
 foreach ($studentsupportforumsnames as $studentsupportforumsname) {
-  $pos = stripos($studentsupportforumsname->name, 'Student Support Group');
+  //$pos = stripos($studentsupportforumsname->name, 'Student Support Group');
+  $pos = stripos($studentsupportforumsname->name, 'Student support forum');
   if ($pos === 0) {
     $listssf[$studentsupportforumsname->id] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
   }
@@ -574,7 +579,8 @@ natsort($listssf);
 <form id="setssfform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetssf" value="1" />
-<input type="submit" name="setssf" value="Make this Forum the Student Support Forum for new Student Registrants:" style="width:50em" />
+<!-- <input type="submit" name="setssf" value="Make this Forum the Student Support Forum for new Student Registrants:" style="width:50em" /> -->
+<input type="submit" name="setssf" value="Make this Forum the Student Support Forum in Academic skills course for new Student Registrants:" style="width:50em" />
 <br />
 <select name="ssf">
 <?php

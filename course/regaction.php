@@ -282,6 +282,7 @@ window.opener.location.reload();
   updateapplication($_POST['sid'], 'userid', $user->id);
 
   // Enrol student in Foundations of Public Health
+  // ... This is now Academic skills course
   $fph = $DB->get_record('course', array('id' => get_config(NULL, 'foundations_public_health_id')));
   $fph_id = 0;
   if (!empty($fph)) {
@@ -297,21 +298,22 @@ window.opener.location.reload();
     $sc_id = $sc->id;
   }
 
-  // Enrol student in Student Support Forums
-  $ssf = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
-  if (!empty($ssf) && ($ssf->id != $fph_id) && ($ssf->id != $sc_id)) {
-    enrolincoursesimple($ssf, $user);
-  }
+//  // Enrol student in Student Support Forums
+//  $ssf = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
+//  if (!empty($ssf) && ($ssf->id != $fph_id) && ($ssf->id != $sc_id)) {
+//    enrolincoursesimple($ssf, $user);
+//  }
 
-  forum_subscribe($user->id, get_config(NULL, 'peoples_student_support_forum_id'));
+  // This is now in Academic skills course and is Forced Subscribe
+  // forum_subscribe($user->id, get_config(NULL, 'peoples_student_support_forum_id'));
 
-  // Keep a note of the specified Forum in case they accidentally unsubscribe or subscribe to more than one (see reset_studentscorner_subscriptions.php)
-  $forum_subscriptions_specified = new stdClass();
-  $forum_subscriptions_specified->userid = $user->id;
-  $forum_subscriptions_specified->forum = get_config(NULL, 'peoples_student_support_forum_id');
-  if (!empty($forum_subscriptions_specified->forum) && !$DB->record_exists('forum_subscriptions_specified', array('userid' => $forum_subscriptions_specified->userid, 'forum' => $forum_subscriptions_specified->forum))) {
-    $DB->insert_record('forum_subscriptions_specified', $forum_subscriptions_specified);
-  }
+//  // Keep a note of the specified Forum in case they accidentally unsubscribe or subscribe to more than one (see reset_studentscorner_subscriptions.php)
+//  $forum_subscriptions_specified = new stdClass();
+//  $forum_subscriptions_specified->userid = $user->id;
+//  $forum_subscriptions_specified->forum = get_config(NULL, 'peoples_student_support_forum_id');
+//  if (!empty($forum_subscriptions_specified->forum) && !$DB->record_exists('forum_subscriptions_specified', array('userid' => $forum_subscriptions_specified->userid, 'forum' => $forum_subscriptions_specified->forum))) {
+//    $DB->insert_record('forum_subscriptions_specified', $forum_subscriptions_specified);
+//  }
 
   $peoples_income_category = $DB->get_record('peoples_income_category', array('userid' => $user->id));
   if (empty($peoples_income_category)) {

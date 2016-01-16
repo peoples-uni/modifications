@@ -104,7 +104,7 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#resetstudentcornersubscriptions">Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back</a><br /><br />
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#resetstudentcornersubscriptions">Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back (not required anymore)</a><br /><br />
 </li>
 </b>
 </ul>
@@ -117,12 +117,18 @@ echo $OUTPUT->header();
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on application forms but also as an approximate guideline on registration forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
 <br />This setting needs to be kept up to date. When applications are closed for a semester, it needs to be set to refer to the next semester.
 </li>
+<!--
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Foundations of Public Health demonstration module that will be used for student registrations and then click "Make this Module the Foundations of Public Health Module for new Student Registrants:" (no need to do this if it has not changed).
+</li>
+-->
+<li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Academic skills course module that will be used for student registrations and then click "Make this Module the Academic skills course for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Students Corner module that will be used for student registrations and then click "Make this Module the Students Corner for new Student Registrants:" (no need to do this if it has not changed).
 </li>
+<!--
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forums module that will be used for student registrations and then click "Make this Module the Student Support Forums Module for new Student Registrants:" (no need to do this if it has not changed).
 </li>
@@ -135,6 +141,15 @@ Note that the names of forums used for Student Support by the Student Support Of
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forum that will be used for student registrations and then click "Make this Forum the Student Support Forum for new Student Registrants:"
 <br />Normally 50 students are assigned to each Student Support Forum. When a forum is full, a new one will need to be manually created and an SSO assigned. This setting then needs to be changed so that newly registered students will be assigned to this new forum as part of the automatic process of registering new students.
+<br />The current practice is wait for 50 students to be waiting to be registered before registering all 50 at once. To help with this, a count of those students not registered (disregarding duplicate e-mails and e-mails already in Moodle) is displayed in <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>.
+<br />This may overestimate the number waiting because of historical registrations what were bypassed.
+</li>
+-->
+<li>
+Note that the names of forums used for Student Support by the Student Support Officers must all start with text exactly the same as this "Student Support Forum" (can be followed by anything else desired).
+</li>
+<li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forum (in the Academic skills course) that will be used for student registrations and then click "Make this Forum the Student Support Forum in Academic skills course for new Student Registrants:"
 <br />The current practice is wait for 50 students to be waiting to be registered before registering all 50 at once. To help with this, a count of those students not registered (disregarding duplicate e-mails and e-mails already in Moodle) is displayed in <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>.
 <br />This may overestimate the number waiting because of historical registrations what were bypassed.
 </li>
@@ -1928,7 +1943,7 @@ Digest subscriptions are not removed by this page as there seems to be little or
 
 
 <a name="resetstudentcornersubscriptions"></a>
-<h2>Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back</h2>
+<h2>Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back (not required anymore)</h2>
 <ol>
 <li>
 <a href="http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php</a> is a page used to Determine if Student Support Forum Subscriptions in Students Corner have changed and change back those that need to be.
