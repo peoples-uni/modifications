@@ -215,10 +215,10 @@ if (!empty($enrols)) {
       continue;
     }
 
-    if (
-      stripos($enrol->forumname, 'Student Support Group') !== 0) {
-      continue;
-    }
+    //if (
+    //  stripos($enrol->forumname, 'Student Support Group') !== 0) {
+    //  continue;
+    //}
 
     if (!empty($chosenmodule) &&
       stripos($enrol->fullname, $chosenmodule) === false) {

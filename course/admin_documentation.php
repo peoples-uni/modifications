@@ -1338,7 +1338,7 @@ Access to tutorposts.php is available to any Tutor or Admin.<br /><br />
 ....................................................
 </li>
 <li>
-To view posts made in Student Support Groups go to: <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a>.
+To view posts made in Student Support Forums go to: <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a>.
 </li>
 <li>
 This lists all posts giving Module, Forum Name and Subject.
