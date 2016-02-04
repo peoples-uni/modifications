@@ -20,6 +20,7 @@ if (!empty($_POST['markfilter'])) {
     . '&chosenendyear=' . $_POST['chosenendyear']
     . '&chosenendmonth=' . $_POST['chosenendmonth']
     . '&chosenendday=' . $_POST['chosenendday']
+    . '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
     . '&chosenforumsearch=' . urlencode(dontstripslashes($_POST['chosenforumsearch']))
     . '&chosenusersearch=' . urlencode(dontstripslashes($_POST['chosenusersearch']))
 		. (empty($_POST['skipintro']) ? '&skipintro=0' : '&skipintro=1')
@@ -62,6 +63,9 @@ if (!empty($_REQUEST['chosenendyear']) && !empty($_REQUEST['chosenendmonth']) &&
 else {
   $endtime = 1.0E+20;
 }
+
+if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
+else $chosenmodule = '';
 
 if (!empty($_REQUEST['chosenforumsearch'])) $chosenforumsearch = dontstripslashes($_REQUEST['chosenforumsearch']);
 else $chosenforumsearch = '';
@@ -115,6 +119,7 @@ Display entries using the following filters...
     <td>End Year</td>
     <td>End Month</td>
     <td>End Day</td>
+    <td>Module Name Contains</td>
     <td>Forum Name Contains</td>
     <td>User Name Contains</td>
 		<td>Skip Introduction/Welcome Topics/Subjects</td>
@@ -128,6 +133,7 @@ Display entries using the following filters...
     displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
     displayoptions('chosenendday', $listendday, $chosenendday);
 		?>
+    <td><input type="text" size="15" name="chosenmodule" value="<?php echo htmlspecialchars($chosenmodule, ENT_COMPAT, 'UTF-8'); ?>" /></td>
     <td><input type="text" size="15" name="chosenforumsearch" value="<?php echo htmlspecialchars($chosenforumsearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
     <td><input type="text" size="15" name="chosenusersearch" value="<?php echo htmlspecialchars($chosenusersearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
 		<td><input type="checkbox" name="skipintro" <?php if ($skipintro) echo ' CHECKED'; ?>></td>
@@ -154,20 +160,43 @@ function displayoptions($name, $options, $selectedvalue) {
 }
 
 
-$studentsupportforums = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
+//$studentsupportforums = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_student_support_id')));
 
-$enrols = $DB->get_records_sql(
-"SELECT fp.id AS postid, fd.id AS discid, u.id as userid, u.lastname, u.firstname, c.fullname, f.name AS forumname, fp.subject, fp.modified
-FROM mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp
-WHERE u.id=fp.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id AND c.id=?
-ORDER BY u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC",
-array($studentsupportforums->id)
-);
+$enrols = $DB->get_records_sql("
+SELECT
+  fp.id AS postid,
+  fd.id AS discid,
+  u.id as userid,
+  u.lastname,
+  u.firstname,
+  c.fullname,
+  f.name AS forumname,
+  fp.subject,
+  fp.modified
+FROM
+  mdl_user u,
+  mdl_course c,
+  mdl_forum f,
+  mdl_forum_discussions fd,
+  mdl_forum_posts fp
+WHERE
+  u.id=fp.userid AND
+  fp.discussion=fd.id AND
+  fd.forum=f.id AND
+  f.course=c.id AND
+  f.name LIKE 'Student Support Forum%'
+ORDER BY
+  u.lastname ASC,
+  u.firstname ASC,
+  fullname ASC,
+  forumname ASC,
+  fp.subject ASC");
 
 $table = new html_table();
 $table->head = array(
   'Family name',
   'Given name',
+  'Module',
   'Discussion Forum Topic',
   'Subject'
   );
@@ -191,6 +220,11 @@ if (!empty($enrols)) {
       continue;
     }
 
+    if (!empty($chosenmodule) &&
+      stripos($enrol->fullname, $chosenmodule) === false) {
+      continue;
+    }
+
     if (!empty($chosenforumsearch) &&
       stripos($enrol->forumname, $chosenforumsearch) === false) {
       continue;
@@ -209,6 +243,7 @@ if (!empty($enrols)) {
     $rowdata = array();
     $rowdata[] = htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($enrol->forumname, ENT_COMPAT, 'UTF-8');
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/mod/forum/discuss.php?d=' . $enrol->discid . '#p' . $enrol->postid . '" target="_blank">' . htmlspecialchars($enrol->subject, ENT_COMPAT, 'UTF-8') . '</a>';
 
@@ -301,9 +336,9 @@ displaystat($usercount, 'Student Posts');
 echo 'Number of Students who Posted: ' . count($usercount);
 echo '<br /><br />';
 
-//displaystat($usermodulecount, 'Student Posts per Module');
-//echo 'Number of Students who Posted per Module: ' . count($usermodulecount);
-//echo '<br /><br />';
+displaystat($usermodulecount, 'Student Posts per Module');
+echo 'Number of Students who Posted per Module: ' . count($usermodulecount);
+echo '<br /><br />';
 
 displaystat($topiccount, 'Student Posts by Forum Topic');
 echo 'Number of Forum Topics with Posts: ' . count($topiccount);
