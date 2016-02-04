@@ -334,11 +334,11 @@ echo '<br />';
 
 displaystat($usercount, 'Student Posts');
 echo 'Number of Students who Posted: ' . count($usercount);
-echo '<br /><br />';
+echo '<br /><br /><br />';
 
 displaystat($usermodulecount, 'Student Posts per Module');
 echo 'Number of Students who Posted per Module: ' . count($usermodulecount);
-echo '<br /><br />';
+echo '<br /><br /><br />';
 
 displaystat($topiccount, 'Student Posts by Forum Topic');
 echo 'Number of Forum Topics with Posts: ' . count($topiccount);
