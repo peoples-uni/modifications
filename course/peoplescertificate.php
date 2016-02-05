@@ -292,7 +292,12 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
   $passed_or_cpd_enrol_ids = array();
   $modules = array();
-  $modules[] = 'Modules completed (Grade):';
+  if ($nopercentage) {
+    $modules[] = 'Modules completed:';
+  }
+  else {
+    $modules[] = 'Modules completed (Grade):';
+  }
   $percentages = array();
   $percentages[] = '';
   //$nopercentage is passed as parameter
@@ -393,7 +398,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   if ($nomodules) {
     cert_printtext(170, 235, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
     $pdf->SetTextColor(0, 0, 120);
-    cert_printtext(170, 270, 'C', 'Helvetica', '', 30, utf8_decode($award . ','));
+    cert_printtext(170, 270, 'C', 'Helvetica', '', 30, utf8_decode($award));
     $pdf->SetTextColor(0, 0, 0);
     cert_printtext(170, 305, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
   }
