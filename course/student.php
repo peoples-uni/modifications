@@ -635,9 +635,13 @@ foreach ($passed_or_cpd_enrol_ids as $passed_or_cpd_enrol_id) {
 
 if ($qualification & 1) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate" target="_blank">Your Peoples Open Access Educational Initiative Certificate</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate&nopercentage=1" target="_blank">(Same Certificate without Percent Grades)</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate&nomodules=1" target="_blank">(Same Certificate without List of Modules)</a><br />';
 }
 if ($qualification & 2) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma" target="_blank">Your Peoples Open Access Educational Initiative Diploma</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma&nopercentage=1" target="_blank">(Same Diploma without Percent Grades)</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma&nomodules=1" target="_blank">(Same Diploma without List of Modules)</a><br />';
 }
 
 if ($isteacher) echo '<a href="' . $CFG->wwwroot . '/course/allow_modules.php?userid=' . $userid . '" target="_blank">Review modules contributing to awards and override disallowed modules</a><br />';

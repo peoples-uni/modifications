@@ -18,6 +18,7 @@ if (empty($USER->id)) {
 
 $cert = required_param('cert', PARAM_ALPHA);
 $nopercentage = optional_param('nopercentage', 0, PARAM_INT);
+$nomodules = optional_param('nomodules', 0, PARAM_INT);
 
 $signatureleft = 130;
 $signatureleft = 80;
@@ -400,6 +401,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
 	$h = 295;
 	$firstdelta = 4;
+  if ($nomodules) $modules = array();
 	foreach ($modules as $index => $module) {
     cert_printtext(170, $h, 'C', 'Helvetica', '', 14, utf8_decode($module . $percentages[$index]));
 		$h += 15 + $firstdelta;
