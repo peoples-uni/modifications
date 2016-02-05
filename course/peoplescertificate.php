@@ -405,7 +405,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   else {
     cert_printtext(170, 200, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
     $pdf->SetTextColor(0, 0, 120);
-    cert_printtext(170, 235, 'C', 'Helvetica', '', 30, utf8_decode($award . ','));
+    cert_printtext(170, 235, 'C', 'Helvetica', '', 30, utf8_decode($award));
     $pdf->SetTextColor(0, 0, 0);
     cert_printtext(170, 270, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
   }
