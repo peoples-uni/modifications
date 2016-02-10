@@ -29,6 +29,9 @@ foreach ($semesters as $semester) {
 $peoples_chosensemester_filter = new peoples_select_filter('Semester', 'chosensemester', $listsemester, $defaultsemester);
 $peoples_filters->add_filter($peoples_chosensemester_filter);
 
+$peoples_exclude_non_submitters_filter = new peoples_boolean_filter('Exclude those in the Semester who did not Submit Anything', 'exclude_non_submitters');
+$peoples_filters->add_filter($peoples_exclude_non_submitters_filter);
+
 $peoples_date_filter = new peoples_date_filter("Last Exam Board Year</td><td>Last Exam Board Month</td><td>Last Exam Board Day (include resubmissions since)");
 $peoples_filters->add_filter($peoples_date_filter);
 
@@ -65,6 +68,7 @@ $peoples_displayforexcel_filter = new peoples_boolean_filter('Display for Copyin
 $peoples_filters->add_filter($peoples_displayforexcel_filter);
 
 $chosensemester = $peoples_chosensemester_filter->get_filter_setting();
+$exclude_non_submitters = $peoples_exclude_non_submitters_filter->get_filter_setting();
 $last_education_committee = $peoples_date_filter->get_filter_setting();
 $diploma_setting = $peoples_diploma_filter->get_filter_setting();
 $displayforexcel = $peoples_displayforexcel_filter->get_filter_setting();
@@ -152,6 +156,8 @@ FROM
 ");
 
 
+$test_for_is_a_student_this_semester = 'SELECT DISTINCT e2.userid FROM mdl_enrolment e2 WHERE e2.semester=?';
+if ($exclude_non_submitters) $test_for_is_a_student_this_semester = 'SELECT DISTINCT e2.userid FROM mdl_enrolment e2, mdl_recorded_submissions rs WHERE e2.semester=? AND e2.courseid=rs.course';
 $enrols = $DB->get_records_sql("
   SELECT
     e.id,
@@ -184,7 +190,7 @@ $enrols = $DB->get_records_sql("
   LEFT JOIN mdl_grade_grades g ON e.userid=g.userid AND i.id=g.itemid
   WHERE
     (
-      e.userid IN (SELECT DISTINCT e2.userid FROM mdl_enrolment e2 WHERE e2.semester=?) OR
+      e.userid IN ($test_for_is_a_student_this_semester) OR
       e.userid IN (
         SELECT x.userid FROM (
           SELECT

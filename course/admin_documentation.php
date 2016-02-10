@@ -1554,6 +1554,7 @@ Access to <a href="http://courses.peoples-uni.org/course/education_committee_rep
 <li>
 There are filters at the top of the report which...<br />
 Set the Semester for the Report. The report will include students registered in that Semester but includes all the enrolments up to and including that Semester for those students.<br />
+There is an "Exclude those in the Semester who did not Submit Anything" filter which, when checked, allows excluding students who would be included because they are enrolled in Modules for the Semester, but who have not submitted anything for the Modules which they are enrolled in for the Semester (they might still be included based on the next filter because they have recently submitted something for a previous Semester).<br />
 Set the Last Exam Board date. This ensures students with resubmissions since that date are included even is the student is not enrolled in the current semester.<br />
 There is a filter by the student's MPH status, if it is desired to include/exclude those students.<br />
 There is a "Has Diploma?" filter which allows excluding students without six passes of some sort whether notified or not ("Has 6 Passes") or separately without a Diploma ("Has Diploma").<br />
