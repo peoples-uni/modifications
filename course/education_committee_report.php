@@ -197,6 +197,7 @@ $enrols = $DB->get_records_sql("
           LEFT JOIN mdl_grade_grades_history gh ON g3.id=gh.oldid
           WHERE
             e3.enrolled!=0 AND
+            e3.courseid>155 AND
             g3.finalgrade IS NOT NULL
           GROUP BY gh.oldid
           HAVING
@@ -206,6 +207,21 @@ $enrols = $DB->get_records_sql("
     ) AND
     s.id<=$semester_id
   ORDER BY s.id ASC", array($chosensemester));
+// e3.courseid>155 'Public Health Nutrition 11a' above because courses up to this seem to have their g3.timemodified and gh.timemodified updated to be recent...
+//          SELECT
+//            c.id,
+//            c.fullname,
+//            MAX(g3.timemodified)
+//          FROM mdl_enrolment e3
+//          JOIN mdl_grade_items i3 ON i3.itemtype='course' AND e3.courseid=i3.courseid
+//          JOIN mdl_grade_grades g3 ON i3.id=g3.itemid AND e3.userid=g3.userid
+//          JOIN mdl_course c ON e3.courseid=c.id
+//          WHERE
+//            e3.enrolled!=0 AND
+//            g3.finalgrade IS NOT NULL AND
+//            g3.timemodified>=1442534400
+//          GROUP BY c.fullname
+//          ORDER BY i3.courseid, g3.timemodified;
 
 
 $idnumbers = $DB->get_records_sql("
