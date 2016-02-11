@@ -157,7 +157,7 @@ FROM
 
 
 $test_for_is_a_student_this_semester = 'SELECT DISTINCT e2.userid FROM mdl_enrolment e2 WHERE e2.semester=?';
-if ($exclude_non_submitters) $test_for_is_a_student_this_semester = 'SELECT DISTINCT e2.userid FROM mdl_enrolment e2, mdl_recorded_submissions rs WHERE e2.semester=? AND e2.courseid=rs.course';
+if ($exclude_non_submitters) $test_for_is_a_student_this_semester = 'SELECT DISTINCT e2.userid FROM mdl_enrolment e2, mdl_recorded_submissions rs WHERE e2.semester=? AND e2.userid=rs.userid AND e2.courseid=rs.course';
 $enrols = $DB->get_records_sql("
   SELECT
     e.id,
