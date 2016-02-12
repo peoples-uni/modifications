@@ -1145,7 +1145,7 @@ Either <a href="http://courses.peoples-uni.org/course/track_submissions.php" tar
 If there has been more than one submission then the "Submission History" column contains a list of all submissions (status & date).
 </li>
 <li>
-The "All Recorded Submissions" column has a list of dates of all submissions even those that are "draft" and the dates of which might have been overwritten by Moodle when the status is changed to "submitted" by us or the student. This is clickable to get to more details.
+The "All Recorded Submissions (in brackets: total Submissions for this module for all enrolments)" column has a list of dates of all submissions even those that are "draft" and the dates of which might have been overwritten by Moodle when the status is changed to "submitted" by us or the student. This is clickable to get to more details. In Brackets, if there is more than one, there is a count of all Submissions made for any assignment in this module in this semester or any semester for which the student has enrolled in the equivalent module.
 </li>
 <li>
 The "All Assignment Grades" column has a list of all assignment grades and the dates.
