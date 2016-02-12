@@ -113,7 +113,7 @@ else {
 
 Student:&nbsp;<?php
 //$students = $DB->get_records_sql("SELECT DISTINCT e.userid, CONCAT(u.lastname, ', ', u.firstname) AS name FROM mdl_enrolment e, mdl_user u WHERE e.userid=u.id ORDER BY TRIM(u.lastname) ASC, TRIM(u.firstname) ASC, u.id ASC");
-$students = $DB->get_records_sql("SELECT DISTINCT u.id AS userid, CONCAT(u.lastname, ', ', u.firstname) AS name FROM mdl_user u WHERE ORDER BY TRIM(u.lastname) ASC, TRIM(u.firstname) ASC, u.id ASC");
+$students = $DB->get_records_sql("SELECT DISTINCT u.id AS userid, CONCAT(u.lastname, ', ', u.firstname) AS name FROM mdl_user u ORDER BY TRIM(u.lastname) ASC, TRIM(u.firstname) ASC, u.id ASC");
 
 if (!empty($userid)) $selectedvalue = $students[$userid]->name;
 else                 $selectedvalue = '';
