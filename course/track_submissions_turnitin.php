@@ -148,6 +148,7 @@ $track_submissions = $DB->get_records_sql("
   FROM (
     SELECT
       CONCAT(e.id, '#', i.id, '#', t2p.id) AS unique_id,
+      e.courseid,
       c.fullname AS course,
       c.fullname AS coursename1,
       c.fullname AS coursename2,
@@ -217,6 +218,27 @@ foreach ($grade_grade_historys as $grade_grade_history) {
 }
 
 
+$number_of_submissions_by_course_by_user = $DB->get_records_sql("
+SELECT
+  CONCAT(codes.course_code, '#', e.userid) AS unique_id,
+  codes.course_code,
+  e.userid,
+  COUNT(*) AS number_submissions
+FROM mdl_enrolment e
+JOIN mdl_course c ON e.courseid=c.id
+JOIN mdl_peoples_course_codes codes ON c.idnumber LIKE BINARY CONCAT(codes.course_code, '%')
+JOIN mdl_recorded_submissions rs ON e.userid=rs.userid AND e.courseid=rs.course
+GROUP BY codes.course_code, e.userid");
+
+$course_code_by_courseid = $DB->get_records_sql("
+SELECT
+  c.id,
+  c.idnumber,
+  codes.course_code
+FROM mdl_course c
+JOIN mdl_peoples_course_codes codes ON c.idnumber LIKE BINARY CONCAT(codes.course_code, '%')");
+
+
 $track_submissions = $peoples_filters->filter_entries($track_submissions);
 
 $table = new html_table();
@@ -232,7 +254,7 @@ $table->head = array(
   'Submission Date',
   'Submission Status',
   //'Submission History',
-  'All Recorded Submissions',
+  'All Recorded Submissions (in brackets: total Submissions for this module for all enrolments)',
   //'All Assignment Grades',
   'Final Grade',
   'MPH',
@@ -260,11 +282,14 @@ foreach ($track_submissions as $index => $track_submission) {
   //if (substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
   //else $rowdata[] = '';
 
+  $number_of_submissions = $number_of_submissions_by_course_by_user[$course_code_by_courseid[$track_submission->courseid] . '#' . $track_submission->userid]
+  if ($number_of_submissions > 1) $number_of_submissions = " ($number_of_submissions)";
+  else $number_of_submissions = '';
   if (!$displayforexcel) {
-    $rowdata[] = '<a href="' . "$CFG->wwwroot/course/studentsubmissions.php?id={$track_submission->userid}&hidequiz=1" . '" target="_blank">' . $track_submission->submissionhistoryall . '</a>';
+    $rowdata[] = '<a href="' . "$CFG->wwwroot/course/studentsubmissions.php?id={$track_submission->userid}&hidequiz=1" . '" target="_blank">' . $track_submission->submissionhistoryall . $number_of_submissions . '</a>';
   }
   else {
-    $rowdata[] = $track_submission->submissionhistoryall;
+    $rowdata[] = $track_submission->submissionhistoryall . $number_of_submissions;
   }
 
   //$rowdata[] = $track_submission->assignmentgrades;
