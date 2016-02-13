@@ -282,7 +282,7 @@ foreach ($track_submissions as $index => $track_submission) {
   //if (substr_count($track_submission->submissionhistory, '(')  > 1) $rowdata[] = $track_submission->submissionhistory;
   //else $rowdata[] = '';
 
-  $number_of_submissions = $number_of_submissions_by_course_by_user[$course_code_by_courseid[$track_submission->courseid] . '#' . $track_submission->userid]
+  $number_of_submissions = $number_of_submissions_by_course_by_user[$course_code_by_courseid[$track_submission->courseid] . '#' . $track_submission->userid];
   if ($number_of_submissions > 1) $number_of_submissions = " ($number_of_submissions)";
   else $number_of_submissions = '';
   if (!$displayforexcel) {
