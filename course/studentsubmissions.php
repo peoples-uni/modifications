@@ -27,6 +27,7 @@ CREATE INDEX mdl_recorded_submissions_aid_ix ON mdl_recorded_submissions (assign
 CREATE INDEX mdl_recorded_submissions_a1id_ix ON mdl_recorded_submissions (assign);
 CREATE INDEX mdl_recorded_submissions_a2id_ix ON mdl_recorded_submissions (turnitintooltwo_submission_part);
 CREATE INDEX mdl_recorded_submissions_uid_ix ON mdl_recorded_submissions (userid);
+CREATE INDEX mdl_recorded_submissions_course_ix ON mdl_recorded_submissions (course);
 CREATE INDEX mdl_recorded_submissions_tim_ix ON mdl_recorded_submissions (timemodified);
 
 mdl_assignment table entries will be deleted as it is upgraded to mdl_assign (Moodle 2.3) so keep all relevant data in this table
