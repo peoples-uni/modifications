@@ -5,6 +5,21 @@
 *
 */
 
+/*
+CREATE TABLE mdl_peoples_accreditation_of_prior_learning (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  prior_foundation BIGINT(10) UNSIGNED NOT NULL,
+  prior_problems BIGINT(10) UNSIGNED NOT NULL,
+  userid_approver BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) UNSIGNED NOT NULL,
+  note text NOT NULL,
+CONSTRAINT PRIMARY KEY (id)
+);
+
+CREATE UNIQUE INDEX mdl_peoples_accreditation_of_prior_learning_uid_ix ON mdl_peoples_accreditation_of_prior_learning (userid);
+*/
+
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
@@ -160,47 +175,48 @@ SELECT
   CASE
     WHEN
       (
-        ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) >= 6)                      /* 6 Masters passes for Diploma */
+        ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 6)    /* 6 Masters passes for Diploma */
           OR
-        ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))  = 5) AND (COUNT(*) >= 6)) /* 5 Masters passes for Diploma & 1 condonement*/
+        ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 5) AND (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 6)) /* 5 Masters passes for Diploma & 1 condonement */
       )
         AND
       (
         (
-          (SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation') >= 2) /* meets_foundation_criterion */
+          (SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation')+IFNULL(a.prior_foundation, 0) >= 2) /* meets_foundation_criterion */
             AND
-          (SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  ) >= 2) /* meets_problems_criterion */
+          (SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  )+IFNULL(a.prior_problems,   0) >= 2) /* meets_problems_criterion */
         )
           OR
         (
-          ( SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation') >= 2) /* meets_foundation_criterion */
+          ( SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation')+IFNULL(a.prior_foundation, 0) >= 2) /* meets_foundation_criterion */
             AND
-          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  )  = 1) AND (SUM(IF(codes.type='problems'  , 1, 0)) >= 2)) /* almost_meets_problems_criterion */
+          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  )+IFNULL(a.prior_problems,   0)  = 1) AND (SUM(IF(codes.type='problems'  , 1, 0))+IFNULL(a.prior_problems,   0) >= 2)) /* almost_meets_problems_criterion */
         )
           OR
         (
-          ( SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  ) >= 2) /* meets_problems_criterion */
+          ( SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='problems'  )+IFNULL(a.prior_problems,   0) >= 2) /* meets_problems_criterion */
             AND
-          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation')  = 1) AND (SUM(IF(codes.type='foundation', 1, 0)) >= 2)) /* almost_meets_foundation_criterion */
+          ((SUM(((e.percentgrades=0) OR (g.finalgrade>49.99999)) AND codes.type='foundation')+IFNULL(a.prior_foundation, 0)  = 1) AND (SUM(IF(codes.type='foundation', 1, 0))+IFNULL(a.prior_foundation, 0) >= 2)) /* almost_meets_foundation_criterion */
         )
       )
     THEN 'Diploma'
 
     WHEN
-      ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) >= 3)                    /* 3 Masters passes for Certificate */
+      ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 3)       /* 3 Masters passes for Certificate */
         OR
-      ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))  = 2) && (COUNT(*)>= 3)) /* 2 Masters passes for Certificate & 1 condonement*/
+      ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 2) && (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)>= 3)) /* 2 Masters passes for Certificate & 1 condonement*/
     THEN 'Certificate'
 
     ELSE ''
   END AS qualification
-FROM
+FROM (
   mdl_enrolment e,
   mdl_course c,
   mdl_user u,
   mdl_grade_grades g,
   mdl_grade_items i,
-  mdl_peoples_course_codes codes
+  mdl_peoples_course_codes codes)
+LEFT JOIN mdl_peoples_accreditation_of_prior_learning a ON e.userid=a.userid
 WHERE
   e.courseid=c.id AND
   e.userid=u.id AND
