@@ -263,6 +263,11 @@ WHERE
 GROUP BY e.userid
 ");
 
+$accreditation_of_prior_learnings = $DB->get_records_sql("
+  SELECT userid, prior_foundation, prior_problems
+  FROM mdl_peoples_accreditation_of_prior_learning");
+if (empty($accreditation_of_prior_learnings)) $accreditation_of_prior_learnings = array();
+
 $table = new html_table();
 
 $table->head = array(
@@ -297,8 +302,24 @@ foreach ($enrols as $enrol) {
   $rowdata[] =  $text;
 
   $rowdata[] =  preg_replace(array('/^PU/', '/, PU/'), array('', ', '), htmlspecialchars($enrol->codespassed, ENT_COMPAT, 'UTF-8'));
+  $text = '';
+  if (!empty($accreditation_of_prior_learnings[$enrol->id])) {
+    if ($accreditation_of_prior_learnings[$enrol->id]->prior_foundation) {
+      $number = $accreditation_of_prior_learnings[$enrol->id]->prior_foundation;
+      $text = " (+ $number for Accreditation of Prior Learnings)";
+    }
+  }
   $rowdata[] =  $enrol->foundationspassed;
+
+  $text = '';
+  if (!empty($accreditation_of_prior_learnings[$enrol->id])) {
+    if ($accreditation_of_prior_learnings[$enrol->id]->prior_problems) {
+      $number = $accreditation_of_prior_learnings[$enrol->id]->prior_problems;
+      $text = " (+ $number for Accreditation of Prior Learnings)";
+    }
+  }
   $rowdata[] =  $enrol->problemspassed;
+
   $mphtext = '';
   if (!empty($peoplesmph2s[$enrol->id])) {
     $peoplesmph2 = $peoplesmph2s[$enrol->id];
