@@ -27,17 +27,16 @@ class accreditation_of_prior_learnings_form extends moodleform {
     $mform->addElement('header', 'assessment_header', 'Accreditation of Prior Learnings');
 
     $enrols = $DB->get_records_sql("
-      SELECT DISTINCT u.*, CONCAT(u.lastname, ', ', u.firstname) AS lastfirst, a.id IS NOT NULL AS already_submitted
+      SELECT DISTINCT u.*, CONCAT(u.lastname, ', ', u.firstname) AS lastfirst, a.id IS NOT NULL AS already_submitted, a.prior_foundation, a.prior_problems
       FROM mdl_user u
       LEFT JOIN mdl_peoples_accreditation_of_prior_learning a ON u.id=a.userid
-      ORDER BY CONCAT(u.lastname, ', ', u.firstname)",
-      array($_SESSION['peoples_course_id_for_discussion_feedback']));
+      ORDER BY CONCAT(u.lastname, ', ', u.firstname)");
 
     $listforstudents = array();
     $listforstudents[''] = 'Select...';
     foreach ($enrols as $student) {
       $listforstudents[$student->id] = $student->lastfirst;
-      if ($student->already_submitted) $listforstudents[$student->id] .= ' (Already Submitted)';
+      if ($student->already_submitted) $listforstudents[$student->id] .= " (Prior Foundation: $student->prior_foundation, Problems: $student->prior_problems)";
     }
     $mform->addElement('select', 'student_id', 'Student', $listforstudents);
     $mform->addRule('student_id', 'Student is required', 'required', null, 'client');
