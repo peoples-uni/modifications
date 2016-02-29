@@ -362,7 +362,7 @@ if (!empty($enrols)) {
 		$z = ($enrol->lastaccess ? format_time(time() - $enrol->lastaccess) : get_string('never'));
 		if ($enrol->enrolled == 0) $z .= '<br />Was Un-Enrolled on: ' . gmdate('d M Y', $enrol->dateunenrolled);
 
-    $enrs = $DB->get_records_sql("SELECT e.datefirstenrolled, e.semester, c.idnumber FROM mdl_enrolment e, mdl_course c
+    $enrs = $DB->get_records_sql("SELECT e.id, e.datefirstenrolled, e.semester, c.idnumber FROM mdl_enrolment e, mdl_course c
       WHERE e.userid=? AND e.courseid=c.id AND ?<e.datefirstenrolled", array($enrol->userid, $enrol->datefirstenrolled));
 		foreach ($enrs as $enr) {
 			$founda = preg_match('/^(.{4,}?)[012]+[0-9]+/', $enrol->idnumber, $matchesa);	// Take out course code without Year/Semester part
