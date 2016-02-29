@@ -633,6 +633,19 @@ foreach ($passed_or_cpd_enrol_ids as $passed_or_cpd_enrol_id) {
   }
 }
 
+$accreditation_of_prior_learnings = $DB->get_records_sql("
+  SELECT userid, prior_foundation, prior_problems
+  FROM mdl_peoples_accreditation_of_prior_learning
+  WHERE userid=:userid", array('userid' => $userid));
+if (!empty($accreditation_of_prior_learnings)) {
+  if ($accreditation_of_prior_learnings[$userid]->prior_foundation) {
+    echo '(Accreditation of Prior Learnings (Foundation): ' . $accreditation_of_prior_learnings[$userid]->prior_foundation . ')<br />';
+  }
+  if ($accreditation_of_prior_learnings[$userid]->prior_problems) {
+    echo '(Accreditation of Prior Learnings (Problems): ' . $accreditation_of_prior_learnings[$userid]->prior_problems . ')<br />';
+  }
+}
+
 if ($qualification & 1) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate" target="_blank">Your Peoples Open Access Educational Initiative Certificate</a><br />';
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=certificate&nopercentage=1" target="_blank">(Same Certificate without Percent Grades)</a><br />';
