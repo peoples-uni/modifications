@@ -77,6 +77,9 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#informing">Informing Students of Semester Final Grade Results</a><br />
 </li>
 <li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#prior">Accreditation of Prior Learnings</a><br />
+</li>
+<li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a><br />
 </li>
 <li>
@@ -1482,6 +1485,7 @@ There are a number of buttons for each course module in "Student Grades" which c
 <li>
 Additionally if the student has met the criteria for receiving a Certificate (3 modules passed 50%+) or Diploma (6 modules passed 50%+, 2 of each type) from Peoples-uni. They will be able to download them here.<br />
 If a Certificate or Diploma is shown for download, there will also be a link to download the "Same Diploma without Percent Grades" or the "Same Diploma without List of Modules".<br />
+Note: These will be preceeded by Accreditation of Prior Learnings, if any.<br />
 Note: After 10 elapsed semesters, module passes for subsequent semesters are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
 Note: After 1 module failures (i.e. a maximum of 0 failures is allowed), module passes are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
 Note: After 1 "Diploma level" pass (between 45% and 50%) (i.e. a maximum of 0 "Diploma level" passes are allowed), module passes are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
@@ -1511,6 +1515,16 @@ To "Mark this Student as Graduated with MPH", set the Semester in which the Stud
 </ol>
 
 
+<a name="prior"></a>
+<h2>Accreditation of Prior Learnings</h2>
+<ol>
+<li>
+The page <a href="http://courses.peoples-uni.org/course/accreditation_of_prior_learnings.php" target="_blank">http://courses.peoples-uni.org/course/accreditation_of_prior_learnings.php</a> allows the specification of "Accreditation of Prior Learnings" for a student. A student can be selected and the number of "Foundation" and "Problems" modules that should be accredited should be specified. These will contribute to a student being (automatically) awarded a Certificate or Diploma.
+</li>
+</ol>
+
+
+
 <a name="progress"></a>
 <h2>Student Progress towards Qualifications</h2>
 <ol>
@@ -1525,8 +1539,8 @@ Given name<br />
 Last access (elapsed time for all modules) [elapsed time is the total number of elapsed semesters that the student studied (or is still studying) with Peoples-uni]<br />
 # Passed @Masters (@Diploma) [number of modules passes at Masters (or Diploma) level, but excluding those that should be discounted because of academic rules (maximum of 10 semesters to date, maximum of 1 fail to date); a note of any Masters level passes that are actually pre-percentage is made]<br />
 Passed [includes the list of modules they have passed (Course Codes)]<br />
-# Foundation [the number of "Foundation Sciences" modules passed]<br />
-# Problems [the number of "Public Health Problems" modules passed]<br />
+# Foundation [the number of "Foundation Sciences" modules passed, with the number accredited for prior learnings, if any]<br />
+# Problems [the number of "Public Health Problems" modules passed, with the number accredited for prior learnings, if any]<br />
 Qualification [shows whether they have qualified for a Diploma, a Certificate or nothing so far]<br />
 "Student Grades"<br />
 "Mark Discounted Modules" [see next bullet point for the link, if there are any that have been discounted, this is noted here]<br />
@@ -1572,7 +1586,7 @@ The report has the following columns...<br />
 One column for each module. In this column, the semester that the student took the module is indicated (possibly more that one) along with the grade. Additionally, the following notes may be included: "Unenrolled", "Not Notified"(not confirmed), "Not Graded, Not Complete", "Participation/CPD", "Not Graded, Did Not Pay" or "Not Graded, Exceptional Factors". If there is no grade and no other indication is given, then just the semester is indicated.<br />
 A spare column<br />
 The "MPH Status changes" column contains MPH status and changes of status along with dates.<br />
-The "Notes" column contains Semester in which the student started and all student notes with dates. It also contains, if the "Has Diploma?" filter is used, an indication that the student has a Diploma<br />
+The "Notes" column contains Semester in which the student started and all student notes with dates. It also contains, if the "Has Diploma?" filter is used, an indication that the student has a Diploma. Also there will be a note of Accreditation of Prior Learnings, if any.<br />
 "Recommendations" column is empty for use by the committee.
 </li>
 <li>
