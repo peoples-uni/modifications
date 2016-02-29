@@ -281,6 +281,12 @@ foreach ($enrols as $enrol) {
 }
 
 
+$accreditation_of_prior_learnings = $DB->get_records_sql("
+  SELECT userid, prior_foundation, prior_problems
+  FROM mdl_peoples_accreditation_of_prior_learning");
+if (empty($accreditation_of_prior_learnings)) $accreditation_of_prior_learnings = array();
+
+
 $userdatas = $peoples_filters->filter_entries($userdatas);
 
 
@@ -304,6 +310,7 @@ foreach ($userdatas as $index => $userdata) {
 
   if (!empty($user_rows[$userdata->id])) {
     if (
+        !empty($accreditation_of_prior_learnings[$userdata->id]) ||
         (($diploma_setting === 'Has 6 Passes' || $diploma_setting === 'Has Diploma') && !empty($userdatas[$userdata->id]->diploma_passes) && $userdatas[$userdata->id]->diploma_passes >= 6) ||
         $diploma_setting === 'Has less than 6 Passes' ||
         $diploma_setting === 'Does not have Diploma'
@@ -363,6 +370,14 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
       if (!empty($qualification)) $text = $qualification . '<br />';
       else                        $text = '';
+      if (!empty($accreditation_of_prior_learnings[$userdata->id])) {
+        if ($accreditation_of_prior_learnings[$userdata->id]->prior_foundation) {
+          $text .= 'Accreditation of Prior Learnings (Foundation): ' . $accreditation_of_prior_learnings[$userdata->id]->prior_foundation . '<br />';
+        }
+        if ($accreditation_of_prior_learnings[$userdata->id]->prior_problems) {
+          $text .= 'Accreditation of Prior Learnings (Problems): ' . $accreditation_of_prior_learnings[$userdata->id]->prior_problems . '<br />';
+        }
+      }
       $text .= htmlspecialchars($first_semester[$userdata->id], ENT_COMPAT, 'UTF-8') . '<br />';
       $notes = $DB->get_records('peoplesstudentnotes', array('userid' => $userdata->id), 'datesubmitted ASC');
       foreach ($notes as $note) {
