@@ -141,6 +141,23 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   $countf_grandfathered = 0;
   $countp = 0;
   $countp_grandfathered = 0;
+  $accreditation_of_prior_learnings = $DB->get_records_sql("
+    SELECT userid, prior_foundation, prior_problems
+    FROM mdl_peoples_accreditation_of_prior_learning
+    WHERE userid=:userid", array('userid' => $userid));
+  if (!empty($accreditation_of_prior_learnings)) {
+    $prior_foundation = $accreditation_of_prior_learnings[$userid]->prior_foundation;
+    $prior_problems   = $accreditation_of_prior_learnings[$userid]->prior_problems;
+
+    $passes_notified_or_not += $prior_foundation + $prior_problems;
+    $diploma_passes         += $prior_foundation + $prior_problems;
+    $masters_passes         += $prior_foundation + $prior_problems;
+    $grandfathered_passes   += $prior_foundation + $prior_problems;
+    $countf                 += $prior_foundation;
+    $countf_grandfathered   += $prior_foundation;
+    $countp                 += $prior_problems;
+    $countp_grandfathered   += $prior_problems;
+  }
   $already_passed = array();
   foreach ($enrols as $enrol) {
     $pass_type[$enrol->id] = '';
