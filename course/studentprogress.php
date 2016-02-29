@@ -309,7 +309,7 @@ foreach ($enrols as $enrol) {
       $text = " (+ $number for Accreditation of Prior Learnings)";
     }
   }
-  $rowdata[] =  $enrol->foundationspassed;
+  $rowdata[] =  $enrol->foundationspassed . $text;
 
   $text = '';
   if (!empty($accreditation_of_prior_learnings[$enrol->id])) {
@@ -318,7 +318,7 @@ foreach ($enrols as $enrol) {
       $text = " (+ $number for Accreditation of Prior Learnings)";
     }
   }
-  $rowdata[] =  $enrol->problemspassed;
+  $rowdata[] =  $enrol->problemspassed . $text;
 
   $mphtext = '';
   if (!empty($peoplesmph2s[$enrol->id])) {
