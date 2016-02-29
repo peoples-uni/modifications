@@ -91,6 +91,19 @@ $foundation_problems = array();
 $passes_notified_or_not = 0;
 $qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems, $passes_notified_or_not);
 
+$accreditation_of_prior_learnings = $DB->get_records_sql("
+  SELECT userid, prior_foundation, prior_problems
+  FROM mdl_peoples_accreditation_of_prior_learning
+  WHERE userid=:userid", array('userid' => $userid));
+if (!empty($accreditation_of_prior_learnings)) {
+  if ($accreditation_of_prior_learnings[$userid]->prior_foundation) {
+    echo '(Accreditation of Prior Learnings (Foundation): ' . $accreditation_of_prior_learnings[$userid]->prior_foundation . ')<br />';
+  }
+  if ($accreditation_of_prior_learnings[$userid]->prior_problems) {
+    echo '(Accreditation of Prior Learnings (Problems): ' . $accreditation_of_prior_learnings[$userid]->prior_problems . ')<br />';
+  }
+}
+
 if ($qualification & 2) {
   echo '<strong>Award Achieved: Diploma</strong><br /><br />';
 }
