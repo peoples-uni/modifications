@@ -721,9 +721,26 @@ elseif ($application->paymentmechanism == 109) $mechanism = 'MoneyGram Confirmed
 else  $mechanism = '';
 
 $pnote = '';
+$balances = $DB->get_records_sql("
+  SELECT
+    b.userid
+  FROM mdl_peoples_student_balance b
+  WHERE
+    b.detail LIKE '%scholarship%' OR
+    b.detail LIKE '%bursa%' OR
+    b.detail LIKE '%busar%' OR
+    b.detail LIKE '%bursr%'
+  GROUP BY b.userid");
+if (empty($balances)) {
+  $balances = array();
+}
+if (!empty($balances[$application->userid])) {
+  $pnote .= '<br />(Previously given a Bursary)';
+}
+
 $paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($paymentnotes)) {
-  $pnote = '<br />(Payment Note Present)';
+  $pnote .= '<br />(Payment Note Present)';
 }
 
 echo '<tr>';
