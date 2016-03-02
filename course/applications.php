@@ -472,6 +472,20 @@ if (empty($dissertations)) {
   $dissertations = array();
 }
 
+$balances = $DB->get_records_sql("
+  SELECT
+    b.userid
+  FROM mdl_peoples_student_balance b
+  WHERE
+    b.detail LIKE '%scholarship%' OR
+    b.detail LIKE '%bursa%' OR
+    b.detail LIKE '%busar%' OR
+    b.detail LIKE '%bursr%'
+  GROUP BY b.userid");
+if (empty($balances)) {
+  $balances = array();
+}
+
 $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r WHERE r.userid!=0');
 
 
@@ -829,6 +843,7 @@ foreach ($applications as $sid => $application) {
     else {
       $z = $mechanism;
     }
+    if (!empty($balances[$application->userid])) $z .= '<br />(Previously given a Bursary)';
     if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
     $rowdata[] = $z;
