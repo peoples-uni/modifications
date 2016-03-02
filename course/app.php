@@ -693,6 +693,22 @@ $neg_amount_to_pay_total = -$amount_to_pay_total;
 if ($amount_to_pay_total >= .01) $x = '<span style="color:red">&pound;' . $amount_to_pay_total . '</span>';
 elseif (abs($amount_to_pay_total) < .01) $x = '<span style="color:green">Nothing</span>';
 else $x = '<span style="color:blue">' . "Overpaid: &pound;$neg_amount_to_pay_total" . '</span>';
+$balances = $DB->get_records_sql("
+  SELECT
+    b.userid
+  FROM mdl_peoples_student_balance b
+  WHERE
+    b.detail LIKE '%scholarship%' OR
+    b.detail LIKE '%bursa%' OR
+    b.detail LIKE '%busar%' OR
+    b.detail LIKE '%bursr%'
+  GROUP BY b.userid");
+if (empty($balances)) {
+  $balances = array();
+}
+if (!empty($balances[$application->userid])) {
+  $x .= '<br />(Previously given a Bursary)';
+}
 echo '<td>' . $x;
 echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
 echo '</td>';
@@ -721,23 +737,6 @@ elseif ($application->paymentmechanism == 109) $mechanism = 'MoneyGram Confirmed
 else  $mechanism = '';
 
 $pnote = '';
-$balances = $DB->get_records_sql("
-  SELECT
-    b.userid
-  FROM mdl_peoples_student_balance b
-  WHERE
-    b.detail LIKE '%scholarship%' OR
-    b.detail LIKE '%bursa%' OR
-    b.detail LIKE '%busar%' OR
-    b.detail LIKE '%bursr%'
-  GROUP BY b.userid");
-if (empty($balances)) {
-  $balances = array();
-}
-if (!empty($balances[$application->userid])) {
-  $pnote .= '<br />(Previously given a Bursary)';
-}
-
 $paymentnotes = $DB->get_records_sql("SELECT * FROM mdl_peoplespaymentnote WHERE (sid=$sid AND sid!=0) OR (userid={$application->userid} AND userid!=0) ORDER BY datesubmitted DESC");
 if (!empty($paymentnotes)) {
   $pnote .= '<br />(Payment Note Present)';
