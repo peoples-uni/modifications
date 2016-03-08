@@ -364,12 +364,14 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
       $month = $matches[1];
       if ($month == 'January' || $month == 'February' || $month == 'March' || $month == 'April' || $month == 'May' || $month == 'June') {
         $month = 9;
+        $day = 30;
       }
       else {
         $year++;
-        $month = 3;
+        $month = 2;
+        $day = 28;
       }
-      $certdate = gmmktime(0, 0, 0, $month, 1, $year);
+      $certdate = gmmktime(0, 0, 0, $month, $day, $year);
     }
 
     if     ($peoplesmph2->graduated == 2) $award .= ' (Merit)';
