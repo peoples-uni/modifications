@@ -430,6 +430,11 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
     cert_printtext(170, 270, 'C', 'Helvetica', '', 30, utf8_decode($award));
     $pdf->SetTextColor(0, 0, 0);
     cert_printtext(170, 305, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
+
+    if ($cert == 'mph') {
+      cert_printtext(170, 340, 'C', 'Helvetica', '', 14, utf8_decode("This reflects passing 6 coursework modules and a Dissertation,"));
+      cert_printtext(170, 375, 'C', 'Helvetica', '', 14, utf8_decode("and carries 180 credits equivalent to 90 credits in the European Credit Transfer System."));
+    }
   }
   else {
     cert_printtext(170, 200, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
