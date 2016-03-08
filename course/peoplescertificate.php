@@ -360,8 +360,8 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
     $found = preg_match('/^Starting (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4,4})$/',
       $peoplesmph2->semester_graduated, $matches);
     if ($found) {
-      $year = $matchesdob[2];
-      $month = $matchesdob[1];
+      $year = $matches[2];
+      $month = $matches[1];
       if ($month == 'January' || $month == 'February' || $month == 'March' || $month == 'April' || $month == 'May' || $month == 'June') {
         $month = 3;
       }
