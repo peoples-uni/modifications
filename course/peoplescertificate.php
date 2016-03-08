@@ -363,11 +363,11 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
       $year = $matches[2];
       $month = $matches[1];
       if ($month == 'January' || $month == 'February' || $month == 'March' || $month == 'April' || $month == 'May' || $month == 'June') {
-        $month = 3;
+        $month = 9;
       }
       else {
         $year++;
-        $month = 9;
+        $month = 3;
       }
       $certdate = gmmktime(0, 0, 0, $month, 1, $year);
     }
