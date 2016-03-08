@@ -308,11 +308,16 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   $passes_notified_or_not = 0;
   $qualification = get_student_award($userid, $enrols, $passed_or_cpd_enrol_ids, $modules, $percentages, $nopercentage, $lastestdate, $cumulative_enrolled_ids_to_discount, $pass_type, $foundation_problems, $passes_notified_or_not);
 
+  $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
+
   if (($cert == 'certificate') && ($qualification & 1)) {
     $award = 'Certificate in Public Health';
   }
   elseif (($cert == 'diploma') && ($qualification & 2)) {
     $award = 'Diploma in Public Health';
+  }
+  elseif (($cert == 'mph') && !empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2) {
+    $award = 'Master of Public Health';
   }
   elseif ($cert == 'testcertificate') {
     $award = 'Certificate in Public Health';
@@ -349,6 +354,30 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
 	$certificatedate = '';
 	$certdate = $lastestdate;
+
+  if ($cert == 'mph') {
+    $certdate = time();
+    $found = preg_match('/^Starting (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4,4})$/',
+      $peoplesmph2->semester_graduated, $matches);
+    if ($found) {
+      $year = $matchesdob[2];
+      $month = $matchesdob[1];
+      if ($month == 'January' || $month == 'February' || $month == 'March' || $month == 'April' || $month == 'May' || $month == 'June') {
+        $month = 3;
+      }
+      else {
+        $year++;
+        $month = 9;
+      }
+      $certdate = gmmktime(0, 0, 0, $month, 1, $year);
+    }
+
+    if     ($peoplesmph2->graduated == 2) $award .= ' (Merit)';
+    elseif ($peoplesmph2->graduated == 3) $award .= ' (Distinction)';
+
+    $nomodules = true;
+  }
+
 	if ($certificate->printdate > 0) {
 		if ($certificate->datefmt == 1) {
 			$certificatedate = str_replace(' 0', ' ', strftime('%B %d, %Y', $certdate));
