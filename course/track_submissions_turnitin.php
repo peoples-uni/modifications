@@ -63,6 +63,12 @@ $listsubmission[] = 'Submitted, Outside Due/Extension';
 $peoples_submission_filter = new peoples_submission_filter('Status', 'submission', $listsubmission, 'Any');
 $peoples_filters->add_filter($peoples_submission_filter);
 
+$listresubmission[] = 'Any';
+$listresubmission[] = 'Yes';
+$listresubmission[] = 'No';
+$peoples_resubmission_filter = new peoples_resubmission_filter('Resubmission?', 'resubmission', $listresubmission, 'Any');
+$peoples_filters->add_filter($peoples_resubmission_filter);
+
 $peoples_mostrecentontop_filter = new peoples_boolean_filter('Sort Most Recent on Top', 'mostrecentontop');
 $peoples_filters->add_filter($peoples_mostrecentontop_filter);
 
