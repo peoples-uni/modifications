@@ -45,6 +45,9 @@ if ($cert == 'transcript') {
   if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
     print_error('invaliduser');
 	}
+  if (!similar_name($userrecord)) {
+    print_error('invaliduser');
+  }
 
 	$courseid = $enrol->courseid;
   if (!$course = $DB->get_record('course', array('id' => $courseid))) {
@@ -128,7 +131,7 @@ if ($cert == 'transcript') {
 	$pdf->SetTextColor(0, 0, 0);
 	cert_printtext(170, 160, 'C', 'Times',    'B', 20, utf8_decode('This is to certify that'));
 
-	cert_printtext(170, 205, 'C', 'Helvetica', '', 30, utf8_decode(fullname($userrecord)));
+  cert_printtext(170, 205, 'C', 'Helvetica', '', 30, utf8_decode(proper_case_if_necessary($userrecord)));
 	cert_printtext(170, 250, 'C', 'Helvetica', '', 20, utf8_decode('has successfully completed the course module'));
   $percent = '';
   if (!$nopercentage && $enrol->percentgrades == 1) {
@@ -187,6 +190,9 @@ elseif ($cert == 'participation') {
   if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
     print_error('invaliduser');
 	}
+  if (!similar_name($userrecord)) {
+    print_error('invaliduser');
+  }
 
 	$courseid = $enrol->courseid;
   if (!$course = $DB->get_record('course', array('id' => $courseid))) {
@@ -265,7 +271,7 @@ elseif ($cert == 'participation') {
 	$pdf->SetTextColor(0, 0, 0);
 	cert_printtext(170, 160, 'C', 'Times',    'B', 20, utf8_decode('This is to certify that'));
 
-	cert_printtext(170, 205, 'C', 'Helvetica', '', 30, utf8_decode(fullname($userrecord)));
+  cert_printtext(170, 205, 'C', 'Helvetica', '', 30, utf8_decode(proper_case_if_necessary($userrecord)));
 	cert_printtext(170, 250, 'C', 'Helvetica', '', 20, utf8_decode('has participated in the course module'));
 	cert_printtext(170, 285, 'C', 'Helvetica', '', 20, utf8_decode($course->fullname . ','));
 	cert_printtext(170, 320, 'C', 'Helvetica', '', 14, utf8_decode("one of the course modules in the People's Open Access Educational Initiative - Peoples-uni."));
@@ -334,6 +340,9 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
     print_error('invaliduser');
 	}
+  if (!similar_name($userrecord)) {
+    print_error('invaliduser');
+  }
 
 	$certificate = new object();
 	$certificate->name = $award;
@@ -424,7 +433,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 	//$pdf->SetTextColor(0, 0, 0);
 	cert_printtext(170, 120, 'C', 'Times',    'B', 20, utf8_decode('This is to certify that'));
 
-	cert_printtext(170, 165, 'C', 'Helvetica', '', 30, utf8_decode(fullname($userrecord)));
+  cert_printtext(170, 165, 'C', 'Helvetica', '', 30, utf8_decode(proper_case_if_necessary($userrecord)));
 
   if ($nomodules) {
     cert_printtext(170, 235, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
@@ -960,5 +969,41 @@ function is_peoples_teacher() {
   if (has_capability('moodle/grade:viewall', context_system::instance())) return true; // Added for Lurker Role
   if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
+}
+
+
+function proper_case_if_necessary($userrecord) {
+  $modified = false;
+
+  $all_lower = "/^([a-z][a-z\']*)([ ,\.\-]*[a-z][a-z\']*)*[ ,\.\-]*$/";
+  $all_upper = "/^([A-Z][A-Z\']*)([ ,\.\-]*[A-Z][A-Z\']*)*[ ,\.\-]*$/";
+
+  $first = $userrecord->firstname;
+  if (preg_match($all_lower, $first) || preg_match($all_upper, $first)) {
+    $modified = true;
+    $first = ucwords(strtolower($first), " ,.-");
+  }
+
+  $last = $userrecord->lastname;
+  if (preg_match($all_lower, $last) || preg_match($all_upper, $last)) {
+    $modified = true;
+    $last = ucwords(strtolower($last), " ,.-");
+  }
+
+  if ($modified) return $first . ' ' . $last;
+  else           return fullname($userrecord);
+}
+
+
+// Security check that someone is not temporarily changing their name to print certificates for others
+function similar_name($userrecord) {
+  global $DB;
+
+  $peoplesregistration = $DB->get_record('peoplesregistration', array('userid' => $userrecord->id));
+  if (empty($peoplesregistration)) return true;
+
+  $percent = 0.0;
+  similar_text(strtolower($userrecord->firstname . ' ' . $userrecord->lastname), strtolower($peoplesregistration->firstname . ' ' . $peoplesregistration->lastname), $percent);
+  return $percent > 40.0;
 }
 ?>
