@@ -211,7 +211,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         }
         $percentages[] = $percent;
 
-        if ($enrol->datenotified > $lastestdate) $lastestdate = $enrol->datenotified;
+        if (($enrol->datenotified > $lastestdate) && ($diploma_passes <= 6)) $lastestdate = $enrol->datenotified;
       }
       elseif (in_array($enrol->id, $cumulative_enrolled_ids_to_discount)) { // Discounted but note marks in any case
         if ($enrol->finalgrade > 49.99999) {
