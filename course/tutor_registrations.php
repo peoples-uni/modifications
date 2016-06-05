@@ -44,8 +44,10 @@ if (!empty($_POST['markfilter'])) {
     . '&chosenendmonth=' . $_POST['chosenendmonth']
     . '&chosenendday=' . $_POST['chosenendday']
     . '&activerecently=' . $_POST['activerecently']
+    . '&chosencountry=' . $_POST['chosencountry']
     . (empty($_POST['approved']) ? '&approved=0' : '&approved=1')
     . (empty($_POST['sortbyname']) ? '&sortbyname=0' : '&sortbyname=1')
+    . (empty($_POST['sortbydate']) ? '&sortbydate=0' : '&sortbydate=1')
     . (empty($_POST['displayforexcel']) ? '&displayforexcel=0' : '&displayforexcel=1')
     );
 }
@@ -108,10 +110,13 @@ else {
   $endtime = 1.0E+20;
 }
 if (!empty($_REQUEST['activerecently'])) $activerecently = $_REQUEST['activerecently'];
+if (!empty($_REQUEST['chosencountry'])) $chosencountry = $_REQUEST['chosencountry'];
 if (!empty($_REQUEST['approved'])) $approved = true;
 else $approved = false;
 if (!empty($_REQUEST['sortbyname'])) $sortbyname = true;
 else $sortbyname = false;
+if (!empty($_REQUEST['sortbydate'])) $sortbydate = true;
+else $sortbydate = false;
 if (!empty($_REQUEST['displayforexcel'])) $displayforexcel = true;
 else $displayforexcel = false;
 
@@ -119,6 +124,11 @@ $listactiverecently[] = 'All';
 if (!isset($activerecently)) $activerecently = 'All';
 $listactiverecently[] = 'Active This or Previous Semester';
 $listactiverecently[] = 'Active This Semester';
+
+$listchosencountry[] = 'All';
+if (!isset($chosencountry)) $chosencountry = 'All';
+$listchosencountry[] = 'Active This or Previous Semester';
+$listchosencountry[] = 'Active This Semester';
 
 for ($i = 2008; $i <= (int)gmdate('Y'); $i++) {
   if (!isset($chosenstartyear)) $chosenstartyear = $i;
@@ -165,8 +175,10 @@ Display entries using the following filters...
     <td>End Month</td>
     <td>End Day</td>
     <td>Semesters Active</td>
+    <td>Country</td>
     <td>Show Approved only?</td>
     <td>Sort by Name</td>
+    <td>Sort by Date</td>
     <td>Display for Copying and Pasting to Excel</td>
   </tr>
   <tr>
@@ -180,9 +192,11 @@ Display entries using the following filters...
     displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
     displayoptions('chosenendday', $listendday, $chosenendday);
     displayoptions('activerecently', $listactiverecently, $activerecently);
+    displayoptions('chosencountry', $listchosencountry, $chosencountry);
     ?>
     <td><input type="checkbox" name="approved" <?php if ($approved) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="sortbyname" <?php if ($sortbyname) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="sortbydate" <?php if ($sortbydate) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="displayforexcel" <?php if ($displayforexcel) echo ' CHECKED'; ?>></td>
   </tr>
 </table>
@@ -364,6 +378,8 @@ if (!empty($extratutors)) {
 
 if ($sortbyname) ksort($peoples_tutor_registrations);
 
+if ($sortbydate) ksort($peoples_tutor_registrations);
+
 $emailcounts = array();
 $emaildups = 0;
 foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) {
@@ -424,6 +440,17 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
       continue;
     }
     if ($activerecently === 'Active This Semester' && empty($tutors_course_list[$peoples_tutor_registration->userid][$latest_semester])) {
+      unset($peoples_tutor_registrations[$index]);
+      continue;
+    }
+  }
+
+  if (!empty($chosencountry) && $chosencountry !== 'Any') {
+    if ($chosencountry === 'Active This or Previous Semester' && empty($tutors_course_list[$peoples_tutor_registration->userid][$latest_semester]) && empty($tutors_course_list[$peoples_tutor_registration->userid][$nextto_latest_semester])) {
+      unset($peoples_tutor_registrations[$index]);
+      continue;
+    }
+    if ($chosencountry === 'Active This Semester' && empty($tutors_course_list[$peoples_tutor_registration->userid][$latest_semester])) {
       unset($peoples_tutor_registrations[$index]);
       continue;
     }
