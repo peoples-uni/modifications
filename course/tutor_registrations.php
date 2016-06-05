@@ -27,6 +27,7 @@ require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
 $countryname = get_string_manager()->get_list_of_countries(false);
+$listchosencountry = array_merge(array('Any' => 'Any'), $countryname);
 $countryname[''] = ''; // There seem to be some '' countries
 
 $PAGE->set_context(context_system::instance());
@@ -125,10 +126,7 @@ if (!isset($activerecently)) $activerecently = 'All';
 $listactiverecently[] = 'Active This or Previous Semester';
 $listactiverecently[] = 'Active This Semester';
 
-$listchosencountry[] = 'All';
-if (!isset($chosencountry)) $chosencountry = 'All';
-$listchosencountry[] = 'Active This or Previous Semester';
-$listchosencountry[] = 'Active This Semester';
+if (!isset($chosencountry)) $chosencountry = 'Any';
 
 for ($i = 2008; $i <= (int)gmdate('Y'); $i++) {
   if (!isset($chosenstartyear)) $chosenstartyear = $i;
@@ -192,7 +190,7 @@ Display entries using the following filters...
     displayoptions('chosenendmonth', $listendmonth, $chosenendmonth);
     displayoptions('chosenendday', $listendday, $chosenendday);
     displayoptions('activerecently', $listactiverecently, $activerecently);
-    displayoptions('chosencountry', $listchosencountry, $chosencountry);
+    displayoptions_with_key('chosencountry', $listchosencountry, $chosencountry);
     ?>
     <td><input type="checkbox" name="approved" <?php if ($approved) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="sortbyname" <?php if ($sortbyname) echo ' CHECKED'; ?>></td>
@@ -217,6 +215,19 @@ function displayoptions($name, $options, $selectedvalue) {
 
     $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
     echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+  }
+  echo '</select></td>';
+}
+
+
+function displayoptions_with_key($name, $options, $selectedvalue) {
+  echo '<td><select name="' . $name . '">';
+  foreach ($options as $key => $option) {
+    if ($key === $selectedvalue) $selected = 'selected="selected"';
+    else $selected = '';
+
+    $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
+    echo '<option value="' . $key . '" ' . $selected . '>' . $opt . '</option>';
   }
   echo '</select></td>';
 }
@@ -378,7 +389,23 @@ if (!empty($extratutors)) {
 
 if ($sortbyname) ksort($peoples_tutor_registrations);
 
-if ($sortbydate) ksort($peoples_tutor_registrations);
+if ($sortbydate) {
+  $peoples_tutor_registrations_new = array();
+
+  foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) {
+    if (empty($peoples_tutor_registration->timecreated)) {
+      $date_index = $peoples_tutor_registration->datesubmitted;
+    }
+    else {
+      $date_index = $peoples_tutor_registration->timecreated;
+    }
+
+    $peoples_tutor_registrations_new["$date_index $index"] = $peoples_tutor_registration;
+  }
+  $peoples_tutor_registrations = $peoples_tutor_registrations_new;
+
+  ksort($peoples_tutor_registrations);
+}
 
 $emailcounts = array();
 $emaildups = 0;
@@ -446,11 +473,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
   }
 
   if (!empty($chosencountry) && $chosencountry !== 'Any') {
-    if ($chosencountry === 'Active This or Previous Semester' && empty($tutors_course_list[$peoples_tutor_registration->userid][$latest_semester]) && empty($tutors_course_list[$peoples_tutor_registration->userid][$nextto_latest_semester])) {
-      unset($peoples_tutor_registrations[$index]);
-      continue;
-    }
-    if ($chosencountry === 'Active This Semester' && empty($tutors_course_list[$peoples_tutor_registration->userid][$latest_semester])) {
+    if ($peoples_tutor_registration->country !== $chosencountry) {
       unset($peoples_tutor_registrations[$index]);
       continue;
     }
