@@ -404,7 +404,7 @@ if ($sortbydate) {
   }
   $peoples_tutor_registrations = $peoples_tutor_registrations_new;
 
-  ksort($peoples_tutor_registrations);
+  krsort($peoples_tutor_registrations);
 }
 
 $emailcounts = array();
@@ -540,8 +540,10 @@ $was_student = $DB->get_records_sql("SELECT DISTINCT userid FROM mdl_enrolment W
 
 
 $table = new html_table();
+$first_column_title = 'Non-registered (ordered by submission date) then Registered (with date)';
+if ($sortbydate) $first_column_title = 'Date (Non-registered submission date or Registered date)';
 $table->head = array(
-  'Non-registered (ordered by submission date) then Registered (with date)',
+  $first_column_title,
   'Family name',
   'Given name',
   'Email address',
