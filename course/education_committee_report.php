@@ -251,7 +251,7 @@ foreach ($enrols as $enrol) {
   if (empty($first_semester[$enrol->userid])) $first_semester[$enrol->userid] = $enrol->semester;
 
   $text = '';
-  if (preg_match('/^(.{4,}?)([012]+[0-9]+[ab]?)/', $enrol->idnumber, $matches)) $text = $matches[2];
+  if (preg_match('/^(.{4,}?)([012]+[0-9]+[abAB]?)/', $enrol->idnumber, $matches)) $text = $matches[2];
   if (!empty($enrol->grade)) $text .= "($enrol->grade)";
 
   if     ($enrol->enrolled == 0) $text .= ' Unenrolled';
