@@ -252,6 +252,7 @@ foreach ($enrols as $enrol) {
 
   $text = '';
   if (preg_match('/^(.{4,}?)([012]+[0-9]+[abAB]?)/', $enrol->idnumber, $matches)) $text = $matches[2];
+  $text = strtolower($text);
   if (!empty($enrol->grade)) $text .= "($enrol->grade)";
 
   if     ($enrol->enrolled == 0) $text .= ' Unenrolled';
