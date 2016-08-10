@@ -373,7 +373,7 @@ LEFT JOIN mdl_rating r ON fp.id=r.itemid
 WHERE
   e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql AND
   r.component='mod_forum' AND r.ratingarea='post' AND
-  r.scaleid IN({$CFG->scale_to_use_for_triple_rating}, {$CFG->scale_to_use_for_triple_rating_2}, {$CFG->scale_to_use_for_triple_rating_3})
+  r.scaleid IN({$CFG->scale_to_use_for_triple_rating}, {$CFG->scale_to_use_for_triple_rating_2}, {$CFG->scale_to_use_for_triple_rating_3}, {$CFG->scale_to_use_for_triple_rating_4})
 ORDER BY fp.created",
 array($chosensemester, $chosenmodule)
 );
@@ -630,6 +630,86 @@ if (!empty($actual_referencing)) {
     }
     else {
       $actual_cumulatedreferencing_percourse[$users_name_course_name] .= ", $item_word";
+    }
+  }
+}
+
+// substantial for Post
+$actual_substantial = array();
+$actual_count_substantial = array();
+$actual_user_substantial = array();
+$actual_user_name_substantial = array();
+$actual_course_name_substantial = array();
+if (!empty($ratings)) {
+  foreach ($ratings as $rating) {
+    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating_4) {
+      if (empty($actual_substantial[$rating->postid])) {
+        $actual_substantial[$rating->postid] = 0.0 + $rating->rating;
+        $actual_count_substantial[$rating->postid] = 1.0;
+        $actual_user_substantial[$rating->postid] = $rating->userid;
+        $actual_user_name_substantial[$rating->postid] = htmlspecialchars(strtolower(trim($rating->lastname . ', ' . $rating->firstname)), ENT_COMPAT, 'UTF-8');
+        $actual_course_name_substantial[$rating->postid] = htmlspecialchars(strtolower(trim($rating->fullname)), ENT_COMPAT, 'UTF-8');
+      }
+      else {
+        $actual_substantial[$rating->postid] =
+          (($actual_substantial[$rating->postid] * $actual_count_substantial[$rating->postid]) + $rating->rating) /
+          ($actual_count_substantial[$rating->postid] + 1.0);
+        $actual_count_substantial[$rating->postid] += 1.0;
+      }
+    }
+  }
+}
+
+// Average substantial for Student
+$actual_averagesubstantial = array();
+$actual_count_averagesubstantial = array();
+if (!empty($actual_substantial)) {
+  foreach ($actual_substantial as $postid => $item) {
+    $student_to_get_average_for = $actual_user_substantial[$postid];
+
+    if (empty($actual_averagesubstantial[$student_to_get_average_for])) {
+      $actual_averagesubstantial[$student_to_get_average_for] = 0.0 + $item;
+      $actual_count_averagesubstantial[$student_to_get_average_for] = 1.0;
+    }
+    else {
+      $actual_averagesubstantial[$student_to_get_average_for] =
+        (($actual_averagesubstantial[$student_to_get_average_for] * $actual_count_averagesubstantial[$student_to_get_average_for]) + $item) /
+        ($actual_count_averagesubstantial[$student_to_get_average_for] + 1.0);
+      $actual_count_averagesubstantial[$student_to_get_average_for] += 1.0;
+    }
+  }
+}
+
+// Average substantial for Student per Course
+$actual_averagesubstantial_percourse = array();
+$actual_count_averagesubstantial_percourse = array();
+$actual_cumulatedsubstantial_percourse = array();
+if (!empty($actual_substantial)) {
+  foreach ($actual_substantial as $postid => $item) {
+
+    $users_name = $actual_user_name_substantial[$postid];
+    $course_name = $actual_course_name_substantial[$postid];
+    $users_name_course_name = $users_name . 'XXX8167YYY' . $course_name;
+
+    if (empty($actual_averagesubstantial_percourse[$users_name_course_name])) {
+      $actual_averagesubstantial_percourse[$users_name_course_name] = 0.0 + $item;
+      $actual_count_averagesubstantial_percourse[$users_name_course_name] = 1.0;
+    }
+    else {
+      $actual_averagesubstantial_percourse[$users_name_course_name] =
+        (($actual_averagesubstantial_percourse[$users_name_course_name] * $actual_count_averagesubstantial_percourse[$users_name_course_name]) + $item) /
+        ($actual_count_averagesubstantial_percourse[$users_name_course_name] + 1.0);
+      $actual_count_averagesubstantial_percourse[$users_name_course_name] += 1.0;
+    }
+
+    if     ($item < 1.01) $item_word = 'No';
+    elseif ($item <=2.99) $item_word = 'Mixed';
+    else                  $item_word = 'Yes';
+    if (empty($actual_cumulatedsubstantial_percourse[$users_name_course_name])) {
+      $actual_cumulatedsubstantial_percourse[$users_name_course_name] = "$item_word";
+    }
+    else {
+      $actual_cumulatedsubstantial_percourse[$users_name_course_name] .= ", $item_word";
     }
   }
 }
