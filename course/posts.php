@@ -354,7 +354,7 @@ else {
 
 
 $enrols = $DB->get_records_sql(
-"SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, u.email, c.fullname, f.name AS forumname, fp.subject, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
+"SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, u.email, c.fullname, f.name AS forumname, fp.subject, fp.created, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 LEFT JOIN mdl_peoplesmph m ON e.userid=m.userid
 WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql
@@ -645,9 +645,11 @@ $table->head = array(
   'Semester',
   'Discussion Forum Topic',
   'Subject',
+  'Created',
   'Referred to resources:',
   'Critical approach:',
   'Referencing:',
+  'Substantial contribution:',
   'Write discussion feedback for student...'
   );
 
@@ -767,6 +769,7 @@ if (!empty($enrols)) {
     $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($enrol->forumname, ENT_COMPAT, 'UTF-8');
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/mod/forum/discuss.php?d=' . $enrol->discid . '#p' . $enrol->postid . '" target="_blank">' . htmlspecialchars($enrol->subject, ENT_COMPAT, 'UTF-8') . '</a>';
+    $rowdata[] = gmdate('d/m/Y', $enrol->created);
 
     if ($actual_referredtoresourcesnotrated) $rowdata[] = 'Not rated';
     if ($actual_referredtoresourcesno) $rowdata[] = 'No';
@@ -782,6 +785,13 @@ if (!empty($enrols)) {
     if ($actual_referencingnone) $rowdata[] = 'None';
     if ($actual_referencingwrongformat) $rowdata[] = 'Wrong format';
     if ($actual_referencinggood) $rowdata[] = 'Good';
+
+[[
+    if ($actual_referredtoresourcesnotrated) $rowdata[] = 'Not rated';
+    if ($actual_referredtoresourcesno) $rowdata[] = 'No';
+    if ($actual_referredtoresourcessome) $rowdata[] = 'Some';
+    if ($actual_referredtoresourcesyes) $rowdata[] = 'Yes';
+]]
 
     $spancolour = '<span>';
     if (!empty($discussionfeedbacks[$enrol->postid])) {
