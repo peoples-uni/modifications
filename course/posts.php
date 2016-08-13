@@ -26,6 +26,7 @@ if (!empty($_POST['markfilter'])) {
     . '&averagereferredtoresources=' . urlencode(dontstripslashes($_POST['averagereferredtoresources']))
     . '&averagecriticalapproach=' . urlencode(dontstripslashes($_POST['averagecriticalapproach']))
     . '&averagereferencing=' . urlencode(dontstripslashes($_POST['averagereferencing']))
+    . '&averagesubstantial=' . urlencode(dontstripslashes($_POST['averagesubstantial']))
 
 		. (empty($_POST['skipintro']) ? '&skipintro=0' : '&skipintro=1')
 		. (empty($_POST['suppressnames']) ? '&suppressnames=0' : '&suppressnames=1')
@@ -45,6 +46,11 @@ if (!empty($_POST['markfilter'])) {
     . (empty($_POST['referencingnone']) ? '&referencingnone=0' : '&referencingnone=1')
     . (empty($_POST['referencingwrongformat']) ? '&referencingwrongformat=0' : '&referencingwrongformat=1')
     . (empty($_POST['referencinggood']) ? '&referencinggood=0' : '&referencinggood=1')
+
+    . (empty($_POST['substantialnotrated']) ? '&substantialnotrated=0' : '&substantialnotrated=1')
+    . (empty($_POST['substantialno']) ? '&substantialno=0' : '&substantialno=1')
+    . (empty($_POST['substantialsome']) ? '&substantialsome=0' : '&substantialsome=1')
+    . (empty($_POST['substantialyes']) ? '&substantialyes=0' : '&substantialyes=1')
 		);
 }
 
@@ -80,6 +86,7 @@ if (!empty($_REQUEST['acceptedmmu'])) $acceptedmmu = dontstripslashes($_REQUEST[
 if (!empty($_REQUEST['averagereferredtoresources'])) $averagereferredtoresources = dontstripslashes($_REQUEST['averagereferredtoresources']);
 if (!empty($_REQUEST['averagecriticalapproach'])) $averagecriticalapproach = dontstripslashes($_REQUEST['averagecriticalapproach']);
 if (!empty($_REQUEST['averagereferencing'])) $averagereferencing = dontstripslashes($_REQUEST['averagereferencing']);
+if (!empty($_REQUEST['averagesubstantial'])) $averagesubstantial = dontstripslashes($_REQUEST['averagesubstantial']);
 
 if (!empty($_REQUEST['skipintro'])) $skipintro = true;
 else $skipintro = false;
@@ -112,6 +119,14 @@ if (!empty($_REQUEST['referencingwrongformat'])) $referencingwrongformat = true;
 else $referencingwrongformat = false;
 if (!empty($_REQUEST['referencinggood'])) $referencinggood = true;
 else $referencinggood = false;
+if (!empty($_REQUEST['substantialnotrated'])) $substantialnotrated = true;
+else $substantialnotrated = false;
+if (!empty($_REQUEST['substantialno'])) $substantialno = true;
+else $substantialno = false;
+if (!empty($_REQUEST['substantialsome'])) $substantialsome = true;
+else $substantialsome = false;
+if (!empty($_REQUEST['substantialyes'])) $substantialyes = true;
+else $substantialyes = false;
 
 // If there are no URL or POST parameters, then default referencing checkboxes to TRUE
 if (empty($_REQUEST['chosensemester'])) {
@@ -127,6 +142,10 @@ if (empty($_REQUEST['chosensemester'])) {
   $referencingnone = true;
   $referencingwrongformat = true;
   $referencinggood = true;
+  $substantialnotrated = true;
+  $substantialno = true;
+  $substantialsome = true;
+  $substantialyes = true;
 }
 
 
@@ -192,6 +211,12 @@ $listaveragereferencing[] = 'None';
 $listaveragereferencing[] = 'Mixed';
 $listaveragereferencing[] = 'Good';
 
+if (!isset($averagesubstantial)) $averagesubstantial = 'Any';
+$listaveragesubstantial[] = 'Any';
+$listaveragesubstantial[] = 'No';
+$listaveragesubstantial[] = 'Mixed';
+$listaveragesubstantial[] = 'Yes';
+
 
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/posts.php'; ?>">
@@ -226,8 +251,8 @@ Display entries using the following filters...
 <table border="2" cellpadding="2">
   <tr>
     <td></td>
-    <td colspan="12">Ratings for Post</td>
-    <td colspan="3">Average Rating of Rated Posts</td>
+    <td colspan="16">Ratings for Post</td>
+    <td colspan="4">Average Rating of Rated Posts</td>
   </tr>
 
   <tr>
@@ -235,7 +260,8 @@ Display entries using the following filters...
     <td colspan="4">Referred to resources:</td>
     <td colspan="4">Critical approach:</td>
     <td colspan="4">Referencing:</td>
-    <td colspan="3"></td>
+    <td colspan="4">Substantial:</td>
+    <td colspan="4"></td>
   </tr>
 
   <tr>
@@ -253,10 +279,16 @@ Display entries using the following filters...
     <td>None</td>
     <td>Wrong format</td>
     <td>Good</td>
+    <td>Not rated</td>
+    <td>No</td>
+    <td>Some</td>
+    <td>Yes</td>
+
 
     <td>Referred to resources:</td>
     <td>Critical approach:</td>
     <td>Referencing:</td>
+    <td>Substantial:</td>
   </tr>
   <tr>
     <td><input type="text" size="15" name="maximumposts" value="<?php echo $maximumposts; ?>" /></td>
@@ -273,11 +305,16 @@ Display entries using the following filters...
     <td><input type="checkbox" name="referencingnone" <?php if ($referencingnone) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="referencingwrongformat" <?php if ($referencingwrongformat) echo ' CHECKED'; ?>></td>
     <td><input type="checkbox" name="referencinggood" <?php if ($referencinggood) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="substantialnotrated" <?php if ($substantialnotrated) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="substantialno" <?php if ($substantialno) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="substantialsome" <?php if ($substantialsome) echo ' CHECKED'; ?>></td>
+    <td><input type="checkbox" name="substantialyes" <?php if ($substantialyes) echo ' CHECKED'; ?>></td>
 
     <?php
     displayoptions('averagereferredtoresources', $listaveragereferredtoresources, $averagereferredtoresources);
     displayoptions('averagecriticalapproach', $listaveragecriticalapproach, $averagecriticalapproach);
     displayoptions('averagereferencing', $listaveragereferencing, $averagereferencing);
+    displayoptions('averagesubstantial', $listaveragesubstantial, $averagesubstantial);
     ?>
   </tr>
 </table>
@@ -741,11 +778,13 @@ $topiccount = array();
 $user_actual_averagereferredtoresources = array();
 $user_actual_averagecriticalapproach = array();
 $user_actual_averagereferencing = array();
+$user_actual_averagesubstantial = array();
 $listofemails = array();
 $post_matching_main_sql_filters_found = array();
 $user_actual_averagereferredtoresources_percourse = array();
 $user_actual_averagecriticalapproach_percourse = array();
 $user_actual_averagereferencing_percourse = array();
+$user_actual_averagesubstantial_percourse = array();
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
@@ -820,6 +859,21 @@ if (!empty($enrols)) {
       ($referencinggood && $actual_referencinggood);
     if (!$include_post) continue;
 
+    $actual_substantialnotrated = false;
+    $actual_substantialno = false;
+    $actual_substantialsome = false;
+    $actual_substantialyes = false;
+    if (empty($actual_substantial[$enrol->postid])) $actual_substantialnotrated = true;
+    elseif ($actual_substantial[$enrol->postid] < 1.01) $actual_substantialno = true;
+    elseif ($actual_substantial[$enrol->postid] <=1.99) $actual_substantialsome = true;
+    else $actual_substantialyes = true;
+    $include_post =
+      ($substantialnotrated && $actual_substantialnotrated) ||
+      ($substantialno && $actual_substantialno) ||
+      ($substantialsome && $actual_substantialsome) ||
+      ($substantialyes && $actual_substantialyes);
+    if (!$include_post) continue;
+
     $include_post =
       (($averagereferredtoresources == 'Any') ) ||
       (($averagereferredtoresources == 'No') && ($actual_averagereferredtoresources[$enrol->userid] < 1.01)) ||
@@ -839,6 +893,13 @@ if (!empty($enrols)) {
       (($averagereferencing == 'None') && ($actual_averagereferencing[$enrol->userid] < 1.01)) ||
       (($averagereferencing == 'Mixed') && (($actual_averagereferencing[$enrol->userid] >=1.01) && ($actual_averagereferencing[$enrol->userid] <=2.99))) ||
       (($averagereferencing == 'Good') && ($actual_averagereferencing[$enrol->userid] > 2.99));
+    if (!$include_post) continue;
+
+    $include_post =
+      (($averagesubstantial == 'Any') ) ||
+      (($averagesubstantial == 'No') && ($actual_averagesubstantial[$enrol->userid] < 1.01)) ||
+      (($averagesubstantial == 'Mixed') && (($actual_averagesubstantial[$enrol->userid] >=1.01) && ($actual_averagesubstantial[$enrol->userid] <=1.99))) ||
+      (($averagesubstantial == 'Yes') && ($actual_averagesubstantial[$enrol->userid] > 1.99));
     if (!$include_post) continue;
 
 
@@ -866,12 +927,10 @@ if (!empty($enrols)) {
     if ($actual_referencingwrongformat) $rowdata[] = 'Wrong format';
     if ($actual_referencinggood) $rowdata[] = 'Good';
 
-[[
-    if ($actual_referredtoresourcesnotrated) $rowdata[] = 'Not rated';
-    if ($actual_referredtoresourcesno) $rowdata[] = 'No';
-    if ($actual_referredtoresourcessome) $rowdata[] = 'Some';
-    if ($actual_referredtoresourcesyes) $rowdata[] = 'Yes';
-]]
+    if ($actual_substantialnotrated) $rowdata[] = 'Not rated';
+    if ($actual_substantialno) $rowdata[] = 'No';
+    if ($actual_substantialsome) $rowdata[] = 'Some';
+    if ($actual_substantialyes) $rowdata[] = 'Yes';
 
     $spancolour = '<span>';
     if (!empty($discussionfeedbacks[$enrol->postid])) {
@@ -946,6 +1005,11 @@ if (!empty($enrols)) {
     elseif ($actual_averagereferencing[$enrol->userid] <=2.99) $user_actual_averagereferencing[$name] = 'Mixed';
     else $user_actual_averagereferencing[$name] = 'Good';
 
+    if (empty($actual_averagesubstantial[$enrol->userid])) $user_actual_averagesubstantial[$name] =  'Not rated';
+    elseif ($actual_averagesubstantial[$enrol->userid] < 1.01) $user_actual_averagesubstantial[$name] = 'No';
+    elseif ($actual_averagesubstantial[$enrol->userid] <=2.99) $user_actual_averagesubstantial[$name] = 'Mixed';
+    else $user_actual_averagesubstantial[$name] = 'Yes';
+
 		$name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname . ', ' . $enrol->fullname)), ENT_COMPAT, 'UTF-8');
 		if (empty($usermodulecount[$name])) {
 			$usermodulecount[$name] = 1;
@@ -980,6 +1044,11 @@ if (!empty($enrols)) {
     elseif ($actual_averagereferencing_percourse[$users_name_course_name] < 1.01) $user_actual_averagereferencing_percourse[$users_name_course_name] = 'None';
     elseif ($actual_averagereferencing_percourse[$users_name_course_name] <=2.99) $user_actual_averagereferencing_percourse[$users_name_course_name] = 'Mixed';
     else $user_actual_averagereferencing_percourse[$users_name_course_name] = 'Good';
+
+    if (empty($actual_averagesubstantial_percourse[$users_name_course_name])) $user_actual_averagesubstantial_percourse[$users_name_course_name] =  'Not rated';
+    elseif ($actual_averagesubstantial_percourse[$users_name_course_name] < 1.01) $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'No';
+    elseif ($actual_averagesubstantial_percourse[$users_name_course_name] <=2.99) $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Mixed';
+    else $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Yes';
 
 		$n++;
     $rowdata[] = $enrol->userid; // Will be removed below
@@ -1091,10 +1160,12 @@ if (!empty($enrols)) {
         $user_actual_averagereferredtoresources[$name] =  'No posts';
         $user_actual_averagecriticalapproach[$name] =  'No posts';
         $user_actual_averagereferencing[$name] =  'No posts';
+        $user_actual_averagesubstantial[$name] =  'No posts';
 
         $user_actual_averagereferredtoresources_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
         $user_actual_averagecriticalapproach_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
         $user_actual_averagereferencing_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
+        $user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
       }
 
       if (in_array($all_user->userid, $students_to_ignore)) {
@@ -1102,10 +1173,12 @@ if (!empty($enrols)) {
         unset($user_actual_averagereferredtoresources[$name]);
         unset($user_actual_averagecriticalapproach[$name]);
         unset($user_actual_averagereferencing[$name]);
+        unset($user_actual_averagesubstantial[$name]);
 
         unset($user_actual_averagereferredtoresources_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
         unset($user_actual_averagecriticalapproach_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
         unset($user_actual_averagereferencing_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
+        unset($user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
       }
       elseif ($usercount[$name] != 0) $usercountnonzero++;
 
@@ -1146,6 +1219,9 @@ echo '<br /><br />';
 displaystat_split_name($user_actual_averagereferencing, "Summary 'Referencing' for Student");
 echo '<br /><br />';
 
+displaystat_split_name($user_actual_averagesubstantial, "Summary 'Substantial' for Student");
+echo '<br /><br />';
+
 displaystat_split_name_and_course_with_cumulated($user_actual_averagereferredtoresources_percourse, "Summary 'Referred to resources' for Student per Module", $actual_cumulatedreferredtoresources_percourse);
 echo '<br /><br />';
 
@@ -1153,6 +1229,9 @@ displaystat_split_name_and_course_with_cumulated($user_actual_averagecriticalapp
 echo '<br /><br />';
 
 displaystat_split_name_and_course_with_cumulated($user_actual_averagereferencing_percourse, "Summary 'Referencing' for Student per Module", $actual_cumulatedreferencing_percourse);
+echo '<br /><br />';
+
+displaystat_split_name_and_course_with_cumulated($user_actual_averagesubstantial_percourse, "Summary 'Substantial' for Student per Module", $actual_cumulatedreferencing_percourse);
 echo '<br /><br />';
 
 natcasesort($listofemails);
