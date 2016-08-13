@@ -3490,10 +3490,6 @@ function forum_print_post($post, $discussion, $forum, &$cm, $course, $ownpost=fa
     }
 
     // Output ratings
-    if (!empty($post->rating4)) {
-        $output .= html_writer::tag('div', $OUTPUT->render($post->rating4), array('class'=>'forum-post-rating'));
-        $output .= html_writer::empty_tag('br');
-    }
     if (!empty($post->rating)) {
         $output .= html_writer::tag('div', $OUTPUT->render($post->rating), array('class'=>'forum-post-rating'));
     }
@@ -3502,7 +3498,12 @@ function forum_print_post($post, $discussion, $forum, &$cm, $course, $ownpost=fa
     }
     if (!empty($post->rating3)) {
         $output .= html_writer::tag('div', $OUTPUT->render($post->rating3), array('class'=>'forum-post-rating'));
-
+        $output .= html_writer::empty_tag('br');
+    }
+    if (!empty($post->rating4)) {
+        $output .= html_writer::tag('div', $OUTPUT->render($post->rating4), array('class'=>'forum-post-rating'));
+    }
+    if (!empty($post->rating3)) {
         if ($post->rating3->user_can_rate()) { // Conditionally add a link to the Notes for the Student ALAN
             $output .= html_writer::tag('div', html_writer::link(new moodle_url('/notes/index.php', array('user'=>$post->userid)), 'Notes', array('target'=>'_blank')), array('class'=>'commands'));
         }
