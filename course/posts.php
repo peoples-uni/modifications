@@ -703,7 +703,7 @@ if (!empty($actual_substantial)) {
     }
 
     if     ($item < 1.01) $item_word = 'No';
-    elseif ($item <=2.99) $item_word = 'Mixed';
+    elseif ($item <=1.99) $item_word = 'Mixed';
     else                  $item_word = 'Yes';
     if (empty($actual_cumulatedsubstantial_percourse[$users_name_course_name])) {
       $actual_cumulatedsubstantial_percourse[$users_name_course_name] = "$item_word";
