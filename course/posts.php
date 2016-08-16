@@ -1007,7 +1007,7 @@ if (!empty($enrols)) {
 
     if (empty($actual_averagesubstantial[$enrol->userid])) $user_actual_averagesubstantial[$name] =  'Not rated';
     elseif ($actual_averagesubstantial[$enrol->userid] < 1.01) $user_actual_averagesubstantial[$name] = 'No';
-    elseif ($actual_averagesubstantial[$enrol->userid] <=2.99) $user_actual_averagesubstantial[$name] = 'Mixed';
+    elseif ($actual_averagesubstantial[$enrol->userid] <=1.99) $user_actual_averagesubstantial[$name] = 'Mixed';
     else $user_actual_averagesubstantial[$name] = 'Yes';
 
 		$name = htmlspecialchars(strtolower(trim($enrol->lastname . ', ' . $enrol->firstname . ', ' . $enrol->fullname)), ENT_COMPAT, 'UTF-8');
@@ -1047,7 +1047,7 @@ if (!empty($enrols)) {
 
     if (empty($actual_averagesubstantial_percourse[$users_name_course_name])) $user_actual_averagesubstantial_percourse[$users_name_course_name] =  'Not rated';
     elseif ($actual_averagesubstantial_percourse[$users_name_course_name] < 1.01) $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'No';
-    elseif ($actual_averagesubstantial_percourse[$users_name_course_name] <=2.99) $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Mixed';
+    elseif ($actual_averagesubstantial_percourse[$users_name_course_name] <=1.99) $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Mixed';
     else $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Yes';
 
 		$n++;
