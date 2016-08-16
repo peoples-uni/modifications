@@ -1231,7 +1231,7 @@ echo '<br /><br />';
 displaystat_split_name_and_course_with_cumulated($user_actual_averagereferencing_percourse, "Summary 'Referencing' for Student per Module", $actual_cumulatedreferencing_percourse);
 echo '<br /><br />';
 
-displaystat_split_name_and_course_with_cumulated($user_actual_averagesubstantial_percourse, "Summary 'Substantial' for Student per Module", $actual_cumulatedreferencing_percourse);
+displaystat_split_name_and_course_with_cumulated($user_actual_averagesubstantial_percourse, "Summary 'Substantial' for Student per Module", $actual_cumulatedsubstantial_percourse);
 echo '<br /><br />';
 
 natcasesort($listofemails);
