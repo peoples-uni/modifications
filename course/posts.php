@@ -1310,7 +1310,7 @@ function displaystat_number_of_topics_with_substantial_posts($number_of_topics_w
     if     ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_rating == -1) $stat = 'No posts!';
     elseif ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_rating == 0) $stat = 'Not rated!';
     elseif ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial == 0) $stat = 'No substantial ratings!';
-    elseif ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial <  3) $stat = '$number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial . ', Less than 3!';
+    elseif ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial <  3) $stat = $number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial . ', Less than 3!';
     else                                                                                                           $stat = $number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial;
     echo "<td>" . $stat . "</td>";
     echo "</tr>";
