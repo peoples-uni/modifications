@@ -430,6 +430,43 @@ if (empty($discussionfeedbacks)) {
   $discussionfeedbacks = array();
 }
 
+// Number of topics with substantial posts
+$number_of_topics_with_substantial_posts_per_user_course = $DB->get_records_sql(
+"
+SELECT
+  LOWER(CONCAT(TRIM(x.lastname), ', ', TRIM(x.firstname), 'XXX8167YYYY', TRIM(x.fullname))) AS unique_id,
+  SUM(x.number_of_substantial>0) AS number_of_topics_with_substantial,
+  SUM(x.number_of_ratings>0) AS number_of_topics_with_rating,
+  x.userid,
+  x.courseid,
+  x.lastname,
+  x.firstname,
+  x.email,
+  x.fullname
+FROM
+  (
+  SELECT
+    u.id AS userid,
+    c.id AS courseid,
+    f.id AS topicid,
+    SUM(IFNULL(r.rating, 0)=2) AS number_of_substantial,
+    SUM(IFNULL(r.rating, 0)) AS number_of_ratings,
+    u.lastname,
+    u.firstname,
+    u.email,
+    c.fullname
+  FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
+  LEFT JOIN mdl_rating r ON fp.id=r.itemid AND r.scaleid IN({$CFG->scale_to_use_for_triple_rating_4}) AND r.component='mod_forum' AND r.ratingarea='post'
+  WHERE
+    e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id
+    $semestersql $modulesql $ssfsql
+  GROUP BY u.id, c.id, f.id
+  ) AS x
+GROUP BY x.userid, x.courseid
+",
+array($chosensemester, $chosenmodule)
+);
+
 
 // referredtoresources for Post
 $actual_referredtoresources = array();
@@ -1050,7 +1087,18 @@ if (!empty($enrols)) {
     elseif ($actual_averagesubstantial_percourse[$users_name_course_name] <=1.99) $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Mixed';
     else $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Yes';
 
-		$n++;
+    if (empty($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($enrol->lastname) . ', ' . trim($enrol->firstname) . 'XXX8167YYYY' . trim($enrol->fullname))])) {
+      $missing_item = new object();
+      $missing_item->lastname = $enrol->lastname;
+      $missing_item->firstname = $enrol->firstname;
+      $missing_item->fullname = $enrol->fullname;
+      $missing_item->email = $enrol->email;
+      $missing_item->number_of_topics_with_rating = -1; // No posts!
+      $missing_item->number_of_topics_with_substantial = 0;
+      $number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($enrol->lastname) . ', ' . trim($enrol->firstname) . 'XXX8167YYYY' . trim($enrol->fullname))] = $missing_item;
+    }
+
+    $n++;
     $rowdata[] = $enrol->userid; // Will be removed below
     $table->data[] = $rowdata;
 
@@ -1233,6 +1281,44 @@ echo '<br /><br />';
 
 displaystat_split_name_and_course_with_cumulated($user_actual_averagesubstantial_percourse, "Summary 'Substantial' for Student per Module", $actual_cumulatedsubstantial_percourse);
 echo '<br /><br />';
+
+if (!empty($number_of_topics_with_substantial_posts_per_user_course)) {
+  echo '<strong>Number of Topics with Substantial Posts for each Student in each Module...</strong>';
+  displaystat_number_of_topics_with_substantial_posts($number_of_topics_with_substantial_posts_per_user_course);
+  echo '<br /><br />';
+}
+
+function displaystat_number_of_topics_with_substantial_posts($number_of_topics_with_substantial_posts_per_user_course) {
+  ksort($number_of_topics_with_substantial_posts_per_user_course);
+
+  echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
+  echo "<tr>";
+  echo "<td>Family name</td>";
+  echo "<td>Given name</td>";
+  echo "<td>Module</td>";
+  echo "<td>e-mail</td>";
+  echo "<td>Number of topics with substantial posts</td>";
+  echo "</tr>";
+
+  foreach ($number_of_topics_with_substantial_posts_per_user_course as $number_of_topics_with_substantial_posts_per_user_course_item) {
+    echo "<tr>";
+    echo "<td>" . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->lastname), ENT_COMPAT, 'UTF-8') . "</td>";
+    echo "<td>" . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->firstname), ENT_COMPAT, 'UTF-8') . "</td>";
+    echo "<td>" . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->fullname), ENT_COMPAT, 'UTF-8') . "</td>";
+    echo '<td><a href="mailto:' . rawurlencode(trim($number_of_topics_with_substantial_posts_per_user_course_item->email)) . '?subject=Discussions">' . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->email), ENT_COMPAT, 'UTF-8') . '</a></td>';
+    $stat = '';
+    elseif ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_rating == -1) $stat = 'No posts!';
+    elseif ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_rating == 0) $stat = 'Not rated!';
+    elseif ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial == 0) $stat = 'No substantial ratings!';
+    elseif ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial <  3) $stat = '$number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial . ', Less than 3!';
+    else                                                                                                           $stat = $number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial;
+    echo "<td>" . $stat . "</td>";
+    echo "</tr>";
+  }
+  echo '</table>';
+  echo '<br/>';
+}
+
 
 natcasesort($listofemails);
 echo 'e-mails of Selected Students...<br />' . implode(', ', array_unique($listofemails));
