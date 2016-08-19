@@ -1765,7 +1765,7 @@ Referencing: None<br />
 Referencing: Wrong format<br />
 Referencing: Good<br />
 <br />
-Note another Scale "Substantial contribution" has now been added but is used separately (not part of this discussion feedback) to determine if a Student has made  an absolute minimum of at least one substantial discussion contribution in each of three separate topics during the semester, before being permitted to submit an assignment. "Substantial" means a well-considered contribution to the discussion (this could be one which demonstrates critical thinking, appropriate referencing, and/or application of new knowledge from the Topic; this can also be a well-researched response to another student's contribution).<br />
+Note another Scale "Substantial contribution" has now been added but is used separately (not part of this discussion feedback) to determine if a Student has made  an absolute minimum of at least one substantial discussion contribution in each of three separate topics during the semester, before being permitted to submit an assignment. "Substantial" means a well-considered contribution to the discussion (this could be one which demonstrates critical thinking, appropriate referencing, and/or application of new knowledge from the Topic; this can also be a well-researched response to another student's contribution):-<br />
 Substantial contribution: No<br />
 Substantial contribution: Yes<br />
 <br />
