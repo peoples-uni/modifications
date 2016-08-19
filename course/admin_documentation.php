@@ -1275,7 +1275,7 @@ There is a parameter you can add to the end of the "Student Submissions" URL "&h
 To view posts made by Students to discussion forums go to: <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a>.
 </li>
 <li>
-This lists all posts for each enrolled student (not others), giving Module, Forum Name and Subject.
+This lists all posts for each enrolled student (not others), giving Module, Forum Name, Subject and post Created date.
 </li>
 <li>
 You can also click on the subject to see the discussion details.
@@ -1283,6 +1283,9 @@ You can also click on the subject to see the discussion details.
 <li>
 Four additional columns to do with ratings of discussions by Tutors are described in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a>.<br />
 These columns are... 'Referred to resources:', 'Critical approach:', 'Referencing:', 'Write discussion feedback for student...'. Also described there are additional filters associated with these columns and also additional summary tables.
+</li>
+<li>
+Similar to the above columns there is a column 'Substantial contribution:' which indicates if a Tutor marked the post as a substantial contribution.
 </li>
 <li>
 After the main body of posts there are tables (one per course) that show, for each Student, the number of posts they have made to each topic. Each is headed by the following text...<br />
@@ -1311,6 +1314,11 @@ There is yet another filter called "Don't Show Number of Posts" which just shows
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by the Student Support Group that the Student is subscribed to in the Student Support Forums (however these groups are no longer used as before), by User Name, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
+</li>
+<li>
+Towards the end of posts.php there is a table that shows, for each Student/Module combination, the number of topics with substantial posts. It is headed by the following text...<br />
+"Number of Topics with Substantial Posts for each Student in each Module..."<br />
+It also shows if the Student has made 'No posts!', the Tutors have not rated any posts for the Student 'Not rated!', the Student has 'No substantial ratings!' and if the Student has 'Less than 3!' substantial ratings.
 </li>
 <li>
 At the end of the <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> page there is a list of e-mails for all Students who have a post matching the filters, there is also a list of e-mails for all Students matching the main filters who have no posts (this could be used to send out reminders).
@@ -1735,6 +1743,7 @@ In Forum Settings for all the relevant forums, in the "Ratings" Section...<br />
 The "Aggregate type" should be set to "Average of ratings" and <br />
 the "Scale" should be set to "Scale: Referred to resources"<br />
 This specific scale must be used as it is the one that triggers the two other necessary scales to be silently added also ("Critical approach" and "Referencing")<br />
+(it also causes "Substantial contribution" to be added)<br />
 This particular scale should be used only in Forums (not in other places that scales can be used).<br />
 <br />
 </li>
@@ -1755,6 +1764,10 @@ For Scale "Referencing":-<br />
 Referencing: None<br />
 Referencing: Wrong format<br />
 Referencing: Good<br />
+<br />
+Note another Scale "Substantial contribution" has now been added but is used separately (not part of this discussion feedback) to determine if a Student has made  an absolute minimum of at least one substantial discussion contribution in each of three separate topics during the semester, before being permitted to submit an assignment. “Substantial” means a well-considered contribution to the discussion (this could be one which demonstrates critical thinking, appropriate referencing, and/or application of new knowledge from the Topic; this can also be a well-researched response to another student’s contribution).<br />
+Substantial contribution: No<br />
+Substantial contribution: Yes<br />
 <br />
 Students will only see ratings for their own posts, not the ratings for other Student's Posts.<br />
 Not all ratings will appear in a Student's Grade Book.<br />
