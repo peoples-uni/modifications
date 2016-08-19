@@ -822,6 +822,7 @@ $user_actual_averagereferredtoresources_percourse = array();
 $user_actual_averagecriticalapproach_percourse = array();
 $user_actual_averagereferencing_percourse = array();
 $user_actual_averagesubstantial_percourse = array();
+$list_of_courses = array();
 $n = 0;
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
@@ -1087,22 +1088,12 @@ if (!empty($enrols)) {
     elseif ($actual_averagesubstantial_percourse[$users_name_course_name] <=1.99) $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Mixed';
     else $user_actual_averagesubstantial_percourse[$users_name_course_name] = 'Yes';
 
-    if (empty($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($enrol->lastname) . ', ' . trim($enrol->firstname) . 'XXX8167YYYY' . trim($enrol->fullname))])) {
-      $missing_item = new object();
-      $missing_item->lastname = $enrol->lastname;
-      $missing_item->firstname = $enrol->firstname;
-      $missing_item->fullname = $enrol->fullname;
-      $missing_item->email = $enrol->email;
-      $missing_item->number_of_topics_with_rating = -1; // No posts!
-      $missing_item->number_of_topics_with_substantial = 0;
-      $number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($enrol->lastname) . ', ' . trim($enrol->firstname) . 'XXX8167YYYY' . trim($enrol->fullname))] = $missing_item;
-    }
-
     $n++;
     $rowdata[] = $enrol->userid; // Will be removed below
     $table->data[] = $rowdata;
 
     $listofemails[$enrol->userid] = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
+    $list_of_courses[$enrol->fullname] = $enrol->fullname;
 	}
 
   // Remove table rows for which the Student has (in total) <= $maximumposts matching the filter
@@ -1214,6 +1205,19 @@ if (!empty($enrols)) {
         $user_actual_averagecriticalapproach_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
         $user_actual_averagereferencing_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
         $user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
+
+        foreach ($list_of_courses as $course_item) {
+          if (empty($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))])) {
+            $missing_item = new object();
+            $missing_item->lastname = $all_user->lastname;
+            $missing_item->firstname = $all_user->firstname;
+            $missing_item->fullname = $course_item;
+            $missing_item->email = $all_user->email;
+            $missing_item->number_of_topics_with_rating = -1; // No posts!
+            $missing_item->number_of_topics_with_substantial = 0;
+            $number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))] = $missing_item;
+          }
+        }
       }
 
       if (in_array($all_user->userid, $students_to_ignore)) {
@@ -1227,6 +1231,10 @@ if (!empty($enrols)) {
         unset($user_actual_averagecriticalapproach_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
         unset($user_actual_averagereferencing_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
         unset($user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
+
+        foreach ($list_of_courses as $course_item) {
+          unset($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))]);
+        }
       }
       elseif ($usercount[$name] != 0) $usercountnonzero++;
 
