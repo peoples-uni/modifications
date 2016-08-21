@@ -1293,6 +1293,12 @@ echo '<br /><br />';
 if (!empty($number_of_topics_with_substantial_posts_per_user_course)) {
   echo '<strong>Number of Topics with Substantial Posts for each Student in each Module...</strong>';
   displaystat_number_of_topics_with_substantial_posts($number_of_topics_with_substantial_posts_per_user_course);
+
+  natcasesort($list_of_courses);
+  foreach ($list_of_courses as $course_item) {
+    echo '<br /><a href="' . $CFG->wwwroot . '/course/substantial_posts.php?chosenmodule=' . urlencode($course_item) '" target="_blank">Click here for a single page for: ' . htmlspecialchars($course_item, ENT_COMPAT, 'UTF-8') . '</a>';
+  }
+
   echo '<br /><br />';
 }
 
