@@ -1321,7 +1321,7 @@ Towards the end of posts.php there is a table that shows, for each Student/Modul
 It also shows if the Student has made 'No posts!', the Tutors have not rated any posts for the Student 'Not rated!', the Student has 'No substantial ratings!' or if the Student has 'Less than 3!' substantial ratings.
 </li>
 <li>
-After that there are a list of clickable links to bring up a separate page for each module (if the filter has selected only one module, then this will be the same as the main table).
+After that there are a list of clickable links to bring up a separate page for each module (if the filter has selected only one module, then there will only be one link and the contents will be the same a the table in the previous bullet point).
 </li>
 <li>
 At the end of the <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> page there is a list of e-mails for all Students who have a post matching the filters, there is also a list of e-mails for all Students matching the main filters who have no posts (this could be used to send out reminders).
