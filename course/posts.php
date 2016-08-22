@@ -812,6 +812,7 @@ $usercountid = array();
 $students_to_ignore = array();
 $usermodulecount = array();
 $topiccount = array();
+$courseswithstudentforumstats = array();
 $user_actual_averagereferredtoresources = array();
 $user_actual_averagecriticalapproach = array();
 $user_actual_averagereferencing = array();
