@@ -21,7 +21,7 @@ if (!$isteacher) {
   notice('<br /><br /><b>You must be a Tutor to do this! Please Click "Continue" below, and then log in with your username and password above!</b><br /><br /><br />', "$CFG->wwwroot/");
 }
 
-echo '<h1>Number of Topics with Substantial Posts for each Student in each Module</h1>';
+echo '<h1>Number of Topics with Substantial Posts for each Student in Module ' . htmlspecialchars(trim($course_item), ENT_COMPAT, 'UTF-8') . '</h1>';
 $PAGE->set_title('Number of Topics with Substantial Posts for each Student in each Module');
 $PAGE->set_heading('Number of Topics with Substantial Posts for each Student in each Module');
 echo $OUTPUT->header();
@@ -99,7 +99,6 @@ if (!empty($all_users)) {
 
 
 if (!empty($number_of_topics_with_substantial_posts_per_user_course)) {
-  echo '<strong>Number of Topics with Substantial Posts for each Student in each Module' . htmlspecialchars(trim($course_item), ENT_COMPAT, 'UTF-8') . '...</strong>';
   displaystat_number_of_topics_with_substantial_posts($number_of_topics_with_substantial_posts_per_user_course);
   echo '<br /><br />';
 }
