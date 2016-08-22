@@ -21,11 +21,6 @@ if (!$isteacher) {
   notice('<br /><br /><b>You must be a Tutor to do this! Please Click "Continue" below, and then log in with your username and password above!</b><br /><br /><br />', "$CFG->wwwroot/");
 }
 
-echo '<h1>Number of Topics with Substantial Posts for each Student in Module ' . htmlspecialchars(trim($course_item), ENT_COMPAT, 'UTF-8') . '</h1>';
-$PAGE->set_title('Number of Topics with Substantial Posts for each Student in each Module');
-$PAGE->set_heading('Number of Topics with Substantial Posts for each Student in each Module');
-echo $OUTPUT->header();
-
 
 $chosensemester = 'All';
 $chosenmodule = $_REQUEST['chosenmodule'];
@@ -34,6 +29,12 @@ $course_item = $chosenmodule;
 $semestersql = 'AND e.semester!=?';
 $modulesql = 'AND c.fullname=?';
 $ssfsql = '';
+
+
+echo '<h1>Number of Topics with Substantial Posts for each Student in Module ' . htmlspecialchars(trim($course_item), ENT_COMPAT, 'UTF-8') . '</h1>';
+$PAGE->set_title('Number of Topics with Substantial Posts for each Student in each Module');
+$PAGE->set_heading('Number of Topics with Substantial Posts for each Student in each Module');
+echo $OUTPUT->header();
 
 
 // Number of topics with substantial posts
