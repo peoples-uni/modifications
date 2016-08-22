@@ -112,7 +112,7 @@ function displaystat_number_of_topics_with_substantial_posts($number_of_topics_w
   echo "<tr>";
   echo "<td>Family name</td>";
   echo "<td>Given name</td>";
-  echo "<td>Module</td>";
+  // echo "<td>Module</td>";
   echo "<td>e-mail</td>";
   echo "<td>Number of topics with substantial posts</td>";
   echo "</tr>";
@@ -121,7 +121,7 @@ function displaystat_number_of_topics_with_substantial_posts($number_of_topics_w
     echo "<tr>";
     echo "<td>" . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->lastname), ENT_COMPAT, 'UTF-8') . "</td>";
     echo "<td>" . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->firstname), ENT_COMPAT, 'UTF-8') . "</td>";
-    echo "<td>" . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->fullname), ENT_COMPAT, 'UTF-8') . "</td>";
+    // echo "<td>" . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->fullname), ENT_COMPAT, 'UTF-8') . "</td>";
     echo '<td><a href="mailto:' . rawurlencode(trim($number_of_topics_with_substantial_posts_per_user_course_item->email)) . '?subject=Discussions">' . htmlspecialchars(trim($number_of_topics_with_substantial_posts_per_user_course_item->email), ENT_COMPAT, 'UTF-8') . '</a></td>';
     $stat = '';
     if     ($number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_rating == -1) $stat = 'No posts!';
