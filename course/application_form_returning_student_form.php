@@ -157,7 +157,7 @@ class application_form_returning_student_form extends moodleform {
     $mform->setExpanded('scholorshipdetails');
 
     $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the <a href="http://peoples-uni.org/content/course-fees" target="_blank">fees (click here)</a>, please provide details on:<br />
-1. What is your current monthly gross income<br />
+1. What is your current employment AND monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />');
