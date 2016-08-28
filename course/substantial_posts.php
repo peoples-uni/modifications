@@ -50,23 +50,12 @@ WHERE e.courseid=c.id
 ORDER BY fullname ASC"
 );
   if (!isset($chosenmodule)) $chosenmodule = 'All';
+  $listmodule = array();
   foreach ($courses as $course) {
     $listmodule[] = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
   }
 
   displayoptions('chosenmodule', $listmodule, $chosenmodule);
-
-function displayoptions($name, $options, $selectedvalue) {
-  echo '<td><select name="' . $name . '">';
-  foreach ($options as $option) {
-    if ($option === $selectedvalue) $selected = 'selected="selected"';
-    else $selected = '';
-
-    $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
-    echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
-  }
-  echo '</select></td>';
-}
 ?>
   </tr>
 </table>
@@ -234,5 +223,17 @@ function is_peoples_teacher() {
 
   if (has_capability('moodle/site:config', context_system::instance())) return true;
   else return false;
+}
+
+function displayoptions($name, $options, $selectedvalue) {
+  echo '<td><select name="' . $name . '">';
+  foreach ($options as $option) {
+    if ($option === $selectedvalue) $selected = 'selected="selected"';
+    else $selected = '';
+
+    $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
+    echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+  }
+  echo '</select></td>';
 }
 ?>
