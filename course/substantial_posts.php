@@ -10,6 +10,11 @@ require_once($CFG->dirroot .'/course/lib.php');
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/substantial_posts.php');
+
+if (!empty($_POST['markfilter'])) {
+  redirect($CFG->wwwroot . '/course/substantial_posts.php?chosenmodule=' . urlencode($_POST['chosenmodule']));
+}
+
 $PAGE->set_pagelayout('embedded');
 
 require_login();
@@ -24,6 +29,61 @@ if (!$isteacher) {
 
 $chosensemester = 'All';
 $chosenmodule = $_REQUEST['chosenmodule'];
+
+if (empty($chosenmodule)) {
+  $PAGE->set_title('Number of Topics with Substantial Posts for each Student in each Module');
+  $PAGE->set_heading('Number of Topics with Substantial Posts for each Student in each Module');
+  echo $OUTPUT->header();
+?>
+<form method="post" action="<?php echo $CFG->wwwroot . '/course/substantial_posts.php'; ?>">
+Display entries using the following filters...
+<table border="2" cellpadding="2">
+  <tr>
+    <td>Module</td>
+  </tr>
+  <tr>
+<?php
+  $courses = $DB->get_records_sql(
+"SELECT DISTINCT c.id AS courseid, c.fullname
+FROM mdl_enrolment e, mdl_course c
+WHERE e.courseid=c.id
+ORDER BY fullname ASC"
+);
+  if (!isset($chosenmodule)) $chosenmodule = 'All';
+  foreach ($courses as $course) {
+    $listmodule[] = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
+  }
+
+  displayoptions('chosenmodule', $listmodule, $chosenmodule);
+
+function displayoptions($name, $options, $selectedvalue) {
+  echo '<td><select name="' . $name . '">';
+  foreach ($options as $option) {
+    if ($option === $selectedvalue) $selected = 'selected="selected"';
+    else $selected = '';
+
+    $opt = htmlspecialchars($option, ENT_COMPAT, 'UTF-8');
+    echo '<option value="' . $opt . '" ' . $selected . '>' . $opt . '</option>';
+  }
+  echo '</select></td>';
+}
+?>
+  </tr>
+</table>
+
+<input type="hidden" name="markfilter" value="1" />
+<input type="submit" name="filter" value="Apply Filters" />
+</form>
+<br />
+<?php
+  echo '<br /><br /><br /><br /><br />';
+  echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
+  echo '<br /><br />';
+
+  echo $OUTPUT->footer();
+  die();
+}
+
 $course_item = $chosenmodule;
 
 $semestersql = 'AND e.semester!=?';
