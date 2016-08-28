@@ -64,12 +64,7 @@ ORDER BY fullname ASC"
 <input type="hidden" name="markfilter" value="1" />
 <input type="submit" name="filter" value="Apply Filters" />
 </form>
-<br />
 <?php
-  echo '<br /><br /><br /><br /><br />';
-  echo '<strong><a href="javascript:window.close();">Close Window</a></strong>';
-  echo '<br /><br />';
-
   echo $OUTPUT->footer();
   die();
 }
