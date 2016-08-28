@@ -31,8 +31,9 @@ $chosensemester = 'All';
 $chosenmodule = $_REQUEST['chosenmodule'];
 
 if (empty($chosenmodule)) {
-  $PAGE->set_title('Number of Topics with Substantial Posts for each Student in each Module');
-  $PAGE->set_heading('Number of Topics with Substantial Posts for each Student in each Module');
+  echo '<h1>Number of Topics with Substantial Posts for each Student in Module</h1>';
+  $PAGE->set_title('Number of Topics with Substantial Posts for each Student in Module');
+  $PAGE->set_heading('Number of Topics with Substantial Posts for each Student in Module');
   echo $OUTPUT->header();
 ?>
 <form method="post" action="<?php echo $CFG->wwwroot . '/course/substantial_posts.php'; ?>">
@@ -81,8 +82,8 @@ $ssfsql = '';
 
 
 echo '<h1>Number of Topics with Substantial Posts for each Student in Module:<br />' . htmlspecialchars(trim($course_item), ENT_COMPAT, 'UTF-8') . '</h1>';
-$PAGE->set_title('Number of Topics with Substantial Posts for each Student in each Module');
-$PAGE->set_heading('Number of Topics with Substantial Posts for each Student in each Module');
+$PAGE->set_title('Number of Topics with Substantial Posts for each Student in Module');
+$PAGE->set_heading('Number of Topics with Substantial Posts for each Student in Module');
 echo $OUTPUT->header();
 
 
