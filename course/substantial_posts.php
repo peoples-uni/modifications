@@ -110,7 +110,9 @@ FROM
   FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
   LEFT JOIN mdl_rating r ON fp.id=r.itemid AND r.scaleid IN({$CFG->scale_to_use_for_triple_rating_4}) AND r.component='mod_forum' AND r.ratingarea='post'
   WHERE
-    e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id
+    e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id AND
+    f.name NOT LIKE 'Introductions -%' AND
+    f.name NOT LIKE 'Introduction forum:%'
     $semestersql $modulesql $ssfsql
   GROUP BY u.id, c.id, f.id
   ) AS x
