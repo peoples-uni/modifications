@@ -161,7 +161,7 @@ function displaystat_number_of_topics_with_substantial_posts($number_of_topics_w
   echo "<td>Given name</td>";
   // echo "<td>Module</td>";
   echo "<td>e-mail</td>";
-  echo "<td>Number of topics with substantial posts</td>";
+  echo "<td>Number of topics with substantial posts (ignoring introductions)</td>";
   echo "</tr>";
 
   foreach ($number_of_topics_with_substantial_posts_per_user_course as $number_of_topics_with_substantial_posts_per_user_course_item) {
