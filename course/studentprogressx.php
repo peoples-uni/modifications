@@ -188,9 +188,9 @@ SELECT
   CASE
     WHEN
       (
-        ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 6)    /* 6 Masters passes for Diploma */
+        ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 8)    /* 8 Masters passes for Diploma */
           OR
-        ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 5) AND (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 6)) /* 5 Masters passes for Diploma & 1 condonement */
+        ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 7) AND (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 8)) /* 7 Masters passes for Diploma & 1 condonement */
       )
         AND
       (
@@ -215,9 +215,9 @@ SELECT
     THEN 'Diploma'
 
     WHEN
-      ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 3)       /* 3 Masters passes for Certificate */
+      ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 4)       /* 4 Masters passes for Certificate */
         OR
-      ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 2) && (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)>= 3)) /* 2 Masters passes for Certificate & 1 condonement*/
+      ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 3) && (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)>= 4)) /* 3 Masters passes for Certificate & 1 condonement*/
     THEN 'Certificate'
 
     ELSE ''
