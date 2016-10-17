@@ -341,7 +341,12 @@ foreach ($enrols as $enrol) {
     $type_of_pass = array(0 => '', 1 => ' (MPH)', 2 => ' (MPH Merit)', 3 => ' (MPH Distinction)');
     $mphtext = $type_of_pass[$peoplesmph2->graduated];
   }
-  if (!empty($frozen_awards[$enrol->id])) $enrol->qualification = $frozen_awards[$enrol->id]->award . '(pre 16b)';
+  if (!empty($frozen_awards[$enrol->id]) && ($frozen_awards[$enrol->id]->award == 2)) {
+    $enrol->qualification = 'Diploma(pre 16b)';
+  }
+  if (!empty($frozen_awards[$enrol->id]) && ($frozen_awards[$enrol->id]->award == 1) && ($enrol->qualification != 'Diploma')) {
+    $enrol->qualification = 'Certificate(pre 16b)';
+  }
   $rowdata[] =  $enrol->qualification . $mphtext;
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->id . '" target="_blank">Student Grades</a>';
 
