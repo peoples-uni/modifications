@@ -341,6 +341,24 @@ foreach ($enrols as $enrol) {
     $type_of_pass = array(0 => '', 1 => ' (MPH)', 2 => ' (MPH Merit)', 3 => ' (MPH Distinction)');
     $mphtext = $type_of_pass[$peoplesmph2->graduated];
   }
+  if ($enrol->qualification == 'Diploma') {
+    if (empty($enrol->course_codes_passed_diploma)) {
+      $met_core_modules_requirement = false;
+    }
+    else {
+      $met_core_modules_requirement = true;
+
+      $course_codes_passed_diploma = explode(',', $enrol->course_codes_passed_diploma);
+
+      if (!in_array('PUBIOS',  $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Biostatistics
+      if (!in_array('PUEPI',   $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Introduction to Epidemiology
+      // New University may want these...
+    //if (!in_array('PUHPROM', $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Health Promotion
+    //if (!in_array('PUISDH',  $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Inequalities and The Social Determinants of Health
+    }
+
+    if (!$met_core_modules_requirement) $enrol->qualification = 'Certificate';
+  }
   if (!empty($frozen_awards[$enrol->id]) && ($frozen_awards[$enrol->id]->award == 2)) {
     $enrol->qualification = 'Diploma(pre 16b)';
   }
