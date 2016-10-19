@@ -354,7 +354,7 @@ foreach ($enrols as $enrol) {
       if (!in_array('PUEPI',   $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Introduction to Epidemiology
       // New University may want these...
     //if (!in_array('PUHPROM', $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Health Promotion
-    //if (!in_array('PUISDH',  $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Inequalities and The Social Determinants of Health
+    //if (!in_array('PUEBP',   $course_codes_passed_diploma)) $met_core_modules_requirement = false;
     }
 
     if (!$met_core_modules_requirement) $enrol->qualification = 'Certificate';
