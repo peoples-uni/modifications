@@ -138,10 +138,12 @@ function get_module_cost($userid, $coursename1, $coursename2) {
     $module_cost = $dissertation*100 + $deltamodules*40;
   }
   elseif ($income_category == 1) { // LMIC Students
-    $module_cost = $dissertation*260 + $deltamodules*40;
+    $module_cost = $dissertation*180 + $deltamodules*40;
+    //$module_cost = $dissertation*260 + $deltamodules*40;
   }
   elseif ($income_category == 2) { // HIC Students
-    $module_cost = $dissertation*1200 + $deltamodules*300;
+    $module_cost = $dissertation*600 + $deltamodules*300;
+    //$module_cost = $dissertation*1200 + $deltamodules*300;
   }
   else { // Should not get here!
     $module_cost = $dissertation*260 + $deltamodules*40;
