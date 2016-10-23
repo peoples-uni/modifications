@@ -48,9 +48,9 @@ $peoples_mmu_filter = new peoples_mph_filter('MPH?', 'mph', $listmph, 'Any');
 $peoples_filters->add_filter($peoples_mmu_filter);
 
 $listdiploma[] = 'Any';
-$listdiploma[] = 'Has 6 Passes';
+$listdiploma[] = 'Has 8 Passes';
 $listdiploma[] = 'Has Diploma';
-$listdiploma[] = 'Has less than 6 Passes';
+$listdiploma[] = 'Has less than 8 Passes';
 $listdiploma[] = 'Does not have Diploma';
 $peoples_diploma_filter = new peoples_select_filter('Has Diploma?', 'diploma', $listdiploma, 'Any');
 $peoples_filters->add_filter($peoples_diploma_filter);
@@ -312,8 +312,8 @@ foreach ($userdatas as $index => $userdata) {
   if (!empty($user_rows[$userdata->id])) {
     if (
         !empty($accreditation_of_prior_learnings[$userdata->id]) ||
-        (($diploma_setting === 'Has 6 Passes' || $diploma_setting === 'Has Diploma') && !empty($userdatas[$userdata->id]->diploma_passes) && $userdatas[$userdata->id]->diploma_passes >= 6) ||
-        $diploma_setting === 'Has less than 6 Passes' ||
+        (($diploma_setting === 'Has 8 Passes' || $diploma_setting === 'Has Diploma') && !empty($userdatas[$userdata->id]->diploma_passes) && $userdatas[$userdata->id]->diploma_passes >= 8) ||
+        $diploma_setting === 'Has less than 8 Passes' ||
         $diploma_setting === 'Does not have Diploma'
       ) {
       // Call get_student_award() to get precise Diploma/count status (we only get here if we need to do an exact calculation based on above "if ()")
@@ -344,9 +344,9 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
     if (
         $diploma_setting === 'Any' ||
-        ($diploma_setting === 'Has 6 Passes' && $passes_notified_or_not >= 6) ||
+        ($diploma_setting === 'Has 8 Passes' && $passes_notified_or_not >= 8) ||
         ($diploma_setting === 'Has Diploma' && $qualification === 'Diploma') ||
-        ($diploma_setting === 'Has less than 6 Passes' && $passes_notified_or_not < 6) ||
+        ($diploma_setting === 'Has less than 8 Passes' && $passes_notified_or_not < 8) ||
         ($diploma_setting === 'Does not have Diploma' && $qualification !== 'Diploma')
       ) {
       $rowdata = array();
