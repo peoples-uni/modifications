@@ -18,6 +18,18 @@ CONSTRAINT PRIMARY KEY (id)
 );
 
 CREATE UNIQUE INDEX mdl_peoples_accreditation_of_prior_learning_uid_ix ON mdl_peoples_accreditation_of_prior_learning (userid);
+
+CREATE TABLE mdl_frozen_award (
+  id bigint(10) NOT NULL AUTO_INCREMENT,
+  userid bigint(10) NOT NULL DEFAULT '0',
+  award bigint(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id),
+  KEY mdl_frozen_uid_ix (userid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+award...
+1 => Certificate
+2 => Diploma
 */
 
 require("../config.php");
@@ -151,6 +163,7 @@ SELECT
   u.firstname,
   u.lastaccess,
   COUNT(*) AS diploma_passes,
+  GROUP_CONCAT(codes.course_code ORDER BY codes.course_code ASC SEPARATOR ',') AS course_codes_passed_diploma,
   SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) AS grandfathered_passes,
   COUNT(*) - SUM((e.percentgrades=0) OR (g.finalgrade>49.99999)) AS diploma_only,
   SUM(e.percentgrades=0) AS pre_percentage_passes,
@@ -175,9 +188,9 @@ SELECT
   CASE
     WHEN
       (
-        ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 6)    /* 6 Masters passes for Diploma */
+        ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 8)    /* 8 Masters passes for Diploma */
           OR
-        ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 5) AND (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 6)) /* 5 Masters passes for Diploma & 1 condonement */
+        ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 7) AND (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 8)) /* 7 Masters passes for Diploma & 1 condonement */
       )
         AND
       (
@@ -202,9 +215,9 @@ SELECT
     THEN 'Diploma'
 
     WHEN
-      ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 3)       /* 3 Masters passes for Certificate */
+      ( SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0) >= 4)       /* 4 Masters passes for Certificate */
         OR
-      ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 2) && (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)>= 3)) /* 2 Masters passes for Certificate & 1 condonement*/
+      ((SUM((e.percentgrades=0) OR (g.finalgrade>49.99999))+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)  = 3) && (COUNT(*)+IFNULL(a.prior_foundation, 0)+IFNULL(a.prior_problems, 0)>= 4)) /* 3 Masters passes for Certificate & 1 condonement*/
     THEN 'Certificate'
 
     ELSE ''
@@ -268,6 +281,8 @@ $accreditation_of_prior_learnings = $DB->get_records_sql("
   FROM mdl_peoples_accreditation_of_prior_learning");
 if (empty($accreditation_of_prior_learnings)) $accreditation_of_prior_learnings = array();
 
+$frozen_awards = $DB->get_records_sql("SELECT userid, award FROM mdl_frozen_award");
+
 $table = new html_table();
 
 $table->head = array(
@@ -325,6 +340,30 @@ foreach ($enrols as $enrol) {
     $peoplesmph2 = $peoplesmph2s[$enrol->id];
     $type_of_pass = array(0 => '', 1 => ' (MPH)', 2 => ' (MPH Merit)', 3 => ' (MPH Distinction)');
     $mphtext = $type_of_pass[$peoplesmph2->graduated];
+  }
+  if ($enrol->qualification == 'Diploma') {
+    if (empty($enrol->course_codes_passed_diploma)) {
+      $met_core_modules_requirement = false;
+    }
+    else {
+      $met_core_modules_requirement = true;
+
+      $course_codes_passed_diploma = explode(',', $enrol->course_codes_passed_diploma);
+
+      if (!in_array('PUBIOS',  $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Biostatistics
+      if (!in_array('PUEPI',   $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Introduction to Epidemiology
+      // New University may want these...
+    //if (!in_array('PUHPROM', $course_codes_passed_diploma)) $met_core_modules_requirement = false; // Health Promotion
+    //if (!in_array('PUEBP',   $course_codes_passed_diploma)) $met_core_modules_requirement = false;
+    }
+
+    if (!$met_core_modules_requirement) $enrol->qualification = 'Certificate';
+  }
+  if (!empty($frozen_awards[$enrol->id]) && ($frozen_awards[$enrol->id]->award == 2)) {
+    $enrol->qualification = 'Diploma(pre 16b)';
+  }
+  if (!empty($frozen_awards[$enrol->id]) && ($frozen_awards[$enrol->id]->award == 1) && ($enrol->qualification != 'Diploma')) {
+    $enrol->qualification = 'Certificate(pre 16b)';
   }
   $rowdata[] =  $enrol->qualification . $mphtext;
   $rowdata[] =  '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->id . '" target="_blank">Student Grades</a>';
