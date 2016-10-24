@@ -160,6 +160,10 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     $countp_grandfathered   += $prior_problems;
   }
   $already_passed = array();
+  $met_core_PUBIOS  = false;
+  $met_core_PUEPI   = false;
+  $met_core_PUHPROM = false;
+  $met_core_PUEBP   = false;
   foreach ($enrols as $enrol) {
     $pass_type[$enrol->id] = '';
     //Test: $enrol->finalgrade = 1.0; (old grading system)
@@ -201,6 +205,13 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
           $countp++;
           if ($grandfathered) $countp_grandfathered++;
           $foundation_problems[$enrol->id] = 'Problems';
+        }
+
+        if ($matched) {
+          if ($matches[1] == 'PUBIOS')  $met_core_PUBIOS  = true;
+          if ($matches[1] == 'PUEPI')   $met_core_PUEPI   = true;
+          if ($matches[1] == 'PUHPROM') $met_core_PUHPROM = true;
+          if ($matches[1] == 'PUEBP')   $met_core_PUEBP   = true;
         }
 
         $semesters[] = $enrol->semester; // Not used
@@ -303,11 +314,15 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
       ||
     ($meets_problems_criterion && $almost_meets_foundation_criterion);
 
+  $met_core_modules_requirement = $met_core_PUBIOS && $met_core_PUEPI;
+  //&& $met_core_PUHPROM
+  //&& $met_core_PUEBP
+
   $qualification = 0;
   if (($grandfathered_passes >= 4) || (($grandfathered_passes == 3) && ($diploma_passes >= 4))) {
     $qualification = $qualification | 1;
   }
-  if ((($grandfathered_passes >= 8) || (($grandfathered_passes == 7) && ($diploma_passes >= 8))) && $meets_overall_criteria) {
+  if ((($grandfathered_passes >= 8) || (($grandfathered_passes == 7) && ($diploma_passes >= 8))) && $meets_overall_criteria && $met_core_modules_requirement) {
     $qualification = $qualification | 2;
   }
 
