@@ -326,5 +326,13 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     $qualification = $qualification | 2;
   }
 
+  $frozen_awards = $DB->get_records_sql("SELECT userid, award FROM mdl_frozen_award WHERE userid=$userid");
+  if (!empty($frozen_awards[$userid]) && ($frozen_awards[$userid]->award == 2)) {
+    $qualification = $qualification | 2;
+  }
+  if (!empty($frozen_awards[$userid]) && ($frozen_awards[$userid]->award == 1)) {
+    $qualification = $qualification | 1;
+  }
+
   return $qualification;
 }
