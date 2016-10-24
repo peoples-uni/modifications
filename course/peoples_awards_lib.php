@@ -100,6 +100,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   $cumulative_enrolled_ids_not_to_be_double_counted = explode(',', $cumulative_enrolled_ids_not_to_be_double_counted_string);
 
 
+  // This has now (20161024) changed Diploma: 8, Certificate: 4 and required code modules
   // This has now (20110728) changed Diploma: 6, Certificate: 3 (also foundation/problems are no longer hard coded)
   // A Diploma when 8 modules have been passed,
   // Provided at least two are from each of the Foundation Sciences and Public Health problems groupings.
@@ -211,7 +212,7 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         }
         $percentages[] = $percent;
 
-        if (($enrol->datenotified > $lastestdate) && ($diploma_passes <= 6)) $lastestdate = $enrol->datenotified;
+        if (($enrol->datenotified > $lastestdate) && ($diploma_passes <= 8)) $lastestdate = $enrol->datenotified;
       }
       elseif (in_array($enrol->id, $cumulative_enrolled_ids_to_discount)) { // Discounted but note marks in any case
         if ($enrol->finalgrade > 49.99999) {
@@ -303,10 +304,10 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
     ($meets_problems_criterion && $almost_meets_foundation_criterion);
 
   $qualification = 0;
-  if (($grandfathered_passes >= 3) || (($grandfathered_passes == 2) && ($diploma_passes >= 3))) {
+  if (($grandfathered_passes >= 4) || (($grandfathered_passes == 3) && ($diploma_passes >= 4))) {
     $qualification = $qualification | 1;
   }
-  if ((($grandfathered_passes >= 6) || (($grandfathered_passes == 5) && ($diploma_passes >= 6))) && $meets_overall_criteria) {
+  if ((($grandfathered_passes >= 8) || (($grandfathered_passes == 7) && ($diploma_passes >= 8))) && $meets_overall_criteria) {
     $qualification = $qualification | 2;
   }
 
