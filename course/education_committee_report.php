@@ -312,7 +312,7 @@ foreach ($userdatas as $index => $userdata) {
   if (!empty($user_rows[$userdata->id])) {
     if (
         !empty($accreditation_of_prior_learnings[$userdata->id]) ||
-        (($diploma_setting === 'Has 8 Passes' || $diploma_setting === 'Has Diploma') && !empty($userdatas[$userdata->id]->diploma_passes) && $userdatas[$userdata->id]->diploma_passes >= 8) ||
+        (($diploma_setting === 'Has 8 Passes' || $diploma_setting === 'Has Diploma') && !empty($userdatas[$userdata->id]->diploma_passes) && $userdatas[$userdata->id]->diploma_passes >= 6) ||
         $diploma_setting === 'Has less than 8 Passes' ||
         $diploma_setting === 'Does not have Diploma'
       ) {
