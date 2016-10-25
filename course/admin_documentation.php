@@ -973,7 +973,7 @@ We hope you enjoy studying with us and wish you every success.
 "Set the Income Category for the Student" button does what it says. It is necessary to specify whether the student is LMIC (Low/Middle Income country) or HIC (High Income country).<br />
 It is also possible to specify that a student is an "Existing Student", but it should not be necessary to use that as all students before the changeover to the new module costings will automatically have this status.<br />
 The default is LMIC (assigned automatically when new students are registered), so there will not normally be a reason to set this.<br />
-The categories are used to allocate costs for modules according to the following scheme (as of 28th June 2014)...<br />
+The categories are used to allocate costs for modules according to the following scheme (as of 24th October 2016)...<br />
 <ol>
 <li>
 Existing MMU MPH Students: &pound;0 per module, &pound;1500 for MPH
@@ -985,10 +985,10 @@ Existing Peoples MPH Students: &pound;40 per module, &pound;100 for the disserta
 Existing (non MPH) Students: &pound;40 per module, &pound;100 for the dissertation
 </li>
 <li>
-New LMIC students: &pound;40 per module, &pound;260 for the dissertation
+New LMIC students: &pound;40 per module, &pound;180 for the dissertation
 </li>
 <li>
-New HIC students: &pound;300 per module, &pound;1200 for the dissertation
+New HIC students: &pound;300 per module, &pound;600 for the dissertation
 </li>
 </ol>
 </li>
@@ -1501,7 +1501,7 @@ There are a number of buttons for each course module in "Student Grades" which c
 "Click to indicate Student will NOT be Graded, but will get a 'Certificate of Participation'"... to be used if someone is on the CPD stream and you only want to give them a certificate of attendance and not academic transcripts counting towards a certificate/diploma. This will be shown on the coursegrades.php report (and successbyqualifications.php). Additionally, the person will get an e-mail telling them the Certificate of Participation is available. And finally they (or you if you want to for some reason) can download the Certificate of Participation from "Student Grades"/student.php.
 </li>
 <li>
-Additionally if the student has met the criteria for receiving a Certificate (3 modules passed 50%+), Diploma (6 modules passed 50%+, 2 of each type) or MPH (manually awarded) from Peoples-uni. They will be able to download them here.<br />
+Additionally if the student has met the criteria for receiving a Certificate (4 modules passed 50%+), Diploma (8 modules passed 50%+, 2 of each type and the core modules PUBIOS & PUEPI) or MPH (manually awarded) from Peoples-uni. They will be able to download them here. (Note that in semesters before 16b there were different requirements for Certificates and Diplomas, the 16b rules do not invalidate previous Certificates and Diplomas.)<br />
 If a Certificate or Diploma is shown for download, there will also be a link to download the "Same Diploma without Percent Grades" or the "Same Diploma without List of Modules".<br />
 Note: These will be preceeded by Accreditation of Prior Learnings, if any.<br />
 Note: After 10 elapsed semesters, module passes for subsequent semesters are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
@@ -1559,7 +1559,7 @@ Last access (elapsed time for all modules) [elapsed time is the total number of 
 Passed [includes the list of modules they have passed (Course Codes)]<br />
 # Foundation [the number of "Foundation Sciences" modules passed, with the number accredited for prior learnings, if any]<br />
 # Problems [the number of "Public Health Problems" modules passed, with the number accredited for prior learnings, if any]<br />
-Qualification [shows whether they have qualified for a Diploma, a Certificate or nothing so far]<br />
+Qualification [shows whether they have qualified for a Diploma, a Certificate or nothing so far, pre 16b Diplomas or Certificates are highlighted]<br />
 "Student Grades"<br />
 "Mark Discounted Modules" [see next bullet point for the link, if there are any that have been discounted, this is noted here]<br />
 </li>
@@ -1589,7 +1589,7 @@ Set the Semester for the Report. The report will include students registered in 
 There is an "Exclude those in the Semester who did not Submit Anything" filter which, when checked, allows excluding students who would be included because they are enrolled in Modules for the Semester, but who have not submitted anything for the Modules which they are enrolled in for the Semester (they might still be included based on the next filter because they have recently submitted something for a previous Semester).<br />
 There are set the "Last Exam Board" date filters. These ensure students with resubmissions since that date are included even is the student is not enrolled in the current semester.<br />
 There is a filter by the student's MPH status, if it is desired to include/exclude those students.<br />
-There is a "Has Diploma?" filter which allows excluding students without six passes of some sort whether notified or not ("Has 6 Passes") or separately without a Diploma ("Has Diploma").<br />
+There is a "Has Diploma?" filter which with the "Has Diploma" option allows excluding students without a Diploma and the "Has 8 Passes" option which allows excluding students who do not have eight passes of some sort whether notified or not.<br />
 There is a "Dissertation Grade available?" filter which allows excluding students who do not yet have a grade for their dissertation (whether notified or not).<br />
 There is an "Only Show those who applied for Scholarship in Semester" filter to show only those who have applied for a scholarship this semester.
 </li>
