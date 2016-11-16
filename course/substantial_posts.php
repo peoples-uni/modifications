@@ -200,9 +200,9 @@ function displaystat_number_of_topics_with_substantial_posts($number_of_topics_w
   echo '</table>';
   echo '<br/>';
 
-  echo 'emails of those with no Posts: ' . implode(', ', $emails_no_posts) . '<br />';
-  echo 'emails of those with no Ratings: ' . implode(', ', $emails_not_rated) . '<br />';
-  echo 'emails of those with less than 3 Substantial Ratings: ' . implode(', ', $emails_less_than_3) . '<br />';
+  echo '<b>emails of those with no Posts:</b> ' . implode(', ', $emails_no_posts) . '<br />';
+  echo '<b>emails of those with no Ratings:</b> ' . implode(', ', $emails_not_rated) . '<br />';
+  echo '<b>emails of those with less than 3 Substantial Ratings:</b> ' . implode(', ', $emails_less_than_3) . '<br />';
 }
 
 
