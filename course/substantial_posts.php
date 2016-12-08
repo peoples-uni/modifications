@@ -167,6 +167,7 @@ function displaystat_number_of_topics_with_substantial_posts($number_of_topics_w
   $emails_no_posts = array();
   $emails_not_rated = array();
   $emails_less_than_3 = array();
+  $emails_greater_than_or_equal_3 = array();
 
   foreach ($number_of_topics_with_substantial_posts_per_user_course as $number_of_topics_with_substantial_posts_per_user_course_item) {
     echo "<tr>";
@@ -193,6 +194,7 @@ function displaystat_number_of_topics_with_substantial_posts($number_of_topics_w
     }
     else {
       $stat = $number_of_topics_with_substantial_posts_per_user_course_item->number_of_topics_with_substantial;
+      $emails_greater_than_or_equal_3[$number_of_topics_with_substantial_posts_per_user_course_item->email] = $number_of_topics_with_substantial_posts_per_user_course_item->email;
     }
     echo "<td>" . $stat . "</td>";
     echo "</tr>";
@@ -203,6 +205,7 @@ function displaystat_number_of_topics_with_substantial_posts($number_of_topics_w
   echo '<b>emails of those with no Posts:</b> ' . implode(', ', $emails_no_posts) . '<br />';
   echo '<b>emails of those with no Ratings:</b> ' . implode(', ', $emails_not_rated) . '<br />';
   echo '<b>emails of those with less than 3 Substantial Ratings:</b> ' . implode(', ', $emails_less_than_3) . '<br />';
+  echo '<b>emails of those with 3 or more Substantial Ratings:</b> ' . implode(', ', $emails_greater_than_or_equal_3) . '<br />';
 }
 
 
