@@ -84,7 +84,8 @@ elseif ($data = $editform->get_data()) {
   $take_final_assignmenttext[3] = 'No, I will study module materials without participating in discussions';
   $take_final_assignmenttext = $take_final_assignmenttext[$application->take_final_assignment];
 
-  $dataitem = $data->applycertpatientsafety;
+  //$dataitem = $data->applycertpatientsafety;
+  $dataitem = 0;
   if (empty($dataitem)) $dataitem = 0;
   $application->applycertpatientsafety = $dataitem;
   $applycertpatientsafetytext = array(0 => '', 1 => 'No', 2 => 'Yes', 3 => 'Already');
