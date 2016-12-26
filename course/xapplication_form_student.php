@@ -79,9 +79,9 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = 0;
   $application->take_final_assignment = $dataitem;
   $take_final_assignmenttext = array(0 => '', 1 => 'No', 2 => 'Yes', 3 => 'Already');
-  $take_final_assignmenttext[1] = 'Yes, I will submit the final assignment for the module(s)';
-  $take_final_assignmenttext[2] = 'I will complete the module(s) without taking the final assignment, but would like to earn a Certificate of Participation';
-  $take_final_assignmenttext[3] = 'I will study the module materials without actively participating in discussions';
+  $take_final_assignmenttext[1] = 'Yes, I will submit the final assignment for each module';
+  $take_final_assignmenttext[2] = 'No, but I would like to earn a Certificate of Participation';
+  $take_final_assignmenttext[3] = 'No, I will study module materials without participating in discussions';
   $take_final_assignmenttext = $take_final_assignmenttext[$application->take_final_assignment];
 
   $dataitem = $data->applycertpatientsafety;
@@ -192,7 +192,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Module 2: $application->coursename2\n\n";
   $message .= "Alternate module: $application->alternatecoursename\n\n";
   $message .= "Apply for MPH: $applymmumphtext\n\n";
-  $message .= "Take the Final Assignment: $take_final_assignmenttext\n\n";
+  $message .= "Submit the Final Assignment: $take_final_assignmenttext\n\n";
   $message .= "Apply for Certificate in Patient Safety: $applycertpatientsafetytext\n\n";
   $message .= "City: $application->city\n\n";
   $countryname = get_string_manager()->get_list_of_countries(false);
