@@ -38,6 +38,7 @@ CREATE TABLE mdl_peoplesapplication (
   coursename4 VARCHAR(255) NOT NULL DEFAULT '',
   alternatecoursename VARCHAR(255) NOT NULL DEFAULT '',
   applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  take_final_assignment BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   applycertpatientsafety BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   semester VARCHAR(255) NOT NULL DEFAULT '',
   dob VARCHAR(20) NOT NULL DEFAULT '',
@@ -104,6 +105,7 @@ ALTER TABLE mdl_peoplesapplication ADD whynotcomplete TEXT NOT NULL DEFAULT '' A
 ALTER TABLE mdl_peoplesapplication ADD reenrolment BIGINT(10) unsigned NOT NULL DEFAULT 0 AFTER nid;
 
 ALTER TABLE mdl_peoplesapplication ADD applycertpatientsafety BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER applymmumph;
+ALTER TABLE mdl_peoplesapplication ADD take_final_assignment BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER applymmumph;
 ))
 
 CREATE TABLE mdl_peoplesmph (
@@ -699,6 +701,8 @@ Sponsoring organisation
 sponsoringorganisation
 Applying for MPH
 applymmumph
+Submit the Final Assignment
+take_final_assignment
 Applying for Certificate in Patient Safety
 applycertpatientsafety
 Scholarship
