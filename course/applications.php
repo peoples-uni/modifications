@@ -727,6 +727,8 @@ $gender = array();
 $age = array();
 $country = array();
 $modulepaidup = array();
+$moduleCPD_only = array();
+$modulestudy_materials_only = array();
 foreach ($applications as $sid => $application) {
   $state = (int)$application->state;
   // Legacy fixups...
@@ -1223,6 +1225,24 @@ foreach ($applications as $sid => $application) {
       }
     }
 
+    if ($application->take_final_assignment == 2) {
+      if (empty($moduleCPD_only[$application->coursename2])) {
+        $moduleCPD_only[$application->coursename2] = 1;
+      }
+      else {
+        $moduleCPD_only[$application->coursename2]++;
+      }
+    }
+
+    if ($application->take_final_assignment == 3) {
+      if (empty($modulestudy_materials_only[$application->coursename2])) {
+        $modulestudy_materials_only[$application->coursename2] = 1;
+      }
+      else {
+        $modulestudy_materials_only[$application->coursename2]++;
+      }
+    }
+
     $table->data[] = $rowdata;
   }
   else { // $displaystudenthistory
@@ -1324,6 +1344,8 @@ echo "<table border=\"1\" BORDERCOLOR=\"RED\">";
 echo "<tr>";
 echo "<td>Module</td>";
 echo "<td>Number of Applications</td>";
+echo "<td>(CPD only)</td>";
+echo "<td>(Study materials only)</td>";
 echo "<td>Number Approved</td>";
 echo "<td>Number Enrolled</td>";
 echo "<td>Number Fully Paid (or New Student)</td>";
@@ -1337,6 +1359,8 @@ foreach ($modules as $product => $number) {
   echo "<tr>";
   echo "<td>" . $product . "</td>";
   echo "<td>" . $number . "</td>";
+  if (empty($moduleCPD_only[$product])) { echo "<td>0</td>";} else { echo "<td>" . $moduleCPD_only[$product] . "</td>";}
+  if (empty($modulestudy_materials_only[$product])) { echo "<td>0</td>";} else { echo "<td>" . $modulestudy_materials_only[$product] . "</td>";}
   if (empty($moduleapprovals[$product])) { echo "<td>0</td>";} else {   echo "<td>" . $moduleapprovals[$product] . "</td>";}
   if (empty($moduleregistrations[$product])) { echo "<td>0</td>";} else { echo "<td>" . $moduleregistrations[$product] . "</td>";}
   if (empty($modulepaidup[$product])) { echo "<td>0</td>";} else { echo "<td>" . $modulepaidup[$product] . "</td>";}
