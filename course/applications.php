@@ -798,6 +798,10 @@ foreach ($applications as $sid => $application) {
     $applymmumphtext[6] = '<br />(Apply OTHER MPH)';
     $applymmumphtext[7] = '<br />(Say already OTHER MPH)';
     $z .= $applymmumphtext[$application->applymmumph];
+    $take_final_assignmenttext = array(0 => '', 1 => '');
+    $take_final_assignmenttext[2] = '<br />(CPD only)';
+    $take_final_assignmenttext[3] = '<br />(Study materials only)';
+    $z .= $take_final_assignmenttext[$application->take_final_assignment];
     $applycertpatientsafetytext = array(0 => '', 1 => '', 2 => '<br />(Apply Cert PS)', 3 => '<br />(Say already Cert PS)');
     $z .= $applycertpatientsafetytext[$application->applycertpatientsafety];
     if (!empty($dissertations[$application->userid])) {
@@ -899,6 +903,7 @@ foreach ($applications as $sid => $application) {
       $z .= '<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
       $z .= '</span>';
       $z .= '<input type="hidden" name="applymmumph" value="' . $application->applymmumph . '" />';
+      $z .= '<input type="hidden" name="take_final_assignment" value="' . $application->take_final_assignment . '" />';
       $z .= '<input type="hidden" name="sid" value="' . $sid . '" />';
       $z .= '<input type="hidden" name="nid" value="' . $application->nid . '" />';
       $z .= '<input type="hidden" name="sesskey" value="' . $USER->sesskey . '" />';
