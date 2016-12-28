@@ -971,6 +971,7 @@ if ($state1 === 02) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1023,6 +1024,7 @@ if (($state2===020) && !empty($_REQUEST['19'])) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1075,6 +1077,7 @@ if ($state1===01 || $state1===03) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1127,6 +1130,7 @@ if (($state2===010 || $state2===030) && !empty($_REQUEST['19'])) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1174,6 +1178,7 @@ if ($state1===02 || $state1===01) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1239,6 +1244,7 @@ if (($state2===020 || $state2===010) && !empty($_REQUEST['19'])) { // Allow modu
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1304,6 +1310,7 @@ elseif ($state2 === 020 && empty($_REQUEST['19'])) { // Allow module 2 to be set
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1369,6 +1376,7 @@ elseif ($state2 === 010 && empty($_REQUEST['19'])) { // Allow module 2 to be set
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1572,6 +1580,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1619,6 +1628,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1661,6 +1671,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1714,6 +1725,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1760,6 +1772,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1802,6 +1815,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="applicationaddress" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="currentjob" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1845,6 +1859,7 @@ if (!$application->ready && $application->nid != 80) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1891,6 +1906,7 @@ if (empty($mphstatus)) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1944,6 +1960,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -1991,6 +2008,7 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2038,6 +2056,7 @@ Reason for Unsuspension (visible to Staff & Students):&nbsp;<input type="text" s
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2086,6 +2105,7 @@ if (empty($peoples_cert_ps->cert_psstatus)) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2132,6 +2152,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2179,6 +2200,7 @@ if (!empty($_REQUEST['29'])) {
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2239,6 +2261,7 @@ echo '<option value="2" ' . $selected2 . '>HIC</option>';
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2286,6 +2309,7 @@ if ($state1 !== 03 && $state2 !== 030 && empty($_REQUEST['29'])) { // Allow appl
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
@@ -2334,6 +2358,7 @@ if ($state1 === 03 && $state2 === 030 && !empty($_REQUEST['19'])) { // Add anoth
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
 <textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
 <textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
