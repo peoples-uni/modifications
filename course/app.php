@@ -802,6 +802,19 @@ if (!empty($mphstatus) || !empty($applymmumphtext) || !empty($peoplesmph2->note)
   if (!empty($peoplesmph2->note)) echo '<tr><td></td><td>' . $peoplesmph2->note . '</td></tr>';
 }
 
+$take_final_assignmenttext = array('0' => '');
+$take_final_assignmenttext['1'] = 'Will submit the final assignment for each module';
+$take_final_assignmenttext['2'] = 'Would like to earn a Certificate of Participation';
+$take_final_assignmenttext['3'] = 'Will study module materials without participating in discussions';
+$take_final_assignmenttext = $take_final_assignmenttext[$_REQUEST['take_final_assignment']];
+
+if (!empty($take_final_assignmenttext)) {
+  echo '<tr>';
+  echo '<td>Submit the Final Assignment for each module?</td>';
+  echo "<td>$take_final_assignmenttext</td>";
+  echo '</tr>';
+}
+
 $applycertpatientsafetytext = array('0' => '', '1' => '', '2' => 'Wants to Apply for Certificate in Patient Safety', '3' => 'Says Already in Certificate in Patient Safety');
 $applycertpatientsafetytext = $applycertpatientsafetytext[$application->applycertpatientsafety];
 
