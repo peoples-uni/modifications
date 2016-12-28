@@ -1225,11 +1225,15 @@ foreach ($applications as $sid => $application) {
       }
     }
 
+if ($application->sid == 4697) error_log($application->take_final_assignment);
     if ($application->take_final_assignment == 2) {
+error_log($application->take_final_assignment);
       if (empty($moduleCPD_only[$application->coursename2])) {
+error_log('=1');
         $moduleCPD_only[$application->coursename2] = 1;
       }
       else {
+error_log('++');
         $moduleCPD_only[$application->coursename2]++;
       }
     }
