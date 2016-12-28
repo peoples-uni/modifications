@@ -772,7 +772,7 @@ In particular the one or two modules that the student has applied for are displa
 </li>
 <li>
 Statistics are displayed at the end of the page.<br />
-Note that the first table of statistics has "Module", "Number of Applications", "Number Approved", "Number Enrolled" and "Number Fully Paid (or New Student)" and can be used to track how modules are filling up.<br />
+Note that the first table of statistics has "Module", "(CPD only)", "(Study materials only)", "Number of Applications", "Number Approved", "Number Enrolled" and "Number Fully Paid (or New Student)" and can be used to track how modules are filling up (and if the Student intends to study for CPD only or just view student materials without engaging in discussions).<br />
 A "New Student" will obviously owe nothing until they are approved so will be included in "Number Fully Paid (or New Student)". After they are approved (assuming they have not paid yet), they will not be included in "Number Fully Paid (or New Student)".
 </li>
 <li>
@@ -797,7 +797,7 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student was enrolled in a previous semester.
 </li>
 <li>
-Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, a possible alternate module (if their desired module is full), Application for MPH (if any), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
+Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, a possible alternate module (if their desired module is full), Application for MPH (if any), do they intend to submit the Final Assignment for each module? (defaults to Yes), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
 </li>
 <li>
 When the "Details" button is pressed for an application, additional applicant data is displayed beyond what is in the "spreadsheet" row.
@@ -874,6 +874,9 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 <li>
 "MPH Status" indicates whether the student "Wants to Apply for ... MPH" or "Says Already in ... MPH" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(... MPH)"). If a Student was "Enrolled in MPH" and then "Unenrolled from MPH" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).<br />
 If a Student was "Suspended from MPH" or "Unsuspended from MPH" (both of which can be set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
+</li>
+<li>
+"Submit the Final Assignment for each module?" indicates whether the student "Will submit the final assignment for each module", "Would like to earn a Certificate of Participation" or "Will study module materials without participating in discussions" (this is also displayed on the main applications.php spreadsheet under "Approved?").
 </li>
 <li>
 "Certificate in Patient Safety Status" indicates whether the student "Wants to Apply for Certificate in Patient Safety" or "Says Already in Certificate in Patient Safety" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in Certificate in Patient Safety" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(Cert PS)"). If a Student was "Enrolled in Certificate in Patient Safety" and then "Unenrolled from Certificate in Patient Safety" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
