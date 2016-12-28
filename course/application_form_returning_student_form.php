@@ -135,6 +135,13 @@ class application_form_returning_student_form extends moodleform {
 //Please do not apply if this is your first semester.<br /><br />');
     $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%), and would like to study for a Master of Public Health (MPH) or Diploma with Peoples-uni, please indicate that you want to apply for the MPH programme. If you have previously applied for the Peoples-uni MPH programme, please do so again, to make sure we know your intentions. For more information on the criteria and rules applying to the MPH programme, please follow this link <a href="http://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a><br /><br />');
 
+    $listforselect = array();
+    $listforselect[1] = 'Yes, I will submit the final assignment for each module';
+    $listforselect[2] = 'No, but I would like to earn a Certificate of Participation';
+    $listforselect[3] = 'No, I will study module materials without participating in discussions';
+    $mform->addElement('select', 'take_final_assignment', 'Do you intend to submit the Final Assignment for each module?', $listforselect);
+    $mform->setDefault('take_final_assignment', 1);
+    $mform->addElement('static', 'explaintake_final_assignment', '&nbsp;', 'Choose an option that most closely describes your intentions.');
 
 //    $listforselect = array();
 //    $listforselect[1] = 'No';
