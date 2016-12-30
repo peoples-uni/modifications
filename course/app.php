@@ -803,7 +803,7 @@ if (!empty($mphstatus) || !empty($applymmumphtext) || !empty($peoplesmph2->note)
 }
 
 $take_final_assignmenttext = array('0' => '');
-$take_final_assignmenttext['1'] = 'Will submit the final assignment for each module';
+$take_final_assignmenttext['1'] = 'Intends to submit the final assignment for each module';
 $take_final_assignmenttext['2'] = 'Would like to earn a Certificate of Participation';
 $take_final_assignmenttext['3'] = 'Will study module materials without participating in discussions';
 $take_final_assignmenttext = $take_final_assignmenttext[$_REQUEST['take_final_assignment']];

@@ -79,7 +79,7 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = 0;
   $application->take_final_assignment = $dataitem;
   $take_final_assignmenttext = array(0 => '', 1 => 'No', 2 => 'Yes', 3 => 'Already');
-  $take_final_assignmenttext[1] = 'Yes, I will submit the final assignment for each module';
+  $take_final_assignmenttext[1] = 'Yes, I intend to submit the final assignment for each module';
   $take_final_assignmenttext[2] = 'No, but I would like to earn a Certificate of Participation';
   $take_final_assignmenttext[3] = 'No, I will study module materials without participating in discussions';
   $take_final_assignmenttext = $take_final_assignmenttext[$application->take_final_assignment];
