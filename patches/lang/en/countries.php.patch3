@@ -1,0 +1,10 @@
+--- countries.php.bak	2017-01-04 18:23:38.574000300 +0000
++++ countries.php	2017-01-04 18:59:34.003948700 +0000
+@@ -266,6 +266,7 @@
+ $string['VU'] = 'Vanuatu';
+ $string['WF'] = 'Wallis And Futuna';
+ $string['WS'] = 'Samoa';
++$string['XK'] = 'Kosovo';
+ $string['YE'] = 'Yemen';
+ $string['YT'] = 'Mayotte';
+ $string['ZA'] = 'South Africa';
