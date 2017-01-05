@@ -1,0 +1,78 @@
+--- turnitintooltwo_submission.class.php.bak	2017-01-05 16:03:52.606580400 +0000
++++ turnitintooltwo_submission.class.php	2017-01-05 16:11:58.446677500 +0000
+@@ -495,6 +495,8 @@
+     public function do_tii_submission($cm, $turnitintooltwoassignment) {
+         global $DB, $USER, $CFG;
+ 
++        $this->record_turnitintooltwo_submission($cm, $this->id, $turnitintooltwoassignment->turnitintooltwo->course); // ALAN 20150820
++
+         $config = turnitintooltwo_admin_config();
+         $notice = array("success" => false);
+         $context = context_module::instance($cm->id);
+@@ -661,6 +663,66 @@
+         return $notice;
+     }
+ 
++private function record_turnitintooltwo_submission($cm, $submission_id, $course_id) { // ALAN 20150820
++  global $DB;
++
++  $turnitintooltwo_submission = $DB->get_record('turnitintooltwo_submissions', array('id' => $submission_id));
++  $turnitintooltwo_part       = $DB->get_record('turnitintooltwo_parts',       array('id' => $turnitintooltwo_submission->submission_part));
++  $turnitintooltwo            = $DB->get_record('turnitintooltwo',             array('id' => $turnitintooltwo_part->turnitintooltwoid));
++
++  $recorded_submission = new object();
++  $recorded_submission->submission                      = $submission_id; // Not used (I think)
++  $recorded_submission->assignment                      = 0; // This is not mod assignment (2.2)
++  $recorded_submission->assign                          = 0; // mod assign (2.3)
++  $recorded_submission->turnitintooltwo_submission_part = $turnitintooltwo_submission->submission_part; // mod turnitintooltwo
++  $recorded_submission->turnitintooltwoid               = $turnitintooltwo_part->turnitintooltwoid;
++  $recorded_submission->userid                          = $turnitintooltwo_submission->userid;
++  $recorded_submission->timemodified                    = time();
++  $recorded_submission->course                          = $course_id;
++  $recorded_submission->name                            = "$turnitintooltwo->name ($turnitintooltwo_part->partname)";
++  $recorded_submission->assignmenttype                  = '';
++  $recorded_submission->data1                           = '';
++  $recorded_submission->data2                           = '';
++  $recorded_submission_id = $DB->insert_record('recorded_submissions', $recorded_submission);
++
++  $turnitintooltwo_submission_fs = get_file_storage();
++  $context = context_module::instance($cm->id);
++  $files = $turnitintooltwo_submission_fs->get_area_files($context->id, 'mod_turnitintooltwo', 'submissions', $submission_id, "timecreated", false);
++  foreach ($files as $submitted_file) {
++    if (empty($submitted_file)) continue;
++
++    $newfilename = $submitted_file->get_filename();
++    if ($newfilename === '.') continue; // by the way, a '.' directory will be auto generated
++    $newfilename = clean_param($newfilename, PARAM_FILE);
++
++    $newfilepath = $submitted_file->get_filepath();
++
++    $filedata = $submitted_file->get_content();
++
++    $recorded_submission_fs = get_file_storage();
++
++    $context = context_user::instance($turnitintooltwo_submission->userid);
++
++    $newrecord = new stdClass();
++    $newrecord->contextid = $context->id;
++    $newrecord->component = 'peoples_recordedsubmissions';
++    $newrecord->filearea  = 'student';
++    $newrecord->itemid    = $recorded_submission_id;
++    $newrecord->filepath  = $newfilepath;
++    $newrecord->filename  = $newfilename;
++    if (!$recorded_submission_fs->file_exists($newrecord->contextid, $newrecord->component, $newrecord->filearea, $newrecord->itemid, $newrecord->filepath, $newrecord->filename)) {
++      $newrecord->source        = $submitted_file->get_source();
++      $newrecord->author        = $submitted_file->get_author();
++      $newrecord->license       = $submitted_file->get_license();
++      $newrecord->timecreated   = $submitted_file->get_timecreated();
++      $newrecord->timemodified  = $submitted_file->get_timemodified();
++      $newrecord->mimetype      = mimeinfo('type', $newfilename);
++      $newrecord->userid        = $turnitintooltwo_submission->userid;
++      $recorded_submission_fs->create_file_from_string($newrecord, $filedata);
++    }
++  }
++} // ALAN 20150820 END
++
+     /**
+      * Update and save an individual submission from Turnitin
+      *

@@ -1,6 +1,6 @@
 --- lib.php.bak	2017-01-04 18:23:53.832848200 +0000
-+++ lib.php	2017-01-04 19:23:08.005796500 +0000
-@@ -3447,6 +3447,16 @@
++++ lib.php	2017-01-05 15:55:04.956869300 +0000
+@@ -3447,6 +3447,21 @@
      if (!empty($post->rating)) {
          $output .= html_writer::tag('div', $OUTPUT->render($post->rating), array('class'=>'forum-post-rating'));
      }
@@ -9,7 +9,12 @@
 +    }
 +    if (!empty($post->rating3)) {
 +        $output .= html_writer::tag('div', $OUTPUT->render($post->rating3), array('class'=>'forum-post-rating'));
-+
++        $output .= html_writer::empty_tag('br');
++    }
++    if (!empty($post->rating4)) {
++        $output .= html_writer::tag('div', $OUTPUT->render($post->rating4), array('class'=>'forum-post-rating'));
++    }
++    if (!empty($post->rating3)) {
 +        if ($post->rating3->user_can_rate()) { // Conditionally add a link to the Notes for the Student ALAN
 +            $output .= html_writer::tag('div', html_writer::link(new moodle_url('/notes/index.php', array('user'=>$post->userid)), 'Notes', array('target'=>'_blank')), array('class'=>'commands'));
 +        }
@@ -17,7 +22,7 @@
  
      // Output the commands
      $commandhtml = array();
-@@ -3545,6 +3555,7 @@
+@@ -3545,6 +3560,7 @@
   */
  function forum_rating_validate($params) {
      global $DB, $USER;
@@ -25,12 +30,12 @@
  
      // Check the component is mod_forum
      if ($params['component'] != 'mod_forum') {
-@@ -3574,7 +3585,7 @@
+@@ -3574,7 +3590,7 @@
          throw new rating_exception('invalidcontext');
      }
  
 -    if ($forum->scale != $params['scaleid']) {
-+    if (($forum->scale != $params['scaleid']) && ($params['scaleid'] != $CFG->scale_to_use_for_triple_rating_2) && ($params['scaleid'] != $CFG->scale_to_use_for_triple_rating_3)) {
++    if (($forum->scale != $params['scaleid']) && ($params['scaleid'] != $CFG->scale_to_use_for_triple_rating_2) && ($params['scaleid'] != $CFG->scale_to_use_for_triple_rating_3) && ($params['scaleid'] != $CFG->scale_to_use_for_triple_rating_4)) {
          //the scale being submitted doesnt match the one in the database
          throw new rating_exception('invalidscaleid');
      }

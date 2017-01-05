@@ -1,0 +1,10 @@
+--- index.php.bak	2017-01-04 18:23:54.272724600 +0000
++++ index.php	2017-01-05 15:13:58.011570400 +0000
+@@ -95,6 +95,7 @@
+ $ratingoptions->sort = $sqlsort;
+ 
+ $rm = new rating_manager();
++$ratingoptions->scaleid = $scaleid;
+ $ratings = $rm->get_all_ratings_for_item($ratingoptions);
+ if (!$ratings) {
+     $msg = get_string('noratings', 'rating');

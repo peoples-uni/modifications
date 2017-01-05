@@ -1,0 +1,242 @@
+--- lib.php.bak	2017-01-04 18:23:53.947422800 +0000
++++ lib.php	2017-01-05 14:33:09.143068200 +0000
+@@ -112,6 +112,11 @@
+     public $itemuserid = null;
+ 
+     /**
++     * @var string Attribute to be used in HTML
++     */
++    public $id_attribute_for_html;
++
++    /**
+      * Constructor.
+      *
+      * @param stdClass $options {
+@@ -181,6 +186,7 @@
+         $ratingoptions->userid = $this->userid;
+ 
+         $rm = new rating_manager();
++        $ratingoptions->use_specific_scale_only = TRUE; // If this is one of our three special scales, deal with only the current one (don't combine all three)
+         $items = $rm->get_ratings($ratingoptions);
+         $firstitem = $items[0]->rating;
+ 
+@@ -393,6 +399,7 @@
+      */
+     public function delete_ratings($options) {
+         global $DB;
++        global $CFG;
+ 
+         if (empty($options->contextid)) {
+             throw new coding_exception('The context option is a required option when deleting ratings.');
+@@ -411,6 +418,16 @@
+                 $conditions[$field] = $options->{$option};
+             }
+         }
++
++        if (!empty($options->use_specific_scale) &&
++          ($options->use_specific_scale == $CFG->scale_to_use_for_triple_rating ||
++           $options->use_specific_scale == $CFG->scale_to_use_for_triple_rating_2 ||
++           $options->use_specific_scale == $CFG->scale_to_use_for_triple_rating_4 ||
++           $options->use_specific_scale == $CFG->scale_to_use_for_triple_rating_3)) {
++
++          $conditions['scaleid'] = $options->use_specific_scale;
++        }
++
+         $DB->delete_records('rating', $conditions);
+     }
+ 
+@@ -430,6 +447,7 @@
+      */
+     public function get_all_ratings_for_item($options) {
+         global $DB;
++        global $CFG;
+ 
+         if (!isset($options->context)) {
+             throw new coding_exception('The context option is a required option when getting ratings for an item.');
+@@ -456,6 +474,18 @@
+             'ratingarea' => $options->ratingarea,
+         );
+         $userfields = user_picture::fields('u', null, 'userid');
++
++        if (!empty($options->scaleid) &&
++          ($options->scaleid == $CFG->scale_to_use_for_triple_rating ||
++           $options->scaleid == $CFG->scale_to_use_for_triple_rating_2 ||
++           $options->scaleid == $CFG->scale_to_use_for_triple_rating_4 ||
++           $options->scaleid == $CFG->scale_to_use_for_triple_rating_3)) {
++          $params['scaleid'] = $options->scaleid;
++          $scaleidwhere = 'AND r.scaleid = :scaleid';
++        }
++        else {
++          $scaleidwhere = '';
++        }
+         $sql = "SELECT r.id, r.rating, r.itemid, r.userid, r.timemodified, r.component, r.ratingarea, $userfields
+                   FROM {rating} r
+              LEFT JOIN {user} u ON r.userid = u.id
+@@ -463,6 +493,7 @@
+                        r.itemid  = :itemid AND
+                        r.component = :component AND
+                        r.ratingarea = :ratingarea
++                       {$scaleidwhere}
+                        {$sortclause}";
+ 
+         return $DB->get_records_sql($sql, $params);
+@@ -486,6 +517,7 @@
+      */
+     public function get_ratings($options) {
+         global $DB, $USER;
++        global $CFG;
+ 
+         if (!isset($options->context)) {
+             throw new coding_exception('The context option is a required option when getting ratings.');
+@@ -548,6 +580,14 @@
+         $params['component']    = $options->component;
+         $params['ratingarea'] = $options->ratingarea;
+ 
++        // Deal with requirement to have 3 separate scales for some Peoples-uni discussions (ALAN)
++        if ($options->scaleid == $CFG->scale_to_use_for_triple_rating ||
++            $options->scaleid == $CFG->scale_to_use_for_triple_rating_2 ||
++            $options->scaleid == $CFG->scale_to_use_for_triple_rating_4 ||
++            $options->scaleid == $CFG->scale_to_use_for_triple_rating_3) {
++          return $this->get_ratings_3_separate_scales($options, $params, $itemidtest, $aggregatestr, $itemidcol, $itemuseridcol);
++        }
++
+         $sql = "SELECT r.id, r.itemid, r.userid, r.scaleid, r.rating AS usersrating
+                   FROM {rating} r
+                  WHERE r.userid = :userid AND
+@@ -618,6 +658,105 @@
+         return $options->items;
+     }
+ 
++
++    public function get_ratings_3_separate_scales($options, $params, $itemidtest, $aggregatestr, $itemidcol, $itemuseridcol) {
++      global $DB;
++      global $CFG;
++
++      $remember_scaleid = $options->scaleid;
++
++      $scales = array(
++        'rating'  => $CFG->scale_to_use_for_triple_rating,
++        'rating2' => $CFG->scale_to_use_for_triple_rating_2,
++        'rating3' => $CFG->scale_to_use_for_triple_rating_3,
++        'rating4' => $CFG->scale_to_use_for_triple_rating_4);
++
++      if (!empty($options->use_specific_scale_only)) {
++        $scales = array('rating' => $options->scaleid);
++      }
++
++      foreach($scales as $key => $scaleid) {
++        $options->scaleid  = $scaleid;
++        $params['scaleid'] = $scaleid;
++
++        $sql = "SELECT r.id, r.itemid, r.userid, r.scaleid, r.rating AS usersrating
++                  FROM {rating} r
++                 WHERE r.userid = :userid AND
++                       r.contextid = :contextid AND
++                       r.itemid {$itemidtest} AND
++                       r.component = :component AND
++                       r.ratingarea = :ratingarea AND
++                       r.scaleid = :scaleid
++              ORDER BY r.itemid";
++        $userratings = $DB->get_records_sql($sql, $params);
++
++        $sql = "SELECT r.itemid, $aggregatestr(r.rating) AS aggrrating, COUNT(r.rating) AS numratings
++                  FROM {rating} r
++                 WHERE r.contextid = :contextid AND
++                       r.itemid {$itemidtest} AND
++                       r.component = :component AND
++                       r.ratingarea = :ratingarea AND
++                       r.scaleid = :scaleid
++              GROUP BY r.itemid, r.component, r.ratingarea, r.contextid
++              ORDER BY r.itemid";
++        $aggregateratings = $DB->get_records_sql($sql, $params);
++
++        $ratingoptions = new stdClass;
++        $ratingoptions->context = $options->context;
++        $ratingoptions->component = $options->component;
++        $ratingoptions->ratingarea = $options->ratingarea;
++        $ratingoptions->settings = $this->generate_rating_settings_object($options);
++        foreach ($options->items as $item) {
++            $founduserrating = false;
++            foreach($userratings as $userrating) {
++                //look for an existing rating from this user of this item
++                if ($item->{$itemidcol} == $userrating->itemid) {
++                    // Note: rec->scaleid = the id of scale at the time the rating was submitted
++                    // may be different from the current scale id
++                    $ratingoptions->scaleid = $userrating->scaleid;
++                    $ratingoptions->userid = $userrating->userid;
++                    $ratingoptions->id = $userrating->id;
++                    $ratingoptions->rating = min($userrating->usersrating, $ratingoptions->settings->scale->max);
++
++                    $founduserrating = true;
++                    break;
++                }
++            }
++            if (!$founduserrating) {
++                $ratingoptions->scaleid = null;
++                $ratingoptions->userid = null;
++                $ratingoptions->id = null;
++                $ratingoptions->rating =  null;
++            }
++
++            if (array_key_exists($item->{$itemidcol}, $aggregateratings)) {
++                $rec = $aggregateratings[$item->{$itemidcol}];
++                $ratingoptions->itemid = $item->{$itemidcol};
++                $ratingoptions->aggregate = min($rec->aggrrating, $ratingoptions->settings->scale->max);
++                $ratingoptions->count = $rec->numratings;
++            } else {
++                $ratingoptions->itemid = $item->{$itemidcol};
++                $ratingoptions->aggregate = null;
++                $ratingoptions->count = 0;
++            }
++
++            $rating = new rating($ratingoptions);
++
++            $rating->id_attribute_for_html = "{$rating->itemid}scale{$scaleid}"; // ALAN: This is used to create HTML id(s)
++
++            $rating->itemtimecreated = $this->get_item_time_created($item);
++            if (!empty($item->{$itemuseridcol})) {
++                $rating->itemuserid = $item->{$itemuseridcol};
++            }
++            $item->{$key} = $rating; // Add this rating to the Post
++        }
++      }
++      $options->scaleid  = $remember_scaleid; // Just in case
++
++      return $options->items;
++    }
++
++
+     /**
+      * Generates a rating settings object based upon the options it is provided.
+      *
+@@ -1114,6 +1253,7 @@
+             $options->userid = $USER->id;
+             $options->itemid = $itemid;
+ 
++            $options->use_specific_scale = $scaleid; // If this is one of our three special scales, deal with only the current one (don't combine all three)
+             $this->delete_ratings($options);
+         }
+ 
+@@ -1143,6 +1283,7 @@
+         $ratingoptions->items = array($item);
+         $ratingoptions->aggregate = $aggregationmethod;
+ 
++        $ratingoptions->use_specific_scale_only = TRUE; // If this is one of our three special scales, deal with only the current one (don't combine all three)
+         $items = $this->get_ratings($ratingoptions);
+         $firstrating = $items[0]->rating;
+ 
+@@ -1171,6 +1312,14 @@
+             $result->aggregate = $aggregatetoreturn;
+             $result->count = $firstrating->count;
+             $result->itemid = $itemid;
++
++            if ($scaleid == $CFG->scale_to_use_for_triple_rating ||
++                $scaleid == $CFG->scale_to_use_for_triple_rating_2 ||
++                $scaleid == $CFG->scale_to_use_for_triple_rating_4 ||
++                $scaleid == $CFG->scale_to_use_for_triple_rating_3) {
++
++              $result->itemid = "{$itemid}scale{$scaleid}"; // ALAN: This is used by JavaScript (module.js) to match correct HTML id and then update it
++            }
+         }
+         return $result;
+     }
