@@ -110,7 +110,7 @@ $sendemail = FALSE;
 if (!empty($_POST['markpayconfirm'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-  $updated = new object();
+  $updated = new stdClass();
   $updated->id = $application->id;
 
   if (empty($_POST['paymentmechanism'])) notice('You must select the Payment Method. Press Continue and re-select.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
@@ -186,7 +186,7 @@ elseif (!empty($_POST['marksetowed'])) {
   if (!empty($application->userid)) { // $application->userid should NOT be empty, but just in case
     $amount = get_balance($application->userid);
 
-    $peoples_student_balance = new object();
+    $peoples_student_balance = new stdClass();
     $peoples_student_balance->userid = $application->userid;
     $peoples_student_balance->amount_delta = -$_POST['amount_delta'];
     $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
@@ -202,7 +202,7 @@ elseif (!empty($_POST['marksetowed'])) {
 elseif (!empty($_POST['note']) && !empty($_POST['markpaymentnote'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-  $newpaymentnote = new object();
+  $newpaymentnote = new stdClass();
   $newpaymentnote->userid        = $application->userid;
   $newpaymentnote->sid           = $_POST['sid'];
   $newpaymentnote->datesubmitted = time();

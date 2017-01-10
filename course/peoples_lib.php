@@ -4,7 +4,7 @@ function updateapplication($sid, $field, $value, $deltamodules = 0, $coursename 
   global $DB;
 
   $record = $DB->get_record('peoplesapplication', array('sid' => $sid));
-  $application = new object();
+  $application = new stdClass();
   $application->id = $record->id;
   $application->{$field} = $value;
 
@@ -37,7 +37,7 @@ function updateapplication($sid, $field, $value, $deltamodules = 0, $coursename 
 
       $amount = get_balance($record->userid);
 
-      $peoples_student_balance = new object();
+      $peoples_student_balance = new stdClass();
       $peoples_student_balance->userid = $record->userid;
       $peoples_student_balance->amount_delta = $module_cost;
       $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
@@ -293,7 +293,7 @@ function enrolincourse($course, $user, $semester) {
     $forum_subscriptions_recordeds = $DB->get_records('forum_subscriptions_recorded', array('userid' => $user->id));
     if (!empty($forum_subscriptions_recordeds)) {
       foreach ($forum_subscriptions_recordeds as $forum_subscriptions_recorded) {
-        $forum_subscriptions = new object();
+        $forum_subscriptions = new stdClass();
         $forum_subscriptions->userid = $forum_subscriptions_recorded->userid;
         $forum_subscriptions->forum  = $forum_subscriptions_recorded->forum;
 

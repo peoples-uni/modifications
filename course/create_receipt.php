@@ -48,7 +48,7 @@ $sid = 0;
 
 if (!empty($_POST['id']) && !empty($_POST['amount']) && !empty($_POST['markupdatecertificate']) && !empty($_POST['updatecertificate'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $peoples_fee_receipt = new object();
+  $peoples_fee_receipt = new stdClass();
 	$_POST['id'] = (int)$_POST['id'];
 	if (empty($_POST['id'])) {
     notice('Bad ID!', "$CFG->wwwroot/index.php");
@@ -65,7 +65,7 @@ if (!empty($_POST['id']) && !empty($_POST['amount']) && !empty($_POST['markupdat
 }
 elseif (!empty($_POST['userid']) && !empty($_POST['amount']) && !empty($_POST['markupdatecertificate']) && !empty($_POST['createcertificate'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $peoples_fee_receipt = new object();
+  $peoples_fee_receipt = new stdClass();
 
   $peoples_fee_receipt->userid = $_POST['userid'];
   $userrecord = $DB->get_record('user', array('id' => $peoples_fee_receipt->userid));

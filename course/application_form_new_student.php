@@ -273,7 +273,7 @@ if ($editform->is_cancelled()) {
 }
 elseif ($data = $editform->get_data()) {
 
-  $application = new object();
+  $application = new stdClass();
 
   // CREATE TABLE mdl_peoplessid (
   //   id BIGINT(10) unsigned NOT NULL auto_increment,

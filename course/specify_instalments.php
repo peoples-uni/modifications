@@ -61,7 +61,7 @@ if (!empty($_POST['markspecifyinstalments'])) {
 
   $peoples_payment_schedule = $DB->get_record('peoples_payment_schedule', array('userid' => $userid));
   if (empty($peoples_payment_schedule)) {
-    $peoples_payment_schedule = new object();
+    $peoples_payment_schedule = new stdClass();
     $insert = TRUE;
     $peoples_payment_schedule->userid = $userid;
     $peoples_payment_schedule->currency = 'GBP';

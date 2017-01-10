@@ -380,7 +380,7 @@ elseif (!empty($_POST['courseid']) && !empty($_POST['markunexpectedlycompleted']
 }
 elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	$newnote = new object();
+	$newnote = new stdClass();
 	$newnote->userid = $userid;
 	$newnote->datesubmitted = time();
 
@@ -390,7 +390,7 @@ elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
 }
 elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && !empty($_POST['graduated']) && $isteacher) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-  $newpeoplesmph2 = new object();
+  $newpeoplesmph2 = new stdClass();
   $newpeoplesmph2->id = $peoplesmph2->id;
   $newpeoplesmph2->graduated = $_POST['graduated'];
   $newpeoplesmph2->semester_graduated = $_POST['semester_graduated'];

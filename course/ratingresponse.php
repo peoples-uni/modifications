@@ -73,7 +73,7 @@ if ($course_id) {
     $student_ratingresponse = $DB->get_record('student_ratingresponse', array('course_id' => $course_id, 'userid' => $USER->id));
 
     if (empty($student_ratingresponse)) {
-      $student_ratingresponse = new object();
+      $student_ratingresponse = new stdClass();
 
       $doinsert = TRUE;
     }

@@ -20,7 +20,7 @@ if ($editform->is_cancelled()) {
 elseif ($data = $editform->get_data()) {
   unset($_SESSION['peoples_filling_in_application_form']);
 
-  $application = new object();
+  $application = new stdClass();
 
   // Should be a transaction! (or use $application->id, but id is less than sid and I do not want to mess with live system now)
   $peoplessid = $DB->get_record('peoplessid', array('id' => 1));

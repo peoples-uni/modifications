@@ -107,7 +107,7 @@ foreach ($worldpay_receipts as $worldpay_receipt) {
       }
     }
 
-    $peoples_fee_receipt = new object();
+    $peoples_fee_receipt = new stdClass();
     $peoples_fee_receipt->userid       = $worldpay_receipt->userid;
     $peoples_fee_receipt->sid          = $worldpay_receipt->sid;
     $peoples_fee_receipt->date         = $worldpay_receipt->date;

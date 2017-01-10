@@ -30,7 +30,7 @@ elseif ($data = $editform->get_data()) {
   $accreditation_of_prior_learnings = $DB->get_record('peoples_accreditation_of_prior_learning', array('userid' => $data->student_id));
 
   if (empty($accreditation_of_prior_learnings)) {
-    $accreditation_of_prior_learnings = new object();
+    $accreditation_of_prior_learnings = new stdClass();
 
     $doinsert = TRUE;
   }

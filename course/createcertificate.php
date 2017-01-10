@@ -54,7 +54,7 @@ $wikitox_certificate = 0;
 
 if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['markupdatecertificate']) && !empty($_POST['updatecertificate'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	$volunteercertificate = new object();
+	$volunteercertificate = new stdClass();
 	$_POST['id'] = (int)$_POST['id'];
 	if (empty($_POST['id'])) {
 	      notice('Bad ID!', "$CFG->wwwroot/index.php");
@@ -114,7 +114,7 @@ if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['title']) &&
 }
 elseif (!empty($_POST['name']) && !empty($_POST['title']) && !empty($_POST['markupdatecertificate']) && !empty($_POST['createcertificate'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-	$volunteercertificate = new object();
+	$volunteercertificate = new stdClass();
 	$volunteercertificate->datecreated = time();
 	$volunteercertificate->name = $_POST['name'];
   $volunteercertificate->title = $_POST['title'];

@@ -56,7 +56,7 @@ $currency = $application->currency;
 if (!empty($_POST['markpaydetails'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 
-  $updated = new object();
+  $updated = new stdClass();
   $updated->id = $application->id;
 
   if (empty($_POST['paymentmechanism'])) notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
@@ -109,7 +109,7 @@ if (!empty($_POST['markpaydetails'])) {
 
   $original_balance = get_balance($application->userid);
 
-  $peoples_student_balance = new object();
+  $peoples_student_balance = new stdClass();
   $peoples_student_balance->userid = $application->userid;
   $peoples_student_balance->amount_delta = -$amount;
   $peoples_student_balance->balance = $original_balance + $peoples_student_balance->amount_delta;

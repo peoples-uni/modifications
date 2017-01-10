@@ -102,7 +102,7 @@ if (!empty($_POST['markcleanout'])) {
   $user_n = array();
   $n = 0;
   foreach ($forum_subscriptions as $forum_subscription) {
-    $forum_subscriptions_recorded = new object();
+    $forum_subscriptions_recorded = new stdClass();
     $forum_subscriptions_recorded->userid = $forum_subscription->userid;
     $forum_subscriptions_recorded->forum  = $forum_subscription->forum;
     $DB->insert_record('forum_subscriptions_recorded', $forum_subscriptions_recorded);

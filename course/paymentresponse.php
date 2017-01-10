@@ -72,7 +72,7 @@ if (empty($_POST['M_donate']) && empty($_POST['M_wikitox']) && empty($_POST['M_m
 // Allow through, two copies of pay.php could have been loaded 20090706...		die();
 	}
 
-	$updated = new object();
+	$updated = new stdClass();
 	$updated->id = $application->id;
 	$updated->paymentmechanism = 1;
 	//$updated->costpaid = $application->costowed;
@@ -86,7 +86,7 @@ if (empty($_POST['M_donate']) && empty($_POST['M_wikitox']) && empty($_POST['M_m
   if (!empty($application->userid)) { // $application->userid should NOT be empty, but just in case
     $amount = get_balance($application->userid);
 
-    $peoples_student_balance = new object();
+    $peoples_student_balance = new stdClass();
     $peoples_student_balance->userid = $application->userid;
     if (empty($_POST['amount'])) {
       $peoples_student_balance->amount_delta = 0;
@@ -102,7 +102,7 @@ if (empty($_POST['M_donate']) && empty($_POST['M_wikitox']) && empty($_POST['M_m
   }
 }
 elseif (!empty($_POST['M_donate'])) {
-	$peoplesdonation = new object();
+	$peoplesdonation = new stdClass();
 
 	if (empty($_POST['amount'])) {
 		$peoplesdonation->amount = '0';
@@ -187,7 +187,7 @@ elseif (!empty($_POST['M_wikitox'])) {
   );
   */
 
-  $peoples_wikitox_payment = new object();
+  $peoples_wikitox_payment = new stdClass();
 
   if (empty($_POST['amount'])) {
     $peoples_wikitox_payment->amount = '0';
@@ -310,7 +310,7 @@ elseif (!empty($_POST['M_mph'])) {
   );
   */
 
-  $peoples_mph_payment = new object();
+  $peoples_mph_payment = new stdClass();
   $peoples_mph_payment->sid = 0;
   $peoples_mph_payment->userid = 0;
 

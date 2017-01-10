@@ -58,7 +58,7 @@ if ($cert == 'transcript') {
 	//if (!$certificate = get_record('certificate', 'name', $cert)) {
 	//	error('certificate was not found');
 	//}
-	$certificate = new object();
+	$certificate = new stdClass();
 	$certificate->name = 'Academic Transcript';
 	$certificate->borderstyle = 'Fancy2-black.jpg';
 	$certificate->bordercolor = '3';
@@ -209,7 +209,7 @@ elseif ($cert == 'participation') {
     print_error('cannotfindcourse');
 	}
 
-	$certificate = new object();
+	$certificate = new stdClass();
 	$certificate->name = 'Certificate of Participation';
 	$certificate->borderstyle = 'Fancy2-black.jpg';
 	$certificate->bordercolor = '3';
@@ -354,7 +354,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
     print_error('invaliduser');
   }
 
-	$certificate = new object();
+	$certificate = new stdClass();
 	$certificate->name = $award;
 	$certificate->borderstyle = 'Fancy2-black.jpg';
 	$certificate->bordercolor = '3';

@@ -312,7 +312,7 @@ elseif (!empty($_POST['username']) && (
   $fields = $DB->get_records_sql("SELECT id, shortname FROM mdl_user_info_field WHERE shortname IN ('dateofbirth', 'applicationaddress', 'currentjob', 'education', 'reasons', 'sponsoringorganisation', 'gender', 'qualification', 'higherqualification', 'employment')");
 	if (!empty($fields)) {
     foreach ($fields as $field) {
-			$data = new object();
+			$data = new stdClass();
 			$data->userid  = $user->id;
 			$data->fieldid = $field->id;
 			if (!empty($user->{$field->shortname})) {
@@ -329,7 +329,7 @@ elseif (!empty($_POST['username']) && (
 		!empty($higherqualificationname[$_POST['higherqualification']]) &&
 		!empty($employmentname[$_POST['employment']])) {
 
-		$data = new object();
+		$data = new stdClass();
 		$data->userid			         = $user->id;
 		$data->parentsid			     = 0;
 		$data->qualification		   = $_POST['qualification'];

@@ -431,7 +431,7 @@ function updateapplication($sid, $field, $value) {
   global $DB;
 
   $record = $DB->get_record('peoplesregistration', array('id' => $sid));
-  $application = new object();
+  $application = new stdClass();
   $application->id = $record->id;
   $application->{$field} = $value;
 

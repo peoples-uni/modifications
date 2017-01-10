@@ -162,7 +162,7 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
   }
   if (!$inmph) { // Protect against duplicate submission
 
-    $newmph = new object();
+    $newmph = new stdClass();
     if (!empty($_REQUEST['29']))  $newmph->userid = $_REQUEST['29'];
     if (!empty($_REQUEST['sid'])) $newmph->sid    = $_REQUEST['sid'];
 
@@ -185,7 +185,7 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
         $DB->update_record('peoplesmph2', $peoplesmph2);
       }
       else {
-        $peoplesmph2 = new object();
+        $peoplesmph2 = new stdClass();
         $peoplesmph2->userid = $newmph->userid;
         $peoplesmph2->datesubmitted = $newmph->datesubmitted;
         $peoplesmph2->datelastunentolled = 0;
@@ -199,7 +199,7 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
       if ($peoplesmph2->mphstatus == 1) { // 1 => MMU MPH
         $amount_to_pay_total = get_balance($newmph->userid);
 
-        $peoples_student_balance = new object();
+        $peoples_student_balance = new stdClass();
         $peoples_student_balance->userid = $newmph->userid;
         $peoples_student_balance->amount_delta = 1500;
         $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
@@ -295,7 +295,7 @@ if (!empty($_POST['markcert_ps']) && !empty($_REQUEST['29'])) {
     $DB->update_record('peoples_cert_ps', $peoples_cert_ps);
   }
   else {
-    $peoples_cert_ps = new object();
+    $peoples_cert_ps = new stdClass();
     $peoples_cert_ps->userid = $_REQUEST['29'];
     $peoples_cert_ps->datesubmitted = time();
     $peoples_cert_ps->datelastunentolled = 0;
@@ -332,7 +332,7 @@ if (!empty($_POST['markincomecat'])) {
     $DB->update_record('peoples_income_category', $peoples_income_category);
   }
   else {
-    $peoples_income_category = new object();
+    $peoples_income_category = new stdClass();
     $peoples_income_category->userid = $userid;
     $peoples_income_category->datesubmitted = time();
     $peoples_income_category->income_category = $_POST['income_category'];
@@ -340,7 +340,7 @@ if (!empty($_POST['markincomecat'])) {
   }
 }
 if (!empty($_POST['note']) && !empty($_POST['markaddnote'])) {
-  $newnote = new object();
+  $newnote = new stdClass();
   if (!empty($_REQUEST['29']))  $newnote->userid = $_REQUEST['29'];
   if (!empty($_REQUEST['sid'])) $newnote->sid    = $_REQUEST['sid'];
 
@@ -575,7 +575,7 @@ echo "</tr>";
 
 $registration = $DB->get_record('peoplesregistration', array('userid' => $application->userid), '*', IGNORE_MULTIPLE);
 if (empty($registration)) {
-  $registration = new object();
+  $registration = new stdClass();
   $registration->whatlearn = '';
   $registration->whylearn = '';
   $registration->whyelearning = '';

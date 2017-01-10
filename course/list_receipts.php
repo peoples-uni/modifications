@@ -81,12 +81,12 @@ foreach ($worldpay_receipts as $worldpay_receipt) {
 
     $userrecord = $DB->get_record('user', array('id' => $worldpay_receipt->userid));
     if (empty($userrecord)) { // Just in case someone deleted a record?
-      $userrecord = new object();
+      $userrecord = new stdClass();
       $userrecord->firstname = 'missing';
       $userrecord->lastname = 'missing';
     }
 
-    $peoples_fee_receipt = new object();
+    $peoples_fee_receipt = new stdClass();
     $peoples_fee_receipt->userid       = $worldpay_receipt->userid;
     $peoples_fee_receipt->sid          = $worldpay_receipt->sid;
     $peoples_fee_receipt->date         = $worldpay_receipt->date;

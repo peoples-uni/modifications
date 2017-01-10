@@ -133,7 +133,7 @@ $all_users = $DB->get_records_sql(
 if (!empty($all_users)) {
   foreach ($all_users as $all_user) {
     if (empty($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))])) {
-      $missing_item = new object();
+      $missing_item = new stdClass();
       $missing_item->lastname = $all_user->lastname;
       $missing_item->firstname = $all_user->firstname;
       $missing_item->fullname = $course_item;

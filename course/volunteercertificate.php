@@ -18,7 +18,7 @@ if (empty($volunteercertificate)) {
   print_error('invalidarguments');
 }
 
-$certificate = new object();
+$certificate = new stdClass();
 $certificate->name = 'Certificate';
 $certificate->borderstyle = 'Fancy2-black.jpg';
 $certificate->bordercolor = '3';

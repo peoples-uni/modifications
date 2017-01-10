@@ -64,7 +64,7 @@ else { // We already know the module... need Form to to collect criteria for a S
     $discussionfeedback = $DB->get_record('discussionfeedback', array('course_id' => $_SESSION['peoples_course_id_for_discussion_feedback'], 'userid' => $data->student_id));
 
     if (empty($discussionfeedback)) {
-      $discussionfeedback = new object();
+      $discussionfeedback = new stdClass();
 
       $doinsert = TRUE;
     }

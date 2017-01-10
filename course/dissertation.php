@@ -54,7 +54,7 @@ if ($editform->is_cancelled()) {
 }
 elseif ($data = $editform->get_data()) {
 
-  $dissertation = new object();
+  $dissertation = new stdClass();
   $dissertation->userid  = $userid;
   $dissertation->datesubmitted  = time();
 

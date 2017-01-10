@@ -52,7 +52,7 @@ $n = 0;
 foreach ($all_users as $a_user) {
   $userid = $a_user->id;
 
-  $record = new object();
+  $record = new stdClass();
 
   $userrecord = $DB->get_record('user', array('id' => $userid));
   if (!empty($userrecord->username)) $record->username = $userrecord->username;

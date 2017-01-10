@@ -105,7 +105,7 @@ elseif (!empty($_POST['markallowlateapplication']) && !empty($application->useri
     $DB->update_record('late_applications_allowed', $late_applications_allowed);
   }
   else {
-    $late_applications_allowed = new object();
+    $late_applications_allowed = new stdClass();
     $late_applications_allowed->userid = $application->userid;
     $late_applications_allowed->approverid = $USER->id;
     $late_applications_allowed->datesubmitted = time();
@@ -231,7 +231,7 @@ elseif (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'
   $fields = $DB->get_records_sql("SELECT id, shortname FROM mdl_user_info_field WHERE shortname IN ('dateofbirth', 'applicationaddress', 'currentjob', 'education', 'reasons', 'sponsoringorganisation', 'gender', 'qualification', 'higherqualification', 'employment')");
   if (!empty($fields)) {
     foreach ($fields as $field) {
-      $data = new object();
+      $data = new stdClass();
       $data->userid  = $user->id;
       $data->fieldid = $field->id;
       if (!empty($user->{$field->shortname})) {
@@ -245,7 +245,7 @@ elseif (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'
     !empty($higherqualificationname[$application->higherqualification]) &&
     !empty($employmentname[$application->employment])) {
 
-    $data = new object();
+    $data = new stdClass();
     $data->userid              = $user->id;
     $data->parentsid           = 0;
     $data->qualification       = $application->qualification;
@@ -317,7 +317,7 @@ window.opener.location.reload();
 
   $peoples_income_category = $DB->get_record('peoples_income_category', array('userid' => $user->id));
   if (empty($peoples_income_category)) {
-    $peoples_income_category = new object();
+    $peoples_income_category = new stdClass();
     $peoples_income_category->userid = $user->id;
     $peoples_income_category->datesubmitted = time();
     $peoples_income_category->income_category = 1; // Default LMIC
@@ -524,7 +524,7 @@ function enrolincoursesimple($course, $user) {
 function updateapplication($id, $field, $value) {
   global $DB;
 
-  $application = new object();
+  $application = new stdClass();
   $application->id = $id;
   $application->{$field} = $value;
 

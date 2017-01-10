@@ -47,7 +47,7 @@ if ($editform->is_cancelled()) {
 }
 elseif ($data = $editform->get_data()) {
 
-  $application = new object();
+  $application = new stdClass();
 
   $application->datesubmitted = time();
 

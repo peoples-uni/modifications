@@ -58,7 +58,7 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $discussionfeedback = $DB->get_record('discussionfeedback', array('course_id' => $course_id, 'userid' => $userid_for_student));
 
   if (empty($discussionfeedback)) {
-    $discussionfeedback = new object();
+    $discussionfeedback = new stdClass();
 
     $doinsert = TRUE;
   }

@@ -87,7 +87,7 @@ if ($amount < .01) {
 }
 $currency = $application->currency;
 
-$updated = new object();
+$updated = new stdClass();
 $updated->id = $application->id;
 $updated->dateattemptedtopay = time();
 $DB->update_record('peoplesapplication', $updated);
