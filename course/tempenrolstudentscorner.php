@@ -57,7 +57,7 @@ function enrolincoursesimple($course, $user, $enrol) {
 		if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
 		if (!empty($role->name)) $message .= ' as ' . $role->name;
 		if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-		add_to_log($course->id, 'course', 'enrol', 'view.php?id='.$course->id, $message);
+		// add_to_log($course->id, 'course', 'enrol', 'view.php?id='.$course->id, $message);
 
 		return true;
 	}

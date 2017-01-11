@@ -123,6 +123,6 @@ function enrolincoursesimple($course, $user) {
   if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
   if (!empty($role->name)) $message .= ' as ' . $role->name;
   if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-  add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
+  // add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
 }
 ?>

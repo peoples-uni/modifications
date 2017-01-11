@@ -56,7 +56,7 @@ else {
       echo "Adding to \"View Full User Profiles\" Role: $userrecord->lastname, $userrecord->firstname<br />";
     }
   }
-  add_to_log(1, 'role', 'assign', 'admin/roles/assign.php?contextid=1&roleid=41', 'View Full User Profiles', '', $USER->id);
+  // add_to_log(1, 'role', 'assign', 'admin/roles/assign.php?contextid=1&roleid=41', 'View Full User Profiles', '', $USER->id);
 }
 
 echo $OUTPUT->footer();

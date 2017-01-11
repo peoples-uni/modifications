@@ -314,7 +314,7 @@ function enrolincourse($course, $user, $semester) {
     if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
     if (!empty($role->name)) $message .= ' as ' . $role->name;
     if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-    add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
+    // add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
 
     return true;
   }
@@ -343,7 +343,7 @@ function enrolincoursesimple($course, $user) {
   if (!empty($user->lastname)) $message .= ' ' . $user->lastname;
   if (!empty($role->name)) $message .= ' as ' . $role->name;
   if (!empty($course->fullname)) $message .= ' in ' . $course->fullname;
-  add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
+  // add_to_log($course->id, 'course', 'enrol', '../enrol/users.php?id=' . $course->id, $message, 0, $user->id);
 }
 
 
@@ -506,7 +506,7 @@ function unenrolstudent($userid, $modulename) {
       if (!empty($user->firstname))  $message .= $user->firstname;
       if (!empty($user->lastname))   $message .= ' ' . $user->lastname;
       $message .= ' as Student in ' . dontstripslashes($modulename);
-      add_to_log($coursetoremove->id, 'course', 'unenrol', '../enrol/users.php?id=' . $coursetoremove->id, $message, 0, $userid);
+      // add_to_log($coursetoremove->id, 'course', 'unenrol', '../enrol/users.php?id=' . $coursetoremove->id, $message, 0, $userid);
     }
   }
 }
