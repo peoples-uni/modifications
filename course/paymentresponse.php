@@ -266,7 +266,7 @@ Peoples-uni Payments";
 
   // Dummy User
   $payments = new stdClass();
-  $payments->id = 999999999;
+  $payments->id = 999999999; $payments->username = 'none';
   $payments->maildisplay = true;
   $payments->mnethostid = $CFG->mnet_localhost_id;
 
@@ -391,7 +391,7 @@ Peoples-uni Payments";
 
   // Dummy User
   $payments = new stdClass();
-  $payments->id = 999999999;
+  $payments->id = 999999999; $payments->username = 'none';
   $payments->maildisplay = true;
   $payments->mnethostid = $CFG->mnet_localhost_id;
 
@@ -426,7 +426,7 @@ function email_error_to_payments($subject, $post) {
 
   // Dummy User
   $payments = new stdClass();
-  $payments->id = 999999999;
+  $payments->id = 999999999; $payments->username = 'none';
   $payments->email = 'payments@peoples-uni.org';
   $payments->maildisplay = true;
   $payments->mnethostid = $CFG->mnet_localhost_id;
@@ -472,7 +472,7 @@ function email_donation($peoplesdonation) {
 
   // Dummy User
   $payments = new stdClass();
-  $payments->id = 999999999;
+  $payments->id = 999999999; $payments->username = 'none';
   $payments->email = 'payments@peoples-uni.org';
   $payments->maildisplay = true;
   $payments->mnethostid = $CFG->mnet_localhost_id;

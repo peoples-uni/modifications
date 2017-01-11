@@ -386,7 +386,7 @@ function sendapprovedmail($email, $subject, $message) {
 
   // Dummy User
   $user = new stdClass();
-  $user->id = 999999999;
+  $user->id = 999999999; $user->username = 'none';
   $user->email = $email;
   $user->maildisplay = true;
   $user->mnethostid = $CFG->mnet_localhost_id;
@@ -419,7 +419,7 @@ function sendapprovedmail_from_support($email, $subject, $message) {
 
   // Dummy User
   $user = new stdClass();
-  $user->id = 999999999;
+  $user->id = 999999999; $user->username = 'none';
   $user->email = $email;
   $user->maildisplay = true;
   $user->mnethostid = $CFG->mnet_localhost_id;
@@ -443,7 +443,7 @@ function sendapprovedmail_from_payments($email, $subject, $message) {
 
   // Dummy User
   $user = new stdClass();
-  $user->id = 999999999;
+  $user->id = 999999999; $user->username = 'none';
   $user->email = $email;
   $user->maildisplay = true;
   $user->mnethostid = $CFG->mnet_localhost_id;

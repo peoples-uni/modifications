@@ -128,7 +128,7 @@ if (!empty($_POST['markpaydetails'])) {
 
   // Dummy User
   $user = new stdClass();
-  $user->id = 999999999;
+  $user->id = 999999999; $user->username = 'none';
   $user->email = 'payments@peoples-uni.org';
   $user->maildisplay = true;
   $user->mnethostid = $CFG->mnet_localhost_id;
