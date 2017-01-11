@@ -255,7 +255,8 @@ elseif ($data = $editform->get_data()) {
 
     context_user::instance($user->id);
 
-    events_trigger('user_created', $user);
+    // events_trigger('user_created', $user);
+    \core\event\user_created::create_from_userid($user->id)->trigger();
 
     sendunpw($user, $passwordforemail);
 
