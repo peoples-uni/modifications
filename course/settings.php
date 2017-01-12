@@ -70,6 +70,7 @@ if (!empty($_POST['markaddsemester']) && !empty($_POST['semester'])) {
   }
 
   if (!$found) {
+    $record = new stdClass();
     $record->semester = $newsemester;
     $DB->insert_record('semesters', $record);
   }
@@ -89,6 +90,7 @@ if (!empty($_POST['markaddfoundation']) && !empty($_POST['foundation'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $_POST['foundation'] = strip_tags($_POST['foundation']);
 
+  $record = new stdClass();
   $record->type = 'foundation';
   $record->course_code = $_POST['foundation'];
   $DB->insert_record('peoples_course_codes', $record);
@@ -97,6 +99,7 @@ if (!empty($_POST['markaddproblems']) && !empty($_POST['problems'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $_POST['problems'] = strip_tags($_POST['problems']);
 
+  $record = new stdClass();
   $record->type = 'problems';
   $record->course_code = $_POST['problems'];
   $DB->insert_record('peoples_course_codes', $record);
@@ -124,6 +127,7 @@ if (!empty($_POST['markaddnewmodule']) && !empty($_POST['moduletoadd'])) {
 	}
 
   if (!$found) {
+    $record = new stdClass();
     $record->fullname = $moduletoadd;
     $courseforid = $DB->get_record('course', array('fullname' => $record->fullname));
     $record->course_id = $courseforid->id;
@@ -141,7 +145,7 @@ if (!empty($_POST['markupdatemodules'])) {
     $fullname_escaped = str_replace('[', 'XLBRACKETX', $fullname_escaped);
     $fullname_escaped = str_replace(']', 'XRBRACKETX', $fullname_escaped);
 
-    if (!empty($_POST[modulefull][$fullname_escaped])) {
+    if (!empty($_POST['modulefull'][$fullname_escaped])) {
       if (!$activemodule->modulefull) {
         $activemodule->modulefull = 1;
         $DB->update_record('activemodules', $activemodule);
@@ -153,7 +157,7 @@ if (!empty($_POST['markupdatemodules'])) {
         $DB->update_record('activemodules', $activemodule);
       }
     }
-    if (!empty($_POST[removemodule][$fullname_escaped])) {
+    if (!empty($_POST['removemodule'][$fullname_escaped])) {
       $DB->delete_records('activemodules', array('id' => $activemodule->id));
     }
   }
