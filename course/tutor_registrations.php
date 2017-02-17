@@ -748,7 +748,7 @@ foreach ($peoples_tutor_registrations as $index => $peoples_tutor_registration) 
     }
 
     if (!empty($files_for_users[$peoples_tutor_registration->userid])) {
-      $rowdata[] = $files_for_users[$peoples_tutor_registration->userid];
+      $rowdata[] = $files_for_users[$peoples_tutor_registration->userid]->filelist;
     }
     else {
       $rowdata[] = '';
