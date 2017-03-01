@@ -1740,7 +1740,7 @@ Students will also be able to see and download receipts in account.php (see <a h
 
 <a name="paymentterms"></a>
 <h2>What a Student sees before they make a Payment via WorldPay</h2>
-When a student goes to pay by WorldPay using pay.php, before they are directed to WorldPay itself, the text they see includes teh following:<br />
+When a student goes to pay by WorldPay using pay.php, before they are directed to WorldPay itself, the text they see includes the following:<br />
 (Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a> )<br />
 <br />
 Cost for your chosen modules (UK Pounds Sterling): ...<br />
