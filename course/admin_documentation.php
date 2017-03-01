@@ -101,6 +101,9 @@ echo $OUTPUT->header();
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts for Student Payments</a><br />
 </li>
 <li>
+<a href="http://courses.peoples-uni.org/course/admin_documentation.php#paymentterms">What a Student sees before they make a Payment via WorldPay</a><br />
+</li>
+<li>
 <a href="http://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a><br />
 </li>
 <li>
@@ -1733,6 +1736,26 @@ That page and the Receipt Edit page (which is actually the same page) also have 
 Students will also be able to see and download receipts in account.php (see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a>).
 </li>
 </ol>
+
+
+<a name="paymentterms"></a>
+<h2>What a Student sees before they make a Payment via WorldPay</h2>
+When a student goes to pay by WorldPay using pay.php, before they are directed to WorldPay itself, the text they see includes teh following:<br />
+(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a> )<br />
+<br />
+Cost for your chosen modules (UK Pounds Sterling): ...<br />
+<br />
+Use the button below to pay for your enrolment in ... with WorldPay.<br />
+  (Or to pay for the Master of Public Health programme.)<br />
+<br />
+(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy">http://www.peoples-uni.org/content/refund-policy</a> )<br />
+<br />
+Your contact details...<br />
+Name: ...<br />
+e-mail: ...<br />
+Address: ...<br />
+Country: ...<br />
+If these do not match the credit card you are going to use then please click HERE to go to a different screen which will allow you to enter the correct details for your credit card and then make a payment.<br />
 
 
 <a name="sendingdiscussion"></a>
