@@ -1767,6 +1767,7 @@ If these do not match the credit card you are going to use then please click HER
 <img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by WorldPay">
 <a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 </div>
+<br />
 
 
 <a name="sendingdiscussion"></a>
