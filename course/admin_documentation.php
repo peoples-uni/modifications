@@ -1742,21 +1742,31 @@ Students will also be able to see and download receipts in account.php (see <a h
 <h2>What a Student sees before they make a Payment via WorldPay</h2>
 When a student goes to pay by WorldPay using pay.php, before they are directed to WorldPay itself, the text they see includes the following:<br />
 <br />
-(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a> )<br />
+<div align="center">
+<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>
+<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>
+<p><br /><br /><b>Cost for your chosen modules (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;[...]</b></p>
+<p>Use the button below to pay for your enrolment in [...] with WorldPay.<br />
+(Or to pay for the Master of Public Health programme.)</p>
 <br />
-Cost for your chosen modules (UK Pounds Sterling): [...]<br />
-<br />
-Use the button below to pay for your enrolment in [...] with WorldPay.<br />
-&nbsp;&nbsp;(Or to pay for the Master of Public Health programme.)<br />
-<br />
-(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy">http://www.peoples-uni.org/content/refund-policy</a> )<br />
-<br />
-Your contact details...<br />
+<p>(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy" target="_blank">http://www.peoples-uni.org/content/refund-policy</a>)</p>
+<p>Your contact details...<br />
 Name: [...]<br />
 e-mail: [...]<br />
 Address: [...]<br />
 Country: [...]<br />
-If these do not match the credit card you are going to use then please click HERE to go to a different screen which will allow you to enter the correct details for your credit card and then make a payment.<br />
+If these do not match the credit card you are going to use then please click HERE to go to a different screen which will allow you to enter the correct details for your credit card and then make a payment.<br /></p>
+<input type="submit" value="Click this to go to the WorldPay website to securely pay [...]" />
+<br /><br />
+<img src=https://www.worldpay.com/cgenerator/logos/visa.gif border=0 alt="Visa Credit payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/visa_debit.gif border=0 alt="Visa Debit payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/visa_electron.gif border=0 alt="Visa Electron payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/mastercard.gif border=0 alt="Mastercard payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/maestro.gif border=0 alt="Maestro payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/jcb.gif border=0 alt="JCB">
+<img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by WorldPay">
+<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
+</div>
 
 
 <a name="sendingdiscussion"></a>
