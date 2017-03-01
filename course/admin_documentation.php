@@ -1750,7 +1750,7 @@ Use the button below to pay for your enrolment in [...] with WorldPay.<br />
 <br />
 (note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy">http://www.peoples-uni.org/content/refund-policy</a> )<br />
 <br />
-Your contact details[...]<br />
+Your contact details...<br />
 Name: [...]<br />
 e-mail: [...]<br />
 Address: [...]<br />
