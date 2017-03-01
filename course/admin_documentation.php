@@ -1743,18 +1743,18 @@ Students will also be able to see and download receipts in account.php (see <a h
 When a student goes to pay by WorldPay using pay.php, before they are directed to WorldPay itself, the text they see includes the following:<br />
 (Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a> )<br />
 <br />
-Cost for your chosen modules (UK Pounds Sterling): ...<br />
+Cost for your chosen modules (UK Pounds Sterling): [...]<br />
 <br />
-Use the button below to pay for your enrolment in ... with WorldPay.<br />
-  (Or to pay for the Master of Public Health programme.)<br />
+Use the button below to pay for your enrolment in [...] with WorldPay.<br />
+&nbsp;&nbsp;(Or to pay for the Master of Public Health programme.)<br />
 <br />
 (note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy">http://www.peoples-uni.org/content/refund-policy</a> )<br />
 <br />
-Your contact details...<br />
-Name: ...<br />
-e-mail: ...<br />
-Address: ...<br />
-Country: ...<br />
+Your contact details[...]<br />
+Name: [...]<br />
+e-mail: [...]<br />
+Address: [...]<br />
+Country: [...]<br />
 If these do not match the credit card you are going to use then please click HERE to go to a different screen which will allow you to enter the correct details for your credit card and then make a payment.<br />
 
 
