@@ -19,6 +19,7 @@ if (empty($USER->id)) {
 $cert = required_param('cert', PARAM_ALPHA);
 $nopercentage = optional_param('nopercentage', 0, PARAM_INT);
 $nomodules = optional_param('nomodules', 0, PARAM_INT);
+$yesmodules = optional_param('nomodules', 0, PARAM_INT);
 
 $signatureleft = 130;
 $signatureleft = 80;
@@ -397,6 +398,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
     elseif ($peoplesmph2->graduated == 3) $award .= ' (Distinction)';
 
     $nomodules = true;
+    if ($yesmodules) $nomodules = false;
   }
 
 	if ($certificate->printdate > 0) {
