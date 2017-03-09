@@ -658,8 +658,8 @@ if ($qualification & 2) {
 }
 if (!empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph" target="_blank">Your Peoples Open Access Educational Initiative MPH</a><br />';
-  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1" target="_blank">(Same with List of Modules)</a><br />';
-  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1&nopercentage=1" target="_blank">(Same with List of Modules but without Percent Grades)</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1" target="_blank">(MPH with List of Modules)</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1&nopercentage=1" target="_blank">(MPH with List of Modules but without Percent Grades)</a><br />';
 }
 
 if ($isteacher) echo '<a href="' . $CFG->wwwroot . '/course/allow_modules.php?userid=' . $userid . '" target="_blank">Review modules contributing to awards and override disallowed modules</a><br />';
