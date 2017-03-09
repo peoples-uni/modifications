@@ -327,6 +327,10 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
   $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
 
+  $number_of_modules_plus_one = count($modules);
+  if ($number_of_modules_plus_one >= 10) $coursework_modules_for_masters = 8;
+  else                                   $coursework_modules_for_masters = 6;
+
   if (($cert == 'certificate') && ($qualification & 1)) {
     $award = 'Certificate in Public Health';
   }
@@ -455,7 +459,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
     cert_printtext(170, 305, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
 
     if ($cert == 'mph') {
-      cert_printtext(170, 340, 'C', 'Helvetica', '', 14, utf8_decode("This reflects passing 6 coursework modules and a Dissertation,"));
+      cert_printtext(170, 340, 'C', 'Helvetica', '', 14, utf8_decode("$number_of_modules_plus_one;This reflects passing $coursework_modules_for_masters coursework modules and a Dissertation,"));
       cert_printtext(170, 375, 'C', 'Helvetica', '', 14, utf8_decode("and carries 180 credits equivalent to 90 credits in the European Credit Transfer System."));
     }
   }
