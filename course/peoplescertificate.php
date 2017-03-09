@@ -459,7 +459,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
     cert_printtext(170, 305, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
 
     if ($cert == 'mph') {
-      cert_printtext(170, 340, 'C', 'Helvetica', '', 14, utf8_decode("$number_of_modules_plus_one;This reflects passing $coursework_modules_for_masters coursework modules and a Dissertation,"));
+      cert_printtext(170, 340, 'C', 'Helvetica', '', 14, utf8_decode("This reflects passing $coursework_modules_for_masters coursework modules and a Dissertation,"));
       cert_printtext(170, 375, 'C', 'Helvetica', '', 14, utf8_decode("and carries 180 credits equivalent to 90 credits in the European Credit Transfer System."));
     }
   }
