@@ -16,6 +16,7 @@ if (!empty($_POST['markfilter'])) {
 	redirect($CFG->wwwroot . '/course/posts.php?'
 		. 'chosensemester=' . urlencode(dontstripslashes($_POST['chosensemester']))
 		. '&chosenmodule=' . urlencode(dontstripslashes($_POST['chosenmodule']))
+    . '&chosentopicsearch=' . urlencode(dontstripslashes($_POST['chosentopicsearch']))
     . '&chosenssf=' . urlencode(dontstripslashes($_POST['chosenssf']))
     . '&chosenusersearch=' . urlencode(dontstripslashes($_POST['chosenusersearch']))
 
@@ -74,6 +75,8 @@ echo $OUTPUT->header();
 
 if (!empty($_REQUEST['chosensemester'])) $chosensemester = dontstripslashes($_REQUEST['chosensemester']);
 if (!empty($_REQUEST['chosenmodule'])) $chosenmodule = dontstripslashes($_REQUEST['chosenmodule']);
+if (!empty($_REQUEST['chosentopicsearch'])) $chosentopicsearch = dontstripslashes($_REQUEST['chosentopicsearch']);
+else $chosentopicsearch = '';
 if (!empty($_REQUEST['chosenssf'])) $chosenssf = dontstripslashes($_REQUEST['chosenssf']);
 if (!empty($_REQUEST['chosenusersearch'])) $chosenusersearch = dontstripslashes($_REQUEST['chosenusersearch']);
 else $chosenusersearch = '';
@@ -225,6 +228,7 @@ Display entries using the following filters...
 	<tr>
 		<td>Semester</td>
 		<td>Module</td>
+    <td>Topic Name Contains</td>
     <td>Students from this SSF only</td>
     <td>User Name Contains</td>
     <td>Accepted MPH?</td>
@@ -236,6 +240,9 @@ Display entries using the following filters...
 		<?php
 		displayoptions('chosensemester', $listsemester, $chosensemester);
 		displayoptions('chosenmodule', $listmodule, $chosenmodule);
+    ?>
+    <td><input type="text" size="15" name="chosentopicsearch" value="<?php echo htmlspecialchars($chosentopicsearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
+    <?php
     displayoptions('chosenssf', $listssf, $chosenssf);
     ?>
     <td><input type="text" size="15" name="chosenusersearch" value="<?php echo htmlspecialchars($chosenusersearch, ENT_COMPAT, 'UTF-8'); ?>" /></td>
@@ -354,6 +361,12 @@ if (empty($chosenmodule) || ($chosenmodule == 'All')) {
 else {
   $modulesql = 'AND c.fullname=?';
 }
+if (empty($chosentopicsearch)) {
+  $topicsql = '';
+}
+else {
+  $topicsql = "AND f.name LIKE '%" .  str_replace("'", "''", $chosentopicsearch) . "%'";
+}
 if (empty($chosenssf) || ($chosenssf == 'All')) {
   $chosenssf = 'All';
   $ssfsql = '';
@@ -394,7 +407,7 @@ $enrols = $DB->get_records_sql(
 "SELECT fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, u.email, c.fullname, f.name AS forumname, fp.subject, fp.created, m.id IS NOT NULL AS mph, m.datesubmitted AS mphdatestamp
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 LEFT JOIN mdl_peoplesmph m ON e.userid=m.userid
-WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql
+WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql $topicsql
 ORDER BY e.semester, u.lastname ASC, u.firstname ASC, fullname ASC, forumname ASC, fp.subject ASC",
 array($chosensemester, $chosenmodule)
 );
@@ -408,7 +421,7 @@ $ratings = $DB->get_records_sql(
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 LEFT JOIN mdl_rating r ON fp.id=r.itemid
 WHERE
-  e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql AND
+  e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql $topicsql AND
   r.component='mod_forum' AND r.ratingarea='post' AND
   r.scaleid IN({$CFG->scale_to_use_for_triple_rating}, {$CFG->scale_to_use_for_triple_rating_2}, {$CFG->scale_to_use_for_triple_rating_3}, {$CFG->scale_to_use_for_triple_rating_4})
 ORDER BY fp.created",
@@ -423,7 +436,7 @@ SELECT
   d.refered_to_resources, d.critical_approach, d.provided_references
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 INNER JOIN mdl_discussionfeedback d ON e.userid=d.userid AND e.courseid=d.course_id
-WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql",
+WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql $topicsql",
 array($chosensemester, $chosenmodule)
 );
 if (empty($discussionfeedbacks)) {
@@ -459,7 +472,7 @@ FROM
   LEFT JOIN mdl_rating r ON fp.id=r.itemid AND r.scaleid IN({$CFG->scale_to_use_for_triple_rating_4}) AND r.component='mod_forum' AND r.ratingarea='post'
   WHERE
     e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id
-    $semestersql $modulesql $ssfsql
+    $semestersql $modulesql $ssfsql $topicsql
   GROUP BY u.id, c.id, f.id
   ) AS x
 GROUP BY x.userid, x.courseid
