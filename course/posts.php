@@ -444,6 +444,12 @@ if (empty($discussionfeedbacks)) {
 }
 
 // Number of topics with substantial posts
+if ($skipintro) {
+  $introductions_sql = "AND f.name NOT LIKE 'Introduction%'";
+}
+else {
+  $introductions_sql = '';
+}
 $number_of_topics_with_substantial_posts_per_user_course = $DB->get_records_sql(
 "
 SELECT
@@ -472,6 +478,7 @@ FROM
   LEFT JOIN mdl_rating r ON fp.id=r.itemid AND r.scaleid IN({$CFG->scale_to_use_for_triple_rating_4}) AND r.component='mod_forum' AND r.ratingarea='post'
   WHERE
     e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id
+    $introductions_sql
     $semestersql $modulesql $ssfsql $topicsql
   GROUP BY u.id, c.id, f.id
   ) AS x
