@@ -845,6 +845,7 @@ $user_actual_averagereferencing_percourse = array();
 $user_actual_averagesubstantial_percourse = array();
 $list_of_courses = array();
 $n = 0;
+$rowdata = array();
 if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
     $post_matching_main_sql_filters_found[$enrol->userid] = TRUE;
@@ -1119,6 +1120,7 @@ if (!empty($enrols)) {
 
   // Remove table rows for which the Student has (in total) <= $maximumposts matching the filter
   $useridkey = count($rowdata) - 1;
+  if (empty($table->data)) $table->data = array();
   foreach ($table->data as $key => $row) {
     $userid_for_row = $table->data[$key][$useridkey];
 
@@ -1214,9 +1216,10 @@ if (!empty($enrols)) {
   if (!empty($all_users)) {
     foreach ($all_users as $all_user) {
       $name = htmlspecialchars(strtolower(trim($all_user->lastname . ', ' . $all_user->firstname)), ENT_COMPAT, 'UTF-8');
-error_log("all_users... $name, usercount[name]: " . $usercount[$name]);
+error_log("Before usercount[name] for $name");
       if (empty($usercount[$name])) {
         $usercount[$name] = 0;
+error_log("all_users... $name, usercount[name]: " . $usercount[$name]);
 
         $user_actual_averagereferredtoresources[$name] =  'No posts';
         $user_actual_averagecriticalapproach[$name] =  'No posts';
