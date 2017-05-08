@@ -1231,7 +1231,7 @@ error_log("all_users... $name, usercount[name]: " . $usercount[$name]);
         $user_actual_averagereferencing_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
         $user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
 
-        if (empty($list_of_courses && !empty($chosenmodule) && $chosenmodule != 'All') {
+        if (empty($list_of_courses && !empty($chosenmodule) && $chosenmodule != 'All')) {
           $list_of_courses[$chosenmodule] = $chosenmodule;
         }
         foreach ($list_of_courses as $course_item) {
