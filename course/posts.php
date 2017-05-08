@@ -1214,6 +1214,7 @@ if (!empty($enrols)) {
   if (!empty($all_users)) {
     foreach ($all_users as $all_user) {
       $name = htmlspecialchars(strtolower(trim($all_user->lastname . ', ' . $all_user->firstname)), ENT_COMPAT, 'UTF-8');
+error_log("all_users... $name, usercount[name]: " . $usercount[$name]);
       if (empty($usercount[$name])) {
         $usercount[$name] = 0;
 
@@ -1228,6 +1229,7 @@ if (!empty($enrols)) {
         $user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
 
         foreach ($list_of_courses as $course_item) {
+error_log("number_of_topics_with_substantial_posts_per_user_course[" . strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item)) . "]: " . $number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))]);
           if (empty($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))])) {
             $missing_item = new stdClass();
             $missing_item->lastname = $all_user->lastname;
@@ -1242,6 +1244,7 @@ if (!empty($enrols)) {
       }
 
       if (in_array($all_user->userid, $students_to_ignore)) {
+error_log("unset(usercount[$name])");
         unset($usercount[$name]);
         unset($user_actual_averagereferredtoresources[$name]);
         unset($user_actual_averagecriticalapproach[$name]);
@@ -1254,6 +1257,7 @@ if (!empty($enrols)) {
         unset($user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
 
         foreach ($list_of_courses as $course_item) {
+error_log("unset(number_of_topics_with_substantial_posts_per_user_course[" . strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item)) . "])");
           unset($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))]);
         }
       }
