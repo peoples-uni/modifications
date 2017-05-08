@@ -1216,10 +1216,8 @@ if (!empty($enrols)) {
   if (!empty($all_users)) {
     foreach ($all_users as $all_user) {
       $name = htmlspecialchars(strtolower(trim($all_user->lastname . ', ' . $all_user->firstname)), ENT_COMPAT, 'UTF-8');
-error_log("Before usercount[name] for $name");
       if (empty($usercount[$name])) {
         $usercount[$name] = 0;
-error_log("all_users... $name, usercount[name]: " . $usercount[$name]);
 
         $user_actual_averagereferredtoresources[$name] =  'No posts';
         $user_actual_averagecriticalapproach[$name] =  'No posts';
@@ -1235,9 +1233,7 @@ error_log("all_users... $name, usercount[name]: " . $usercount[$name]);
           $list_of_courses[$chosenmodule] = $chosenmodule;
         }
         foreach ($list_of_courses as $course_item) {
-error_log("number_of_topics_with_substantial_posts_per_user_course[" . strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item)) . "]");
           if (empty($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))])) {
-error_log("Setting to No posts!");
             $missing_item = new stdClass();
             $missing_item->lastname = $all_user->lastname;
             $missing_item->firstname = $all_user->firstname;
@@ -1251,7 +1247,6 @@ error_log("Setting to No posts!");
       }
 
       if (in_array($all_user->userid, $students_to_ignore)) {
-error_log("unset(usercount[$name])");
         unset($usercount[$name]);
         unset($user_actual_averagereferredtoresources[$name]);
         unset($user_actual_averagecriticalapproach[$name]);
@@ -1264,7 +1259,6 @@ error_log("unset(usercount[$name])");
         unset($user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY']); // Will only remove "No posts" ones
 
         foreach ($list_of_courses as $course_item) {
-error_log("unset(number_of_topics_with_substantial_posts_per_user_course[" . strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item)) . "])");
           unset($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))]);
         }
       }
