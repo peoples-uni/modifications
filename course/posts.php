@@ -1231,6 +1231,9 @@ error_log("all_users... $name, usercount[name]: " . $usercount[$name]);
         $user_actual_averagereferencing_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
         $user_actual_averagesubstantial_percourse[$name . 'XXX8167YYY'] =  'No posts'; // (an empty course)
 
+        if (empty($list_of_courses && !empty($chosenmodule) && $chosenmodule != 'All') {
+          $list_of_courses[$chosenmodule] = $chosenmodule;
+        }
         foreach ($list_of_courses as $course_item) {
 error_log("number_of_topics_with_substantial_posts_per_user_course[" . strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item)) . "]: " . $number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))]);
           if (empty($number_of_topics_with_substantial_posts_per_user_course[strtolower(trim($all_user->lastname) . ', ' . trim($all_user->firstname) . 'XXX8167YYYY' . trim($course_item))])) {
