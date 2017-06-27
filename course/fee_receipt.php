@@ -25,7 +25,8 @@ $certificate->bordercolor = '3';
 $certificate->printwmark = '';
 $certificate->printdate = '2';
 $certificate->datefmt = '2';
-$certificate->printsignature1 = 'Alec_Tice_Signature.png';
+//$certificate->printsignature1 = 'Alec_Tice_Signature.png';
+$certificate->printsignature1 = 'Alice_Chimuzu_Signature.png';
 $certificate->logo = 'PeopleUniOrg_Logo.jpg';
 $certificate->printseal = '';
 
@@ -78,7 +79,8 @@ cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Trustees:'));
 $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Professor Rajan Madhok, rmadhok@peoples-uni.org  Chair'));
 $offset += $delta;
-cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Mr Alistair Tice, atice@peoples-uni.org  Treasurer'));
+//cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Mr Alistair Tice, atice@peoples-uni.org  Treasurer'));
+cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Julie Storr'));
 $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Professor Richard Heller, rfheller@peoples-uni.org  Coordinator'));
 
@@ -104,11 +106,13 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
 
 $offset += 160;
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Signed'));
-print_signature($certificate->printsignature1, $orientation, $left + 70, $offset - 14, '100', '20');
+//print_signature($certificate->printsignature1, $orientation, $left + 70, $offset - 14, '100', '20');
+print_signature($certificate->printsignature1, $orientation, $left + 70, $offset - 14, '66', '20');
 
 $delta = 20;
 $offset += $delta;
-cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Alistair Tice,'));
+//cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Alistair Tice,'));
+cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Mrs Alice Chimuzu,'));
 $offset += $delta;
 cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Treasurer'));
 
