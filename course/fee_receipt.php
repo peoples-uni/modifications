@@ -26,7 +26,7 @@ $certificate->printwmark = '';
 $certificate->printdate = '2';
 $certificate->datefmt = '2';
 //$certificate->printsignature1 = 'Alec_Tice_Signature.png';
-$certificate->printsignature1 = 'Alice_Chimuzu_Signature.png';
+$certificate->printsignature1 = 'Alice_Chimuzu_Signature.jpg';
 $certificate->logo = 'PeopleUniOrg_Logo.jpg';
 $certificate->printseal = '';
 
