@@ -80,7 +80,7 @@ $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Professor Rajan Madhok, rmadhok@peoples-uni.org  Chair'));
 $offset += $delta;
 //cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Mr Alistair Tice, atice@peoples-uni.org  Treasurer'));
-cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Julie Storr'));
+cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Ms Julie Storr'));
 $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Professor Richard Heller, rfheller@peoples-uni.org  Coordinator'));
 
