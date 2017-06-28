@@ -114,7 +114,8 @@ $offset += $delta;
 //cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Alistair Tice,'));
 cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Mrs Alice Chimuzu,'));
 $offset += $delta;
-cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Treasurer'));
+//cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Treasurer'));
+cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('Accountant'));
 
 
 $filesafe = clean_filename($certificate->name . '.pdf');
