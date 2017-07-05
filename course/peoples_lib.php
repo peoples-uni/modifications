@@ -134,19 +134,23 @@ function get_module_cost($userid, $coursename1, $coursename2) {
   if ($mphstatus == 1) { // MMU MPH
     $module_cost = 0;
   }
-  elseif ($income_category == 0) { // Existing Students
-    $module_cost = $dissertation*100 + $deltamodules*40;
-  }
-  elseif ($income_category == 1) { // LMIC Students
-    $module_cost = $dissertation*180 + $deltamodules*40;
+  //elseif ($income_category == 0) { // Existing Students
+  //  $module_cost = $dissertation*100 + $deltamodules*40;
+  //}
+  elseif ($income_category == 0 || $income_category == 1) { // LMIC Students
+    $module_cost = $dissertation*100 + $deltamodules*50; // For 18a onwards
+    $module_cost = $dissertation*180 + $deltamodules*50; // Just for 17b
+    //$module_cost = $dissertation*180 + $deltamodules*40;
     //$module_cost = $dissertation*260 + $deltamodules*40;
   }
   elseif ($income_category == 2) { // HIC Students
-    $module_cost = $dissertation*600 + $deltamodules*300;
+    $module_cost = $dissertation*800 + $deltamodules*400; // 20170705
+    //$module_cost = $dissertation*600 + $deltamodules*300;
     //$module_cost = $dissertation*1200 + $deltamodules*300;
   }
   else { // Should not get here!
-    $module_cost = $dissertation*260 + $deltamodules*40;
+    $module_cost = $dissertation*800 + $deltamodules*400; // 20170705
+    //$module_cost = $dissertation*260 + $deltamodules*40;
   }
 
   return $module_cost;

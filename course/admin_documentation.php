@@ -979,22 +979,23 @@ We hope you enjoy studying with us and wish you every success.
 "Set the Income Category for the Student" button does what it says. It is necessary to specify whether the student is LMIC (Low/Middle Income country) or HIC (High Income country).<br />
 It is also possible to specify that a student is an "Existing Student", but it should not be necessary to use that as all students before the changeover to the new module costings will automatically have this status.<br />
 The default is LMIC (assigned automatically when new students are registered), so there will not normally be a reason to set this.<br />
-The categories are used to allocate costs for modules according to the following scheme (as of 24th October 2016)...<br />
+The categories are used to allocate costs for modules according to the following scheme (as of 5th July 2017)...<br />
 <ol>
 <li>
 Existing MMU MPH Students: &pound;0 per module, &pound;1500 for MPH
 </li>
 <li>
-Existing Peoples MPH Students: &pound;40 per module, &pound;100 for the dissertation
+Existing Peoples MPH Students: Same as LMIC below
 </li>
 <li>
-Existing (non MPH) Students: &pound;40 per module, &pound;100 for the dissertation
+Existing (non MPH) Students: Same as LMIC below
 </li>
 <li>
-New LMIC students: &pound;40 per module, &pound;180 for the dissertation
+New LMIC students: &pound;50 per module, &pound;180 for the dissertation<br />
+But this will have to change to &pound;100 for the dissertation in 18a
 </li>
 <li>
-New HIC students: &pound;300 per module, &pound;600 for the dissertation
+New HIC students: &pound;400 per module, &pound;800 for the dissertation
 </li>
 </ol>
 </li>
