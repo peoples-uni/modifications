@@ -331,27 +331,6 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   if ($number_of_modules_plus_one >= 10) $coursework_modules_for_masters = 8;
   else                                   $coursework_modules_for_masters = 6;
 
-  if (($cert == 'certificate') && ($qualification & 1)) {
-    $award = 'Certificate in Public Health';
-  }
-  elseif (($cert == 'diploma') && ($qualification & 2)) {
-    $award = 'Diploma in Public Health';
-  }
-  elseif (($cert == 'mph') && !empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2) {
-    $award = 'Master of Public Health';
-  }
-  elseif ($cert == 'testcertificate') {
-    $award = 'Certificate in Public Health';
-    while (count($modules) < 5) $modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
-  }
-  elseif ($cert == 'testdiploma') {
-    $award = 'Diploma in Public Health';
-    while (count($modules) < 9) $modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
-  }
-  else {
-    print_error('invalidarguments');
-  }
-
   if (!$userrecord = $DB->get_record('user', array('id' => $userid))) {
     print_error('invaliduser');
 	}
@@ -360,7 +339,6 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   }
 
 	$certificate = new stdClass();
-	$certificate->name = $award;
 	$certificate->borderstyle = 'Fancy2-black.jpg';
 	$certificate->bordercolor = '3';
 	$certificate->printwmark = '';
@@ -379,6 +357,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 	$certificatedate = '';
 	$certdate = $lastestdate;
 
+  $award_postfix = '';
   if ($cert == 'mph') {
     $certdate = time();
     $found = preg_match('/^Starting (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4,4})$/',
@@ -398,12 +377,50 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
       $certdate = gmmktime(0, 0, 0, $month, $day, $year);
     }
 
-    if     ($peoplesmph2->graduated == 2) $award .= ' (Merit)';
-    elseif ($peoplesmph2->graduated == 3) $award .= ' (Distinction)';
+    if     ($peoplesmph2->graduated == 2) $award_postfix = ' (Merit)';
+    elseif ($peoplesmph2->graduated == 3) $award_postfix = ' (Distinction)';
 
     $nomodules = true;
     if ($yesmodules) $nomodules = false;
   }
+
+  if (($cert == 'certificate') && ($qualification & 1)) {
+    if ($certdate > 1496275200) { // June 1st 2017
+      $award = 'Postgraduate Certificate-Level in Public Health';
+    }
+    else {
+      $award = 'Certificate in Public Health';
+    }
+  }
+  elseif (($cert == 'diploma') && ($qualification & 2)) {
+    if ($certdate > 1496275200) { // June 1st 2017
+      $award = 'Postgraduate Diploma-Level in Public Health';
+    }
+    else {
+      $award = 'Diploma in Public Health';
+    }
+  }
+  elseif (($cert == 'mph') && !empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2) {
+    if ($certdate > 1496275200) { // June 1st 2017
+      $award = 'Masters-Level in Public Health' . $award_postfix;
+    }
+    else {
+      $award = 'Master of Public Health' . $award_postfix;
+    }
+  }
+  elseif ($cert == 'testcertificate') {
+    $award = 'Certificate in Public Health';
+    while (count($modules) < 5) $modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
+  }
+  elseif ($cert == 'testdiploma') {
+    $award = 'Diploma in Public Health';
+    while (count($modules) < 9) $modules[] = 'Aaaaaaaaaaaaaaaaaaaaaaaaaa';
+  }
+  else {
+    print_error('invalidarguments');
+  }
+
+  $certificate->name = $award;
 
 	if ($certificate->printdate > 0) {
 		if ($certificate->datefmt == 1) {
@@ -452,7 +469,12 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   cert_printtext(170, 165, 'C', 'Helvetica', '', 30, utf8_decode(proper_case_if_necessary($userrecord)));
 
   if ($nomodules) {
-    cert_printtext(170, 235, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
+    if ($certdate > 1496275200) { // June 1st 2017
+      cert_printtext(170, 235, 'C', 'Helvetica', '', 14, utf8_decode('has gained an Academic Achievement Award:'));
+    }
+    else {
+      cert_printtext(170, 235, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
+    }
     $pdf->SetTextColor(0, 0, 120);
     cert_printtext(170, 270, 'C', 'Helvetica', '', 30, utf8_decode($award));
     $pdf->SetTextColor(0, 0, 0);
@@ -460,11 +482,16 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
     if ($cert == 'mph') {
       cert_printtext(170, 340, 'C', 'Helvetica', '', 14, utf8_decode("This reflects passing $coursework_modules_for_masters coursework modules and a Dissertation,"));
-      cert_printtext(170, 375, 'C', 'Helvetica', '', 14, utf8_decode("and carries 180 credits equivalent to 90 credits in the European Credit Transfer System."));
+      cert_printtext(170, 375, 'C', 'Helvetica', '', 14, utf8_decode("and carries 180 credits equivalent to 72 credits in the European Credit Transfer System."));
     }
   }
   else {
-    cert_printtext(170, 200, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
+    if ($certdate > 1496275200) { // June 1st 2017
+      cert_printtext(170, 200, 'C', 'Helvetica', '', 14, utf8_decode('has gained an Academic Achievement Award:'));
+    }
+    else {
+      cert_printtext(170, 200, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
+    }
     $pdf->SetTextColor(0, 0, 120);
     cert_printtext(170, 235, 'C', 'Helvetica', '', 30, utf8_decode($award));
     $pdf->SetTextColor(0, 0, 0);
