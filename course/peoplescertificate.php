@@ -471,14 +471,18 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   if ($nomodules) {
     if ($certdate > 1496275200) { // June 1st 2017
       cert_printtext(170, 235, 'C', 'Helvetica', '', 14, utf8_decode('has gained an Academic Achievement Award:'));
+      $pdf->SetTextColor(0, 0, 120);
+      cert_printtext(170, 270, 'C', 'Helvetica', '', 30, utf8_decode($award));
+      $pdf->SetTextColor(0, 0, 0);
+      cert_printtext(170, 305, 'C', 'Helvetica', '', 14, utf8_decode("from the People's Open Access Educational Initiative - Peoples-uni."));
     }
     else {
       cert_printtext(170, 235, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
+      $pdf->SetTextColor(0, 0, 120);
+      cert_printtext(170, 270, 'C', 'Helvetica', '', 30, utf8_decode($award));
+      $pdf->SetTextColor(0, 0, 0);
+      cert_printtext(170, 305, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
     }
-    $pdf->SetTextColor(0, 0, 120);
-    cert_printtext(170, 270, 'C', 'Helvetica', '', 30, utf8_decode($award));
-    $pdf->SetTextColor(0, 0, 0);
-    cert_printtext(170, 305, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
 
     if ($cert == 'mph') {
       cert_printtext(170, 340, 'C', 'Helvetica', '', 14, utf8_decode("This reflects passing $coursework_modules_for_masters coursework modules and a Dissertation,"));
@@ -488,14 +492,18 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   else {
     if ($certdate > 1496275200) { // June 1st 2017
       cert_printtext(170, 200, 'C', 'Helvetica', '', 14, utf8_decode('has gained an Academic Achievement Award:'));
+      $pdf->SetTextColor(0, 0, 120);
+      cert_printtext(170, 235, 'C', 'Helvetica', '', 30, utf8_decode($award));
+      $pdf->SetTextColor(0, 0, 0);
+      cert_printtext(170, 270, 'C', 'Helvetica', '', 14, utf8_decode("from the People's Open Access Educational Initiative - Peoples-uni."));
     }
     else {
       cert_printtext(170, 200, 'C', 'Helvetica', '', 14, utf8_decode('has been awarded a'));
+      $pdf->SetTextColor(0, 0, 120);
+      cert_printtext(170, 235, 'C', 'Helvetica', '', 30, utf8_decode($award));
+      $pdf->SetTextColor(0, 0, 0);
+      cert_printtext(170, 270, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
     }
-    $pdf->SetTextColor(0, 0, 120);
-    cert_printtext(170, 235, 'C', 'Helvetica', '', 30, utf8_decode($award));
-    $pdf->SetTextColor(0, 0, 0);
-    cert_printtext(170, 270, 'C', 'Helvetica', '', 14, utf8_decode("by the People's Open Access Educational Initiative - Peoples-uni."));
   }
 
 	//cert_printtext(170, 350, 'C', 'Helvetica', '', 14, utf8_decode('This carries 15 credits towards a Peoples-uni Certificate or Diploma,'));
