@@ -91,8 +91,8 @@ class application_form_returning_student_form extends moodleform {
     $text = "Please select the first course module you are applying for from the drop down box.
     <br /><strong>Note:</strong> The 'Masters dissertation' is restricted to those who have passed sufficient prior modules.
     <br /><strong>Note:</strong> If you are applying for the 'Masters dissertation' module, you also need to separately submit a provisional topic for your dissertation. Please <strong><a href=\"" . $CFG->wwwroot . "/course/dissertation.php\" target=\"_blank\">Click Here on the Dissertation Topic Form</a></strong> to do this. You will find some helpful information there.
-    <br />You MUST submit this Course Application Form, but your application will not be approved if you have not also submitted a provisional topic.
-    <br /><strong>Note:</strong> The 'Global Mental Health' module is new and not available to students enrolled on the MMU programme.";
+    <br />You MUST submit this Course Application Form, but your application will not be approved if you have not also submitted a provisional topic.";
+    //<br /><strong>Note:</strong> The 'Global Mental Health' module is new and not available to students enrolled on the MMU programme.";
     //<br /><strong>Note:</strong> Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student.";
 //<br /><strong>Note:</strong> You should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.
     if ($count > 1) {
@@ -130,10 +130,10 @@ class application_form_returning_student_form extends moodleform {
     //$listforselect[2] = 'Yes, apply for MMU MPH';
     //$listforselect[6] = 'Yes, apply for OTHER MPH';
     //$listforselect[7] = 'I am already enrolled in OTHER MPH';
-    $mform->addElement('select', 'applymmumph', 'Apply for Peoples-uni Master of Public Health programme', $listforselect);
+    //20170717 removed: $mform->addElement('select', 'applymmumph', 'Apply for Peoples-uni Master of Public Health programme', $listforselect);
     //$mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
 //Please do not apply if this is your first semester.<br /><br />');
-    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%), and would like to study for a Master of Public Health (MPH) or Diploma with Peoples-uni, please indicate that you want to apply for the MPH programme. If you have previously applied for the Peoples-uni MPH programme, please do so again, to make sure we know your intentions. For more information on the criteria and rules applying to the MPH programme, please follow this link <a href="http://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a><br /><br />');
+    //20170717 removed: $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%), and would like to study for a Master of Public Health (MPH) or Diploma with Peoples-uni, please indicate that you want to apply for the MPH programme. If you have previously applied for the Peoples-uni MPH programme, please do so again, to make sure we know your intentions. For more information on the criteria and rules applying to the MPH programme, please follow this link <a href="http://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a><br /><br />');
 
     $listforselect = array();
     $listforselect[1] = 'Yes, I intend to submit the final assignment for each module';
@@ -167,7 +167,8 @@ class application_form_returning_student_form extends moodleform {
 1. What is your current employment AND monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
-4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />');
+4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />
+5. We can only accept Scholarship applications if they arrive before 1st August.<br />');
     $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
 
 
