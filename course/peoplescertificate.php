@@ -310,7 +310,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   $use_six_modules_for_diploma_rule = false;
   if (!empty($frozen_awards[$userid]) &&
       ($frozen_awards[$userid]->award == 2 || $frozen_awards[$userid]->award == 1) &&
-      ($cert == 'certificate' || $cert == 'diploma') {
+      ($cert == 'certificate' || $cert == 'diploma')) {
     $use_six_modules_for_diploma_rule = true;
   }
 
