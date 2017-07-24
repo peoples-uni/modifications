@@ -306,6 +306,14 @@ LEFT JOIN
 ON cid=icourseid
 ORDER BY datefirstenrolled ASC, fullname ASC");
 
+  $frozen_awards = $DB->get_records_sql("SELECT userid, award FROM mdl_frozen_award WHERE userid=$userid");
+  $use_six_modules_for_diploma_rule = false;
+  if (!empty($frozen_awards[$userid]) &&
+      ($frozen_awards[$userid]->award == 2 || $frozen_awards[$userid]->award == 1) &&
+      ($cert == 'certificate' || $cert == 'diploma') {
+    $use_six_modules_for_diploma_rule = true;
+  }
+
 
   $passed_or_cpd_enrol_ids = array();
   $modules = array();
@@ -385,7 +393,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   }
 
   if (($cert == 'certificate') && ($qualification & 1)) {
-    if ($certdate > 1496275200) { // June 1st 2017
+    if ($certdate > 1496275200 && !$use_six_modules_for_diploma_rule) { // June 1st 2017
       $award = 'Postgraduate Certificate-Level in Public Health';
     }
     else {
@@ -393,7 +401,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
     }
   }
   elseif (($cert == 'diploma') && ($qualification & 2)) {
-    if ($certdate > 1496275200) { // June 1st 2017
+    if ($certdate > 1496275200 && !$use_six_modules_for_diploma_rule) { // June 1st 2017
       $award = 'Postgraduate Diploma-Level in Public Health';
     }
     else {
@@ -469,7 +477,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
   cert_printtext(170, 165, 'C', 'Helvetica', '', 30, utf8_decode(proper_case_if_necessary($userrecord)));
 
   if ($nomodules) {
-    if ($certdate > 1496275200) { // June 1st 2017
+    if ($certdate > 1496275200 && !$use_six_modules_for_diploma_rule) { // June 1st 2017
       cert_printtext(170, 235, 'C', 'Helvetica', '', 14, utf8_decode('has gained an Academic Achievement Award:'));
       $pdf->SetTextColor(0, 0, 120);
       cert_printtext(170, 270, 'C', 'Helvetica', '', 30, utf8_decode($award));
@@ -490,7 +498,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
     }
   }
   else {
-    if ($certdate > 1496275200) { // June 1st 2017
+    if ($certdate > 1496275200 && !$use_six_modules_for_diploma_rule) { // June 1st 2017
       cert_printtext(170, 200, 'C', 'Helvetica', '', 14, utf8_decode('has gained an Academic Achievement Award:'));
       $pdf->SetTextColor(0, 0, 120);
       cert_printtext(170, 235, 'C', 'Helvetica', '', 30, utf8_decode($award));
