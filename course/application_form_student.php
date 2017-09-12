@@ -157,8 +157,19 @@ elseif ($data = $editform->get_data()) {
 
   $application->datesubmitted         = time();
 
-  $semester_current = $DB->get_record('semester_current', array('id' => 1));
-  $application->semester = $semester_current->semester;
+  $semester = optional_param('semester', '', PARAM_ALPHA);
+  if (!empty($semester)) {
+    $found = $DB->get_record('semesters', array('semester' => $semester));
+    if (!found) $semester = '';
+  }
+
+  if (!empty($semester) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
+    $application->semester = $semester;
+  }
+  else {
+    $semester_current = $DB->get_record('semester_current', array('id' => 1));
+    $application->semester = $semester_current->semester;
+  }
 
   $application->currency = 'GBP'; // The DB default is no longer correct 20090526!
   $application->methodofpayment = '';
