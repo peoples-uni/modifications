@@ -662,6 +662,8 @@ if (!empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1&nopercentage=1" target="_blank">(MPH with List of Modules but without Percent Grades)</a><br />';
 }
 
+echo '<a href="' . $CFG->wwwroot . '/course/peoplestranscript.php?userid=' . $userid . '" target="_blank">Your Peoples Open Access Educational Initiative portrait format Student Transcript</a><br />';
+
 if ($isteacher) echo '<a href="' . $CFG->wwwroot . '/course/allow_modules.php?userid=' . $userid . '" target="_blank">Review modules contributing to awards and override disallowed modules</a><br />';
 
 
