@@ -12,6 +12,10 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/application_form_student.php');
 
+$semester = optional_param('semester', '', PARAM_ALPHA);
+$courseid = optional_param('courseid', 0, PARAM_INT);
+error_log("START...semester: $semester, courseid: $courseid");
+
 
 $editform = new application_form_returning_student_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
@@ -158,8 +162,6 @@ elseif ($data = $editform->get_data()) {
 
   $application->datesubmitted         = time();
 
-  $semester = optional_param('semester', '', PARAM_ALPHA);
-  $courseid = optional_param('courseid', 0, PARAM_INT);
 error_log("semester: $semester, courseid: $courseid");
   if (!empty($semester) && !empty($courseid)) {
     $found = $DB->get_record('semesters', array('semester' => $semester));
