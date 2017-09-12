@@ -160,20 +160,24 @@ elseif ($data = $editform->get_data()) {
 
   $semester = optional_param('semester', '', PARAM_ALPHA);
   $courseid = optional_param('courseid', 0, PARAM_INT);
+error_log("semester: $semester, courseid: $courseid");
   if (!empty($semester) && !empty($courseid)) {
     $found = $DB->get_record('semesters', array('semester' => $semester));
     if (empty($found)) {
+error_log("semester NOT FOUND");
       $semester = '';
     }
     else {
       $found = $DB->get_records('enrolment', array('semester' => $semester, 'courseid' => $courseid));
       if (empty($found)) {
+error_log("enrolmnet for courseid NOT FOUND");
         $semester = '';
       }
     }
   }
 
   if (!empty($semester) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
+error_log("YES DOING IT");
     $application->semester = $semester;
 
     $application->course_id_1 = $courseid;
@@ -186,6 +190,7 @@ elseif ($data = $editform->get_data()) {
     $application->alternatecoursename = '';
   }
   else {
+error_log("PLAIN ORDINARY");
     $semester_current = $DB->get_record('semester_current', array('id' => 1));
     $application->semester = $semester_current->semester;
   }
