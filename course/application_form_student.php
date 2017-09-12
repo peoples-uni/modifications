@@ -62,6 +62,7 @@ elseif ($data = $editform->get_data()) {
     $application->alternatecoursename = $course->fullname;
   }
 
+  if (empty($data->applymmumph)) $data->applymmumph = 0;
   $dataitem = $data->applymmumph;
   if (empty($dataitem)) $dataitem = 0;
   $application->applymmumph = $dataitem;
@@ -158,13 +159,31 @@ elseif ($data = $editform->get_data()) {
   $application->datesubmitted         = time();
 
   $semester = optional_param('semester', '', PARAM_ALPHA);
-  if (!empty($semester)) {
+  $courseid = optional_param('courseid', 0, PARAM_INT);
+  if (!empty($semester) && !empty($courseid)) {
     $found = $DB->get_record('semesters', array('semester' => $semester));
-    if (!found) $semester = '';
+    if (empty($found)) {
+      $semester = '';
+    }
+    else {
+      $found = $DB->get_records('enrolment', array('semester' => $semester, 'courseid' => $courseid));
+      if (empty($found)) {
+        $semester = '';
+      }
+    }
   }
 
   if (!empty($semester) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
     $application->semester = $semester;
+
+    $application->course_id_1 = $courseid;
+    $course = $DB->get_record('course', array('id' => $courseid));
+    $application->coursename1 = $course->fullname;
+
+    $application->course_id_2 = 0;
+    $application->coursename2 = '';
+    $application->course_id_alternate = 0;
+    $application->alternatecoursename = '';
   }
   else {
     $semester_current = $DB->get_record('semester_current', array('id' => 1));
