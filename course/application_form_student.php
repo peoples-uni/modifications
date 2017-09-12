@@ -12,12 +12,39 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/application_form_student.php');
 
-$semester = optional_param('semester', '', PARAM_ALPHA);
+$semester = optional_param('semester', '', PARAM_NOTAGS);
 $courseid = optional_param('courseid', 0, PARAM_INT);
-error_log("START...semester: $semester, courseid: $courseid");
+if (!empty($semester) && !empty($courseid) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
+  error_log("semester: $semester, courseid: $courseid");
+  $found = $DB->get_record('semesters', array('semester' => $semester));
+  if (empty($found)) {
+    error_log("semester NOT FOUND");
+    $semester = '';
+    $courseid = 0;
+    $coursefullname = '';
+  }
+  else {
+    $found = $DB->get_records('enrolment', array('semester' => $semester, 'courseid' => $courseid));
+    $course = $DB->get_record('course', array('id' => $courseid));
+    if (empty($found) || empty($course)) {
+      error_log("enrolment for courseid NOT FOUND");
+      $semester = '';
+      $courseid = 0;
+      $coursefullname = '';
+    }
+    else {
+      $coursefullname = $course->fullname;
+    }
+  }
+}
+else {
+  $semester = '';
+  $courseid = 0;
+  $coursefullname = '';
+}
 
 
-$editform = new application_form_returning_student_form(NULL, array('customdata' => array()));
+$editform = new application_form_returning_student_form(NULL, array('customdata' => array('semester' => $semester, 'courseid' => $courseid, 'coursefullname' => $coursefullname)));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url('http://peoples-uni.org'));
 }
@@ -162,37 +189,11 @@ elseif ($data = $editform->get_data()) {
 
   $application->datesubmitted         = time();
 
-error_log("semester: $semester, courseid: $courseid");
-  if (!empty($semester) && !empty($courseid)) {
-    $found = $DB->get_record('semesters', array('semester' => $semester));
-    if (empty($found)) {
-error_log("semester NOT FOUND");
-      $semester = '';
-    }
-    else {
-      $found = $DB->get_records('enrolment', array('semester' => $semester, 'courseid' => $courseid));
-      if (empty($found)) {
-error_log("enrolmnet for courseid NOT FOUND");
-        $semester = '';
-      }
-    }
-  }
-
-  if (!empty($semester) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
-error_log("YES DOING IT");
-    $application->semester = $semester;
-
-    $application->course_id_1 = $courseid;
-    $course = $DB->get_record('course', array('id' => $courseid));
-    $application->coursename1 = $course->fullname;
-
-    $application->course_id_2 = 0;
-    $application->coursename2 = '';
-    $application->course_id_alternate = 0;
-    $application->alternatecoursename = '';
+  if (!empty($data->semester) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
+    error_log("Non standard semester: $semester");
+    $application->semester = $data->semester;
   }
   else {
-error_log("PLAIN ORDINARY");
     $semester_current = $DB->get_record('semester_current', array('id' => 1));
     $application->semester = $semester_current->semester;
   }
