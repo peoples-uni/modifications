@@ -800,7 +800,11 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student was enrolled in a previous semester.
 </li>
 <li>
-Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, a possible alternate module (if their desired module is full), Application for MPH (if any), do they intend to submit the Final Assignment for each module? (defaults to Yes), Scholarship request (if any) and why they did not complete the previous semester (if they did not).
+Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, a possible alternate module (if their desired module is full), Application for MPH (if any), do they intend to submit the Final Assignment for each module? (defaults to Yes), Scholarship request (if any) and why they did not complete the previous semester (if they did not).<br />
+Note: Someone with a "Manager" role can fill in the form on behalf of a student even when applications are closed.<br />
+Additionally if the form is called with a parameter specifying a semester in the following way:<br />
+<a href="http://courses.peoples-uni.org/course/application_form_student.php?semester=Starting%20March%202017" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php?semester=Starting%20March%202017</a><br />
+It will be possible to make applications for a previous semester.
 </li>
 <li>
 When the "Details" button is pressed for an application, additional applicant data is displayed beyond what is in the "spreadsheet" row.
