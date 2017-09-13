@@ -41,8 +41,16 @@ class application_form_returning_student_form extends moodleform {
 <p><strong>Note:</strong> You must submit your application on or before ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '.</p>
 <p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a></strong></p>');
 
+    $mform->addElement('hidden', 'semester', $this->_customdata['semester']);
 
-    $semester_current = $DB->get_record('semester_current', array('id' => 1));
+    if (empty($this->_customdata['semester'])) {
+      $semester_current = $DB->get_record('semester_current', array('id' => 1));
+    }
+    else {
+      $semester_current = new stdClass();
+      $semester_current->semester = $this->_customdata['semester'];
+    }
+
     $mform->addElement('header', 'modules', "Course Module Selection for Semester $semester_current->semester");
     $mform->setExpanded('modules');
 
@@ -69,7 +77,21 @@ class application_form_returning_student_form extends moodleform {
       }
     }
 
-    $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
+    if (empty($this->_customdata['semester'])) {
+      $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
+    }
+    else {
+      $activemodules = get_records_sql("
+        SELECT DISTINCT
+          c.id AS course_id,
+          c.fullname,
+          0 AS modulefull
+        FROM mdl_enrolment e
+        JOIN mdl_course c ON e.courseid=c.id
+        WHERE e.semester=?
+        ORDER BY c.fullname ASC",
+        array($this->_customdata['semester']));
+    }
 
     $listforselect = array();
     $listforselect[''] = 'Select...';

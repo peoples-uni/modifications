@@ -13,38 +13,20 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/application_form_student.php');
 
 $semester = optional_param('semester', '', PARAM_NOTAGS);
-$courseid = optional_param('courseid', 0, PARAM_INT);
-if (!empty($semester) && !empty($courseid) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
-  error_log("semester: $semester, courseid: $courseid");
+if (!empty($semester) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
+  error_log("semester: $semester");
   $found = $DB->get_record('semesters', array('semester' => $semester));
   if (empty($found)) {
     error_log("semester NOT FOUND");
     $semester = '';
-    $courseid = 0;
-    $coursefullname = '';
-  }
-  else {
-    $found = $DB->get_records('enrolment', array('semester' => $semester, 'courseid' => $courseid));
-    $course = $DB->get_record('course', array('id' => $courseid));
-    if (empty($found) || empty($course)) {
-      error_log("enrolment for courseid NOT FOUND");
-      $semester = '';
-      $courseid = 0;
-      $coursefullname = '';
-    }
-    else {
-      $coursefullname = $course->fullname;
-    }
   }
 }
 else {
   $semester = '';
-  $courseid = 0;
-  $coursefullname = '';
 }
 
 
-$editform = new application_form_returning_student_form(NULL, array('customdata' => array('semester' => $semester, 'courseid' => $courseid, 'coursefullname' => $coursefullname)));
+$editform = new application_form_returning_student_form(NULL, array('customdata' => array('semester' => $semester)));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url('http://peoples-uni.org'));
 }
@@ -189,8 +171,12 @@ elseif ($data = $editform->get_data()) {
 
   $application->datesubmitted         = time();
 
-  if (!empty($data->semester) && has_capability('moodle/site:viewparticipants', context_system::instance())) {
-    error_log("Non standard semester: $semester");
+  if (!empty($data->semester)) {
+    error_log("Non standard semester: {$data->semester}");
+    if (!has_capability('moodle/site:viewparticipants', context_system::instance())) {
+      error_log("Not a Manager!");
+      die();
+    }
     $application->semester = $data->semester;
   }
   else {
