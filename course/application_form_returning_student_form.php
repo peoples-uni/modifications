@@ -84,7 +84,7 @@ class application_form_returning_student_form extends moodleform {
       $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
     }
     else {
-      $activemodules = get_records_sql("
+      $activemodules = $DB->get_records_sql("
         SELECT DISTINCT
           c.id AS course_id,
           c.fullname,
