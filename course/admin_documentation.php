@@ -1702,7 +1702,7 @@ It shows:-
 </li>
 <li>
 <a href="http://courses.peoples-uni.org/course/payment_history.php">http://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester.<br />
-At the bottom of that page is a link to <a href="' . $CFG->wwwroot . '/course/download_payment_history.php">Download CSV file with full payment history for all semesters</a>.
+At the bottom of that page is a link to <a href="http://courses.peoples-uni.org/course/download_payment_history.php">Download CSV file with full payment history for all semesters</a>.
 </li>
 </ol>
 
