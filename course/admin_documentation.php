@@ -1701,7 +1701,8 @@ It shows:-
 <br />Their receipts for Payments (see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts for Student Payments</a>), if any.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/payment_history.php">http://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester.
+<a href="http://courses.peoples-uni.org/course/payment_history.php">http://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester.<br />
+At the bottom of that page is a link to <a href="' . $CFG->wwwroot . '/course/download_payment_history.php">Download CSV file with full payment history for all semesters</a>.
 </li>
 </ol>
 

@@ -232,6 +232,7 @@ if ($displayforexcel) {
 }
 
 echo '<br />Total Entries: ' . $n;
+echo '<br /><br /><a href="' . $CFG->wwwroot . '/course/download_payment_history.php">Download CSV file with full payment history for all semesters</a>';
 
 echo $OUTPUT->footer();
 ?>
