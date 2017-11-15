@@ -139,7 +139,7 @@ function get_module_cost($userid, $coursename1, $coursename2) {
   //}
   elseif ($income_category == 0 || $income_category == 1) { // LMIC Students
     $module_cost = $dissertation*100 + $deltamodules*50; // For 18a onwards
-    $module_cost = $dissertation*180 + $deltamodules*50; // Just for 17b
+    //$module_cost = $dissertation*180 + $deltamodules*50; // Just for 17b
     //$module_cost = $dissertation*180 + $deltamodules*40;
     //$module_cost = $dissertation*260 + $deltamodules*40;
   }
