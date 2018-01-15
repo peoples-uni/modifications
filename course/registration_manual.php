@@ -14,7 +14,7 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url('/course/registration_manual.php');
 
 
-$editform = new registration_form(NULL, array('customdata' => array()));
+$editform = new registration_manual_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
   redirect(new moodle_url('http://peoples-uni.org'));
 }
