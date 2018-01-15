@@ -105,6 +105,7 @@ elseif ($data = $editform->get_data()) {
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
   $dataitem = $data->whatlearn;
+  if (empty($dataitem)) $dataitem = array();
   $arraystring = '';
   foreach ($dataitem as $datax) {
     $datax = (int)$datax;
@@ -113,6 +114,7 @@ elseif ($data = $editform->get_data()) {
   $application->whatlearn = $arraystring;
 
   $dataitem = $data->whylearn;
+  if (empty($dataitem)) $dataitem = array();
   $arraystring = '';
   foreach ($dataitem as $datax) {
     $datax = (int)$datax;
@@ -121,6 +123,7 @@ elseif ($data = $editform->get_data()) {
   $application->whylearn = $arraystring;
 
   $dataitem = $data->whyelearning;
+  if (empty($dataitem)) $dataitem = array();
   $arraystring = '';
   foreach ($dataitem as $datax) {
     $datax = (int)$datax;
@@ -129,6 +132,7 @@ elseif ($data = $editform->get_data()) {
   $application->whyelearning = $arraystring;
 
   $dataitem = $data->howuselearning;
+  if (empty($dataitem)) $dataitem = array();
   $arraystring = '';
   foreach ($dataitem as $datax) {
     $datax = (int)$datax;
