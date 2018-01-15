@@ -100,7 +100,6 @@ class registration_manual_form extends moodleform {
     $whatlearnname['40'] = 'I am not sure';
     $select = &$mform->addElement('select', 'whatlearn', 'What do you want to learn?', $whatlearnname);
     $select->setMultiple(true);
-    $mform->addRule('whatlearn', 'What do you want to learn is required', 'required', null, 'client');
     $mform->addElement('static', 'explainwhatlearn', '&nbsp;', 'Select options that best describe What do you want to learn <b>(Ctrl Click for multiple options)</b>.<br />');
 
     $whylearnname['10'] = 'I want to apply what I learn to my current/future work';
@@ -187,7 +186,6 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $howfoundpeoplesname['60'] = 'I used a search engine to look for courses';
     $howfoundpeoplesname['70'] = 'Referral from Partnership Institution';
     $mform->addElement('select', 'howfoundpeoples', 'How did you hear about Peoples-uni?', $howfoundpeoplesname);
-    $mform->addRule('howfoundpeoples', 'How did you hear about Peoples-uni is required', 'required', null, 'client');
     $mform->addElement('static', 'explainhowfoundpeoples', '&nbsp;', 'Select the option that best describes how you heard about Peoples-uni.<br />');
 
     $mform->addElement('text', 'howfoundorganisationname', 'Name of the organisation or person from whom you heard about Peoples-uni', 'maxlength="100" size="50"');
