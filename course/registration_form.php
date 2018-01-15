@@ -25,22 +25,28 @@ class registration_form extends moodleform {
     $mform->addElement('header', 'top', 'Instructions');
 
     $mform->addElement('static', 'instuctions', '',
-"<p><strong>
-There are three steps for enrolment in Peoples-uni courses.<br />
+"<strong>There are three steps for enrolment in Peoples-uni courses.<br />
 <br />
-1. You need to complete the registration by filling in your details (see boxes below) and you will receive an automatic reply.<br />
+1. Please complete this Registration Form (below) and you will receive an automatic reply soon after you submit it.<br />
+If you do not, it means that we cannot reach your e-mail address.<br />" .
+'In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a>.<br />' .
+"<br />
+2. As a new student, you will also be invited to take part in our 'Preparing to Study' course. This takes place online in January/February and July/August.<br />
+You will receive detailed information about the course nearer the time.<br />
+There is no payment for the Preparing to Study course.<br />
 <br />
-2. You will be invited to take part in our 'Preparing to Study' course - these take place online in January/Febrary and July/August. You will receive detailed information about the course a month before it begins. There is no payment for the Preparing to Study course.<br />
-<br />
-3. In February/August we will send you an application form so you can choose specific modules - you will receive confirmation that you are enrolled in the course in early April/September, when you will need to pay your course fees. The modules then begin in mid April/September.<br />
-</strong></p>
-<p><strong>Note:</strong> The closing date for applications for enrolment in modules for the upcoming semester is " . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . ' approximately. When enrolments are open you will be informed (this is normally about 2 weeks before that date).</p>
-<p><strong>Please read the information on </strong><a href="http://peoples-uni.org/content/course-fees">Course Fees (Click Here)</a><strong> to make sure that you are prepared.</strong></p>
-<p>For inquires about registration please send an email to <a href="mailto:apply@peoples-uni.org?subject=Registration query">apply@peoples-uni.org</a>.</p>
+3. In February/August we will send you an invitation to complete the Application Form to apply for specific modules for the next semester.<br />
+Applications will be open for a 3-week window during that time.<br />
+Semesters start in mid-March and mid-September.<br />
+You will receive confirmation of your module enrolment shortly before then,<br />
+when you will also need to pay your course fees.</strong><br />" .
+
+'<p><strong>Please read the information on </strong><a href="http://peoples-uni.org/content/course-fees">Course Fees (Click Here)</a><strong> to make sure that you are prepared.</strong></p>
+<p>For inquires about registration please email <a href="mailto:apply@peoples-uni.org?subject=Registration query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
-<p><strong>You should receive an e-mail with a copy of your application soon after you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a>.</strong></p>
 <p><strong>Note:</strong> We may analyse student data to help us improve the course and some of this information might be published in academic journals to help others. No student will be individually identifiable in any publication.</p>
 ');
+//<p>Note:</strong> The closing date for applications for enrolment in modules for the upcoming semester is " . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . ' approximately. When enrolments are open you will be informed (this is normally about 2 weeks before that date).</p>
 
 
     $mform->addElement('header', 'personaldetails', 'Personal details');
