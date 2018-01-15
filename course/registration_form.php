@@ -35,13 +35,13 @@ If you do not, it means that we cannot reach your e-mail address.<br />" .
 You will receive detailed information about the course nearer the time.<br />
 There is no payment for the Preparing to Study course.<br />
 <br />
-3. In February/August we will send you an invitation to complete the Application Form to apply for specific modules for the next semester.<br />
+3. In February or August we will send you an invitation to complete the Application Form to apply for specific modules for the next semester.<br />
 Applications will be open for a 3-week window during that time.<br />
 Semesters start in mid-March and mid-September.<br />
 You will receive confirmation of your module enrolment shortly before then,<br />
 when you will also need to pay your course fees.</strong><br />" .
 
-'<p><strong>Please read the information on </strong><a href="http://peoples-uni.org/content/course-fees">Course Fees (Click Here)</a><strong> to make sure that you are prepared.</strong></p>
+'<p><strong>Please read the information on </strong><a href="http://peoples-uni.org/content/course-fees-payment-options target="_blank">Course Fees (Click Here)</a><strong> to make sure that you are prepared.</strong></p>
 <p>For inquires about registration please email <a href="mailto:apply@peoples-uni.org?subject=Registration query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
 <p><strong>Note:</strong> We may analyse student data to help us improve the course and some of this information might be published in academic journals to help others. No student will be individually identifiable in any publication.</p>
