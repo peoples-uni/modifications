@@ -31,7 +31,8 @@ class registration_form extends moodleform {
 If you do not, it means that we cannot reach your e-mail address.<br />" .
 'In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a>.<br />' .
 "<br />
-2. As a new student, you will also be invited to take part in our 'Preparing to Study' course. This takes place online in January/February and July/August.<br />
+2. As a new student, you will also be invited to take part in our 'Preparing to Study' course.<br />
+This takes place online in January/February and July/August.<br />
 You will receive detailed information about the course nearer the time.<br />
 There is no payment for the Preparing to Study course.<br />
 <br />
