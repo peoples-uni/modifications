@@ -42,7 +42,7 @@ Semesters start in mid-March and mid-September.<br />
 You will receive confirmation of your module enrolment shortly before then,<br />
 when you will also need to pay your course fees.</strong><br />" .
 
-'<p><strong>Please read the information on </strong><a href="http://peoples-uni.org/content/course-fees-payment-options target="_blank">Course Fees (Click Here)</a><strong> to make sure that you are prepared.</strong></p>
+'<p><strong>Please read the information on </strong><a href="http://peoples-uni.org/content/course-fees-payment-options" target="_blank">Course Fees (Click Here)</a><strong> to make sure that you are prepared.</strong></p>
 <p>For inquires about registration please email <a href="mailto:apply@peoples-uni.org?subject=Registration query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
 <p><strong>Note:</strong> We may analyse student data to help us improve the course and some of this information might be published in academic journals to help others. No student will be individually identifiable in any publication.</p>
