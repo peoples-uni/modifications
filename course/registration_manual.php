@@ -104,8 +104,11 @@ elseif ($data = $editform->get_data()) {
   $dataitem = $data->reasons;
   $application->reasons = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
 
-  $dataitem = $data->whatlearn;
-  if (empty($dataitem)) $dataitem = array();
+  if (empty($data->whatlearn)) {
+    $dataitem = array();
+  } else {
+    $dataitem = $data->whatlearn;
+  }
   $arraystring = '';
   foreach ($dataitem as $datax) {
     $datax = (int)$datax;
@@ -113,8 +116,11 @@ elseif ($data = $editform->get_data()) {
   }
   $application->whatlearn = $arraystring;
 
-  $dataitem = $data->whylearn;
-  if (empty($dataitem)) $dataitem = array();
+  if (empty($data->whylearn)) {
+    $dataitem = array();
+  } else {
+    $dataitem = $data->whylearn;
+  }
   $arraystring = '';
   foreach ($dataitem as $datax) {
     $datax = (int)$datax;
@@ -122,8 +128,11 @@ elseif ($data = $editform->get_data()) {
   }
   $application->whylearn = $arraystring;
 
-  $dataitem = $data->whyelearning;
-  if (empty($dataitem)) $dataitem = array();
+  if (empty($data->whyelearning)) {
+    $dataitem = array();
+  } else {
+    $dataitem = $data->whyelearning;
+  }
   $arraystring = '';
   foreach ($dataitem as $datax) {
     $datax = (int)$datax;
@@ -131,8 +140,11 @@ elseif ($data = $editform->get_data()) {
   }
   $application->whyelearning = $arraystring;
 
-  $dataitem = $data->howuselearning;
-  if (empty($dataitem)) $dataitem = array();
+  if (empty($data->howuselearning)) {
+    $dataitem = array();
+  } else {
+    $dataitem = $data->howuselearning;
+  }
   $arraystring = '';
   foreach ($dataitem as $datax) {
     $datax = (int)$datax;
