@@ -30,6 +30,7 @@ $employmentname['50'] = 'Other health related';
 $employmentname['60'] = 'Academic occupation (e.g. lecturer)';
 
 $howfoundpeoplesname['']   = '';
+$howfoundpeoplesname[ '0'] = '';
 $howfoundpeoplesname['10'] = 'Informed by another Peoples-uni student';
 $howfoundpeoplesname['20'] = 'Informed by someone else';
 $howfoundpeoplesname['30'] = 'Facebook';
