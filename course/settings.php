@@ -192,6 +192,11 @@ if (!empty($_POST['mark_register_email']) && !empty($_POST['value_register_email
   $value_register_email = $_POST['value_register_email'];
   set_config('peoples_register_email', $value_register_email);
 }
+if (!empty($_POST['mark_register_email_pretoria']) && !empty($_POST['value_register_email_pretoria'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $value_register_email_pretoria = $_POST['value_register_email_pretoria'];
+  set_config('peoples_register_email_pretoria', $value_register_email_pretoria);
+}
 if (!empty($_POST['mark_batch_registration_email']) && !empty($_POST['value_batch_registration_email'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $value_batch_registration_email = $_POST['value_batch_registration_email'];
@@ -617,6 +622,16 @@ foreach ($listssf as $key => $listssfname) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_register_email" value="1" />
 <input type="submit" name="set_register_email" value="Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)" style="width:50em" />
+</form>
+<br />
+
+<form id="register_email_form_pretoria" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<textarea name="value_register_email_pretoria" rows="15" cols="75" wrap="hard" style="width:auto">
+<?php echo htmlspecialchars(get_config(NULL, 'peoples_register_email_pretoria'), ENT_COMPAT, 'UTF-8'); ?>
+</textarea><br />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_register_email_pretoria" value="1" />
+<input type="submit" name="set_register_email_pretoria" value="Set the above text as the Register Student (Pretoria) e-mail wording (in Registration Details/reg.php)" style="width:50em" />
 </form>
 <br />
 

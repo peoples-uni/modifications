@@ -256,6 +256,30 @@ if ($state === 0) {
 <br />
 
 <?php
+  $peoples_register_email_pretoria = get_config(NULL, 'peoples_register_email_pretoria');
+
+  $peoples_register_email_pretoria = str_replace('GIVEN_NAME_HERE', $given_name, $peoples_register_email_pretoria);
+  $peoples_register_email_pretoria = str_replace('FPH_ID_HERE', get_config(NULL, 'foundations_public_health_id'), $peoples_register_email_pretoria);
+  $peoples_register_email_pretoria = str_replace('SC_ID_HERE', get_config(NULL, 'peoples_students_corner_id'), $peoples_register_email_pretoria);
+  $peoples_register_email_pretoria = str_replace('SSF_ID_HERE', get_config(NULL, 'peoples_student_support_id'), $peoples_register_email_pretoria);
+  $peoples_register_email_pretoria = str_replace('FORUM_HERE', get_config(NULL, 'peoples_student_support_forum_id'), $peoples_register_email_pretoria);
+
+  $peoples_register_email_pretoria = htmlspecialchars($peoples_register_email_pretoria, ENT_COMPAT, 'UTF-8');
+
+?>
+<br />To Register this Student and send an e-mail to Student (edit e-mail text if you wish), press "Register Student (Pretoria)".
+<form id="approveapplicationform_pretoria" method="post" action="<?php echo $CFG->wwwroot . '/course/regaction.php'; ?>">
+<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
+<textarea name="approvedtext" rows="15" cols="75" wrap="hard" style="width:auto">
+<?php echo $peoples_register_email_pretoria; ?>
+</textarea>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="markapproveapplication" value="1" />
+<input type="submit" name="approveapplication" value="Register Student (Pretoria)" />
+</form>
+<br />
+
+<?php
 }
 else {
   echo '<span style="color:green">This Student is Registered.</span><br />';
