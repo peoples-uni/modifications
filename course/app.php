@@ -781,6 +781,16 @@ if (!empty($notes)) {
   }
 }
 
+$applyceatuptext = array(0 => '', 1 => '');
+$applyceatuptext[2] = 'Says enrolling with CE at UP';
+$applyceatuptext = $applyceatuptext[$_REQUEST['applyceatup']];
+
+if (!empty($applyceatuptext)) {
+  echo '<tr><td colspan="2">CE at UP Status...</td></tr>';
+
+  if (!empty($applyceatuptext)) echo '<tr><td></td><td>' . $applyceatuptext . '</td></tr>';
+}
+
 $applymmumphtext = array('0' => '', '1' => '', '2' => 'Wants to Apply for MMU MPH', '3' => 'Says Already in MMU MPH');
 $applymmumphtext['2'] = 'Wants to Apply for MMU MPH';
 $applymmumphtext['3'] = 'Says already in MMU MPH';
@@ -970,6 +980,7 @@ if ($state1 === 02) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1023,6 +1034,7 @@ if (($state2===020) && !empty($_REQUEST['19'])) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1076,6 +1088,7 @@ if ($state1===01 || $state1===03) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1129,6 +1142,7 @@ if (($state2===010 || $state2===030) && !empty($_REQUEST['19'])) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1177,6 +1191,7 @@ if ($state1===02 || $state1===01) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1243,6 +1258,7 @@ if (($state2===020 || $state2===010) && !empty($_REQUEST['19'])) { // Allow modu
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1309,6 +1325,7 @@ elseif ($state2 === 020 && empty($_REQUEST['19'])) { // Allow module 2 to be set
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1375,6 +1392,7 @@ elseif ($state2 === 010 && empty($_REQUEST['19'])) { // Allow module 2 to be set
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1579,6 +1597,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1627,6 +1646,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1670,6 +1690,7 @@ if (!empty($userrecord)) {
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1724,6 +1745,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1771,6 +1793,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1814,6 +1837,7 @@ No Moodle user with the Username: '<?php echo htmlspecialchars($_REQUEST['21'], 
 <input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
 <input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
 <input type="hidden" name="gender" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1858,6 +1882,7 @@ if (!$application->ready && $application->nid != 80) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1905,6 +1930,7 @@ if (empty($mphstatus)) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -1959,6 +1985,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -2007,6 +2034,7 @@ Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" si
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -2055,6 +2083,7 @@ Reason for Unsuspension (visible to Staff & Students):&nbsp;<input type="text" s
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -2104,6 +2133,7 @@ if (empty($peoples_cert_ps->cert_psstatus)) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -2151,6 +2181,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -2199,6 +2230,7 @@ if (!empty($_REQUEST['29'])) {
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -2260,6 +2292,7 @@ echo '<option value="2" ' . $selected2 . '>HIC</option>';
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -2308,6 +2341,7 @@ if ($state1 !== 03 && $state2 !== 030 && empty($_REQUEST['29'])) { // Allow appl
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">
@@ -2357,6 +2391,7 @@ if ($state1 === 03 && $state2 === 030 && !empty($_REQUEST['19'])) { // Add anoth
 <input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
 <input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
 <span style="display: none;">

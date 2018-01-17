@@ -75,6 +75,15 @@ elseif ($data = $editform->get_data()) {
     $application->alternatecoursename = $course->fullname;
   }
 
+  if (empty($data->applyceatup)) $data->applyceatup = 0;
+  $dataitem = $data->applyceatup;
+  if (empty($dataitem)) $dataitem = 0;
+  $application->applyceatup = $dataitem;
+  $applyceatuptext = array(0 => '');
+  $applyceatuptext[1] = 'No, continue with Peoples-uni';
+  $applyceatuptext[2] = 'Yes, I am also enrolling with "CE at UP"';
+  $applyceatuptext = $applyceatuptext[$application->applyceatup];
+
   if (empty($data->applymmumph)) $data->applymmumph = 0;
   $dataitem = $data->applymmumph;
   if (empty($dataitem)) $dataitem = 0;
@@ -216,6 +225,7 @@ elseif ($data = $editform->get_data()) {
   $message .= "Module 1: $application->coursename1\n\n";
   $message .= "Module 2: $application->coursename2\n\n";
   $message .= "Alternate module: $application->alternatecoursename\n\n";
+  $message .= "Apply for MPH: $applyceatuptext\n\n";
   $message .= "Apply for MPH: $applymmumphtext\n\n";
   $message .= "Submit the Final Assignment: $take_final_assignmenttext\n\n";
   $message .= "Apply for Certificate in Patient Safety: $applycertpatientsafetytext\n\n";

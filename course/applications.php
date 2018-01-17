@@ -37,6 +37,7 @@ CREATE TABLE mdl_peoplesapplication (
   coursename3 VARCHAR(255) NOT NULL DEFAULT '',
   coursename4 VARCHAR(255) NOT NULL DEFAULT '',
   alternatecoursename VARCHAR(255) NOT NULL DEFAULT '',
+  applyceatup BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   take_final_assignment BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   applycertpatientsafety BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -99,6 +100,7 @@ ALTER TABLE mdl_peoplesapplication ADD dob VARCHAR(20) NOT NULL DEFAULT '' AFTER
 ALTER TABLE mdl_peoplesapplication ADD sponsoringorganisation text NOT NULL DEFAULT '' AFTER reasons;
 ALTER TABLE mdl_peoplesapplication ADD ready BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER state_4;
 
+ALTER TABLE mdl_peoplesapplication ADD applyceatup BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER alternatecoursename;
 ALTER TABLE mdl_peoplesapplication ADD applymmumph BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER coursename4;
 ALTER TABLE mdl_peoplesapplication ADD scholarship TEXT NOT NULL DEFAULT '' AFTER sponsoringorganisation;
 ALTER TABLE mdl_peoplesapplication ADD whynotcomplete TEXT NOT NULL DEFAULT '' AFTER scholarship;
@@ -699,6 +701,8 @@ Reasons for wanting to enrol
 10
 Sponsoring organisation
 sponsoringorganisation
+Applying for CE at UP
+applyceatup
 Applying for MPH
 applymmumph
 Submit the Final Assignment
@@ -792,6 +796,9 @@ foreach ($applications as $sid => $application) {
     elseif ($state === 022) $z = '<span style="color:blue">Denied or Deferred</span>';
     elseif ($state1===02 || $state2===020) $z = '<span style="color:blue">Some</span>';
     else $z = '<span style="color:green">Yes</span>';
+    $applyceatuptext = array(0 => '', 1 => '');
+    $applyceatuptext[2] = '<br />(Says enrolling with CE at UP)';
+    $z .= $applyceatuptext[$application->applyceatup];
     $applymmumphtext = array(0 => '', 1 => '', 2 => '<br />(Apply MMU MPH)', 3 => '<br />(Say already MMU MPH)');
     $applymmumphtext[2] = '<br />(Apply MMU MPH)';
     $applymmumphtext[3] = '<br />(Say already MMU MPH)';
@@ -904,6 +911,7 @@ foreach ($applications as $sid => $application) {
       $z .= '<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto">' . $application->whynotcomplete . '</textarea>';
       $z .= '<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto">' . htmlspecialchars($application->paymentidentification, ENT_COMPAT, 'UTF-8') . '</textarea>';
       $z .= '</span>';
+      $z .= '<input type="hidden" name="applyceatup" value="' . $application->applyceatup . '" />';
       $z .= '<input type="hidden" name="applymmumph" value="' . $application->applymmumph . '" />';
       $z .= '<input type="hidden" name="take_final_assignment" value="' . $application->take_final_assignment . '" />';
       $z .= '<input type="hidden" name="sid" value="' . $sid . '" />';
