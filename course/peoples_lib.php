@@ -115,14 +115,17 @@ function get_module_cost($userid, $coursename1, $coursename2) {
   global $DB;
 
   $peoples_ceatup_courses_names = array();
-  $peoples_ceatup_courses = $DB->get_records_sql('
-    SELECT up.course_id, c.fullname
-    FROM mdl_peoples_ceatup_courses up
-    JOIN mdl_course c ON up.course_id=c.id
-    ORDER BY c.fullname ASC');
-  if (!empty($peoples_ceatup_courses)) {
-    foreach ($peoples_ceatup_courses as $peoples_ceatup_course) {
-        $peoples_ceatup_courses_names[] = $peoples_ceatup_course->fullname;
+  $peoples_ceatup = $DB->get_record('peoples_ceatup', array('userid' => $userid));
+  if (!empty($peoples_ceatup) && $peoples_ceatup->ceatup_status > 0) {
+    $peoples_ceatup_courses = $DB->get_records_sql('
+      SELECT up.course_id, c.fullname
+      FROM mdl_peoples_ceatup_courses up
+      JOIN mdl_course c ON up.course_id=c.id
+      ORDER BY c.fullname ASC');
+    if (!empty($peoples_ceatup_courses)) {
+      foreach ($peoples_ceatup_courses as $peoples_ceatup_course) {
+          $peoples_ceatup_courses_names[] = $peoples_ceatup_course->fullname;
+      }
     }
   }
 
