@@ -123,38 +123,36 @@ if (!empty($_POST['markclosesemester'])) {
 		}
 	}
 }
-[[[
-[[[
-DEL
-CREATE TABLE mdl_peoples_ceatup_courses (
-  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
-  course_id BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  extra BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  CONSTRAINT PRIMARY KEY (id)
-);
-
-
-
-mark_remove_ceatup_module
-moduletoremove
-]]]
 if (!empty($_POST['mark_add_ceatup_module']) && !empty($_POST['moduletoadd'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $moduletoadd = $_POST['moduletoadd'];
 
-  $activemodules = $DB->get_records('activemodules');
+  $peoples_ceatup_courses = $DB->get_records('peoples_ceatup_courses');
 
   $found = false;
-  foreach ($activemodules as $activemodule) {
-    if ($moduletoadd === $activemodule->fullname) $found = true;
+  foreach ($peoples_ceatup_courses as $peoples_ceatup_course) {
+    if ($moduletoadd == $peoples_ceatup_course->course_id) $found = true;
   }
 
   if (!$found) {
     $record = new stdClass();
-    $record->fullname = $moduletoadd;
-    $courseforid = $DB->get_record('course', array('fullname' => $record->fullname));
-    $record->course_id = $courseforid->id;
-    $DB->insert_record('activemodules', $record);
+    $record->course_id = $moduletoadd;
+    $DB->insert_record('peoples_ceatup_courses', $record);
+  }
+}
+if (!empty($_POST['mark_remove_ceatup_module']) && !empty($_POST['moduletoremove'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $moduletoadd = $_POST['moduletoremove'];
+
+  $peoples_ceatup_courses = $DB->get_records('peoples_ceatup_courses');
+
+  $found = false;
+  foreach ($peoples_ceatup_courses as $peoples_ceatup_course) {
+    if ($moduletoadd == $peoples_ceatup_course->course_id) $found = true;
+  }
+
+  if ($found) {
+    $DB->delete_records('peoples_ceatup_courses', array('course_id' => $moduletoadd));
   }
 }
 if (!empty($_POST['markupdatemodules'])) {
