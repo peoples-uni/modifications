@@ -35,6 +35,14 @@ CREATE TABLE mdl_peoples_course_codes (
   CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoples_course_code_ix ON mdl_peoples_course_codes (course_code);
+
+CREATE TABLE mdl_peoples_ceatup_courses (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  course_id BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  extra BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  CONSTRAINT PRIMARY KEY (id)
+);
+CREATE INDEX mdl_peoples_ceatup_courses_ix ON mdl_peoples_ceatup_courses (course_id);
 */
 
 
@@ -115,6 +123,69 @@ if (!empty($_POST['markclosesemester'])) {
 		}
 	}
 }
+[[[
+[[[
+DEL
+CREATE TABLE mdl_peoples_ceatup_courses (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  course_id BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  extra BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  CONSTRAINT PRIMARY KEY (id)
+);
+
+
+
+mark_remove_ceatup_module
+moduletoremove
+]]]
+if (!empty($_POST['mark_add_ceatup_module']) && !empty($_POST['moduletoadd'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+  $moduletoadd = $_POST['moduletoadd'];
+
+  $activemodules = $DB->get_records('activemodules');
+
+  $found = false;
+  foreach ($activemodules as $activemodule) {
+    if ($moduletoadd === $activemodule->fullname) $found = true;
+  }
+
+  if (!$found) {
+    $record = new stdClass();
+    $record->fullname = $moduletoadd;
+    $courseforid = $DB->get_record('course', array('fullname' => $record->fullname));
+    $record->course_id = $courseforid->id;
+    $DB->insert_record('activemodules', $record);
+  }
+}
+if (!empty($_POST['markupdatemodules'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+
+  $activemodules = $DB->get_records('activemodules');
+
+  foreach ($activemodules as $activemodule) {
+
+    $fullname_escaped = $activemodule->fullname;
+    $fullname_escaped = str_replace('[', 'XLBRACKETX', $fullname_escaped);
+    $fullname_escaped = str_replace(']', 'XRBRACKETX', $fullname_escaped);
+
+    if (!empty($_POST['modulefull'][$fullname_escaped])) {
+      if (!$activemodule->modulefull) {
+        $activemodule->modulefull = 1;
+        $DB->update_record('activemodules', $activemodule);
+      }
+    }
+    else {
+      if ($activemodule->modulefull) {
+        $activemodule->modulefull = 0;
+        $DB->update_record('activemodules', $activemodule);
+      }
+    }
+    if (!empty($_POST['removemodule'][$fullname_escaped])) {
+      $DB->delete_records('activemodules', array('id' => $activemodule->id));
+    }
+  }
+}
+]]]
 if (!empty($_POST['markaddnewmodule']) && !empty($_POST['moduletoadd'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 	$moduletoadd = $_POST['moduletoadd'];
@@ -434,20 +505,21 @@ foreach ($courses as $course) {
 
 <?php
 echo '<br />Here is a list of CE at UP Courses (for all semesters)...';
-echo 'Foundation Sciences:';
-$foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
-foreach ($foundation_records as $record) {
-  $foundation[$record->course_code] = 1;
-  echo '<br />' . $record->course_code;
+
+$peoples_ceatup_courses = $DB->get_records_sql('
+  SELECT up.course_id, c.fullname
+  FROM mdl_peoples_ceatup_courses up
+  JOIN mdl_course c ON up.course_id=c.id
+  ORDER BY c.fullname ASC');
+if (empty($peoples_ceatup_courses)) {
+  $peoples_ceatup_courses = array();
+}
+
+foreach ($peoples_ceatup_courses as $peoples_ceatup_course) {
+  echo '<br />' . htmlspecialchars($peoples_ceatup_course->course_code, ENT_COMPAT, 'UTF-8');
 }
 ?>
 
-[[[
-mark_add_ceatup_module
-moduletoadd
-mark_remove_ceatup_module
-moduletoremove
-]]]
 <form id="add_ceatup_module_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_add_ceatup_module" value="1" />
