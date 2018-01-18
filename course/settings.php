@@ -155,34 +155,6 @@ if (!empty($_POST['mark_remove_ceatup_module']) && !empty($_POST['moduletoremove
     $DB->delete_records('peoples_ceatup_courses', array('course_id' => $moduletoadd));
   }
 }
-if (!empty($_POST['markupdatemodules'])) {
-  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
-
-  $activemodules = $DB->get_records('activemodules');
-
-  foreach ($activemodules as $activemodule) {
-
-    $fullname_escaped = $activemodule->fullname;
-    $fullname_escaped = str_replace('[', 'XLBRACKETX', $fullname_escaped);
-    $fullname_escaped = str_replace(']', 'XRBRACKETX', $fullname_escaped);
-
-    if (!empty($_POST['modulefull'][$fullname_escaped])) {
-      if (!$activemodule->modulefull) {
-        $activemodule->modulefull = 1;
-        $DB->update_record('activemodules', $activemodule);
-      }
-    }
-    else {
-      if ($activemodule->modulefull) {
-        $activemodule->modulefull = 0;
-        $DB->update_record('activemodules', $activemodule);
-      }
-    }
-    if (!empty($_POST['removemodule'][$fullname_escaped])) {
-      $DB->delete_records('activemodules', array('id' => $activemodule->id));
-    }
-  }
-}
 if (!empty($_POST['markaddnewmodule']) && !empty($_POST['moduletoadd'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 	$moduletoadd = $_POST['moduletoadd'];
