@@ -818,29 +818,19 @@ if (!empty($notes)) {
   }
 }
 
-[[[
-$applycertpatientsafetytext = array('0' => '', '1' => '', '2' => 'Wants to Apply for Certificate in Patient Safety', '3' => 'Says Already in Certificate in Patient Safety');
-$applycertpatientsafetytext = $applycertpatientsafetytext[$application->applycertpatientsafety];
+$applyceatuptext = array(0 => '', 1 => '');
+$applyceatuptext[2] = 'Says enrolling with CE at UP';
+$applyceatuptext = $applyceatuptext[$application->applyceatup];
 
 if (!empty($application->userid)) $peoples_ceatup = $DB->get_record('peoples_ceatup', array('userid' => $application->userid));
 else $peoples_ceatup = NULL;
 
-if (!empty($applycertpatientsafetytext) || !empty($peoples_ceatup->note)) {
-  echo '<tr><td colspan="2">Certificate in Patient Safety Status...</td></tr>';
-
-  if (!empty($applycertpatientsafetytext)) echo '<tr><td></td><td>' . $applycertpatientsafetytext . '</td></tr>';
-
-  if (!empty($peoples_ceatup->note)) echo '<tr><td></td><td>' . $peoples_ceatup->note . '</td></tr>';
-}
-]]]
-$applyceatuptext = array(0 => '', 1 => '');
-$applyceatuptext[2] = 'Says enrolling with CE at UP';
-$applyceatuptext = $applyceatuptext[$_REQUEST['applyceatup']];
-
-if (!empty($applyceatuptext)) {
+if (!empty($applyceatuptext) || !empty($peoples_ceatup->note)) {
   echo '<tr><td colspan="2">CE at UP Status...</td></tr>';
 
   if (!empty($applyceatuptext)) echo '<tr><td></td><td>' . $applyceatuptext . '</td></tr>';
+
+  if (!empty($peoples_ceatup->note)) echo '<tr><td></td><td>' . $peoples_ceatup->note . '</td></tr>';
 }
 
 $applymmumphtext = array('0' => '', '1' => '', '2' => 'Wants to Apply for MMU MPH', '3' => 'Says Already in MMU MPH');
@@ -2251,7 +2241,7 @@ elseif (!empty($_REQUEST['29'])) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="markunenroll_ceatup" value="1" />
-Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
+Reason for Unenrolment (visible to Staff & Student):&nbsp;<input type="text" size="45" name="note" /><br />
 <input type="submit" name="unenroll_ceatup" value="Unenroll a student from CE at UP" />
 </form>
 <br />
