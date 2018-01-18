@@ -472,12 +472,13 @@ else {
 // Retrieve all relevent rows
 //$applications = get_records_sql('SELECT a.sid AS appsid, a.* FROM mdl_peoplesapplication AS a WHERE hidden=0 ORDER BY datesubmitted DESC');
 $applications = $DB->get_records_sql('
-  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, m.id IS NOT NULL AS mph, m.mphstatus, m.datesubmitted AS mphdatestamp, IFNULL(ps.cert_psstatus, 0) AS cert_ps, ps.datesubmitted AS cert_psdatestamp, p.id IS NOT NULL AS paymentnote
+  SELECT DISTINCT a.sid AS appsid, a.*, n.id IS NOT NULL AS notepresent, IFNULL(up.ceatup_status, 0) AS ceatup, m.id IS NOT NULL AS mph, m.mphstatus, m.datesubmitted AS mphdatestamp, IFNULL(ps.cert_psstatus, 0) AS cert_ps, ps.datesubmitted AS cert_psdatestamp, p.id IS NOT NULL AS paymentnote
   FROM mdl_peoplesapplication a
   LEFT JOIN mdl_peoplesstudentnotes n ON (a.sid=n.sid AND n.sid!=0) OR (a.userid=n.userid AND n.userid!=0)
   LEFT JOIN mdl_peoplesmph          m ON (a.sid=m.sid AND m.sid!=0) OR (a.userid=m.userid AND m.userid!=0)
   LEFT JOIN mdl_peoples_cert_ps    ps ON                                a.userid=ps.userid
   LEFT JOIN mdl_peoplespaymentnote  p ON (a.sid=p.sid AND p.sid!=0) OR (a.userid=p.userid AND p.userid!=0)
+  LEFT JOIN mdl_peoples_ceatup     up ON                                a.userid=up.userid
   WHERE hidden=0 ORDER BY ' . $sortorder);
 if (empty($applications)) {
   $applications = array();
@@ -889,6 +890,7 @@ foreach ($applications as $sid => $application) {
     if ($application->mph && ($application->mphstatus == 1)) $z .= '<br />(MMU MPH)';
     if ($application->mph && ($application->mphstatus == 2)) $z .= '<br />(Peoples MPH)';
     if ($application->mph && ($application->mphstatus == 3)) $z .= '<br />(OTHER MPH)';
+    if ($application->ceatup) $z .= '<br />(CE at UP)';
     if ($application->cert_ps) $z .= '<br />(Cert PS)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
     $rowdata[] = $z;
