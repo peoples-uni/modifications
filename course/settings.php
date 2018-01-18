@@ -520,7 +520,7 @@ foreach ($peoples_ceatup_courses as $peoples_ceatup_course) {
 <form id="add_ceatup_module_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_add_ceatup_module" value="1" />
-<input type="submit" name="add_ceatup_module" value="Add this Module to Above Active Module list for Applications:" style="width:50em" />
+<input type="submit" name="add_ceatup_module" value="Add this Module to Above List of CE at UP Courses:" style="width:50em" />
 <select name="moduletoadd">
 <?php
 foreach ($courses as $course) {
@@ -532,12 +532,11 @@ foreach ($courses as $course) {
 ?>
 </select>
 </form>
-<br />
 
 <form id="remove_ceatup_module_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="mark_remove_ceatup_module" value="1" />
-<input type="submit" name="remove_ceatup_module" value="Add this Module to Above Active Module list for Applications:" style="width:50em" />
+<input type="submit" name="remove_ceatup_module" value="Remove this Module from Above List of CE at UP Courses:" style="width:50em" />
 <select name="moduletoremove">
 <?php
 foreach ($courses as $course) {
