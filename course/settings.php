@@ -433,6 +433,55 @@ foreach ($courses as $course) {
 </form>
 
 <?php
+echo '<br />Here is a list of CE at UP Courses (for all semesters)...';
+echo 'Foundation Sciences:';
+$foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
+foreach ($foundation_records as $record) {
+  $foundation[$record->course_code] = 1;
+  echo '<br />' . $record->course_code;
+}
+?>
+
+[[[
+mark_add_ceatup_module
+moduletoadd
+mark_remove_ceatup_module
+moduletoremove
+]]]
+<form id="add_ceatup_module_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_add_ceatup_module" value="1" />
+<input type="submit" name="add_ceatup_module" value="Add this Module to Above Active Module list for Applications:" style="width:50em" />
+<select name="moduletoadd">
+<?php
+foreach ($courses as $course) {
+  $modulename = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
+?>
+<option value="<?php echo $course->id; ?>"><?php echo $modulename; ?></option>
+<?php
+}
+?>
+</select>
+</form>
+<br />
+
+<form id="remove_ceatup_module_form" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="mark_remove_ceatup_module" value="1" />
+<input type="submit" name="remove_ceatup_module" value="Add this Module to Above Active Module list for Applications:" style="width:50em" />
+<select name="moduletoremove">
+<?php
+foreach ($courses as $course) {
+  $modulename = htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8');
+?>
+<option value="<?php echo $course->id; ?>"><?php echo $modulename; ?></option>
+<?php
+}
+?>
+</select>
+</form>
+
+<?php
 echo '<br />Here is are lists of valid Peoples-uni agreed Course Codes (Course ID numbers)...';
 echo '<br />Foundation Sciences:';
 $foundation_records = $DB->get_records('peoples_course_codes', array('type' => 'foundation'), 'course_code ASC');
