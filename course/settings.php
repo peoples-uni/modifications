@@ -514,7 +514,7 @@ if (empty($peoples_ceatup_courses)) {
 }
 
 foreach ($peoples_ceatup_courses as $peoples_ceatup_course) {
-  echo '<br />' . htmlspecialchars($peoples_ceatup_course->course_code, ENT_COMPAT, 'UTF-8');
+  echo '<br />' . htmlspecialchars($peoples_ceatup_course->fullname, ENT_COMPAT, 'UTF-8');
 }
 ?>
 

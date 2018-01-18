@@ -114,8 +114,26 @@ function instalments_allowed($userid) {
 function get_module_cost($userid, $coursename1, $coursename2) {
   global $DB;
 
-  if (empty($coursename2)) $deltamodules = 1;
-  else $deltamodules = 2;
+  $peoples_ceatup_courses_names = array();
+  $peoples_ceatup_courses = $DB->get_records_sql('
+    SELECT up.course_id, c.fullname
+    FROM mdl_peoples_ceatup_courses up
+    JOIN mdl_course c ON up.course_id=c.id
+    ORDER BY c.fullname ASC');
+  if (!empty($peoples_ceatup_courses)) {
+    foreach ($peoples_ceatup_courses as $peoples_ceatup_course) {
+        $peoples_ceatup_courses_names[] = $peoples_ceatup_course->fullname;
+    }
+  }
+
+  if (empty($coursename2)) {
+    $deltamodules = 1;
+    if (in_array($coursename2, $peoples_ceatup_courses_names)) $deltamodules = 0; // No charge for CE at UP modules
+  } else {
+    $deltamodules = 2;
+    if (in_array($coursename1, $peoples_ceatup_courses_names)) $deltamodules--;
+    if (in_array($coursename2, $peoples_ceatup_courses_names)) $deltamodules--;
+  }
 
   $income_category = get_income_category($userid);
 
