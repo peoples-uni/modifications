@@ -156,6 +156,21 @@ graduated...
 2 => Merit
 3 => Distinction
 
+
+CREATE TABLE mdl_peoples_ceatup (
+  id BIGINT(10) UNSIGNED NOT NULL auto_increment,
+  userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  datesubmitted BIGINT(10) UNSIGNED NOT NULL,
+  datelastunentolled BIGINT(10) UNSIGNED NOT NULL,
+  ceatup_status BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  graduated BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  suspended BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  semester_graduated VARCHAR(255) NOT NULL DEFAULT '',
+  note text default '' NOT NULL,
+CONSTRAINT PRIMARY KEY (id)
+);
+CREATE INDEX mdl_peoples_ceatup_uid_ix ON mdl_peoples_ceatup (userid);
+
 CREATE TABLE mdl_peoples_cert_ps (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,
   userid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
