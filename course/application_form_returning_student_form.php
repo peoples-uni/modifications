@@ -33,7 +33,7 @@ class application_form_returning_student_form extends moodleform {
     $mform->setExpanded('top');
 
     $mform->addElement('static', 'instuctions', '',
-'<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/content/who-should-apply">Who should apply (Click Here)</a><strong> before submitting this form,<br />
+'<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/content/who-should-apply" target="_blank">Who should apply (Click Here)</a><strong> before submitting this form,<br />
 particularly see the information about </strong><a href="http://peoples-uni.org/content/course-fees-payment-options" target="_blank">Course fees (Click Here)</a></p>
 <p><strong>
 The following modules will also be offered in partnership with the University of Pretoria<br />
@@ -47,7 +47,7 @@ For these modules, students have the option of either enrolling with "CE at UP",
 towards a Masters programme with the University of Pretoria.<br />
 In both cases, modules are delivered by Peoples-uni in the usual way.<br />
 <br />
-If you wish to enrol with Ce@UP, please go to <a href="http://www.ce.up.ac.za/">http://www.ce.up.ac.za/</a><br />
+If you wish to enrol with Ce@UP, please go to <a href="http://www.ce.up.ac.za/" target="_blank">http://www.ce.up.ac.za/</a><br />
 You will be able to apply there between 1-20 February, and will be charged directly by "CE at UP"<br />
 (and not Peoples-uni, for the above courses).<br />
 <br />
