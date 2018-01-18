@@ -285,6 +285,43 @@ if (!empty($_POST['marksuspendmph'])) {
     //$refreshparent = true;
   }
 }
+if (!empty($_POST['mark_ceatup']) && !empty($_REQUEST['29'])) {
+
+  $peoples_ceatup = $DB->get_record('peoples_ceatup', array('userid' => $_REQUEST['29']));
+  if (!empty($peoples_ceatup)) {
+    $peoples_ceatup->datesubmitted = time();
+    $peoples_ceatup->ceatup_status = 1;
+    $peoples_ceatup->note = $peoples_ceatup->note . '<br />Enrolled CE at UP: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
+    $DB->update_record('peoples_ceatup', $peoples_ceatup);
+  }
+  else {
+    $peoples_ceatup = new stdClass();
+    $peoples_ceatup->userid = $_REQUEST['29'];
+    $peoples_ceatup->datesubmitted = time();
+    $peoples_ceatup->datelastunentolled = 0;
+    $peoples_ceatup->ceatup_status = 1;
+    $peoples_ceatup->note = 'Enrolled in Certificate in Patient Safety: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
+    $DB->insert_record('peoples_ceatup', $peoples_ceatup);
+  }
+
+  $refreshparent = true;
+}
+if (!empty($_POST['markunenroll_ceatup']) && !empty($_REQUEST['29'])) {
+
+  $peoples_ceatup = $DB->get_record('peoples_ceatup', array('userid' => $_REQUEST['29']));
+  if (!empty($peoples_ceatup)) {
+    $peoples_ceatup->datelastunentolled = time();
+    $peoples_ceatup->ceatup_status = 0;
+
+    if (!empty($_REQUEST['note'])) $usernote = ' (' . htmlspecialchars($_REQUEST['note'], ENT_COMPAT, 'UTF-8') . ')';
+    else  $usernote = '';
+    $peoples_ceatup->note = $peoples_ceatup->note . '<br />Unenrolled from CE at UP: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datelastunentolled) . $usernote;
+
+    $DB->update_record('peoples_ceatup', $peoples_ceatup);
+  }
+
+  $refreshparent = true;
+}
 if (!empty($_POST['markcert_ps']) && !empty($_REQUEST['29'])) {
 
   $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $_REQUEST['29']));
@@ -781,6 +818,21 @@ if (!empty($notes)) {
   }
 }
 
+[[[
+$applycertpatientsafetytext = array('0' => '', '1' => '', '2' => 'Wants to Apply for Certificate in Patient Safety', '3' => 'Says Already in Certificate in Patient Safety');
+$applycertpatientsafetytext = $applycertpatientsafetytext[$application->applycertpatientsafety];
+
+if (!empty($application->userid)) $peoples_ceatup = $DB->get_record('peoples_ceatup', array('userid' => $application->userid));
+else $peoples_ceatup = NULL;
+
+if (!empty($applycertpatientsafetytext) || !empty($peoples_ceatup->note)) {
+  echo '<tr><td colspan="2">Certificate in Patient Safety Status...</td></tr>';
+
+  if (!empty($applycertpatientsafetytext)) echo '<tr><td></td><td>' . $applycertpatientsafetytext . '</td></tr>';
+
+  if (!empty($peoples_ceatup->note)) echo '<tr><td></td><td>' . $peoples_ceatup->note . '</td></tr>';
+}
+]]]
 $applyceatuptext = array(0 => '', 1 => '');
 $applyceatuptext[2] = 'Says enrolling with CE at UP';
 $applyceatuptext = $applyceatuptext[$_REQUEST['applyceatup']];
@@ -2107,6 +2159,103 @@ Reason for Suspension (visible to Staff & Students):&nbsp;<input type="text" siz
 <br />
 <?php
   }
+}
+
+if (empty($peoples_ceatup->ceatup_status)) {
+?>
+<br />To record that the student has been enrolled in CE at UP, press "Record...".<br />
+<form id="ceatup_form" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
+<input type="hidden" name="state" value="<?php echo $state; ?>" />
+<input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="1" value="<?php echo htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="2" value="<?php echo htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="11" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
+<input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
+<input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
+<input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
+<input type="hidden" name="12" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="14" value="<?php echo htmlspecialchars($_REQUEST['14'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="13" value="<?php echo htmlspecialchars($_REQUEST['13'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="34" value="<?php echo htmlspecialchars($_REQUEST['34'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="35" value="<?php echo htmlspecialchars($_REQUEST['35'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
+<span style="display: none;">
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+</span>
+<input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
+<input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<input type="hidden" name="mark_ceatup" value="1" />
+<input type="submit" name="ceatup_name" value="Record that the Student has been enrolled in CE at UP" />
+</form>
+<br />
+<?php
+}
+elseif (!empty($_REQUEST['29'])) {
+?>
+<br />To Unenroll a student from CE at UP, press "Unenroll...".<br />
+(This does not affect any course modules or payments.)<br />
+<form id="unenroll_ceatup_form" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
+<input type="hidden" name="state" value="<?php echo $state; ?>" />
+<input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="1" value="<?php echo htmlspecialchars($_REQUEST['1'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="2" value="<?php echo htmlspecialchars($_REQUEST['2'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="11" value="<?php echo htmlspecialchars($_REQUEST['11'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="16" value="<?php echo htmlspecialchars($_REQUEST['16'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="18" value="<?php echo htmlspecialchars($_REQUEST['18'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="19" value="<?php echo htmlspecialchars($_REQUEST['19'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="alternatecoursename" value="<?php echo $_REQUEST['alternatecoursename']; ?>" />
+<input type="hidden" name="dobday" value="<?php echo $_REQUEST['dobday']; ?>" />
+<input type="hidden" name="dobmonth" value="<?php echo $_REQUEST['dobmonth']; ?>" />
+<input type="hidden" name="dobyear" value="<?php echo $_REQUEST['dobyear']; ?>" />
+<input type="hidden" name="12" value="<?php echo htmlspecialchars($_REQUEST['12'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="14" value="<?php echo htmlspecialchars($_REQUEST['14'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="13" value="<?php echo htmlspecialchars($_REQUEST['13'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="34" value="<?php echo htmlspecialchars($_REQUEST['34'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="35" value="<?php echo htmlspecialchars($_REQUEST['35'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="36" value="<?php echo htmlspecialchars($_REQUEST['36'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="31" value="<?php echo htmlspecialchars($_REQUEST['31'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="21" value="<?php echo htmlspecialchars($_REQUEST['21'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applyceatup" value="<?php echo htmlspecialchars($_REQUEST['applyceatup'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="applymmumph" value="<?php echo htmlspecialchars($_REQUEST['applymmumph'], ENT_COMPAT, 'UTF-8'); ?>" />
+<input type="hidden" name="take_final_assignment" value="<?php echo htmlspecialchars($_REQUEST['take_final_assignment'], ENT_COMPAT, 'UTF-8'); ?>" />
+<span style="display: none;">
+<textarea name="3" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['3'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="7" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['7'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="8" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['8'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="10" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['10'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="sponsoringorganisation" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['sponsoringorganisation'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="scholarship" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['scholarship'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="whynotcomplete" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['whynotcomplete'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+<textarea name="32" rows="10" cols="100" wrap="hard" style="width:auto"><?php echo htmlspecialchars($_REQUEST['32'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+</span>
+<input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
+<input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<input type="hidden" name="markunenroll_ceatup" value="1" />
+Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
+<input type="submit" name="unenroll_ceatup" value="Unenroll a student from CE at UP" />
+</form>
+<br />
+<?php
 }
 
 if (empty($peoples_cert_ps->cert_psstatus)) {
