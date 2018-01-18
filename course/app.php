@@ -954,8 +954,9 @@ same time and will involve a heavy workload - please be sure you do have the tim
 
 ?>
 <br />To approve this application and send an e-mail to applicant (edit e-mail text if you wish), press "Approve Full Application".
-<br /><i><b>NOTE: Any student that is doing MPH must, if not already so recorded,<br />
+<br /><i><b>NOTE: Any student that is doing MPH or "CE at UP" must, if not already so recorded,<br />
 be recorded as MPH by clicking "Record that the Student has been enrolled in the MPH" BEFORE APPROVAL<br />
+or as "CE at UP" by clicking "Record that the Student has been enrolled in CE at UP" BEFORE APPROVAL<br />
 (to pick up correct wording for e-mail).</b></i>
 <br /><i><b>NOTE: Please check the Amount Owed by the student (in e-mail below) looks OK before sending.<br />
 To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts, Method or Confirmed Status</a></b></i>
