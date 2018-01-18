@@ -183,7 +183,6 @@ if (!empty($_POST['markupdatemodules'])) {
     }
   }
 }
-]]]
 if (!empty($_POST['markaddnewmodule']) && !empty($_POST['moduletoadd'])) {
 	if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
 	$moduletoadd = $_POST['moduletoadd'];
