@@ -33,24 +33,29 @@ class application_form_returning_student_form extends moodleform {
     $mform->setExpanded('top');
 
     $mform->addElement('static', 'instuctions', '',
-'<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/content/who-should-apply">Who should apply (Click Here)</a><strong> before submitting this form, particularly see the information about </strong><a href="http://peoples-uni.org/content/course-fees">Course fees (Click Here)</a></p>
+'<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/content/who-should-apply">Who should apply (Click Here)</a><strong> before submitting this form,<br />
+particularly see the information about </strong><a href="http://peoples-uni.org/content/course-fees-payment-options" target="_blank">Course fees (Click Here)</a></p>
 <p><strong>
-The following modules will also be offered in partnership with the University of Pretoria through its continuing education programme "CE at UP":-<br />
+The following modules will also be offered in partnership with the University of Pretoria<br />
+through its continuing education programme "CE at UP":-<br />
 Health Economics<br />
 Inequalities and Social Determinants of Health<br />
 Public Health Concepts for Policy Makers<br />
 <br />
 For these modules, students have the option of either enrolling with "CE at UP", or via Peoples-uni.<br />
-"CE at UP" enrolments attract a higher fee (4000 Rand), but offer the option to earn credits towards a Masters programme with the University of Pretoria.<br />
+"CE at UP" enrolments attract a higher fee (4000 Rand), but offer the option to earn credits<br />
+towards a Masters programme with the University of Pretoria.<br />
 In both cases, modules are delivered by Peoples-uni in the usual way.<br />
 <br />
 If you wish to enrol with Ce@UP, please go to <a href="http://www.ce.up.ac.za/">http://www.ce.up.ac.za/</a><br />
-You will be able to apply there between 1-20 February, and will be charged directly by "CE at UP" (and not Peoples-uni, for the above courses).<br />
+You will be able to apply there between 1-20 February, and will be charged directly by "CE at UP"<br />
+(and not Peoples-uni, for the above courses).<br />
 <br />
 Regardless of whether you are applying to "CE at UP", please fill in this form.<br />
 There is also a field below to allow you to indicate that you are applying to "CE at UP".
 </strong></p>
-<p><strong>Use this form to apply to do course modules. You must have already been registered in Moodle. You need to enter the user name that you use when logging into Moodle in the form below.</strong></p>
+<p><strong>Use this form to apply to do course modules. You must have already been registered in Moodle.<br />
+You need to enter the user name that you use when logging into Moodle in the form below.</strong></p>
 <p><strong>If you have not been registered in Moodle you must apply by </strong><a href="http://courses.peoples-uni.org/course/registration.php">Clicking Here</a><strong> first.</strong></p>
 <p>For inquires about course enrolment or payment please send an e-mail to <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a></p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
@@ -210,7 +215,7 @@ There is also a field below to allow you to indicate that you are applying to "C
     $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
     $mform->setExpanded('scholorshipdetails');
 
-    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the <a href="http://peoples-uni.org/content/course-fees" target="_blank">fees (click here)</a>, please provide details on:<br />
+    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the <a href="http://peoples-uni.org/content/course-fees-payment-options" target="_blank">fees (click here)</a>, please provide details on:<br />
 1. What is your current employment AND monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
