@@ -131,7 +131,7 @@ function get_module_cost($userid, $coursename1, $coursename2) {
 
   if (empty($coursename2)) {
     $deltamodules = 1;
-    if (in_array($coursename2, $peoples_ceatup_courses_names)) $deltamodules = 0; // No charge for Enterprises University of Pretoria modules
+    if (in_array($coursename1, $peoples_ceatup_courses_names)) $deltamodules = 0; // No charge for Enterprises University of Pretoria modules
   } else {
     $deltamodules = 2;
     if (in_array($coursename1, $peoples_ceatup_courses_names)) $deltamodules--;
