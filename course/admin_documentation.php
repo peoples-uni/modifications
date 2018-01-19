@@ -965,7 +965,7 @@ We hope you enjoy studying with us and wish you every success.
 </pre>
 </li>
 <li>
-"Unenroll a student from the Masters in Public Health (MPH)" button does what it says.
+"Unenrol the student from the Masters in Public Health (MPH)" button does what it says.
 </li>
 <li>
 "Suspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added which are displayed further up the page. This leaves the student as an MPH student but indicates they are not currently active). They are not listed on track_submissions.php or track_submissions_turnitin.php when filtering for MPH students.
@@ -977,7 +977,7 @@ We hope you enjoy studying with us and wish you every success.
 "Record that the Student has been enrolled in the Certificate in Patient Safety" button does what it says.
 </li>
 <li>
-"Unenroll a student from the Certificate in Patient Safety" button does what it says.
+"Unenrol the student from the Certificate in Patient Safety" button does what it says.
 </li>
 <li>
 "Set the Income Category for the Student" button does what it says. It is necessary to specify whether the student is LMIC (Low/Middle Income country) or HIC (High Income country).<br />

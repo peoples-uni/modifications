@@ -2005,7 +2005,7 @@ MPH&nbsp;programme:&nbsp;
 }
 elseif (!empty($_REQUEST['29'])) {
 ?>
-<br />To Unenroll a student from the Masters in Public Health (MPH), press "Unenroll...".<br />
+<br />To Unenrol the student from the Masters in Public Health (MPH), press "Unenrol...".<br />
 (This does not affect any course modules or payments.)<br />
 <form id="unenrollmphform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
@@ -2047,7 +2047,7 @@ elseif (!empty($_REQUEST['29'])) {
 
 <input type="hidden" name="markunenrollmph" value="1" />
 Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
-<input type="submit" name="unenrollmph" value="Unenroll a student from the Masters in Public Health (MPH)" />
+<input type="submit" name="unenrollmph" value="Unenrol the student from the Masters in Public Health (MPH)" />
 </form>
 <br />
 <?php
@@ -2201,7 +2201,7 @@ if (empty($peoples_ceatup->ceatup_status)) {
 }
 elseif (!empty($_REQUEST['29'])) {
 ?>
-<br />To Unenroll a student from CE at UP, press "Unenroll...".<br />
+<br />To Unenrol the student from CE at UP, press "Unenrol...".<br />
 (This does not affect any course modules or payments.)<br />
 <form id="unenroll_ceatup_form" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
@@ -2243,7 +2243,7 @@ elseif (!empty($_REQUEST['29'])) {
 
 <input type="hidden" name="markunenroll_ceatup" value="1" />
 Reason for Unenrolment (visible to Staff & Student):&nbsp;<input type="text" size="45" name="note" /><br />
-<input type="submit" name="unenroll_ceatup" value="Unenroll a student from CE at UP" />
+<input type="submit" name="unenroll_ceatup" value="Unenrol the student from CE at UP" />
 </form>
 <br />
 <?php
@@ -2298,7 +2298,7 @@ if (empty($peoples_cert_ps->cert_psstatus)) {
 }
 elseif (!empty($_REQUEST['29'])) {
 ?>
-<br />To Unenroll a student from the Certificate in Patient Safety, press "Unenroll...".<br />
+<br />To Unenrol the student from the Certificate in Patient Safety, press "Unenrol...".<br />
 (This does not affect any course modules or payments.)<br />
 <form id="unenrollcert_psform" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
@@ -2340,7 +2340,7 @@ elseif (!empty($_REQUEST['29'])) {
 
 <input type="hidden" name="markunenrollcert_ps" value="1" />
 Reason for Unenrolment (visible to Staff & Students):&nbsp;<input type="text" size="45" name="note" /><br />
-<input type="submit" name="unenrollcert_ps" value="Unenroll a student from the Certificate in Patient Safety" />
+<input type="submit" name="unenrollcert_ps" value="Unenrol the student from the Certificate in Patient Safety" />
 </form>
 <br />
 <?php
