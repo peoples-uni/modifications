@@ -894,7 +894,7 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 If a Student was "Suspended from MPH" or "Unsuspended from MPH" (both of which can be set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
 </li>
 <li>
-"Enterprises University of Pretoria Status" indicates whether the student is "enrolling with Enterprises University of Pretoria" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(... MPH)"). If a Student was "Enrolled in MPH" and then "Unenrolled from MPH" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).<br />
+"Enterprises University of Pretoria Status" indicates whether the student is "enrolling with Enterprises University of Pretoria" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in Enterprises University of Pretoria" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(University of Pretoria)").<br />
 If a Student was Unenrolled (which can be set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
 </li>
 <li>
