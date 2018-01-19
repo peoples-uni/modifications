@@ -37,8 +37,8 @@ class application_form_returning_student_form extends moodleform {
 particularly see the information about </strong><a href="http://peoples-uni.org/content/course-fees-payment-options" target="_blank">Course fees (Click Here)</a></p>
 <p><strong>
 Peoples-uni is currently negotiating a collaboration with the University of Pretoria.<br />
-It is therefore possible that in semester 2018a, three of our modules will also become available through "Enterprises University of Pretoria".<br />
-This is likely to apply to the following modules:<br />
+It is therefore possible that in semester 2018a, three of our modules will also become available through<br />
+"Enterprises University of Pretoria". This is likely to apply to the following modules:<br />
 - Health Economics<br />
 - Inequalities and Social Determinants of Health<br />
 - Public Health Concepts for Policy Makers<br />
