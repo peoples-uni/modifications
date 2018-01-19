@@ -300,6 +300,13 @@ journeys. ( https://www.linkedin.com/company/people%27s-open-access-initiative)
 </pre>
 </li>
 <li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording for Pretoria and then click "Set the above text as the Register Student (Pretoria) e-mail wording (in Registration Details/reg.php)".<br />
+This wording should be similar to above, but will probably be simpler.
+</li>
+<li>
+<strong>Note:</strong> <a href="http://courses.peoples-uni.org/course/registration_manual.php" target="_blank">http://courses.peoples-uni.org/course/registration_manual.php</a> can be used by Peoples-uni staff to register students, particularly from Enterprises University of Pretoria. This is useful because there are a lot less required fields.
+</li>
+<li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default batch reminder e-mail wording and then click "Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)". Here is an (unfinished) sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
@@ -469,6 +476,10 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 <li>
 In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> each new module has to be individually added by selecting the new module from the selection list (making sure it is the correct version of the module for the new semester). This selection is beside the "Add this Module to above Active Module list for Applications:" button. When an individual module is selected then click "Add this Module to above Active Module list for Applications:", repeat this until the full set of modules for the new semester is listed.<br />
 NOTE: once any module is added (which is not then immediately marked as full... see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a>), application forms will be opened for students!
+</li>
+<li>
+In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> each
+Enterprises University of Pretoria module (cumulative for each semester) needs to be added using "Add this Module to Above List of Enterprises University of Pretoria Courses:". This is so students will not be charged for those modules. They can be removed with "Remove this Module from Above List of Enterprises University of Pretoria Courses:".
 </li>
 <li>
 You can confirm that the application form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed.
@@ -883,6 +894,10 @@ payconfirm.php also lists the full student payment account, the "Payment Method"
 If a Student was "Suspended from MPH" or "Unsuspended from MPH" (both of which can be set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
 </li>
 <li>
+"Enterprises University of Pretoria Status" indicates whether the student is "enrolling with Enterprises University of Pretoria" (this is also displayed on the main applications.php spreadsheet under "Approved?"). It also indicates whether the Student was "Enrolled in MPH" (it is set further down the "Details" page. It is also displayed on the main applications.php spreadsheet under "Enrolled?" as "(... MPH)"). If a Student was "Enrolled in MPH" and then "Unenrolled from MPH" (which is also set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).<br />
+If a Student was Unenrolled (which can be set further down the "Details" page) this is also indicated here with dates and any reason (but this is not shown on the main applications.php spreadsheet).
+</li>
+<li>
 "Submit the Final Assignment for each module?" indicates whether the student "Intends to submit the final assignment for each module", "Would like to earn a Certificate of Participation" or "Will study module materials without participating in discussions" (this is also displayed on the main applications.php spreadsheet under "Approved?").
 </li>
 <li>
@@ -972,6 +987,12 @@ We hope you enjoy studying with us and wish you every success.
 </li>
 <li>
 "Unsuspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added. This makes the student active again).
+</li>
+<li>
+"Record that the Student has been enrolled in Enterprises University of Pretoria" button does what it says. The student will not be charged, by us, for modules with Enterprises University of Pretoria.
+</li>
+<li>
+"Unenrol the student from Enterprises University of Pretoria" button does what it says.
 </li>
 <li>
 "Record that the Student has been enrolled in the Certificate in Patient Safety" button does what it says.
