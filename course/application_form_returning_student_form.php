@@ -36,23 +36,24 @@ class application_form_returning_student_form extends moodleform {
 '<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/content/who-should-apply" target="_blank">Who should apply (Click Here)</a><strong> before submitting this form,<br />
 particularly see the information about </strong><a href="http://peoples-uni.org/content/course-fees-payment-options" target="_blank">Course fees (Click Here)</a></p>
 <p><strong>
-The following modules will also be offered in partnership with the University of Pretoria<br />
-through its continuing education programme "CE at UP":-<br />
-Health Economics<br />
-Inequalities and Social Determinants of Health<br />
-Public Health Concepts for Policy Makers<br />
+Peoples-uni is currently negotiating a collaboration with the University of Pretoria.<br />
+It is therefore possible that in semester 2018a, three of our modules will also become available through "Enterprises University of Pretoria".<br />
+This is likely to apply to the following modules:<br />
+- Health Economics<br />
+- Inequalities and Social Determinants of Health<br />
+- Public Health Concepts for Policy Makers<br />
 <br />
-For these modules, students have the option of either enrolling with "CE at UP", or via Peoples-uni.<br />
-"CE at UP" enrolments attract a higher fee (4000 Rand), but offer the option to earn credits<br />
-towards a Masters programme with the University of Pretoria.<br />
-In both cases, modules are delivered by Peoples-uni in the usual way.<br />
+For these modules, students would have the option of either enrolling with Enterprises University of Pretoria, or via Peoples-uni.<br />
+Enterprises University of Pretoria enrolments attract a higher fee (likely 4000 Rand, to be confirmed),<br />
+but would likely offer the option to earn credits towards a Masters programme with the University of Pretoria.<br />
+In both cases, modules would be delivered by Peoples-uni in the usual way.<br />
 <br />
-If you wish to enrol with Ce@UP, please go to <a href="http://www.ce.up.ac.za/" target="_blank">http://www.ce.up.ac.za/</a><br />
-You will be able to apply there between 1-20 February, and will be charged directly by "CE at UP"<br />
-(and not Peoples-uni, for the above courses).<br />
+If you wish to enrol with Enterprises University of Pretoria, should this become available for semester 18a,<br />
+please indicate that in the field below.<br />
+We will then notify you when enrolment through Enterprises University of Pretoria becomes available,<br />
+and not yet charge you for your course fees, as these would be payable to Enterprises University of Pretoria.<br />
 <br />
-Regardless of whether you are applying to "CE at UP", please fill in this form.<br />
-There is also a field below to allow you to indicate that you are applying to "CE at UP".
+In any case, you need to complete this form to indicate your choice of modules (with Enterprises University of Pretoria or Peoples-uni).
 </strong></p>
 <p><strong>Use this form to apply to do course modules. You must have already been registered in Moodle.<br />
 You need to enter the user name that you use when logging into Moodle in the form below.</strong></p>
@@ -61,6 +62,11 @@ You need to enter the user name that you use when logging into Moodle in the for
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
 <p><strong>Note:</strong> You must submit your application on or before ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '.</p>
 <p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a></strong></p>');
+// <a href="http://www.enterprises.up.ac.za/" target="_blank">http://www.enterprises.up.ac.za/</a><br />
+// You will be able to apply there between 1-20 February, and will be charged directly by Enterprises University of Pretoria<br />
+// (and not Peoples-uni, for the above courses).<br />
+// <br />
+//Regardless of whether you are applying to Enterprises University of Pretoria, please fill in this form.<br />
 
     $customdata = $this->_customdata['customdata'];
     $semester  = $customdata['semester'];
@@ -162,8 +168,8 @@ You need to enter the user name that you use when logging into Moodle in the for
 
     $listforselect = array();
     $listforselect[1] = 'No, continue with Peoples-uni';
-    $listforselect[2] = 'Yes, I am also enrolling with "CE at UP"';
-    $mform->addElement('select', 'applyceatup', 'Are you also enrolling with "CE at UP"?', $listforselect);
+    $listforselect[2] = 'Yes, I am also enrolling with Enterprises University of Pretoria';
+    $mform->addElement('select', 'applyceatup', 'Are you also enrolling with Enterprises University of Pretoria?', $listforselect);
     $mform->addElement('static', 'explainapplyceatup', '&nbsp;', 'If you intend enrolling with the University of Pretoria (or already have), please indicate here<br /><br />');
 
     $listforselect = array();
@@ -220,7 +226,8 @@ You need to enter the user name that you use when logging into Moodle in the for
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />
-5. Please note that late applications for scholarships cannot be considered after ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '.<br />');
+5. Please note that late applications for scholarships cannot be considered after ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '.<br />
+6. Scholarships do not apply to Enterprises University of Pretoria modules.');
     $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
 
 

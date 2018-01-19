@@ -717,7 +717,7 @@ Reasons for wanting to enrol
 10
 Sponsoring organisation
 sponsoringorganisation
-Applying for CE at UP
+Applying for Enterprises University of Pretoria
 applyceatup
 Applying for MPH
 applymmumph
@@ -813,7 +813,7 @@ foreach ($applications as $sid => $application) {
     elseif ($state1===02 || $state2===020) $z = '<span style="color:blue">Some</span>';
     else $z = '<span style="color:green">Yes</span>';
     $applyceatuptext = array(0 => '', 1 => '');
-    $applyceatuptext[2] = '<br />(Says enrolling with CE at UP)';
+    $applyceatuptext[2] = '<br />(Says enrolling with University of Pretoria)';
     $z .= $applyceatuptext[$application->applyceatup];
     $applymmumphtext = array(0 => '', 1 => '', 2 => '<br />(Apply MMU MPH)', 3 => '<br />(Say already MMU MPH)');
     $applymmumphtext[2] = '<br />(Apply MMU MPH)';
@@ -890,7 +890,7 @@ foreach ($applications as $sid => $application) {
     if ($application->mph && ($application->mphstatus == 1)) $z .= '<br />(MMU MPH)';
     if ($application->mph && ($application->mphstatus == 2)) $z .= '<br />(Peoples MPH)';
     if ($application->mph && ($application->mphstatus == 3)) $z .= '<br />(OTHER MPH)';
-    if ($application->ceatup) $z .= '<br />(CE at UP)';
+    if ($application->ceatup) $z .= '<br />(University of Pretoria)';
     if ($application->cert_ps) $z .= '<br />(Cert PS)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
     $rowdata[] = $z;

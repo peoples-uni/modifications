@@ -291,7 +291,7 @@ if (!empty($_POST['mark_ceatup']) && !empty($_REQUEST['29'])) {
   if (!empty($peoples_ceatup)) {
     $peoples_ceatup->datesubmitted = time();
     $peoples_ceatup->ceatup_status = 1;
-    $peoples_ceatup->note = $peoples_ceatup->note . '<br />Enrolled in CE at UP: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
+    $peoples_ceatup->note = $peoples_ceatup->note . '<br />Enrolled in Enterprises University of Pretoria: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
     $DB->update_record('peoples_ceatup', $peoples_ceatup);
   }
   else {
@@ -300,7 +300,7 @@ if (!empty($_POST['mark_ceatup']) && !empty($_REQUEST['29'])) {
     $peoples_ceatup->datesubmitted = time();
     $peoples_ceatup->datelastunentolled = 0;
     $peoples_ceatup->ceatup_status = 1;
-    $peoples_ceatup->note = 'Enrolled in CE at UP: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
+    $peoples_ceatup->note = 'Enrolled in Enterprises University of Pretoria: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
     $DB->insert_record('peoples_ceatup', $peoples_ceatup);
   }
 
@@ -315,7 +315,7 @@ if (!empty($_POST['markunenroll_ceatup']) && !empty($_REQUEST['29'])) {
 
     if (!empty($_REQUEST['note'])) $usernote = ' (' . htmlspecialchars($_REQUEST['note'], ENT_COMPAT, 'UTF-8') . ')';
     else  $usernote = '';
-    $peoples_ceatup->note = $peoples_ceatup->note . '<br />Unenrolled from CE at UP: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datelastunentolled) . $usernote;
+    $peoples_ceatup->note = $peoples_ceatup->note . '<br />Unenrolled from Enterprises University of Pretoria: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datelastunentolled) . $usernote;
 
     $DB->update_record('peoples_ceatup', $peoples_ceatup);
   }
@@ -819,14 +819,14 @@ if (!empty($notes)) {
 }
 
 $applyceatuptext = array(0 => '', 1 => '');
-$applyceatuptext[2] = 'Says enrolling with CE at UP';
+$applyceatuptext[2] = 'Says enrolling with Enterprises University of Pretoria';
 $applyceatuptext = $applyceatuptext[$application->applyceatup];
 
 if (!empty($application->userid)) $peoples_ceatup = $DB->get_record('peoples_ceatup', array('userid' => $application->userid));
 else $peoples_ceatup = NULL;
 
 if (!empty($applyceatuptext) || !empty($peoples_ceatup->note)) {
-  echo '<tr><td colspan="2">CE at UP Status...</td></tr>';
+  echo '<tr><td colspan="2">Enterprises University of Pretoria Status...</td></tr>';
 
   if (!empty($applyceatuptext)) echo '<tr><td></td><td>' . $applyceatuptext . '</td></tr>';
 
@@ -954,9 +954,9 @@ same time and will involve a heavy workload - please be sure you do have the tim
 
 ?>
 <br />To approve this application and send an e-mail to applicant (edit e-mail text if you wish), press "Approve Full Application".
-<br /><i><b>NOTE: Any student that is doing MPH or "CE at UP" must, if not already so recorded,<br />
+<br /><i><b>NOTE: Any student that is doing MPH or Enterprises University of Pretoria must, if not already so recorded,<br />
 be recorded as MPH by clicking "Record that the Student has been enrolled in the MPH" BEFORE APPROVAL<br />
-or as "CE at UP" by clicking "Record that the Student has been enrolled in CE at UP" BEFORE APPROVAL<br />
+or as Enterprises University of Pretoria by clicking "Record that the Student has been enrolled in Enterprises University of Pretoria" BEFORE APPROVAL<br />
 (to pick up correct wording for e-mail).</b></i>
 <br /><i><b>NOTE: Please check the Amount Owed by the student (in e-mail below) looks OK before sending.<br />
 To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts, Method or Confirmed Status</a></b></i>
@@ -2154,7 +2154,7 @@ Reason for Suspension (visible to Staff & Students):&nbsp;<input type="text" siz
 
 if (empty($peoples_ceatup->ceatup_status)) {
 ?>
-<br />To record that the student has been enrolled in CE at UP, press "Record...".<br />
+<br />To record that the student has been enrolled in Enterprises University of Pretoria, press "Record...".<br />
 <form id="ceatup_form" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
 <input type="hidden" name="29" value="<?php echo htmlspecialchars($_REQUEST['29'], ENT_COMPAT, 'UTF-8'); ?>" />
@@ -2194,14 +2194,14 @@ if (empty($peoples_ceatup->ceatup_status)) {
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 
 <input type="hidden" name="mark_ceatup" value="1" />
-<input type="submit" name="ceatup_name" value="Record that the Student has been enrolled in CE at UP" />
+<input type="submit" name="ceatup_name" value="Record that the Student has been enrolled in Enterprises University of Pretoria" />
 </form>
 <br />
 <?php
 }
 elseif (!empty($_REQUEST['29'])) {
 ?>
-<br />To Unenrol the student from CE at UP, press "Unenrol...".<br />
+<br />To Unenrol the student from Enterprises University of Pretoria, press "Unenrol...".<br />
 (This does not affect any course modules or payments.)<br />
 <form id="unenroll_ceatup_form" method="post" action="<?php echo $CFG->wwwroot . '/course/app.php'; ?>">
 <input type="hidden" name="state" value="<?php echo $state; ?>" />
@@ -2243,7 +2243,7 @@ elseif (!empty($_REQUEST['29'])) {
 
 <input type="hidden" name="markunenroll_ceatup" value="1" />
 Reason for Unenrolment (visible to Staff & Student):&nbsp;<input type="text" size="45" name="note" /><br />
-<input type="submit" name="unenroll_ceatup" value="Unenrol the student from CE at UP" />
+<input type="submit" name="unenroll_ceatup" value="Unenrol the student from Enterprises University of Pretoria" />
 </form>
 <br />
 <?php
