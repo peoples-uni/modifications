@@ -291,7 +291,7 @@ if (!empty($_POST['mark_ceatup']) && !empty($_REQUEST['29'])) {
   if (!empty($peoples_ceatup)) {
     $peoples_ceatup->datesubmitted = time();
     $peoples_ceatup->ceatup_status = 1;
-    $peoples_ceatup->note = $peoples_ceatup->note . '<br />Enrolled CE at UP: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
+    $peoples_ceatup->note = $peoples_ceatup->note . '<br />Enrolled in CE at UP: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
     $DB->update_record('peoples_ceatup', $peoples_ceatup);
   }
   else {
@@ -300,7 +300,7 @@ if (!empty($_POST['mark_ceatup']) && !empty($_REQUEST['29'])) {
     $peoples_ceatup->datesubmitted = time();
     $peoples_ceatup->datelastunentolled = 0;
     $peoples_ceatup->ceatup_status = 1;
-    $peoples_ceatup->note = 'Enrolled in Certificate in Patient Safety: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
+    $peoples_ceatup->note = 'Enrolled in CE at UP: ' . gmdate('d/m/Y H:i', $peoples_ceatup->datesubmitted);
     $DB->insert_record('peoples_ceatup', $peoples_ceatup);
   }
 
