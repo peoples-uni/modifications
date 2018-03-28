@@ -445,6 +445,19 @@ if (!empty($enrolposts)) {
 // END POSTS Extract
 
 
+$bursaries = $DB->get_records_sql("
+SELECT
+  b.userid,
+  COUNT(*) AS number
+FROM mdl_peoples_student_balance b
+WHERE
+  b.detail LIKE '%scholarship%' OR
+  b.detail LIKE '%bursa%' OR
+  b.detail LIKE '%busar%' OR
+  b.detail LIKE '%bursr%'
+GROUP BY b.userid");
+
+
 if (!$displayforexcel) echo '<b>Data displayed and totalled for students with qualification data only...</b><br />';
 $table = new html_table();
 $table->head = array(
@@ -478,6 +491,7 @@ $table->head = array(
   'I am not sure(How will you use your new knowledge and skills to improve population health?)',
   'ID',
   'Became Tutor or SSO?',
+  'Number of Bursaries',
   );
 
 $n = 0;
@@ -662,6 +676,13 @@ if (!empty($enrols)) {
     }
     else {
       $rowdata[] = htmlspecialchars($tutors_by_id[$enrol->userid]->new_roles, ENT_COMPAT, 'UTF-8');
+    }
+
+    if (empty($bursaries[$enrol->userid])) {
+      $rowdata[] = '';
+    }
+    else {
+      $rowdata[] = $bursaries[$enrol->userid]->number;
     }
 
 		if ($enrol->username !== $lastname) {
