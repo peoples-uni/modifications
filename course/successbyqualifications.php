@@ -457,6 +457,17 @@ WHERE
   b.detail LIKE '%bursr%'
 GROUP BY b.userid");
 
+$scholarships = $DB->get_records_sql("
+SELECT DISTINCT
+  userid
+FROM mdl_peoplesapplication
+WHERE
+  scholarship !='' AND
+  scholarship !='I am not seeking scholarship' AND
+  scholarship !='none' AND
+  scholarship !='n/a' AND
+  scholarship !='none.'");
+
 
 if (!$displayforexcel) echo '<b>Data displayed and totalled for students with qualification data only...</b><br />';
 $table = new html_table();
@@ -492,6 +503,7 @@ $table->head = array(
   'ID',
   'Became Tutor or SSO?',
   'Number of Bursaries',
+  'Applied Scholarship?',
   );
 
 $n = 0;
@@ -683,6 +695,13 @@ if (!empty($enrols)) {
     }
     else {
       $rowdata[] = $bursaries[$enrol->userid]->number;
+    }
+
+    if (empty($scholarships[$enrol->userid])) {
+      $rowdata[] = '';
+    }
+    else {
+      $rowdata[] = 'Yes';
     }
 
 		if ($enrol->username !== $lastname) {

@@ -155,6 +155,7 @@ $table->head = array(
   'Date',
   'Amount',
   'Detail',
+  'ID',
   );
 
 $n = 0;
@@ -180,6 +181,8 @@ foreach ($applications as $application) {
   $rowdata[] = '&pound;' . number_format($application->amount_delta, 2);
  
   $rowdata[] = htmlspecialchars($application->detail, ENT_COMPAT, 'UTF-8');
+
+  $rowdata[] = $application->userid;
 
   $table->data[] = $rowdata;
   $n++;
