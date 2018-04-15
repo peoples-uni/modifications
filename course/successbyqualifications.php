@@ -465,6 +465,7 @@ FROM mdl_peoples_student_balance b
 WHERE
   b.amount_delta < 0 AND (
   b.detail LIKE '%Ecobank%' OR
+  b.detail LIKE '%Eco-bank%' OR
   b.detail LIKE '%WorldPay%' OR
   b.detail LIKE '%Barclays%' OR
   b.detail LIKE '%Diamond%' OR
