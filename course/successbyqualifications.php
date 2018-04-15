@@ -457,6 +457,24 @@ WHERE
   b.detail LIKE '%bursr%'
 GROUP BY b.userid");
 
+$paid_somethings = $DB->get_records_sql("
+SELECT
+  b.userid,
+  COUNT(*) AS number
+FROM mdl_peoples_student_balance b
+WHERE
+  b.amount_delta < 0 AND (
+  b.detail LIKE '%Ecobank%' OR
+  b.detail LIKE '%WorldPay%' OR
+  b.detail LIKE '%Barclays%' OR
+  b.detail LIKE '%Diamond%' OR
+  b.detail LIKE '%Western%' OR
+  b.detail LIKE '%MoneyGram%' OR
+  b.detail LIKE '%instalment%' OR
+  b.detail LIKE '%paid%' OR
+  b.detail LIKE '%payment%')
+GROUP BY b.userid");
+
 $scholarships = $DB->get_records_sql("
 SELECT DISTINCT
   userid
@@ -504,6 +522,7 @@ $table->head = array(
   'Became Tutor or SSO?',
   'Number of Bursaries',
   'Applied Scholarship?',
+  'Number of Payments',
   );
 
 $n = 0;
@@ -702,6 +721,13 @@ if (!empty($enrols)) {
     }
     else {
       $rowdata[] = 'Yes';
+    }
+
+    if (empty($paid_somethings[$enrol->userid])) {
+      $rowdata[] = '';
+    }
+    else {
+      $rowdata[] = $paid_somethings[$enrol->userid]->number;
     }
 
 		if ($enrol->username !== $lastname) {
