@@ -523,7 +523,7 @@ $table->head = array(
   'I am not sure(How will you use your new knowledge and skills to improve population health?)',
   'ID',
   'Became Tutor or SSO?',
-  'Total Bursaries (Number)',
+  'Total Bursary (Number)',
   'Applied Scholarship?',
   'Total Payments (Number)',
   );
@@ -716,7 +716,7 @@ if (!empty($enrols)) {
       $rowdata[] = '';
     }
     else {
-      $rowdata[] = $bursaries[$enrol->userid]->total . ' (' . $bursaries[$enrol->userid]->number . ')';
+      $rowdata[] = '&pound;' . $bursaries[$enrol->userid]->total . ' (' . $bursaries[$enrol->userid]->number . ')';
     }
 
     if (empty($scholarships[$enrol->userid])) {
@@ -730,7 +730,7 @@ if (!empty($enrols)) {
       $rowdata[] = '';
     }
     else {
-      $rowdata[] = $paid_somethings[$enrol->userid]->total . ' (' . $paid_somethings[$enrol->userid]->number . ')';
+      $rowdata[] = '&pound;' . $paid_somethings[$enrol->userid]->total . ' (' . $paid_somethings[$enrol->userid]->number . ')';
     }
 
 		if ($enrol->username !== $lastname) {
