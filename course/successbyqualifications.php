@@ -448,6 +448,7 @@ if (!empty($enrolposts)) {
 $bursaries = $DB->get_records_sql("
 SELECT
   b.userid,
+  SUM(b.amount_delta) AS total,
   COUNT(*) AS number
 FROM mdl_peoples_student_balance b
 WHERE
@@ -460,6 +461,7 @@ GROUP BY b.userid");
 $paid_somethings = $DB->get_records_sql("
 SELECT
   b.userid,
+  -SUM(b.amount_delta) AS total,
   COUNT(*) AS number
 FROM mdl_peoples_student_balance b
 WHERE
@@ -521,9 +523,9 @@ $table->head = array(
   'I am not sure(How will you use your new knowledge and skills to improve population health?)',
   'ID',
   'Became Tutor or SSO?',
-  'Number of Bursaries',
+  'Total Bursaries (Number)',
   'Applied Scholarship?',
-  'Number of Payments',
+  'Total Payments (Number)',
   );
 
 $n = 0;
@@ -714,7 +716,7 @@ if (!empty($enrols)) {
       $rowdata[] = '';
     }
     else {
-      $rowdata[] = $bursaries[$enrol->userid]->number;
+      $rowdata[] = $bursaries[$enrol->userid]->total . ' (' . $bursaries[$enrol->userid]->number . ')';
     }
 
     if (empty($scholarships[$enrol->userid])) {
@@ -728,7 +730,7 @@ if (!empty($enrols)) {
       $rowdata[] = '';
     }
     else {
-      $rowdata[] = $paid_somethings[$enrol->userid]->number;
+      $rowdata[] = $paid_somethings[$enrol->userid]->total . ' (' . $paid_somethings[$enrol->userid]->number . ')';
     }
 
 		if ($enrol->username !== $lastname) {
