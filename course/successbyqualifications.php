@@ -448,7 +448,7 @@ if (!empty($enrolposts)) {
 $bursaries = $DB->get_records_sql("
 SELECT
   b.userid,
-  SUM(b.amount_delta) AS total,
+  -SUM(b.amount_delta) AS total,
   COUNT(*) AS number
 FROM mdl_peoples_student_balance b
 WHERE
