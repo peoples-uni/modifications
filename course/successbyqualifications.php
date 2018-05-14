@@ -526,6 +526,9 @@ $table->head = array(
   'Total Bursary (Number)',
   'Applied Scholarship?',
   'Total Payments (Number)',
+  'Date of Birth',
+  'Country',
+  'Gender',
   );
 
 $n = 0;
@@ -732,6 +735,30 @@ if (!empty($enrols)) {
     else {
       $rowdata[] = '&pound;' . $paid_somethings[$enrol->userid]->total . ' (' . $paid_somethings[$enrol->userid]->number . ')';
     }
+
+    $profdob = '';
+    if ($dobid) {
+      $data = $DB->get_record('user_info_data', array('userid' => $enrol->userid, 'fieldid' => $dobid));
+      if (!empty($data->data)) {
+        $founddob = preg_match('/^[0-9]{1,2} (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4,})$/', $data->data, $matchesdob); // Take out course code without Year/Semester part
+        if ($founddob) {
+          $profdob = $matchesdob[2];
+        }
+      }
+    }
+    $rowdata[] = $profdob;
+
+    $rowdata[] = $countryname[$enrol->country];
+
+    $profgender = '';
+    if ($genderid) {
+      $data = $DB->get_record('user_info_data', array('userid' => $enrol->userid, 'fieldid' => $genderid));
+      if (!empty($data->data)) {
+        $profgender = $data->data;
+      }
+    }
+    $rowdata[] = $profgender;
+
 
 		if ($enrol->username !== $lastname) {
 
