@@ -144,7 +144,7 @@ if (empty($applications)) {
 $scholarships = $DB->get_records_sql("
 SELECT
   userid,
-  GROUP_CONCAT(CONCAT(semester, ': ', scholarship) ORDER BY id ASC SEPARATOR '<br />')
+  GROUP_CONCAT(CONCAT(semester, ': ', scholarship) ORDER BY id ASC SEPARATOR '<br />') AS text
 FROM mdl_peoplesapplication
 WHERE
   scholarship!='' AND
@@ -201,7 +201,7 @@ foreach ($applications as $application) {
   $rowdata[] = $application->userid;
 
   if (!empty($scholarships[$application->userid])) {
-    $text = $scholarships[$application->userid];
+    $text = $scholarships[$application->userid]->text;
     $text = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $text));
     if ($displaystandardforexcel) $text = str_replace('<br />', ' ', $text);
     $rowdata[] = htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
