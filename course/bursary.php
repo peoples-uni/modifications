@@ -141,6 +141,21 @@ if (empty($applications)) {
   $applications = array();
 }
 
+$scholarships = $DB->get_records_sql("
+SELECT
+  userid,
+  GROUP_CONCAT(CONCAT(semester, ': ', scholarship) ORDER BY id ASC SEPARATOR '<br />')
+FROM mdl_peoplesapplication
+WHERE
+  scholarship!='' AND
+  scholarship!='none' AND
+  scholarship!='n/a' AND
+  scholarship!='none.'
+GROUP BY userid");
+if (empty($scholarships)) {
+  $scholarships = array();
+}
+
 $applications = $peoples_filters->filter_entries($applications);
 
 
@@ -156,6 +171,7 @@ $table->head = array(
   'Amount',
   'Detail',
   'ID',
+  'Scholarship application details',
   );
 
 $n = 0;
@@ -184,6 +200,15 @@ foreach ($applications as $application) {
 
   $rowdata[] = $application->userid;
 
+  if (!empty($scholarships[$application->userid])) {
+    $text = $scholarships[$application->userid];
+    $text = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $text));
+    if ($displaystandardforexcel) $text = str_replace('<br />', ' ', $text)
+    $rowdata[] = htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+  } else {
+    $rowdata[] = '';
+  }
+
   $table->data[] = $rowdata;
   $n++;
 }
@@ -199,4 +224,10 @@ echo 'Total Entries: ' . $n;
 echo '<br /><br />';
 
 echo $OUTPUT->footer();
+
+
+function break_or_space_if_excel($displaystandardforexcel) {
+  if ($displaystandardforexcel) return ' ';
+  else return '<br />';
+}
 ?>
