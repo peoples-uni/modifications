@@ -204,7 +204,7 @@ foreach ($applications as $application) {
     $text = $scholarships[$application->userid]->text;
     $text = str_replace("\r", '', str_replace("\n", break_or_space_if_excel($displaystandardforexcel), $text));
     if ($displaystandardforexcel) $text = str_replace('<br />', ' ', $text);
-    $rowdata[] = htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+    $rowdata[] = $text;
   } else {
     $rowdata[] = '';
   }
