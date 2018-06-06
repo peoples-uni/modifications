@@ -37,7 +37,7 @@ echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/co
 
 //echo '<p><b>You should only pay if you have been notified that you have been accepted on the Manchester Metropolitan University Master of Public Health programme.</b></p>';
 
-echo '<p><b>Enter the amount 1500 UK Pounds (or instalment amount if this has been agreed) if you wish to pay for the EUCLID University MPH course, enter your contact information and then click the button below to make your payment with WorldPay.</b></p>';
+echo '<p><b>Enter the agreed amount in UK Pounds to pay for the EUCLID University MPH, enter your contact information and then click the button below to make your payment with WorldPay.</b></p>';
 
 $donatetime = time();
 ?>
@@ -108,7 +108,7 @@ function checkemail(str) {
 <input type="hidden" name="cartId" value="EUCLID University MPH <?php echo $donatetime; ?>" />
 <input type="hidden" name="currency" value="GBP" />
 
-<strong>Amount you wish to Pay (in UK Pounds):&nbsp;</strong><input type="text" size="10" name="amount" /><br /><br />
+<strong>Amount in UK Pounds:&nbsp;</strong><input type="text" size="10" name="amount" /><br /><br />
 <input type="hidden" name="desc" value="EUCLID University MPH Course Payment <?php echo $donatetime; ?>" />
 
 <?php
@@ -144,7 +144,6 @@ foreach ($countryname as $key => $countryvalue) {
 </table>
 <br />
 <input type="hidden" name="M_mph" value="<?php echo $donatetime; ?>" />
-<input type="hidden" name="M_dateattemptedtopay" value="<?php echo time(); ?>" />
 <input type="submit" value="Click this to go to the WorldPay website to securely make your payment" />
 
 </form>
