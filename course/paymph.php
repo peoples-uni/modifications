@@ -1,7 +1,7 @@
 <?php  // $Id: paymph.php,v 1.1 2011/07/19 15:02:00 alanbarrett Exp $
 /**
 *
-* Pay for MMU MPH
+* Pay for EUCLID University MPH
 *
 */
 
@@ -15,8 +15,8 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/paymph.php');
 $PAGE->set_pagelayout('standard');
 
-$PAGE->set_title('Payment for MMU MPH');
-$PAGE->set_heading('Payment for MMU MPH');
+$PAGE->set_title('Payment for EUCLID University MPH');
+$PAGE->set_heading('Payment for EUCLID University MPH');
 echo $OUTPUT->header();
 
 echo $OUTPUT->box_start('generalbox boxaligncenter');
@@ -35,7 +35,7 @@ echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/co
 
 echo '<p><b>You should only pay if you have been notified that you have been accepted on the Manchester Metropolitan University Master of Public Health programme.</b></p>';
 
-echo '<p><b>Enter the amount 1500 UK Pounds (or instalment amount if this has been agreed) if you wish to pay for the MMU MPH course, enter your contact information and then click the button below to make your payment with RBS WorldPay.</b></p>';
+echo '<p><b>Enter the amount 1500 UK Pounds (or instalment amount if this has been agreed) if you wish to pay for the EUCLID University MPH course, enter your contact information and then click the button below to make your payment with WorldPay.</b></p>';
 
 $donatetime = time();
 ?>
@@ -101,11 +101,11 @@ function checkemail(str) {
 
 <form action="<?php echo $payurl; ?>" method="post" onSubmit="return verify()" name="donateform">
 <input type="hidden" name="instId" value="232634" />
-<input type="hidden" name="cartId" value="MMU MPH <?php echo $donatetime; ?>" />
+<input type="hidden" name="cartId" value="EUCLID University MPH <?php echo $donatetime; ?>" />
 <input type="hidden" name="currency" value="GBP" />
 
 <strong>Amount you wish to Pay (in UK Pounds):&nbsp;</strong><input type="text" size="10" name="amount" /><br /><br />
-<input type="hidden" name="desc" value="MMU MPH Course Payment <?php echo $donatetime; ?>" />
+<input type="hidden" name="desc" value="EUCLID University MPH Course Payment <?php echo $donatetime; ?>" />
 
 <?php
 if ($test) {
@@ -130,20 +130,20 @@ if ($test) {
 </table>
 <br />
 <input type="hidden" name="M_mph" value="<?php echo $donatetime; ?>" />
-<input type="submit" value="Click this to go to the RBS WorldPay website to securely make your payment" />
+<input type="submit" value="Click this to go to the WorldPay website to securely make your payment" />
 
 </form>
 <br /><br />
 
 
-<img src=https://www.worldpay.com/cgenerator/logos/visa.gif border=0 alt="Visa Credit payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/visa_debit.gif border=0 alt="Visa Debit payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/visa_electron.gif border=0 alt="Visa Electron payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/mastercard.gif border=0 alt="Mastercard payments supported by RBS WorldPay">
-<img src=https://www.worldpay.com/cgenerator/logos/maestro.gif border=0 alt="Maestro payments supported by RBS WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/visa.gif border=0 alt="Visa Credit payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/visa_debit.gif border=0 alt="Visa Debit payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/visa_electron.gif border=0 alt="Visa Electron payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/mastercard.gif border=0 alt="Mastercard payments supported by WorldPay">
+<img src=https://www.worldpay.com/cgenerator/logos/maestro.gif border=0 alt="Maestro payments supported by WorldPay">
 <img src=https://www.worldpay.com/cgenerator/logos/jcb.gif border=0 alt="JCB">
-<img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by RBS WorldPay">
-<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By RBS WorldPay"></a>
+<img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by WorldPay">
+<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 
 </div>
 
