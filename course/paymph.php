@@ -11,9 +11,11 @@ $test = false;
 
 require("../config.php");
 
+$countryname = get_string_manager()->get_list_of_countries(false);
+
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/course/paymph.php');
-$PAGE->set_pagelayout('standard');
+$PAGE->set_pagelayout('embedded');
 
 $PAGE->set_title('Payment for EUCLID University MPH');
 $PAGE->set_heading('Payment for EUCLID University MPH');
@@ -33,7 +35,7 @@ echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p><br />';
 
-echo '<p><b>You should only pay if you have been notified that you have been accepted on the Manchester Metropolitan University Master of Public Health programme.</b></p>';
+//echo '<p><b>You should only pay if you have been notified that you have been accepted on the Manchester Metropolitan University Master of Public Health programme.</b></p>';
 
 echo '<p><b>Enter the amount 1500 UK Pounds (or instalment amount if this has been agreed) if you wish to pay for the EUCLID University MPH course, enter your contact information and then click the button below to make your payment with WorldPay.</b></p>';
 
@@ -98,6 +100,8 @@ function checkemail(str) {
   }
 }
 </script>
+
+<p>(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy" target="_blank">http://www.peoples-uni.org/content/refund-policy</a>)</p>
 
 <form action="<?php echo $payurl; ?>" method="post" onSubmit="return verify()" name="donateform">
 <input type="hidden" name="instId" value="232634" />
