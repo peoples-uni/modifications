@@ -33,40 +33,15 @@ class application_form_returning_student_form extends moodleform {
     $mform->setExpanded('top');
 
     $mform->addElement('static', 'instuctions', '',
-'<p><strong>Please read the information in </strong><a href="http://www.peoples-uni.org/content/who-should-apply" target="_blank">Who should apply (Click Here)</a><strong> before submitting this form,<br />
-particularly see the information about </strong><a href="http://peoples-uni.org/content/course-fees-payment-options" target="_blank">Course fees (Click Here)</a></p>
-<p><strong>
-Peoples-uni is currently negotiating a collaboration with the University of Pretoria.<br />
-It is therefore possible that in semester 2018a, three of our modules will also become available through<br />
-"Enterprises University of Pretoria". This is likely to apply to the following modules:<br />
-- Health Economics<br />
-- Inequalities and Social Determinants of Health<br />
-- Public Health Concepts for Policy Makers<br />
-<br />
-For these modules, students would have the option of either enrolling with Enterprises University of Pretoria, or via Peoples-uni.<br />
-Enterprises University of Pretoria enrolments attract a higher fee (likely 4000 Rand, to be confirmed),<br />
-but would likely offer the option to earn credits towards a Masters programme with the University of Pretoria.<br />
-In both cases, modules would be delivered by Peoples-uni in the usual way.<br />
-<br />
-If you wish to enrol with Enterprises University of Pretoria, should this become available for semester 18a,<br />
-please indicate that in the field below.<br />
-We will then notify you when enrolment through Enterprises University of Pretoria becomes available,<br />
-and not yet charge you for your course fees, as these would be payable to Enterprises University of Pretoria.<br />
-<br />
-In any case, you need to complete this form to indicate your choice of modules (with Enterprises University of Pretoria or Peoples-uni).
-</strong></p>
-<p><strong>Use this form to apply to do course modules. You must have already been registered in Moodle.<br />
-You need to enter the user name that you use when logging into Moodle in the form below.</strong></p>
-<p><strong>If you have not been registered in Moodle you must apply by </strong><a href="http://courses.peoples-uni.org/course/registration.php">Clicking Here</a><strong> first.</strong></p>
+'<p><strong>Please read the information in </strong><a href="https://www.peoples-uni.org/content/who-should-apply" target="_blank">Who should apply (Click Here)</a><strong> before submitting this form,<br />
+particularly see the information about </strong><a href="https://peoples-uni.org/content/course-fees-payment-options" target="_blank">Course fees (Click Here)</a></p>
+<p><strong>Use this form to apply to study any of our Masters-level modules. To apply, you must have already been registered in Moodle (our online platform).<br />
+If you have not been registered in Moodle you must apply by </strong><a href="http://courses.peoples-uni.org/course/registration.php">Clicking Here</a><strong> first.</strong></p>
+<p><strong>You need to enter the user name that you use when logging into Moodle in the form below.</strong></p>
 <p>For inquires about course enrolment or payment please send an e-mail to <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a></p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
 <p><strong>Note:</strong> You must submit your application on or before ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '.</p>
 <p><strong>You should receive an e-mail with a copy of your application when you submit this form. If you do not, it means that we cannot reach your e-mail address. In that case please send an e-mail to <a href="mailto:apply@peoples-uni.org">apply@peoples-uni.org</a></strong></p>');
-// <a href="http://www.enterprises.up.ac.za/" target="_blank">http://www.enterprises.up.ac.za/</a><br />
-// You will be able to apply there between 1-20 February, and will be charged directly by Enterprises University of Pretoria<br />
-// (and not Peoples-uni, for the above courses).<br />
-// <br />
-//Regardless of whether you are applying to Enterprises University of Pretoria, please fill in this form.<br />
 
     $customdata = $this->_customdata['customdata'];
     $semester  = $customdata['semester'];
@@ -138,15 +113,10 @@ You need to enter the user name that you use when logging into Moodle in the for
     $listforunavailable = implode(", ", $listforunavailable);
 
     $_SESSION['peoples_filling_in_application_form'] = time();
-    //$text = "Please select the first course module you are applying for from the drop down box. Note: you should not apply for 'Masters dissertation' until given permission to do so. Note: Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student. Note: you should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
-    //$text = "Please select the first course module you are applying for from the drop down box. Note: The 'Masters dissertation' is restricted to those who have passed sufficient prior modules. Note: Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student. Note: you should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.";
     $text = "Please select the first course module you are applying for from the drop down box.
-    <br /><strong>Note:</strong> The 'Masters dissertation' is restricted to those who have passed sufficient prior modules.
-    <br /><strong>Note:</strong> If you are applying for the 'Masters dissertation' module, you also need to separately submit a provisional topic for your dissertation. Please <strong><a href=\"" . $CFG->wwwroot . "/course/dissertation.php\" target=\"_blank\">Click Here on the Dissertation Topic Form</a></strong> to do this. You will find some helpful information there.
-    <br />You MUST submit this Course Application Form, but your application will not be approved if you have not also submitted a provisional topic.";
-    //<br /><strong>Note:</strong> The 'Global Mental Health' module is new and not available to students enrolled on the MMU programme.";
-    //<br /><strong>Note:</strong> Please do not apply for 'Scientific decision-making in health-care' if you are an MPH student.";
-//<br /><strong>Note:</strong> You should only apply for 'Patient Safety in Practice' if you are doing the Certificate in Patient Safety and also if you have already completed the module 'Patient Safety' which is required for the Certificate in Patient Safety.
+    <br /><strong>Note:</strong> The 'Masters dissertation' is restricted to those who have passed eight prior modules.
+    <br /><strong>Note:</strong> If you are applying for the 'Masters dissertation' module, you have to submit this form as well as a separate form indicating the provisional topic for your dissertation. Please <strong><a href=\"" . $CFG->wwwroot . "/course/dissertation.php\" target=\"_blank\">Click Here for the Dissertation Topic Form</a></strong> to do this.
+    <br />Please make sure you submit both forms as otherwise your application cannot be approved.";
     if ($count > 1) {
       //$text .= ' Note: ' . $listforunavailable . ' are not available for this semester because they are full.';
       $text .= '<br /><strong>Note:</strong> ' . $listforunavailable . ' are not available for this semester because they are full.';
@@ -161,16 +131,27 @@ You need to enter the user name that you use when logging into Moodle in the for
     $mform->addElement('static', 'explain1', '&nbsp;', $text . '<br />');
 
     $mform->addElement('select', 'course_id_2', 'Second module', $listforselect);
-    $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to do two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br /><br />');
+    $mform->addElement('static', 'explain2', '&nbsp;', 'If you want do apply to study two modules in the same semester, select the second course module here. Please realise that both modules will run at the same time and the workload may be heavy, be sure that you do have the time if you elect to take two modules in the same semester.<br /><br />');
 
     $mform->addElement('select', 'course_id_alternate', 'Alternate module', $listforselect);
-    $mform->addElement('static', 'explain3', '&nbsp;', 'If a module you want to take is full then please indicate which module is your preferred alternate choice.<br /><br />');
+    $mform->addElement('static', 'explain3', '&nbsp;', 'Occasionally, a module you selected above may be full or not currently offered; for this case, please indicate which module is your preferred alternate choice.<br /><br />');
 
     $listforselect = array();
     $listforselect[1] = 'No, continue with Peoples-uni';
     $listforselect[2] = 'Yes, I am also enrolling with Enterprises University of Pretoria';
     $mform->addElement('select', 'applyceatup', 'Are you also enrolling with Enterprises University of Pretoria?', $listforselect);
     $mform->addElement('static', 'explainapplyceatup', '&nbsp;', 'If you intend enrolling with the University of Pretoria (or already have), please indicate here<br /><br />');
+[[
+Do you want to apply for the Masters-level programme with Peoples-uni or EUCLID?
+NOTE: To apply for either of these programmes, you have to have passed two modules and not failed any after resubmissions.  The curriculum is the same.
+NOTE: Peoples-uni programme fee is 500 Sterling in total (sum of all module fees).  The EUCLID MPH costs an additional 750 Sterling for students eligible by start of semester 18b (more thereafter).
+
+Answer options:
+Peoples-uni Masters-level programme.
+EUCLID MPH programme.
+I intend to enrol on one of the Masters programmes in future.
+I don’t intend to complete a full Masters programme.
+]]
 
     $listforselect = array();
     //$listforselect[1] = 'No, continue with Peoples-uni';
@@ -221,13 +202,13 @@ You need to enter the user name that you use when logging into Moodle in the for
     $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
     $mform->setExpanded('scholorshipdetails');
 
-    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the <a href="http://peoples-uni.org/content/course-fees-payment-options" target="_blank">fees (click here)</a>, please provide details on:<br />
+//RAJAN/DICK Judith wants edit...
+    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the <a href="https://peoples-uni.org/content/course-fees-payment-options" target="_blank">fees (click here)</a>, please provide details on:<br />
 1. What is your current employment AND monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />
-5. Please note that late applications for scholarships cannot be considered after ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '.<br />
-6. Scholarships do not apply to Enterprises University of Pretoria modules.');
+5. Please note that late applications for scholarships cannot be considered after ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date'))');
     $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
 
 
