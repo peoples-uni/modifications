@@ -89,7 +89,8 @@ $certdate = $lastestdate;
 $award = '';
 $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
 $award_postfix = '';
-if (!empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2) {
+// 20180616 changed from Peoples MPH only: (!empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2)
+if (!empty($peoplesmph2->graduated)) {
   $certdate = time();
   $found = preg_match('/^Starting (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4,4})$/', $peoplesmph2->semester_graduated, $matches);
   if ($found) {
