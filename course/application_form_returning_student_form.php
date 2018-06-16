@@ -144,8 +144,11 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
 [[
 Do you want to apply for the Masters-level programme with Peoples-uni or EUCLID?
 NOTE: To apply for either of these programmes, you have to have passed two modules and not failed any after resubmissions.  The curriculum is the same.
-NOTE: Peoples-uni programme fee is 500 Sterling in total (sum of all module fees).  The EUCLID MPH costs an additional 750 Sterling for students eligible by start of semester 18b (more thereafter).
-
+NOTE: There will be fees for the EUCLID MPH award in addition to those for the Peoples-uni award.
+[[
+but I would not add anything about fees
+- other than to say that the fees for the EUCLID MPH are in addition to those for the Peoples-uni award.
+]]
 Answer options:
 Peoples-uni Masters-level programme.
 EUCLID MPH programme.
