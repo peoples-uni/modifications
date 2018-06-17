@@ -822,8 +822,8 @@ foreach ($applications as $sid => $application) {
     $applymmumphtext[5] = '<br />(Say already Peoples-uni MPH)';
     $applymmumphtext[6] = '<br />(Apply EUCLID MPH)';
     $applymmumphtext[7] = '<br />(Say already EUCLID MPH)';
-    $applymmumphtext[8] = '<br />(Say future MPH)';
-    $applymmumphtext[9] = '<br />(Say no MPH)';
+    $applymmumphtext[-8]= '<br />(Say future MPH)';
+    $applymmumphtext[-9]= '<br />(Say no MPH)';
     $z .= $applymmumphtext[$application->applymmumph];
     $take_final_assignmenttext = array(0 => '', 1 => '');
     $take_final_assignmenttext[2] = '<br />(CPD only)';
