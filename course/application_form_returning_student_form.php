@@ -139,44 +139,30 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
     $listforselect = array();
     $listforselect[1] = 'No, continue with Peoples-uni';
     $listforselect[2] = 'Yes, I am also enrolling with Enterprises University of Pretoria';
-    $mform->addElement('select', 'applyceatup', 'Are you also enrolling with Enterprises University of Pretoria?', $listforselect);
-    $mform->addElement('static', 'explainapplyceatup', '&nbsp;', 'If you intend enrolling with the University of Pretoria (or already have), please indicate here<br /><br />');
-[[
-Do you want to apply for the Masters-level programme with Peoples-uni or EUCLID?
-NOTE: To apply for either of these programmes, you have to have passed two modules and not failed any after resubmissions.  The curriculum is the same.
-NOTE: There will be fees for the EUCLID MPH award in addition to those for the Peoples-uni award.
-[[
-but I would not add anything about fees
-- other than to say that the fees for the EUCLID MPH are in addition to those for the Peoples-uni award.
-]]
-Answer options:
-Peoples-uni Masters-level programme.
-EUCLID MPH programme.
-I intend to enrol on one of the Masters programmes in future.
-I don’t intend to complete a full Masters programme.
-===
-Dick...
-Yes, students will need to have passed the P-u Masters level course
-(we can't call it a P-u MPH) before getting the EUCLID MPH.
-===
-]]
+//    $mform->addElement('select', 'applyceatup', 'Are you also enrolling with Enterprises University of Pretoria?', $listforselect);
+//    $mform->addElement('static', 'explainapplyceatup', '&nbsp;', 'If you intend enrolling with the University of Pretoria (or already have), please indicate here<br /><br />');
 
     $listforselect = array();
     //$listforselect[1] = 'No, continue with Peoples-uni';
+    //$listforselect[2] = 'Yes, apply for MMU MPH';
     //$listforselect[3] = 'I am already enrolled in MMU MPH';
     //$listforselect[4] = 'Yes, apply for Peoples-uni MPH';
     //$listforselect[5] = 'I am already enrolled in Peoples-uni MPH';
-// Judith suggested...
-//    $listforselect[4] = 'Yes, apply for Peoples-uni MPH';
-//    $listforselect[1] = 'No, continue with Peoples-uni';
-// I changed to...
     $listforselect[1] = 'No, continue with Peoples-uni';
-    $listforselect[4] = 'Yes, apply for Peoples-uni MPH';
-    $listforselect[5] = 'I am already enrolled in Peoples-uni MPH';
-    $listforselect[3] = 'I am already enrolled in MMU MPH';
-    //$listforselect[2] = 'Yes, apply for MMU MPH';
+    $listforselect[4] = 'Yes, apply for Peoples-uni Masters-level programme';
+    $listforselect[5] = 'I am already enrolled in Peoples-uni Masters-level programme';
+    $listforselect[6] = 'Yes, apply for EUCLID MPH programme';
+    $listforselect[7] = 'I am already enrolled in EUCLID MPH programme';
+    $listforselect[8] = 'I intend to enrol on one of the Masters programmes in future';
+    $listforselect[9] = 'I don\'t intend to complete a full Masters programme';
     //$listforselect[6] = 'Yes, apply for OTHER MPH';
     //$listforselect[7] = 'I am already enrolled in OTHER MPH';
+    $mform->addElement('select', 'applymmumph', 'Apply for Masters-level programme with Peoples-uni or EUCLID?', $listforselect);
+    $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%) and not failed any after resubmissions
+and wish to apply for the Masters-level programme with Peoples-uni or EUCLID, please indicate your preferences here. Note that the curriculum is the same. If you have previously applied for the Masters-level programme, please do so again, to make sure we know your intentions.<br />
+<strong>NOTE</strong>: There will be fees for the EUCLID MPH award in addition to those for the Peoples-uni award.<br />
+For more information on the criteria and rules applying to the MPH programme, please follow this link <a href="https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum" target="_blank">https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum</a><br /><br />');
+
     //20170717 removed: $mform->addElement('select', 'applymmumph', 'Apply for Peoples-uni Master of Public Health programme', $listforselect);
     //$mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
 //Please do not apply if this is your first semester.<br /><br />');
