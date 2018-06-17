@@ -369,6 +369,9 @@ class peoples_chosenmmu_filter extends peoples_select_filter {
   public function filter_entries(array $list_to_filter) {
     foreach ($list_to_filter as $index => $list_entry) {
       if (!empty($this->selectedvalue) && $this->selectedvalue !== 'Any') {
+        if ($list_entry->applymmumph == 8) $list_entry->applymmumph = -8;
+        if ($list_entry->applymmumph == 9) $list_entry->applymmumph = -9;
+
         if ($this->selectedvalue === 'No' && $list_entry->applymmumph >= 2) {
           unset($list_to_filter[$index]);
           continue;

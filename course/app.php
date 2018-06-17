@@ -840,8 +840,8 @@ $applymmumphtext['4'] = 'Wants to Apply for Peoples-uni MPH';
 $applymmumphtext['5'] = 'Says already in Peoples-uni MPH';
 $applymmumphtext['6'] = 'Wants to Apply for EUCLID MPH';
 $applymmumphtext['7'] = 'Says already in EUCLID MPH';
-$applymmumphtext['-8']= 'Says will enrol in MPH in future';
-$applymmumphtext['-9']= 'Says will not enrol in MPH in future';
+$applymmumphtext['8'] = 'Says will enrol in MPH in future';
+$applymmumphtext['9'] = 'Says will not enrol in MPH in future';
 $applymmumphtext = $applymmumphtext[$_REQUEST['applymmumph']];
 
 if (!empty($application->userid)) $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $application->userid));
