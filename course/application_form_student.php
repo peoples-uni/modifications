@@ -92,10 +92,12 @@ elseif ($data = $editform->get_data()) {
   $applymmumphtext[1] = 'No, continue with Peoples-uni';
   $applymmumphtext[2] = 'Yes, apply for MMU MPH';
   $applymmumphtext[3] = 'I am already enrolled in MMU MPH';
-  $applymmumphtext[4] = 'Yes, apply for Peoples-uni MPH';
-  $applymmumphtext[5] = 'I am already enrolled in Peoples-uni MPH';
-  $applymmumphtext[6] = 'Yes, apply for OTHER MPH';
-  $applymmumphtext[7] = 'I am already enrolled in OTHER MPH';
+  $applymmumphtext[4] = 'Yes, apply for Peoples-uni Masters-level programme';
+  $applymmumphtext[5] = 'I am already enrolled in Peoples-uni Masters-level programme';
+  $applymmumphtext[6] = 'Yes, apply for EUCLID MPH programme';
+  $applymmumphtext[7] = 'I am already enrolled in EUCLID MPH programme';
+  $applymmumphtext[8] = 'I intend to enrol on one of the Masters programmes in future';
+  $applymmumphtext[9] = 'I don\'t intend to complete a full Masters programme';
   $applymmumphtext = $applymmumphtext[$application->applymmumph];
 
   $dataitem = $data->take_final_assignment;
