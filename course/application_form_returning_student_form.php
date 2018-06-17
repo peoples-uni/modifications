@@ -154,6 +154,11 @@ Peoples-uni Masters-level programme.
 EUCLID MPH programme.
 I intend to enrol on one of the Masters programmes in future.
 I don’t intend to complete a full Masters programme.
+===
+Dick...
+Yes, students will need to have passed the P-u Masters level course
+(we can't call it a P-u MPH) before getting the EUCLID MPH.
+===
 ]]
 
     $listforselect = array();
