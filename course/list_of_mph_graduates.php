@@ -91,7 +91,7 @@ if (!empty($enrols)) {
     $rowdata[] = htmlspecialchars($enrol->semester_graduated, ENT_COMPAT, 'UTF-8');
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
-    $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
+    $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'EUCLID MPH');
     $rowdata[] = $certifying[$enrol->mphstatus];
     $type_of_pass = array(0 => '', 1 => '', 2 => 'Merit', 3 => 'Distinction');
     $rowdata[] = $type_of_pass[$enrol->graduated];

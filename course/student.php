@@ -128,9 +128,9 @@ if (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POS
   $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
 }
 if (!empty($peoplesmph2->graduated)) {
-  $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'OTHER MPH');
+  $certifying = array(0 => '', 1 => 'MMU', 2 => 'Peoples-uni', 3 => 'EUCLID');
   $type_of_pass = array(0 => '', 1 => '', 2 => '(Merit) ', 3 => '(Distinction) ');
-  echo '<br />Graduated with MPH ' . $type_of_pass[$peoplesmph2->graduated] . 'in Semester ' . $peoplesmph2->semester_graduated . ' (Certified by ' . $certifying[$peoplesmph2->mphstatus] . ')';
+  echo '<br />Graduated with Masters-Level Award ' . $type_of_pass[$peoplesmph2->graduated] . 'in Semester ' . $peoplesmph2->semester_graduated . ' (Certificate from ' . $certifying[$peoplesmph2->mphstatus] . ')';
 }
 
 $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $userid));
@@ -656,10 +656,10 @@ if ($qualification & 2) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma&nopercentage=1" target="_blank">(Same Diploma without Percent Grades)</a><br />';
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma&nomodules=1" target="_blank">(Same Diploma without List of Modules)</a><br />';
 }
-if (!empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2) {
-  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph" target="_blank">Your Peoples Open Access Educational Initiative MPH</a><br />';
-  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1" target="_blank">(MPH with List of Modules)</a><br />';
-  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1&nopercentage=1" target="_blank">(MPH with List of Modules but without Percent Grades)</a><br />';
+if (!empty($peoplesmph2->graduated) && ($peoplesmph2->mphstatus == 2 || $peoplesmph2->mphstatus == 3)) {
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph" target="_blank">Your Peoples Open Access Educational Initiative Masters-Level Award</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1" target="_blank">(Masters-Level Award with List of Modules)</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1&nopercentage=1" target="_blank">(Masters-Level Award with List of Modules but without Percent Grades)</a><br />';
 }
 
 echo '<a href="' . $CFG->wwwroot . '/course/peoplestranscript.php?userid=' . $userid . '" target="_blank">Your Peoples Open Access Educational Initiative portrait format Student Transcript</a><br />';
@@ -729,7 +729,7 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 <br /><br />
 
 <?php if (!empty($peoplesmph2)) { ?>
-<br />To mark this student as graduated with MPH, select semester (defaults to current) & type of pass below and press "Mark...".<br />
+<br />To mark this student as graduated with Masters-Level Award, select semester (defaults to current) & type of pass below and press "Mark...".<br />
 <form id="graduatedform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
 <?php
 $semesters = $DB->get_records('semesters', NULL, 'id ASC');
@@ -754,7 +754,7 @@ foreach ($semesters as $semester) {
 </select>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markgraduated" value="1" />
-<input type="submit" name="submitgraduated" value="Mark this Student as Graduated with MPH" />
+<input type="submit" name="submitgraduated" value="Mark this Student as Graduated with Masters-Level Award" />
 </form>
 <br /><br />
 <?php } ?>

@@ -337,7 +337,7 @@ if (!empty($enrols)) {
       foreach ($mph2s as $mph2) { // There is only ever one, but I am leaving code the same
         if ($mph2->mphstatus == 1) $inmph = '<br />(MMU MPH)';
         if ($mph2->mphstatus == 2) $inmph = '<br />(Peoples-uni MPH)';
-        if ($mph2->mphstatus == 3) $inmph = '<br />(OTHER MPH)';
+        if ($mph2->mphstatus == 3) $inmph = '<br />(EUCLID MPH)';
 
         if ($mph2->suspended) $inmph .= '(Suspended)';
 

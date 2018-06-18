@@ -408,7 +408,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
       $award = 'Diploma in Public Health';
     }
   }
-  elseif (($cert == 'mph') && !empty($peoplesmph2->graduated) && $peoplesmph2->mphstatus == 2) {
+  elseif (($cert == 'mph') && !empty($peoplesmph2->graduated) && ($peoplesmph2->mphstatus == 2 || $peoplesmph2->mphstatus == 3)) {
     if ($certdate > 1496275200) { // June 1st 2017
       $award = 'Masters-Level in Public Health' . $award_postfix;
     }

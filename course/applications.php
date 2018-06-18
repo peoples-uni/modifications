@@ -148,7 +148,7 @@ mphstatus (in both tables)...
 0 => Un-enrolled (in peoplesmph2, not used in peoplesmph)
 1 => MMU MPH
 2 => Peoples MPH
-3 => OTHER(to be determined) MPH
+3 => EUCLID MPH
 
 graduated...
 0 => not graduated
@@ -358,7 +358,7 @@ $listacceptedmmu[] = 'Yes';
 $listacceptedmmu[] = 'No';
 $listacceptedmmu[] = 'MMU MPH';
 $listacceptedmmu[] = 'Peoples MPH';
-$listacceptedmmu[] = 'OTHER MPH';
+$listacceptedmmu[] = 'EUCLID MPH';
 for ($year = 11; $year <= 17; $year++) {
   $listacceptedmmu[] = "Accepted {$year}a";
   $listacceptedmmu[] = "Accepted {$year}b";
@@ -891,7 +891,7 @@ foreach ($applications as $sid => $application) {
     if ($application->notepresent) $z .= '<br />(Note Present)';
     if ($application->mph && ($application->mphstatus == 1)) $z .= '<br />(MMU MPH)';
     if ($application->mph && ($application->mphstatus == 2)) $z .= '<br />(Peoples MPH)';
-    if ($application->mph && ($application->mphstatus == 3)) $z .= '<br />(OTHER MPH)';
+    if ($application->mph && ($application->mphstatus == 3)) $z .= '<br />(EUCLID MPH)';
     if ($application->ceatup) $z .= '<br />(University of Pretoria)';
     if ($application->cert_ps) $z .= '<br />(Cert PS)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
@@ -1299,7 +1299,7 @@ foreach ($applications as $sid => $application) {
 
     if     ($application->mph && ($application->mphstatus == 1)) $z = 'MMU MPH';
     elseif ($application->mph && ($application->mphstatus == 2)) $z = 'Peoples MPH';
-    elseif ($application->mph && ($application->mphstatus == 3)) $z = 'OTHER MPH';
+    elseif ($application->mph && ($application->mphstatus == 3)) $z = 'EUCLID MPH';
     else $z = '';
     $rowdata[] = $z;
 

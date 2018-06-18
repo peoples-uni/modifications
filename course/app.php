@@ -170,7 +170,7 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
     $mphstatus = (int)$_POST['mphstatus'];
     $newmph->mphstatus = $mphstatus;
     if     ($mphstatus == 1) $mphuniversity = 'MMU MPH';
-    elseif ($mphstatus == 3) $mphuniversity = 'OTHER MPH';
+    elseif ($mphstatus == 3) $mphuniversity = 'EUCLID MPH';
     else                     $mphuniversity = 'Peoples-uni MPH';
     $newmph->note = '';
     $DB->insert_record('peoplesmph', $newmph);
@@ -1995,7 +1995,7 @@ if (empty($mphstatus)) {
 <input type="hidden" name="markmph" value="1" />
 MPH&nbsp;programme:&nbsp;
 <select name="mphstatus">
-<option value="3" selected="selected">OTHER MPH</option>
+<option value="3" selected="selected">EUCLID MPH</option>
 <option value="2"                    >Peoples-uni MPH</option>
 <option value="1"                    >MMU MPH</option>
 </select>
