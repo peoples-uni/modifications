@@ -197,8 +197,7 @@ For more information on the criteria and rules applying to the Masters-level pro
     $mform->setExpanded('scholorshipdetails');
     $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the Peoples-uni fees, we may be able to assist in approved cases.<br />
 Please note that there will be a separate process for applying for the EUCLID MPH including any applications for bursaries, after graduation from the Peoples-uni programme. We will write to you at that time, and the meantime we encourage you to think about saving money for this if you want to take up this option.<br />
-Whether you want the additional EUCLID award or not, you can still study with Peoples-uni and If you cannot afford the more modest Peoples-uni fees,<br />
-then we may be able to assist in approved cases.<br />
+Whether you want the additional EUCLID award or not, you can still study with Peoples-uni and If you cannot afford the more modest Peoples-uni fees, then we may be able to assist in approved cases.<br />
 If you would like to apply for a reduction or waiver of the <a href="https://peoples-uni.org/content/course-fees-payment-options" target="_blank">fees (click here)</a>, please provide details on:<br />
 1. What is your current employment AND monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />
