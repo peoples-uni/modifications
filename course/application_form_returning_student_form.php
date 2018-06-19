@@ -160,7 +160,7 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
     $mform->addElement('select', 'applymmumph', 'Apply for Masters-level programme with Peoples-uni or EUCLID?', $listforselect);
     $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%) and not failed any after resubmissions
 and wish to apply for the Masters-level programme with Peoples-uni or EUCLID, please indicate your preferences here. Note that the curriculum is the same. If you have previously applied for the Masters-level programme, please do so again, to make sure we know your intentions.<br />
-<strong>NOTE</strong>: There will be fees for the EUCLID MPH award in addition to those for the Peoples-uni award, these will only be payable after achieving the Peoples-uni award.<br />
+<strong>NOTE</strong>: There will be fees for the EUCLID MPH award, but note that these will only be payable after achieving the Peoples-uni award.<br />
 For more information on the criteria and rules applying to the Masters-level programme, please follow this link <a href="https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum" target="_blank">https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum</a><br /><br />');
 
     //20170717 removed: $mform->addElement('select', 'applymmumph', 'Apply for Peoples-uni Master of Public Health programme', $listforselect);
@@ -195,13 +195,17 @@ For more information on the criteria and rules applying to the Masters-level pro
 
     $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
     $mform->setExpanded('scholorshipdetails');
-    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the Peoples-uni fees, we may be able to assist in approved cases. If you would like to apply for a reduction or waiver of the <a href="https://peoples-uni.org/content/course-fees-payment-options" target="_blank">fees (click here)</a>, please provide details on:<br />
+    $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the Peoples-uni fees, we may be able to assist in approved cases.<br />
+Please note that there will be a separate process for applying for the EUCLID MPH including any applications for bursaries, after graduation from the Peoples-uni programme.<br />
+We will write to you at that time, and the meantime we encourage you to think about saving money for this if you want to take up this option.<br />
+Whether you want the additional EUCLID award or not, you can still study with Peoples-uni and If you cannot afford the more modest Peoples-uni fees,<br />
+then we may be able to assist in approved cases.<br />
+If you would like to apply for a reduction or waiver of the <a href="https://peoples-uni.org/content/course-fees-payment-options" target="_blank">fees (click here)</a>, please provide details on:<br />
 1. What is your current employment AND monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />
 3. Whether you are able to pay a portion of the fees and if so how much<br />
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />
-5. Please note that late applications for scholarships cannot be considered after ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . '<br />
-6. Also note that there will be a separate process for applying for the EUCLID MPH including any applications for bursaries, after graduation from the Peoples-uni programme');
+5. Please note that late applications for scholarships cannot be considered after ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')));
     $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
 
 
