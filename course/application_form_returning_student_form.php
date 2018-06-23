@@ -148,13 +148,12 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
     //$listforselect[3] = 'I am already enrolled in MMU MPH';
     //$listforselect[4] = 'Yes, apply for Peoples-uni MPH';
     //$listforselect[5] = 'I am already enrolled in Peoples-uni MPH';
-    $listforselect[1] = 'No, continue with Peoples-uni';
+    $listforselect[1] = 'I don\'t intend to complete a full Masters programme';
+    $listforselect[8] = 'I intend to enrol on one of the Masters programmes in future';
     $listforselect[4] = 'Yes, apply for Peoples-uni Masters-level programme';
     $listforselect[5] = 'I am already enrolled in Peoples-uni Masters-level programme';
     $listforselect[6] = 'Yes, apply for EUCLID MPH programme';
     $listforselect[7] = 'I am already enrolled in EUCLID MPH programme';
-    $listforselect[8] = 'I intend to enrol on one of the Masters programmes in future';
-    $listforselect[9] = 'I don\'t intend to complete a full Masters programme';
     //$listforselect[6] = 'Yes, apply for OTHER MPH';
     //$listforselect[7] = 'I am already enrolled in OTHER MPH';
     $mform->addElement('select', 'applymmumph', 'Apply for Masters-level programme with Peoples-uni or EUCLID?', $listforselect);

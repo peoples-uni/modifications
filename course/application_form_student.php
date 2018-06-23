@@ -89,7 +89,7 @@ elseif ($data = $editform->get_data()) {
   if (empty($dataitem)) $dataitem = 0;
   $application->applymmumph = $dataitem;
   $applymmumphtext = array(0 => '', 1 => 'No', 2 => 'Yes', 3 => 'Already');
-  $applymmumphtext[1] = 'No, continue with Peoples-uni';
+  $applymmumphtext[1] = 'I don\'t intend to complete a full Masters programme';
   $applymmumphtext[2] = 'Yes, apply for MMU MPH';
   $applymmumphtext[3] = 'I am already enrolled in MMU MPH';
   $applymmumphtext[4] = 'Yes, apply for Peoples-uni Masters-level programme';
