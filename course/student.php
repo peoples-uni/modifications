@@ -124,13 +124,17 @@ $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $userid));
 if (!empty($peoplesmph2->note)) echo '<br />' . $peoplesmph2->note;
 
 if (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && !empty($_POST['graduated']) && $isteacher) {
+  $peoplesmph2->mphstatus = $_POST['mphstatus'];
   $peoplesmph2->graduated = $_POST['graduated'];
+  $peoplesmph2->entitled  = $_POST['entitled'];
   $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
 }
 if (!empty($peoplesmph2->graduated)) {
   $certifying = array(0 => '', 1 => 'MMU', 2 => 'Peoples-uni', 3 => 'EUCLID');
+  $certifying_organisation = $peoplesmph2->mphstatus;
+  if ($peoplesmph2->mphstatus == 3 && $peoplesmph2->entitled == 0) $certifying_organisation = 2; // Peoples-uni
   $type_of_pass = array(0 => '', 1 => '', 2 => '(Merit) ', 3 => '(Distinction) ');
-  echo '<br />Graduated with Masters-Level Award ' . $type_of_pass[$peoplesmph2->graduated] . 'in Semester ' . $peoplesmph2->semester_graduated . ' (Certificate from ' . $certifying[$peoplesmph2->mphstatus] . ')';
+  echo '<br />Graduated with Masters-Level Award ' . $type_of_pass[$peoplesmph2->graduated] . 'in Semester ' . $peoplesmph2->semester_graduated . ' (Certificate from ' . $certifying[$certifying_organisation] . ')';
 }
 
 $peoples_cert_ps = $DB->get_record('peoples_cert_ps', array('userid' => $userid));
@@ -388,11 +392,13 @@ elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
 	$newnote->note = dontaddslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
   $DB->insert_record('peoplesstudentnotes', $newnote);
 }
-elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && !empty($_POST['graduated']) && $isteacher) {
+elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && !empty($_POST['graduated']) && !empty($_POST['mphstatus'])) && $isteacher) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $newpeoplesmph2 = new stdClass();
   $newpeoplesmph2->id = $peoplesmph2->id;
+  $newpeoplesmph2->mphstatus = $_POST['mphstatus'];
   $newpeoplesmph2->graduated = $_POST['graduated'];
+  $newpeoplesmph2->entitled  = $_POST['entitled'];
   $newpeoplesmph2->semester_graduated = $_POST['semester_graduated'];
   $DB->update_record('peoplesmph2', $newpeoplesmph2);
 }
@@ -728,7 +734,7 @@ Dear <?php echo htmlspecialchars($userrecord->firstname, ENT_COMPAT, 'UTF-8'); ?
 </form>
 <br /><br />
 
-<?php if (!empty($peoplesmph2)) { ?>
+<?php if (!empty($peoplesmph2) && $peoplesmph2->mphstatus != 0) { ?>
 <br />To mark this student as graduated with Masters-Level Award, select semester (defaults to current) & type of pass below and press "Mark...".<br />
 <form id="graduatedform" method="post" action="<?php echo $CFG->wwwroot . '/course/student.php?id=' . $userid; ?>">
 <?php
@@ -740,6 +746,7 @@ foreach ($semesters as $semester) {
 ?>
 <select name="semester_graduated">
 <?php
+if (!empty($peoplesmph2->semester_graduated)) $latest_semester = $peoplesmph2->semester_graduated;
 foreach ($semesters as $semester) {
   if ($semester->semester == $latest_semester) $selected = 'selected="selected"';
   else $selected = '';
@@ -748,9 +755,18 @@ foreach ($semesters as $semester) {
 ?>
 </select>
 <select name="graduated">
-<option value="1" >Pass</option>
-<option value="2" >Merit</option>
-<option value="3" >Distinction</option>
+<option value="1" <?php if ($peoplesmph2->graduated == 1) echo 'selected="selected"'; ?> >Pass</option>
+<option value="2" <?php if ($peoplesmph2->graduated == 2) echo 'selected="selected"'; ?> >Merit</option>
+<option value="3" <?php if ($peoplesmph2->graduated == 3) echo 'selected="selected"'; ?> >Distinction</option>
+</select>
+<select name="mphstatus">
+<option value="1" <?php if ($peoplesmph2->mphstatus == 1) echo 'selected="selected"'; ?> >MMU</option>
+<option value="2" <?php if ($peoplesmph2->mphstatus == 2) echo 'selected="selected"'; ?> >Peoples-uni</option>
+<option value="3" <?php if ($peoplesmph2->mphstatus == 3) echo 'selected="selected"'; ?> >EUCLID</option>
+</select>
+<select name="entitled">
+<option value="0" <?php if ($peoplesmph2->entitled == 0) echo 'selected="selected"'; ?> >Not entitled to EUCLID MPH certificate</option>
+<option value="1" <?php if ($peoplesmph2->entitled == 1) echo 'selected="selected"'; ?> >Entitled to EUCLID MPH certificate (in particular have paid)</option>
 </select>
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="markgraduated" value="1" />

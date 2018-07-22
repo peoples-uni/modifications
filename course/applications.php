@@ -158,6 +158,9 @@ graduated...
 2 => Merit
 3 => Distinction
 
+entitled...
+0 => Not entitled to EUCLID MPH certificate
+1 =>     Entitled to EUCLID MPH certificate (in particular have paid)
 
 CREATE TABLE mdl_peoples_ceatup (
   id BIGINT(10) UNSIGNED NOT NULL auto_increment,
