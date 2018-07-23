@@ -271,6 +271,7 @@ Peoples-uni Payments";
   $payments->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
+  $supportuser->id = 999999998; $supportuser->username = 'none';
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
@@ -370,13 +371,25 @@ elseif (!empty($_POST['M_mph'])) {
   $currency = $peoples_mph_payment->currency;
   $name     = dontstripslashes($peoples_mph_payment->name);
   $email    = dontstripslashes($peoples_mph_payment->email);
+
+  $userid = 0;
+  $userids = $DB->get_records_sql("SELECT m.userid FROM mdl_user u JOIN mdl_peoplesmph2 m ON u.id=m.userid");
+  if (empty($userids)) {
+    $email .= ' COULD NOT FIND THIS EMAIL IN MPH STUDENTS';
+  }
+  else {
+    foreach ($userids as $uid) {
+      $userid = $uid->id;
+    }
+  }
+
   $address  = dontstripslashes($peoples_mph_payment->address);
   $country  = $peoples_mph_payment->country;
   $time     = $peoples_mph_payment->M_mph;
   $transid  = $peoples_mph_payment->datafromworldpay;
 
-  $subject = "MMU MPH Payment of $amount for $name";
-  $message = "MMU MPH Payment via RBS WorldPay
+  $subject = "MPH Payment of $amount for $name";
+  $message = "MPH Payment via RBS WorldPay
 
 Name   : $name
 Amount : $amount $currency
@@ -396,6 +409,7 @@ Peoples-uni Payments";
   $payments->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
+  $supportuser->id = 999999998; $supportuser->username = 'none';
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
@@ -408,6 +422,19 @@ Peoples-uni Payments";
   $payments->email = 'payments@peoples-uni.org';
   //$payments->email = 'alanabarrett0@gmail.com';
   $ret = email_to_user($payments, $supportuser, $subject, $message);
+
+  if (!empty($userid)) {
+    $balance = get_balance($userid);
+
+    $peoples_student_balance = new stdClass();
+    $peoples_student_balance->userid = $userid;
+    $peoples_student_balance->amount_delta = -$amount;
+    $peoples_student_balance->balance = $balance + $peoples_student_balance->amount_delta;
+    $peoples_student_balance->currency = 'GBP';
+    $peoples_student_balance->detail = "WorldPay $updated->datafromworldpay";
+    $peoples_student_balance->date = time();
+    $DB->insert_record('peoples_student_balance', $peoples_student_balance);
+  }
 }
 // Could generate output for user, but we will use default behaviour (probably our uploaded file)
 
@@ -432,6 +459,7 @@ function email_error_to_payments($subject, $post) {
   $payments->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
+  $supportuser->id = 999999998; $supportuser->username = 'none';
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
@@ -478,6 +506,7 @@ function email_donation($peoplesdonation) {
   $payments->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
+  $supportuser->id = 999999998; $supportuser->username = 'none';
   $supportuser->email = 'payments@peoples-uni.org';
   $supportuser->firstname = 'Peoples-uni Payments';
   $supportuser->lastname = '';
