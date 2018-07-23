@@ -438,7 +438,7 @@ Peoples-uni Payments";
     $peoples_student_balance->amount_delta = -$amount;
     $peoples_student_balance->balance = $balance + $peoples_student_balance->amount_delta;
     $peoples_student_balance->currency = 'GBP';
-    $peoples_student_balance->detail = "WorldPay $peoples_mph_payment->datafromworldpay";
+    $peoples_student_balance->detail = "WorldPay $transid";
     $peoples_student_balance->date = time();
     $DB->insert_record('peoples_student_balance', $peoples_student_balance);
   }
