@@ -11,6 +11,8 @@ $test = false;
 
 
 require('../config.php');
+$PAGE->set_context(context_system::instance());
+
 require_once($CFG->dirroot .'/course/lib.php');
 
 
@@ -373,13 +375,18 @@ elseif (!empty($_POST['M_mph'])) {
   $email    = dontstripslashes($peoples_mph_payment->email);
 
   $userid = 0;
-  $userids = $DB->get_records_sql("SELECT m.userid FROM mdl_user u JOIN mdl_peoplesmph2 m ON u.id=m.userid");
+  $userids = $DB->get_records_sql("
+    SELECT m.userid
+    FROM mdl_user u
+    JOIN mdl_peoplesmph2 m ON u.id=m.userid
+    WHERE email=:email",
+    array('email' => $email));
   if (empty($userids)) {
     $email .= ' COULD NOT FIND THIS EMAIL IN MPH STUDENTS';
   }
   else {
     foreach ($userids as $uid) {
-      $userid = $uid->id;
+      $userid = $uid->userid;
     }
   }
 
@@ -431,7 +438,7 @@ Peoples-uni Payments";
     $peoples_student_balance->amount_delta = -$amount;
     $peoples_student_balance->balance = $balance + $peoples_student_balance->amount_delta;
     $peoples_student_balance->currency = 'GBP';
-    $peoples_student_balance->detail = "WorldPay $updated->datafromworldpay";
+    $peoples_student_balance->detail = "WorldPay $peoples_mph_payment->datafromworldpay";
     $peoples_student_balance->date = time();
     $DB->insert_record('peoples_student_balance', $peoples_student_balance);
   }
