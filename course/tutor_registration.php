@@ -208,6 +208,7 @@ function sendapprovedmail($email, $subject, $message) {
   $user->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
+  $supportuser->id = 999999998; $supportuser->username = 'none';
   $supportuser->email = 'volunteer@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
@@ -239,6 +240,7 @@ function sendapprovedmail_from_applicant($email, $application, $subject, $messag
   $user->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
+  $supportuser->id = 999999998; $supportuser->username = 'none';
   $supportuser->email = $application->email;
   $supportuser->firstname = $application->firstname;
   $supportuser->lastname = $application->lastname;

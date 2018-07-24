@@ -149,6 +149,7 @@ function sendapprovedmail($email, $subject, $message) {
   $user->mnethostid = $CFG->mnet_localhost_id;
 
   $supportuser = new stdClass();
+  $supportuser->id = 999999998; $supportuser->username = 'none';
   $supportuser->email = 'education@helpdesk.peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';

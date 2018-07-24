@@ -387,6 +387,7 @@ TECHSUPPORT_EMAIL_HERE";
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();
   //$supportuser->email = 'techsupport@helpdesk.peoples-uni.org';
+  $supportuser->id = 999999998; $supportuser->username = 'none';
   $supportuser->email = 'volunteer@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
