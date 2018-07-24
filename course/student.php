@@ -392,7 +392,7 @@ elseif (!empty($_POST['note']) && !empty($_POST['markaddnote']) && $isteacher) {
 	$newnote->note = dontaddslashes(str_replace("\r", '', str_replace("\n", '<br />', htmlspecialchars(dontstripslashes($_POST['note']), ENT_COMPAT, 'UTF-8'))));
   $DB->insert_record('peoplesstudentnotes', $newnote);
 }
-elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && !empty($_POST['graduated']) && !empty($_POST['mphstatus'])) && $isteacher) {
+elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POST['markgraduated']) && !empty($_POST['graduated']) && !empty($_POST['mphstatus']) && $isteacher) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $newpeoplesmph2 = new stdClass();
   $newpeoplesmph2->id = $peoplesmph2->id;
