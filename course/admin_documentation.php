@@ -1572,7 +1572,7 @@ the institution
 and click the button.<br />
 Only set "Entitled to EUCLID MPH certificate" if they have paid for this or been given a complete bursary.<br />
 Note that "Mark this Student as Graduated with Masters-Level Award" can be used subsequently to change a student from say "Peoples-uni" to "EUCLID" (and should be if appropriate). The Semester, type of pass etc. will not be changed unless you change them in this form.<br />
-A list of those Graduates who may be eligible for EUCLID MPH is in <a href="http://courses.peoples-uni.org/course/EUCLID.php" target="_blank">Graduates who may be eligible for EUCLID MPH</a> as noted above.<br />
+A list of those Graduates who may be eligible for EUCLID MPH is in <a href="http://courses.peoples-uni.org/course/EUCLID.php" target="_blank">Graduates who may be eligible for EUCLID MPH</a>.<br />
 The columns in this include "Certifying Institution", "How much Owed" and "Marked as paid for EUCLID".<br />
 These can be used to determine if a student expects a EUCLID certificate, if they have paid for it and if they have been confirmed as paid "Marked as paid for EUCLID" in "Student Grades".<br />
 If "Marked as paid for EUCLID" is set they are due a EUCLID certificate. If the certifying institution is "EUCLID", and they owe nothing, "Marked as paid for EUCLID" should be set using "Mark this Student as Graduated with Masters-Level Award" in "Student Grades".<br />
