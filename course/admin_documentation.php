@@ -1472,6 +1472,7 @@ After this there are links to the...<br />
 <a href="http://courses.peoples-uni.org/course/successbyqualifications.php" target="_blank">Success by Qualifications Report</a><br />
 <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">Discussion Feedback to Students</a><br />
 <a href="http://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">List of MPH Graduates</a><br />
+<a href="http://courses.peoples-uni.org/course/EUCLID.php" target="_blank">Graduates who may be eligible for EUCLID MPH</a><br />
 </li>
 <li>
 At the bottom of the page, there are two forms to send e-mails to all the above students (those that are selected by the filters). The two sets of default wording are set in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>.<br />

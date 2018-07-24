@@ -530,6 +530,9 @@ echo '<br />';
 echo '<a href="' . $CFG->wwwroot . '/course/discussionfeedbacks.php" target="_blank">Click here to see Discussion Feedback to Students</a>';
 echo '<br />';
 echo '<a href="' . $CFG->wwwroot . '/course/list_of_mph_graduates.php" target="_blank">Click here to see a List of MPH Graduates</a>';
+echo '<br />';
+echo '<a href="' . $CFG->wwwroot . '/course/EUCLID.php" target="_blank">Click here to see a List of Graduates who may be eligible for EUCLID MPH</a>';
+
 
 echo '<br /><br /><br /><br />';
 
