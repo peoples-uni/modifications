@@ -1575,7 +1575,7 @@ Note that "Mark this Student as Graduated with Masters-Level Award" can be used 
 A list of those Graduates who may be eligible for EUCLID MPH is in <a href="http://courses.peoples-uni.org/course/EUCLID.php" target="_blank">Graduates who may be eligible for EUCLID MPH</a> as noted above.<br />
 The columns in this include "Certifying Institution", "How much Owed" and "Marked as paid for EUCLID".<br />
 These can be used to determine if a student expects a EUCLID certificate, if they have paid for it and if they have been confirmed as paid "Marked as paid for EUCLID" in "Student Grades".<br />
-If the latter is set they are due a EUCLID certificate. If the certifying institution is "EUCLID", and they owe nothing, "Marked as paid for EUCLID" should be set.<br />
+If the latter is set they are due a EUCLID certificate. If the certifying institution is "EUCLID", and they owe nothing, "Marked as paid for EUCLID" should be set using "Mark this Student as Graduated with Masters-Level Award".<br />
 Note that a graduated student who wants a "EUCLID" certificate should have the amount owed in "Update Payment Amounts, Method or Confirmed Status"/payconfirm.php.<br />
 They should pay (by card) using <a href="http://courses.peoples-uni.org/course/paymph.php" target="_blank">http://courses.peoples-uni.org/course/paymph.php</a> which accepts variable amounts and which will cause the student account to be automatically updated if used.<br />
 The student should enter the same email they use in Moodle so they can be matched when updating their account.<br />
