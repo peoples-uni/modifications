@@ -51,8 +51,8 @@ $table->head = array(
   'Semester Graduated',
   'Family name',
   'Given name',
-  'Certifying Institution',
-  'How much Owed',
+  'Certifying Institution (click for Student Grades)',
+  'How much Owed (click for payconfirm.php)',
   'Marked as paid for EUCLID',
   'Type of pass',
   'Country',
@@ -67,16 +67,32 @@ if (!empty($enrols)) {
 	foreach ($enrols as $enrol) {
     $rowdata = array();
     $rowdata[] = htmlspecialchars($enrol->semester_graduated, ENT_COMPAT, 'UTF-8');
+
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->lastname, ENT_COMPAT, 'UTF-8') . '</a>';
+
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
+
     $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'EUCLID MPH');
-    $rowdata[] = $certifying[$enrol->mphstatus];
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">' . $certifying[$enrol->mphstatus] . '</a>';
+
     $balance = get_balance($enrol->userid);
-    $rowdata[] = $balance;
+    $application = $DB->get_record_sql("
+      SELECT * FROM mdl_peoplesapplication
+      WHERE (state=19 OR state=26 OR state=11 OR state=25 OR state=27 OR state=9 OR state=10 OR state=17) AND userid=?
+      ORDER BY datesubmitted DESC",
+      array($enrol->userid), IGNORE_MULTIPLE);
+    $sid = 0;
+    if (!empty($application)) {
+      $sid = $application->sid;
+    }
+    $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $sid . '" target="_blank">' . $balance . '</a>';
+
     $type_of_entitled = array(0 => '', 1 => 'Yes');
     $rowdata[] = $type_of_entitled[$enrol->entitled];
+
     $type_of_pass = array(0 => '', 1 => '', 2 => 'Merit', 3 => 'Distinction');
     $rowdata[] = $type_of_pass[$enrol->graduated];
+
     $rowdata[] = htmlspecialchars($countryname[$enrol->country], ENT_COMPAT, 'UTF-8');
 
     $listofemails[]  = htmlspecialchars($enrol->email, ENT_COMPAT, 'UTF-8');
