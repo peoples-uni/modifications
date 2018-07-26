@@ -275,6 +275,12 @@ $h += 45;
 cert_printtext($signatureleft, $h, 'L', 'Helvetica', '', 10, utf8_decode('Chair of the Trustees, Professor Rajan Madhok'));
 $h += 5;
 print_signature($certificate->printsignature2, $orientation, $signatureleft, $h, '59', '31');
+$h += 45;
+
+if (!empty($peoplesmph2->entitled) && $peoplesmph2->entitled == 1) {
+  cert_printtext($signatureleft, $h, 'L', 'Helvetica', '', 10, utf8_decode('In partnership with'));
+  print_signature('euclidlogo-120.png', $orientation, $signatureleft + 100, $h, '90', '30');
+}
 
 
 $filesafe = clean_filename($certificate->name.'.pdf');
