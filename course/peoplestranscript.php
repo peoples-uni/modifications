@@ -279,8 +279,8 @@ $h += 45;
 
 $h = 710;
 if (!empty($peoplesmph2->entitled) && $peoplesmph2->entitled == 1) {
-  cert_printtext($signatureleft + 200, $h + 30, 'L', 'Helvetica', '', 10, utf8_decode('In partnership with'));
-  print_signature('euclidlogo-120.png', $orientation, $signatureleft + 300, $h, '210', '70');
+  cert_printtext($signatureleft + 180, $h + 30, 'L', 'Helvetica', '', 10, utf8_decode('In partnership with'));
+  print_signature('euclidlogo-120.png', $orientation, $signatureleft + 280, $h, '210', '70');
 }
 
 
