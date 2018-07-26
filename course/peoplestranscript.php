@@ -278,8 +278,8 @@ print_signature($certificate->printsignature2, $orientation, $signatureleft, $h,
 $h += 45;
 
 if (!empty($peoplesmph2->entitled) && $peoplesmph2->entitled == 1) {
-  cert_printtext($signatureleft, $h, 'L', 'Helvetica', '', 10, utf8_decode('In partnership with'));
-  print_signature('euclidlogo-120.png', $orientation, $signatureleft + 100, $h, '90', '30');
+  cert_printtext($signatureleft + 200, $h + 15, 'L', 'Helvetica', '', 10, utf8_decode('In partnership with'.$h));
+  print_signature('euclidlogo-120.png', $orientation, $signatureleft + 400, $h, '180', '60');
 }
 
 
