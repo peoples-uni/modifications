@@ -214,9 +214,9 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
       $subject = 'Peoples-uni MPH Programme Application Approved';
       $body = "Dear $user->firstname,
 
-Your application to the MPH Programme with Peoples-uni has been approved.
+Your application to join the MPH Programme has been approved.
 Please ensure you are familiar with the academic award criteria and regulations at this link:
-http://www.peoples-uni.org/node/232
+http://www.peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum
 
 We hope you enjoy studying with us and wish you every success.
 
