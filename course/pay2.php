@@ -101,7 +101,7 @@ if ($test) {
 	$testresult = $name;		// will be AUTHORISED
 }
 else {
-	$payurl = 'https://select.worldpay.com/wcc/purchase';
+  $payurl = 'https://secure.worldpay.com/wcc/purchase';
 }
 
 echo '<div align="center">';
@@ -175,7 +175,7 @@ foreach ($countryname as $key => $countryvalue) {
 <br /><br />
 
 <?php
-//<script language="JavaScript" src="https://select.worldpay.com/wcc/logo?instId=XXXXX"></script>
+//<script language="JavaScript" src="https://secure.worldpay.com/wcc/logo?instId=XXXXX"></script>
 ?>
 
 <img src=https://www.worldpay.com/cgenerator/logos/visa.gif border=0 alt="Visa Credit payments supported by WorldPay">

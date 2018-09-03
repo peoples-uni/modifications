@@ -44,7 +44,7 @@ if ($test) {
 	$payurl = 'https://select-test.worldpay.com/wcc/purchase';
 }
 else {
-	$payurl = 'https://select.worldpay.com/wcc/purchase';
+  $payurl = 'https://secure.worldpay.com/wcc/purchase';
 }
 
 echo '<div align="center">';
