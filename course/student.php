@@ -127,7 +127,7 @@ if (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POS
   $peoplesmph2->mphstatus = $_POST['mphstatus'];
   $peoplesmph2->graduated = $_POST['graduated'];
   $peoplesmph2->entitled  = $_POST['entitled'];
-  $peoplesmph2->will_pay  = $_POST['will_pay'];
+  $peoplesmph2->will_pay  = $_POST['willpay'];
   $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
 }
 if (!empty($peoplesmph2->graduated)) {
@@ -400,8 +400,8 @@ elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($
   $newpeoplesmph2->mphstatus = $_POST['mphstatus'];
   $newpeoplesmph2->graduated = $_POST['graduated'];
   $newpeoplesmph2->entitled  = $_POST['entitled'];
-  $newpeoplesmph2->will_pay  = $_POST['will_pay'];
-error_log("_POST['will_pay']: " . $_POST['will_pay']);
+  $newpeoplesmph2->will_pay  = $_POST['willpay'];
+error_log("_POST['willpay']: " . $_POST['willpay']);
   $newpeoplesmph2->semester_graduated = $_POST['semester_graduated'];
   $DB->update_record('peoplesmph2', $newpeoplesmph2);
 }
@@ -767,7 +767,7 @@ foreach ($semesters as $semester) {
 <option value="2" <?php if ($peoplesmph2->mphstatus == 2) echo 'selected="selected"'; ?> >Peoples-uni</option>
 <option value="3" <?php if ($peoplesmph2->mphstatus == 3) echo 'selected="selected"'; ?> >EUCLID</option>
 </select>
-<select name="will_pay">
+<select name="willpay">
 <option value="0" <?php if ($peoplesmph2->will_pay == 0) echo 'selected="selected"'; ?> >Will not pay for EUCLID MPH certificate</option>
 <option value="1" <?php if ($peoplesmph2->will_pay == 1) echo 'selected="selected"'; ?> >Will pay or get full Scholarship for EUCLID</option>
 </select>
