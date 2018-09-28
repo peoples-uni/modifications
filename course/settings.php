@@ -211,6 +211,7 @@ if (!empty($_POST['marksetfph']) && !empty($_POST['fph'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $fph = $_POST['fph'];
   set_config('foundations_public_health_id', $fph); // This id is now used for "Academic skills course for new students"
+  set_config('peoples_student_support_id',   $fph); // Actually is used (contrary to comment below), set it in parallel
 }
 if (!empty($_POST['marksetssc']) && !empty($_POST['ssc'])) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
