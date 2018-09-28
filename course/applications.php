@@ -135,7 +135,7 @@ CREATE TABLE mdl_peoplesmph2 (
   graduated BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   suspended BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   entitled  BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  will_pay  BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  willpay   BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   semester_graduated VARCHAR(255) NOT NULL DEFAULT '',
   note text default '' NOT NULL,
 CONSTRAINT PRIMARY KEY (id)
@@ -146,7 +146,7 @@ ALTER TABLE mdl_peoplesmph2 ADD graduated BIGINT(10) UNSIGNED NOT NULL DEFAULT 0
 ALTER TABLE mdl_peoplesmph2 ADD semester_graduated VARCHAR(255) NOT NULL DEFAULT '' AFTER graduated;
 ALTER TABLE mdl_peoplesmph2 ADD suspended BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER graduated;
 ALTER TABLE mdl_peoplesmph2 ADD entitled  BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER suspended;
-ALTER TABLE mdl_peoplesmph2 ADD will_pay  BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER entitled;
+ALTER TABLE mdl_peoplesmph2 ADD willpay   BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER entitled;
 
 mphstatus (in both tables)...
 0 => Un-enrolled (in peoplesmph2, not used in peoplesmph)
@@ -164,7 +164,7 @@ entitled...
 0 => Not entitled to EUCLID MPH certificate
 1 =>     Entitled to EUCLID MPH certificate (in particular have paid)
 
-will_pay...
+willpay...
 0 => Not signed-up to pay
 1 => Will pay or get full Scholarship for EUCLID MPH certificate
 

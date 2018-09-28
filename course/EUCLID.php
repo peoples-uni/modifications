@@ -40,7 +40,7 @@ if (!empty($prof->id)) $genderid = $prof->id;
 
 
 $enrols = $DB->get_records_sql("
-SELECT m.id, m.semester_graduated, m.mphstatus, m.graduated, m.entitled, m.will_pay, u.id as userid, u.lastname, u.firstname, u.email, u.country
+SELECT m.id, m.semester_graduated, m.mphstatus, m.graduated, m.entitled, m.willpay, u.id as userid, u.lastname, u.firstname, u.email, u.country
 FROM mdl_peoplesmph2 m, mdl_user u
 WHERE m.userid=u.id AND m.graduated!=0 AND m.mphstatus>1
 ORDER BY STR_TO_DATE(SUBSTRING(m.semester_graduated, 10), '%M %Y') ASC, u.lastname ASC, u.firstname ASC
@@ -89,7 +89,7 @@ if (!empty($enrols)) {
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $sid . '" target="_blank">' . $balance . '</a>';
 
     $type_of_entitled = array(0 => '', 1 => 'Yes');
-    $rowdata[] = $type_of_entitled[$enrol->will_pay];
+    $rowdata[] = $type_of_entitled[$enrol->willpay];
 
     $type_of_entitled = array(0 => '', 1 => 'Yes');
     $rowdata[] = $type_of_entitled[$enrol->entitled];
