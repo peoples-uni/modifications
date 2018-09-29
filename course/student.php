@@ -403,6 +403,7 @@ elseif (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($
   $newpeoplesmph2->willpay  = $_POST['willpay'];
 error_log("_POST['willpay']: " . $_POST['willpay']);
   $newpeoplesmph2->semester_graduated = $_POST['semester_graduated'];
+error_log(print_r($newpeoplesmph2, true));
   $DB->update_record('peoplesmph2', $newpeoplesmph2);
 }
 
