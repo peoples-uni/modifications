@@ -64,6 +64,19 @@ $peoples_filters->add_filter($peoples_mph_dissertation_filter);
 $peoples_applied_scholarship_in_semester_filter = new peoples_applied_scholarship_in_semester_filter('Only Show those who applied for Scholarship in Semester', 'onlyscholarship', $peoples_chosensemester_filter->get_filter_setting());
 $peoples_filters->add_filter($peoples_applied_scholarship_in_semester_filter);
 
+$studentsupportforumsnames = $DB->get_records('forum', array('course' => get_config(NULL, 'peoples_student_support_id')));
+$listssf = array();
+$listssf[] = 'All';
+foreach ($studentsupportforumsnames as $studentsupportforumsname) {
+  $pos = stripos($studentsupportforumsname->name, 'Student Support Group');
+  if ($pos === 0) {
+    $listssf[] = htmlspecialchars($studentsupportforumsname->name, ENT_COMPAT, 'UTF-8');
+  }
+}
+natsort($listssf);
+$peoples_chosenssf_filter = new peoples_select_filter('Students from this SSF only', 'chosenssf', $listssf, 'All');
+$peoples_filters->add_filter($peoples_chosenssf_filter);
+
 $peoples_displayforexcel_filter = new peoples_boolean_filter('Display for Copying and Pasting to Excel', 'displayforexcel');
 $peoples_filters->add_filter($peoples_displayforexcel_filter);
 
@@ -71,6 +84,7 @@ $chosensemester = $peoples_chosensemester_filter->get_filter_setting();
 $exclude_non_submitters = $peoples_exclude_non_submitters_filter->get_filter_setting();
 $last_education_committee = $peoples_date_filter->get_filter_setting();
 $diploma_setting = $peoples_diploma_filter->get_filter_setting();
+$chosenssf = $peoples_chosenssf_filter->get_filter_setting();
 $displayforexcel = $peoples_displayforexcel_filter->get_filter_setting();
 
 
@@ -115,6 +129,10 @@ if (!$displayforexcel) $peoples_filters->show_filters();
 $semester = $DB->get_record('semesters', array('semester' => $chosensemester));
 $semester_id = $semester->id;
 
+if ($chosenssf != 'All') {
+  $forum = $DB->get_record('forum', array('course' => get_config(NULL, 'peoples_student_support_id'), 'name' => $chosenssf));
+  $forum_id = $forum->id;
+}
 
 $idnumbers = $DB->get_records_sql("
   SELECT
