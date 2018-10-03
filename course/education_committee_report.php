@@ -131,7 +131,20 @@ $semester_id = $semester->id;
 
 if ($chosenssf != 'All') {
   $forum = $DB->get_record('forum', array('course' => get_config(NULL, 'peoples_student_support_id'), 'name' => $chosenssf));
-  $forum_id = $forum->id;
+  $users_in_forum = $DB->get_records_sql("
+    SELECT
+      fs.userid
+    FROM
+      mdl_forum_subscriptions fs
+    WHERE
+      fs.forum=?
+    ", array($forum->id));
+  $users_to_include_for_chosenssf = array();
+  if (!empty($users_in_forum)) {
+    foreach ($users_in_forum as $user_in_forum) {
+      $users_to_include_for_chosenssf[$user_in_forum->userid] = $user_in_forum->userid;
+    }
+  }
 }
 
 $idnumbers = $DB->get_records_sql("
