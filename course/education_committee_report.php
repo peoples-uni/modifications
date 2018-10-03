@@ -337,6 +337,8 @@ $table->head[] = 'Recommendations';
 
 $n = 0;
 foreach ($userdatas as $index => $userdata) {
+  if ($chosenssf != 'All' && !in_array($userdata->id, $users_to_include_for_chosenssf)) continue;
+
   $qualification = '';
   $passes_notified_or_not = 0;
 
