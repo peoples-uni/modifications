@@ -137,7 +137,18 @@ if ($chosenssf != 'All') {
     FROM
       mdl_forum_subscriptions fs
     WHERE
-      fs.forum=?
+      fs.forum=? AND
+      fs.userid NOT IN (
+        SELECT ra.userid
+        FROM
+          mdl_role_assignments ra,
+          mdl_role r,
+          mdl_context con
+        WHERE
+          ra.roleid=r.id AND
+          ra.contextid=con.id AND
+          r.shortname IN ('sso') AND
+          con.contextlevel=50)
     ", array($forum->id));
   $users_to_include_for_chosenssf = array();
   if (!empty($users_in_forum)) {
