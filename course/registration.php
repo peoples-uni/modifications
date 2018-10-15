@@ -64,7 +64,7 @@ $PAGE->set_url('/course/registration.php');
 
 $editform = new registration_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
-  redirect(new moodle_url('http://peoples-uni.org'));
+  redirect(new moodle_url('https://peoples-uni.org'));
 }
 elseif ($data = $editform->get_data()) {
 
@@ -206,6 +206,7 @@ elseif ($data = $editform->get_data()) {
   $peoples_register_ack_email = strip_tags($peoples_register_ack_email);
   $peoples_register_ack_email = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $peoples_register_ack_email); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                                                                // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $peoples_register_ack_email = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $peoples_register_ack_email);
   $message = $peoples_register_ack_email;
 
   $message .= "\n\n";

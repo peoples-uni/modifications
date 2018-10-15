@@ -56,7 +56,7 @@ $PAGE->set_url('/course/tutor_registration.php');
 
 $editform = new tutor_registration_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
-  redirect(new moodle_url('http://peoples-uni.org'));
+  redirect(new moodle_url('https://peoples-uni.org'));
 }
 elseif ($data = $editform->get_data()) {
 

@@ -109,7 +109,7 @@ else {
 
   $editform = new survey_form(NULL, array('customdata' => array()));
   if ($editform->is_cancelled()) {
-    redirect(new moodle_url('http://peoples-uni.org'));
+    redirect(new moodle_url('https://peoples-uni.org'));
   }
   elseif ($survey = $editform->get_data()) {
 
