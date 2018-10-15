@@ -355,10 +355,10 @@ line at the top of your web browser window.
 
 Be aware that you should use this link to login and
 NOT the main Peoples-uni site (which has a completely
-different login): http://peoples-uni.org
+different login): https://peoples-uni.org
 
 Your profile is at:
-http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
+https://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
 You are welcome to personalize this, so students
 and colleagues can learn more about you.
 
@@ -383,6 +383,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $message = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $message);
 
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();
