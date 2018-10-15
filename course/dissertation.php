@@ -50,7 +50,7 @@ if (empty($fullname) || trim($fullname) == 'Guest User') {
 
 $editform = new dissertation_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
-  redirect(new moodle_url('http://peoples-uni.org'));
+  redirect(new moodle_url('https://peoples-uni.org'));
 }
 elseif ($data = $editform->get_data()) {
 
@@ -105,16 +105,16 @@ elseif ($data = $editform->get_data()) {
   $message .= "by looking at the Dissertation section on the Students Corner.\n";
   $message .= "\n";
   $message .= "The Epidemiology:\n";
-  $message .= "http://courses.peoples-uni.org/mod/url/view.php?id=11948\n";
+  $message .= "https://courses.peoples-uni.org/mod/url/view.php?id=11948\n";
   $message .= "\n";
   $message .= "Evidence-based practice:\n";
-  $message .= "http://courses.peoples-uni.org/mod/url/view.php?id=11949\n";
+  $message .= "https://courses.peoples-uni.org/mod/url/view.php?id=11949\n";
   $message .= "\n";
   $message .= "General public health:\n";
   $message .= "http://ssc.bibalex.org/classification/list.jsf?aid=F749A4C0BC3130E62DF0AF5E593F2979\n";
   $message .= "\n";
   $message .= "and Biostatistics resources:\n";
-  $message .= "http://courses.peoples-uni.org/pluginfile.php/20079/mod_resource/content/1/Basics%20of%20Biostatistics.pdf\n";
+  $message .= "https://courses.peoples-uni.org/pluginfile.php/20079/mod_resource/content/1/Basics%20of%20Biostatistics.pdf\n";
   $message .= "\n";
   $message .= "are all very helpful and you are more likely to be successful with your\n";
   $message .= "dissertation if you spend time studying these resources.\n";

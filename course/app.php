@@ -216,7 +216,7 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
 
 Your application to join the MPH Programme has been approved.
 Please ensure you are familiar with the academic award criteria and regulations at this link:
-http://www.peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum
+https://www.peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum
 
 We hope you enjoy studying with us and wish you every success.
 
@@ -928,7 +928,7 @@ same time and will involve a heavy workload - please be sure you do have the tim
     $peoples_approval_email = str_replace('COURSE_MODULE_2_WARNING_TEXT_HERE', '', $peoples_approval_email);
   }
   if ($instalments_allowed && empty($payment_schedule)) {
-    $peoples_approval_email = str_replace('NOTE_ON_INSTALMENTS_HERE', "If you wish to pay by instalments, you may select your preferences at http://courses.peoples-uni.org/course/specify_instalments.php (you will need to log in).", $peoples_approval_email);
+    $peoples_approval_email = str_replace('NOTE_ON_INSTALMENTS_HERE', "If you wish to pay by instalments, you may select your preferences at https://courses.peoples-uni.org/course/specify_instalments.php (you will need to log in).", $peoples_approval_email);
   }
   else {
     $peoples_approval_email = str_replace('NOTE_ON_INSTALMENTS_HERE', "", $peoples_approval_email);

@@ -136,6 +136,7 @@ if (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'])) 
 	$body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+$body = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $body);
 
 	$subject = 'Peoples-Uni Application Approved';
 
@@ -159,6 +160,7 @@ elseif (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
 	$body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $body = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $body);
 
 	$subject = 'Peoples-Uni Application';
 
@@ -715,11 +717,11 @@ line at the top of your web browser window.
 
 Be aware that you should use this link to login and
 NOT the main Peoples-uni site (which has a completely
-different login): http://peoples-uni.org
+different login): https://peoples-uni.org
 
 You should also read the student handbook at:
 
-http://peoples-uni.org/content/student-handbook
+https://peoples-uni.org/content/student-handbook
 
 You will receive separate e-mails, each with a link to one of
 your selected course modules. Please access these and familiarise
@@ -729,12 +731,12 @@ You will also be sent a welcome message when the course actually starts.
 
 Additionally, you have been enrolled in the Students Corner:
 
-http://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
+https://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
 
 which is available for student chat.
 
 Your profile is at:
-http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
+https://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
 
 Note that the private information in this is not visible to other students.
 
@@ -756,6 +758,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $message = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $message);
 
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();
@@ -784,7 +787,7 @@ function sendstudentscorner($user) { // Not used as this is now done on registra
 
 You have been enrolled in the Students Corner for this semester:
 
-http://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
+https://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
 
 which is available for student chat.
 
@@ -805,6 +808,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $message = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $message);
 
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();
@@ -833,7 +837,7 @@ function sendstudentsupportforums($user) { // Not used as this is now done on re
 
 You have been enrolled in the Student Support Forums module:
 
-http://courses.peoples-uni.org/course/view.php?id=STUDENT_SUPPORT_ID_HERE
+https://courses.peoples-uni.org/course/view.php?id=STUDENT_SUPPORT_ID_HERE
 
 This is in addition to the modules which you are going to study and the Students Corner.
 
@@ -858,6 +862,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $message = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $message);
 
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();
