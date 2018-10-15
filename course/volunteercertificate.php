@@ -35,11 +35,11 @@ $certificate->printseal = 'Logo.png';
 $certificate->printseal = 'tapestry_logo.jpg';
 $certificate->printseal = '';
 
-$url_to_display = 'http://peoples-uni.org';
+$url_to_display = 'https://peoples-uni.org';
 $name_to_display = 'Coordinator, Professor Richard Heller';
 
 if ($volunteercertificate->wikitox_certificate) {
-  $url_to_display = 'http://wikitox.peoples-uni.org';
+  $url_to_display = 'https://wikitox.peoples-uni.org';
   $name_to_display = 'Professor Andrew H Dawson';
   $certificate->printsignature1 = 'dawsonsignature.jpg';
   $certificate->printsignature2 = '';

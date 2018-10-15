@@ -15,7 +15,7 @@ $PAGE->set_url('/course/application_form_returning_student.php');
 
 $editform = new application_form_returning_student_form(NULL, array('customdata' => array()));
 if ($editform->is_cancelled()) {
-  redirect(new moodle_url('http://peoples-uni.org'));
+  redirect(new moodle_url('https://peoples-uni.org'));
 }
 elseif ($data = $editform->get_data()) {
 

@@ -152,7 +152,7 @@ if (!empty($dissertations)) {
     if (!$displayforexcel) {
       $rowdata[] = '<a name="' .  $dissertation->id . '"></a>' . gmdate('d/m/Y H:i', $dissertation->datesubmitted);
 
-      $a  = '<form id="dissertationsemester' . $dissertation->id . '" class="dissertationsemesterform" method="post" action="http://courses.peoples-uni.org/SHOULDNOTBEHERE.php">';
+      $a  = '<form id="dissertationsemester' . $dissertation->id . '" class="dissertationsemesterform" method="post" action="https://courses.peoples-uni.org/SHOULDNOTBEHERE.php">';
       $a .= '  <input type="hidden" class="dissertationsemesterinput" name="dissertationid" value="' . $dissertation->id . '" />';
       $a .= '  <input type="hidden" class="dissertationsemesterinput" name="sesskey" value="' . $USER->sesskey . '" />';
 
@@ -217,7 +217,7 @@ echo 'e-mails of Above Students...<br />' . implode(', ', array_unique($listofem
 ?>
 <script type="text/javascript">
 //<![CDATA[
-M.yui.add_module({"dissertation_semester":{"name":"dissertation_semester","fullpath":"http:\/\/courses.peoples-uni.org\/course\/dissertation_semester.js","requires":["node","event","overlay","io-base","json"]}});
+M.yui.add_module({"dissertation_semester":{"name":"dissertation_semester","fullpath":"https:\/\/courses.peoples-uni.org\/course\/dissertation_semester.js","requires":["node","event","overlay","io-base","json"]}});
 
 YUI().use('dissertation_semester', function(Y) { M.dissertation_semester.init(Y); });
 

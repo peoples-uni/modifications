@@ -66,7 +66,7 @@ if ($course_id) {
   $editform = new ratingresponse_form($PAGE->url, array('data' => $data, 'customdata' => array('course_id' => $course_id)));
 
   if ($editform->is_cancelled()) {
-    redirect(new moodle_url('http://courses.peoples-uni.org'));
+    redirect(new moodle_url('https://courses.peoples-uni.org'));
   }
   elseif ($data = $editform->get_data()) {
 
@@ -193,7 +193,7 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
     $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $discussionfeedback->what_do_differently_when_prepare_post));
   }
   else {
-    $linktoform = '<a href="http://courses.peoples-uni.org/course/ratingresponse.php?course_id=' . $discussionfeedback->course_id . '">Click here to add your reflections</a>';
+    $linktoform = '<a href="https://courses.peoples-uni.org/course/ratingresponse.php?course_id=' . $discussionfeedback->course_id . '">Click here to add your reflections</a>';
     $rowdata[] = $linktoform;
     $rowdata[] = $linktoform;
     $rowdata[] = $linktoform;
@@ -203,7 +203,7 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
 }
 echo html_writer::table($table);
 
-echo '<br /><a href="http://courses.peoples-uni.org/">Click here to return to Moodle</a>';
+echo '<br /><a href="https://courses.peoples-uni.org/">Click here to return to Moodle</a>';
 
 
 echo $OUTPUT->footer();

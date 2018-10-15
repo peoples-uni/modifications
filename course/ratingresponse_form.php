@@ -28,7 +28,7 @@ class ratingresponse_form extends moodleform {
     $student_ratingresponse = $DB->get_record('student_ratingresponse', array('userid' => $USER->id, 'course_id' => $course_id));
 
     if (!empty($student_ratingresponse)) $already_submitted = '<p><strong>You have just now (or previously) submitted this form (see your reflections below the form), but you may submit again if you wish.</strong><br />
-    <a href="http://courses.peoples-uni.org/">Click here to return to Moodle</a></p><br />';
+    <a href="https://courses.peoples-uni.org/">Click here to return to Moodle</a></p><br />';
     else  $already_submitted = '';
 
     $mform->addElement('static', 'instuctions', '',
@@ -36,7 +36,7 @@ class ratingresponse_form extends moodleform {
       '<p><strong>Module: ' . htmlspecialchars($course->fullname, ENT_COMPAT, 'UTF-8') . '</strong></p><br />
       <p>This form is used to allow you to reflect on what you need to do to improve your discussion forum contributions in this module and how you will do that.</p>
       <p>Below this form you can see past ratings on your discussion contributions by Student Support Officers for all modules along with any reflections on these ratings that you have previously submitted.</p>
-      <p>Guidelines for discussion forum contributions are in <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a></p>
+      <p>Guidelines for discussion forum contributions are in <a href="https://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a></p>
       <p><strong>Note:</strong> The data in this form will not be visible to other students.</p>
       <p><strong>Note:</strong> You must complete all fields marked with a red <span style="color:#ff0000">*</span>.</p>
       ');
