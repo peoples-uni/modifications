@@ -36,7 +36,7 @@ class application_form_returning_student_form extends moodleform {
 '<p><strong>Please read the information in </strong><a href="https://www.peoples-uni.org/content/who-should-apply" target="_blank">Who should apply (Click Here)</a><strong> before submitting this form,<br />
 particularly see the information about </strong><a href="https://peoples-uni.org/content/course-fees-payment-options" target="_blank">Course fees (Click Here)</a></p>
 <p><strong>Use this form to apply to study any of our Masters-level modules. To apply, you must have already been registered in Moodle (our online platform).<br />
-If you have not been registered in Moodle you must apply by </strong><a href="http://courses.peoples-uni.org/course/registration.php">Clicking Here</a><strong> first.</strong></p>
+If you have not been registered in Moodle you must apply by </strong><a href="https://courses.peoples-uni.org/course/registration.php">Clicking Here</a><strong> first.</strong></p>
 <p><strong>You need to enter the user name that you use when logging into Moodle in the form below.</strong></p>
 <p>For inquires about course enrolment or payment please send an e-mail to <a href="mailto:apply@peoples-uni.org?subject=Registration or payment query">apply@peoples-uni.org</a></p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <span style="color:#ff0000">*</span>.</p>
@@ -163,9 +163,9 @@ and wish to apply for the Masters-level programme with Peoples-uni or EUCLID, pl
 For more information on the criteria and rules applying to the Masters-level programme, please follow this link <a href="https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum" target="_blank">https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum</a><br /><br />');
 
     //20170717 removed: $mform->addElement('select', 'applymmumph', 'Apply for Peoples-uni Master of Public Health programme', $listforselect);
-    //$mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="http://www.peoples-uni.org/book/course-fees" target="_blank">http://www.peoples-uni.org/book/course-fees</a>)?<br />
+    //$mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="https://www.peoples-uni.org/book/course-fees" target="_blank">https://www.peoples-uni.org/book/course-fees</a>)?<br />
 //Please do not apply if this is your first semester.<br /><br />');
-    //20170717 removed: $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%), and would like to study for a Master of Public Health (MPH) or Diploma with Peoples-uni, please indicate that you want to apply for the MPH programme. If you have previously applied for the Peoples-uni MPH programme, please do so again, to make sure we know your intentions. For more information on the criteria and rules applying to the MPH programme, please follow this link <a href="http://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a><br /><br />');
+    //20170717 removed: $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%), and would like to study for a Master of Public Health (MPH) or Diploma with Peoples-uni, please indicate that you want to apply for the MPH programme. If you have previously applied for the Peoples-uni MPH programme, please do so again, to make sure we know your intentions. For more information on the criteria and rules applying to the MPH programme, please follow this link <a href="https://www.peoples-uni.org/node/232" target="_blank">http://www.peoples-uni.org/node/232</a><br /><br />');
 
     $listforselect = array();
     $listforselect[1] = 'Yes, I intend to submit the final assignment for each module';
@@ -180,7 +180,7 @@ For more information on the criteria and rules applying to the Masters-level pro
 //    $listforselect[2] = 'Yes';
 //    $listforselect[3] = 'I am already enrolled in the Certificate in Patient Safety';
 //    $mform->addElement('select', 'applycertpatientsafety', 'Apply for Certificate in Patient Safety', $listforselect);
-//    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Certificate in Patient Safety (see <a href="http://www.peoples-uni.org/node/281" target="_blank">http://www.peoples-uni.org/node/281</a>)?<br />
+//    $mform->addElement('static', 'explainapplycertpatientsafety', '&nbsp;', 'Do you want to apply for enrolment in the Certificate in Patient Safety (see <a href="https://www.peoples-uni.org/node/281" target="_blank">https://www.peoples-uni.org/node/281</a>)?<br />
 //For this certificate you will need to complete the Evidence Based Practice, Patient Safety & Patient Safety in Practice modules.<br />');
 
     $mform->addElement('header', 'personaldetails', 'Your Existing Moodle User Name');

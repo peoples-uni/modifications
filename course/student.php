@@ -152,6 +152,7 @@ if (!empty($_POST['mailtext']) && !empty($_POST['markemailstudent'])) {
 
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $body = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $body);
 
 	$subject = 'Peoples-Uni Information';
 
