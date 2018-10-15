@@ -61,7 +61,7 @@ if ($code != 28595 && $code != 69315 && $code != 48223) {
   die();
 }
 
-echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>';
+echo '<p>(Our legal registration details: <a href="https://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">https://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>';
 
 echo "<p>Enter the amount you wish to donate (minimum 25 UK Pounds Sterling) and your contact information (if you wish) and then click the button below to make your donation with RBS WorldPay.</p>";
 
@@ -150,7 +150,7 @@ Allow Peoples-uni to display your name (but no other details) on our website as 
 <img src=https://www.worldpay.com/cgenerator/logos/maestro.gif border=0 alt="Maestro payments supported by RBS WorldPay">
 <img src=https://www.worldpay.com/cgenerator/logos/jcb.gif border=0 alt="JCB">
 <img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by RBS WorldPay">
-<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By RBS WorldPay"></a>
+<a href=https://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By RBS WorldPay"></a>
 
 </div>
 

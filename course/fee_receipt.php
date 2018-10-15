@@ -30,7 +30,7 @@ $certificate->printsignature1 = 'Alice_Chimuzu_Signature.jpg';
 $certificate->logo = 'PeopleUniOrg_Logo.jpg';
 $certificate->printseal = '';
 
-$url_to_display = 'http://peoples-uni.org';
+$url_to_display = 'https://peoples-uni.org';
 $name_to_display = 'Coordinator, Professor Richard Heller';
 
 $certificatedate = '';
