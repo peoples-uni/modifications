@@ -113,7 +113,7 @@ else {
 echo '<div align="center">';
 
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
-echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>';
+echo '<p>(Our legal registration details: <a href="https://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">https://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>';
 
 if ($amount == $original_amount) {
   echo "<p><br /><br /><b>Cost for your chosen modules (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
@@ -130,7 +130,7 @@ else {
   $modulespurchasedlong = "Next unpaid instalment for the Master of Public Health programme";
 }
 
-echo '<p>(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy" target="_blank">http://www.peoples-uni.org/content/refund-policy</a>)</p>';
+echo '<p>(note our refund policy: <a href="https://www.peoples-uni.org/content/refund-policy" target="_blank">https://www.peoples-uni.org/content/refund-policy</a>)</p>';
 
 echo '<p>Your contact details...<br />';
 echo "Name: $name<br />";
@@ -138,7 +138,7 @@ echo "e-mail: $email<br />";
 echo "Address: $address2<br />";
 $country2 = $countryname[$country];
 echo "Country: $country2<br />";
-echo 'If these do not match the credit card you are going to use then please click <a href="http://courses.peoples-uni.org/course/pay2.php?sid=' . $sid . '">HERE</a> to go to a different screen which will allow you to enter the correct details for your credit card and then make a payment.<br /></p>'
+echo 'If these do not match the credit card you are going to use then please click <a href="https://courses.peoples-uni.org/course/pay2.php?sid=' . $sid . '">HERE</a> to go to a different screen which will allow you to enter the correct details for your credit card and then make a payment.<br /></p>'
 
 ?>
 <form action="<?php echo $payurl; ?>" method="post">
@@ -200,11 +200,11 @@ else {
 <img src=https://www.worldpay.com/cgenerator/logos/ELV.gif border=0 alt="ELV payments supported by WorldPay">
 <?php } ?>
 <?php if (true) { ?>
-<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
+<a href=https://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 <?php } ?>
 <?php if (false) { ?>
 // Security Certificate Errors...
-<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.rbsworldpay.com/images/cardlogos/poweredByRBSWorldPay.gif border=0 alt="Powered By WorldPay"></a>
+<a href=https://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.rbsworldpay.com/images/cardlogos/poweredByRBSWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 <?php } ?>
 
 </div>

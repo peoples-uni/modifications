@@ -65,6 +65,7 @@ if (!empty($_POST['defertext']) && !empty($_POST['markdeferapplication'])) {
   $body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $body = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $body);
 
   $subject = 'Peoples-Uni Registration';
 
@@ -119,6 +120,7 @@ elseif (!empty($_POST['approvedtext']) && !empty($_POST['markapproveapplication'
   $body = strip_tags($body);
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $body = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $body);
 
   $subject = 'Peoples-Uni Registration Approved';
 
@@ -404,14 +406,14 @@ line at the top of your web browser window.
 
 Be aware that you should use this link to login and
 NOT the main Peoples-uni site (which has a completely
-different login): http://peoples-uni.org
+different login): https://peoples-uni.org
 
 You should also read the student handbook at:
 
-http://peoples-uni.org/content/student-handbook
+https://peoples-uni.org/content/student-handbook
 
 Your profile is at:
-http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
+https://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
 
 Note that the private information in this is not visible to other students.
 
@@ -433,6 +435,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $message = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $message);
 
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();
@@ -461,7 +464,7 @@ function sendstudentscorner($user) {
 
 You have been enrolled in the Students Corner for this semester:
 
-http://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
+https://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
 
 which is available for student chat.
 
@@ -482,6 +485,7 @@ TECHSUPPORT_EMAIL_HERE";
 
   $message = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $message); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                          // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $message = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $message);
 
   //$supportuser = generate_email_supportuser();
   $supportuser = new stdClass();

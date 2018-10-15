@@ -31,7 +31,7 @@ else {
 echo '<div align="center">';
 
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
-echo '<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p><br />';
+echo '<p>(Our legal registration details: <a href="https://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">https://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p><br />';
 
 echo '<p><b>You should only pay if you have been notified by the course convenor that you have been accepted to the WikiTox course.</b></p>';
 
@@ -143,7 +143,7 @@ if ($test) {
 <img src=https://www.worldpay.com/cgenerator/logos/maestro.gif border=0 alt="Maestro payments supported by RBS WorldPay">
 <img src=https://www.worldpay.com/cgenerator/logos/jcb.gif border=0 alt="JCB">
 <img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by RBS WorldPay">
-<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By RBS WorldPay"></a>
+<a href=https://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 
 </div>
 
