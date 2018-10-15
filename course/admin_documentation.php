@@ -35,82 +35,82 @@ echo $OUTPUT->header();
 <ul>
 <b>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#configurationreg">Configuration of Registrations Process</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#configurationreg">Configuration of Registrations Process</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#dealingwithregistrations">Dealing with Registrations</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#dealingwithregistrations">Dealing with Registrations</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#theregdetailsbutton">The "Details" button and the Registration Process</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#theregdetailsbutton">The "Details" button and the Registration Process</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#configuration">Configuration of Applications Process for a new Semester</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#configuration">Configuration of Applications Process for a new Semester</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#dealingwithapplications">Dealing with Applications</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#dealingwithapplications">Dealing with Applications</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">The "Details" button and the Approval Process</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">The "Details" button and the Approval Process</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tutorregistration">Registering Tutors in Moodle</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#tutorregistration">Registering Tutors in Moodle</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracksubmissions">Tracking Student Assignment Submissions</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#tracksubmissions">Tracking Student Assignment Submissions</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#informing">Informing Students of Semester Final Grade Results</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#informing">Informing Students of Semester Final Grade Results</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#prior">Accreditation of Prior Learnings</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#prior">Accreditation of Prior Learnings</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#education_committee_report">Education Committee Report</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#education_committee_report">Education Committee Report</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#statistics">Statistics on Success of Students by Qualifications on Entry</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#statistics">Statistics on Success of Students by Qualifications on Entry</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#creatingcertificates">Creating Certificates for Peoples-uni Volunteers</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#creatingcertificates">Creating Certificates for Peoples-uni Volunteers</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts for Student Payments</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts for Student Payments</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#paymentterms">What a Student sees before they make a Payment via WorldPay</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#paymentterms">What a Student sees before they make a Payment via WorldPay</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a><br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#resetstudentcornersubscriptions">Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back (not required anymore)</a><br /><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#resetstudentcornersubscriptions">Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back (not required anymore)</a><br /><br />
 </li>
 </b>
 </ul>
@@ -120,23 +120,23 @@ echo $OUTPUT->header();
 <h2>Configuration of Registrations Process</h2>
 <ol>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on application forms but also as an approximate guideline on registration forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on application forms but also as an approximate guideline on registration forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
 <br />This setting needs to be kept up to date. When applications are closed for a semester, it needs to be set to refer to the next semester.
 </li>
 <!--
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Foundations of Public Health demonstration module that will be used for student registrations and then click "Make this Module the Foundations of Public Health Module for new Student Registrants:" (no need to do this if it has not changed).
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Foundations of Public Health demonstration module that will be used for student registrations and then click "Make this Module the Foundations of Public Health Module for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 -->
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Academic skills course module that will be used for student registrations and then click "Make this Module the Academic skills course for new Student Registrants:" (no need to do this if it has not changed).
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Academic skills course module that will be used for student registrations and then click "Make this Module the Academic skills course for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Students Corner module that will be used for student registrations and then click "Make this Module the Students Corner for new Student Registrants:" (no need to do this if it has not changed).
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Students Corner module that will be used for student registrations and then click "Make this Module the Students Corner for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 <!--
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forums module that will be used for student registrations and then click "Make this Module the Student Support Forums Module for new Student Registrants:" (no need to do this if it has not changed).
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forums module that will be used for student registrations and then click "Make this Module the Student Support Forums Module for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 <li>
 The above three settings will, from 2014a on, normally point to the same module, this is not a problem.
@@ -145,9 +145,9 @@ The above three settings will, from 2014a on, normally point to the same module,
 Note that the names of forums used for Student Support by the Student Support Officers must all start with text exactly the same as this "Student Support Group" (can be followed by anything else desired). This is because this text is used to limit the forums selectable in various filters.
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forum that will be used for student registrations and then click "Make this Forum the Student Support Forum for new Student Registrants:"
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forum that will be used for student registrations and then click "Make this Forum the Student Support Forum for new Student Registrants:"
 <br />Normally 50 students are assigned to each Student Support Forum. When a forum is full, a new one will need to be manually created and an SSO assigned. This setting then needs to be changed so that newly registered students will be assigned to this new forum as part of the automatic process of registering new students.
-<br />The current practice is wait for 50 students to be waiting to be registered before registering all 50 at once. To help with this, a count of those students not registered (disregarding duplicate e-mails and e-mails already in Moodle) is displayed in <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>.
+<br />The current practice is wait for 50 students to be waiting to be registered before registering all 50 at once. To help with this, a count of those students not registered (disregarding duplicate e-mails and e-mails already in Moodle) is displayed in <a href="https://courses.peoples-uni.org/course/registrations.php" target="_blank">https://courses.peoples-uni.org/course/registrations.php</a>.
 <br />This may overestimate the number waiting because of historical registrations what were bypassed.
 </li>
 -->
@@ -155,12 +155,12 @@ In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">
 Note that the names of forums used for Student Support by the Student Support Officers must all start with text exactly the same as this "Student Support Forum" (can be followed by anything else desired).
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forum (in the Academic skills course) that will be used for student registrations and then click "Make this Forum the Student Support Forum in Academic skills course for new Student Registrants:"
-<br />The current practice is wait for 50 students to be waiting to be registered before registering all 50 at once. To help with this, a count of those students not registered (disregarding duplicate e-mails and e-mails already in Moodle) is displayed in <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>.
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Student Support Forum (in the Academic skills course) that will be used for student registrations and then click "Make this Forum the Student Support Forum in Academic skills course for new Student Registrants:"
+<br />The current practice is wait for 50 students to be waiting to be registered before registering all 50 at once. To help with this, a count of those students not registered (disregarding duplicate e-mails and e-mails already in Moodle) is displayed in <a href="https://courses.peoples-uni.org/course/registrations.php" target="_blank">https://courses.peoples-uni.org/course/registrations.php</a>.
 <br />This may overestimate the number waiting because of historical registrations what were bypassed.
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the Auto Acknowledgement e-mail wording for the Registration Form and then click "Set the above text as the Auto Acknowledgement e-mail wording for the Registration Form (form also echoed)". Here is a sample of previous wording...
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> edit the Auto Acknowledgement e-mail wording for the Registration Form and then click "Set the above text as the Auto Acknowledgement e-mail wording for the Registration Form (form also echoed)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
@@ -181,7 +181,7 @@ In preparation for this you can do the following:
 
 1. Read the Are you Ready materials on the website and check that
 you are prepared to study:
-http://www.peoples-uni.org/content/are-you-ready-peoples-uni
+https://www.peoples-uni.org/content/are-you-ready-peoples-uni
 
 2. Think about your study plan and when you will study -
 You will need to make sure you can log on and read the discussions a
@@ -189,11 +189,11 @@ minimum of once per week, but to get the best out of the forums we
 expect you to read and respond to others forum posts every few days.
 
 3. *Read the student handbook*:
-http://www.peoples-uni.org/content/student-handbook
+https://www.peoples-uni.org/content/student-handbook
 
 4. You may want to complete our open access Foundations in Public
 Health module (not obligatory) - you can access this online at:
-http://courses.peoples-uni.org/course/view.php?id=308
+https://courses.peoples-uni.org/course/view.php?id=308
 
 There are lots of resources for you to read, which will help you
 learn key public health terms. This module is self directed learning
@@ -217,7 +217,7 @@ to follow our students and tutors learning journeys.
 </pre>
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording and then click "Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)". Here is a sample of previous wording...
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording and then click "Set the above text as the Register Student e-mail wording (in Registration Details/reg.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
@@ -245,12 +245,12 @@ studying your Peoples-uni modules.
 
 Your student support forum, of which the introductory email will
 explain more, is here:
-http://courses.peoples-uni.org/mod/forum/view.php?f=FORUM_HERE
+https://courses.peoples-uni.org/mod/forum/view.php?f=FORUM_HERE
 
 To help you prepare for the Academic skills module, please
 
 1.*Read the student handbook*:
-http://www.peoples-uni.org/content/student-handbook
+https://www.peoples-uni.org/content/student-handbook
 
 You now have access to moodle and so you can learn how to do the following
 tasks by reading the handbook:
@@ -264,7 +264,7 @@ work.
 2. Look at the study resources on Students corner. You may also want 
 to look at the student2student discussion forums where students can 
 chat and share experiences:
-http://courses.peoples-uni.org/course/view.php?id=SC_ID_HERE
+https://courses.peoples-uni.org/course/view.php?id=SC_ID_HERE
 You can look around at the different resources we have:
 • News forum on main page - this is for sending messages between all
 students in Peoples-uni (there are over 400 students).  So, please use this
@@ -279,7 +279,7 @@ and critical appraisal.
 appraisal and more study resources
 
 3. Complete the Are you ready Quiz :
-http://www.peoples-uni.org/content/are-you-ready-peoples-uni
+https://www.peoples-uni.org/content/are-you-ready-peoples-uni
 
 
 Note:
@@ -300,14 +300,14 @@ journeys. ( https://www.linkedin.com/company/people%27s-open-access-initiative)
 </pre>
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording for Pretoria and then click "Set the above text as the Register Student (Pretoria) e-mail wording (in Registration Details/reg.php)".<br />
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> edit the default Registration e-mail wording for Pretoria and then click "Set the above text as the Register Student (Pretoria) e-mail wording (in Registration Details/reg.php)".<br />
 This wording should be similar to above, but will probably be simpler.
 </li>
 <li>
-<strong>Note:</strong> <a href="http://courses.peoples-uni.org/course/registration_manual.php" target="_blank">http://courses.peoples-uni.org/course/registration_manual.php</a> can be used by Peoples-uni staff to register students, particularly from Enterprises University of Pretoria. This is useful because there are a lot less required fields.
+<strong>Note:</strong> <a href="https://courses.peoples-uni.org/course/registration_manual.php" target="_blank">https://courses.peoples-uni.org/course/registration_manual.php</a> can be used by Peoples-uni staff to register students, particularly from Enterprises University of Pretoria. This is useful because there are a lot less required fields.
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default batch reminder e-mail wording and then click "Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)". Here is an (unfinished) sample of previous wording...
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> edit the default batch reminder e-mail wording and then click "Set above text as Batch Reminder e-mail wording (in registrations.php spreadsheet)". Here is an (unfinished) sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
@@ -319,7 +319,7 @@ We look forward to seeing you on the course soon.
 </pre>
 </li>
 <li>
-Note there are two Drupal menu items which now are left permanently enabled and are used for new Registrations and for Course Applications respectively: "Registration form for new students" and "Course Application Form" (<a href="http://courses.peoples-uni.org/course/registration.php" target="_blank">http://courses.peoples-uni.org/course/registration.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>).<br />
+Note there are two Drupal menu items which now are left permanently enabled and are used for new Registrations and for Course Applications respectively: "Registration form for new students" and "Course Application Form" (<a href="https://courses.peoples-uni.org/course/registration.php" target="_blank">https://courses.peoples-uni.org/course/registration.php</a> & <a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>).<br />
 Note also, that if applications are closed the second of these will indicate this along with approximate dates when Applications will open (from "Last Allowed Date" setting above).
 </li>
 </ol>
@@ -329,7 +329,7 @@ Note also, that if applications are closed the second of these will indicate thi
 <h2>Dealing with Registrations</h2>
 <ol>
 <li>
-Go to <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a>. You can see a list of potential and existing registrants.
+Go to <a href="https://courses.peoples-uni.org/course/registrations.php" target="_blank">https://courses.peoples-uni.org/course/registrations.php</a>. You can see a list of potential and existing registrants.
 </li>
 <li>
 It is possible to filter the registrations by registration status, by date and by name or email. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
@@ -356,11 +356,11 @@ E-mails of all the students in the spreadsheet (i.e. after any filters have been
 It is also possible to programmatically send a reminder or other e-mail to all of the students in the spreadsheet (i.e. after any filters have been applied) by using the form at the end of the page (instuctions for the form are given there).
 </li>
 <li>
-Access to <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+Access to <a href="https://courses.peoples-uni.org/course/registrations.php" target="_blank">https://courses.peoples-uni.org/course/registrations.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 <li>
 At a later stage, when students edit their own profile (e.g. their names, e-mail or address) or when an administrator edits a student profile (e.g. date of birth), the registrations.php data (or for that matter the applications.php data to be described later) will be out of date and will not reflect the updated data in Moodle.<br />
-To bring both registrations.php and applications.php up to date with the Moodle student profiles click on/visit <a href="http://courses.peoples-uni.org/course/copy_moodle_student_data_to_registrations_applications.php" target="_blank">http://courses.peoples-uni.org/course/copy_moodle_student_data_to_registrations_applications.php</a><br />
+To bring both registrations.php and applications.php up to date with the Moodle student profiles click on/visit <a href="https://courses.peoples-uni.org/course/copy_moodle_student_data_to_registrations_applications.php" target="_blank">https://courses.peoples-uni.org/course/copy_moodle_student_data_to_registrations_applications.php</a><br />
 This will copy over all the student profile data from Moodle (but not for any deleted accounts) and give an indication of how many student profiles were processed.
 <br />
 Access to this function is only available to the "Administrator" role.
@@ -375,7 +375,7 @@ Access to this function is only available to the "Administrator" role.
 When the "Details" button is pressed for an registration application, additional applicant data is displayed beyond what is in the "spreadsheet" row.
 </li>
 "Register Student" is a button which allows the registration application to be approved. The user is sent the e-mail outlined above under <a href="#configurationreg">"Configuration of Registrations Process"</a>.<br />
-The "Registered?" entry in <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a> and "Details" will indicate "Yes" as opposed to "No".<br />
+The "Registered?" entry in <a href="https://courses.peoples-uni.org/course/registrations.php" target="_blank">https://courses.peoples-uni.org/course/registrations.php</a> and "Details" will indicate "Yes" as opposed to "No".<br />
 The following e-mail will ALSO be sent from techsupport@peoples-uni.org:<br />
 <pre>
 Hi FULL_NAME_HERE,
@@ -396,14 +396,14 @@ line at the top of your web browser window.
 
 Be aware that you should use this link to login and
 NOT the main Peoples-uni site (which has a completely
-different login): http://peoples-uni.org
+different login): https://peoples-uni.org
 
 You should also read the student handbook at:
 
-http://peoples-uni.org/content/student-handbook
+https://peoples-uni.org/content/student-handbook
 
 Your profile is at:
-http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
+https://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
 
 Note that the private information in this is not visible to other students.
 
@@ -429,7 +429,7 @@ TECHSUPPORT_EMAIL_HERE
 <li>
 "Allow this Student to make a Late Course Application (choose how long...)" allows the Student to make a late application for courses. The deadline can be specified. The deadline is always set to 3:00 am GMT early in the morning of the day after the day specified.<br />
 It will only be possible to set a late application deadline if the Student is already registered (and therefore has a Moodle account) as they have to login to get the benefit of the late registration (so we know who they are).<br />
-In particular they should be told to go to this URL <a href="http://courses.peoples-uni.org/course/apply.php" target="_blank">http://courses.peoples-uni.org/course/apply.php</a> in order to make a late application as this will force them to login first.<br />
+In particular they should be told to go to this URL <a href="https://courses.peoples-uni.org/course/apply.php" target="_blank">https://courses.peoples-uni.org/course/apply.php</a> in order to make a late application as this will force them to login first.<br />
 The student will be able to apply for any course module that has been specified in settings.php. If they apply for courses that we do not wish them to apply for, we can change them to suitable modules in the applications.php "Details" page.
 </li>
 <li>
@@ -458,34 +458,34 @@ The 'Course ID number'(Course Code) for the new modules must have the EXACT SAME
 If the course is in a different language (such as French) you should add an additional code to the 'Course ID number', [F] for French, [S] for Spanish etc. So examples would be "PUPHC10a[F]" or "PUPHC10a[S]".
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> lists (the base part of) all valid Peoples-uni agreed Course Codes (Course ID numbers) for "Foundation Sciences" and "Public Health Problems".<br />
-If new modules are added for which there was no equivalent for previous semesters then <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> indicates if there is a module without a 'Course ID number'(Course Code) and requests that you fix that.<br />
+<a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> lists (the base part of) all valid Peoples-uni agreed Course Codes (Course ID numbers) for "Foundation Sciences" and "Public Health Problems".<br />
+If new modules are added for which there was no equivalent for previous semesters then <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> indicates if there is a module without a 'Course ID number'(Course Code) and requests that you fix that.<br />
 Or if the 'Course ID number'(Course Code) does not match a Peoples-uni agreed Course Code it indicates that you should either assign a suitable one or allows you to enter a new Peoples-uni agreed Course Code (base part only) in either the "Foundation Sciences" or "Public Health Problems" groupings.<br />
 These groupings are used for Diploma awarding purposes.
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> "Check to completely Remove from Forms" should be set for all the old courses from the previous semester and "Mark Modules as Full or to be Removed based on Check Boxes Above" clicked.
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> "Check to completely Remove from Forms" should be set for all the old courses from the previous semester and "Mark Modules as Full or to be Removed based on Check Boxes Above" clicked.
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter a New Semester name like "Starting September 2009" and click "Set Current Semester to:".
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> enter a New Semester name like "Starting September 2009" and click "Set Current Semester to:".
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on application forms but also as an approximate guideline on registration forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> enter the Last Allowed Date for Applications (which is displayed on application forms but also as an approximate guideline on registration forms) and click "Set Last Allowed Date (display only, not enforced) for Applications to:".
 <br />This setting needs to be kept up to date. When applications are closed for a semester, it needs to be set to refer to the next semester.
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> each new module has to be individually added by selecting the new module from the selection list (making sure it is the correct version of the module for the new semester). This selection is beside the "Add this Module to above Active Module list for Applications:" button. When an individual module is selected then click "Add this Module to above Active Module list for Applications:", repeat this until the full set of modules for the new semester is listed.<br />
-NOTE: once any module is added (which is not then immediately marked as full... see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a>), application forms will be opened for students!
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> each new module has to be individually added by selecting the new module from the selection list (making sure it is the correct version of the module for the new semester). This selection is beside the "Add this Module to above Active Module list for Applications:" button. When an individual module is selected then click "Add this Module to above Active Module list for Applications:", repeat this until the full set of modules for the new semester is listed.<br />
+NOTE: once any module is added (which is not then immediately marked as full... see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#closing">Closing Applications for a Semester</a>), application forms will be opened for students!
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> each
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> each
 Enterprises University of Pretoria module (cumulative for each semester) needs to be added using "Add this Module to Above List of Enterprises University of Pretoria Courses:". This is so students will not be charged for those modules. They can be removed with "Remove this Module from Above List of Enterprises University of Pretoria Courses:".
 </li>
 <li>
-You can confirm that the application form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed.
+You can confirm that the application form has changed by looking at it (<a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed.
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the wording to be included at the top of the Acknowledgement e-mail sent upon Course Application form Submission by the student. This should have the correct dates. Then click "Set the text to be included at top of Acknowledgement e-mail sent upon Course Application form Submission". Here is a sample of previous wording...
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> edit the wording to be included at the top of the Acknowledgement e-mail sent upon Course Application form Submission by the student. This should have the correct dates. Then click "Set the text to be included at top of Acknowledgement e-mail sent upon Course Application form Submission". Here is a sample of previous wording...
 <br /><pre>
 Thank you for your application.
 
@@ -499,7 +499,7 @@ Orientation week begins on March 16th.
 </pre>
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording for dates and banking and then click "Set the above text as the Students Approval e-mail wording (in Application Details/app.php)". Here is a sample of previous wording...
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording for dates and banking and then click "Set the above text as the Students Approval e-mail wording (in Application Details/app.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
@@ -514,7 +514,7 @@ We will send you all these details on the first day of the course
 orientation week September 17th 2012.
 
 Please see the course timetable at:
-http://www.peoples-uni.org/book/course-dates
+https://www.peoples-uni.org/book/course-dates
 
 *** Payment will be required unless you have been approved for a bursary.
 If you can do this before enrolment on 17th of September, it would be
@@ -527,7 +527,7 @@ There are a number of ways you can pay.
 
 WITH A CREDIT CARD... You can pay via the secure online
 payment system RBS WorldPay. Please click on the following URL:
-http://courses.peoples-uni.org/course/pay.php?sid=SID_HERE
+https://courses.peoples-uni.org/course/pay.php?sid=SID_HERE
 
 and follow instructions (Everything happens automatically,
 there is no need to tell us about your payment).
@@ -547,7 +547,7 @@ Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
 When you have made the Bank Transfer you must then click on this
 web site (URL):
-http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+https://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
 and fill in the form so we know about your payment.
 
@@ -560,7 +560,7 @@ Account number: 0122270018
 Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
 When you have made the Bank Transfer you must then click on this web site (URL):
-http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+https://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
 and fill in the form so we know about your payment.
 
@@ -585,7 +585,7 @@ These should be of the sender, if not sent by you.
 
 You can look at your payment account balance and all transactions
 at any time when logged in at this URL:
-http://courses.peoples-uni.org/course/account.php
+https://courses.peoples-uni.org/course/account.php
 
 NOTE_ON_INSTALMENTS_HERE
 
@@ -596,10 +596,10 @@ you enjoy the experience and find it useful.
 </pre>
 </li>
 <li>
-Similarly in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
+Similarly in <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> edit the default Approval e-mail wording (for BURSARY Students) for dates and then click "Set the above text as the Students Approval e-mail wording with BURSARY (in Application Details/app.php)".
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> edit the default batch reminder e-mail wording for dates and banking and then click "Set above text as Batch Reminder e-mail wording (in applications.php spreadsheet)". Here is a sample of previous wording...
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> edit the default batch reminder e-mail wording for dates and banking and then click "Set above text as Batch Reminder e-mail wording (in applications.php spreadsheet)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
@@ -618,7 +618,7 @@ Here is a reminder of the payment methods.
 
 WITH A CREDIT CARD... You can pay via the secure online
 payment system RBS WorldPay. Please click on the following URL:
-http://courses.peoples-uni.org/course/pay.php?sid=SID_HERE
+https://courses.peoples-uni.org/course/pay.php?sid=SID_HERE
 
 and follow instructions (Everything happens automatically,
 there is no need to tell us about your payment).
@@ -638,7 +638,7 @@ Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
 When you have made the Bank Transfer you must then click on this
 web site (URL):
-http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+https://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
 and fill in the form so we know about your payment.
 
@@ -652,7 +652,7 @@ Please be sure to quote this number SID_HERE as a reference in
 addition to giving your name on the lodgement docket.
 When you have made the Bank Transfer you must then click on this
 web site (URL):
-http://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
+https://courses.peoples-uni.org/course/paydetails.php?sid=SID_HERE
 
 and fill in the form so we know about your payment.
 Note for others in Africa: Anyone from the country list at
@@ -680,7 +680,7 @@ We hope that you are enjoying the course this semester.
 </pre>
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> you may want to edit the default batch e-mail to enrolled students wording (although it probably will not need to be changed) and then click "Set above text as wording for Batch e-mail to enrolled students (in coursegrades.php)". Here is a sample of previous wording...
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> you may want to edit the default batch e-mail to enrolled students wording (although it probably will not need to be changed) and then click "Set above text as wording for Batch e-mail to enrolled students (in coursegrades.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
@@ -694,32 +694,32 @@ This is used both for payment purposes and also to present anonymous data to you
 </pre>
 </li>
 <li>
-In <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> you may want to edit the default batch e-mail to enrolled students wording and then click "Set above text as wording for the Batch e-mail to Not Logged on students (in coursegrades.php)". Here is a sample of previous wording...
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> you may want to edit the default batch e-mail to enrolled students wording and then click "Set above text as wording for the Batch e-mail to Not Logged on students (in coursegrades.php)". Here is a sample of previous wording...
 <br /><pre>
 Dear GIVEN_NAME_HERE,
 
 This is a reminder that you have not logged on to Peoples-uni
 since the start of the Semester.
 
-You can login at http://courses.peoples-uni.org/login/index.php
+You can login at https://courses.peoples-uni.org/login/index.php
 
      Peoples Open Access Education Initiative Administrator.</pre>
 </li>
 <li>
-Note there are two Drupal menu items which now are left permanently enabled and are used for new Registrations and for Course Applications respectively: "Registration form for new students" and "Course Application Form" (<a href="http://courses.peoples-uni.org/course/registration.php" target="_blank">http://courses.peoples-uni.org/course/registration.php</a> & <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>).<br />
+Note there are two Drupal menu items which now are left permanently enabled and are used for new Registrations and for Course Applications respectively: "Registration form for new students" and "Course Application Form" (<a href="https://courses.peoples-uni.org/course/registration.php" target="_blank">https://courses.peoples-uni.org/course/registration.php</a> & <a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>).<br />
 Note also, that if applications are closed the second of these will indicate this along with approximate dates when Applications will open (from "Last Allowed Date" setting above).
 </li>
 <li>
-One Dummy Student application should be made to test that the Dummy application appears in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>.
+One Dummy Student application should be made to test that the Dummy application appears in <a href="https://courses.peoples-uni.org/course/applications.php" target="_blank">https://courses.peoples-uni.org/course/applications.php</a>.
 </li>
 <li>
-Change wording on module dates etc. in <a href="http://www.peoples-uni.org/" target="_blank">http://www.peoples-uni.org/</a> Drupal pages
+Change wording on module dates etc. in <a href="https://www.peoples-uni.org/" target="_blank">https://www.peoples-uni.org/</a> Drupal pages
 </li>
 <li>
-Mailshot existing students (list of e-mails can be obtained from <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> for the old semester(s))
+Mailshot existing students (list of e-mails can be obtained from <a href="https://courses.peoples-uni.org/course/coursegrades.php" target="_blank">https://courses.peoples-uni.org/course/coursegrades.php</a> for the old semester(s))
 </li>
 <li>
-Mailshot potential new students (lists of e-mails can be obtained from <a href="http://courses.peoples-uni.org/course/registrations.php" target="_blank">http://courses.peoples-uni.org/course/registrations.php</a> and old historical expressions of interest can also be found in <a href="http://courses.peoples-uni.org/course/interest.php" target="_blank">http://courses.peoples-uni.org/course/interest.php</a>)<br />
+Mailshot potential new students (lists of e-mails can be obtained from <a href="https://courses.peoples-uni.org/course/registrations.php" target="_blank">https://courses.peoples-uni.org/course/registrations.php</a> and old historical expressions of interest can also be found in <a href="https://courses.peoples-uni.org/course/interest.php" target="_blank">https://courses.peoples-uni.org/course/interest.php</a>)<br />
 Note: Remember that any new students registration requests that come in after this point will need to be told that they need to apply promptly if they are to be in time for the new semester.
 </li>
 <li>
@@ -737,10 +737,10 @@ The Course Total calculation (calculator icon on course total line of Categories
 Note: Course Total used have to be entered manually because of a custom patch to Moodle, but this will now be removed so an automatic calculation is required.
 </li>
 <li>
-Note: At a later stage (when students have been enrolled in their courses and any new tutors assigned), <a href="http://courses.peoples-uni.org/course/give_tutors_viewprofiles.php" target="_blank">http://courses.peoples-uni.org/course/give_tutors_viewprofiles.php</a> should be visited to give all Module Leader/Tutors/Student coordinator the sitewide Moodle Role "View Full User Profiles". See <a href="http://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</a>.
+Note: At a later stage (when students have been enrolled in their courses and any new tutors assigned), <a href="https://courses.peoples-uni.org/course/give_tutors_viewprofiles.php" target="_blank">https://courses.peoples-uni.org/course/give_tutors_viewprofiles.php</a> should be visited to give all Module Leader/Tutors/Student coordinator the sitewide Moodle Role "View Full User Profiles". See <a href="https://courses.peoples-uni.org/course/admin_documentation.php#misc">Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</a>.
 </li>
 <li>
-Obsolete: Each course module needs to have the Block "Track Marking" added (on the bottom right hand side). This will allow Tutors to access the Marking Spreadsheet see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.
+Obsolete: Each course module needs to have the Block "Track Marking" added (on the bottom right hand side). This will allow Tutors to access the Marking Spreadsheet see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.
 </li>
 <li>
 Note: At a later stage (when assignments are setup), all the assignments should be configured as the multiple file upload type "Advanced uploading of files". This is so students can have feedback on their submissions uploaded by the Tutor as an annotated copy of the student's submitted file using "track changes". Also students will be able to resubmit assignments.
@@ -752,13 +752,13 @@ Note: At a later stage (when assignments are setup), all the assignments should 
 <h2>Dealing with Applications</h2>
 <ol>
 <li>
-Go to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>. You can see a list of applicants for this semester.
+Go to <a href="https://courses.peoples-uni.org/course/applications.php" target="_blank">https://courses.peoples-uni.org/course/applications.php</a>. You can see a list of applicants for this semester.
 </li>
 <li>
 It is possible to filter the applications by semester (if you do not just want the current semester), by approval/registration status, by date, by name or email, by module name, by payment up to date?, by payment method, by whether the student is a Re&#8209;enrolment or a New student, by whether the student has applied for (or says they are already in) MPH, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted), by whether the student has been suspended or graduated from MPH, by whether the student has made any application in the current semester, by whether the student has made any application in the previous semester, by whether the student has applied for a Scholarship and by the Income Category of the Student. When you have selected your desired filters you should then click "Apply Filters". You may also "Reset Filters" to remove them.
 </li>
 <li>
-It is possible to sort applications by student name in order to be able to compare them with other pages such as <a href="http://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">http://courses.peoples-uni.org/course/education_committee_report.php</a> by clicking "Sort by Student Name" and then "Apply Filters".
+It is possible to sort applications by student name in order to be able to compare them with other pages such as <a href="https://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">https://courses.peoples-uni.org/course/education_committee_report.php</a> by clicking "Sort by Student Name" and then "Apply Filters".
 </li>
 <li>
 It is also possible to display only the columns relevant to Scholarships by clicking "Show Scholarship Relevant Columns" and then "Apply Filters".
@@ -796,10 +796,10 @@ E-mails of all the students in the spreadsheet (i.e. after any filters have been
 It is also possible to programmatically send a reminder or other e-mail to all of the students in the spreadsheet (i.e. after any filters have been applied) by using the form at the end of the page (instuctions for the form are given there). In particular, there is also a way requesting e-mails NOT to be sent to any student who is up to date in payments (balance adjusted for instalments <= 0).
 </li>
 <li>
-Access to <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+Access to <a href="https://courses.peoples-uni.org/course/applications.php" target="_blank">https://courses.peoples-uni.org/course/applications.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 <li>
-If someone is given the "Manager" role (instead of the "Administrator" role) it may be useful to make them a "Tutors" in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Student coordinator" role in each desired course.
+If someone is given the "Manager" role (instead of the "Administrator" role) it may be useful to make them a "Tutors" in any one course (e.g. the Technical Check module) if it is desired to also give them access to "<a href="https://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>". Additionally if that person is needed to view course content, they should be given "Student coordinator" role in each desired course.
 </li>
 </ol>
 
@@ -811,10 +811,10 @@ If someone is given the "Manager" role (instead of the "Administrator" role) it 
 First, underneath the details button, sometimes there is an indication "Re-enrolment". This indicates that the student was enrolled in a previous semester.
 </li>
 <li>
-Note that the student has applied with the form: <a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, a possible alternate module (if their desired module is full), Application for MPH (if any), do they intend to submit the Final Assignment for each module? (defaults to Yes), Scholarship request (if any) and why they did not complete the previous semester (if they did not).<br />
+Note that the student has applied with the form: <a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, a possible alternate module (if their desired module is full), Application for MPH (if any), do they intend to submit the Final Assignment for each module? (defaults to Yes), Scholarship request (if any) and why they did not complete the previous semester (if they did not).<br />
 Note: Someone with a "Manager" role can fill in the form on behalf of a student even when applications are closed.<br />
 Additionally if the form is called with a parameter specifying a semester in the following way:<br />
-<a href="http://courses.peoples-uni.org/course/application_form_student.php?semester=Starting%20March%202017" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php?semester=Starting%20March%202017</a><br />
+<a href="https://courses.peoples-uni.org/course/application_form_student.php?semester=Starting%20March%202017" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php?semester=Starting%20March%202017</a><br />
 It will be possible to make applications for a previous semester.
 </li>
 <li>
@@ -824,10 +824,10 @@ When the "Details" button is pressed for an application, additional applicant da
 "Alternate module" Indicates a possible alternate module set by the Student (if their desired module is full).
 </li>
 <li>
-"Student Grades" Launches the Peoples-uni transcript of the grades achieved by this student in all the modules they have done. See "Course Grades" (<a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a>) which is described below in "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>".
+"Student Grades" Launches the Peoples-uni transcript of the grades achieved by this student in all the modules they have done. See "Course Grades" (<a href="https://courses.peoples-uni.org/course/coursegrades.php" target="_blank">https://courses.peoples-uni.org/course/coursegrades.php</a>) which is described below in "<a href="https://courses.peoples-uni.org/course/admin_documentation.php#studentenrolments">Student Enrolments and Grades</a>".
 </li>
 <li>
-"Student Submissions" Launches a report on all the assignment submissions made by this student. See "<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a>" below.
+"Student Submissions" Launches a report on all the assignment submissions made by this student. See "<a href="https://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a>" below.
 </li>
 <li>
 "Payment up to date? (amount owed includes modules already approved for this semester or any MPH instalments due this semester)" indicates the amount still due this semester (i.e. instalments due in subsequent semesters are not included).<br />
@@ -835,11 +835,11 @@ If any of the transactions for this student are "(not confirmed)", this will be 
 </li>
 <li>
 "Total Payment Owed (might be more because of future instalments)" indicates any payment due from the student (if they are paying by instalments, this indicates the total due, NOT just the amount due this semester). It also indicates overpayment.<br />
-If <a href="http://courses.peoples-uni.org/course/bursary.php" target="_blank">http://courses.peoples-uni.org/course/bursary.php</a> or "Update Payment Amounts, Method or Confirmed Status" indicates a bursary has previously been given, then this will be indicated here by "(Previously given a Bursary)".
+If <a href="https://courses.peoples-uni.org/course/bursary.php" target="_blank">https://courses.peoples-uni.org/course/bursary.php</a> or "Update Payment Amounts, Method or Confirmed Status" indicates a bursary has previously been given, then this will be indicated here by "(Previously given a Bursary)".
 </li>
 <li>
 "Payment Method" can be one of...<br />
-'RBS WorldPay Confirmed': They paid online with a credit card (using the link they were sent in their approval e-mail which brings then to http://courses.peoples-uni.org/course/pay.php?sid=XXX (XXX being their SID, the unique application ID number noted in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details").<br />
+'RBS WorldPay Confirmed': They paid online with a credit card (using the link they were sent in their approval e-mail which brings then to https://courses.peoples-uni.org/course/pay.php?sid=XXX (XXX being their SID, the unique application ID number noted in <a href="https://courses.peoples-uni.org/course/applications.php" target="_blank">https://courses.peoples-uni.org/course/applications.php</a> and "Details").<br />
 'Barclays Bank Transfer': They have indicated they have paid by bank transfer to Barclays, but we have not confirmed that.<br />
 'Ecobank Transfer': They have indicated they have paid by bank transfer to Ecobank, but we have not confirmed that.<br />
 'Diamond Bank Transfer': They have indicated they have paid by bank transfer to Diamond Bank, but we have not confirmed that.<br />
@@ -864,8 +864,8 @@ The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram'
 <li>
 Updating the student payment account by adding a new transaction which decreases (or increases) the balance owed. This might be to record that a payment has been made (although WorldPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;50 per module or other amounts depending on LMIC/HIC status and whether it is an ordinary module or dissertation) are automatically added to the account when a student is approved for modules (see below for in "Set the Income Category for the Student" details).<br />
 Any transaction that is added can be marked as "(not confirmed)". All non-credit card transaction added by a student (in paydetails.php) will automatically be "(not confirmed)".<br />
-Note: <a href="http://courses.peoples-uni.org/course/payment_history.php" target="_blank">http://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester. There are links to "Update Payment Amounts, Method or Confirmed Status" and some filters.<br />
-Note: <a href="http://courses.peoples-uni.org/course/bursary.php" target="_blank">http://courses.peoples-uni.org/course/bursary.php</a> allows staff ("Manager") to see those students who have been awarded a Bursary (the word "Bursary" has been used in an account entry detail). There are various filters available.
+Note: <a href="https://courses.peoples-uni.org/course/payment_history.php" target="_blank">https://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester. There are links to "Update Payment Amounts, Method or Confirmed Status" and some filters.<br />
+Note: <a href="https://courses.peoples-uni.org/course/bursary.php" target="_blank">https://courses.peoples-uni.org/course/bursary.php</a> allows staff ("Manager") to see those students who have been awarded a Bursary (the word "Bursary" has been used in an account entry detail). There are various filters available.
 </li>
 <li>
 Setting the "Payment Method". Note that a confirmatory e-mail is sent to the student with all their payment account transactions when a "Confirmed" status is set.<br />
@@ -876,7 +876,7 @@ Marking all transactions in a student account which are "(not confirmed)" as con
 </li>
 <li>
 Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page in "Payment Method" for all future applications by this student).<br />
-payconfirm.php also lists the full student payment account, the "Payment Method" for all previous applications for earlier semesters by this student and the student payment schedule for those MPH students that have elected to pay by instalments (there is also a link to Specify Instalments/specify_instalments.php to specify/change this payment schedule using the same page as the student uses... see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a>).
+payconfirm.php also lists the full student payment account, the "Payment Method" for all previous applications for earlier semesters by this student and the student payment schedule for those MPH students that have elected to pay by instalments (there is also a link to Specify Instalments/specify_instalments.php to specify/change this payment schedule using the same page as the student uses... see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a>).
 </li>
 </ol>
 </li>
@@ -905,17 +905,17 @@ If a Student was Unenrolled (which can be set further down the "Details" page) t
 </li>
 <li>
 "Student Dissertation Proposals" displays any proposal submitted by the Student (links to these proposals are also displayed on the main applications.php spreadsheet under "Approved?").
-These proposals are submitted by the Student by clicking on a link in the Course Application Form (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>).
+These proposals are submitted by the Student by clicking on a link in the Course Application Form (<a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>).
 There are instructions about what to do there.
-They can also be entered at other times by the Student clicking directly on <a href="http://courses.peoples-uni.org/course/dissertation.php" target="_blank">http://courses.peoples-uni.org/course/dissertation.php</a><br />
-Access to <a href="http://courses.peoples-uni.org/course/dissertations.php" target="_blank">http://courses.peoples-uni.org/course/dissertations.php</a>, which is where Dissertation Proposals are displayed is available to any Tutor, Lurker or Admin.<br />
+They can also be entered at other times by the Student clicking directly on <a href="https://courses.peoples-uni.org/course/dissertation.php" target="_blank">https://courses.peoples-uni.org/course/dissertation.php</a><br />
+Access to <a href="https://courses.peoples-uni.org/course/dissertations.php" target="_blank">https://courses.peoples-uni.org/course/dissertations.php</a>, which is where Dissertation Proposals are displayed is available to any Tutor, Lurker or Admin.<br />
 When the Student submits the dissertation form, the Semester for that entry is set to the current Semester. Any entry in dissertations.php can have its Semester changed by selecting a different Semester for that entry using the drop down beside the displayed Semester.<br />
 There is a filter on dissertations.php for selecting a particular Semester or "All".<br />
 There is a filter "Display for Copying and Pasting to Excel" to suppress extraneous information so that copying will work effectively.
 </li>
 <li>
 "Approve Full Application" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail outlined above under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which requests payment.<br />
-The "Approved?" entry in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Yes" as opposed to "No", "Some" (if only one application is approved, see below) or "Denied or Deferred" (if the application has been un-approved after being approved.)
+The "Approved?" entry in <a href="https://courses.peoples-uni.org/course/applications.php" target="_blank">https://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Yes" as opposed to "No", "Some" (if only one application is approved, see below) or "Denied or Deferred" (if the application has been un-approved after being approved.)
 </li>
 <li>
 "Approve Full Application BURSARY" is a button which allows the full application to be approved (both Modules if the applicant has specified two). The user is sent the e-mail specified under <a href="#configuration">"Configuration of Applications Process for a new Semester"</a> which indicates they have a bursary (as well as other information).
@@ -956,9 +956,9 @@ There is a link to your course at the bottom of the profile or you can click:
   $a->courseurl
 </pre>
 <br />
-The "Enrolled?" column in <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
+The "Enrolled?" column in <a href="https://courses.peoples-uni.org/course/applications.php" target="_blank">https://courses.peoples-uni.org/course/applications.php</a> and "Details" will indicate "Some" or "Yes" if the Applicant has been enrolled in all their modules.
 <br />
-Note: This button (and the button in that next bullet point) will restore any Forum Subscriptions in Students Corner what were removed by <a href="http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a>. See <a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a>.
+Note: This button (and the button in that next bullet point) will restore any Forum Subscriptions in Students Corner what were removed by <a href="https://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">https://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a>. See <a href="https://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a>.
 </li>
 <li>
 "Enrol User in Modules ... and ..." button will enrol the user in both modules.
@@ -972,7 +972,7 @@ Dear firstname,
 Your application to the MPH Programme with Peoples-uni has been approved.
 Please ensure you are familiar with the academic award criteria
 and regulations at this link:
-http://www.peoples-uni.org/node/232
+https://www.peoples-uni.org/node/232
 
 We hope you enjoy studying with us and wish you every success.
 
@@ -1053,20 +1053,20 @@ Note that the applications.php spreadsheet is refreshed with any changes that ha
 <h2>Closing Applications for a Semester</h2>
 <ol>
 <li>
-First it may be desirable to mark some modules as full before all the applications are finally closed. To do this go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> click "Check to mark Module as Full" for any module that is full and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed, but also that there is extra wording automatically added to explain that the two modules are full.
+First it may be desirable to mark some modules as full before all the applications are finally closed. To do this go to <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> click "Check to mark Module as Full" for any module that is full and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed, but also that there is extra wording automatically added to explain that the two modules are full.
 </li>
 <li>
-But to fully close applications go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> and click "Mark All Modules as Full (Applicants will be sent to Registration Form)". You can confirm that the form has closed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>).
+But to fully close applications go to <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> and click "Mark All Modules as Full (Applicants will be sent to Registration Form)". You can confirm that the form has closed by looking at it (<a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>).
 </li>
 <li>
-In the case that you want to reopen applications temporarily for some reason... Just go to <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> deselect "Check to mark Module as Full" for any module that you wish to reopen and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="http://courses.peoples-uni.org/course/application_form_student.php" target="_blank">http://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed.
+In the case that you want to reopen applications temporarily for some reason... Just go to <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> deselect "Check to mark Module as Full" for any module that you wish to reopen and then click "Mark Modules as Full or to be Removed based on Check Boxes Above". You can confirm that the form has changed by looking at it (<a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>). You will see the list of modules has changed.
 </li>
 <li>
 Note: Those who have the permission "moodle/site:viewparticipants" (which is the same as gives access to applications.php), can enter an application on behalf of a student (presumably for a "late" student application) even if applications are closed. They are also allowed make an application for modules even if those modules are full.<br />
-Also it is possible to allow a student to make a late application (see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#theregdetailsbutton">The "Details" button and the Registration Process</a> above).
+Also it is possible to allow a student to make a late application (see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#theregdetailsbutton">The "Details" button and the Registration Process</a> above).
 </li>
 <li>
-Note: When all students have been enrolled for a module, then the Marking Spreadsheet will need to be created see... <a href="http://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.<br />
+Note: When all students have been enrolled for a module, then the Marking Spreadsheet will need to be created see... <a href="https://courses.peoples-uni.org/course/admin_documentation.php#trackmarking">Collaborative Assignment Marking and Resubmission Tracking</a>.<br />
 This should be done some time before assignment submission and grading starts.
 </li>
 </ol>
@@ -1076,14 +1076,14 @@ This should be done some time before assignment submission and grading starts.
 <h2>Registering Tutors in Moodle</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/tutor_registration.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration.php</a> is a page the link to which should be given to new volunteers (of any type, but primarily tutor volunteers) to enter data about themselves including their reasons for volunteering and their experience and also data needed to register them in Moodle.
+<a href="https://courses.peoples-uni.org/course/tutor_registration.php" target="_blank">https://courses.peoples-uni.org/course/tutor_registration.php</a> is a page the link to which should be given to new volunteers (of any type, but primarily tutor volunteers) to enter data about themselves including their reasons for volunteering and their experience and also data needed to register them in Moodle.
 <br />Note: we (Peoples-uni) could also use this form to enter data for a volunteer who has never filled in the form or been registered in Moodle, although it is better for the prospective volunteer to do it.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/tutor_registration_existing.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration_existing.php</a> is similar to the previous page but is designed to gather a subset of the above information, because they have previously been registered in Moodle but we would still like to have a record of their background etc. They must be logged into Moodle for this form.
+<a href="https://courses.peoples-uni.org/course/tutor_registration_existing.php" target="_blank">https://courses.peoples-uni.org/course/tutor_registration_existing.php</a> is similar to the previous page but is designed to gather a subset of the above information, because they have previously been registered in Moodle but we would still like to have a record of their background etc. They must be logged into Moodle for this form.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a>
+<a href="https://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">https://courses.peoples-uni.org/course/tutor_registrations.php</a>
 list all forms submitted by volunteers and also all Moodle users who have ever been tutors in one of the Peoples-uni modules even is they have never submitted a form (also includes all SSOs).
 </li>
 <li>
@@ -1120,7 +1120,7 @@ The "Create form" or "Edit form" links bring you to a page where you can edit th
 <br />The e-mail also contains the following text about their profile and also indicating that they will get further information, so this should be followed up quickly with guidelines on being a tutor (or whatever other role then may be given in Peoples-uni).
 <pre>
 Your profile is at:
-http://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
+https://courses.peoples-uni.org/user/view.php?id=USER_ID_HERE&course=1
 You are welcome to personalize this, so students
 and colleagues can learn more about you.
 
@@ -1131,7 +1131,7 @@ You will soon receive information about next steps.
 Registration is only a first step, they will not have access to anything, especially they will not have access to any modules... they need to be manually given the appropriate Moodle roles suitable to their new volunteer position.
 </li>
 <li>
-Note: the <a href="http://courses.peoples-uni.org/course/tutor_registration_edit.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registration_edit.php</a> page URL which is linked from the <a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a> page can be given directly to any tutor to allow them to view and edit/update their own data including CV(s) if the form has already has been created by the volunteer themselves or by us. They cannot edit "Volunteer type", "Modules of interest" or "Notes" unless they happen to be a Module leader.
+Note: the <a href="https://courses.peoples-uni.org/course/tutor_registration_edit.php" target="_blank">https://courses.peoples-uni.org/course/tutor_registration_edit.php</a> page URL which is linked from the <a href="https://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">https://courses.peoples-uni.org/course/tutor_registrations.php</a> page can be given directly to any tutor to allow them to view and edit/update their own data including CV(s) if the form has already has been created by the volunteer themselves or by us. They cannot edit "Volunteer type", "Modules of interest" or "Notes" unless they happen to be a Module leader.
 </li>
 </ol>
 
@@ -1140,18 +1140,18 @@ Note: the <a href="http://courses.peoples-uni.org/course/tutor_registration_edit
 <h2>Misc: Enrolling Tutors in Tutors Corner, Giving Tutors the Sitewide Moodle Role "View Full User Profiles", Making a Donation</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">http://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Module Leader", "Tutors" or "Student coordinator" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
+<a href="https://courses.peoples-uni.org/course/enroltutorscorner.php" target="_blank">https://courses.peoples-uni.org/course/enroltutorscorner.php</a> Enrolls all current users with roles "Module Leader", "Tutors" or "Student coordinator" in the "Tutors Corner" and "Guide for online facilitators" modules.<br />
 The names or contextid of these two modules should not be changed.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/give_tutors_viewprofiles.php" target="_blank">http://courses.peoples-uni.org/course/give_tutors_viewprofiles.php</a> can be run at any time to give all Module Leader/Tutors/Student coordinator the sitewide Moodle Role "View Full User Profiles". The script should normally be run every semester after students have been enrolled as it picks up all tutors (etc.) for those courses which have enrolled students (enrolled by our enrolment system for current or previous semesters). It does not apply to tutors in other courses e.g. techie check or test/demo/introductory/student support courses.<br />
+<a href="https://courses.peoples-uni.org/course/give_tutors_viewprofiles.php" target="_blank">https://courses.peoples-uni.org/course/give_tutors_viewprofiles.php</a> can be run at any time to give all Module Leader/Tutors/Student coordinator the sitewide Moodle Role "View Full User Profiles". The script should normally be run every semester after students have been enrolled as it picks up all tutors (etc.) for those courses which have enrolled students (enrolled by our enrolment system for current or previous semesters). It does not apply to tutors in other courses e.g. techie check or test/demo/introductory/student support courses.<br />
 This sitewide role "View Full User Profiles" allows users to see the full profiles of other users. When a user is given this role they will be able to see all profiles (not just those for students in their own course) and will even be able to see profiles of other tutors (but we do not use the custom profile fields for tutors, so there is little to see except city/country).
 </li>
 <li>
-The following page was linked from the Drupal menus to allow donations: <a href="http://courses.peoples-uni.org/course/donate.php?code=28595" target="_blank">http://courses.peoples-uni.org/course/donate.php?code=28595</a> but now it is not linked (because of usage for fraudulently testing stolen credit cards) but can be given out on request.
+The following page was linked from the Drupal menus to allow donations: <a href="https://courses.peoples-uni.org/course/donate.php?code=28595" target="_blank">https://courses.peoples-uni.org/course/donate.php?code=28595</a> but now it is not linked (because of usage for fraudulently testing stolen credit cards) but can be given out on request.
 </li>
 <li>
-This page also allows donations, but has a cleaner layout (without Moodle menus): <a href="http://courses.peoples-uni.org/course/donate_occ.php?code=28595" target="_blank">http://courses.peoples-uni.org/course/donate_occ.php?code=28595</a>. It can be used within a course where misuse is less likely.
+This page also allows donations, but has a cleaner layout (without Moodle menus): <a href="https://courses.peoples-uni.org/course/donate_occ.php?code=28595" target="_blank">https://courses.peoples-uni.org/course/donate_occ.php?code=28595</a>. It can be used within a course where misuse is less likely.
 </li>
 <li>
 Both pages send an e-mail to payments@peoples-uni.org with the sum donated. If the donator has allowed us "to keep a record of your details and possibly contact you" (there is a checkbox) we include their details in that e-mail (as well as saving in the database). In this case, if they have provided an e-mail address, we also send a thank you e-mail back to them.
@@ -1166,7 +1166,7 @@ Note there is also a checkbox to "Allow Peoples-uni to display your name (but no
 <h2>Tracking Student Assignment Submissions</h2>
 <ol>
 <li>
-Either <a href="http://courses.peoples-uni.org/course/track_submissions.php" target="_blank">http://courses.peoples-uni.org/course/track_submissions.php</a> (for assign module) or <a href="http://courses.peoples-uni.org/course/track_submissions_turnitin.php" target="_blank">http://courses.peoples-uni.org/course/track_submissions_turnitin.php</a> (for turnitintooltwo module) allow tracking of student assignment submissions (most recent date and status displayed) against due, cut-off and extension dates (turnitin does not support cut-off or extension). If the cut-off or extension dates have not been entered in the assignment for the student, they are not tested. An indication is also given (in the final column) if there is no submission or if the submission is outside the various dates. Here are the possible indications that can be given...
+Either <a href="https://courses.peoples-uni.org/course/track_submissions.php" target="_blank">https://courses.peoples-uni.org/course/track_submissions.php</a> (for assign module) or <a href="https://courses.peoples-uni.org/course/track_submissions_turnitin.php" target="_blank">https://courses.peoples-uni.org/course/track_submissions_turnitin.php</a> (for turnitintooltwo module) allow tracking of student assignment submissions (most recent date and status displayed) against due, cut-off and extension dates (turnitin does not support cut-off or extension). If the cut-off or extension dates have not been entered in the assignment for the student, they are not tested. An indication is also given (in the final column) if there is no submission or if the submission is outside the various dates. Here are the possible indications that can be given...
 <br />No Submission
 <br />Within Extension
 <br />Within Cut-off
@@ -1215,16 +1215,16 @@ Yes (the assignment title has the word "Resubmission" in it)<br />
 No<br />
 </li>
 <li>
-Also in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a> it is possible to indicate that certain assignments (normally the first assignment in a course) from inclusion in the table. The setting "Set above comma separated list of assignment IDs to be excluded from track_submissions.php" should contain a comma separated list of all assignments from all semesters that should be excluded. The IDs can be found in the "Assignment (id)" column of track_submissions.php.
+Also in <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> it is possible to indicate that certain assignments (normally the first assignment in a course) from inclusion in the table. The setting "Set above comma separated list of assignment IDs to be excluded from track_submissions.php" should contain a comma separated list of all assignments from all semesters that should be excluded. The IDs can be found in the "Assignment (id)" column of track_submissions.php.
 </li>
 <li>
 The Manager role gives access to this page.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> describes a way of looking at all submissions and all grades for an individual student.
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> describes a way of looking at all submissions and all grades for an individual student.
 </li>
 <li>
-<strong>Additionally</strong>... <a href="http://courses.peoples-uni.org/course/track_quizzes.php" target="_blank">http://courses.peoples-uni.org/course/track_quizzes.php</a> allows tracking of student quiz submissions (most important in Biostatistics) in a similar way to track_submissions.php with the same column names.
+<strong>Additionally</strong>... <a href="https://courses.peoples-uni.org/course/track_quizzes.php" target="_blank">https://courses.peoples-uni.org/course/track_quizzes.php</a> allows tracking of student quiz submissions (most important in Biostatistics) in a similar way to track_submissions.php with the same column names.
 </li>
 </ol>
 
@@ -1286,7 +1286,7 @@ Assignment grades agreed in the spreadsheet will need to be manually entered in 
 <h2>Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</h2>
 <ol>
 <li>
-If you go to any of the following links <a href="http://courses.peoples-uni.org/course/applications.php" target="_blank">http://courses.peoples-uni.org/course/applications.php</a>, "Details", <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> or "Student Grades"/student.php, you will see a link called "Student Submissions" for each student which will allow you to view all submissions that students have made for assignments (including re-submissions) and also all the grades received by the Student and all comments by the Tutors.
+If you go to any of the following links <a href="https://courses.peoples-uni.org/course/applications.php" target="_blank">https://courses.peoples-uni.org/course/applications.php</a>, "Details", <a href="https://courses.peoples-uni.org/course/coursegrades.php" target="_blank">https://courses.peoples-uni.org/course/coursegrades.php</a> or "Student Grades"/student.php, you will see a link called "Student Submissions" for each student which will allow you to view all submissions that students have made for assignments (including re-submissions) and also all the grades received by the Student and all comments by the Tutors.
 </li>
 <li>
 The "Student Submissions" link will display (In the first table) a list of all submissions made by the student. Note that the files can always be downloaded to your machine by clicking on them.
@@ -1304,7 +1304,7 @@ There is a parameter you can add to the end of the "Student Submissions" URL "&h
 ....................................................
 </li>
 <li>
-To view posts made by Students to discussion forums go to: <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a>.
+To view posts made by Students to discussion forums go to: <a href="https://courses.peoples-uni.org/course/posts.php" target="_blank">https://courses.peoples-uni.org/course/posts.php</a>.
 </li>
 <li>
 This lists all posts for each enrolled student (not others), giving Module, Forum Name, Subject and post Created date.
@@ -1313,7 +1313,7 @@ This lists all posts for each enrolled student (not others), giving Module, Foru
 You can also click on the subject to see the discussion details.
 </li>
 <li>
-Four additional columns to do with ratings of discussions by Tutors are described in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a>.<br />
+Four additional columns to do with ratings of discussions by Tutors are described in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a>.<br />
 These columns are... 'Referred to resources:', 'Critical approach:', 'Referencing:', 'Write discussion feedback for student...'. Also described there are additional filters associated with these columns and also additional summary tables.
 </li>
 <li>
@@ -1324,7 +1324,7 @@ After the main body of posts there are tables (one per course) that show, for ea
 "Posts by Student by Forum Topic for: <i>Course Name</i>..."
 </li>
 <li>
-There is also a filter which says "Suppress Names on Posts by Student by Forum Topic Report for each Course (& use SID)"... that causes names not to be displayed for those tables only (& the SID application number to be used to keep the data anonymous). <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> can be used, if necessary, to send an e-mail to enrolled students to remind them of their SID... Go to the form at the end of that page, enter a subject such as "Here is your Peoples-uni SID", change the draft e-mail text to something like this (the default version of this is set in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>)...<br />
+There is also a filter which says "Suppress Names on Posts by Student by Forum Topic Report for each Course (& use SID)"... that causes names not to be displayed for those tables only (& the SID application number to be used to keep the data anonymous). <a href="https://courses.peoples-uni.org/course/coursegrades.php" target="_blank">https://courses.peoples-uni.org/course/coursegrades.php</a> can be used, if necessary, to send an e-mail to enrolled students to remind them of their SID... Go to the form at the end of that page, enter a subject such as "Here is your Peoples-uni SID", change the draft e-mail text to something like this (the default version of this is set in <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a>)...<br />
 <pre>
 Dear GIVEN_NAME_HERE,
 
@@ -1342,10 +1342,10 @@ This is used both for payment purposes and also to present anonymous data to you
 There is yet another filter called "Don't Show Number of Posts" which just shows a "Yes" if there has been a post rather than the number of posts in the "Posts by Student by Forum Topic" Reports.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also gives totals by Student after the "Posts by Student by Forum Topic" Reports. It then also gives totals by Student by module and yet again after that there is a summary of contributions per topic at the end of the page.
+<a href="https://courses.peoples-uni.org/course/posts.php" target="_blank">https://courses.peoples-uni.org/course/posts.php</a> also gives totals by Student after the "Posts by Student by Forum Topic" Reports. It then also gives totals by Student by module and yet again after that there is a summary of contributions per topic at the end of the page.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by Topic Name, by the Student Support Group that the Student is subscribed to in the Student Support Forums (however these groups are no longer used as before), by User Name, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
+<a href="https://courses.peoples-uni.org/course/posts.php" target="_blank">https://courses.peoples-uni.org/course/posts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module, by Topic Name, by the Student Support Group that the Student is subscribed to in the Student Support Forums (however these groups are no longer used as before), by User Name, by whether the student has been accepted into MPH (and, if desired, during which period they were accepted) etc. (as well as the filters mentioned above).
 </li>
 <li>
 Towards the end of posts.php there is a table that shows, for each Student/Module combination, the number of topics with substantial posts. It is headed by the following text...<br />
@@ -1356,7 +1356,7 @@ It also shows if the Student has made 'No posts!', the Tutors have not rated any
 After that there are a list of clickable links to bring up a separate page for each module (if the filter has selected only one module, then there will only be one link and the contents will be the same as the table in the previous bullet point).
 </li>
 <li>
-At the end of the <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> page there is a list of e-mails for all Students who have a post matching the filters, there is also a list of e-mails for all Students matching the main filters who have no posts (this could be used to send out reminders).
+At the end of the <a href="https://courses.peoples-uni.org/course/posts.php" target="_blank">https://courses.peoples-uni.org/course/posts.php</a> page there is a list of e-mails for all Students who have a post matching the filters, there is also a list of e-mails for all Students matching the main filters who have no posts (this could be used to send out reminders).
 </li>
 <li>
 Access to posts.php is available to any Tutor, Student coordinator or Admin.<br /><br />
@@ -1365,7 +1365,7 @@ Access to posts.php is available to any Tutor, Student coordinator or Admin.<br 
 ....................................................
 </li>
 <li>
-To view posts made by Tutors to discussion forums go to: <a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a>.
+To view posts made by Tutors to discussion forums go to: <a href="https://courses.peoples-uni.org/course/tutorposts.php" target="_blank">https://courses.peoples-uni.org/course/tutorposts.php</a>.
 </li>
 <li>
 This lists all posts for each Tutor ("Module Leader" or "Tutors", not others), giving Module, Forum Name, Subject and Date of post.<br />
@@ -1379,10 +1379,10 @@ After the main body of posts there are tables (one per course) that show, for ea
 "Posts by Tutor by Forum Topic for: <i>Course Name</i>..."
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a> also gives totals by Tutor after the "Posts by Tutor by Forum Topic" Reports. It then also gives totals by Tutor by module and yet again after that there is a summary of contributions per topic at the end of the page.
+<a href="https://courses.peoples-uni.org/course/tutorposts.php" target="_blank">https://courses.peoples-uni.org/course/tutorposts.php</a> also gives totals by Tutor after the "Posts by Tutor by Forum Topic" Reports. It then also gives totals by Tutor by module and yet again after that there is a summary of contributions per topic at the end of the page.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/tutorposts.php" target="_blank">http://courses.peoples-uni.org/course/tutorposts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module etc.
+<a href="https://courses.peoples-uni.org/course/tutorposts.php" target="_blank">https://courses.peoples-uni.org/course/tutorposts.php</a> also includes filters so you can suppress those topics which start with the word "introduction" and limit scope to e.g. one module etc.
 </li>
 <li>
 Access to tutorposts.php is available to any Tutor or Admin.<br /><br />
@@ -1391,7 +1391,7 @@ Access to tutorposts.php is available to any Tutor or Admin.<br /><br />
 ....................................................
 </li>
 <li>
-To view posts made in Student Support Forums go to: <a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a>.
+To view posts made in Student Support Forums go to: <a href="https://courses.peoples-uni.org/course/support_posts.php" target="_blank">https://courses.peoples-uni.org/course/support_posts.php</a>.
 </li>
 <li>
 This lists all posts giving Module, Forum Name and Subject.
@@ -1403,7 +1403,7 @@ You can also click on the subject to see the discussion details.
 After the main body of posts there are tables that show for each contributor, the number of posts they have made to each topic and further summaries.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/support_posts.php" target="_blank">http://courses.peoples-uni.org/course/support_posts.php</a> also includes various filters.
+<a href="https://courses.peoples-uni.org/course/support_posts.php" target="_blank">https://courses.peoples-uni.org/course/support_posts.php</a> also includes various filters.
 </li>
 <li>
 Access to support_posts.php is available to any Tutor, Student coordinator or Admin.
@@ -1415,7 +1415,7 @@ Access to support_posts.php is available to any Tutor, Student coordinator or Ad
 <h2>Student Enrolments and Grades</h2>
 <ol>
 <li>
-"Course Grades" at the following URL <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> shows details about all enrolments (by default for the current semester).
+"Course Grades" at the following URL <a href="https://courses.peoples-uni.org/course/coursegrades.php" target="_blank">https://courses.peoples-uni.org/course/coursegrades.php</a> shows details about all enrolments (by default for the current semester).
 </li>
 <li>
 For each enrolment it shows the following...<br />
@@ -1469,13 +1469,13 @@ As another extra it generates the same statistics as are generated in applicatio
 </li>
 <li>
 After this there are links to the...<br />
-<a href="http://courses.peoples-uni.org/course/successbyqualifications.php" target="_blank">Success by Qualifications Report</a><br />
-<a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">Discussion Feedback to Students</a><br />
-<a href="http://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">List of MPH Graduates</a><br />
-<a href="http://courses.peoples-uni.org/course/EUCLID.php" target="_blank">Graduates who may be eligible for EUCLID MPH</a><br />
+<a href="https://courses.peoples-uni.org/course/successbyqualifications.php" target="_blank">Success by Qualifications Report</a><br />
+<a href="https://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">Discussion Feedback to Students</a><br />
+<a href="https://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">List of MPH Graduates</a><br />
+<a href="https://courses.peoples-uni.org/course/EUCLID.php" target="_blank">Graduates who may be eligible for EUCLID MPH</a><br />
 </li>
 <li>
-At the bottom of the page, there are two forms to send e-mails to all the above students (those that are selected by the filters). The two sets of default wording are set in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>.<br />
+At the bottom of the page, there are two forms to send e-mails to all the above students (those that are selected by the filters). The two sets of default wording are set in <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a>.<br />
 The first form is typically used to send students a reminder of the their Application ID/SID.<br />
 The second is typically used to send students a reminder that they have not logged on to Peoples-uni since the start of the Semester. But to do this correctly (i.e. select the appropriate students to send this e-mail to), it is necessary to set the "Show Students Not Logged on for this many Days" filter at the top of the page to an appropriate number of days before sending the e-mail.
 </li>
@@ -1489,7 +1489,7 @@ The second is typically used to send students a reminder that they have not logg
 <h2>Informing Students of Semester Final Grade Results</h2>
 <ol>
 <li>
-From "Course Grades" at <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> you can select "Student Grades" to see the grades received by a given Student for all that Student's modules along with feedback from the Tutor for all assignments.
+From "Course Grades" at <a href="https://courses.peoples-uni.org/course/coursegrades.php" target="_blank">https://courses.peoples-uni.org/course/coursegrades.php</a> you can select "Student Grades" to see the grades received by a given Student for all that Student's modules along with feedback from the Tutor for all assignments.
 </li>
 <?php
 //<li>
@@ -1501,13 +1501,13 @@ From "Course Grades" at <a href="http://courses.peoples-uni.org/course/coursegra
 //So...
 ?>
 <li>
-Note... The Moodle "Course Total" grade (which is what is displayed and used in "Course Grades"/"Student Grades") is based on the grades for the course assignments. It is calculated automatically by Moodle when the course assignment grades are entered (according to the calculation specified for the specific course as described in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#configuration">Configuration of Applications Process for a new Semester</a>).
+Note... The Moodle "Course Total" grade (which is what is displayed and used in "Course Grades"/"Student Grades") is based on the grades for the course assignments. It is calculated automatically by Moodle when the course assignment grades are entered (according to the calculation specified for the specific course as described in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#configuration">Configuration of Applications Process for a new Semester</a>).
 <?php
 //The "Course Total" grades for each course should be set by the tutor. This is done in the Moodle grade report for the course... turn editing on and set the course total grades (on far right) to Passed/Failed or No Grade.
 ?>
 </li>
 <li>
-After that diversion... Back to "Course Grades"/"Student Grades"... Go to: <a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> and click on "Student Grades" for an individual student.
+After that diversion... Back to "Course Grades"/"Student Grades"... Go to: <a href="https://courses.peoples-uni.org/course/coursegrades.php" target="_blank">https://courses.peoples-uni.org/course/coursegrades.php</a> and click on "Student Grades" for an individual student.
 </li>
 <li>
 There are a number of buttons for each course module in "Student Grades" which can be pressed (not visible to a student when they see their own version of this page). Not all will be visible at any one time...
@@ -1538,12 +1538,12 @@ Additionally if the student has met the criteria for receiving a Certificate (4 
 If a Certificate, Diploma or MPH is shown for download, there will also be a link to download the "Same Diploma without Percent Grades" or the "Same Diploma without List of Modules" and similar for a certificate or MPH.<br />
 There is also a "portrait format Student Transcript" for download.<br />
 Note: These will be preceeded by Accreditation of Prior Learnings, if any.<br />
-Note: After 10 elapsed semesters, module passes for subsequent semesters are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
-Note: After 1 module failures (i.e. a maximum of 0 failures is allowed), module passes are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
-Note: After 1 "Diploma level" pass (between 45% and 50%) (i.e. a maximum of 0 "Diploma level" passes are allowed), module passes are no longer counted (but see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
+Note: After 10 elapsed semesters, module passes for subsequent semesters are no longer counted (but see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
+Note: After 1 module failures (i.e. a maximum of 0 failures is allowed), module passes are no longer counted (but see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
+Note: After 1 "Diploma level" pass (between 45% and 50%) (i.e. a maximum of 0 "Diploma level" passes are allowed), module passes are no longer counted (but see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#progress">Student Progress towards Qualifications</a> for a discussion of how this can be overridden using a link "Review modules contributing to awards and override disallowed modules" just below the certificates).<br />
 Note: for a Diploma or a Certificate, one Diploma pass (between 45% and 50%) will be automatically allowed ("condoned") in place of one Masters pass (50%+) ONLY if that module's "Masters level" failure has been overridden with the "Review modules contributing to awards and override disallowed modules" link.<br />
-Note: In <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a> "Some Discounted!" is displayed in the last column on the right to indicate that modules have been discounted for any of the academic reasons indicated above.<br />
-Note: To find students listed by semester that have had modules discounted, go to the bottom of <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a>.<br />
+Note: In <a href="https://courses.peoples-uni.org/course/studentprogress.php" target="_blank">https://courses.peoples-uni.org/course/studentprogress.php</a> "Some Discounted!" is displayed in the last column on the right to indicate that modules have been discounted for any of the academic reasons indicated above.<br />
+Note: To find students listed by semester that have had modules discounted, go to the bottom of <a href="https://courses.peoples-uni.org/course/studentprogress.php" target="_blank">https://courses.peoples-uni.org/course/studentprogress.php</a>.<br />
 Note: Once a student has broken a limit such as 10 semesters or a maximum number of fails, if it is desired that extra modules that are passed over time should be counted, each new module to be counted will continue to need to be overridden individually.<br />
 Note: Currently "Some Discounted!" (or "Discounted because of academic rules") will be displayed in some conditions where an exam has not been passed but would be discounted if it had been passed. This is slightly unfortunate, but can be ignored.<br />
 The above describes the new rules that came into place in the semester "Starting March 2015", and the older rules that applied before that will not be retrospectively changed.<br />
@@ -1559,7 +1559,7 @@ Note that the files can be uploaded from a number of sources, but the most likel
 <li>
 Other options on this page are:<br />
 To send another e-mail to the student: "e-mail Student",<br />
-Add a note to the student record (see also the <a href="http://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">details button/page</a>), or<br />
+Add a note to the student record (see also the <a href="https://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">details button/page</a>), or<br />
 Look at "Student Submissions".<br />
 Note that the student's most recent approved SID/Application ID/Registration Number is shown near the top of "Student Grades" and a student may be directed here to find their most recent SID.
 </li>
@@ -1573,14 +1573,14 @@ and click the button.<br />
 Only set "Will pay or get full Scholarship for EUCLID" if they have indicated they will pay or have been given a complete bursary.<br />
 Only set "Entitled to EUCLID MPH certificate" if they have paid for this or been given a complete bursary.<br />
 Note that "Mark this Student as Graduated with Masters-Level Award" can be used subsequently to change a student from say "Peoples-uni" to "EUCLID" (and should be if appropriate). The Semester, type of pass etc. will not be changed unless you change them in this form.<br />
-A list of those Graduates who may be eligible for EUCLID MPH is in <a href="http://courses.peoples-uni.org/course/EUCLID.php" target="_blank">Graduates who may be eligible for EUCLID MPH</a>.<br />
+A list of those Graduates who may be eligible for EUCLID MPH is in <a href="https://courses.peoples-uni.org/course/EUCLID.php" target="_blank">Graduates who may be eligible for EUCLID MPH</a>.<br />
 The columns in this include "Certifying Institution", "How much Owed", "Will pay or get full Scholarship for EUCLID" and "Marked as paid for EUCLID".<br />
 These can be used to determine if a student "Will pay or get full Scholarship for EUCLID", if they have actually paid for it and if they have been confirmed as paid "Marked as paid for EUCLID" in "Student Grades".<br />
 If "Marked as paid for EUCLID" is set they are due a EUCLID certificate. If "Will pay or get full Scholarship for EUCLID" is Yes and they owe nothing, "Marked as paid for EUCLID" should be set using "Mark this Student as Graduated with Masters-Level Award" in "Student Grades".<br />
 Note that a graduated student who wants a "EUCLID" certificate should have the amount owed set in "Update Payment Amounts, Method or Confirmed Status"/payconfirm.php at the same time "Will pay or get full Scholarship for EUCLID" is set using "Mark this Student as Graduated with Masters-Level Award" in "Student Grades".<br />
-They should pay (by card) using <a href="http://courses.peoples-uni.org/course/paymph.php" target="_blank">http://courses.peoples-uni.org/course/paymph.php</a> which accepts variable amounts and which will cause the student account to be automatically updated if used.<br />
+They should pay (by card) using <a href="https://courses.peoples-uni.org/course/paymph.php" target="_blank">https://courses.peoples-uni.org/course/paymph.php</a> which accepts variable amounts and which will cause the student account to be automatically updated if used.<br />
 The student should enter the same email they use in Moodle so they can be matched when updating their account.<br />
-A list of all those Graduated is in <a href="http://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">http://courses.peoples-uni.org/course/list_of_mph_graduates.php</a> as noted above.
+A list of all those Graduated is in <a href="https://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">https://courses.peoples-uni.org/course/list_of_mph_graduates.php</a> as noted above.
 </li>
 </ol>
 
@@ -1589,7 +1589,7 @@ A list of all those Graduated is in <a href="http://courses.peoples-uni.org/cour
 <h2>Accreditation of Prior Learnings</h2>
 <ol>
 <li>
-The page <a href="http://courses.peoples-uni.org/course/accreditation_of_prior_learnings.php" target="_blank">http://courses.peoples-uni.org/course/accreditation_of_prior_learnings.php</a> allows the specification of "Accreditation of Prior Learnings" for a student. A student can be selected and the number of "Foundation" and "Problems" modules that should be accredited should be specified. These will contribute to a student being (automatically) awarded a Certificate or Diploma.
+The page <a href="https://courses.peoples-uni.org/course/accreditation_of_prior_learnings.php" target="_blank">https://courses.peoples-uni.org/course/accreditation_of_prior_learnings.php</a> allows the specification of "Accreditation of Prior Learnings" for a student. A student can be selected and the number of "Foundation" and "Problems" modules that should be accredited should be specified. These will contribute to a student being (automatically) awarded a Certificate or Diploma.
 </li>
 </ol>
 
@@ -1599,7 +1599,7 @@ The page <a href="http://courses.peoples-uni.org/course/accreditation_of_prior_l
 <h2>Student Progress towards Qualifications</h2>
 <ol>
 <li>
-To see how our students are progressing towards Certificates and Diplomas go to <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a>.<br />
+To see how our students are progressing towards Certificates and Diplomas go to <a href="https://courses.peoples-uni.org/course/studentprogress.php" target="_blank">https://courses.peoples-uni.org/course/studentprogress.php</a>.<br />
 It is ordered with the the student who has passed the most modules at top.
 </li>
 <li>
@@ -1621,7 +1621,7 @@ It contains the type of pass or fail or various types of non-grading.<br />
 For each module that has been discounted because of academic rules (maximum of 10 semesters to date, maximum of 0 failed modules to date, maximum of 0 "Diploma level" passes (between 45% and 50%)), there is a checkbox that can be checked (or unchecked if desired) to indicate that the module should not be discounted (i.e. will count towards a Diploma or Certificate). There is a submission button "Mark Modules that Should be Discounted (or not)" that should be clicked when the checkboxes have been set appropriately to update discounted modules.
 </li>
 <li>
-To find students listed by semester that have had modules discounted, go to the bottom of <a href="http://courses.peoples-uni.org/course/studentprogress.php" target="_blank">http://courses.peoples-uni.org/course/studentprogress.php</a>. You can click on a name to "Mark Discounted Modules".
+To find students listed by semester that have had modules discounted, go to the bottom of <a href="https://courses.peoples-uni.org/course/studentprogress.php" target="_blank">https://courses.peoples-uni.org/course/studentprogress.php</a>. You can click on a name to "Mark Discounted Modules".
 </li>
 </ol>
 
@@ -1630,10 +1630,10 @@ To find students listed by semester that have had modules discounted, go to the 
 <h2>Education Committee Report</h2>
 <ol>
 <li>
-A report for the use of the Education Committee is at <a href="http://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">http://courses.peoples-uni.org/course/education_committee_report.php</a>.
+A report for the use of the Education Committee is at <a href="https://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">https://courses.peoples-uni.org/course/education_committee_report.php</a>.
 </li>
 <li>
-Access to <a href="http://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">http://courses.peoples-uni.org/course/education_committee_report.php</a> is given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+Access to <a href="https://courses.peoples-uni.org/course/education_committee_report.php" target="_blank">https://courses.peoples-uni.org/course/education_committee_report.php</a> is given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 <li>
 There are filters at the top of the report which...<br />
@@ -1669,7 +1669,7 @@ Note when exported to Excel, the notes will not be explicitly on separate lines 
 <h2>Statistics on Success of Students by Qualifications on Entry</h2>
 <ol>
 <li>
-Analysis of grades versus other characteristics (e.g. qualifications on entry, number of postings and initial goals) can be found using <a href="http://courses.peoples-uni.org/course/successbyqualifications.php" target="_blank">http://courses.peoples-uni.org/course/successbyqualifications.php</a>
+Analysis of grades versus other characteristics (e.g. qualifications on entry, number of postings and initial goals) can be found using <a href="https://courses.peoples-uni.org/course/successbyqualifications.php" target="_blank">https://courses.peoples-uni.org/course/successbyqualifications.php</a>
 </li>
 <li>
 There you will see (at the bottom of the page), a breakdown of qualifications and employment. Above this the page lists qualifications and employment per person. Note, only students for which we have this data are displayed and counted (some early application forms did not have this data).
@@ -1682,7 +1682,7 @@ There are also filters that limit scope to e.g. one module, by whether the stude
 </li>
 <li>
 The rightmost column also contains information on whether the student became a Tutor or SSO which may allow analysis of the characteristics of those students who go on to become contributors to Peoples-uni.<br />
-Note that <a href="http://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">List of MPH Graduates</a> and <a href="http://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">http://courses.peoples-uni.org/course/tutor_registrations.php</a> also contain this Tutor/SSO information.
+Note that <a href="https://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">List of MPH Graduates</a> and <a href="https://courses.peoples-uni.org/course/tutor_registrations.php" target="_blank">https://courses.peoples-uni.org/course/tutor_registrations.php</a> also contain this Tutor/SSO information.
 </li>
 </ol>
 
@@ -1691,7 +1691,7 @@ Note that <a href="http://courses.peoples-uni.org/course/list_of_mph_graduates.p
 <h2>Creating Certificates for Peoples-uni Volunteers</h2>
 <ol>
 <li>
-Go to <a href="http://courses.peoples-uni.org/course/listcertificates.php" target="_blank">http://courses.peoples-uni.org/course/listcertificates.php</a> and you will see a list of volunteer certificates sorted by first name of the person that was given the certificate.
+Go to <a href="https://courses.peoples-uni.org/course/listcertificates.php" target="_blank">https://courses.peoples-uni.org/course/listcertificates.php</a> and you will see a list of volunteer certificates sorted by first name of the person that was given the certificate.
 </li>
 <li>
 You can edit an existing certificate by pressing "Edit".
@@ -1731,18 +1731,18 @@ You can also list all certificates with the "List All Certificates" link.
 <h2>Page to allow a Student to see their Payment Account</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/account.php">http://courses.peoples-uni.org/course/account.php</a> allows a student to see their account, it is no direct use to staff (see "Update Payment Amounts, Method or Confirmed Status"/payconfirm.php in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">The "Details" button and the Approval Process</a> for a staff view on these data).
+<a href="https://courses.peoples-uni.org/course/account.php">https://courses.peoples-uni.org/course/account.php</a> allows a student to see their account, it is no direct use to staff (see "Update Payment Amounts, Method or Confirmed Status"/payconfirm.php in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">The "Details" button and the Approval Process</a> for a staff view on these data).
 </li>
 <li>
 It shows:-
 <br />Whether they are enrolled in MPH.
 <br />All their payment account transactions.
 <br />Their instalment payment schedule, if any.
-<br />Their receipts for Payments (see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts for Student Payments</a>), if any.
+<br />Their receipts for Payments (see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts for Student Payments</a>), if any.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/payment_history.php">http://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester.<br />
-At the bottom of that page is a link to <a href="http://courses.peoples-uni.org/course/download_payment_history.php">Download CSV file with full payment history for all semesters</a>.
+<a href="https://courses.peoples-uni.org/course/payment_history.php">https://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester.<br />
+At the bottom of that page is a link to <a href="https://courses.peoples-uni.org/course/download_payment_history.php">Download CSV file with full payment history for all semesters</a>.
 </li>
 </ol>
 
@@ -1775,12 +1775,12 @@ It will be possible to see on the page who has specified the instalment schedule
 <h2>List and Create Receipts for Student Payments</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/list_receipts.php">http://courses.peoples-uni.org/course/list_receipts.php</a> shows a list of all Receipts for Student Payments. These are generated automatically for all WorldPay payments, but must be manually generated for other payments. It is possible to click on a receipt to see it and it is also possible to Edit an existing receipt.<br />
-At the bottom of the page there is a link to <a href="http://courses.peoples-uni.org/course/create_receipt.php">http://courses.peoples-uni.org/course/create_receipt.php</a> to allow a new Receipt to be created.<br />
-That page and the Receipt Edit page (which is actually the same page) also have a link to <a href="http://courses.peoples-uni.org/course/student_receipts.php">http://courses.peoples-uni.org/course/student_receipts.php</a> where a Student can see a list of their Receipts and also download them.
+<a href="https://courses.peoples-uni.org/course/list_receipts.php">https://courses.peoples-uni.org/course/list_receipts.php</a> shows a list of all Receipts for Student Payments. These are generated automatically for all WorldPay payments, but must be manually generated for other payments. It is possible to click on a receipt to see it and it is also possible to Edit an existing receipt.<br />
+At the bottom of the page there is a link to <a href="https://courses.peoples-uni.org/course/create_receipt.php">https://courses.peoples-uni.org/course/create_receipt.php</a> to allow a new Receipt to be created.<br />
+That page and the Receipt Edit page (which is actually the same page) also have a link to <a href="https://courses.peoples-uni.org/course/student_receipts.php">https://courses.peoples-uni.org/course/student_receipts.php</a> where a Student can see a list of their Receipts and also download them.
 </li>
 <li>
-Students will also be able to see and download receipts in account.php (see <a href="http://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a>).
+Students will also be able to see and download receipts in account.php (see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a>).
 </li>
 </ol>
 
@@ -1791,12 +1791,12 @@ When a student goes to pay by WorldPay using pay.php, before they are directed t
 <br />
 <div align="center">
 <p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>
-<p>(Our legal registration details: <a href="http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">http://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>
+<p>(Our legal registration details: <a href="https://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative" target="_blank">https://www.peoples-uni.org/content/details-registration-peoples-open-access-education-initiative</a>)</p>
 <p><br /><br /><b>Cost for your chosen modules (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;[...]</b></p>
 <p>Use the button below to pay for your enrolment in [...] with WorldPay.<br />
 (Or to pay for the Master of Public Health programme.)</p>
 <br />
-<p>(note our refund policy: <a href="http://www.peoples-uni.org/content/refund-policy" target="_blank">http://www.peoples-uni.org/content/refund-policy</a>)</p>
+<p>(note our refund policy: <a href="https://www.peoples-uni.org/content/refund-policy" target="_blank">https://www.peoples-uni.org/content/refund-policy</a>)</p>
 <p>Your contact details...<br />
 Name: [...]<br />
 e-mail: [...]<br />
@@ -1812,7 +1812,7 @@ If these do not match the credit card you are going to use then please click HER
 <img src=https://www.worldpay.com/cgenerator/logos/maestro.gif border=0 alt="Maestro payments supported by WorldPay">
 <img src=https://www.worldpay.com/cgenerator/logos/jcb.gif border=0 alt="JCB">
 <img src=https://www.worldpay.com/cgenerator/logos/solo.gif border=0 alt="Solo payments supported by WorldPay">
-<a href=http://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
+<a href=https://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.worldpay.com/cgenerator/logos/poweredByWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 </div>
 <br />
 
@@ -1821,8 +1821,8 @@ If these do not match the credit card you are going to use then please click HER
 <h2>Sending Discussion Feedback to Students</h2>
 <ol>
 <li>
-Student coordinators need to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a><br />
-They should now do that using <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a><br />
+Student coordinators need to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="https://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a><br />
+They should now do that using <a href="https://courses.peoples-uni.org/course/posts.php" target="_blank">https://courses.peoples-uni.org/course/posts.php</a><br />
 <br />
 </li>
 <li>
@@ -1863,7 +1863,7 @@ There is also a link "Notes" on the right hand side of the ratings which gives T
 <br />
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> has 3 new columns with the (averaged if more than one Tutor rated) value of each of the 3 ratings for each Student Post (or "Not rated").<br />
+<a href="https://courses.peoples-uni.org/course/posts.php" target="_blank">https://courses.peoples-uni.org/course/posts.php</a> has 3 new columns with the (averaged if more than one Tutor rated) value of each of the 3 ratings for each Student Post (or "Not rated").<br />
 <br />
 </li>
 There is a fourth new column "Write discussion feedback for student..." which is colour coded to indicate if the student has been sent Discussion Feedback for the Module containing the Discussion Post. It is coloured Green/Yellow/Red, if feedback has been sent.<br />
@@ -1876,11 +1876,11 @@ There are 3 criteria (that match the 3 ratings) that must be selected as "Yes", 
 As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria feedback.<br />
 Note: It is possible to re-submit and e-mail again and overwrite the recorded submission.<br />
 <br />
-The data (criteria and free form text along with Student reflection on this feedback if provided) are stored for later analysis and can be accessed again from <a href="http://courses.peoples-uni.org/course/posts.php" target="_blank">http://courses.peoples-uni.org/course/posts.php</a> (via "Write discussion feedback" link). A spreadsheet with feedback/reflection data for all Students is displayed in the "old" Discussion Feedback page at <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a> where a list of e-mails of Students sent feedback can also be seen.<br />
+The data (criteria and free form text along with Student reflection on this feedback if provided) are stored for later analysis and can be accessed again from <a href="https://courses.peoples-uni.org/course/posts.php" target="_blank">https://courses.peoples-uni.org/course/posts.php</a> (via "Write discussion feedback" link). A spreadsheet with feedback/reflection data for all Students is displayed in the "old" Discussion Feedback page at <a href="https://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">https://courses.peoples-uni.org/course/discussionfeedbacks.php</a> where a list of e-mails of Students sent feedback can also be seen.<br />
 <br />
-The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a><br />
+The wording for the e-mail is specified in <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a><br />
 The e-mail text should give a link to a form which will allow Students to submit reflections on their discussion contributions. This link is
-http://courses.peoples-uni.org/course/ratingresponse.php?course_id=IDHERE<br />
+https://courses.peoples-uni.org/course/ratingresponse.php?course_id=IDHERE<br />
 There should be appropriate instructions about filling out the form.<br />
 The form contains the following fields...<br />
 What skills do I need to improve? (think about feedback I received in the e-mail on my contributions and from tutor/other student posts)<br />
@@ -1893,7 +1893,7 @@ Dear Alan,
 This is to provide feedback to you about your contributions to the
 discussion forums in each of the Topics in the module.
 As you will know from the section in the Student Handbook
-http://peoples-uni.org/content/discussion-contributions
+https://peoples-uni.org/content/discussion-contributions
 
 contributions to the discussion forums should “show reflection
 and critical thought, and understanding of relevant literature.
@@ -1925,7 +1925,7 @@ anything
 
 Please reflect on this feedback and then fill in this form
 with your reflections (you will need to login to Moodle):
-http://courses.peoples-uni.org/course/ratingresponse.php?course_id=326
+https://courses.peoples-uni.org/course/ratingresponse.php?course_id=326
 
 There are some helpful resources on how to carry out referencing in
 the Student Handbook and also in the Student Corner - such as the
@@ -1941,7 +1941,7 @@ http://equella.nottingham.ac.uk/uon/items/9ba73656-1729-2453-d9eb-6fd932a12753/1
 However, the Vancouver style is also frequently used in the medical
 scientific literature. There is information on critical thinking in
 the Student Corner "How can I develop my Critical Thinking skills?":
-http://courses.peoples-uni.org/mod/page/view.php?id=11321
+https://courses.peoples-uni.org/mod/page/view.php?id=11321
 
 We will be sending information on the number of posts you have made
 to the discussions in comparison with others on your module at a
@@ -1967,8 +1967,8 @@ At the top of the Feedback page all existing Postings with Ratings and existing 
 <br />
 </li>
 <li>
-As indicated in the same e-mail above, there is a link e.g. http://courses.peoples-uni.org/course/ratingresponse.php?course_id=326 which is sent out to students to allow them to submit reflections on the discussion feedback that they have been given. At the bottom of this page the student will be able to see all discussion feedback they have been given (one per Module) along with their reflections on this feedback (if any). This link can be sent out without a course_id parameter i.e.<br />
-<a href="http://courses.peoples-uni.org/course/ratingresponse.php">http://courses.peoples-uni.org/course/ratingresponse.php</a><br />
+As indicated in the same e-mail above, there is a link e.g. https://courses.peoples-uni.org/course/ratingresponse.php?course_id=326 which is sent out to students to allow them to submit reflections on the discussion feedback that they have been given. At the bottom of this page the student will be able to see all discussion feedback they have been given (one per Module) along with their reflections on this feedback (if any). This link can be sent out without a course_id parameter i.e.<br />
+<a href="https://courses.peoples-uni.org/course/ratingresponse.php">https://courses.peoples-uni.org/course/ratingresponse.php</a><br />
 This page will not have the form, but it will have all the discussion feedback with reflections (if any). Any missing reflections will have a link "Click here to add your reflections", which if clicked will bring the student to the form to add their reflections.<br />
 <br />
 </li>
@@ -2015,7 +2015,7 @@ And to allow sending general messages to filtered groups of Students there is a 
 <h2>Sending Discussion Feedback to Students (old method which still works, but has been superceded by one above)</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/discussionfeedback.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedback.php</a> is a form used by Student coordinators to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="http://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a>
+<a href="https://courses.peoples-uni.org/course/discussionfeedback.php" target="_blank">https://courses.peoples-uni.org/course/discussionfeedback.php</a> is a form used by Student coordinators to send feedback (in an e-mail) to a student in a module on whether they have meet the criteria on contribution to discussions specified in the <a href="https://peoples-uni.org/content/discussion-contributions" target="_blank">Student Handbook: Discussion contributions</a>
 </li>
 <li>
 The Student coordinator will need to specify the module (submit the form) and then select individual students (submitting the form again for each student) to give feedback. As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria.
@@ -2027,23 +2027,23 @@ It is indicated in the form whether the form has already been submitted for each
 There is a link close to the top of the form to allow resetting the module when/if is desired to move to a new module for feedback to students in that module.
 </li>
 <li>
-The data (criteria and free form text) are stored for later analysis and displayed in <a href="http://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedbacks.php</a>
+The data (criteria and free form text) are stored for later analysis and displayed in <a href="https://courses.peoples-uni.org/course/discussionfeedbacks.php" target="_blank">https://courses.peoples-uni.org/course/discussionfeedbacks.php</a>
 <br />A list of e-mails of Students sent feedback can also be seen here.
 </li>
 <li>
 Filters can be used to limit what is displayed on that page.
 </li>
 <li>
-There is also a link back to the <a href="http://courses.peoples-uni.org/course/discussionfeedback.php" target="_blank">http://courses.peoples-uni.org/course/discussionfeedback.php</a> form on that page.
+There is also a link back to the <a href="https://courses.peoples-uni.org/course/discussionfeedback.php" target="_blank">https://courses.peoples-uni.org/course/discussionfeedback.php</a> form on that page.
 </li>
 <li>
-<a href="http://courses.peoples-uni.org/course/coursegrades.php" target="_blank">http://courses.peoples-uni.org/course/coursegrades.php</a> also contains a link to that page.
+<a href="https://courses.peoples-uni.org/course/coursegrades.php" target="_blank">https://courses.peoples-uni.org/course/coursegrades.php</a> also contains a link to that page.
 </li>
 <li>
-The wording for the e-mail is specified in <a href="http://courses.peoples-uni.org/course/settings.php" target="_blank">http://courses.peoples-uni.org/course/settings.php</a>
+The wording for the e-mail is specified in <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a>
 </li>
 <li>
-The part about Student Posts in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> will be useful to see what students have posted.
+The part about Student Posts in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#tracking">Viewing Student Submissions & Re-Submissions, Grades & Comments, Student Posts, Tutor Posts and Student Support Forum Posts</a> will be useful to see what students have posted.
 </li>
 </ol>
 
@@ -2052,11 +2052,11 @@ The part about Student Posts in <a href="http://courses.peoples-uni.org/course/a
 <h2>Cleaning out old Discussion Forum Subscriptions in Students Corner</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a> is a page used to Clean out old Discussion Forum Subscriptions in Students Corner.
+<a href="https://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">https://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a> is a page used to Clean out old Discussion Forum Subscriptions in Students Corner.
 <br />It is possible to visit the page without causing any changes as long as the form is not submitted.
 </li>
 <li>
-Access to <a href="http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+Access to <a href="https://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php" target="_blank">https://courses.peoples-uni.org/course/clean_studentscorner_subscriptions.php</a> and the Details for each student are given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 <li>
 When the page is brought up a table will be displayed "Student Subscriptions that will be Removed (and remembered for later)..." showing those forum subscriptions in Students Corner that will be removed if the form is submitted.
@@ -2084,11 +2084,11 @@ Digest subscriptions are not removed by this page as there seems to be little or
 <h2>Determining if Student Support Forum Subscriptions in Students Corner have changed and Changing Back (not required anymore)</h2>
 <ol>
 <li>
-<a href="http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php</a> is a page used to Determine if Student Support Forum Subscriptions in Students Corner have changed and change back those that need to be.
+<a href="https://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php" target="_blank">https://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php</a> is a page used to Determine if Student Support Forum Subscriptions in Students Corner have changed and change back those that need to be.
 <br />It is possible to visit the page without causing any changes as long as the form is not submitted.
 </li>
 <li>
-Access to <a href="http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php" target="_blank">http://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php</a> is given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
+Access to <a href="https://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php" target="_blank">https://courses.peoples-uni.org/course/reset_studentscorner_subscriptions.php</a> is given by the System-wide "Manager" or "Administrator" roles. Both have the permission: moodle/site:viewparticipants.
 </li>
 <li>
 A table is displayed. For each Student (not Tutor or Viewer etc.) who has Student Support Forum Subscriptions (or should have) and the actual subscriptions do not match the expected subscription, a line in the table is displayed.
@@ -2103,7 +2103,7 @@ Another column with "Changed Forum Subscriptions" and a checkbox which should be
 Note that the "Original Forum Subscriptions" are recorded when a student is initially registered (there will only be one initially).
 </li>
 <li>
-Note there can be multiple subscriptions in each column and some of the subscriptions in the second column could be recorded subscriptions as described in <a href="http://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a>.
+Note there can be multiple subscriptions in each column and some of the subscriptions in the second column could be recorded subscriptions as described in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#cleanstudentcornersubscriptions">Cleaning out old Discussion Forum Subscriptions in Students Corner</a>.
 </li>
 <li>
 When the button "Change Back Subscriptions (or keep them) based on checkboxes above" is clicked the desired changes are made based on the checkboxes (if any) selected.
