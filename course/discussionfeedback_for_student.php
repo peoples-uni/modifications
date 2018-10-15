@@ -104,6 +104,7 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
 
   $peoples_discussion_feedback_email = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $peoples_discussion_feedback_email); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                                                                              // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $peoples_discussion_feedback_email = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $peoples_discussion_feedback_email);
 
   $student_name = fullname($userrecord);
   sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname ($student_name)", $peoples_discussion_feedback_email);

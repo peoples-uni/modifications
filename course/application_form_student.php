@@ -28,7 +28,7 @@ else {
 
 $editform = new application_form_returning_student_form(NULL, array('customdata' => array('semester' => $semester)));
 if ($editform->is_cancelled()) {
-  redirect(new moodle_url('http://peoples-uni.org'));
+  redirect(new moodle_url('https://peoples-uni.org'));
 }
 elseif ($data = $editform->get_data()) {
   unset($_SESSION['peoples_filling_in_application_form']);
@@ -207,6 +207,7 @@ elseif ($data = $editform->get_data()) {
 
   $body = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $body); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                    // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+  $body = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $body);
   $message = "$body\n\n";
 
   if ($application->reenrolment == 0) {

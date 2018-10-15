@@ -631,6 +631,7 @@ function sendemails($enrols, $emailsubject, $emailbody, $reg) {
 
         $emailbodytemp = preg_replace('#(http://[^\s]+)[\s]+#', "$1\n\n", $emailbodytemp); // Make sure every URL is followed by 2 newlines, some mail readers seem to concatenate following stuff to the URL if this is not done
                                                                                            // Maybe they would behave better if Moodle/we used CRLF (but we currently do not)
+        $emailbodytemp = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $emailbodytemp);
 
         if (sendapprovedmail_from_payments($email, $emailsubject, $emailbodytemp)) {
           echo "($i) $email successfully sent.<br />";

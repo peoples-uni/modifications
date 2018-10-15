@@ -181,7 +181,7 @@ if ($cert == 'transcript') {
 
 	cert_printtext(170, 475, 'C', 'Helvetica', '', 15, utf8_decode('Semester: ' . $enrol->semester));
 	cert_printtext(170, 500, 'C', 'Helvetica', '', 10, utf8_decode(isset($course->idnumber) ? $course->idnumber : ''));
-	cert_printtext(170, 500, 'R', 'Helvetica', '', 10, utf8_decode('http://peoples-uni.org'));
+	cert_printtext(170, 500, 'R', 'Helvetica', '', 10, utf8_decode('https://peoples-uni.org'));
 
 	//cert_printtext(150, 430, '', '', '', '', '');
 	//$pdf->SetLeftMargin(130);
@@ -291,7 +291,7 @@ elseif ($cert == 'participation') {
 
 	cert_printtext(170, 475, 'C', 'Helvetica', '', 15, utf8_decode('Semester: ' . $enrol->semester));
 	cert_printtext(170, 500, 'C', 'Helvetica', '', 10, utf8_decode(isset($course->idnumber) ? $course->idnumber : ''));
-	cert_printtext(170, 500, 'R', 'Helvetica', '', 10, utf8_decode('http://peoples-uni.org'));
+	cert_printtext(170, 500, 'R', 'Helvetica', '', 10, utf8_decode('https://peoples-uni.org'));
 
 	$filesafe = clean_filename($certificate->name.'.pdf');
 	$pdf->Output($filesafe, 'I'); // open in browser
@@ -530,7 +530,7 @@ ORDER BY datefirstenrolled ASC, fullname ASC");
 
 	//cert_printtext(170, 475, 'C', 'Helvetica', '', 15, utf8_decode('Semester: ' . $enrol->semester));
 	//cert_printtext(170, 500, 'C', 'Helvetica', '', 10, utf8_decode(isset($course->idnumber) ? $course->idnumber : ''));
-	cert_printtext(170, 500, 'R', 'Helvetica', '', 10, utf8_decode('http://peoples-uni.org'));
+	cert_printtext(170, 500, 'R', 'Helvetica', '', 10, utf8_decode('https://peoples-uni.org'));
 
 	//cert_printtext(150, 430, '', '', '', '', '');
 	//$pdf->SetLeftMargin(130);
