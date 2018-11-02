@@ -42,10 +42,12 @@
   CREATE INDEX mdl_peoples_payment_schedule_uid_ix ON mdl_peoples_payment_schedule (userid);
 
   CREATE TABLE mdl_peoples_instalment_amount (
+    id BIGINT(10) unsigned NOT NULL auto_increment,
     userid BIGINT(10)  UNSIGNED NOT NULL,
     date   BIGINT(10)  UNSIGNED NOT NULL DEFAULT 0,
     amount VARCHAR(10) NOT NULL,
-    PRIMARY KEY (userid)
+    PRIMARY KEY (id),
+    UNIQUE  KEY (userid)
   );
 */
 
