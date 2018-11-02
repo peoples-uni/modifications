@@ -449,6 +449,7 @@ Instalment Amount:&nbsp;<input type="text" size="60" name="amount" value="<?php 
 <input type="hidden" name="markpayconfirminstalment" value="1" />
 <input type="submit" name="payconfirminstalment" value="Set Instalment Amount (leave blank for full payment)" />
 </form>
+<br /><br /><br />
 <?php
   }
 }
