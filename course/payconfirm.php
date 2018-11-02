@@ -440,7 +440,7 @@ else {
     $peoples_instalment_amount = $DB->get_record('peoples_instalment_amount', array('userid' => $userid));
     if (empty($peoples_instalment_amount)) $instalment = '';
     else                                   $instalment = $peoples_instalment_amount->amount
-
+?>
 <form id="payconfirminstalmentform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
@@ -449,6 +449,7 @@ Instalment Amount:&nbsp;<input type="text" size="60" name="amount" value="<?php 
 <input type="hidden" name="markpayconfirminstalment" value="1" />
 <input type="submit" name="payconfirminstalment" value="Set Instalment Amount (leave blank for full payment)" />
 </form>
+<?php
   }
 }
 
