@@ -40,6 +40,13 @@
     PRIMARY KEY (id)
   );
   CREATE INDEX mdl_peoples_payment_schedule_uid_ix ON mdl_peoples_payment_schedule (userid);
+
+  CREATE TABLE mdl_peoples_instalment_amount (
+    userid BIGINT(10)  UNSIGNED NOT NULL,
+    date   BIGINT(10)  UNSIGNED NOT NULL DEFAULT 0,
+    amount VARCHAR(10) NOT NULL,
+    PRIMARY KEY (userid)
+  );
 */
 
 
@@ -223,6 +230,23 @@ elseif (!empty($_POST['marktransactionconfirmed'])) {
       $balance->not_confirmed = 0;
       $DB->update_record('peoples_student_balance', $balance);
     }
+  }
+}
+elseif (!empty($_POST['markpayconfirminstalment']) && !empty($_POST['userid'])) {
+  if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
+
+  if (empty($_POST['amount'])) {
+    $DB->delete_records('peoples_instalment_amount', array('userid' => $_POST['userid']));
+  }
+  elseif (!is_numeric($_POST['amount'])) {
+    notice('Instalment Amount must be a number. Press Continue and re-enter.', "$CFG->wwwroot/course/payconfirm.php?sid=$sid");
+  } else {
+    $DB->delete_records('peoples_instalment_amount', array('userid' => $_POST['userid']));
+    $peoples_instalment_amount = new stdClass();
+    $peoples_instalment_amount->userid = $_POST['userid'];
+    $peoples_instalment_amount->amount = $_POST['amount'];
+    $peoples_instalment_amount->date   = time();
+    $DB->insert_record('peoples_instalment_amount', $peoples_instalment_amount);
   }
 }
 
@@ -411,7 +435,20 @@ if (!empty($payment_schedule) && $userid != 0) {
 }
 else {
   if ($userid != 0) {
-    echo '<br /><br /><br /><br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Specify Instalments for this Student (normally done by Student themselves)</a>';
+    //echo '<br /><br /><br /><br /><a href="' . $CFG->wwwroot . '/course/specify_instalments.php?userid=' . $userid . '" target="_blank">Specify Instalments for this Student (normally done by Student themselves)</a>';
+
+    $peoples_instalment_amount = $DB->get_record('peoples_instalment_amount', array('userid' => $userid));
+    if (empty($peoples_instalment_amount)) $instalment = '';
+    else                                   $instalment = $peoples_instalment_amount->amount
+
+<form id="payconfirminstalmentform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
+<input type="hidden" name="sid" value="<?php echo $sid; ?>" />
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<input type="hidden" name="userid" value="<?php echo $userid; ?>" />
+Instalment Amount:&nbsp;<input type="text" size="60" name="amount" value="<?php echo $instalment; ?>" /><br />
+<input type="hidden" name="markpayconfirminstalment" value="1" />
+<input type="submit" name="payconfirminstalment" value="Set Instalment Amount (leave blank for full payment)" />
+</form>
   }
 }
 
