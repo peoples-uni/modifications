@@ -152,13 +152,14 @@ if (empty($peoples_instalment_amount)) {
 <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
 <?php
 } else {
+$instalment = (int)$peoples_instalment_amount->amount;
 ?>
-<p>Your normal installment amount is <?php echo "{$peoples_instalment_amount->amount} $currency";?>.</p>
+<p>Your normal installment amount is <?php echo "$instalment $currency";?>.</p>
 <p>You still owe <?php echo "$amount $currency";?>.</p>
 <p><strong>Please enter the amount you are paying now (in UK Pounds):&nbsp;</strong><input type="text" size="10" name="amount" /></p>
+<?php
 $amount = '';
 $currency = '';
-<?php
 }
 ?>
 <input type="hidden" name="desc" value="<?php echo $modulespurchasedlong; ?>" />
