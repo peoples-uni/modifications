@@ -875,6 +875,9 @@ Setting the "Payment Method". Note that a confirmatory e-mail is sent to the stu
 Marking all transactions in a student account which are "(not confirmed)" as confirmed.
 </li>
 <li>
+Specify that a student may pay amounts smaller than the full amount owed. If this "Instalment Amount" is set then that student will, when they go to pay be allowed enter an amount to pay different from the amount they owe (although this will still be displayed along with expected instalment amount). When they pay, the amount they paid will be deducted from their balance, and the next time they go to pay, they will see the updated amount they owe (their new balance).
+</li>
+<li>
 Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page in "Payment Method" for all future applications by this student).<br />
 payconfirm.php also lists the full student payment account, the "Payment Method" for all previous applications for earlier semesters by this student and the student payment schedule for those MPH students that have elected to pay by instalments (there is also a link to Specify Instalments/specify_instalments.php to specify/change this payment schedule using the same page as the student uses... see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a>).
 </li>
@@ -1750,6 +1753,9 @@ At the bottom of that page is a link to <a href="https://courses.peoples-uni.org
 <a name="specifyinstalments"></a>
 <h2>Specify Instalment Payment Schedule</h2>
 <ol>
+<li>
+This mechanism is no longer used (it was designed for MMU MPH). A simpler mechanism to allow selected students pay amounts smaller than the full amount owed can now be specified in payconfirm.php.
+</li>
 <li>
 This is used for the student to specify an instalment payment schedule for themselves. It can also be used (via a link in payconfirm.php) by staff to specify or change an instalment payment schedule. The student is only allowed do this once, after that it can only be changed by staff. The student should be/will be notified of the page to use for this in their approval e-mail.
 </li>
