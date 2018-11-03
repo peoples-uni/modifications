@@ -130,7 +130,23 @@ echo '<p>(note our refund policy: <a href="https://www.peoples-uni.org/content/r
 <input type="hidden" name="instId" value="232634" />
 <input type="hidden" name="cartId" value="<?php echo $modulespurchased; ?>" />
 <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
+<?php
+$peoples_instalment_amount = $DB->get_record('peoples_instalment_amount', array('userid' => $application->userid));
+if (empty($peoples_instalment_amount)) {
+?>
 <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
+<?php
+} else {
+$instalment = (int)$peoples_instalment_amount->amount;
+?>
+<p>Your normal installment amount is <?php echo "$instalment $currency";?>.</p>
+<p>You still owe <?php echo "$amount $currency";?>.</p>
+<p><strong>Please enter the amount you are paying now (in UK Pounds):&nbsp;</strong><input type="text" size="10" name="amount" /></p>
+<?php
+$amount = '';
+$currency = '';
+}
+?>
 <input type="hidden" name="desc" value="<?php echo $modulespurchasedlong; ?>" />
 
 <?php
