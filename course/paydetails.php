@@ -96,6 +96,7 @@ if (!empty($_POST['markpaydetails'])) {
   else notice('You must select the method you used for payment. Press Continue and re-select.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
 
   if (empty($_POST['datafromworldpay'])) notice('You must enter text with details of the payment. Press Continue and re-enter.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
+  if (empty($_POST['amount_paid'])) notice('You must enter the amount paid. Press Continue and re-enter.', "$CFG->wwwroot/course/paydetails.php?sid=$sid");
 
   $updated->datafromworldpay = $_POST['datafromworldpay'];
 
@@ -111,7 +112,9 @@ if (!empty($_POST['markpaydetails'])) {
 
   $peoples_student_balance = new stdClass();
   $peoples_student_balance->userid = $application->userid;
-  $peoples_student_balance->amount_delta = -$amount;
+
+  $amount_paid = $_POST['amount_paid'];
+  $peoples_student_balance->amount_delta = -$amount_paid;
   $peoples_student_balance->balance = $original_balance + $peoples_student_balance->amount_delta;
   $peoples_student_balance->currency = 'GBP';
   $peoples_student_balance->detail = $mechanism;
@@ -123,7 +126,7 @@ if (!empty($_POST['markpaydetails'])) {
   $DB->insert_record('peoples_student_balance', $peoples_student_balance);
 
   $message  = "$name indicates that payment has been made using $mechanism.\n";
-  $message .= "Applicant's balance has been adjusted by $amount pounds (not confirmed).\n\n";
+  $message .= "Applicant's balance has been adjusted by $amount_paid pounds (not confirmed).\n\n";
   $message .= "Payment info that was entered by applicant: $info\n";
 
   // Dummy User
@@ -152,7 +155,7 @@ else {
   echo "<p><b>Amount for next unpaid instalment (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
 }
 
-echo "<p>Select the method you used to pay.<br />Then enter confirmation/receipt information you received when you paid.<br />Then click Submit.</p>";
+echo "<p>Select the method you used to pay.<br />Then enter the amount you paid when converted to UK Pounds Sterling (even if you did a transfer in a different currency).<br />Then enter confirmation/receipt information you received when you paid.<br />Then click Submit.</p>";
 
 ?>
 <br /><br />
@@ -175,6 +178,7 @@ Select the method you used for Payment: <select name="paymentmechanism">
 ?>
 </select><br /><br />
 
+Enter amount you paid when converted to UK Pounds Sterling: <input type="text" size="60" name="amount_paid" /><br /><br />
 Enter confirmation/receipt information you received when you paid: <input type="text" size="60" name="datafromworldpay" />
 
 <input type="hidden" name="markpaydetails" value="1" /><br /><br />
