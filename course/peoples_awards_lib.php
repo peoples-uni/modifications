@@ -69,6 +69,8 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
   }
   $cumulative_enrolled_ids_to_discount = explode(',', $cumulative_enrolled_ids_to_discount_string);
 
+  // Hack to ignore course_id: 148, user_id: 192, PUEPI, Introduction to Epidemiology (Dick 20181111)
+  if ($userid == 192) $cumulative_enrolled_ids_to_discount[] = 148;
 
   // If an identical module has already been passed, then do not count the first pass and count the second
   $all_enrols = $DB->get_records_sql("
