@@ -52,7 +52,7 @@ foreach ($enrols as $enrol) {
     $credits = 60;
   }
   else {
-    $credits = 20;
+    $credits = 15; // Dick asked to change from 20 to 15 20181227 (and this does match peoplescertificate.php)
   }
 
   $enrol_list[$enrol->fullname] = array('code' => $code, 'semester' => $semester_text, 'credits' => $credits, 'id' => $enrol->id);
