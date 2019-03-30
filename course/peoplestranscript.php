@@ -50,6 +50,7 @@ foreach ($enrols as $enrol) {
 
   if ($code == 'PUDISS') {
     $credits = 60;
+    if ($userid == 2183) $credits = 55;
   }
   else {
     $credits = 15; // Dick asked to change from 20 to 15 20181227 (and this does match peoplescertificate.php)
