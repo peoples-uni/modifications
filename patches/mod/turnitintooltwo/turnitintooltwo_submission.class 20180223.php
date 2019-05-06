@@ -1,6 +1,6 @@
 <?php
 // This file is part of Moodle - http://moodle.org/
-// - edit by omo -TEST
+//
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -14,9 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
-
-require_once(__DIR__."/lib.php");
 require_once(__DIR__.'/classes/digitalreceipt/receipt_message.php');
 require_once(__DIR__.'/classes/digitalreceipt/instructor_message.php');
 
@@ -51,7 +48,7 @@ class turnitintooltwo_submission {
     private $submission_instructors;
     public $submission_orcapable;
     public $submission_acceptnothing;
-    public $overallgrade;
+    public $overall_grade;
     private $receipt;
 
     public function __construct($id = 0, $idtype = "moodle", $turnitintooltwoassignment = "", $partid = "") {
@@ -76,10 +73,13 @@ class turnitintooltwo_submission {
     /**
      * Create new submission object in database
      *
+     * @global type $DB
      * @param mixed $data to use for object
      * @return object
      */
     public function create_submission($data) {
+        global $DB;
+
         $this->userid = $data['studentsname'];
         $this->submission_part = $data['submissionpart'];
         $this->submission_title = $data['submissiontitle'];
@@ -96,35 +96,14 @@ class turnitintooltwo_submission {
         $submission->submission_unanon = 0;
         $submission->submission_grade = null;
         $submission->submission_gmimaged = 0;
-        $submission->submission_hash = $submission->userid.'_'.$submission->turnitintooltwoid.'_'.$submission->submission_part;
 
-        $response = $this->insert_submission($submission);
-
-        if ($response) {
-            $this->reset_submission($data);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Reset submission data when resubmitting
-     *
-     * @global type $DB
-     * @param object $submission data to insert.
-     * @return boolean
-     */
-    public function insert_submission($submission) {
-        global $DB;
-
-        try {
-            $this->id = $DB->insert_record('turnitintooltwo_submissions', $submission);
-            return true;
-        } catch (Exception $e) {
+        if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
             return false;
         }
+
+        $this->reset_submission($data);
+
+        return true;
     }
 
     /**
@@ -180,26 +159,26 @@ class turnitintooltwo_submission {
                 $this->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
             }
 
-            if (count($turnitintooltwoassignment->get_parts()) > 1) {
+            if (count($turnitintooltwoassignment->get_parts() > 1)) {
                 if ($submission->userid != 0) {
                     $usersubmissions = $turnitintooltwoassignment->get_user_submissions($submission->userid,
                                                             $submission->turnitintooltwoid);
                     $useroverallgrade = $turnitintooltwoassignment->get_overall_grade($usersubmissions);
 
                     if ($turnitintooltwoassignment->turnitintooltwo->grade == 0 OR $useroverallgrade === '--') {
-                        $this->overallgrade = '--';
+                        $this->overall_grade = '--';
                     } else if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) { // Scale.
                         $scale = $DB->get_record('scale', array('id' => $turnitintooltwoassignment->turnitintooltwo->grade * -1));
                         $scalearray = explode(",", $scale->scale);
                         // Array is zero indexed, Scale positions are from 1 upward.
                         $index = $useroverallgrade - 1;
-                        $this->overallgrade = $scalearray[$index];
+                        $this->overall_grade = $scalearray[$index];
                     } else {
-                        $usergrade = round($useroverallgrade / $turnitintooltwoassignment->turnitintooltwo->grade * 100, 1);
-                        $this->overallgrade = $usergrade.'%';
+                        $this->overall_grade = round($useroverallgrade /
+                                                    $turnitintooltwoassignment->turnitintooltwo->grade * 100, 1).'%';
                     }
                 } else {
-                    $this->overallgrade = '--';
+                    $this->overall_grade = '--';
                 }
             }
 
@@ -319,7 +298,7 @@ class turnitintooltwo_submission {
 
         // Delete Moodle submission first.
         if (!$DB->delete_records('turnitintooltwo_submissions', array('id' => $this->id))) {
-            $notice["type"] = "danger";
+            $notice["type"] = "error";
             $notice["message"] = get_string('submissiondeleteerror', 'turnitintooltwo');
             return $notice;
         }
@@ -339,9 +318,9 @@ class turnitintooltwo_submission {
         // Update grade in Gradecenter.
         $grades = new stdClass();
 
-        // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking.
-        if ($submissions = $DB->get_records('turnitintooltwo_submissions',
-                                    array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
+        // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking
+        if ($submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' =>
+                                                $turnitintooltwoassignment->turnitintooltwo->id,
                                                     'userid' => $this->userid, 'submission_unanon' => 1))) {
             $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
             if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
@@ -389,7 +368,7 @@ class turnitintooltwo_submission {
                     $this->userid
                 );
 
-                $notice["type"] = "danger";
+                $notice["type"] = "full-error";
                 $notice["message"] = get_string('submissiondeleted', 'turnitintooltwo').
                                         ' ('.get_string('turnitinid', 'turnitintooltwo').
                                             ': '.$this->submission_objectid.')';
@@ -415,13 +394,12 @@ class turnitintooltwo_submission {
      * @return integer $submissionid the submissions id for the submission
      */
     public function do_tii_nothing_submission($cm, $turnitintooltwoassignment, $partid, $userid) {
-        global $DB, $USER;
+        global $DB, $USER, $CFG;
 
         $context = context_module::instance($cm->id);
 
         // Check if user is a member of class, if not then join them to it.
-        $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
-        $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
+        $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
         $user = new turnitintooltwo_user($userid, 'Learner');
         $user->join_user_to_class($course->turnitin_cid);
         $user->edit_tii_user();
@@ -431,11 +409,11 @@ class turnitintooltwo_submission {
         // Create Submission object to send to Turnitin.
         $newsubmission = new TiiSubmission();
         $newsubmission->setAssignmentId($part->tiiassignid);
-        $newsubmission->setAuthorUserId($user->tiiuserid);
+        $newsubmission->setAuthorUserId($user->tii_user_id);
         $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
         $instructor->edit_tii_user();
 
-        $newsubmission->setSubmitterUserId($instructor->tiiuserid);
+        $newsubmission->setSubmitterUserId($instructor->tii_user_id);
         $newsubmission->setRole('Instructor');
 
         // Initialise Comms Object.
@@ -451,18 +429,32 @@ class turnitintooltwo_submission {
             $submission->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
             $submission->submission_part = $partid;
             $submission->submission_title = get_string('gradingtemplate', 'turnitintooltwo');
-            $submission->submission_type = 1; // Always a file type.
+            $submission->submission_type = 1; // Always a file type
             $submission->submission_objectid = $newsubmission->getSubmissionId();
             $submission->submission_unanon = 0;
             $submission->submission_grade = null;
             $submission->submission_gmimaged = 0;
             $submission->submission_acceptnothing = 1;
             $submission->submission_orcapable = 0;
-            $submission->submission_hash = $submission->userid.'_'.$submission->turnitintooltwoid.'_'.$submission->submission_part;
 
-            // Add entry to log.
-            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission",
-                    'view.php?id='.$cm->id, get_string('gradenosubmission', 'turnitintooltwo') . ": $userid", $cm->id, $userid);
+            //Send a message to the user's Moodle inbox with the digital receipt.
+            $partdetails = $turnitintooltwoassignment->get_part_details($partid);
+            $input = array(
+                'firstname' => $user->firstname,
+                'lastname' => $user->lastname,
+                'submission_title' => get_string('gradingtemplate', 'turnitintooltwo'),
+                'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
+                'assignment_part' => $partdetails->partname,
+                'course_fullname' => $course->fullname,
+                'submission_date' => date('d-M-Y h:iA'),
+                'submission_id' => $submission->submission_objectid
+            );
+
+            $message = $this->receipt->build_message($input);
+            $this->receipt->send_message($userid, $message);
+
+            //Add entry to log.
+            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, get_string('gradenosubmission', 'turnitintooltwo') . ": $userid", $cm->id, $userid);
 
             if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
                 return get_string('submissionupdateerror', 'turnitintooltwo');
@@ -472,16 +464,16 @@ class turnitintooltwo_submission {
                 $assignment->submitted = 1;
                 $DB->update_record('turnitintooltwo', $assignment);
 
-                $partdata = new stdClass();
-                $partdata->id = $partid;
-                $partdata->submitted = 1;
+                $part_data = new stdClass();
+                $part_data->id = $partid;
+                $part_data->submitted = 1;
 
-                // Disable anonymous marking if post date has passed.
+                //Disable anonymous marking if post date has passed.
                 if ($part->dtpost <= time()) {
-                    $partdata->unanon = 1;
+                    $part_data->unanon = 1;
                 }
 
-                $DB->update_record('turnitintooltwo_parts', $partdata);
+                $DB->update_record('turnitintooltwo_parts', $part_data);
 
                 return array( "submission_id" => $newsubmission->getSubmissionId() );
             }
@@ -510,8 +502,7 @@ class turnitintooltwo_submission {
         $context = context_module::instance($cm->id);
 
         // Check if user is a member of class, if not then join them to it.
-        $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
-        $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
+        $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
         $user = new turnitintooltwo_user($this->userid, 'Learner');
         $user->join_user_to_class($course->turnitin_cid);
         $user->edit_tii_user();
@@ -529,13 +520,13 @@ class turnitintooltwo_submission {
             );
 
             if ( !$turnitintooltwoassignment->turnitintooltwo->anon && empty($config->enablepseudo) ) {
-                $userdetails = array(
+                $user_details = array(
                     $this->userid,
                     $user->firstname,
                     $user->lastname
                 );
 
-                $filename = array_merge($userdetails, $filename);
+                $filename = array_merge($user_details, $filename);
             }
 
             $suffix = $file->get_filename();
@@ -564,15 +555,15 @@ class turnitintooltwo_submission {
                 $apimethod = "createSubmission";
             }
             $newsubmission->setTitle($this->submission_title);
-            $newsubmission->setAuthorUserId($user->tiiuserid);
+            $newsubmission->setAuthorUserId($user->tii_user_id);
             if ($user->id == $USER->id) {
-                $newsubmission->setSubmitterUserId($user->tiiuserid);
+                $newsubmission->setSubmitterUserId($user->tii_user_id);
                 $newsubmission->setRole('Learner');
             } else {
                 $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
                 $instructor->edit_tii_user();
 
-                $newsubmission->setSubmitterUserId($instructor->tiiuserid);
+                $newsubmission->setSubmitterUserId($instructor->tii_user_id);
                 $newsubmission->setRole('Instructor');
             }
 
@@ -606,7 +597,6 @@ class turnitintooltwo_submission {
                 $submission->submission_unanonreason = $this->submission_unanonreason;
                 $submission->submission_transmatch = $this->submission_transmatch;
                 $submission->submission_acceptnothing = 0;
-                $submission->submission_hash = $submission->userid.'_'.$submission->turnitintooltwoid.'_'.$submission->submission_part;
 
                 $DB->update_record('turnitintooltwo_submissions', $submission);
 
@@ -617,30 +607,31 @@ class turnitintooltwo_submission {
 
                 $notice["success"] = true;
                 $notice["message"] = get_string('submissionuploadsuccess', 'turnitintooltwo');
-                $notice["extract"] = htmlspecialchars($newsubmission->getTextExtract());
+                $notice["extract"] = $newsubmission->getTextExtract();
                 $notice["tii_submission_id"] = $submission->submission_objectid;
 
-                // Send a message to the user's Moodle inbox with the digital receipt.
+                //Send a message to the user's Moodle inbox with the digital receipt.
                 $input = array(
                     'firstname' => $user->firstname,
                     'lastname' => $user->lastname,
                     'submission_title' => $this->submission_title,
                     'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
-                    'assignment_part' => $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
+                    'assignment_part' => $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
                     'course_fullname' => $course->fullname,
                     'submission_date' => date('d-M-Y h:iA'),
                     'submission_id' => $submission->submission_objectid
                 );
 
-                // Student digital receipt.
-                $message = $this->receipt->build_message($input);
-                $this->receipt->send_message($this->userid, $message, $course->id);
 
-                // Instructor digital receipt.
+                // Student digital receipt
+                $message = $this->receipt->build_message($input);
+                $this->receipt->send_message($this->userid, $message);
+
+                // Instructor digital receipt
                 $this->submission_instructors = get_enrolled_users($context, 'mod/turnitintooltwo:grade', 0, 'u.id');
-                if (!empty($this->submission_instructors)) {
+                if(!empty($this->submission_instructors)){
                     $message = $this->instructor_receipt->build_instructor_message($input);
-                    $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message, $course->id);
+                    $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message);
                 }
 
                 // Create a log entry for submission going to Turnitin.
@@ -656,9 +647,7 @@ class turnitintooltwo_submission {
                 );
 
                 // Add to activity log.
-                $logstring = "Action: Submission | Id: ".$this->turnitintooltwoid." | Part: ".$submission->submission_part;
-                $logstring .= " | User ID: ".$user->id." (".$user->tiiuserid.") Submission title: ".$submission->submission_title;
-                turnitintooltwo_activitylog($logstring, "REQUEST");
+                turnitintooltwo_activitylog("Action: Submission | Id: ".$this->turnitintooltwoid." | Part: ".$submission->submission_part." | User ID: ".$user->id." (".$user->tii_user_id.") Submission title: ".$submission->submission_title, "REQUEST");
             } catch (Exception $e) {
                 $errorstring = (!is_null($this->submission_objectid)) ? "updatesubmissionerror" : "createsubmissionerror";
                 $error = $turnitincomms->handle_exceptions($e, $errorstring, false, true);
@@ -783,11 +772,8 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
         $sub->submission_objectid = $tiisubmissiondata->getSubmissionId();
         $sub->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
 
-        if (is_numeric($tiisubmissiondata->getOverallSimilarity())) {
-            $sub->submission_score = $tiisubmissiondata->getOverallSimilarity();
-        } else {
-            $sub->submission_score = null;
-        }
+        $sub->submission_score = (is_numeric($tiisubmissiondata->getOverallSimilarity())) ?
+                                        $tiisubmissiondata->getOverallSimilarity() : null;
         $sub->submission_transmatch = 0;
 
         if ($turnitintooltwoassignment->turnitintooltwo->transmatch == 1 &&
@@ -803,28 +789,24 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
         $sub->submission_unanon = ($tiisubmissiondata->getAnonymous() == 1) ? 0 : 1;
         $sub->submission_orcapable = ($tiisubmissiondata->getOriginalityReportCapable() == 1) ? 1 : 0;
         $sub->submission_acceptnothing = ($tiisubmissiondata->getAcceptNothingSubmission() == 1) ? 1 : 0;
-
-        if ($sub->submission_unanon == 1) {
-            $sub->submission_unanonreason = urldecode($tiisubmissiondata->getAnonymousRevealReason());
-        } else {
-            $sub->submission_unanonreason = null;
-        }
+        $sub->submission_unanonreason = ($sub->submission_unanon == 1) ?
+                                            urldecode($tiisubmissiondata->getAnonymousRevealReason()) : null;
 
         $sub->submission_modified = strtotime($tiisubmissiondata->getDate());
         $sub->translated_overall_similarity = $tiisubmissiondata->getTranslatedOverallSimilarity();
-        if ($tiisubmissiondata->getAuthorLastViewedFeedback() > 0) {
-            $sub->submission_attempts = strtotime($tiisubmissiondata->getAuthorLastViewedFeedback());
-        } else {
-            $sub->submission_attempts = 0;
-        }
+        $sub->submission_attempts = ($tiisubmissiondata->getAuthorLastViewedFeedback() > 0) ?
+                                    strtotime($tiisubmissiondata->getAuthorLastViewedFeedback()) : 0;
 
         // If save not passed in then only update if certain items have changed to save on database load.
         if ($this->submission_grade != $sub->submission_grade || $this->submission_score != $sub->submission_score ||
             $this->submission_modified != $sub->submission_modified || $this->submission_attempts != $sub->submission_attempts ||
             $this->submission_unanon != $sub->submission_unanon || $this->submission_part != $sub->submission_part ||
-            $this->submission_gmimaged != $sub->submission_gmimaged || $this->submission_objectid != $sub->submission_objectid) {
+            $this->submission_gmimaged != $sub->submission_gmimaged) {
             $save = true;
         }
+
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
+                                                                $turnitintooltwoassignment->turnitintooltwo->course);
 
         if ($save) {
             // If the user is not a moodle user then get their name from Tii - only do this on initial save.
@@ -833,10 +815,21 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
             // If we have no user ID get it from the Moodle database by using their Turnitin e-mail address.
             if ($sub->userid == 0) {
                 $tmpuser = new turnitintooltwo_user(0);
-                $tmpuser->tiiuserid = $tiisubmissiondata->getAuthorUserId();
+                $tmpuser->tii_user_id = $tiisubmissiondata->getAuthorUserId();
                 $tiiuser = $tmpuser->set_user_values_from_tii();
                 if ($userrecord = $DB->get_record('user', array('email' => $tiiuser["email"]))) {
                     $sub->userid = $userrecord->id;
+                }
+            }
+
+            // Check if the user is enrolled.
+            if ($sub->userid != 0) {
+                $context = context_module::instance($cm->id);
+                if (!is_enrolled($context, $sub->userid)) {
+                    // Enroll the user as a student.
+                    $enrol = enrol_get_plugin('manual');
+                    $instance = $DB->get_record("enrol", array('courseid'=> $cm->course, 'enrol'=>'manual'));
+                    $enrol->enrol_user($instance, $sub->userid, 5);
                 }
             }
 
@@ -844,7 +837,7 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
                 if ($tiisubmissiondata->getAuthorUserId() > 0) {
                     $sub->submission_nmuserid = $tiisubmissiondata->getAuthorUserId();
                     $tmpuser = new turnitintooltwo_user(0);
-                    $tmpuser->tiiuserid = $tiisubmissiondata->getAuthorUserId();
+                    $tmpuser->tii_user_id = $tiisubmissiondata->getAuthorUserId();
                     $tiiuser = $tmpuser->set_user_values_from_tii();
 
                     $sub->submission_nmfirstname = $tiiuser["firstname"];
@@ -856,16 +849,6 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
                 }
             }
 
-            // Create our submission hash to prevent duplication.
-            $sub->submission_hash = $sub->userid.'_'.$sub->turnitintooltwoid.'_'.$sub->submission_part;
-            // Check submission hash doesn't exist already
-            $checksub = $DB->get_record('turnitintooltwo_submissions',
-                                            array("submission_hash" => $sub->submission_hash), 'id', IGNORE_MULTIPLE);
-
-            if ($checksub) {
-                $this->id = $checksub->id;
-            }
-
             if (!empty($this->id)) {
                 $sub->id = $this->id;
                 $DB->update_record("turnitintooltwo_submissions", $sub, $bulk);
@@ -873,46 +856,32 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
                 $sub->id = $DB->insert_record("turnitintooltwo_submissions", $sub, true, $bulk);
             }
 
-            // Update the Moodle gradebook.
-            $this->update_gradebook($sub, $turnitintooltwoassignment);
-        }
-    }
+            // Update gradebook.
+            @include_once($CFG->libdir."/gradelib.php");
+            if ($sub->userid > 0 && $sub->submission_unanon) {
+                $user = new turnitintooltwo_user($sub->userid, "Learner");
 
-    /**
-     * Update the Moodle gradebook.
-     *
-     * @param type $sub
-     * @return type $turnitintooltwoassignment
-     */
-    public function update_gradebook($sub, $turnitintooltwoassignment) {
-        global $DB, $CFG;
+                $grades = new stdClass();
 
-        // Update gradebook.
-        @include_once($CFG->libdir."/gradelib.php");
-        if ($sub->userid > 0 && $sub->submission_unanon) {
-            $user = new turnitintooltwo_user($sub->userid, "Learner");
-            $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
-                                                            $turnitintooltwoassignment->turnitintooltwo->course);
-            $grades = new stdClass();
+                // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking
+                if ($submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' =>
+                                                        $turnitintooltwoassignment->turnitintooltwo->id,
+                                                            'userid' => $user->id, 'submission_unanon' => 1))) {
+                    $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
+                    if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
+                        // Using a scale.
+                        $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
+                    } else {
+                        $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
+                    }
 
-            // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking.
-            if ($submissions = $DB->get_records('turnitintooltwo_submissions',
-                                            array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
-                                                        'userid' => $user->id, 'submission_unanon' => 1))) {
-                $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
-                if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
-                    // Using a scale.
-                    $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
-                } else {
-                    $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
                 }
+                $grades->userid = $user->id;
+                $params['idnumber'] = $cm->idnumber;
 
+                grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
+                                'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
             }
-            $grades->userid = $user->id;
-            $params['idnumber'] = $cm->idnumber;
-
-            grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
-                            'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
         }
     }
 
@@ -923,12 +892,10 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
      * @return boolean
      */
     public function unanonymise_submission($reason) {
-        global $USER;
-
         // Get user and part details.
         $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
         $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part);
-        $user = new turnitintooltwo_user($USER->id);
+        $user = new turnitintooltwo_user($this->userid);
 
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
@@ -937,12 +904,11 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
         $submission = new TiiSubmission();
         $submission->setSubmissionId($this->submission_objectid);
         $submission->setAssignmentId($partdetails->tiiassignid);
-        $reason = urldecode($reason);
         if (strlen($reason) < 5) {
             $reason = "No specified reason: ".$reason;
         }
         $submission->setAnonymousRevealReason($reason);
-        $submission->setAnonymousRevealUser($user->tiiuserid);
+        $submission->setAnonymousRevealUser($user->tii_user_id);
         $submission->setAnonymousRevealDateTime(date("c"));
 
         try {
@@ -952,17 +918,5 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
             $turnitincomms->handle_exceptions($e, "unanonymiseerror", false);
             return false;
         }
-    }
-
-    /**
-     * Checking if grade exists for assignment
-     *
-     * @param string $turnitintooltwoid
-     * @return int
-     */
-    public function count_graded_submissions($turnitintooltwoid) {
-        global $DB;
-        return $DB->count_records_select("turnitintooltwo_submissions", "turnitintooltwoid = :turnitintooltwoid AND submission_grade > 0",
-            array("turnitintooltwoid" => $turnitintooltwoid));
     }
 }
