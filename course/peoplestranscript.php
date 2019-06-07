@@ -51,6 +51,7 @@ foreach ($enrols as $enrol) {
   if ($code == 'PUDISS') {
     $credits = 60;
     if ($userid == 2183) $credits = 55;
+    if ($userid == 1852) $credits = 55;
   }
   else {
     $credits = 15; // Dick asked to change from 20 to 15 20181227 (and this does match peoplescertificate.php)
@@ -225,6 +226,7 @@ foreach ($modules as $index => $module) {
   cert_printtext($signatureleft + $d1, $h, 'L', 'Helvetica', '', $size_title, utf8_decode($enrol_list[$module]['code']));
 
   if ($userid == 2183) $enrol_list[$module]['credits'] += 5;
+  if ($userid == 1852) $enrol_list[$module]['credits'] += 5;
   cert_printtext($signatureleft + $d2, $h, 'L', 'Helvetica', '', $size_title, utf8_decode($enrol_list[$module]['credits']));
 
   $credit_total += $enrol_list[$module]['credits'];
