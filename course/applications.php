@@ -116,7 +116,7 @@ CREATE TABLE mdl_peoplesmph (
   sid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   datesubmitted BIGINT(10) UNSIGNED NOT NULL,
   mphstatus BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  note text default '' NOT NULL,
+  note text NOT NULL,
 CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoplesmph_uid_ix ON mdl_peoplesmph (userid);
@@ -137,7 +137,7 @@ CREATE TABLE mdl_peoplesmph2 (
   entitled  BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   willpay   BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   semester_graduated VARCHAR(255) NOT NULL DEFAULT '',
-  note text default '' NOT NULL,
+  note text NOT NULL,
 CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoplesmph2_uid_ix ON mdl_peoplesmph2 (userid);
@@ -177,7 +177,7 @@ CREATE TABLE mdl_peoples_ceatup (
   graduated BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   suspended BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   semester_graduated VARCHAR(255) NOT NULL DEFAULT '',
-  note text default '' NOT NULL,
+  note text NOT NULL,
 CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoples_ceatup_uid_ix ON mdl_peoples_ceatup (userid);
@@ -188,7 +188,7 @@ CREATE TABLE mdl_peoples_cert_ps (
   datesubmitted BIGINT(10) UNSIGNED NOT NULL,
   datelastunentolled BIGINT(10) UNSIGNED NOT NULL,
   cert_psstatus BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  note text default '' NOT NULL,
+  note text NOT NULL,
 CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoples_cert_ps_uid_ix ON mdl_peoples_cert_ps (userid);
@@ -216,7 +216,7 @@ CREATE TABLE mdl_peoplespaymentnote (
   sid BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   datesubmitted BIGINT(10) UNSIGNED NOT NULL,
   paymentstatus BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  note text default '' NOT NULL,
+  note text NOT NULL,
 CONSTRAINT PRIMARY KEY (id)
 );
 CREATE INDEX mdl_peoplespaymentnote_uid_ix ON mdl_peoplespaymentnote (userid);
