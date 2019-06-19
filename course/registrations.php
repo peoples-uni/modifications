@@ -235,7 +235,7 @@ $full_names = [];
 $full_dobs = [];
 foreach ($applications as $application) {
   if ($application->state == 1) { // Was previously registered
-    $fullname = $application->firstname . ' ' . $application->lastname;
+    $fullname = strtolower($application->firstname . ' ' . $application->lastname);
     $full_names[$fullname] = $fullname;
 
     $dob = $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
@@ -367,7 +367,7 @@ foreach ($applications as $sid => $application) {
 
   $prefix = '';
   if ($application->state == 0) {
-    if (!empty($full_names[$application->firstname . ' ' . $application->lastname])) {
+    if (!empty($full_names[strtolower($application->firstname . ' ' . $application->lastname)])) {
       $prefix = '<span style="color:red">**</span>';
     }
   }
