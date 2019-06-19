@@ -365,7 +365,13 @@ foreach ($applications as $sid => $application) {
     $rowdata[] = $z;
   }
 
-  $rowdata[] = htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8');
+  $prefix = '';
+  if ($application->state == 0) {
+    if (!empty($full_names[$application->firstname . ' ' . $application->lastname])) {
+      $prefix = '<span style="color:red">**</span>';
+    }
+  }
+  $rowdata[] = $prefix . htmlspecialchars($application->lastname, ENT_COMPAT, 'UTF-8');
 
   $rowdata[] = htmlspecialchars($application->firstname, ENT_COMPAT, 'UTF-8');
 
@@ -382,7 +388,13 @@ foreach ($applications as $sid => $application) {
   }
   $rowdata[] = $z;
 
-  $rowdata[] = $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
+  $prefix = '';
+  if ($application->state == 0) {
+    if (!empty($full_dobs[$application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear])) {
+      $prefix = '<span style="color:red">**</span>';
+    }
+  }
+  $rowdata[] = $prefix . $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
 
   $rowdata[] = $application->gender;
 
