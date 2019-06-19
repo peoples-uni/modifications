@@ -231,6 +231,18 @@ if (empty($email_already_in_moodle)) {
   $email_already_in_moodle = array();
 }
 
+$full_names = [];
+$full_dobs = [];
+foreach ($applications as $application) {
+  if ($application->state == 1) { // Was previously registered
+    $fullname = $application->firstname . ' ' . $application->lastname;
+    $full_names[$fullname] = $fullname;
+
+    $dob = $application->dobday . '/' . $application->dobmonth . '/' . $application->dobyear;
+    $full_dobs[$dob] = $dob;
+  }
+}
+
 $emaildups = 0;
 foreach ($applications as $sid => $application) {
   $state = (int)$application->state;
@@ -497,8 +509,10 @@ echo '<br />Total Registered: ' . $nregistered;
 echo '<br /><br />(Duplicated e-mails: ' . $emaildups . ',  see <span style="color:navy">**</span>)';
 echo '<br /><br />(If a Moodle user already has this e-mail then it will be marked with <span style="color:red">**</span>.<br />
 In that case the student is probably already in Moodle and should not be registered.)';
+echo '<br />(If a Moodle user already has a name or date of birth that seems to match a new registration, then these will also be marked with <span style="color:red">**</span>. But this is less likely to be relevant.)';
+
 echo '<br /><br />Total Not Registered (excluding duplicates or those with existing Moodle user): ' . count(array_unique($students_unregistered));
-echo '<br />(This may overestimate the number waiting to be registered because of historical registrations what were bypassed.)';
+echo '<br />(This may overestimate the number waiting to be registered because of historical registrations that were bypassed.)';
 echo '<br/><br/>';
 
 
