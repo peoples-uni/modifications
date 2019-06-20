@@ -307,7 +307,8 @@ elseif ($data = $editform->get_data()) {
   $message .= "Name of the organisation or person:\n" . htmlspecialchars_decode($application->howfoundorganisationname, ENT_COMPAT) . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
-  sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
+  sendapprovedmail_from_applicant('apply@peoples-uni.org', $application, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
+  //sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/registration_form_success.php'));
 }
@@ -340,6 +341,38 @@ function sendapprovedmail($email, $subject, $message) {
   $supportuser->email = 'apply@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
+  $supportuser->firstnamephonetic = NULL;
+  $supportuser->lastnamephonetic = NULL;
+  $supportuser->middlename = NULL;
+  $supportuser->alternatename = NULL;
+  $supportuser->maildisplay = true;
+
+  //$user->email = 'alanabarrett0@gmail.com';
+  $ret = email_to_user($user, $supportuser, $subject, $message);
+
+  //$user->email = 'applicationresponses@peoples-uni.org';
+  //$user->email = 'alanabarrett0@gmail.com';
+  //email_to_user($user, $supportuser, $email . ' Sent: ' . $subject, $message);
+
+  return $ret;
+}
+
+
+function sendapprovedmail_from_applicant($email, $application, $subject, $message) {
+  global $CFG;
+
+  // Dummy User
+  $user = new stdClass();
+  $user->id = 999999999; $user->username = 'none';
+  $user->email = $email;
+  $user->maildisplay = true;
+  $user->mnethostid = $CFG->mnet_localhost_id;
+
+  $supportuser = new stdClass();
+  $supportuser->id = 999999998; $supportuser->username = 'none';
+  $supportuser->email = $application->email;
+  $supportuser->firstname = $application->firstname;
+  $supportuser->lastname = $application->lastname;
   $supportuser->firstnamephonetic = NULL;
   $supportuser->lastnamephonetic = NULL;
   $supportuser->middlename = NULL;
