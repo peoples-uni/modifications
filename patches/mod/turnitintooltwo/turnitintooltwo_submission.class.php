@@ -681,7 +681,7 @@ private function record_turnitintooltwo_submission($cm, $submission_id, $course_
   $turnitintooltwo_part       = $DB->get_record('turnitintooltwo_parts',       array('id' => $turnitintooltwo_submission->submission_part));
   $turnitintooltwo            = $DB->get_record('turnitintooltwo',             array('id' => $turnitintooltwo_part->turnitintooltwoid));
 
-  $recorded_submission = new object();
+  $recorded_submission = new stdClass();
   $recorded_submission->submission                      = $submission_id; // Not used (I think)
   $recorded_submission->assignment                      = 0; // This is not mod assignment (2.2)
   $recorded_submission->assign                          = 0; // mod assign (2.3)
