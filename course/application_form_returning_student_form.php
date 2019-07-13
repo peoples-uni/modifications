@@ -114,6 +114,7 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
 
     $_SESSION['peoples_filling_in_application_form'] = time();
     $text = "Please select the first course module you are applying for from the drop down box.
+    <br /><strong>Note:</strong> We strongly recommend for students wishing to pursue the Masters programme to study epidemiology at the beginning of their programme, preferably their first semester (if they have not studied epidemiology previously).
     <br /><strong>Note:</strong> The 'Masters dissertation' is restricted to those who have passed eight prior modules.
     <br /><strong>Note:</strong> If you are applying for the 'Masters dissertation' module, you have to submit this form as well as a separate form indicating the provisional topic for your dissertation. Please <strong><a href=\"" . $CFG->wwwroot . "/course/dissertation.php\" target=\"_blank\">Click Here for the Dissertation Topic Form</a></strong> to do this.
     <br />Please make sure you submit both forms as otherwise your application cannot be approved.";
