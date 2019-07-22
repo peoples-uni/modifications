@@ -307,8 +307,8 @@ elseif ($data = $editform->get_data()) {
   $message .= "Name of the organisation or person:\n" . htmlspecialchars_decode($application->howfoundorganisationname, ENT_COMPAT) . "\n";
 
   sendapprovedmail($application->email, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
-  sendapprovedmail_from_applicant('apply@peoples-uni.org', $application, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
-  //sendapprovedmail('apply@peoples-uni.org', "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
+  sendapprovedmail_from_applicant('studentregistrations@peoples-uni.org', $application, "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
+  //sendapprovedmail('studentregistrations@peoples-uni.org', "Peoples-uni Registration request Form Submission From: $application->lastname, $application->firstname", $message);
 
   redirect(new moodle_url($CFG->wwwroot . '/course/registration_form_success.php'));
 }
@@ -338,7 +338,7 @@ function sendapprovedmail($email, $subject, $message) {
 
   $supportuser = new stdClass();
   $supportuser->id = 999999998; $supportuser->username = 'none';
-  $supportuser->email = 'apply@peoples-uni.org';
+  $supportuser->email = 'studentregistrations@peoples-uni.org';
   $supportuser->firstname = "People's Open Access Education Initiative: Peoples-uni";
   $supportuser->lastname = '';
   $supportuser->firstnamephonetic = NULL;
