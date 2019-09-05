@@ -61,7 +61,8 @@ function get_student_award($userid, $enrols, &$passed_or_cpd_enrol_ids, &$module
         if ($semester_enrolls->num_passes_masters != $semester_enrolls->num_passes) $discount_all = true; // No Diploma level passes
       }
       // 20150726 removed: || ($total_unfinished > 3)...
-      if ($discount_all || ($total_fails > 1) || ($elapsed_semesters > 10)) { // If TRUE, then discount this Semester's Modules by academic rules
+      // 20190905 changed to 20 semesters based on Judith's request
+      if ($discount_all || ($total_fails > 1) || ($elapsed_semesters > 20)) { // If TRUE, then discount this Semester's Modules by academic rules
         $cumulative_enrolled_ids_to_discount_string .= ",$semester_enrolls->enrolled_ids_to_discount";   // But note comment above: "If there is a match, then this module should not be discounted, no matter what"
       }
     }
