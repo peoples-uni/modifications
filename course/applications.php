@@ -495,6 +495,16 @@ if (empty($applications)) {
   $applications = array();
 }
 
+// Preparing to Study Certificates
+$pts_certs = $DB->get_records_sql('
+  SELECT u.id, u.firstname, u.lastname
+  FROM  mdl_user u
+  JOIN  mdl_customcert_issues i ON u.id=i.userid
+  WHERE i.customcertid=1');
+if (empty($pts_certs)) {
+  $pts_certs = [];
+}
+
 $dissertations = $DB->get_records_sql('
   SELECT d.userid, GROUP_CONCAT(d.id ORDER BY d.id DESC) AS ids
   FROM mdl_peoplesdissertation d
@@ -573,6 +583,7 @@ if (!$displayextra && !$displayscholarship && !$displaystudenthistory) {
   $table->head = array(
     'Submitted',
     'sid',
+    'PTS cert',
     'Approved?',
     'Payment up to date?',
     'Enrolled?',
@@ -597,6 +608,7 @@ elseif ($displayscholarship) {
   $displayextra = false;
   $table->head = array(
     'sid',
+    'PTS cert',
     'Approved?',
     'Payment up to date?',
     'Enrolled?',
@@ -646,6 +658,7 @@ else { // $displayextra
   $table->head = array(
     'Submitted',
     'sid',
+    'PTS cert',
     'Approved?',
     'Payment up to date?',
     'Enrolled?',
@@ -818,6 +831,10 @@ foreach ($applications as $sid => $application) {
     if (!$displayscholarship) $rowdata[] = gmdate('d/m/Y H:i', $application->datesubmitted);
     //echo '<td>' . $sid . '</td>';
     $rowdata[] = $sid;
+
+    $text_pts_cert = '';
+    if (!empty($pts_certs[$application->userid])) $text_pts_cert = 'Yes';
+    $rowdata[] = $text_pts_cert;
 
     if ($state === 0) $z = '<span style="color:red">No</span>';
     elseif ($state === 022) $z = '<span style="color:blue">Denied or Deferred</span>';
