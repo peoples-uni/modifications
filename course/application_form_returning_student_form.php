@@ -82,6 +82,20 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
       }
     }
 
+    $already_mph         = false;
+    $already_scholarship = false;
+    if (!empty($USER->id)) {
+      $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $USER->id));
+      if (!empty($peoplesmph2)) {
+        if ($peoplesmph2->mphstatus > 0) $already_mph = true;
+      }
+
+      $peoples_decision = $DB->get_record('peoples_decision', array('userid' => $USER->id));
+      if (!empty($peoples_decision)) {
+        if ($peoples_decision->decided_scholarship > 0) $already_scholarship = true;
+      }
+    }
+
     if (empty($semester)) {
       $activemodules = $DB->get_records('activemodules', NULL, 'fullname ASC');
     }
@@ -143,6 +157,7 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
 //    $mform->addElement('select', 'applyceatup', 'Are you also enrolling with Enterprises University of Pretoria?', $listforselect);
 //    $mform->addElement('static', 'explainapplyceatup', '&nbsp;', 'If you intend enrolling with the University of Pretoria (or already have), please indicate here<br /><br />');
 
+  if (!$already_mph) {
     $listforselect = array();
     //$listforselect[1] = 'No, continue with Peoples-uni';
     //$listforselect[2] = 'Yes, apply for MMU MPH';
@@ -152,9 +167,9 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
     $listforselect[1] = 'I don\'t intend to complete a full Masters programme';
     $listforselect[8] = 'I intend to enrol on one of the Masters programmes in future';
     $listforselect[4] = 'Yes, apply for Peoples-uni Masters-level programme';
-    $listforselect[5] = 'I am already enrolled in Peoples-uni Masters-level programme';
+    //$listforselect[5] = 'I am already enrolled in Peoples-uni Masters-level programme';
     $listforselect[6] = 'Yes, apply for EUCLID MPH programme';
-    $listforselect[7] = 'I am already enrolled in EUCLID MPH programme';
+    //$listforselect[7] = 'I am already enrolled in EUCLID MPH programme';
     //$listforselect[6] = 'Yes, apply for OTHER MPH';
     //$listforselect[7] = 'I am already enrolled in OTHER MPH';
     $mform->addElement('select', 'applymmumph', 'Apply for Masters-level programme with Peoples-uni or EUCLID?', $listforselect);
@@ -162,6 +177,7 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
 and wish to apply for the Masters-level programme with Peoples-uni or EUCLID, please indicate your preferences here. Note that the curriculum is the same. If you have previously applied for the Masters-level programme, please do so again, to make sure we know your intentions.<br />
 <strong>NOTE</strong>: There will be fees for the EUCLID MPH award, but note that these will only be payable after achieving the Peoples-uni award.<br />
 For more information on the criteria and rules applying to the Masters-level programme, please follow this link <a href="https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum" target="_blank">https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum</a><br /><br />');
+  }
 
     //20170717 removed: $mform->addElement('select', 'applymmumph', 'Apply for Peoples-uni Master of Public Health programme', $listforselect);
     //$mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'Do you want to apply for enrolment in the Master of Public Health programme (please note the fees <a href="https://www.peoples-uni.org/book/course-fees" target="_blank">https://www.peoples-uni.org/book/course-fees</a>)?<br />
@@ -193,6 +209,7 @@ For more information on the criteria and rules applying to the Masters-level pro
     $mform->addElement('static', 'explainusername', '&nbsp;', 'The user name you use to login to your course modules.<br />');
 
 
+  if (!$already_scholarship) {
     $mform->addElement('header', 'scholorshipdetails', 'Scholarship');
     $mform->setExpanded('scholorshipdetails');
     $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the Peoples-uni fees, we may be able to assist in approved cases.<br />
@@ -205,6 +222,7 @@ If you would like to apply for a reduction or waiver of the <a href="https://peo
 4. How you plan to use the skills/qualifications you will gain from Peoples-uni for the health of the population (up to 150 words)<br />
 5. Please note that late applications for scholarships cannot be considered after ' . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')));
     $mform->addElement('textarea', 'scholarship', '&nbsp;', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
+  }
 
 
     $mform->addElement('header', 'whynotcompletedetails', 'Previous Semester');

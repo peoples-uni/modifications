@@ -216,8 +216,7 @@ elseif (!empty($_POST['markscholarship'])) {
     $peoples_decision->decided_scholarship = $_POST['decided_scholarship'];
     $peoples_decision->date_scholarship    = time();
     $DB->update_record('peoples_decision', $peoples_decision);
-  }
-  else {
+  } else {
     $peoples_decision = new stdClass();
     $peoples_decision->userid              = $application->userid;
     $peoples_decision->decided_scholarship = $_POST['decided_scholarship'];
