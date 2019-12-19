@@ -231,9 +231,11 @@ CREATE TABLE mdl_peoples_decision (
   id                  BIGINT(10) UNSIGNED NOT NULL auto_increment,
   userid              BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   decided_mph         BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
-  date_mph            BIGINT(10) UNSIGNED NOT NULL,
   decided_scholarship BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  date_mph            BIGINT(10) UNSIGNED NOT NULL,
   date_scholarship    BIGINT(10) UNSIGNED NOT NULL,
+  note_mph            TEXT NOT NULL,
+  note_scholarship    TEXT NOT NULL,
 CONSTRAINT PRIMARY KEY (id),
 INDEX mdl_peoples_decision_uid_ix ON mdl_peoplesmph2 (userid);
 );
