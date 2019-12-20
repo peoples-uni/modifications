@@ -835,7 +835,7 @@ If any of the transactions for this student are "(not confirmed)", this will be 
 </li>
 <li>
 "Total Payment Owed (might be more because of future instalments)" indicates any payment due from the student (if they are paying by instalments, this indicates the total due, NOT just the amount due this semester). It also indicates overpayment.<br />
-If <a href="https://courses.peoples-uni.org/course/bursary.php" target="_blank">https://courses.peoples-uni.org/course/bursary.php</a> or "Update Payment Amounts, Method or Confirmed Status" indicates a bursary has previously been given, then this will be indicated here by "(Previously given a Bursary)".
+If <a href="https://courses.peoples-uni.org/course/bursary.php" target="_blank">https://courses.peoples-uni.org/course/bursary.php</a> or "Update Payment Amounts, Method, Confirmed Status or Scholarship" indicates a bursary has previously been given, then this will be indicated here by "(Previously given a Bursary)".
 </li>
 <li>
 "Payment Method" can be one of...<br />
@@ -859,12 +859,12 @@ If <a href="https://courses.peoples-uni.org/course/bursary.php" target="_blank">
 The student can set 'Barclays Bank Transfer', 'Ecobank Transfer' and 'MoneyGram' using the paydetails.php link they will have been sent in their approval e-mail (the link includes the SID unique application ID). The credit card one is set automatically and the rest are set manually by us as described in the next bullet point.
 </li>
 <li>
-"Update Payment Amounts, Method or Confirmed Status" are links (to payconfirm.php with the applicant SID as a parameter) that bring up a page that allows us to update the data in the previous bullet points by:-
+"Update Payment Amounts, Method, Confirmed Status or Scholarship" are links (to payconfirm.php with the applicant SID as a parameter) that bring up a page that allows us to update the data in the previous bullet points by:-
 <ol>
 <li>
 Updating the student payment account by adding a new transaction which decreases (or increases) the balance owed. This might be to record that a payment has been made (although WorldPay credit card payments are added as transactions automatically by the software) or a student has been given a bursary. Transactions for the amount owed for modules (&pound;50 per module or other amounts depending on LMIC/HIC status and whether it is an ordinary module or dissertation) are automatically added to the account when a student is approved for modules (see below for in "Set the Income Category for the Student" details).<br />
 Any transaction that is added can be marked as "(not confirmed)". All non-credit card transaction added by a student (in paydetails.php) will automatically be "(not confirmed)".<br />
-Note: <a href="https://courses.peoples-uni.org/course/payment_history.php" target="_blank">https://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester. There are links to "Update Payment Amounts, Method or Confirmed Status" and some filters.<br />
+Note: <a href="https://courses.peoples-uni.org/course/payment_history.php" target="_blank">https://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester. There are links to "Update Payment Amounts, Method, Confirmed Status or Scholarship" and some filters.<br />
 Note: <a href="https://courses.peoples-uni.org/course/bursary.php" target="_blank">https://courses.peoples-uni.org/course/bursary.php</a> allows staff ("Manager") to see those students who have been awarded a Bursary (the word "Bursary" has been used in an account entry detail). There are various filters available.
 </li>
 <li>
@@ -1580,7 +1580,7 @@ A list of those Graduates who may be eligible for EUCLID MPH is in <a href="http
 The columns in this include "Certifying Institution", "How much Owed", "Will pay or get full Scholarship for EUCLID" and "Marked as paid for EUCLID".<br />
 These can be used to determine if a student "Will pay or get full Scholarship for EUCLID", if they have actually paid for it and if they have been confirmed as paid "Marked as paid for EUCLID" in "Student Grades".<br />
 If "Marked as paid for EUCLID" is set they are due a EUCLID certificate. If "Will pay or get full Scholarship for EUCLID" is Yes and they owe nothing, "Marked as paid for EUCLID" should be set using "Mark this Student as Graduated with Masters-Level Award" in "Student Grades".<br />
-Note that a graduated student who wants a "EUCLID" certificate should have the amount owed set in "Update Payment Amounts, Method or Confirmed Status"/payconfirm.php at the same time "Will pay or get full Scholarship for EUCLID" is set using "Mark this Student as Graduated with Masters-Level Award" in "Student Grades".<br />
+Note that a graduated student who wants a "EUCLID" certificate should have the amount owed set in "Update Payment Amounts, Method, Confirmed Status or Scholarship"/payconfirm.php at the same time "Will pay or get full Scholarship for EUCLID" is set using "Mark this Student as Graduated with Masters-Level Award" in "Student Grades".<br />
 They should pay (by card) using <a href="https://courses.peoples-uni.org/course/paymph.php" target="_blank">https://courses.peoples-uni.org/course/paymph.php</a> which accepts variable amounts and which will cause the student account to be automatically updated if used.<br />
 The student should enter the same email they use in Moodle so they can be matched when updating their account.<br />
 A list of all those Graduated is in <a href="https://courses.peoples-uni.org/course/list_of_mph_graduates.php" target="_blank">https://courses.peoples-uni.org/course/list_of_mph_graduates.php</a> as noted above.
@@ -1734,7 +1734,7 @@ You can also list all certificates with the "List All Certificates" link.
 <h2>Page to allow a Student to see their Payment Account</h2>
 <ol>
 <li>
-<a href="https://courses.peoples-uni.org/course/account.php">https://courses.peoples-uni.org/course/account.php</a> allows a student to see their account, it is no direct use to staff (see "Update Payment Amounts, Method or Confirmed Status"/payconfirm.php in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">The "Details" button and the Approval Process</a> for a staff view on these data).
+<a href="https://courses.peoples-uni.org/course/account.php">https://courses.peoples-uni.org/course/account.php</a> allows a student to see their account, it is no direct use to staff (see "Update Payment Amounts, Method, Confirmed Status or Scholarship"/payconfirm.php in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#thedetailsbutton">The "Details" button and the Approval Process</a> for a staff view on these data).
 </li>
 <li>
 It shows:-

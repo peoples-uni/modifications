@@ -720,7 +720,7 @@ echo '<td>';
 if ($amount_to_pay_this_semester >= .01) echo '<span style="color:red">No: &pound;' . $amount_to_pay_this_semester . ' Owed now' . $not_confirmed_text . '</span>';
 elseif (abs($amount_to_pay_this_semester) < .01) echo '<span style="color:green">Yes' . $not_confirmed_text . '</span>';
 else echo '<span style="color:blue">' . "Overpaid: &pound;$amount_to_pay_this_semester" . $not_confirmed_text . '</span>'; // Will never be Overpaid here because of function used
-echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method, Confirmed Status or Scholarship</a>';
 echo '</td>';
 echo '</tr>';
 
@@ -747,7 +747,7 @@ if (!empty($balances[$application->userid])) {
   $x .= '<br />(Previously given a Bursary)';
 }
 echo '<td>' . $x;
-echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method, Confirmed Status or Scholarship</a>';
 echo '</td>';
 echo '</tr>';
 
@@ -782,7 +782,7 @@ if (!empty($paymentnotes)) {
 echo '<tr>';
 echo '<td>Payment Method</td>';
 echo '<td>' . $mechanism;
-echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method or Confirmed Status</a>';
+echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method, Confirmed Status or Scholarship</a>';
 echo $pnote;
 echo '</td>';
 echo '</tr>';
@@ -961,7 +961,7 @@ be recorded as MPH by clicking "Record that the Student has been enrolled in the
 or as Enterprises University of Pretoria by clicking "Record that the Student has been enrolled in Enterprises University of Pretoria" BEFORE APPROVAL<br />
 (to pick up correct wording for e-mail).</b></i>
 <br /><i><b>NOTE: Please check the Amount Owed by the student (in e-mail below) looks OK before sending.<br />
-To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts, Method or Confirmed Status</a></b></i>
+To fix any issues <a href="<?php echo $CFG->wwwroot . '/course/payconfirm.php?sid=' . $application->sid; ?>" target="_blank">click here to Update Payment Amounts, Method, Confirmed Status or Scholarship</a></b></i>
 <form id="approveapplicationform" method="post" action="<?php echo $CFG->wwwroot . '/course/appaction.php'; ?>">
 <input type="hidden" name="sid" value="<?php echo $_REQUEST['sid']; ?>" />
 <input type="hidden" name="nid" value="<?php echo $_REQUEST['nid']; ?>" />
