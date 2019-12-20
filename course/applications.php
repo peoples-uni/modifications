@@ -235,6 +235,10 @@ CREATE TABLE mdl_peoples_decision (
 CONSTRAINT PRIMARY KEY (id),
 INDEX mdl_peoples_decision_uid_ix ON mdl_peoplesmph2 (userid);
 );
+decided_scholarship...
+<option value="0">Not Decided Yet</option>
+<option value="1">Approved</option>
+<option value="2">Rejected</option>
 */
 
 
@@ -534,6 +538,14 @@ $balances = $DB->get_records_sql("
   GROUP BY b.userid");
 if (empty($balances)) {
   $balances = array();
+}
+
+$peoples_decisions = $DB->get_records('peoples_decision');
+if (empty($peoples_decisions)) {
+  $peoples_decisions = [];
+}
+foreach ($peoples_decisions as $peoples_decision) {
+  if ($peoples_decision->decided_scholarship == 1) $balances[$peoples_decision->userid] = 1;
 }
 
 $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r WHERE r.userid!=0');
