@@ -233,7 +233,7 @@ CREATE TABLE mdl_peoples_decision (
   decided_scholarship BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   date_scholarship    BIGINT(10) UNSIGNED NOT NULL,
 CONSTRAINT PRIMARY KEY (id),
-INDEX mdl_peoples_decision_uid_ix ON mdl_peoplesmph2 (userid);
+INDEX mdl_peoples_decision_uid_ix (userid)
 );
 decided_scholarship...
 <option value="0">Not Decided Yet</option>
