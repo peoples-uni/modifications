@@ -812,6 +812,8 @@ First, underneath the details button, sometimes there is an indication "Re-enrol
 </li>
 <li>
 Note that the student has applied with the form: <a href="https://courses.peoples-uni.org/course/application_form_student.php" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php</a>. All students use the Moodle account they were given during Registration. They have to enter very little information: their existing Moodle username, desired modules, a possible alternate module (if their desired module is full), Application for MPH (if any), do they intend to submit the Final Assignment for each module? (defaults to Yes), Scholarship request (if any) and why they did not complete the previous semester (if they did not).<br />
+Note: The scholarship field will not be shown if a decision has been made on a multi-semester bursary.<br />
+Note: The MPH field  will not be shown if the student has been enrolled in an MPH.<br />
 Note: Someone with a "Manager" role can fill in the form on behalf of a student even when applications are closed.<br />
 Additionally if the form is called with a parameter specifying a semester in the following way:<br />
 <a href="https://courses.peoples-uni.org/course/application_form_student.php?semester=Starting%20March%202017" target="_blank">https://courses.peoples-uni.org/course/application_form_student.php?semester=Starting%20March%202017</a><br />
@@ -835,7 +837,8 @@ If any of the transactions for this student are "(not confirmed)", this will be 
 </li>
 <li>
 "Total Payment Owed (might be more because of future instalments)" indicates any payment due from the student (if they are paying by instalments, this indicates the total due, NOT just the amount due this semester). It also indicates overpayment.<br />
-If <a href="https://courses.peoples-uni.org/course/bursary.php" target="_blank">https://courses.peoples-uni.org/course/bursary.php</a> or "Update Payment Amounts, Method, Confirmed Status or Scholarship" indicates a bursary has previously been given, then this will be indicated here by "(Previously given a Bursary)".
+If <a href="https://courses.peoples-uni.org/course/bursary.php" target="_blank">https://courses.peoples-uni.org/course/bursary.php</a> or "Update Payment Amounts, Method, Confirmed Status or Scholarship" indicates a bursary has previously been given, then this will be indicated here by "(Previously given a Bursary)".<br />
+If "Update Payment Amounts, Method, Confirmed Status or Scholarship" indicates a multi-semester bursary has been awarded, then this will be indicated here by "(Multi-Semester Bursary Approved)" or "(Multi-Semester Bursary Rejected)".
 </li>
 <li>
 "Payment Method" can be one of...<br />
@@ -876,6 +879,9 @@ Marking all transactions in a student account which are "(not confirmed)" as con
 </li>
 <li>
 Specify that a student may pay amounts smaller than the full amount owed. If this "Instalment Amount" is set then that student will, when they go to pay be allowed enter an amount to pay different from the amount they owe (although this will still be displayed along with expected instalment amount). When they pay, the amount they paid will be deducted from their balance, and the next time they go to pay, they will see the updated amount they owe (their new balance).
+</li>
+<li>
+Award or reject a multi-semester scholarship. A "(Multi-Semester Bursary Approved)" or "(Multi-Semester Bursary Rejected)" indicator will be displayed under the "Payment up to date?" column in applications.php.
 </li>
 <li>
 Add a Payment Note for the Student (which will be seen on payconfirm.php in future semesters for this student and will be noted in applications.php under "Payment up to date?" and also on the "Details" page in "Payment Method" for all future applications by this student).<br />

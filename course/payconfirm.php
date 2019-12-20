@@ -490,7 +490,7 @@ if (!empty($paymentnotes)) {
 }
 ?>
 
-<br /><br /><br /><p>If you know whether the student has been awarded a scholarship or been rejected, indicate it here. It would also be advisable to add a Payment Note below.<br />
+<br /><br /><br /><p>If you know whether the student has been awarded a multi-semester scholarship or been rejected, indicate it here. It would also be advisable to add a Payment Note below.<br />
 (If the setting is different from "Not Decided Yet" then future application forms for this student will not have an option to request a scholarship.)</p>
 
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
