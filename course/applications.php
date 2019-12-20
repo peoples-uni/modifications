@@ -544,9 +544,6 @@ $peoples_decisions = $DB->get_records('peoples_decision');
 if (empty($peoples_decisions)) {
   $peoples_decisions = [];
 }
-foreach ($peoples_decisions as $peoples_decision) {
-  if ($peoples_decision->decided_scholarship == 1) $balances[$peoples_decision->userid] = 1;
-}
 
 $registrations = $DB->get_records_sql('SELECT DISTINCT r.userid AS userid_index, r.* FROM mdl_peoplesregistration r WHERE r.userid!=0');
 
@@ -928,6 +925,8 @@ foreach ($applications as $sid => $application) {
       $z = $mechanism;
     }
     if (!empty($balances[$application->userid])) $z .= '<br />(Previously given a Bursary)';
+    if (!empty($peoples_decisions[$application->userid]) && $peoples_decisions[$application->userid] == 1) $z .= '<br />(Multi-Semester Bursary Approved)';
+    if (!empty($peoples_decisions[$application->userid]) && $peoples_decisions[$application->userid] == 2) $z .= '<br />(Multi-Semester Bursary Rejected)';
     if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
     $rowdata[] = $z;
