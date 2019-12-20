@@ -116,6 +116,7 @@ elseif ($data = $editform->get_data()) {
   $applycertpatientsafetytext = array(0 => '', 1 => 'No', 2 => 'Yes', 3 => 'Already');
   $applycertpatientsafetytext = $applycertpatientsafetytext[$application->applycertpatientsafety];
 
+  if (empty($data->scholarship)) $data->scholarship = '';
   $dataitem = $data->scholarship;
   if (empty($dataitem)) $dataitem = '';
   $application->scholarship = htmlspecialchars($dataitem, ENT_COMPAT, 'UTF-8');
