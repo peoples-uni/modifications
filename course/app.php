@@ -747,9 +747,9 @@ if (!empty($balances[$application->userid])) {
   $x .= '<br />(Previously given a Bursary)';
 }
 if (!empty($application->userid)) $peoples_decision = $DB->get_record('peoples_decision', array('userid' => $application->userid));
-if (!empty($peoples_decision) && !empty($peoples_decisions[$application->userid])) {
-  if ($peoples_decisions[$application->userid] == 1) $x .= '<br />(Multi-Semester Bursary Approved)';
-  if ($peoples_decisions[$application->userid] == 2) $x .= '<br />(Multi-Semester Bursary Rejected)';
+if (!empty($peoples_decision)) {
+  if ($peoples_decision->decided_scholarship == 1) $x .= '<br />(Multi-Semester Bursary Approved)';
+  if ($peoples_decision->decided_scholarship == 2) $x .= '<br />(Multi-Semester Bursary Rejected)';
 }
 echo '<td>' . $x;
 echo '<br /><a href="' . $CFG->wwwroot . '/course/payconfirm.php?sid=' . $_REQUEST['sid'] . '" target="_blank">Update Payment Amounts, Method, Confirmed Status or Scholarship</a>';

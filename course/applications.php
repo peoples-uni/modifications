@@ -925,8 +925,8 @@ foreach ($applications as $sid => $application) {
       $z = $mechanism;
     }
     if (!empty($balances[$application->userid])) $z .= '<br />(Previously given a Bursary)';
-    if (!empty($peoples_decisions[$application->userid]) && $peoples_decisions[$application->userid] == 1) $z .= '<br />(Multi-Semester Bursary Approved)';
-    if (!empty($peoples_decisions[$application->userid]) && $peoples_decisions[$application->userid] == 2) $z .= '<br />(Multi-Semester Bursary Rejected)';
+    if (!empty($peoples_decisions[$application->userid]) && $peoples_decisions[$application->userid]->decided_scholarship == 1) $z .= '<br />(Multi-Semester Bursary Approved)';
+    if (!empty($peoples_decisions[$application->userid]) && $peoples_decisions[$application->userid]->decided_scholarship == 2) $z .= '<br />(Multi-Semester Bursary Rejected)';
     if ($application->paymentnote) $z .= '<br />(Payment Note Present)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
     $rowdata[] = $z;
