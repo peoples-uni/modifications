@@ -487,7 +487,7 @@ if (!empty($paymentnotes)) {
   }
 
   echo '</table>';
-  <br /><br /><br />
+  echo '<br /><br /><br />';
 }
 ?>
 
