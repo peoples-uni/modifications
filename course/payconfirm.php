@@ -500,7 +500,7 @@ Scholarship Status: <select name="decided_scholarship">
 <option value="0">Not Decided Yet</option>
 <option value="1">Approved</option>
 <option value="2">Rejected</option>
-</select><br /><br />
+</select><br />
 
 <input type="hidden" name="markscholarship" value="1" />
 <input type="submit" name="scholarship" value="Indicate Scholarship Status for this Student" />
