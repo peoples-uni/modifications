@@ -540,7 +540,11 @@ if (empty($balances)) {
   $balances = array();
 }
 
-$peoples_decisions = $DB->get_records('peoples_decision');
+$peoples_decisions = $DB->get_records_sql("
+  SELECT
+    userid,
+    decided_scholarship
+  FROM mdl_peoples_decision");
 if (empty($peoples_decisions)) {
   $peoples_decisions = [];
 }
