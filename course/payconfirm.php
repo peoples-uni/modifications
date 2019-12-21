@@ -487,10 +487,11 @@ if (!empty($paymentnotes)) {
   }
 
   echo '</table>';
+  <br /><br /><br />
 }
 ?>
 
-<br /><br /><br /><p>If you know whether the student has been awarded a multi-semester scholarship or been rejected, indicate it here. It would also be advisable to add a Payment Note below.<br />
+<p>If you know whether the student has been awarded a multi-semester scholarship or been rejected, indicate it here. It would also be advisable to add a Payment Note below.<br />
 (If the setting is different from "Not Decided Yet" then future application forms for this student will not have an option to request a scholarship.)</p>
 
 <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
@@ -504,6 +505,7 @@ Scholarship Status: <select name="decided_scholarship">
 <input type="hidden" name="markscholarship" value="1" />
 <input type="submit" name="scholarship" value="Indicate Scholarship Status for this Student" />
 </form>
+<br /><br /><br />
 
 <form id="paymentnoteform" method="post" action="<?php echo $CFG->wwwroot . '/course/payconfirm.php'; ?>">
 
