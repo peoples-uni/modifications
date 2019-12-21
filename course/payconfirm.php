@@ -501,8 +501,8 @@ $peoples_decision = $DB->get_record('peoples_decision', array('userid' => $useri
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 Scholarship Status: <select name="decided_scholarship">
 <option value="0">Not Decided Yet</option>
-<option value="1" <?php if ($peoples_decision->decided_scholarship == 1) echo 'selected="selected"'; ?> >Approved</option>
-<option value="2" <?php if ($peoples_decision->decided_scholarship == 2) echo 'selected="selected"'; ?> >Rejected</option>
+<option value="1" <?php if (!empty($peoples_decision) && $peoples_decision->decided_scholarship == 1) echo 'selected="selected"'; ?> >Approved</option>
+<option value="2" <?php if (!empty($peoples_decision) && $peoples_decision->decided_scholarship == 2) echo 'selected="selected"'; ?> >Rejected</option>
 </select><br />
 
 <input type="hidden" name="markscholarship" value="1" />
