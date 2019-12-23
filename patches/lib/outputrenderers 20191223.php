@@ -120,16 +120,12 @@ class renderer_base {
                              'userdate' => array($userdatehelper, 'transform'),
                          );
 
-            $this->mustache = new \core\output\mustache_engine(array(
+            $this->mustache = new Mustache_Engine(array(
                 'cache' => $cachedir,
                 'escape' => 's',
                 'loader' => $loader,
                 'helpers' => $helpers,
-                'pragmas' => [Mustache_Engine::PRAGMA_BLOCKS],
-                // Don't allow the JavaScript helper to be executed from within another
-                // helper. If it's allowed it can be used by users to inject malicious
-                // JS into the page.
-                'blacklistednestedhelpers' => ['js']));
+                'pragmas' => [Mustache_Engine::PRAGMA_BLOCKS]));
 
         }
 
@@ -387,7 +383,7 @@ class renderer_base {
     /**
      * Whether we should display the main logo.
      *
-     * @param int $headinglevel The heading level we want to check against.
+     * @param int $headinglevel
      * @return bool
      */
     public function should_display_main_logo($headinglevel = 1) {
@@ -1574,11 +1570,9 @@ class core_renderer extends renderer_base {
      * @return string hex color code.
      */
     public function get_generated_color_for_id($id) {
-        $colornumbers = range(1, 10);
-        $basecolors = [];
-        foreach ($colornumbers as $number) {
-            $basecolors[] = get_config('core_admin', 'coursecolor' . $number);
-        }
+        // The colour palette is hardcoded for now. It would make sense to combine it with theme settings.
+        $basecolors = ['#81ecec', '#74b9ff', '#a29bfe', '#dfe6e9', '#00b894',
+            '#0984e3', '#b2bec3', '#fdcb6e', '#fd79a8', '#6c5ce7'];
 
         $color = $basecolors[$id % 10];
         return $color;
@@ -1996,10 +1990,8 @@ class core_renderer extends renderer_base {
         $button = new single_button($url, $label, $method);
 
         foreach ((array)$options as $key=>$value) {
-            if (property_exists($button, $key)) {
+            if (array_key_exists($key, $button)) {
                 $button->$key = $value;
-            } else {
-                $button->set_attribute($key, $value);
             }
         }
 
@@ -2250,7 +2242,6 @@ class core_renderer extends renderer_base {
         if ($rating->user_can_view_aggregate()) {
 
             $aggregatelabel = $ratingmanager->get_aggregate_label($rating->settings->aggregationmethod);
-            $aggregatelabel = html_writer::tag('span', $aggregatelabel, array('class'=>'rating-aggregate-label'));
             if (!empty($rating->id_attribute_for_html)) $aggregatelabel = ''; // For 3 separate scales don't display Aggregate Label
             $aggregatestr   = $rating->get_aggregate_string();
 
@@ -2262,16 +2253,17 @@ class core_renderer extends renderer_base {
             }
             $aggregatehtml .= html_writer::tag('span', $countstr, array('id'=>"ratingcount{$id_attribute_for_html}", 'class' => 'ratingcount')).' ';
 
+            $ratinghtml .= html_writer::tag('span', $aggregatelabel, array('class'=>'rating-aggregate-label'));
             if ($rating->settings->permissions->viewall && $rating->settings->pluginpermissions->viewall) {
 
                 $nonpopuplink = $rating->get_view_ratings_url();
                 $popuplink = $rating->get_view_ratings_url(true);
 
                 $action = new popup_action('click', $popuplink, 'ratings', array('height' => 400, 'width' => 600));
-                $aggregatehtml = $this->action_link($nonpopuplink, $aggregatehtml, $action);
+                $ratinghtml .= $this->action_link($nonpopuplink, $aggregatehtml, $action);
+            } else {
+                $ratinghtml .= $aggregatehtml;
             }
-
-            $ratinghtml .= html_writer::tag('span', $aggregatelabel . $aggregatehtml, array('class' => 'rating-aggregate-container'));
         }
 
         $formstart = null;
@@ -2487,7 +2479,7 @@ class core_renderer extends renderer_base {
     public function user_picture(stdClass $user, array $options = null) {
         $userpicture = new user_picture($user);
         foreach ((array)$options as $key=>$value) {
-            if (property_exists($userpicture, $key)) {
+            if (array_key_exists($key, $userpicture)) {
                 $userpicture->$key = $value;
             }
         }
@@ -2815,8 +2807,8 @@ EOD;
             $output .= $this->header();
         }
 
-        $message = '<p class="errormessage">' . s($message) . '</p>'.
-                '<p class="errorcode"><a href="' . s($moreinfourl) . '">' .
+        $message = '<p class="errormessage">' . $message . '</p>'.
+                '<p class="errorcode"><a href="' . $moreinfourl . '">' .
                 get_string('moreinformation') . '</a></p>';
         if (empty($CFG->rolesactive)) {
             $message .= '<p class="errormessage">' . get_string('installproblem', 'error') . '</p>';
@@ -2825,20 +2817,16 @@ EOD;
         $output .= $this->box($message, 'errorbox alert alert-danger', null, array('data-rel' => 'fatalerror'));
 
         if ($CFG->debugdeveloper) {
-            $labelsep = get_string('labelsep', 'langconfig');
             if (!empty($debuginfo)) {
                 $debuginfo = s($debuginfo); // removes all nasty JS
                 $debuginfo = str_replace("\n", '<br />', $debuginfo); // keep newlines
-                $label = get_string('debuginfo', 'debug') . $labelsep;
-                $output .= $this->notification("<strong>$label</strong> " . $debuginfo, 'notifytiny');
+                $output .= $this->notification('<strong>Debug info:</strong> '.$debuginfo, 'notifytiny');
             }
             if (!empty($backtrace)) {
-                $label = get_string('stacktrace', 'debug') . $labelsep;
-                $output .= $this->notification("<strong>$label</strong> " . format_backtrace($backtrace), 'notifytiny');
+                $output .= $this->notification('<strong>Stack trace:</strong> '.format_backtrace($backtrace), 'notifytiny');
             }
             if ($obbuffer !== '' ) {
-                $label = get_string('outputbuffer', 'debug') . $labelsep;
-                $output .= $this->notification("<strong>$label</strong> " . s($obbuffer), 'notifytiny');
+                $output .= $this->notification('<strong>Output buffer:</strong> '.s($obbuffer), 'notifytiny');
             }
         }
 
@@ -4051,10 +4039,10 @@ EOD;
     }
 
     /**
-     * Returns the moodle_url for the favicon.
+     * Returns the URL for the favicon.
      *
      * @since Moodle 2.5.1 2.6
-     * @return moodle_url The moodle_url for the favicon
+     * @return string The favicon URL
      */
     public function favicon() {
         return $this->image_url('favicon', 'theme');
@@ -4271,17 +4259,6 @@ EOD;
     public function full_header() {
         global $PAGE;
 
-        if ($PAGE->include_region_main_settings_in_header_actions() && !$PAGE->blocks->is_block_present('settings')) {
-            // Only include the region main settings if the page has requested it and it doesn't already have
-            // the settings block on it. The region main settings are included in the settings block and
-            // duplicating the content causes behat failures.
-            $PAGE->add_header_action(html_writer::div(
-                $this->region_main_settings_menu(),
-                'd-print-none',
-                ['id' => 'region-main-settings-menu']
-            ));
-        }
-
         $header = new stdClass();
         $header->settingsmenu = $this->context_header_settings_menu();
         $header->contextheader = $this->context_header();
@@ -4289,7 +4266,6 @@ EOD;
         $header->navbar = $this->navbar();
         $header->pageheadingbutton = $this->page_heading_button();
         $header->courseheader = $this->course_header();
-        $header->headeractions = $PAGE->get_header_actions();
         return $this->render_from_template('core/full_header', $header);
     }
 
@@ -4519,12 +4495,10 @@ EOD;
      * @param int $limit limit the number of tags to display, if size of $tags is more than this limit the "more" link
      *               will be appended to the end, JS will toggle the rest of the tags
      * @param context $pagecontext specify if needed to overwrite the current page context for the view tag link
-     * @param bool $accesshidelabel if true, the label should have class="accesshide" added.
      * @return string
      */
-    public function tag_list($tags, $label = null, $classes = '', $limit = 10,
-            $pagecontext = null, $accesshidelabel = false) {
-        $list = new \core_tag\output\taglist($tags, $label, $classes, $limit, $pagecontext, $accesshidelabel);
+    public function tag_list($tags, $label = null, $classes = '', $limit = 10, $pagecontext = null) {
+        $list = new \core_tag\output\taglist($tags, $label, $classes, $limit, $pagecontext);
         return $this->render_from_template('core_tag/taglist', $list->export_for_template($this));
     }
 
@@ -4740,16 +4714,6 @@ EOD;
         global $PAGE;
         $data = $bar->export_for_template($this);
         return $this->render_from_template('core/progress_bar', $data);
-    }
-
-    /**
-     * Renders element for a toggle-all checkbox.
-     *
-     * @param \core\output\checkbox_toggleall $element
-     * @return string
-     */
-    public function render_checkbox_toggleall(\core\output\checkbox_toggleall $element) {
-        return $this->render_from_template($element->get_template(), $element->export_for_template($this));
     }
 }
 
