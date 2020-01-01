@@ -116,7 +116,7 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   $offset += $delta;
   cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($certificatedate));
   $offset += $delta;
-  cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Invoice Number: ' . $peoples_fee_receipt->id));
+  cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Invoice Number: ' . (empty($peoples_fee_receipt->sid) ? '' : ($peoples_fee_receipt->sid . '-')) . $peoples_fee_receipt->id));
 [[[
 Student Information:
 Full name: Ephrida Ndovi
