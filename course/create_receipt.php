@@ -35,8 +35,8 @@ require_login();
 
 require_capability('moodle/site:viewparticipants', context_system::instance());
 
-$PAGE->set_title('Create Receipt');
-$PAGE->set_heading('Create Receipt');
+$PAGE->set_title('Create Receipt/Invoice');
+$PAGE->set_heading('Create Receipt/Invoice');
 echo $OUTPUT->header();
 
 $userid = 0;
@@ -59,6 +59,11 @@ if (!empty($_POST['id']) && !empty($_POST['amount']) && !empty($_POST['markupdat
   $peoples_fee_receipt->currency   = $_POST['currency'];
   $peoples_fee_receipt->name_payee = $_POST['name_payee'];
   $peoples_fee_receipt->modules    = $_POST['modules'];
+  if (strpos($peoples_fee_receipt->modules, '£') === false) { // £ is indicator of Invoice
+    $peoples_fee_receipt->receipt_flag = 0;
+  } else {
+    $peoples_fee_receipt->receipt_flag = 100;
+  }
   $DB->update_record('peoples_fee_receipt', $peoples_fee_receipt);
 
 	$id = $_POST['id'];
@@ -84,6 +89,11 @@ elseif (!empty($_POST['userid']) && !empty($_POST['amount']) && !empty($_POST['m
   $peoples_fee_receipt->lastname     = $userrecord->lastname;
   $peoples_fee_receipt->name_payee   = $_POST['name_payee'];
   $peoples_fee_receipt->modules      = $_POST['modules'];
+  if (strpos($peoples_fee_receipt->modules, '£') === false) { // £ is indicator of Invoice
+    $peoples_fee_receipt->receipt_flag = 0;
+  } else {
+    $peoples_fee_receipt->receipt_flag = 100;
+  }
 
   $id = $DB->insert_record('peoples_fee_receipt', $peoples_fee_receipt);
 }
@@ -96,10 +106,11 @@ if (!empty($id)) {
   $modules    = $peoples_fee_receipt->modules;
   $name_payee = $peoples_fee_receipt->name_payee;
   $sid        = $peoples_fee_receipt->sid;
+  $receipt_flag = $peoples_fee_receipt->receipt_flag;
 
-  echo '<a href="' . $CFG->wwwroot . '/course/fee_receipt.php?id=' . $id . '" target="_blank">Click THIS LINK to Preview Receipt</a><br />';
+  echo '<a href="' . $CFG->wwwroot . '/course/fee_receipt.php?id=' . $id . '" target="_blank">Click THIS LINK to Preview Receipt/Invoice</a><br />';
 ?>
-<br />Change the text and then click "Update Receipt"...<br />
+<br />Change the text and then click "Update Receipt/Invoice"...<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR
 <?php
 }
@@ -107,7 +118,13 @@ else {
 	$id = '';
 }
 ?>
-<br />Enter something in at least the Student and Amount fields and then click "Create New Receipt"...<br />
+<br />Enter something in at least the Student and Amount fields and then click "Create New Receipt/Invoice"...<br />
+//Note: Any "Modules" that has a "£" symbol will be treated as an invoice with a differing format with two columns.<br />
+//Text before the first "£" will appear in the first column.<br />
+//The "£" symbol and any following text such an amount to pay and possibly a conversion to Naira will appear in a second column.<br />
+//However it is possible to have more than one line, say for two or more modules. A ";" symbol will start a second or subsequent line.<br />
+//The additional lines should have a module part and a "£" part for the second column.<br />
+//Finally, the "Amount" field below should be a grand total but can optionally have a Naira conversion.<br />
 <form id="updatecertificateform" method="post" action="<?php echo $CFG->wwwroot . '/course/create_receipt.php'; ?>">
 <input type="hidden" name="id" value="<?php echo $id ?>" />
 
@@ -137,25 +154,25 @@ SID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="tex
 <?php
 if (!empty($id)) {
 ?>
-<br /><input type="submit" name="updatecertificate" value="Update Receipt" style="width:40em" />
+<br /><input type="submit" name="updatecertificate" value="Update Receipt/Invoice" style="width:40em" />
 <?php
 }
 ?>
 <br />
-<br /><input type="submit" name="createcertificate" value="Create New Receipt" style="width:40em" />
+<br /><input type="submit" name="createcertificate" value="Create New Receipt/Invoice" style="width:40em" />
 </form>
 <br />
 <?php
 
 if (!empty($id)) {
-  echo 'Send this EXACT link to Receipt Recipient: <a href="' . $CFG->wwwroot . '/course/display_receipt.php?id=' . $id . '" target="_blank">' . $CFG->wwwroot . '/course/display_receipt.php?id=' . $id . '</a><br />';
+  echo 'Send this EXACT link to Receipt/Invoice Recipient: <a href="' . $CFG->wwwroot . '/course/display_receipt.php?id=' . $id . '" target="_blank">' . $CFG->wwwroot . '/course/display_receipt.php?id=' . $id . '</a><br />';
   echo 'Or ask them to go to: <a href="' . $CFG->wwwroot . '/course/student_receipts.php?id=' . $userid . '" target="_blank">' . $CFG->wwwroot . '/course/student_receipts.php</a><br />';
-  echo '(They will also see their receipts at ' . $CFG->wwwroot . '/course/account.php .)<br /><br />'; 
+  echo '(They will also see their receipts/invoices at ' . $CFG->wwwroot . '/course/account.php .)<br /><br />';
 }
 
 ?>
 <br/><strong><a href="javascript:window.close();">Close Window</a></strong><br />
-<br /><a href="<?php echo $CFG->wwwroot ?>/course/list_receipts.php">List All Receipts</a>
+<br /><a href="<?php echo $CFG->wwwroot ?>/course/list_receipts.php">List All Receipts/Invoices</a>
 <br />
 <?php
 
