@@ -116,6 +116,13 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   $offset += $delta;
   cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($certificatedate));
   $offset += $delta;
+  cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Invoice Number: ' . $peoples_fee_receipt->id));
+[[[
+Student Information:
+Full name: Ephrida Ndovi
+Semester: 2019B
+]]]
+  $offset += $delta;
   if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->name_payee));
   $offset += $delta;
   cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->firstname . ' ' . $peoples_fee_receipt->lastname));
@@ -127,6 +134,31 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   $pdf->SetXY($left, $offset);
   $pdf->setFont('Times', '', 14);
   $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $peoples_fee_receipt->amount $currency in payment for $peoples_fee_receipt->modules"), 0, 'L', 0);
+[[[
+DESCRIPTION   AMOUNT
+Introduction to Epidemiology 19b    £50
+Inequalities and The Social Determinants of Health 19b    £50
+
+INVOICE TOTAL
+£100
+]]]
+[[[
+1.We also accept credit card
+
+BANK NAME: Ecobank Nigeria PLC.
+Branch: Wuse II, Abuja
+Account name: Datasphir Solutions Limited
+Account number: 0122270018
+
+BANK NAME: Barclays
+Branch: Barclays Bank, Manchester City, PO Box 357, 51 Mosley Street,
+Manchester UK.
+Account name: Peoples Open Access Education Initiative
+Account number: 93777308
+Sort code: 20-55-34
+SWIFT: BARCGB22
+IBAN: GB82 BARC 2055 3493 7773 08
+]]]
 }
 
 $offset += 160;
