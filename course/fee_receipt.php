@@ -149,23 +149,28 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode("INVOICE TOTAL ($currency)"));
   cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode($peoples_fee_receipt->amount));
 
-[[[
-1.We also accept credit card
-
-BANK NAME: Ecobank Nigeria PLC.
-Branch: Wuse II, Abuja
-Account name: Datasphir Solutions Limited
-Account number: 0122270018
-
-BANK NAME: Barclays
-Branch: Barclays Bank, Manchester City, PO Box 357, 51 Mosley Street,
-Manchester UK.
-Account name: Peoples Open Access Education Initiative
-Account number: 93777308
-Sort code: 20-55-34
-SWIFT: BARCGB22
-IBAN: GB82 BARC 2055 3493 7773 08
-]]]
+$methods = [
+'PAYMENT METHODS',
+''
+'1. By credit card as already communicated',
+''
+'2. BANK NAME: Ecobank Nigeria PLC.',
+'Branch: Wuse II, Abuja',
+'Account name: Datasphir Solutions Limited',
+'Account number: 0122270018',
+''
+'3. BANK NAME: Barclays',
+'Branch: Barclays Bank, Manchester City, PO Box 357, 51 Mosley Street, Manchester UK.',
+'Account name: Peoples Open Access Education Initiative',
+'Account number: 93777308',
+'Sort code: 20-55-34',
+'SWIFT: BARCGB22',
+'IBAN: GB82 BARC 2055 3493 7773 08',
+]
+  foreach ($methods as $method) {
+    $offset += $delta;
+    cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($method));
+  }
 }
 
 $offset += 160;
