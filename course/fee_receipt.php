@@ -129,11 +129,26 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode('DESCRIPTION'));
   cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('AMOUNT'));
 
-[[[
-Introduction to Epidemiology 19b    £50
-Inequalities and The Social Determinants of Health 19b    £50
-INVOICE TOTAL      £100
-]]]
+  $lines = explode(';', $peoples_fee_receipt->modules);
+  if (empty($lines)) $lines = [];
+  foreach ($lines as $line) {
+    $offset += $delta;
+
+    $parts = explode('£', $peoples_fee_receipt->modules);
+    if (empty($parts)) $parts = [];
+    $item   = '';
+    $amount = '';
+    if (!empty($parts[0])) $item   =       $parts[0];
+    if (!empty($parts[1])) $amount = '£' . $parts[1];
+
+    cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode($item));
+    cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode($amount));
+  }
+
+  $offset += $delta;
+  cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode("INVOICE TOTAL ($currency)"));
+  cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode($peoples_fee_receipt->amount));
+
 [[[
 1.We also accept credit card
 
