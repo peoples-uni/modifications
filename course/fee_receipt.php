@@ -86,6 +86,9 @@ $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode('Professor Richard Heller, rfheller@peoples-uni.org  Coordinator'));
 
 $offset += 30;
+
+if ($peoples_fee_receipt->receipt_flag < 100) {
+
 cert_printtext($left-50, $offset, 'C', 'Times', '', 18, utf8_decode('RECEIPT'));
 $offset += 20;
 
@@ -104,6 +107,27 @@ $offset += 20;
 $pdf->SetXY($left, $offset);
 $pdf->setFont('Times', '', 14);
 $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $peoples_fee_receipt->amount $currency in payment for $peoples_fee_receipt->modules"), 0, 'L', 0);
+
+} else { // Invoice
+  cert_printtext($left-50, $offset, 'C', 'Times', '', 18, utf8_decode('RECEIPT'));
+  $offset += 20;
+
+  $delta = 18;
+  $offset += $delta;
+  cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($certificatedate));
+  $offset += $delta;
+  if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->name_payee));
+  $offset += $delta;
+  cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->firstname . ' ' . $peoples_fee_receipt->lastname));
+  $offset += $delta;
+  if (!empty($peoples_fee_receipt->sid)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('SID: ' . $peoples_fee_receipt->sid));
+
+  $currency = ($peoples_fee_receipt->currency == 'GBP') ? 'UK Pounds' : $peoples_fee_receipt->currency;
+  $offset += 20;
+  $pdf->SetXY($left, $offset);
+  $pdf->setFont('Times', '', 14);
+  $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $peoples_fee_receipt->amount $currency in payment for $peoples_fee_receipt->modules"), 0, 'L', 0);
+}
 
 $offset += 160;
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Signed'));
