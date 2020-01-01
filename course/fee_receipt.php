@@ -117,30 +117,22 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($certificatedate));
   $offset += $delta;
   cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Invoice Number: ' . (empty($peoples_fee_receipt->sid) ? '' : ($peoples_fee_receipt->sid . '-')) . $peoples_fee_receipt->id));
-[[[
-Student Information:
-Full name: Ephrida Ndovi
-Semester: 2019B
-]]]
+
   $offset += $delta;
   if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->name_payee));
   $offset += $delta;
-  cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->firstname . ' ' . $peoples_fee_receipt->lastname));
-  $offset += $delta;
-  if (!empty($peoples_fee_receipt->sid)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('SID: ' . $peoples_fee_receipt->sid));
+  cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Student full name: ' . $peoples_fee_receipt->firstname . ' ' . $peoples_fee_receipt->lastname));
 
   $currency = ($peoples_fee_receipt->currency == 'GBP') ? 'UK Pounds' : $peoples_fee_receipt->currency;
-  $offset += 20;
-  $pdf->SetXY($left, $offset);
-  $pdf->setFont('Times', '', 14);
-  $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $peoples_fee_receipt->amount $currency in payment for $peoples_fee_receipt->modules"), 0, 'L', 0);
+
+  $offset += $delta;
+  cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode('DESCRIPTION'));
+  cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('AMOUNT'));
+
 [[[
-DESCRIPTION   AMOUNT
 Introduction to Epidemiology 19b    £50
 Inequalities and The Social Determinants of Health 19b    £50
-
-INVOICE TOTAL
-£100
+INVOICE TOTAL      £100
 ]]]
 [[[
 1.We also accept credit card
