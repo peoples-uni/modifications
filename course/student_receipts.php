@@ -130,7 +130,11 @@ if (empty($peoples_fee_receipts)) {
 else {
   foreach ($peoples_fee_receipts as $peoples_fee_receipt) {
     $cur = ($peoples_fee_receipt->currency == 'GBP') ? 'UK Pounds' : $peoples_fee_receipt->currency;
-    $wording = gmdate('d/m/Y', $peoples_fee_receipt->date) . ":&nbsp;&nbsp;{$peoples_fee_receipt->amount} $cur for " . htmlspecialchars($peoples_fee_receipt->modules, ENT_COMPAT, 'UTF-8');
+    if ($peoples_fee_receipt->receipt_flag < 100) {
+      $wording = 'Receipt: ' . gmdate('d/m/Y', $peoples_fee_receipt->date) . ":&nbsp;&nbsp;{$peoples_fee_receipt->amount} $cur for " . htmlspecialchars($peoples_fee_receipt->modules, ENT_COMPAT, 'UTF-8');
+    } else {
+      $wording = 'Invoice: ' . gmdate('d/m/Y', $peoples_fee_receipt->date) . ":&nbsp;&nbsp;{$peoples_fee_receipt->amount} $cur for " . htmlspecialchars($peoples_fee_receipt->modules, ENT_COMPAT, 'UTF-8');
+    }
     echo '<a href="' . $CFG->wwwroot . '/course/fee_receipt.php?id=' . $peoples_fee_receipt->id . '" target="_blank">' . $wording . '</a><br />';
   }
 }

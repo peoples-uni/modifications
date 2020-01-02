@@ -205,12 +205,16 @@ $peoples_fee_receipts = $DB->get_records('peoples_fee_receipt', array('userid' =
 
 if (!empty($peoples_fee_receipts)) {
   echo '<br /><br />';
-  echo '<b>Download a Receipt by right clicking on one of the links below...</b><br />';
-  echo '(When your Receipt appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br /><br />';
+  echo '<b>Download a Receipt or Invoice by right clicking on one of the links below...</b><br />';
+  echo '(When your Receipt or Invoice appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br /><br />';
 
   foreach ($peoples_fee_receipts as $peoples_fee_receipt) {
     $cur = ($peoples_fee_receipt->currency == 'GBP') ? 'UK Pounds' : $peoples_fee_receipt->currency;
-    $wording = gmdate('d/m/Y', $peoples_fee_receipt->date) . ":&nbsp;&nbsp;{$peoples_fee_receipt->amount} $cur for " . htmlspecialchars($peoples_fee_receipt->modules, ENT_COMPAT, 'UTF-8');
+    if ($peoples_fee_receipt->receipt_flag < 100) {
+      $wording = 'Receipt: ' . gmdate('d/m/Y', $peoples_fee_receipt->date) . ":&nbsp;&nbsp;{$peoples_fee_receipt->amount} $cur for " . htmlspecialchars($peoples_fee_receipt->modules, ENT_COMPAT, 'UTF-8');
+    } else {
+      $wording = 'Invoice: ' . gmdate('d/m/Y', $peoples_fee_receipt->date) . ":&nbsp;&nbsp;{$peoples_fee_receipt->amount} $cur for " . htmlspecialchars($peoples_fee_receipt->modules, ENT_COMPAT, 'UTF-8');
+    }
     echo '<a href="' . $CFG->wwwroot . '/course/fee_receipt.php?id=' . $peoples_fee_receipt->id . '" target="_blank">' . $wording . '</a><br />';
   }
 }

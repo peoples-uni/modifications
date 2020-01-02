@@ -108,6 +108,13 @@ echo '<table border="1" BORDERCOLOR="RED">';
 
 foreach ($peoples_fee_receipts as $peoples_fee_receipt) {
 	echo '<tr>';
+  echo '<td>';
+  if ($peoples_fee_receipt->receipt_flag < 100) {
+    echo 'Receipt';
+  } else {
+    echo 'Invoice';
+  }
+  echo '</td>';
 	echo '<td>';
   echo '<a href="' . $CFG->wwwroot . '/course/display_receipt.php?id=' . $peoples_fee_receipt->id . '" target="_blank">' . $CFG->wwwroot . '/course/display_receipt.php?id=' . $peoples_fee_receipt->id . '</a>';
 	echo '</td>';
@@ -152,7 +159,7 @@ foreach ($peoples_fee_receipts as $peoples_fee_receipt) {
 echo '</table>';
 
 ?>
-<br /><br /><a href="<?php echo $CFG->wwwroot ?>/course/create_receipt.php" target="_blank">Create New Receipt</a>
+<br /><br /><a href="<?php echo $CFG->wwwroot ?>/course/create_receipt.php" target="_blank">Create New Receipt/Invoice</a>
 <?php
 
 echo $OUTPUT->footer();
