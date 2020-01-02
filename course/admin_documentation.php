@@ -98,7 +98,7 @@ echo $OUTPUT->header();
 <a href="https://courses.peoples-uni.org/course/admin_documentation.php#specifyinstalments">Specify Instalment Payment Schedule</a><br />
 </li>
 <li>
-<a href="https://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts for Student Payments</a><br />
+<a href="https://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts/Invoices for Student Payments</a><br />
 </li>
 <li>
 <a href="https://courses.peoples-uni.org/course/admin_documentation.php#paymentterms">What a Student sees before they make a Payment via WorldPay</a><br />
@@ -1747,7 +1747,7 @@ It shows:-
 <br />Whether they are enrolled in MPH.
 <br />All their payment account transactions.
 <br />Their instalment payment schedule, if any.
-<br />Their receipts for Payments (see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts for Student Payments</a>), if any.
+<br />Their receipts/invoices for Payments (see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#createreceipts">List and Create Receipts/Invoices for Student Payments</a>), if any.
 </li>
 <li>
 <a href="https://courses.peoples-uni.org/course/payment_history.php">https://courses.peoples-uni.org/course/payment_history.php</a> allows staff ("Manager") to see a summary of accounts for all students for a semester.<br />
@@ -1784,15 +1784,15 @@ It will be possible to see on the page who has specified the instalment schedule
 
 
 <a name="createreceipts"></a>
-<h2>List and Create Receipts for Student Payments</h2>
+<h2>List and Create Receipts/Invoices for Student Payments</h2>
 <ol>
 <li>
-<a href="https://courses.peoples-uni.org/course/list_receipts.php">https://courses.peoples-uni.org/course/list_receipts.php</a> shows a list of all Receipts for Student Payments. These are generated automatically for all WorldPay payments, but must be manually generated for other payments. It is possible to click on a receipt to see it and it is also possible to Edit an existing receipt.<br />
-At the bottom of the page there is a link to <a href="https://courses.peoples-uni.org/course/create_receipt.php">https://courses.peoples-uni.org/course/create_receipt.php</a> to allow a new Receipt to be created.<br />
-That page and the Receipt Edit page (which is actually the same page) also have a link to <a href="https://courses.peoples-uni.org/course/student_receipts.php">https://courses.peoples-uni.org/course/student_receipts.php</a> where a Student can see a list of their Receipts and also download them.
+<a href="https://courses.peoples-uni.org/course/list_receipts.php">https://courses.peoples-uni.org/course/list_receipts.php</a> shows a list of all Receipts/Invoices for Student Payments. Receipts are generated automatically for all WorldPay payments, but must be manually generated for other payments. It is possible to click on a receipt/invoice to see it and it is also possible to Edit an existing receipt/invoice.<br />
+At the bottom of the page there is a link to <a href="https://courses.peoples-uni.org/course/create_receipt.php">https://courses.peoples-uni.org/course/create_receipt.php</a> to allow a new Receipt/Invoice to be created.<br />
+That page and the Receipt/Invoice Edit page (which is actually the same page) also have a link to <a href="https://courses.peoples-uni.org/course/student_receipts.php">https://courses.peoples-uni.org/course/student_receipts.php</a> where a Student can see a list of their Receipts/Invoices and also download them.
 </li>
 <li>
-Students will also be able to see and download receipts in account.php (see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a>).
+Students will also be able to see and download receipts/invoices in account.php (see <a href="https://courses.peoples-uni.org/course/admin_documentation.php#studentaccount">Page to allow a Student to see their Payment Account</a>).
 </li>
 </ol>
 
