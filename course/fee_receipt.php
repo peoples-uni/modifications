@@ -151,14 +151,14 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
 
 $methods = [
 'PAYMENT METHODS',
-''
+'',
 '1. By credit card as already communicated',
-''
+'',
 '2. BANK NAME: Ecobank Nigeria PLC.',
 'Branch: Wuse II, Abuja',
 'Account name: Datasphir Solutions Limited',
 'Account number: 0122270018',
-''
+'',
 '3. BANK NAME: Barclays',
 'Branch: Barclays Bank, Manchester City, PO Box 357, 51 Mosley Street, Manchester UK.',
 'Account name: Peoples Open Access Education Initiative',
