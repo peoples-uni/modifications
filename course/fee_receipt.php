@@ -166,7 +166,7 @@ $methods = [
 'Sort code: 20-55-34',
 'SWIFT: BARCGB22',
 'IBAN: GB82 BARC 2055 3493 7773 08',
-]
+];
   foreach ($methods as $method) {
     $offset += $delta;
     cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($method));
