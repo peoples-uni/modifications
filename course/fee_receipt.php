@@ -127,7 +127,9 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
 
   $offset += $delta;
   cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode('DESCRIPTION'));
-  cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode('AMOUNT'));
+
+  $amount_offset = 250;
+  cert_printtext($left + $amount_offset, $offset, 'L', 'Times', '', 14, utf8_decode('AMOUNT'));
 
   $lines = explode(';', $peoples_fee_receipt->modules);
   if (empty($lines)) $lines = [];
@@ -142,12 +144,12 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
     if (!empty($parts[1])) $amount = '£' . $parts[1];
 
     cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode($item));
-    cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode($amount));
+    cert_printtext($left + $amount_offset, $offset, 'L', 'Times', '', 14, utf8_decode($amount));
   }
 
   $offset += $delta;
   cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode("INVOICE TOTAL ($currency)"));
-  cert_printtext($left + 70, $offset, 'L', 'Times', '', 14, utf8_decode($peoples_fee_receipt->amount));
+  cert_printtext($left + $amount_offset, $offset, 'L', 'Times', '', 14, utf8_decode($peoples_fee_receipt->amount));
 
 $methods = [
 'PAYMENT METHODS',
