@@ -96,7 +96,7 @@ $delta = 18;
 $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($certificatedate));
 $offset += $delta;
-if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To: ' . $peoples_fee_receipt->name_payee));
+if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To:    ' . $peoples_fee_receipt->name_payee));
 $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->firstname . ' ' . $peoples_fee_receipt->lastname));
 $offset += $delta;
@@ -119,7 +119,7 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Invoice Number: ' . (empty($peoples_fee_receipt->sid) ? '' : ($peoples_fee_receipt->sid . '-')) . $peoples_fee_receipt->id));
 
   $offset += $delta;
-  if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->name_payee));
+  if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To: ' . $peoples_fee_receipt->name_payee));
   $offset += $delta;
   cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Student full name: ' . $peoples_fee_receipt->firstname . ' ' . $peoples_fee_receipt->lastname));
 
