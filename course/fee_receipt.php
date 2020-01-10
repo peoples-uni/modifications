@@ -96,7 +96,7 @@ $delta = 18;
 $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($certificatedate));
 $offset += $delta;
-if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->name_payee));
+if (!empty($peoples_fee_receipt->name_payee)) cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To: ' . $peoples_fee_receipt->name_payee));
 $offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('To    ' . $peoples_fee_receipt->firstname . ' ' . $peoples_fee_receipt->lastname));
 $offset += $delta;
