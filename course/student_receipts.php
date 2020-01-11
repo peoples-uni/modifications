@@ -44,8 +44,8 @@ echo '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $userid . '" target="_
 echo ', Last access: ' . ($userrecord->lastaccess ? format_time(time() - $userrecord->lastaccess) : get_string('never'));
 echo '<br /><br />';
 
-echo '<b>Download a Receipt by right clicking on one of the links below...</b><br />';
-echo '(When your Receipt appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br /><br />';
+echo '<b>Download a Receipt or Invoice by right clicking on one of the links below...</b><br />';
+echo '(When your Receipt or Invoice appears, you can print it by clicking the Adobe Acrobat print icon on the top left)<br /><br />';
 
 $worldpay_receipts = $DB->get_records_sql("
   SELECT
