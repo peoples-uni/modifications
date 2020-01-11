@@ -152,7 +152,7 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   cert_printtext($left,                  $offset, 'L', 'Times', '', 14, utf8_decode("INVOICE TOTAL ($currency)"));
   cert_printtext($left + $amount_offset, $offset, 'L', 'Times', '', 14, utf8_decode($peoples_fee_receipt->amount));
 
-  $offset += 25;
+  $offset += 20;
 $methods = [
 '',
 'PAYMENT METHODS',
