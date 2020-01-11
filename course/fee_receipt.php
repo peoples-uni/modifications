@@ -137,7 +137,7 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   foreach ($lines as $line) {
     $offset += $delta;
 
-    $parts = explode('£', $peoples_fee_receipt->modules);
+    $parts = explode('£', $line);
     if (empty($parts)) $parts = [];
     $item   = '';
     $amount = '';
