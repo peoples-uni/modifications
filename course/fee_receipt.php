@@ -108,7 +108,7 @@ $pdf->SetXY($left, $offset);
 $pdf->setFont('Times', '', 14);
 $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $peoples_fee_receipt->amount $currency in payment for $peoples_fee_receipt->modules"), 0, 'L', 0);
 
-  $offset += $delta;
+  $offset += 160;
 } else { // Invoice
   cert_printtext($left-50, $offset, 'C', 'Times', '', 18, utf8_decode('INVOICE'));
   $offset += 20;
@@ -172,11 +172,11 @@ $methods = [
 'IBAN: GB82 BARC 2055 3493 7773 08',
 ];
   foreach ($methods as $method) {
-    $offset += 10;
+    $offset += 11;
     cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode($method));
   }
 
-  $offset += 160;
+  $offset += $delta;
 }
 
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Signed'));
