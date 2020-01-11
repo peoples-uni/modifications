@@ -143,12 +143,12 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
     if (!empty($parts[0])) $item   =       $parts[0];
     if (!empty($parts[1])) $amount = '£' . $parts[1];
 
-    cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode($item));
+    cert_printtext($left,                  $offset, 'L', 'Times', '', 14, utf8_decode($item));
     cert_printtext($left + $amount_offset, $offset, 'L', 'Times', '', 14, utf8_decode($amount));
   }
 
   $offset += $delta;
-  cert_printtext($left,      $offset, 'L', 'Times', '', 14, utf8_decode("INVOICE TOTAL ($currency)"));
+  cert_printtext($left,                  $offset, 'L', 'Times', '', 14, utf8_decode("INVOICE TOTAL ($currency)"));
   cert_printtext($left + $amount_offset, $offset, 'L', 'Times', '', 14, utf8_decode($peoples_fee_receipt->amount));
 
 $methods = [
@@ -171,12 +171,12 @@ $methods = [
 'IBAN: GB82 BARC 2055 3493 7773 08',
 ];
   foreach ($methods as $method) {
-    $offset += $delta;
-    cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode($method));
+    $offset += 10;
+    cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode($method));
   }
 }
 
-$offset += 160;
+$offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Signed'));
 //print_signature($certificate->printsignature1, $orientation, $left + 70, $offset - 14, '100', '20');
 print_signature($certificate->printsignature1, $orientation, $left + 70, $offset - 14 - 10, '99', '30');
