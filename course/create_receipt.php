@@ -119,12 +119,12 @@ else {
 }
 ?>
 <br />Enter something in at least the Student and Amount fields and then click "Create New Receipt/Invoice"...<br />
-//Note: Any "Modules" that has a "£" symbol will be treated as an invoice with a differing format with two columns.<br />
-//Text before the first "£" will appear in the first column.<br />
-//The "£" symbol and any following text such an amount to pay and possibly a conversion to Naira will appear in a second column.<br />
-//However it is possible to have more than one line, say for two or more modules. A ";" symbol will start a second or subsequent line.<br />
-//The additional lines should have a module part and a "£" part for the second column.<br />
-//Finally, the "Amount" field below should be a grand total but can optionally have a Naira conversion.<br />
+Note: Any "Modules" that has a "£" symbol will be treated as an invoice with a differing format with two columns.<br />
+Text before the first "£" will appear in the first column.<br />
+The "£" symbol and any following text such an amount to pay and possibly a conversion to Naira will appear in a second column.<br />
+However it is possible to have more than one line, say for two or more modules. A ";" symbol will start a second or subsequent line.<br />
+The additional lines should have a module part and a "£" part for the second column.<br />
+Finally, the "Amount" field below should be a grand total but can optionally have a Naira conversion.<br />
 <form id="updatecertificateform" method="post" action="<?php echo $CFG->wwwroot . '/course/create_receipt.php'; ?>">
 <input type="hidden" name="id" value="<?php echo $id ?>" />
 
