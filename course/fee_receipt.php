@@ -128,7 +128,7 @@ $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $p
   $offset += $delta*2;
   cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('DESCRIPTION'));
 
-  $amount_offset = 450;
+  $amount_offset = 400;
   cert_printtext($left + $amount_offset, $offset, 'L', 'Times', '', 14, utf8_decode('AMOUNT'));
 
   $lines = explode(';', $peoples_fee_receipt->modules);
