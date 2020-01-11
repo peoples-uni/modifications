@@ -108,6 +108,7 @@ $pdf->SetXY($left, $offset);
 $pdf->setFont('Times', '', 14);
 $pdf->MultiCell(400, 35, utf8_decode("The Trustees acknowledge the receipt of $peoples_fee_receipt->amount $currency in payment for $peoples_fee_receipt->modules"), 0, 'L', 0);
 
+  $offset += $delta;
 } else { // Invoice
   cert_printtext($left-50, $offset, 'C', 'Times', '', 18, utf8_decode('INVOICE'));
   $offset += 20;
@@ -174,9 +175,10 @@ $methods = [
     $offset += 10;
     cert_printtext($left, $offset, 'L', 'Times', '', 10, utf8_decode($method));
   }
+
+  $offset += 160;
 }
 
-$offset += $delta;
 cert_printtext($left, $offset, 'L', 'Times', '', 14, utf8_decode('Signed'));
 //print_signature($certificate->printsignature1, $orientation, $left + 70, $offset - 14, '100', '20');
 print_signature($certificate->printsignature1, $orientation, $left + 70, $offset - 14 - 10, '99', '30');
