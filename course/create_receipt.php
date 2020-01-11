@@ -124,6 +124,7 @@ Text before the first "£" will appear in the first column.<br />
 The "£" symbol and any following text such an amount to pay and possibly a conversion to Naira will appear in a second column.<br />
 However it is possible to have more than one line, say for two or more modules. A ";" symbol will start a second or subsequent line.<br />
 The additional lines should have a module part and a "£" part for the second column.<br />
+(The "Modules" field, although small, will allow larger text amounts.)<br />
 Finally, the "Amount" field below should be a grand total but can optionally have text giving the Naira conversion.<br />
 <form id="updatecertificateform" method="post" action="<?php echo $CFG->wwwroot . '/course/create_receipt.php'; ?>">
 <input type="hidden" name="id" value="<?php echo $id ?>" />
