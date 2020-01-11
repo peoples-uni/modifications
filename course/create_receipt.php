@@ -119,7 +119,7 @@ else {
 }
 ?>
 <br />Enter something in at least the Student and Amount fields and then click "Create New Receipt/Invoice"...<br />
-Note: Any "Modules" that has a "£" symbol will be treated as an invoice with a differing format with two columns.<br />
+Note: Any "Modules" that has a "£" symbol will be treated as an invoice with a different format having two columns.<br />
 Text before the first "£" will appear in the first column.<br />
 The "£" symbol and any following text such an amount to pay and possibly a conversion to Naira will appear in a second column.<br />
 However it is possible to have more than one line, say for two or more modules. A ";" symbol will start a second or subsequent line.<br />
