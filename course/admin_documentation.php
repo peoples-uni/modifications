@@ -132,7 +132,7 @@ In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank"
 In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Academic skills course module that will be used for student registrations and then click "Make this Module the Academic skills course for new Student Registrants:" (no need to do this if it has not changed).
 </li>
 <li>
-In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Students Corner module that will be used for student registrations and then click "Make this Module the Students Corner for new Student Registrants:" (no need to do this if it has not changed).
+In <a href="https://courses.peoples-uni.org/course/settings.php" target="_blank">https://courses.peoples-uni.org/course/settings.php</a> select the Students Corner module that will be used for student enrolments and then click "Make this Module the Students Corner for new Student Enrolments:" (no need to do this if it has not changed).
 </li>
 <!--
 <li>

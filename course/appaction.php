@@ -547,10 +547,21 @@ elseif (!empty($_POST['userid']) && (
 	}
 
   // Enrol student in Students Corner
-  //$studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
+  $studentscorner = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
   if (!empty($studentscorner)) {
+    // Is the student already enrolled in the Students Corner?
+    $enrolled_corner = $DB->get_records_sql(
+      "SELECT ue.userid
+      FROM mdl_enrol e
+      JOIN mdl_user_enrolments ue ON e.id=ue.enrolid
+      WHERE
+        e.courseid=? AND
+        ue.userid=?",
+      [$studentscorner->id, $user->id]);
+    if (empty($enrolled_corner)) {
     enrolincoursesimple($studentscorner, $user);
     sendstudentscorner($user);
+    }
   }
 
   // Enrol student in Student Support Forums
@@ -779,7 +790,9 @@ TECHSUPPORT_EMAIL_HERE";
 }
 
 
-function sendstudentscorner($user) { // Not used as this is now done on registration... Now not used at all (call is not reached)
+// WAS: Not used as this is now done on registration... Now not used at all (call is not reached)
+// 20200112 Used again
+function sendstudentscorner($user) {
   global $DB;
   global $CFG;
 

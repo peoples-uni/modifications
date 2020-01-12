@@ -605,7 +605,7 @@ foreach ($idnumbers as $idnumber) {
 <form id="setstudentscornerform" method="post" action="<?php echo $CFG->wwwroot . '/course/settings.php'; ?>">
 <input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
 <input type="hidden" name="marksetstudentscorner" value="1" />
-<input type="submit" name="setstudentscorner" value="Make this Module the Students Corner for new Student Registrants:" style="width:50em" />
+<input type="submit" name="setstudentscorner" value="Make this Module the Students Corner for new Student Enrolments:" style="width:50em" />
 <br />
 <select name="studentscorner">
 <?php

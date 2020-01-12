@@ -294,7 +294,8 @@ window.opener.location.reload();
   }
 
   // Enrol student in Students Corner
-  $sc = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
+  // 20200112...
+  //$sc = $DB->get_record('course', array('id' => get_config(NULL, 'peoples_students_corner_id')));
   $sc_id = 0;
   if (!empty($sc) && ($sc->id != $fph_id)) {
     enrolincoursesimple($sc, $user);
