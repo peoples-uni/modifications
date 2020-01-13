@@ -802,7 +802,8 @@ You have been enrolled in the Students Corner for this semester:
 
 https://courses.peoples-uni.org/course/view.php?id=STUDENTS_CORNER_ID_HERE
 
-which is available for student chat.
+The Students Corner contains a number of interesting resources,
+as well as discussion forums to get advice and chat with fellow students.
 
 If you need help, please contact the site administrator,
 TECHSUPPORT_EMAIL_HERE";
