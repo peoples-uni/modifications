@@ -192,7 +192,11 @@ foreach ($enrols as $enrol) {
   break;  
 }
 cert_printtext($signatureleft,       $h, 'L', 'Helvetica', '', $size_header, utf8_decode('FIRST ENROLLED WITH PEOPLES-UNI:'));
+if ($userid != 2820) {
 cert_printtext($signatureleft + $in, $h, 'L', 'Helvetica', '', $size_header, utf8_decode($semester));
+} else {
+cert_printtext($signatureleft + $in, $h, 'L', 'Helvetica', '', $size_header, utf8_decode('September 2014'));
+}
 $h += 20;
 
 if (!empty($peoplesmph2->mphstatus)) {
