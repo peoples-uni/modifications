@@ -33,8 +33,6 @@ If you do not, it means that we cannot reach your e-mail address.<br />" .
 "<br />
 2. You will be invited to take part in our 'Preparing to study' course for new students<br />
 - it is a requirement to complete this course before you can enrol this will ensure that you are ready to study online with Peoples-uni.<br />
-This takes place online in January/February and July/August.<br />
-You will receive detailed information about the course nearer the time.<br />
 There is no payment for the Preparing to Study course.<br />
 <br />
 3. In February or August we will send you an invitation to complete the Application Form to apply for specific modules for the next semester.<br />
