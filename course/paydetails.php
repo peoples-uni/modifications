@@ -148,7 +148,8 @@ echo '<div align="center">';
 echo '<p><img alt="Peoples-uni" src="tapestry_logo.jpg" /></p>';
 
 if ($amount == $original_amount) {
-  echo "<p><br /><br /><b>Amount that you owe up to and including this semester (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount $currency</b></p>";
+  $amount_rounded = number_format($amount, 0);
+  echo "<p><br /><br /><b>Amount that you owe up to and including this semester (UK Pounds Sterling):&nbsp;&nbsp;&nbsp;$amount_rounded $currency</b></p>";
 }
 else {
   echo "<p><br /><br /><b>You have already paid your main instalment for this semester.</b></p>";
