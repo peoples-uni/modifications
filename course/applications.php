@@ -595,6 +595,7 @@ foreach ($applications as $sid => $application) {
 
 if ($sendemails) {
   if (empty($_POST['reg'])) $_POST['reg'] = '/^[a-zA-Z0-9_.-]/';
+  if (empty($_POST['notforuptodatepayments'])) $_POST['notforuptodatepayments'] = 0;
   sendemails($applications, strip_tags(dontstripslashes($_POST['emailsubject'])), strip_tags(dontstripslashes($_POST['emailbody'])), dontstripslashes($_POST['reg']), $_POST['notforuptodatepayments']);
 }
 
@@ -919,7 +920,7 @@ foreach ($applications as $sid => $application) {
     if (!empty($application->userid)) {
       $not_confirmed_text = '';
       if (is_not_confirmed($application->userid)) $not_confirmed_text = ' (not confirmed)';
-      $amount = amount_to_pay($application->userid);
+      $amount = number_format(amount_to_pay($application->userid), 0);
       $amount_owed = $amount;
       if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed now' . $not_confirmed_text . $mechanism . '</span>';
       elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $not_confirmed_text . $mechanism . '</span>';
@@ -1532,7 +1533,7 @@ function sendemails($applications, $emailsubject, $emailbody, $reg, $notforuptod
     $emailbodytemp = str_replace('GIVEN_NAME_HERE', trim($application->firstname), $emailbody);
     $emailbodytemp = str_replace('SID_HERE', $sid, $emailbodytemp);
 
-    if (!empty($application->userid)) $amount = amount_to_pay($application->userid);
+    if (!empty($application->userid)) $amount = number_format(amount_to_pay($application->userid), 0);
     else $amount = 0;
     $emailbodytemp = str_replace('AMOUNT_TO_PAY_HERE', $amount, $emailbodytemp);
 

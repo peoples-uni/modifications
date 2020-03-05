@@ -439,7 +439,7 @@ if (!empty($enrols)) {
         if (!empty($application->userid)) {
           $not_confirmed_text = '';
           if (is_not_confirmed($application->userid)) $not_confirmed_text = ' (not confirmed)';
-          $amount = amount_to_pay($application->userid);
+          $amount = number_format(amount_to_pay($application->userid), 0);
           if ($amount >= .01) $z = '<span style="color:red">No: &pound;' . $amount . ' Owed now' . $not_confirmed_text . $mechanism . '</span>';
           elseif (abs($amount) < .01) $z = '<span style="color:green">Yes' . $not_confirmed_text . $mechanism . '</span>';
           else $z = '<span style="color:blue">' . "Overpaid: &pound;$amount" . $not_confirmed_text . $mechanism . '</span>'; // Will never be Overpaid here because of function used
