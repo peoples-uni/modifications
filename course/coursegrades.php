@@ -447,7 +447,7 @@ if (!empty($enrols)) {
         else {
           $z = $mechanism;
         }
-        if ($application->paymentnote) $z .= '<br />(Payment Note Present)'; // Not enabled at present
+        if (!empty($application->paymentnote)) $z .= '<br />(Payment Note Present)'; // Not enabled at present
       }
       $rowdata[] = $z;
     }
