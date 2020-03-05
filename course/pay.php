@@ -74,7 +74,7 @@ else {
 }
 $modulespurchasedlong = htmlspecialchars($modulespurchasedlong, ENT_COMPAT, 'UTF-8');
 
-$amount = amount_to_pay($application->userid);
+$amount = number_format(amount_to_pay($application->userid), 0);
 $original_amount = $amount;
 
 if ($amount < .01) {
