@@ -250,22 +250,22 @@ if (!empty($ratings)) {
 }
 
 // substantial for Post
-$actual_referencing = array();
-$actual_count_referencing = array();
-$actual_user_referencing = array();
+$actual_substantial = array();
+$actual_count_substantial = array();
+$actual_user_substantial = array();
 if (!empty($ratings)) {
   foreach ($ratings as $rating) {
     if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating_4) {
-      if (empty($actual_referencing[$rating->postid])) {
-        $actual_referencing[$rating->postid] = 0.0 + $rating->rating;
-        $actual_count_referencing[$rating->postid] = 1.0;
-        $actual_user_referencing[$rating->postid] = $rating->userid;
+      if (empty($actual_substantial[$rating->postid])) {
+        $actual_substantial[$rating->postid] = 0.0 + $rating->rating;
+        $actual_count_substantial[$rating->postid] = 1.0;
+        $actual_user_substantial[$rating->postid] = $rating->userid;
       }
       else {
-        $actual_referencing[$rating->postid] =
-          (($actual_referencing[$rating->postid] * $actual_count_referencing[$rating->postid]) + $rating->rating) /
-          ($actual_count_referencing[$rating->postid] + 1.0);
-        $actual_count_referencing[$rating->postid] += 1.0;
+        $actual_substantial[$rating->postid] =
+          (($actual_substantial[$rating->postid] * $actual_count_substantial[$rating->postid]) + $rating->rating) /
+          ($actual_count_substantial[$rating->postid] + 1.0);
+        $actual_count_substantial[$rating->postid] += 1.0;
       }
     }
   }
@@ -281,6 +281,7 @@ $table->head = array(
   'Referred to resources:',
   'Critical approach:',
   'Referencing:'
+  'substantial contribution:'
   );
 
 $n = 0;
@@ -314,14 +315,14 @@ if (!empty($enrols)) {
     elseif ($actual_referencing[$enrol->postid] <=2.99) $actual_referencingwrongformat = true;
     else $actual_referencinggood = true;
 
-    $actual_referencingnotrated = false;
-    $actual_referencingnone = false;
-    $actual_referencingwrongformat = false;
-    $actual_referencinggood = false;
-    if (empty($actual_referencing[$enrol->postid])) $actual_referencingnotrated = true;
-    elseif ($actual_referencing[$enrol->postid] < 1.01) $actual_referencingnone = true;
-    elseif ($actual_referencing[$enrol->postid] <=2.99) $actual_referencingwrongformat = true;
-    else $actual_referencinggood = true;
+    $actual_substantialnotrated = false;
+    $actual_substantialno = false;
+    $actual_substantialsome = false;
+    $actual_substantialyes = false;
+    if (empty($actual_substantial[$enrol->postid])) $actual_substantialnotrated = true;
+    elseif ($actual_substantial[$enrol->postid] < 1.01) $actual_substantialno = true;
+    elseif ($actual_substantial[$enrol->postid] <=2.99) $actual_substantialsome = true;
+    else $actual_substantialyes = true;
 
     $rowdata = array();
     $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
@@ -344,10 +345,10 @@ if (!empty($enrols)) {
     if ($actual_referencingwrongformat) $rowdata[] = 'Wrong format';
     if ($actual_referencinggood) $rowdata[] = 'Good';
 
-    if ($actual_referencingnotrated) $rowdata[] = 'Not rated';
-    if ($actual_referencingnone) $rowdata[] = 'None';
-    if ($actual_referencingwrongformat) $rowdata[] = 'Wrong format';
-    if ($actual_referencinggood) $rowdata[] = 'Good';
+    if ($actual_substantialnotrated) $rowdata[] = 'Not rated';
+    if ($actual_substantialno) $rowdata[] = 'No';
+    if ($actual_substantialsome) $rowdata[] = 'Some';
+    if ($actual_substantialyes) $rowdata[] = 'Yes';
 
 		$n++;
     $table->data[] = $rowdata;
