@@ -128,6 +128,16 @@ class discussionfeedback_form extends moodleform {
     $mform->addRule('provided_references', 'Provided references in an appropriate format is required', 'required', null, 'client');
     $mform->addElement('static', 'explainprovided_references', '&nbsp;', 'Did the student provide references in an appropriate format?<br />');
 
+    // Provided a substantial contribution
+    $assessmentname[  ''] = 'Select...';
+    $assessmentname['10'] = 'Yes';
+    $assessmentname['20'] = 'No';
+    $assessmentname['30'] = 'Could be improved';
+    $assessmentname['40'] = 'Not applicable';
+    $mform->addElement('select', 'substantial_contribution', 'Provided a substantial contribution', $assessmentname);
+    $mform->addRule('substantial_contribution', 'Provided a substantial contribution is required', 'required', null, 'client');
+    $mform->addElement('static', 'explainsubstantial_contribution', '&nbsp;', 'Did the student provide a substantial contribution?<br />');
+
     //$mform->addElement('static', 'explainassessment_text', '&nbsp;', 'Add any free text you wish to be added to the assessment<br />');
     //$mform->addElement('textarea', 'assessment_text', '&nbsp;', 'wrap="HARD" rows="10" cols="100"');
     $mform->addElement('textarea', 'assessment_text', 'Add any free text you wish to be added to the e-mail after the assessment', 'wrap="HARD" rows="10" cols="100" style="width:auto"');
