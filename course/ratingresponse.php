@@ -163,6 +163,7 @@ $table->head = array(
   'Referred to resources in the topics',
   'Included critical approach to information',
   'Provided references in an appropriate format',
+  'Provided a substantial contribution',
   'Free text',
   'Your reflection: What skills do I need to improve?',
   'Your reflection: What will I do to improve my academic skills? (and when?)',
@@ -176,6 +177,7 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
 
   $rowdata[] = htmlspecialchars($discussionfeedback->fullname, ENT_COMPAT, 'UTF-8');
 
+  $assessmentname[' 0'] = '';
   $assessmentname['10'] = 'Yes';
   $assessmentname['20'] = 'No';
   $assessmentname['30'] = 'Could be improved';
@@ -184,6 +186,7 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
   $rowdata[] =  $assessmentname[$discussionfeedback->refered_to_resources];
   $rowdata[] =  $assessmentname[$discussionfeedback->critical_approach];
   $rowdata[] =  $assessmentname[$discussionfeedback->provided_references];
+  $rowdata[] =  $assessmentname[$discussionfeedback->substantial_contribution];
 
   $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $discussionfeedback->assessment_text));
 
