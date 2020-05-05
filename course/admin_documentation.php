@@ -1322,8 +1322,8 @@ This lists all posts for each enrolled student (not others), giving Module, Foru
 You can also click on the subject to see the discussion details.
 </li>
 <li>
-Four additional columns to do with ratings of discussions by Tutors are described in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a>.<br />
-These columns are... 'Referred to resources:', 'Critical approach:', 'Referencing:', 'Write discussion feedback for student...'. Also described there are additional filters associated with these columns and also additional summary tables.
+Five additional columns to do with ratings of discussions by Tutors are described in <a href="https://courses.peoples-uni.org/course/admin_documentation.php#sendingdiscussion">Sending Discussion Feedback to Students</a>.<br />
+These columns are... 'Referred to resources:', 'Critical approach:', 'Referencing:', 'Substantial contribution:', 'Write discussion feedback for student...'. Also described there are additional filters associated with these columns and also additional summary tables.
 </li>
 <li>
 Similar to the above columns there is a column 'Substantial contribution:' which indicates if a Tutor marked the post as a substantial contribution.
@@ -1865,7 +1865,7 @@ Referencing: None<br />
 Referencing: Wrong format<br />
 Referencing: Good<br />
 <br />
-Note another Scale "Substantial contribution" has now been added but is used separately (not part of this discussion feedback) to determine if a Student has made  an absolute minimum of at least one substantial discussion contribution in each of three separate topics during the semester, before being permitted to submit an assignment. "Substantial" means a well-considered contribution to the discussion (this could be one which demonstrates critical thinking, appropriate referencing, and/or application of new knowledge from the Topic; this can also be a well-researched response to another student's contribution):-<br />
+Note another Scale "Substantial contribution" has now been added that is primarily used to determine if a Student has made  an absolute minimum of at least one substantial discussion contribution in each of three separate topics during the semester, before being permitted to submit an assignment. "Substantial" means a well-considered contribution to the discussion (this could be one which demonstrates critical thinking, appropriate referencing, and/or application of new knowledge from the Topic; this can also be a well-researched response to another student's contribution):-<br />
 Substantial contribution: No<br />
 Substantial contribution: Yes<br />
 <br />
@@ -1878,7 +1878,7 @@ There is also a link "Notes" on the right hand side of the ratings which gives T
 <a href="https://courses.peoples-uni.org/course/posts.php" target="_blank">https://courses.peoples-uni.org/course/posts.php</a> has 3 new columns with the (averaged if more than one Tutor rated) value of each of the 3 ratings for each Student Post (or "Not rated").<br />
 <br />
 </li>
-There is a fourth new column "Write discussion feedback for student..." which is colour coded to indicate if the student has been sent Discussion Feedback for the Module containing the Discussion Post. It is coloured Green/Yellow/Red, if feedback has been sent.<br />
+There is a fifth new column "Write discussion feedback for student..." which is colour coded to indicate if the student has been sent Discussion Feedback for the Module containing the Discussion Post. It is coloured Green/Yellow/Red, if feedback has been sent.<br />
 Green indicates the Feedback was completely "Good" (for that course).<br />
 Red indicates the Feedback was completely "Bad" (for that course).<br />
 Yellow indicates the Feedback was mixed.<br />
