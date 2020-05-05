@@ -11,6 +11,13 @@ $assessmentname['20'] = 'No';
 $assessmentname['30'] = 'Could be improved';
 $assessmentname['40'] = 'Not applicable';
 
+$assessmentname_display[  ''] = 'Select...';
+$assessmentname_display[ '0'] = '';
+$assessmentname_display['10'] = 'Yes';
+$assessmentname_display['20'] = 'No';
+$assessmentname_display['30'] = 'Could be improved';
+$assessmentname_display['40'] = 'Not applicable';
+
 require("../config.php");
 require_once($CFG->dirroot .'/course/lib.php');
 
@@ -38,18 +45,20 @@ if (empty($userrecord)) {
 }
 
 
-if (!empty($_POST['refered_to_resources']) && !empty($_POST['critical_approach']) && !empty($_POST['provided_references'])) {
+if (!empty($_POST['refered_to_resources']) && !empty($_POST['critical_approach']) && !empty($_POST['provided_references']) && !empty($_POST['substantial_contribution'])) {
   $refered_to_resources = (int)$_POST['refered_to_resources'];
   $critical_approach    = (int)$_POST['critical_approach'];
   $provided_references  = (int)$_POST['provided_references'];
+  $substantial_contribution  = (int)$_POST['substantial_contribution'];
 }
 else {
   $refered_to_resources = 0;
   $critical_approach    = 0;
   $provided_references  = 0;
+  $substantial_contribution  = 0;
 }
 
-if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $refered_to_resources && $critical_approach && $provided_references) {
+if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $refered_to_resources && $critical_approach && $provided_references && $substantial_contribution) {
   if (!confirm_sesskey()) print_error('confirmsesskeybad', 'error');
   $course_id = (int)$_POST['course_id'];
   $course = $DB->get_record('course', array('id' => $course_id));
@@ -69,6 +78,7 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $discussionfeedback->refered_to_resources = $refered_to_resources;
   $discussionfeedback->critical_approach = $critical_approach;
   $discussionfeedback->provided_references = $provided_references;
+  $discussionfeedback->substantial_contribution = $substantial_contribution;
 
   $assessment_text = $_POST['assessment_text'];
   if (empty($assessment_text)) $assessment_text = '';
@@ -93,6 +103,7 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $criteria  = "Referred to resources in the topics: $assessmentname[$refered_to_resources]\n\n";
   $criteria .= "Included critical approach to information: $assessmentname[$critical_approach]\n\n";
   $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n";
+  $criteria .= "Provided a substantial contribution: $assessmentname[$substantial_contribution]\n";
   if (!empty($assessment_text)) $criteria .= "\n" . $assessment_text . "\n";
   $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
   $senders_name_here = fullname($USER);
@@ -319,6 +330,7 @@ $table->head = array(
   'Referred to resources in the topics',
   'Included critical approach to information',
   'Provided references in an appropriate format',
+  'Provided a substantial contribution',
   'Free text',
   'Student reflection: What skills do I need to improve?',
   'Student reflection: What will I do to improve my academic skills? (and when?)',
@@ -334,6 +346,7 @@ foreach ($discussionfeedbacks as $discussionfeedback) {
   $rowdata[] =  $assessmentname[$discussionfeedback->refered_to_resources];
   $rowdata[] =  $assessmentname[$discussionfeedback->critical_approach];
   $rowdata[] =  $assessmentname[$discussionfeedback->provided_references];
+  $rowdata[] =  $assessmentname_display[$discussionfeedback->substantial_contribution];
   $rowdata[] = str_replace("\r", '', str_replace("\n", '<br />', $discussionfeedback->assessment_text));
 
   if ($discussionfeedback->rating_submitted) {
@@ -385,6 +398,11 @@ function verify<?php echo $all_course->id ?>() {
     alert("You must enter feedback for 'Provided references in an appropriate format'");
     document.feedbackdiscussionform<?php echo $all_course->id ?>.provided_references.focus();
     return false;
+  var substantial_contribution = document.feedbackdiscussionform<?php echo $all_course->id ?>.substantial_contribution.value;
+  if (substantial_contribution == "") {
+    alert("You must enter feedback for 'Provided a substantial contribution'");
+    document.feedbackdiscussionform<?php echo $all_course->id ?>.substantial_contribution.focus();
+    return false;
   }
   return true;
 }
@@ -411,6 +429,10 @@ Write Discussion Feedback for <?php echo htmlspecialchars($all_course->fullname,
 <tr>
   <td>Provided references in an appropriate format:</td>
   <?php displaynumericoptions('provided_references', $assessmentname, 'Select...'); ?>
+</tr>
+<tr>
+  <td>Provided a substantial contribution:</td>
+  <?php displaynumericoptions('substantial_contribution', $assessmentname, 'Select...'); ?>
 </tr>
 <tr>
   <td>Add any free text you wish to be added to the e-mail after the assessment:</td>
