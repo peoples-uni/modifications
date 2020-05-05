@@ -1884,7 +1884,7 @@ Red indicates the Feedback was completely "Bad" (for that course).<br />
 Yellow indicates the Feedback was mixed.<br />
 <br />
 When this column entry is clicked for a Post, a page is brought up which allows Feedback to be recorded and sent (by e-mail) to a Student for Discussion contributions to any of the (individual) Courses that the Student is taking this Semester.<br />
-There are 3 criteria (that match the 3 ratings) that must be selected as "Yes", "No" or "Could be improved"<br />
+There are 4 criteria (that match the 4 ratings) that must be selected as "Yes", "No" or "Could be improved"<br />
 As well as the criteria, there is an optional free form field which, if present, will be added to the e-mail after the criteria feedback.<br />
 Note: It is possible to re-submit and e-mail again and overwrite the recorded submission.<br />
 <br />
