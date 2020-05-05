@@ -89,11 +89,12 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $discussionfeedback->user_id_submitted = $USER->id;
   $discussionfeedback->datesubmitted = time();
 
+error_log(print_r($discussionfeedback, true));
   if ($doinsert) {
-    $DB->insert_record('discussionfeedback', $discussionfeedback);
+//    $DB->insert_record('discussionfeedback', $discussionfeedback);
   }
   else {
-    $DB->update_record('discussionfeedback', $discussionfeedback);
+//    $DB->update_record('discussionfeedback', $discussionfeedback);
   }
 
   $peoples_discussion_feedback_email = get_config(NULL, 'peoples_discussion_feedback_email');
@@ -118,7 +119,8 @@ if (!empty($_POST['markfeedbackdiscussion']) && !empty($_POST['course_id']) && $
   $peoples_discussion_feedback_email = preg_replace('#(https://[^\s]+)[\s]+#', "$1\n\n", $peoples_discussion_feedback_email);
 
   $student_name = fullname($userrecord);
-  sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname ($student_name)", $peoples_discussion_feedback_email);
+error_log($peoples_discussion_feedback_email);
+//  sendapprovedmail($userrecord->email, "Peoples-uni Discussion Feedback for $course->fullname ($student_name)", $peoples_discussion_feedback_email);
 }
 
 
