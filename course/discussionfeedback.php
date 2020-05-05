@@ -14,11 +14,14 @@ CREATE TABLE mdl_discussionfeedback (
   refered_to_resources BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   critical_approach BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   provided_references BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
+  substantial_contribution BIGINT(10) UNSIGNED NOT NULL DEFAULT 0,
   assessment_text TEXT NOT NULL,
 CONSTRAINT  PRIMARY KEY (id)
 );
 CREATE INDEX mdl_discussionfeedback_uid_ix ON mdl_discussionfeedback (userid);
 CREATE INDEX mdl_discussionfeedback_cid_ix ON mdl_discussionfeedback (course_id);
+
+ALTER TABLE mdl_discussionfeedback ADD substantial_contribution BIGINT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER provided_references;
 */
 
 
@@ -75,6 +78,7 @@ else { // We already know the module... need Form to to collect criteria for a S
     $discussionfeedback->refered_to_resources = $data->refered_to_resources;
     $discussionfeedback->critical_approach = $data->critical_approach;
     $discussionfeedback->provided_references = $data->provided_references;
+    $discussionfeedback->substantial_contribution = $data->substantial_contribution;
 
     $dataitem = $data->assessment_text;
     if (empty($dataitem)) $dataitem = '';
@@ -105,9 +109,11 @@ else { // We already know the module... need Form to to collect criteria for a S
     $refered_to_resources = $discussionfeedback->refered_to_resources;
     $critical_approach = $discussionfeedback->critical_approach;
     $provided_references = $discussionfeedback->provided_references;
+    $substantial_contribution = $discussionfeedback->substantial_contribution;
     $criteria  = "Referred to resources in the topics: $assessmentname[$refered_to_resources]\n\n";
     $criteria .= "Included critical approach to information: $assessmentname[$critical_approach]\n\n";
     $criteria .= "Provided references in an appropriate format: $assessmentname[$provided_references]\n";
+    $criteria .= "Provided a substantial contribution: $assessmentname[$substantial_contribution]\n";
     if (!empty($discussionfeedback->assessment_text)) $criteria .= "\n" . $discussionfeedback->assessment_text . "\n";
     $peoples_discussion_feedback_email = str_replace('DISCUSSION_CRITERIA_HERE', $criteria, $peoples_discussion_feedback_email);
     $senders_name_here = fullname($USER);
