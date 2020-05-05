@@ -280,8 +280,8 @@ $table->head = array(
   'Subject',
   'Referred to resources:',
   'Critical approach:',
-  'Referencing:'
-  'substantial contribution:'
+  'Referencing:',
+  'substantial contribution:',
   );
 
 $n = 0;
