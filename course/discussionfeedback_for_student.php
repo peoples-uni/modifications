@@ -155,7 +155,7 @@ LEFT JOIN mdl_rating r ON fp.id=r.itemid
 WHERE
   e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id AND
   r.component='mod_forum' AND r.ratingarea='post' AND
-  r.scaleid IN({$CFG->scale_to_use_for_triple_rating}, {$CFG->scale_to_use_for_triple_rating_2}, {$CFG->scale_to_use_for_triple_rating_3}) AND
+  r.scaleid IN({$CFG->scale_to_use_for_triple_rating}, {$CFG->scale_to_use_for_triple_rating_2}, {$CFG->scale_to_use_for_triple_rating_3}, {$CFG->scale_to_use_for_triple_rating_4}) AND
   e.userid=?",
 array($userid_for_student)
 );
@@ -249,6 +249,28 @@ if (!empty($ratings)) {
   }
 }
 
+// substantial for Post
+$actual_referencing = array();
+$actual_count_referencing = array();
+$actual_user_referencing = array();
+if (!empty($ratings)) {
+  foreach ($ratings as $rating) {
+    if ($rating->scaleid == $CFG->scale_to_use_for_triple_rating_4) {
+      if (empty($actual_referencing[$rating->postid])) {
+        $actual_referencing[$rating->postid] = 0.0 + $rating->rating;
+        $actual_count_referencing[$rating->postid] = 1.0;
+        $actual_user_referencing[$rating->postid] = $rating->userid;
+      }
+      else {
+        $actual_referencing[$rating->postid] =
+          (($actual_referencing[$rating->postid] * $actual_count_referencing[$rating->postid]) + $rating->rating) /
+          ($actual_count_referencing[$rating->postid] + 1.0);
+        $actual_count_referencing[$rating->postid] += 1.0;
+      }
+    }
+  }
+}
+
 
 $table = new html_table();
 $table->head = array(
@@ -292,6 +314,15 @@ if (!empty($enrols)) {
     elseif ($actual_referencing[$enrol->postid] <=2.99) $actual_referencingwrongformat = true;
     else $actual_referencinggood = true;
 
+    $actual_referencingnotrated = false;
+    $actual_referencingnone = false;
+    $actual_referencingwrongformat = false;
+    $actual_referencinggood = false;
+    if (empty($actual_referencing[$enrol->postid])) $actual_referencingnotrated = true;
+    elseif ($actual_referencing[$enrol->postid] < 1.01) $actual_referencingnone = true;
+    elseif ($actual_referencing[$enrol->postid] <=2.99) $actual_referencingwrongformat = true;
+    else $actual_referencinggood = true;
+
     $rowdata = array();
     $rowdata[] = htmlspecialchars($enrol->semester, ENT_COMPAT, 'UTF-8');
     $rowdata[] = htmlspecialchars($enrol->fullname, ENT_COMPAT, 'UTF-8');
@@ -307,6 +338,11 @@ if (!empty($enrols)) {
     if ($actual_criticalapproachno) $rowdata[] = 'No';
     if ($actual_criticalapproachsome) $rowdata[] = 'Some';
     if ($actual_criticalapproachyes) $rowdata[] = 'Yes';
+
+    if ($actual_referencingnotrated) $rowdata[] = 'Not rated';
+    if ($actual_referencingnone) $rowdata[] = 'None';
+    if ($actual_referencingwrongformat) $rowdata[] = 'Wrong format';
+    if ($actual_referencinggood) $rowdata[] = 'Good';
 
     if ($actual_referencingnotrated) $rowdata[] = 'Not rated';
     if ($actual_referencingnone) $rowdata[] = 'None';
