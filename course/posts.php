@@ -433,7 +433,7 @@ array($chosensemester, $chosenmodule)
 $discussionfeedbacks = $DB->get_records_sql("
 SELECT
   fp.id AS postid, fd.id AS discid, e.semester, u.id as userid, u.lastname, u.firstname, u.email, c.fullname, f.name AS forumname, fp.subject,
-  d.refered_to_resources, d.critical_approach, d.provided_references
+  d.refered_to_resources, d.critical_approach, d.provided_references, d.substantial_contribution
 FROM (mdl_enrolment e, mdl_user u, mdl_course c, mdl_forum f, mdl_forum_discussions fd, mdl_forum_posts fp)
 INNER JOIN mdl_discussionfeedback d ON e.userid=d.userid AND e.courseid=d.course_id
 WHERE e.enrolled!=0 AND e.userid=u.id AND e.courseid=c.id AND fp.userid=e.userid AND fp.discussion=fd.id AND fd.forum=f.id AND f.course=c.id $semestersql $modulesql $ssfsql $topicsql",
@@ -996,11 +996,13 @@ if (!empty($enrols)) {
     if (!empty($discussionfeedbacks[$enrol->postid])) {
       if     ($discussionfeedbacks[$enrol->postid]->refered_to_resources == 10 &&
               $discussionfeedbacks[$enrol->postid]->critical_approach == 10 &&
+             ($discussionfeedbacks[$enrol->postid]->substantial_contribution == 10 || $discussionfeedbacks[$enrol->postid]->substantial_contribution == 0) &&
               $discussionfeedbacks[$enrol->postid]->provided_references == 10) {
         $spancolour = '<span style="color:green">';
       }
       elseif ($discussionfeedbacks[$enrol->postid]->refered_to_resources == 20 &&
               $discussionfeedbacks[$enrol->postid]->critical_approach == 20 &&
+             ($discussionfeedbacks[$enrol->postid]->substantial_contribution == 20 || $discussionfeedbacks[$enrol->postid]->substantial_contribution == 0) &&
               $discussionfeedbacks[$enrol->postid]->provided_references == 20) {
         $spancolour = '<span style="color:red">';
       }
