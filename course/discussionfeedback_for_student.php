@@ -435,6 +435,7 @@ function verify<?php echo $all_course->id ?>() {
     alert("You must enter feedback for 'Provided references in an appropriate format'");
     document.feedbackdiscussionform<?php echo $all_course->id ?>.provided_references.focus();
     return false;
+  }
   var substantial_contribution = document.feedbackdiscussionform<?php echo $all_course->id ?>.substantial_contribution.value;
   if (substantial_contribution == "") {
     alert("You must enter feedback for 'Provided a substantial contribution'");
