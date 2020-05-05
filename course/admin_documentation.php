@@ -2001,10 +2001,15 @@ Ratings for Post, Referencing: Not rated (checkbox)<br />
 Ratings for Post, Referencing: None (checkbox)<br />
 Ratings for Post, Referencing: Wrong format (checkbox)<br />
 Ratings for Post, Referencing: Good (checkbox)<br />
+Ratings for Post, Substantial: Not rated (checkbox)<br />
+Ratings for Post, Substantial: No (checkbox)<br />
+Ratings for Post, Substantial: Some (checkbox)<br />
+Ratings for Post, Substantial: Yes (checkbox)<br />
 <br />
 Average Rating of Rated Posts, Referred to resources: ("Any", "No", "Mixed", "Yes")<br />
 Average Rating of Rated Posts, Critical approach: ("Any", "No", "Mixed", "Yes")<br />
 Average Rating of Rated Posts, Referencing: ("Any", "None", "Mixed", "Good")<br />
+Average Rating of Rated Posts, Substantial: ("Any", "No", "Mixed", "Yes")<br />
 <br />
 </li>
 <li>
@@ -2012,9 +2017,11 @@ There are new summary tables in posts.php...<br />
 Summary 'Referred to resources' for Student<br />
 Summary 'Critical approach' for Student<br />
 Summary 'Referencing' for Student<br />
+Summary 'Substantial' for Student<br />
 Summary 'Referred to resources' for Student per Module<br />
 Summary 'Critical approach' for Student per Module<br />
 Summary 'Referencing' for Student per Module<br />
+Summary 'Substantial' for Student per Module<br />
 <br />
 </li>
 <li>
