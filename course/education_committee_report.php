@@ -29,6 +29,9 @@ foreach ($semesters as $semester) {
 $peoples_chosensemester_filter = new peoples_select_filter('Semester', 'chosensemester', $listsemester, $defaultsemester);
 $peoples_filters->add_filter($peoples_chosensemester_filter);
 
+$peoples_chosensearch_filter = new peoples_chosensearch_filter('Name Contains', 'chosensearch');
+$peoples_filters->add_filter($peoples_chosensearch_filter);
+
 $peoples_exclude_non_submitters_filter = new peoples_boolean_filter('Exclude those in the Semester who did not Submit Anything', 'exclude_non_submitters');
 $peoples_filters->add_filter($peoples_exclude_non_submitters_filter);
 
@@ -178,6 +181,7 @@ $userdatas = $DB->get_records_sql("
     u.id,
     u.lastname,
     u.firstname,
+    '!!!!!!!!!!!!!!!!!!' AS email,
     CONCAT(u.lastname, ', ', u.firstname) AS name,
     IFNULL(m.mphstatus, 0) AS mph,
     IFNULL(m.suspended, 0) AS mphsuspended,
