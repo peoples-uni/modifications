@@ -41,6 +41,8 @@ function updateapplication($sid, $field, $value, $deltamodules = 0, $coursename 
       $peoples_student_balance->userid = $record->userid;
       $peoples_student_balance->amount_delta = $module_cost;
       $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
+      $peoples_student_balance->balance = round($peoples_student_balance->balance, 2);
+      if ($peoples_student_balance->balance == '-0') $peoples_student_balance->balance = 0;
       $peoples_student_balance->currency = 'GBP';
       if (!empty($coursename2)) {
         $course2 = " & '{$coursename2}'";

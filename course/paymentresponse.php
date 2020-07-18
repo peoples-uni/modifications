@@ -97,6 +97,8 @@ if (empty($_POST['M_donate']) && empty($_POST['M_wikitox']) && empty($_POST['M_m
       $peoples_student_balance->amount_delta = -$_POST['amount'];
     }
     $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
+    $peoples_student_balance->balance = round($peoples_student_balance->balance, 2);
+    if ($peoples_student_balance->balance == '-0') $peoples_student_balance->balance = 0;
     $peoples_student_balance->currency = 'GBP';
     $peoples_student_balance->detail = "WorldPay $updated->datafromworldpay";
     $peoples_student_balance->date = time();
@@ -437,6 +439,8 @@ Peoples-uni Payments";
     $peoples_student_balance->userid = $userid;
     $peoples_student_balance->amount_delta = -$amount;
     $peoples_student_balance->balance = $balance + $peoples_student_balance->amount_delta;
+    $peoples_student_balance->balance = round($peoples_student_balance->balance, 2);
+    if ($peoples_student_balance->balance == '-0') $peoples_student_balance->balance = 0;
     $peoples_student_balance->currency = 'GBP';
     $peoples_student_balance->detail = "WorldPay $transid";
     $peoples_student_balance->date = time();

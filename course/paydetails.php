@@ -116,6 +116,8 @@ if (!empty($_POST['markpaydetails'])) {
   $amount_paid = $_POST['amount_paid'];
   $peoples_student_balance->amount_delta = -$amount_paid;
   $peoples_student_balance->balance = $original_balance + $peoples_student_balance->amount_delta;
+  $peoples_student_balance->balance = round($peoples_student_balance->balance, 2);
+  if ($peoples_student_balance->balance == '-0') $peoples_student_balance->balance = 0;
   $peoples_student_balance->currency = 'GBP';
   $peoples_student_balance->detail = $mechanism;
   if (!empty($info)) {

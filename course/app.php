@@ -203,6 +203,8 @@ if (!empty($_POST['markmph']) && !empty($_POST['mphstatus'])) {
         $peoples_student_balance->userid = $newmph->userid;
         $peoples_student_balance->amount_delta = 1500;
         $peoples_student_balance->balance = $amount_to_pay_total + $peoples_student_balance->amount_delta;
+        $peoples_student_balance->balance = round($peoples_student_balance->balance, 2);
+        if ($peoples_student_balance->balance == '-0') $peoples_student_balance->balance = 0;
         $peoples_student_balance->currency = 'GBP';
         $peoples_student_balance->detail = "Initial Full amount for {$mphuniversity}";
         $peoples_student_balance->date = time();

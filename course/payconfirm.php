@@ -199,6 +199,8 @@ elseif (!empty($_POST['marksetowed'])) {
     $peoples_student_balance->userid = $application->userid;
     $peoples_student_balance->amount_delta = -$_POST['amount_delta'];
     $peoples_student_balance->balance = $amount + $peoples_student_balance->amount_delta;
+    $peoples_student_balance->balance = round($peoples_student_balance->balance, 2);
+    if ($peoples_student_balance->balance == '-0') $peoples_student_balance->balance = 0;
     $peoples_student_balance->currency = 'GBP';
     $peoples_student_balance->detail = $_POST['detail'];
     $peoples_student_balance->date = time();
