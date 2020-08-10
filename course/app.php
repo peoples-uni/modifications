@@ -2005,6 +2005,7 @@ if (empty($mphstatus)) {
 MPH&nbsp;programme:&nbsp;
 <select name="mphstatus">
 <option value="3" selected="selected">EUCLID MPH</option>
+<option value="4"                    >FPD MPH</option>
 <option value="2"                    >Peoples-uni MPH</option>
 <option value="1"                    >MMU MPH</option>
 </select>
