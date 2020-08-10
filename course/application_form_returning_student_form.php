@@ -172,7 +172,8 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
     //$listforselect[7] = 'I am already enrolled in EUCLID MPH programme';
     //$listforselect[6] = 'Yes, apply for OTHER MPH';
     //$listforselect[7] = 'I am already enrolled in OTHER MPH';
-    $mform->addElement('select', 'applymmumph', 'Apply for Masters-level programme with Peoples-uni or EUCLID?', $listforselect);
+    $listforselect[9] = 'Yes, apply for FPD Pretoria MPH programme';
+    $mform->addElement('select', 'applymmumph', 'Apply for Masters-level programme with Peoples-uni, EUCLID or FPD Pretoria?', $listforselect);
     $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%) and not failed any after resubmissions
 and wish to apply for the Masters-level programme with Peoples-uni or EUCLID, please indicate your preferences here. Note that the curriculum is the same. If you have previously applied for the Masters-level programme, please do so again, to make sure we know your intentions.<br />
 <strong>NOTE</strong>: There will be fees for the EUCLID MPH award, but note that these will only be payable after achieving the Peoples-uni award.<br />
