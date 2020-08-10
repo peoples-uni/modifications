@@ -131,7 +131,7 @@ if (!empty($peoplesmph2) && !empty($_POST['semester_graduated']) && !empty($_POS
   $peoplesmph2->semester_graduated = $_POST['semester_graduated'];
 }
 if (!empty($peoplesmph2->graduated)) {
-  $certifying = array(0 => '', 1 => 'MMU', 2 => 'Peoples-uni', 3 => 'EUCLID');
+  $certifying = array(0 => '', 1 => 'MMU', 2 => 'Peoples-uni', 3 => 'EUCLID', 4 => 'FPD');
   $certifying_organisation = $peoplesmph2->mphstatus;
   if ($peoplesmph2->mphstatus == 3 && $peoplesmph2->entitled == 0) $certifying_organisation = 2; // Peoples-uni
   $type_of_pass = array(0 => '', 1 => '', 2 => '(Merit) ', 3 => '(Distinction) ');
@@ -665,7 +665,7 @@ if ($qualification & 2) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma&nopercentage=1" target="_blank">(Same Diploma without Percent Grades)</a><br />';
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=diploma&nomodules=1" target="_blank">(Same Diploma without List of Modules)</a><br />';
 }
-if (!empty($peoplesmph2->graduated) && ($peoplesmph2->mphstatus == 2 || $peoplesmph2->mphstatus == 3)) {
+if (!empty($peoplesmph2->graduated) && ($peoplesmph2->mphstatus == 2 || $peoplesmph2->mphstatus == 3 || $peoplesmph2->mphstatus == 4)) {
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph" target="_blank">Your Peoples Open Access Educational Initiative Masters-Level Award</a><br />';
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1" target="_blank">(Masters-Level Award with List of Modules)</a><br />';
   echo '<a href="' . $CFG->wwwroot . '/course/peoplescertificate.php?userid=' . $userid . '&cert=mph&yesmodules=1&nopercentage=1" target="_blank">(Masters-Level Award with List of Modules but without Percent Grades)</a><br />';
@@ -766,6 +766,7 @@ foreach ($semesters as $semester) {
 <option value="1" <?php if ($peoplesmph2->mphstatus == 1) echo 'selected="selected"'; ?> >MMU</option>
 <option value="2" <?php if ($peoplesmph2->mphstatus == 2) echo 'selected="selected"'; ?> >Peoples-uni</option>
 <option value="3" <?php if ($peoplesmph2->mphstatus == 3) echo 'selected="selected"'; ?> >EUCLID</option>
+<option value="4" <?php if ($peoplesmph2->mphstatus == 4) echo 'selected="selected"'; ?> >FPD</option>
 </select>
 <select name="willpay">
 <option value="0" <?php if ($peoplesmph2->willpay == 0) echo 'selected="selected"'; ?> >Will not pay for EUCLID MPH certificate</option>

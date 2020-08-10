@@ -73,7 +73,7 @@ if (!empty($enrols)) {
 
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/user/view.php?id=' . $enrol->userid . '" target="_blank">' . htmlspecialchars($enrol->firstname, ENT_COMPAT, 'UTF-8') . '</a>';
 
-    $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'EUCLID MPH');
+    $certifying = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'EUCLID MPH', 4 => 'FPD MPH');
     $rowdata[] = '<a href="' . $CFG->wwwroot . '/course/student.php?id=' . $enrol->userid . '" target="_blank">' . $certifying[$enrol->mphstatus] . '</a>';
 
     $balance = get_balance($enrol->userid);

@@ -338,6 +338,7 @@ if (!empty($enrols)) {
         if ($mph2->mphstatus == 1) $inmph = '<br />(MMU MPH)';
         if ($mph2->mphstatus == 2) $inmph = '<br />(Peoples-uni MPH)';
         if ($mph2->mphstatus == 3) $inmph = '<br />(EUCLID MPH)';
+        if ($mph2->mphstatus == 4) $inmph = '<br />(FPD MPH)';
 
         if ($mph2->suspended) $inmph .= '(Suspended)';
 

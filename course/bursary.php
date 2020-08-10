@@ -34,6 +34,7 @@ $listacceptedmmu[] = 'No';
 $listacceptedmmu[] = 'MMU MPH';
 $listacceptedmmu[] = 'Peoples MPH';
 $listacceptedmmu[] = 'EUCLID MPH';
+$listacceptedmmu[] = 'FPD MPH';
 for ($year = 11; $year <= 17; $year++) {
   $listacceptedmmu[] = "Accepted {$year}a";
   $listacceptedmmu[] = "Accepted {$year}b";
@@ -190,6 +191,7 @@ foreach ($applications as $application) {
   if     ($application->mph && ($application->mphstatus == 1)) $z = 'MMU MPH';
   elseif ($application->mph && ($application->mphstatus == 2)) $z = 'Peoples MPH';
   elseif ($application->mph && ($application->mphstatus == 3)) $z = 'EUCLID MPH';
+  elseif ($application->mph && ($application->mphstatus == 4)) $z = 'FPD MPH';
   else $z = '';
   $rowdata[] = $z;
 

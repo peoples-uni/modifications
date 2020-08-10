@@ -47,9 +47,11 @@ $listmph[] = 'No';
 $listmph[] = 'MMU MPH';
 $listmph[] = 'Peoples MPH';
 $listmph[] = 'EUCLID MPH';
+$listmph[] = 'FPD MPH';
 $listmph[] = 'Not MMU MPH';
 $listmph[] = 'Not Peoples MPH';
 $listmph[] = 'Not EUCLID MPH';
+$listmph[] = 'Not FPD MPH';
 $peoples_mmu_filter = new peoples_mph_filter('MPH?', 'mph', $listmph, 'Any');
 $peoples_filters->add_filter($peoples_mmu_filter);
 
@@ -266,7 +268,7 @@ foreach ($track_submissions as $index => $track_submission) {
 
   $rowdata[] = $track_submission->grade;
 
-  $mphname = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'EUCLID MPH');
+  $mphname = array(0 => '', 1 => 'MMU MPH', 2 => 'Peoples MPH', 3 => 'EUCLID MPH', 4 => 'FPD MPH');
   $rowdata[] = $mphname[$track_submission->mph];
 
   $index_element = "{$track_submission->itemid}#{$track_submission->userid}";

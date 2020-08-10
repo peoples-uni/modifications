@@ -17,6 +17,7 @@ $mphstatus_texts[0] = '';
 $mphstatus_texts[1] = 'MMU MPH';
 $mphstatus_texts[2] = 'Peoples MPH';
 $mphstatus_texts[3] = 'EUCLID MPH';
+$mphstatus_texts[4] = 'FPD MPH';
 
 $PAGE->set_context(context_system::instance());
 
@@ -54,6 +55,7 @@ $listacceptedmmu[] = 'No';
 $listacceptedmmu[] = 'MMU MPH';
 $listacceptedmmu[] = 'Peoples MPH';
 $listacceptedmmu[] = 'EUCLID MPH';
+$listacceptedmmu[] = 'FPD MPH';
 for ($year = 11; $year <= 17; $year++) {
   $listacceptedmmu[] = "Accepted {$year}a";
   $listacceptedmmu[] = "Accepted {$year}b";
