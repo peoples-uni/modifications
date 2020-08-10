@@ -998,7 +998,8 @@ We hope you enjoy studying with us and wish you every success.
 "Unsuspend student from the Masters in Public Health (MPH)" button does what it says (Reasons can be added. This makes the student active again).
 </li>
 <li>
-"Record that the Student has been enrolled in Enterprises University of Pretoria" button does what it says. The student will not be charged, by us, for modules with Enterprises University of Pretoria.
+"Record that the Student has been enrolled in Enterprises University of Pretoria" button does what it says. The student will not be charged, by us, for modules with Enterprises University of Pretoria.<br />
+Note: FPD Pretoria is a different institution and as soon as someone is enrolled in FPD MPH, they will no longer be charged for modules.
 </li>
 <li>
 "Unenrol the student from Enterprises University of Pretoria" button does what it says.
