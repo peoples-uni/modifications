@@ -384,6 +384,7 @@ $listacceptedmmu[] = 'No';
 $listacceptedmmu[] = 'MMU MPH';
 $listacceptedmmu[] = 'Peoples MPH';
 $listacceptedmmu[] = 'EUCLID MPH';
+$listacceptedmmu[] = 'FPD MPH';
 for ($year = 11; $year <= 17; $year++) {
   $listacceptedmmu[] = "Accepted {$year}a";
   $listacceptedmmu[] = "Accepted {$year}b";
@@ -876,6 +877,7 @@ foreach ($applications as $sid => $application) {
     $applymmumphtext[7] = '<br />(Say already EUCLID MPH)';
     $applymmumphtext[8] = '<br />(Say future MPH)';
     $applymmumphtext[9] = '<br />(Say no MPH)';
+    $applymmumphtext[10] = '<br />(Apply FPD MPH)';
     $z .= $applymmumphtext[$application->applymmumph];
     $take_final_assignmenttext = array(0 => '', 1 => '');
     $take_final_assignmenttext[2] = '<br />(CPD only)';
@@ -946,6 +948,7 @@ foreach ($applications as $sid => $application) {
     if ($application->mph && ($application->mphstatus == 1)) $z .= '<br />(MMU MPH)';
     if ($application->mph && ($application->mphstatus == 2)) $z .= '<br />(Peoples MPH)';
     if ($application->mph && ($application->mphstatus == 3)) $z .= '<br />(EUCLID MPH)';
+    if ($application->mph && ($application->mphstatus == 4)) $z .= '<br />(FPD MPH)';
     if ($application->ceatup) $z .= '<br />(University of Pretoria)';
     if ($application->cert_ps) $z .= '<br />(Cert PS)';
     if ($displaystandardforexcel) $z = str_replace('<br />', ' ', $z);
@@ -1354,6 +1357,7 @@ foreach ($applications as $sid => $application) {
     if     ($application->mph && ($application->mphstatus == 1)) $z = 'MMU MPH';
     elseif ($application->mph && ($application->mphstatus == 2)) $z = 'Peoples MPH';
     elseif ($application->mph && ($application->mphstatus == 3)) $z = 'EUCLID MPH';
+    elseif ($application->mph && ($application->mphstatus == 4)) $z = 'FPD MPH';
     else $z = '';
     $rowdata[] = $z;
 

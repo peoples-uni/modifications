@@ -414,7 +414,11 @@ class peoples_acceptedmmu_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
-        if ($this->selectedvalue !== 'No' && $this->selectedvalue !== 'Yes' && $this->selectedvalue !== 'MMU MPH' && $this->selectedvalue !== 'Peoples MPH' && $this->selectedvalue !== 'EUCLID MPH') {
+        if ($this->selectedvalue === 'FPD MPH'     && (!$list_entry->mph || ($list_entry->mphstatus != 4))) {
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue !== 'No' && $this->selectedvalue !== 'Yes' && $this->selectedvalue !== 'MMU MPH' && $this->selectedvalue !== 'Peoples MPH' && $this->selectedvalue !== 'EUCLID MPH' && $this->selectedvalue !== 'FPD MPH') {
           if (!$list_entry->mph || $list_entry->mphdatestamp < $this->stamp_range[$this->selectedvalue]['start'] || $list_entry->mphdatestamp >= $this->stamp_range[$this->selectedvalue]['end']) {
             unset($list_to_filter[$index]);
             continue;
@@ -781,6 +785,10 @@ class peoples_mph_filter extends peoples_select_filter {
           unset($list_to_filter[$index]);
           continue;
         }
+        if ($this->selectedvalue === 'FPD MPH' && ($list_entry->mph != 4)) { // removed " || $list_entry->mphsuspended != 0"
+          unset($list_to_filter[$index]);
+          continue;
+        }
         if ($this->selectedvalue === 'Not MMU MPH' && ($list_entry->mph == 1)) { // removed " || $list_entry->mphsuspended != 0"
           unset($list_to_filter[$index]);
           continue;
@@ -790,6 +798,10 @@ class peoples_mph_filter extends peoples_select_filter {
           continue;
         }
         if ($this->selectedvalue === 'Not EUCLID MPH' && ($list_entry->mph == 3)) { // removed " || $list_entry->mphsuspended != 0"
+          unset($list_to_filter[$index]);
+          continue;
+        }
+        if ($this->selectedvalue === 'Not FPD MPH' && ($list_entry->mph == 4)) { // removed " || $list_entry->mphsuspended != 0"
           unset($list_to_filter[$index]);
           continue;
         }
