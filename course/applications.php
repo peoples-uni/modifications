@@ -153,6 +153,7 @@ mphstatus (in both tables)...
 1 => MMU MPH
 2 => Peoples MPH
 3 => EUCLID MPH
+4 => FPD MPH
 
 graduated...
 0 => not graduated

@@ -154,7 +154,7 @@ function get_module_cost($userid, $coursename1, $coursename2) {
     $deltamodules--;
   }
 
-  if ($mphstatus == 1) { // MMU MPH
+  if ($mphstatus == 1  || $mphstatus == 4) { // MMU MPH or FPH MPH
     $module_cost = 0;
   }
   //elseif ($income_category == 0) { // Existing Students
