@@ -172,10 +172,11 @@ If you have not been registered in Moodle you must apply by </strong><a href="ht
     //$listforselect[7] = 'I am already enrolled in EUCLID MPH programme';
     //$listforselect[6] = 'Yes, apply for OTHER MPH';
     //$listforselect[7] = 'I am already enrolled in OTHER MPH';
-    $listforselect[10] = 'Yes, apply for FPD Pretoria MPH programme';
+    $listforselect[10] = 'Yes, I am already enrolled in FPD Pretoria MPH programme';
     $mform->addElement('select', 'applymmumph', 'Apply for Masters-level programme with Peoples-uni, EUCLID or FPD Pretoria?', $listforselect);
     $mform->addElement('static', 'explainapplymmumph', '&nbsp;', 'If you have already passed two modules at Masters level (50%) and not failed any after resubmissions
 and wish to apply for the Masters-level programme with Peoples-uni or EUCLID, please indicate your preferences here. Note that the curriculum is the same. If you have previously applied for the Masters-level programme, please do so again, to make sure we know your intentions.<br />
+<strong>NOTE</strong>: If you already enrolled in the FPD Pretoria MPH programme, the two module requirement does not apply and you should indicate that you are already enrolled.<br />
 <strong>NOTE</strong>: There will be fees for the EUCLID MPH award, but note that these will only be payable after achieving the Peoples-uni award.<br />
 For more information on the criteria and rules applying to the Masters-level programme, please follow this link <a href="https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum" target="_blank">https://peoples-uni.org/content/peoples-uni-public-health-masters-level-award-programme-curriculum</a><br /><br />');
   }
@@ -216,7 +217,7 @@ For more information on the criteria and rules applying to the Masters-level pro
     $mform->addElement('static', 'explainscholarship', '&nbsp;', 'If you cannot afford the Peoples-uni fees, we may be able to assist in approved cases.<br />
 Please note that there will be a separate process for applying for the EUCLID MPH including any applications for bursaries, after graduation from the Peoples-uni programme. We will write to you at that time, and the meantime we encourage you to think about saving money for this if you want to take up this option.<br />
 Whether you want the additional EUCLID award or not, you can still study with Peoples-uni and If you cannot afford the more modest Peoples-uni fees, then we may be able to assist in approved cases.<br />
-Payments and bursaries for those enrolling on the FPD Pretoria MPH are dealt with through FPD.<br />
+Payments and bursaries for those enrolled in the FPD Pretoria MPH are dealt with through FPD.<br />
 If you would like to apply for a reduction or waiver of the <a href="https://peoples-uni.org/content/course-fees-payment-options" target="_blank">fees (click here)</a>, please provide details on:<br />
 1. What is your current employment AND monthly gross income<br />
 2. What is the reason you are unable to pay the fees<br />

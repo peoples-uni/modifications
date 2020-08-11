@@ -850,7 +850,7 @@ $applymmumphtext['6'] = 'Wants to Apply for EUCLID MPH';
 $applymmumphtext['7'] = 'Says already in EUCLID MPH';
 $applymmumphtext['8'] = 'Says will enrol in MPH in future';
 $applymmumphtext['9'] = 'Says will not enrol in MPH in future';
-$applymmumphtext['10'] = 'Wants to Apply for FPD Pretoria MPH';
+$applymmumphtext['10'] = 'Says already enrolled in FPD Pretoria MPH';
 $applymmumphtext = $applymmumphtext[$_REQUEST['applymmumph']];
 
 if (!empty($application->userid)) $peoplesmph2 = $DB->get_record('peoplesmph2', array('userid' => $application->userid));
