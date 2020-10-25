@@ -233,6 +233,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
         document.addEventListener("DOMContentLoaded", function(event) { 
             document.getElementById("id_submitbutton").addEventListener("click", function() {
                 alert("Clicked");
+                return false;
             });
         });
 
