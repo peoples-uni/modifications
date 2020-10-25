@@ -232,20 +232,10 @@ If you have a postgraduate qualification, please indicate name of qualification,
     <script>
         document.addEventListener("DOMContentLoaded", function(event) { 
             document.getElementById("id_submitbutton").addEventListener("click", function(event_click_submitbutton) {
-[[
-if (element.addEventListener) {
-    element.addEventListener("submit", function(evt) {
-        evt.preventDefault();
-        window.history.back();
-    }, true);
-}
-else {
-    element.attachEvent('onsubmit', function(evt){
-        evt.preventDefault();
-        window.history.back();
-    });
-}
-]]
+//    element.addEventListener("submit", function(evt) {
+//        evt.preventDefault();
+//        window.history.back();
+//    }, true);
                 event_click_submitbutton.preventDefault()
                 alert("Clicked");
                 return false;
