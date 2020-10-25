@@ -231,7 +231,22 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('static', 'captcha', '&nbsp;', '<br /><script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         document.addEventListener("DOMContentLoaded", function(event) { 
-            document.getElementById("id_submitbutton").addEventListener("click", function() {
+            document.getElementById("id_submitbutton").addEventListener("click", function(event_click_submitbutton) {
+[[
+if (element.addEventListener) {
+    element.addEventListener("submit", function(evt) {
+        evt.preventDefault();
+        window.history.back();
+    }, true);
+}
+else {
+    element.attachEvent('onsubmit', function(evt){
+        evt.preventDefault();
+        window.history.back();
+    });
+}
+]]
+                event_click_submitbutton.preventDefault()
                 alert("Clicked");
                 return false;
             });
