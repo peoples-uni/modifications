@@ -228,7 +228,8 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->setType('howfoundorganisationname', PARAM_TEXT);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
 
-    $mform->addElement('static', 'captcha', '&nbsp;', '<br /><script src="https://www.google.com/recaptcha/api.js" async defer>
+    $mform->addElement('static', 'captcha', '&nbsp;', '<br /><script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
         var onSuccessCaptcha = function(response) {
             var errorDivs = document.getElementsByClassName("recaptcha-error");
 alert("onSuccessCaptcha");
