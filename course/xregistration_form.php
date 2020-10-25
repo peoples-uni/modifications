@@ -51,6 +51,7 @@ when you will also need to pay your course fees.</strong><br />" .
 
     $mform->addElement('header', 'personaldetails', 'Personal details');
 
+/*
     $mform->addElement('text', 'lastname', 'Family name', 'maxlength="100" size="50"');
     $mform->addRule('lastname', 'Family name is required', 'required', null, 'client');
     $mform->setType('lastname', PARAM_NOTAGS);
@@ -222,6 +223,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addRule('howfoundpeoples', 'How did you hear about Peoples-uni is required', 'required', null, 'client');
     $mform->addElement('static', 'explainhowfoundpeoples', '&nbsp;', 'Select the option that best describes how you heard about Peoples-uni.<br />');
 
+*/
     $mform->addElement('text', 'howfoundorganisationname', 'Name of the organisation or person from whom you heard about Peoples-uni', 'maxlength="100" size="50"');
     $mform->setType('howfoundorganisationname', PARAM_TEXT);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
@@ -229,11 +231,14 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('static', 'captcha', '&nbsp;', '<br /><script src="https://www.google.com/recaptcha/api.js" async defer>
         var onSuccessCaptcha = function(response) {
             var errorDivs = document.getElementsByClassName("recaptcha-error");
+alert("onSuccessCaptcha");
             if (errorDivs.length) {
+alert("onSuccessCaptcha errorDivs.length");
                 errorDivs[0].className = "";
             }
             var errorMsgs = document.getElementsByClassName("recaptcha-error-message");
             if (errorMsgs.length) {
+alert("onSuccessCaptcha errorMsgs.length" + errorMsgs[0]);
                 errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
             }
         };
