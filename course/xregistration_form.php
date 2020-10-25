@@ -230,8 +230,10 @@ If you have a postgraduate qualification, please indicate name of qualification,
 
     $mform->addElement('static', 'captcha', '&nbsp;', '<br /><script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
-        document.getElementById("id_submitbutton").addEventListener("click", function() {
-            alert("Clicked");
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            document.getElementById("id_submitbutton").addEventListener("click", function() {
+                alert("Clicked");
+            });
         });
 
         var onSuccessCaptcha = function(response) {
