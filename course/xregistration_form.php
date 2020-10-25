@@ -45,8 +45,6 @@ when you will also need to pay your course fees.</strong><br />" .
 <p>For inquires about registration please email <a href="mailto:apply@peoples-uni.org?subject=Registration query">apply@peoples-uni.org</a>.</p>
 <p><strong>Note:</strong> You must complete the fields marked with a red <abbr class="initialism text-danger" title="Required"><i class="icon fa fa-exclamation-circle text-danger fa-fw "  title="Required" aria-label="Required"></i></abbr>.</p>
 <p><strong>Note:</strong> We may analyse student data to help us improve the course and some of this information might be published in academic journals to help others. No student will be individually identifiable in any publication.</p>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<div class="g-recaptcha" data-sitekey="6LfAOtsZAAAAAG9gyInaS5Cok_PMSuDLouRQ9XNL"></div>    
 ');
 //<p>Note:</strong> The closing date for applications for enrolment in modules for the upcoming semester is " . gmdate('jS F Y', get_config(NULL, 'peoples_last_application_date')) . ' approximately. When enrolments are open you will be informed (this is normally about 2 weeks before that date).</p>
 
@@ -227,6 +225,8 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('text', 'howfoundorganisationname', 'Name of the organisation or person from whom you heard about Peoples-uni', 'maxlength="100" size="50"');
     $mform->setType('howfoundorganisationname', PARAM_TEXT);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
+
+    $mform->addElement('static', 'captcha', '&nbsp;', '<script src="https://www.google.com/recaptcha/api.js" async defer></script><div class="g-recaptcha" data-sitekey="6LfAOtsZAAAAAG9gyInaS5Cok_PMSuDLouRQ9XNL"></div>');
 
 
     $this->add_action_buttons(false, 'Submit Form');
