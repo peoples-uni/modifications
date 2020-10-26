@@ -230,23 +230,25 @@ If you have a postgraduate qualification, please indicate name of qualification,
 
     $mform->addElement('static', 'captcha', '&nbsp;', '<br /><script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
+        var successfullCaptcha = false;
+
         document.addEventListener("DOMContentLoaded", function(event) { 
             document.getElementById("id_submitbutton").addEventListener("click", function(event_click_submitbutton) {
-                event_click_submitbutton.preventDefault()
+                if (!successfullCaptcha) event_click_submitbutton.preventDefault()
                 alert("Clicked");
             });
         });
 
         var onSuccessCaptcha = function(response) {
+            successfullCaptcha = true;
+
             var errorDivs = document.getElementsByClassName("recaptcha-error");
 alert("onSuccessCaptcha");
             if (errorDivs.length) {
-alert("onSuccessCaptcha errorDivs.length");
                 errorDivs[0].className = "";
             }
             var errorMsgs = document.getElementsByClassName("recaptcha-error-message");
             if (errorMsgs.length) {
-alert("onSuccessCaptcha errorMsgs.length" + errorMsgs[0]);
                 errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
             }
         };
