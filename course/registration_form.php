@@ -226,6 +226,38 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->setType('howfoundorganisationname', PARAM_TEXT);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
 
+    $mform->addElement('static', 'captcha', '&nbsp;', '<br />
+    <div class="recaptcha-error">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        var successfullCaptcha = false;
+
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            document.getElementById("id_submitbutton").addEventListener("click", function(event_click_submitbutton) {
+                if (!successfullCaptcha) {
+                    event_click_submitbutton.preventDefault();
+                    alert("You must check the checkbox \'I\'m not a robot\' to proceed");
+                }
+            });
+        });
+
+        var onSuccessCaptcha = function(response) {
+            successfullCaptcha = true;
+
+            var errorDivs = document.getElementsByClassName("recaptcha-error");
+            if (errorDivs.length) {
+                errorDivs[0].className = "";
+            }
+            var errorMsgs = document.getElementsByClassName("recaptcha-error-message");
+            if (errorMsgs.length) {
+                errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+            }
+        };
+    </script>
+    <div class="g-recaptcha" data-sitekey="6LfAOtsZAAAAAG9gyInaS5Cok_PMSuDLouRQ9XNL" data-callback="onSuccessCaptcha"></div>
+    <div class="recaptcha-error-message">Please verify that you are not a robot.</div>
+    </div>');
+
 
     $this->add_action_buttons(false, 'Submit Form');
 
