@@ -228,7 +228,9 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->setType('howfoundorganisationname', PARAM_TEXT);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
 
-    $mform->addElement('static', 'captcha', '&nbsp;', '<br /><script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    $mform->addElement('static', 'captcha', '&nbsp;', '<br />
+    <div class="recaptcha-error">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         var successfullCaptcha = false;
 
@@ -255,7 +257,8 @@ alert("removing");
         };
     </script>
     <div class="g-recaptcha" data-sitekey="6LfAOtsZAAAAAG9gyInaS5Cok_PMSuDLouRQ9XNL" data-callback="onSuccessCaptcha"></div>
-    <div class="recaptcha-error-message">Please verify that you are not a robot.</div>');
+    <div class="recaptcha-error-message">Please verify that you are not a robot.</div>
+    </div>');
 
 
     $this->add_action_buttons(false, 'Submit Form');
