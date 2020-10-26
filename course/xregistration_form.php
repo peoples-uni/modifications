@@ -51,11 +51,11 @@ when you will also need to pay your course fees.</strong><br />" .
 
     $mform->addElement('header', 'personaldetails', 'Personal details');
 
-/*
     $mform->addElement('text', 'lastname', 'Family name', 'maxlength="100" size="50"');
     $mform->addRule('lastname', 'Family name is required', 'required', null, 'client');
     $mform->setType('lastname', PARAM_NOTAGS);
     $mform->addElement('static', 'explainlastname', '&nbsp;', 'Your Family name or Surname.<br />');
+/*
 
     $mform->addElement('text', 'firstname', 'Given name', 'maxlength="100" size="50"');
     $mform->addRule('firstname', 'Given name is required', 'required', null, 'client');
@@ -209,6 +209,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addElement('static', 'explaincurrentjob', '&nbsp;', 'You can add any details about your current employment.<br />');
 
 
+*/
     $mform->addElement('header', 'howfounddetails', 'How did you hear about Peoples-uni?');
 
     $howfoundpeoplesname[  ''] = 'Select...';
@@ -223,7 +224,6 @@ If you have a postgraduate qualification, please indicate name of qualification,
     $mform->addRule('howfoundpeoples', 'How did you hear about Peoples-uni is required', 'required', null, 'client');
     $mform->addElement('static', 'explainhowfoundpeoples', '&nbsp;', 'Select the option that best describes how you heard about Peoples-uni.<br />');
 
-*/
     $mform->addElement('text', 'howfoundorganisationname', 'Name of the organisation or person from whom you heard about Peoples-uni', 'maxlength="100" size="50"');
     $mform->setType('howfoundorganisationname', PARAM_TEXT);
     $mform->addElement('static', 'explainhowfoundorganisationname', '&nbsp;', 'Please enter the name of the organisation, person or website from whom you heard about Peoples-uni.<br />');
