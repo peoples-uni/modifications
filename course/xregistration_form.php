@@ -236,7 +236,8 @@ If you have a postgraduate qualification, please indicate name of qualification,
 
         document.addEventListener("DOMContentLoaded", function(event) { 
             document.getElementById("id_submitbutton").addEventListener("click", function(event_click_submitbutton) {
-//                if (!successfullCaptcha) event_click_submitbutton.preventDefault()
+                if (!successfullCaptcha) event_click_submitbutton.preventDefault()
+                alert("You must check the checkbox: 'I'm not a robot' to proceed");
             });
         });
 
@@ -244,14 +245,11 @@ If you have a postgraduate qualification, please indicate name of qualification,
             successfullCaptcha = true;
 
             var errorDivs = document.getElementsByClassName("recaptcha-error");
-alert("onSuccessCaptcha");
             if (errorDivs.length) {
-alert("removing class");
                 errorDivs[0].className = "";
             }
             var errorMsgs = document.getElementsByClassName("recaptcha-error-message");
             if (errorMsgs.length) {
-alert("removing");
                 errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
             }
         };
