@@ -250,7 +250,9 @@ alert("onSuccessCaptcha errorMsgs.length" + errorMsgs[0]);
                 errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
             }
         };
-    </script><div class="g-recaptcha" data-sitekey="6LfAOtsZAAAAAG9gyInaS5Cok_PMSuDLouRQ9XNL" data-callback="onSuccessCaptcha"></div>');
+    </script>
+    <div class="g-recaptcha" data-sitekey="6LfAOtsZAAAAAG9gyInaS5Cok_PMSuDLouRQ9XNL" data-callback="onSuccessCaptcha"></div>
+    <div class="recaptcha-error-message">Please verify that you are not a robot.</div>');
 
 
     $this->add_action_buttons(false, 'Submit Form');
