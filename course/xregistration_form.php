@@ -237,7 +237,7 @@ If you have a postgraduate qualification, please indicate name of qualification,
         document.addEventListener("DOMContentLoaded", function(event) { 
             document.getElementById("id_submitbutton").addEventListener("click", function(event_click_submitbutton) {
                 if (!successfullCaptcha) event_click_submitbutton.preventDefault()
-                alert("You must check the checkbox: 'I'm not a robot' to proceed");
+                alert("You must check the checkbox: \'I\'m not a robot\' to proceed");
             });
         });
 
