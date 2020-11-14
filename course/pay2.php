@@ -194,6 +194,7 @@ foreach ($countryname as $key => $countryvalue) {
 //<script language="JavaScript" src="https://secure.worldpay.com/wcc/logo?instId=XXXXX"></script>
 ?>
 
+<!--
 <img src=https://www.worldpay.com/cgenerator/logos/visa.gif border=0 alt="Visa Credit payments supported by WorldPay">
 <img src=https://www.worldpay.com/cgenerator/logos/visa_debit.gif border=0 alt="Visa Debit payments supported by WorldPay">
 <img src=https://www.worldpay.com/cgenerator/logos/visa_electron.gif border=0 alt="Visa Electron payments supported by WorldPay">
@@ -216,6 +217,9 @@ foreach ($countryname as $key => $countryvalue) {
 // Security Certificate Errors...
 <a href=https://www.worldpay.com/index.php?CMP=BA2713><img src=https://www.rbsworldpay.com/images/cardlogos/poweredByRBSWorldPay.gif border=0 alt="Powered By WorldPay"></a>
 <?php } ?>
+-->
+<a href="https://www.fisglobal.com/en-gb/merchant-solutions-worldpay">Powered By WorldPay</a>
+
 
 </div>
 
